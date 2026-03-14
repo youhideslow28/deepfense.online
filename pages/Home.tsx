@@ -193,29 +193,6 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
         <div className="lg:col-span-5 h-[300px] md:h-[380px] w-full"><AnalyticsChart lang={lang} /></div>
       </div>
 
-      {/* --- PARTNERS TICKER (NEW) --- */}
-      <div className="mb-16 overflow-hidden relative group">
-          <div className="text-center mb-4 text-[10px] text-gray-500 uppercase tracking-[0.3em] font-mono">{t.partners_title}</div>
-          <div className="flex justify-center flex-wrap gap-6 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-             <div className="flex items-center gap-2 border border-white/10 px-4 py-2 rounded-full bg-white/5">
-                 <Database size={14} className="text-blue-400"/>
-                 <span className="text-xs font-bold text-gray-300">PHISHTANK</span>
-             </div>
-             <div className="flex items-center gap-2 border border-white/10 px-4 py-2 rounded-full bg-white/5">
-                 <Globe size={14} className="text-green-400"/>
-                 <span className="text-xs font-bold text-gray-300">APWG</span>
-             </div>
-             <div className="flex items-center gap-2 border border-white/10 px-4 py-2 rounded-full bg-white/5">
-                 <ShieldCheck size={14} className="text-primary"/>
-                 <span className="text-xs font-bold text-gray-300">CHONGLUADAO.VN</span>
-             </div>
-             <div className="flex items-center gap-2 border border-white/10 px-4 py-2 rounded-full bg-white/5">
-                 <Server size={14} className="text-yellow-400"/>
-                 <span className="text-xs font-bold text-gray-300">OPENPHISH</span>
-             </div>
-          </div>
-      </div>
-
       {/* --- INTERACTIVE SUMMER MINIGAME --- */}
       {season === 'SUMMER' && (
         <div className="mb-20 relative group animate-in slide-in-from-bottom-8 duration-700">

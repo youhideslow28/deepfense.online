@@ -38,7 +38,7 @@ export const TRANSLATIONS: Record<Language, any> = {
     police: "CẢNH SÁT 113",
     cyber_security: "AN NINH MẠNG",
     footer_rights: "BẢO LƯU MỌI QUYỀN.",
-    agent_welcome: "Xin chào! Tôi là DEEPFENSE AGENT. Tôi được tích hợp dữ liệu tham khảo từ APWG, PhishTank và cộng đồng Chống Lừa Đảo. Tôi có thể giúp gì cho bạn?",
+    agent_welcome: "Xin chào! Tôi là DEEPFENSE AGENT. Tôi có thể giúp gì cho bạn?",
     agent_placeholder: "Hỏi về dấu hiệu lừa đảo...",
     result_pass: "AN TOÀN",
     result_fail: "NGUY HIỂM",
@@ -69,7 +69,7 @@ export const TRANSLATIONS: Record<Language, any> = {
     police: "POLICE 113",
     cyber_security: "CYBER SECURITY",
     footer_rights: "ALL RIGHTS RESERVED.",
-    agent_welcome: "Hello! I am DEEPFENSE AGENT. Utilizing reference data from APWG, PhishTank, and Anti-Phishing community. How can I assist you?",
+    agent_welcome: "Hello! I am DEEPFENSE AGENT. How can I assist you?",
     agent_placeholder: "Ask about scam signs...",
     result_pass: "SECURE",
     result_fail: "DANGER",
@@ -161,14 +161,6 @@ export const FUN_FACTS: Record<Language, FunFact[]> = {
 export const KNOWLEDGE_BASE: Record<Language, any[]> = {
   vi: [
     {
-      category: "🌐 NGUỒN DỮ LIỆU THAM KHẢO",
-      items: [
-        { title: "APWG & GASA", content: "Tham khảo dữ liệu và báo cáo từ Liên minh chống lừa đảo toàn cầu (GASA) và APWG. Cập nhật blacklist từ Facebook, Microsoft, Twitter." },
-        { title: "PhishTank & OpenPhish", content: "Tra cứu thời gian thực với cơ sở dữ liệu URL lừa đảo lớn nhất thế giới, cập nhật liên tục các trang web giả mạo." },
-        { title: "Chống Lừa Đảo (VN)", content: "Sử dụng dữ liệu từ cộng đồng 500.000+ thành viên, kết hợp AI Agent nhận diện trang web độc hại với độ chính xác 98%." }
-      ]
-    },
-    {
       category: "🛡️ PHÒNG VỆ ĐỜI SỐNG (DỄ NHỚ)",
       items: [
         { title: "Quy tắc 30 giây", content: "Khi nhận cuộc gọi khẩn cấp, hãy im lặng 30 giây để quan sát kỹ cử động mắt và miệng của người gọi." },
@@ -194,14 +186,6 @@ export const KNOWLEDGE_BASE: Record<Language, any[]> = {
     }
   ],
   en: [
-    {
-      category: "🌐 REFERENCED DATA SOURCES",
-      items: [
-        { title: "APWG & GASA", content: "Referencing data and reports from Anti-Phishing Working Group (APWG) and GASA. Updating blacklists from Facebook, Microsoft, Twitter." },
-        { title: "PhishTank & OpenPhish", content: "Real-time connection with the world's largest phishing URL databases." },
-        { title: "ChongLuaDao (VN)", content: "Leveraging data from a 500,000+ member community, combined with AI Agents detecting malicious sites with 98% accuracy." }
-      ]
-    },
     {
       category: "🛡️ LIFE DEFENSE (EASY TO REMEMBER)",
       items: [
