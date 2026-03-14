@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { LEVELS, TRANSLATIONS, SURVEY_SCALE } from '../data';
 import { GameState, Language } from '../types';
-import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight } from 'lucide-react';
+import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2 } from 'lucide-react';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -20,69 +20,34 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
 
   const surveyQuestions = [
     {
-        id: 'emotion',
-        vi: 'Cảm xúc hiện tại của bạn về hiểm họa Deepfake?',
-        en: 'Your current emotion regarding Deepfake threats?'
+        id: 'q1_prior_knowledge',
+        vi: 'Trước khi trải nghiệm, tôi đã hiểu rõ về mức độ tinh vi của công nghệ Deepfake.',
+        en: 'Before this experience, I clearly understood the sophistication of Deepfake technology.'
     },
     {
-        id: 'confidence',
-        vi: 'Mức độ tự tin của bạn trong việc bảo vệ gia đình?',
-        en: 'How confident are you in protecting your family?'
+        id: 'q2_threat_perception',
+        vi: 'Tôi tin rằng Deepfake là một mối đe dọa nghiêm trọng đối với an toàn tài chính cá nhân.',
+        en: 'I believe Deepfake is a severe threat to personal financial safety.'
     },
     {
-        id: 'sophistication',
-        vi: 'Bạn đánh giá thế nào về độ tinh vi của AI hiện nay?',
-        en: 'How do you rate the current sophistication of AI?'
+        id: 'q3_system_trust',
+        vi: 'Các hệ thống AI phân tích tự động (như Deepfense) là thực sự cần thiết trong tương lai.',
+        en: 'Automated AI analysis systems (like Deepfense) are truly necessary in the future.'
     },
     {
-        id: 'readiness',
-        vi: 'Mức độ sẵn sàng áp dụng các quy tắc phòng vệ vào thực tế?',
-        en: 'How ready are you to apply defense rules in reality?'
+        id: 'q4_self_efficacy',
+        vi: 'Sau bài kiểm tra, tôi tự tin hơn vào khả năng nhận diện hình ảnh/video giả mạo của mình.',
+        en: 'After the test, I am more confident in my ability to detect fake images/videos.'
     },
     {
-        id: 'sharing',
-        vi: 'Bạn có thường xuyên chia sẻ thông tin cá nhân lên mạng xã hội không?',
-        en: 'Do you frequently share personal information on social media?'
+        id: 'q5_behavioral_intent_1',
+        vi: 'Tôi dự định sẽ thiết lập ngay "Mật mã gia đình" để phòng tránh các cuộc gọi lừa đảo.',
+        en: 'I intend to immediately set up a "Family Password" to prevent scam calls.'
     },
     {
-        id: 'security_habit',
-        vi: 'Bạn có thói quen thay đổi mật khẩu định kỳ không?',
-        en: 'Do you have the habit of changing passwords periodically?'
-    },
-    {
-        id: 'stranger_trust',
-        vi: 'Mức độ tin tưởng của bạn đối với các cuộc gọi video từ số lạ?',
-        en: 'Your trust level towards video calls from strangers?'
-    },
-    {
-        id: 'ai_optimism',
-        vi: 'Bạn có tin AI sẽ mang lại nhiều lợi ích hơn là rủi ro không?',
-        en: 'Do you believe AI brings more benefits than risks?'
-    },
-    {
-        id: 'education',
-        vi: 'Bạn có sẵn lòng tham gia các lớp học kỹ năng phòng chống tội phạm mạng không?',
-        en: 'Are you willing to participate in cybercrime prevention skills classes?'
-    },
-    {
-        id: 'advocate',
-        vi: 'Bạn sẽ chia sẻ kiến thức này với ít nhất 3 người thân chứ?',
-        en: 'Will you share this knowledge with at least 3 relatives?'
-    },
-    {
-        id: 'invulnerability',
-        vi: 'Bạn có tin rằng mình sẽ không bao giờ bị lừa bởi Deepfake không?',
-        en: 'Do you believe you will never be fooled by Deepfake?'
-    },
-    {
-        id: 'aftermath',
-        vi: 'Bạn có cảm thấy an toàn hơn sau khi tham gia thử thách này không?',
-        en: 'Do you feel safer after participating in this challenge?'
-    },
-    {
-        id: 'action',
-        vi: 'Bạn có dự định thiết lập "mật mã gia đình" ngay hôm nay không?',
-        en: 'Do you plan to set up a "family password" today?'
+        id: 'q6_behavioral_intent_2',
+        vi: 'Tôi sẵn sàng chia sẻ nền tảng giáo dục này cho người thân (đặc biệt là người lớn tuổi).',
+        en: 'I am willing to share this educational platform with relatives (especially the elderly).'
     }
   ];
 
@@ -200,6 +165,21 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
     const score = gameState.score;
     const scales = SURVEY_SCALE[lang];
 
+    // Phân tích dữ liệu kết quả (Năng lực nhận diện chia theo nhóm)
+    const morphologicalIds = ["v1", "v2", "v4"]; // Tay, khuôn mặt, đôi cánh
+    const contextIds = ["v3", "v5", "v7"];       // Chuyển động hươu, thiên nga, mây
+    const physicsIds = ["v6", "v8", "v9", "v10"]; // Dòng nước, cát, áp lực
+
+    const getScoreForCategory = (ids: string[]) => {
+       const total = ids.length;
+       const wrong = wrongLevels.filter(l => ids.includes(l.id)).length;
+       return Math.round(((total - wrong) / total) * 100);
+    };
+
+    const morphScore = getScoreForCategory(morphologicalIds);
+    const contextScore = getScoreForCategory(contextIds);
+    const physicsScore = getScoreForCategory(physicsIds);
+
     // Status logic
     let statusTitle = "";
     let statusDesc = "";
@@ -306,6 +286,49 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                             {lang === 'vi' ? 'KẾT THÚC CHIẾN DỊCH' : 'END CAMPAIGN'}
                         </button>
                     </div>
+                </div>
+
+                {/* BẢNG PHÂN TÍCH ĐỒ THỊ */}
+                <div className="bg-surface border border-white/10 p-6 md:p-10 rounded-3xl mb-12 shadow-xl">
+                   <h3 className="text-lg md:text-xl font-black text-white uppercase italic tracking-widest mb-8 flex items-center gap-3 border-b border-white/5 pb-6">
+                      <BarChart2 size={24} className="text-primary" />
+                      {lang === 'vi' ? 'PHÂN TÍCH ĐỒ THỊ NĂNG LỰC NHẬN DIỆN' : 'DETECTION COMPETENCY GRAPH ANALYSIS'}
+                   </h3>
+                   
+                   <div className="space-y-8">
+                      {/* Bar 1 */}
+                      <div className="space-y-3">
+                         <div className="flex justify-between text-xs md:text-sm font-bold uppercase tracking-widest">
+                            <span className="text-gray-400">{lang === 'vi' ? 'NHẬN DIỆN HÌNH THỂ CHI TIẾT' : 'MORPHOLOGICAL DETAIL DETECTION'}</span>
+                            <span className="text-primary">{morphScore}%</span>
+                         </div>
+                         <div className="h-4 w-full bg-black rounded-full overflow-hidden border border-white/5 shadow-inner p-0.5">
+                            <div className="h-full bg-gradient-to-r from-primary/50 to-primary rounded-full transition-all duration-1000" style={{ width: `${morphScore}%` }}></div>
+                         </div>
+                      </div>
+                      
+                      {/* Bar 2 */}
+                      <div className="space-y-3">
+                         <div className="flex justify-between text-xs md:text-sm font-bold uppercase tracking-widest">
+                            <span className="text-gray-400">{lang === 'vi' ? 'NHẬN THỨC BỐI CẢNH & KHÔNG GIAN' : 'CONTEXT & SPATIAL AWARENESS'}</span>
+                            <span className="text-blue-400">{contextScore}%</span>
+                         </div>
+                         <div className="h-4 w-full bg-black rounded-full overflow-hidden border border-white/5 shadow-inner p-0.5">
+                            <div className="h-full bg-gradient-to-r from-blue-500/50 to-blue-500 rounded-full transition-all duration-1000" style={{ width: `${contextScore}%` }}></div>
+                         </div>
+                      </div>
+
+                      {/* Bar 3 */}
+                      <div className="space-y-3">
+                         <div className="flex justify-between text-xs md:text-sm font-bold uppercase tracking-widest">
+                            <span className="text-gray-400">{lang === 'vi' ? 'PHÂN TÍCH CHUYỂN ĐỘNG VẬT LÝ' : 'PHYSICS MOTION ANALYSIS'}</span>
+                            <span className="text-secondary">{physicsScore}%</span>
+                         </div>
+                         <div className="h-4 w-full bg-black rounded-full overflow-hidden border border-white/5 shadow-inner p-0.5">
+                            <div className="h-full bg-gradient-to-r from-secondary/50 to-secondary rounded-full transition-all duration-1000" style={{ width: `${physicsScore}%` }}></div>
+                         </div>
+                      </div>
+                   </div>
                 </div>
 
                 {wrongLevels.length > 0 && (

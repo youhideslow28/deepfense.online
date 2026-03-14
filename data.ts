@@ -123,16 +123,32 @@ export const CHECKLIST_DATA: Record<Language, ChecklistItem[]> = {
 
 export const FUN_FACTS: Record<Language, FunFact[]> = {
   vi: [
-    { title: "MẮT VUÔNG?", content: "Các mẫu AI cũ thường tạo ra con ngươi hình vuông thay vì hình tròn tự nhiên." },
+    { title: "3 GIÂY", content: "AI thế hệ mới chỉ cần 3 giây âm thanh gốc để nhân bản giọng nói của bạn với độ chính xác 95%." },
     { title: "NHỊP THỞ", content: "Deepfake hiếm khi mô phỏng được nhịp thở nhẹ nhàng làm rung vai của con người." },
-    { title: "GÓC NGHIÊNG", content: "AI gặp khó khăn nhất khi nhân vật quay nghiêng mặt 90 độ." },
-    { title: "BÀN TAY", content: "AI thế hệ cũ thường xuyên vẽ sai số lượng ngón tay hoặc các khớp tay bị biến dạng." }
+    { title: "GÓC NGHIÊNG", content: "AI gặp khó khăn nhất khi nhân vật quay nghiêng mặt 90 độ, thường gây mờ nhòe." },
+    { title: "RĂNG DÍNH LIỀN", content: "Nhiều AI chưa thể vẽ kẽ răng, khiến hàm răng trông như một dải trắng liền mạch." },
+    { title: "MẮT VUÔNG", content: "Các mẫu AI cũ thường tạo ra con ngươi hình vuông hoặc hình lục giác thay vì tròn." },
+    { title: "CHỚP MẮT", content: "Nhân vật do AI tạo ra thường chớp mắt quá ít hoặc chớp với tốc độ bất thường." },
+    { title: "MÀU DA KHÔNG KHỚP", content: "Da mặt và da cổ đôi khi có sự chênh lệch màu sắc rõ rệt do lỗi ghép nối." },
+    { title: "ÁNH SÁNG KÍNH", content: "Bóng đèn phản chiếu trên tròng kính thường không di chuyển đúng quy luật vật lý." },
+    { title: "TRANG SỨC DÍNH", content: "Khuyên tai, vòng cổ thường bị mờ, tan chảy hoặc dính liền vào da thịt." },
+    { title: "TÓC BAY", content: "Các sợi tóc con mỏng thường bị xóa mờ hoặc hòa lẫn vào phông nền phía sau." },
+    { title: "ĐỘ TRỄ ÂM", content: "Khẩu hình miệng và âm thanh thường trễ nhau vài mili-giây, không khớp hoàn hảo." },
+    { title: "BÀN TAY SÁP", content: "Da tay trong video Deepfake thường trông quá mịn như sáp, thiếu nếp nhăn." }
   ],
   en: [
-    { title: "SQUARE EYES?", content: "Old AI models often created square pupils instead of natural circular ones." },
+    { title: "3 SECONDS", content: "Modern AI only needs 3 seconds of original audio to clone your voice with 95% accuracy." },
     { title: "BREATHING", content: "Deepfakes rarely simulate the subtle shoulder movements of human breathing." },
-    { title: "SIDE PROFILE", content: "AI struggles most when a character turns their face 90 degrees." },
-    { title: "HAND DETAILS", content: "Older AI generations frequently miscalculate the number of fingers or hand joints." }
+    { title: "SIDE PROFILE", content: "AI struggles most when a character turns their face 90 degrees, causing blurring." },
+    { title: "MERGED TEETH", content: "Many AIs cannot draw gaps between teeth, making them look like a seamless white band." },
+    { title: "SQUARE EYES", content: "Older AI models often created square or hexagonal pupils instead of natural circular ones." },
+    { title: "BLINK RATE", content: "AI-generated characters often blink too infrequently or at unnatural speeds." },
+    { title: "SKIN TONE", content: "Facial and neck skin sometimes show distinct color differences due to blending errors." },
+    { title: "GLASSES GLARE", content: "Light reflections on glasses often defy the laws of physics and don't track correctly." },
+    { title: "JEWELRY", content: "Earrings and necklaces often appear blurry, melted, or fused to the skin." },
+    { title: "HAIR BLENDING", content: "Fine hair strands are often blurred out or merged completely with the background." },
+    { title: "AUDIO DELAY", content: "Lip movements and audio are often a few milliseconds out of sync." },
+    { title: "WAX HANDS", content: "Hand skin in Deepfake videos often looks too smooth, like wax, missing wrinkles." }
   ]
 };
 
@@ -208,8 +224,8 @@ export const KNOWLEDGE_BASE: Record<Language, any[]> = {
 };
 
 export const SURVEY_SCALE: Record<Language, string[]> = {
-  vi: ["😱 Rất lo sợ", "😟 Lo lắng", "😐 Bình thường", "🛡️ Cảnh giác", "⚡ Rất tự tin"],
-  en: ["😱 Terrified", "😟 Anxious", "😐 Neutral", "🛡️ Vigilant", "⚡ Very Confident"]
+  vi: ["1 HOÀN TOÀN KHÔNG", "2 KHÔNG TÁN THÀNH", "3 TRUNG LẬP", "4 TÁN THÀNH", "5 HOÀN TOÀN ĐỒNG Ý"],
+  en: ["1 STRONGLY DISAGREE", "2 DISAGREE", "3 NEUTRAL", "4 AGREE", "5 STRONGLY AGREE"]
 };
 
 export const PERSONALITY_QUESTIONS: Record<Language, PersonalityQuestion[]> = {
@@ -234,7 +250,13 @@ export const NEWS_DATA: Record<Language, NewsItem[]> = {
     { tag: "TP.HCM", title: "Chiêu trò 'người thân cấp cứu' bằng Deepfake", date: "10/2025", loss: "500 Triệu VNĐ", desc: "Kẻ xấu giả giọng và mặt con cái đang cấp cứu để hối thúc cha mẹ chuyển tiền gấp.", url: "https://tuoitre.vn" },
     { tag: "CÔNG NGHỆ", title: "Phát hiện mã nguồn tạo Deepfake AI mới", date: "08/2025", loss: "N/A", desc: "Công cụ mới cho phép tạo video giả mạo chỉ với 1 bức ảnh và 3 giây âm thanh.", url: "https://tinhte.vn" },
     { tag: "NGÂN HÀNG", title: "Cảnh báo lừa đảo xác thực khuôn mặt", date: "07/2025", loss: "Chưa thống kê", desc: "Tội phạm dùng Deepfake vượt qua hệ thống eKYC của một số tổ chức tài chính.", url: "https://vnexpress.net" },
-    { tag: "GIẢI TRÍ", title: "Người nổi tiếng bị gán ghép hình ảnh nhạy cảm", date: "06/2025", loss: "Uy tín", desc: "Làn sóng Deepfake khiêu dâm tấn công các nghệ sĩ gây bức xúc dư luận.", url: "https://zingnews.vn" }
+    { tag: "GIẢI TRÍ", title: "Người nổi tiếng bị gán ghép hình ảnh nhạy cảm", date: "06/2025", loss: "Uy tín", desc: "Làn sóng Deepfake khiêu dâm tấn công các nghệ sĩ gây bức xúc dư luận.", url: "https://zingnews.vn" },
+    { tag: "CẢNH BÁO", title: "Cuộc gọi video vay tiền bùng phát cuối năm", date: "12/2025", loss: "Hàng tỷ đồng", desc: "Tội phạm lợi dụng dịp lễ tết để giả mạo người thân vay tiền, mượn vốn khẩn cấp.", url: "#" },
+    { tag: "TÍN DỤNG", title: "Giả mạo nhân viên ngân hàng qua Zalo", date: "01/2026", loss: "800 Triệu VNĐ", desc: "Dùng Deepfake mặc đồng phục ngân hàng yêu cầu khách hàng đọc mã OTP.", url: "#" },
+    { tag: "GIÁO DỤC", title: "Lừa đảo học phí sinh viên bằng video ảo", date: "02/2026", loss: "300 Triệu VNĐ", desc: "Giả mạo giáo viên gọi điện trực tiếp yêu cầu phụ huynh đóng học phí khẩn cấp.", url: "#" },
+    { tag: "CHỨNG KHOÁN", title: "Deepfake lùa gà đầu tư tài chính ảo", date: "03/2026", loss: "15 Tỷ VNĐ", desc: "Tạo video giả mạo các chuyên gia kinh tế nổi tiếng để kêu gọi chuyển tiền đầu tư.", url: "#" },
+    { tag: "TÌNH CẢM", title: "Mất trắng sau cuộc gọi với 'người yêu Tây'", date: "02/2026", loss: "2 Tỷ VNĐ", desc: "Kẻ gian dùng AI tạo khuôn mặt nam giới ngoại quốc gọi điện hẹn hò qua Telegram.", url: "#" },
+    { tag: "DOANH NGHIỆP", title: "Kế toán chuyển nhầm tiền do sếp gọi video", date: "01/2026", loss: "5 Tỷ VNĐ", desc: "Cuộc họp nội bộ bị giả mạo hoàn toàn từ hình ảnh đến giọng nói của Giám đốc.", url: "#" }
   ],
   en: [
     { tag: "HANOI", title: "Fake Police Officer Property Fraud", date: "11/2025", loss: "$100k", desc: "Subjects used Deepfake uniforms for video call scams via Zalo.", url: "https://vtv.vn" },
@@ -242,6 +264,12 @@ export const NEWS_DATA: Record<Language, NewsItem[]> = {
     { tag: "HCMC", title: "'Emergency' Scam using Deepfake Tech", date: "10/2025", loss: "$20k", desc: "Scammers spoof children's voices and faces in fake emergency situations to rush parents.", url: "https://tuoitre.vn" },
     { tag: "TECH", title: "New Deepfake AI Source Code Discovered", date: "08/2025", loss: "N/A", desc: "A new tool allows generating fake videos with just 1 photo and 3 seconds of audio.", url: "https://tinhte.vn" },
     { tag: "BANKING", title: "Facial Authentication Scam Warning", date: "07/2025", loss: "TBD", desc: "Criminals use Deepfake to bypass eKYC systems of several financial organizations.", url: "https://vnexpress.net" },
-    { tag: "ENT", title: "Celebrities Targeted by Non-consensual Deepfakes", date: "06/2025", loss: "Reputation", desc: "Wave of pornographic Deepfakes attacking artists causes public outrage.", url: "https://zingnews.vn" }
+    { tag: "ENT", title: "Celebrities Targeted by Non-consensual Deepfakes", date: "06/2025", loss: "Reputation", desc: "Wave of pornographic Deepfakes attacking artists causes public outrage.", url: "https://zingnews.vn" },
+    { tag: "WARNING", title: "End-of-Year Loan Video Call Scams Surge", date: "12/2025", loss: "Millions", desc: "Criminals exploit holidays to impersonate relatives needing urgent loans.", url: "#" },
+    { tag: "CREDIT", title: "Fake Bank Employee via Messaging Apps", date: "01/2026", loss: "$35k", desc: "Deepfaked bank staff uniforms used to trick victims into sharing OTP codes.", url: "#" },
+    { tag: "EDUCATION", title: "Student Tuition Fraud via Virtual Video", date: "02/2026", loss: "$12k", desc: "Fake teachers calling parents directly demanding urgent tuition payments.", url: "#" },
+    { tag: "STOCK", title: "Deepfake Financial Investment Scam", date: "03/2026", loss: "$600k", desc: "Fake videos of famous economic experts urging people to transfer investment funds.", url: "#" },
+    { tag: "ROMANCE", title: "Lost Everything to a 'Foreign Lover' Call", date: "02/2026", loss: "$80k", desc: "Scammers use AI to generate attractive foreign faces for romance scams on Telegram.", url: "#" },
+    { tag: "CORP", title: "Accountant Transfers Funds to Fake Boss", date: "01/2026", loss: "$200k", desc: "An entire internal meeting was faked, including the image and voice of the Director.", url: "#" }
   ]
 };

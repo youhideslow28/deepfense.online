@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageType, Language, Season } from '../types';
 import { NEWS_DATA, FUN_FACTS, TRANSLATIONS } from '../data';
-import { Activity, Play, AlertTriangle, Lightbulb, PhoneCall, Cpu, ShieldCheck, Gift, Scan, XOctagon, CheckCircle2, User, Search, Smartphone, Siren, Globe, Database, Server } from 'lucide-react';
+import { Activity, Play, AlertTriangle, Lightbulb, PhoneCall, Cpu, ShieldCheck, Gift, Scan, XOctagon, CheckCircle2, User, Search, Smartphone, Siren, Globe, Database, Server, ExternalLink } from 'lucide-react';
 import AnalyticsChart from '../components/AnalyticsChart';
 import { db } from '../firebase';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
@@ -16,7 +16,6 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
   const t = TRANSLATIONS[lang];
-  const newsItems = NEWS_DATA[lang];
   const facts = FUN_FACTS[lang];
   
   // --- SUMMER MINIGAME STATE ---
@@ -25,6 +24,54 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
   const [scanProgress, setScanProgress] = useState(0);
   const [protectedUsers, setProtectedUsers] = useState(0); // Đổi tên biến cho rõ nghĩa
   const [totalAttempts, setTotalAttempts] = useState(0);   // Biến mới: Tổng số lượt chơi
+  
+  const [newsIndex, setNewsIndex] = useState(0);
+  const [factIndex, setFactIndex] = useState(0);
+  const [liveNews, setLiveNews] = useState<any[]>(NEWS_DATA[lang]); // State lưu tin tức realtime
+
+  // --- FETCH REAL-TIME NEWS (TỰ ĐỘNG HÓA) ---
+  useEffect(() => {
+    setLiveNews(NEWS_DATA[lang]); // Reset về tin mặc định khi đổi ngôn ngữ
+    setNewsIndex(0);
+
+    const fetchLiveNews = async () => {
+      try {
+        // Tìm kiếm trên Google News theo ngôn ngữ
+        const query = lang === 'vi' ? 'deepfake lừa đảo' : 'deepfake scam';
+        const langCode = lang === 'vi' ? 'vi' : 'en-US';
+        const gl = lang === 'vi' ? 'VN' : 'US';
+        
+        // Dùng rss2json API (miễn phí) để chuyển RSS thành JSON và vượt qua CORS
+        const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=${langCode}&gl=${gl}&ceid=${gl}:${langCode}`;
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+        
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        
+        if (data.status === 'ok' && data.items && data.items.length > 0) {
+          const formattedNews = data.items.map((item: any) => {
+            const pubDate = new Date(item.pubDate);
+            const dateStr = `${pubDate.getDate()}/${pubDate.getMonth() + 1}/${pubDate.getFullYear()}`;
+            const cleanDesc = item.description.replace(/<[^>]*>?/gm, '').substring(0, 110) + '...'; // Lọc bỏ HTML
+
+            return {
+              tag: lang === 'vi' ? "TIN MỚI (LIVE)" : "LATEST",
+              title: item.title.split(' - ')[0], // Cắt bỏ tên tòa soạn ở đuôi
+              date: dateStr,
+              loss: lang === 'vi' ? "Chưa xác định" : "TBD",
+              desc: cleanDesc,
+              url: item.link
+            };
+          });
+          setLiveNews(formattedNews); // Cập nhật tin thực tế vào hệ thống
+        }
+      } catch (error) {
+        console.error("Lỗi lấy tin tức tự động, sử dụng dữ liệu dự phòng.", error);
+      }
+    };
+
+    fetchLiveNews();
+  }, [lang]);
 
   // --- FIREBASE: LẮNG NGHE SỐ LƯỢNG NGƯỜI THAM GIA (REAL-TIME) ---
   useEffect(() => {
@@ -45,6 +92,17 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
         unsubscribeTotal();
     };
   }, []);
+
+  // --- AUTO TICKER EFFECT CẢNH BÁO & KIẾN THỨC ---
+  useEffect(() => {
+    const newsTimer = setInterval(() => setNewsIndex(prev => (prev + 2) % liveNews.length), 6000); // 6s đổi 2 tin
+    const factTimer = setInterval(() => setFactIndex(prev => (prev + 4) % facts.length), 8000); // 8s đổi 4 kiến thức
+    
+    return () => {
+      clearInterval(newsTimer);
+      clearInterval(factTimer);
+    };
+  }, [liveNews.length, facts.length]);
 
   // Reset game
   const resetGame = () => {
@@ -68,6 +126,18 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
       if (choice === 'VERIFY') setGamePhase('RESULT_WIN');
       else setGamePhase('RESULT_LOSE');
   };
+
+  // Data cắt lát để hiển thị thực tế
+  const displayNews = [
+    liveNews[newsIndex % liveNews.length] || liveNews[0],
+    liveNews[(newsIndex + 1) % liveNews.length] || liveNews[0]
+  ];
+  const displayFacts = [
+    facts[factIndex % facts.length],
+    facts[(factIndex + 1) % facts.length],
+    facts[(factIndex + 2) % facts.length],
+    facts[(factIndex + 3) % facts.length]
+  ];
 
   return (
     <div className="animate-in fade-in duration-500">
@@ -313,23 +383,27 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
                     <div className="bg-secondary/20 p-2 rounded-lg"><AlertTriangle className="text-secondary" size={20} /></div>
                     <div>
                       <h2 className="text-white font-black text-sm tracking-widest uppercase italic leading-none">{t.warning_center}</h2>
-                      <p className="text-[9px] text-gray-500 font-mono uppercase tracking-tighter mt-1">LATEST_NETWORK_THREATS_REPORT</p>
+                      <p className="text-[9px] text-gray-500 font-mono uppercase tracking-tighter mt-1 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
+                          LIVE_NETWORK_THREATS_MONITOR
+                      </p>
                     </div>
                 </div>
              </div>
-             <div className="grid grid-cols-1 md:grid-cols-2">
-                {newsItems.map((news, index) => (
-                    <div key={index} className="p-6 border-b border-r border-white/5 transition-all relative flex flex-col">
+             <div key={`news-ticker-${newsIndex}`} className="grid grid-cols-1 md:grid-cols-2 animate-in fade-in slide-in-from-right-4 duration-700">
+                {displayNews.map((news, index) => (
+                    <a href={news.url} target="_blank" rel="noopener noreferrer" key={index} className="p-6 border-b border-r border-white/5 transition-all relative flex flex-col hover:bg-white/5 group/news cursor-pointer">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="bg-secondary/10 text-secondary text-[8px] font-black px-2 py-0.5 rounded tracking-widest border border-secondary/20 uppercase">{news.tag}</span>
+                            <span className="bg-secondary/10 text-secondary text-[8px] font-black px-2 py-0.5 rounded tracking-widest border border-secondary/20 uppercase flex items-center gap-1"><span className="w-1.5 h-1.5 bg-secondary rounded-full animate-pulse"></span>{news.tag}</span>
                             <span className="text-[9px] text-gray-500 font-mono italic">{news.date}</span>
                         </div>
-                        <h3 className="text-md font-bold text-white mb-2 leading-tight">{news.title}</h3>
+                        <h3 className="text-md font-bold text-white mb-2 leading-tight group-hover/news:text-secondary transition-colors">{news.title}</h3>
                         <p className="text-[11px] text-gray-400 line-clamp-2 italic leading-relaxed mb-4">{news.desc}</p>
                         <div className="mt-auto flex items-center justify-between">
                           <div className="text-[10px] text-secondary font-black uppercase tracking-tight">{lang === 'vi' ? 'THIỆT HẠI' : 'LOSS'}: {news.loss}</div>
+                          <ExternalLink size={12} className="text-gray-600 group-hover/news:text-white transition-colors" />
                         </div>
-                    </div>
+                    </a>
                 ))}
              </div>
         </div>
@@ -350,14 +424,18 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
                  </div>
              </div>
              <div className="bg-primary/5 border border-primary/20 rounded-3xl p-6 flex-1 shadow-xl relative overflow-hidden">
-                 <h4 className="text-primary font-black text-[10px] mb-6 uppercase tracking-widest border-b border-primary/10 pb-3 flex items-center gap-2">
-                    <Lightbulb size={14} /> {t.knowledge}
+                 <h4 className="text-primary font-black text-[10px] mb-6 uppercase tracking-widest border-b border-primary/10 pb-3 flex items-center justify-between">
+                    <span className="flex items-center gap-2"><Lightbulb size={14} /> {t.knowledge}</span>
+                    <span className="text-[8px] bg-primary/10 text-primary px-2 py-0.5 rounded-full animate-pulse">AUTO-REFRESH</span>
                  </h4>
-                 <div className="space-y-6">
-                    {facts.map((f, i) => (
-                        <div key={i} className="text-[11px] text-gray-400 flex gap-4">
-                            <div className="bg-primary/20 h-5 w-5 rounded flex items-center justify-center shrink-0"><ShieldCheck size={10} className="text-primary" /></div>
-                            <span><strong className="text-gray-200 uppercase block mb-1 tracking-tight">{f.title}</strong> {f.content}</span>
+                 <div key={`fact-ticker-${factIndex}`} className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-700">
+                    {displayFacts.map((f, i) => (
+                        <div key={i} className="text-[11px] text-gray-400 flex gap-3 bg-black/40 p-3 rounded-xl border border-white/5 shadow-inner">
+                            <div className="bg-primary/20 h-6 w-6 rounded flex items-center justify-center shrink-0"><ShieldCheck size={12} className="text-primary" /></div>
+                            <div className="flex flex-col">
+                                <strong className="text-gray-200 uppercase tracking-tight mb-0.5">{f.title}</strong>
+                                <span>{f.content}</span>
+                            </div>
                         </div>
                     ))}
                  </div>
