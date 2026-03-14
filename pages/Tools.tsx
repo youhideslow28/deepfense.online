@@ -227,6 +227,7 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
             </KnowledgeItem>
         </div>
       )}
+    </div>
   );
 };
 
