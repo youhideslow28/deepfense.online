@@ -41,9 +41,10 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
         const query = lang === 'vi' ? 'deepfake lừa đảo' : 'deepfake scam';
         const langCode = lang === 'vi' ? 'vi' : 'en-US';
         const gl = lang === 'vi' ? 'VN' : 'US';
+        const ceid = lang === 'vi' ? 'VN:vi' : 'US:en';
         
         // Dùng rss2json API (miễn phí) để chuyển RSS thành JSON và vượt qua CORS
-        const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=${langCode}&gl=${gl}&ceid=${gl}:${langCode}`;
+        const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=${langCode}&gl=${gl}&ceid=${ceid}`;
         const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
         
         const response = await fetch(apiUrl);
