@@ -117,7 +117,7 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
         }, 600);
     }, 4000); // Cứ 4s lật 1 thẻ ngẫu nhiên
 
-    const factTimer = setInterval(() => setFactIndex(prev => (prev + 1) % facts.length), 6000); // 6s đổi 1 kiến thức
+    const factTimer = setInterval(() => setFactIndex(prev => (prev + 2) % facts.length), 6000); // 6s đổi 2 kiến thức
     
     return () => {
       clearInterval(newsTimer);
@@ -148,8 +148,11 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
       else setGamePhase('RESULT_LOSE');
   };
 
-  // Dữ liệu Kiến thức 1 items/lượt
-  const currentFact = facts[factIndex % facts.length];
+  // Dữ liệu Kiến thức (Lấy 2 items/lượt)
+  const displayFacts = [
+      facts[factIndex % facts.length],
+      facts[(factIndex + 1) % facts.length]
+  ];
 
   return (
     <div className="animate-in fade-in duration-500">
@@ -442,16 +445,18 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
                  <h4 className="text-primary font-black text-[10px] mb-4 uppercase tracking-widest border-b border-primary/10 pb-3 flex items-center shrink-0">
                     <span className="flex items-center gap-2"><Lightbulb size={14} /> {t.knowledge}</span>
                  </h4>
-                 <div key={`fact-ticker-${factIndex}`} className="animate-in fade-in slide-in-from-right-4 duration-500 flex-1 flex flex-col justify-center">
-                    <div className="text-[13px] text-gray-400 flex flex-col gap-4 bg-black/40 p-6 rounded-2xl border border-white/5 shadow-inner">
-                        <div className="flex items-center gap-4">
-                            <div className="bg-primary/20 h-12 w-12 rounded-xl flex items-center justify-center shrink-0">
-                                <ShieldCheck size={24} className="text-primary" />
+                 <div key={`fact-ticker-${factIndex}`} className="animate-in fade-in slide-in-from-right-4 duration-500 flex-1 flex flex-col justify-center gap-4">
+                    {displayFacts.map((fact, idx) => (
+                        <div key={idx} className="text-[13px] text-gray-400 flex flex-col gap-3 bg-black/40 p-5 rounded-2xl border border-white/5 shadow-inner">
+                            <div className="flex items-center gap-4">
+                                <div className="bg-primary/20 h-10 w-10 rounded-xl flex items-center justify-center shrink-0">
+                                    <ShieldCheck size={20} className="text-primary" />
+                                </div>
+                                <strong className="text-gray-200 uppercase tracking-widest text-sm leading-tight">{fact?.title}</strong>
                             </div>
-                            <strong className="text-gray-200 uppercase tracking-widest text-sm leading-tight">{currentFact?.title}</strong>
+                            <p className="leading-relaxed italic text-[12px]">{fact?.content}</p>
                         </div>
-                        <p className="leading-relaxed italic text-[12px]">{currentFact?.content}</p>
-                    </div>
+                    ))}
                  </div>
              </div>
         </div>

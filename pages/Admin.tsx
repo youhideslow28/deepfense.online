@@ -128,7 +128,9 @@ const Admin: React.FC = () => {
                             </div>
                             <div className="flex md:flex-col gap-2 justify-center border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-4 min-w-[140px]">
                                 <a 
-                                    href={`mailto:${report.email}?subject=${encodeURIComponent("Phản hồi báo cáo sự cố từ DEEPFENSE.AI")}&body=${encodeURIComponent(`Chào ${report.name},\n\nChúng tôi đã nhận được báo cáo của bạn về sự việc: "${report.desc}".\n\nĐội ngũ chuyên gia của chúng tôi đang tiến hành phân tích thông tin và sẽ phản hồi tư vấn chi tiết cho bạn trong thời gian sớm nhất.\n\nTrân trọng,\nĐội ngũ Hỗ trợ DEEPFENSE.AI`)}`}
+                                    href={`https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${encodeURIComponent(report.email)}&su=${encodeURIComponent("Phản hồi báo cáo sự cố từ DEEPFENSE.AI")}&body=${encodeURIComponent(`Chào ${report.name},\n\nChúng tôi đã nhận được báo cáo của bạn về sự việc: "${report.desc}".\n\nĐội ngũ chuyên gia của chúng tôi đang tiến hành phân tích thông tin và sẽ phản hồi tư vấn chi tiết cho bạn trong thời gian sớm nhất.\n\nTrân trọng,\nĐội ngũ Hỗ trợ DEEPFENSE.AI`)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="p-3 rounded-lg flex items-center gap-2 text-xs font-bold w-full justify-center transition-colors bg-blue-600/20 text-blue-400 hover:bg-blue-600/40"
                                 >
                                     <Mail size={16}/> Gửi Email
