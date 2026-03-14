@@ -285,31 +285,31 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                         shadowHover: "group-hover:shadow-[0_0_15px_#ec4899]"
                     }
                 ].map((phase, index) => {
-                    const isLast = index === 4;
+                    const isCurrent = index === 1; // Nhấn mạnh vào Q1/2026
                     return (
                         <div key={index} className="w-[180px] md:w-[220px] shrink-0 snap-center relative group flex flex-col">
                             {/* Dot Point */}
-                            <div className={`w-5 h-5 rounded-full bg-black border-4 ${phase.borderClass} absolute top-0 left-1/2 -translate-x-1/2 z-10 ${phase.hoverBg} ${phase.shadowHover} transition-all duration-300 ${isLast ? '!w-6 !h-6 -top-0.5 flex items-center justify-center' : ''}`}>
-                                {isLast && <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>}
+                            <div className={`w-5 h-5 rounded-full bg-black border-4 ${phase.borderClass} absolute top-0 left-1/2 -translate-x-1/2 z-10 ${phase.hoverBg} ${phase.shadowHover} transition-all duration-300 ${isCurrent ? '!w-6 !h-6 -top-0.5 flex items-center justify-center' : ''}`}>
+                                {isCurrent && <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>}
                             </div>
                             
                             {/* Card Content */}
-                            <div className={`mt-8 bg-surface ${isLast ? 'border border-pink-500/30' : 'border border-gray-800'} p-4 md:p-6 rounded-2xl ${phase.hoverClass} transition-colors h-full flex flex-col items-center text-center justify-center ${isLast ? 'relative overflow-hidden shadow-[0_0_30px_rgba(236,72,153,0.05)]' : ''}`}>
-                                {isLast && (
-                                    <div className="inline-flex bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest mb-2">
-                                        {lang === 'vi' ? 'MỤC TIÊU' : 'TARGET'}
+                            <div className={`mt-8 bg-surface ${isCurrent ? 'border border-blue-500/30' : 'border border-gray-800'} p-4 md:p-6 rounded-2xl ${phase.hoverClass} transition-colors h-full flex flex-col items-center text-center justify-center ${isCurrent ? 'relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.15)]' : ''}`}>
+                                {isCurrent && (
+                                    <div className="inline-flex bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest mb-2">
+                                        {lang === 'vi' ? 'HIỆN TẠI' : 'CURRENT'}
                                     </div>
                                 )}
                                 
-                                <h4 className={`text-lg md:text-xl font-black text-white mb-2 tracking-tight ${isLast ? 'flex items-center gap-1.5' : ''}`}>
-                                    {phase.time} {isLast && <Cpu className="text-pink-500" size={16}/>}
+                                <h4 className={`text-lg md:text-xl font-black text-white mb-2 tracking-tight ${isCurrent ? 'flex items-center gap-1.5' : ''}`}>
+                                    {phase.time} {isCurrent && <Video className="text-blue-500" size={16}/>}
                                 </h4>
                                 
                                 <h5 className={`text-[10px] md:text-[11px] font-bold ${phase.textClass} mb-3 uppercase tracking-widest flex items-center justify-center gap-1.5 leading-tight`}>
-                                    {!isLast && phase.icon} {phase.title}
+                                    {!isCurrent && phase.icon} {phase.title}
                                 </h5>
                                 
-                                <p className={`text-gray-400 text-[10px] md:text-xs leading-relaxed text-balance ${isLast ? 'font-bold !text-gray-300' : ''}`}>
+                                <p className={`text-gray-400 text-[10px] md:text-xs leading-relaxed text-balance ${isCurrent ? 'font-bold !text-gray-300' : ''}`}>
                                     {phase.desc}
                                 </p>
                             </div>
