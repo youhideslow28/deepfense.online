@@ -42,8 +42,9 @@ export const TRANSLATIONS: Record<Language, any> = {
     agent_placeholder: "Hỏi về dấu hiệu lừa đảo...",
     result_pass: "AN TOÀN",
     result_fail: "NGUY HIỂM",
-    label_name: "Tên người báo cáo",
-    label_phone: "Số điện thoại",
+    label_name: "Tên gọi (Nickname)",
+    label_email: "Địa chỉ Email",
+    label_attachment: "Đính kèm (Ảnh/Video)",
     label_desc: "Chi tiết sự cố",
     partners_title: "THAM KHẢO DỮ LIỆU TỪ NHỮNG NGUỒN UY TÍN"
   },
@@ -72,8 +73,9 @@ export const TRANSLATIONS: Record<Language, any> = {
     agent_placeholder: "Ask about scam signs...",
     result_pass: "SECURE",
     result_fail: "DANGER",
-    label_name: "Reporter Name",
-    label_phone: "Phone Number",
+    label_name: "Display Name",
+    label_email: "Email Address",
+    label_attachment: "Attachment (Image/Video)",
     label_desc: "Incident Details",
     partners_title: "DATA REFERENCED FROM REPUTABLE SOURCES"
   }

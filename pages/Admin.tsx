@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { db } from '../firebase';
 import { collection, query, orderBy, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
-import { ShieldAlert, CheckCircle, Trash2, Lock, Eye, Loader2 } from 'lucide-react';
+import { ShieldAlert, CheckCircle, Trash2, Lock, Eye, Loader2, Mail, Paperclip, ExternalLink } from 'lucide-react';
 
 const Admin: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -111,13 +111,28 @@ const Admin: React.FC = () => {
                                         {report.submittedAt?.seconds ? new Date(report.submittedAt.seconds * 1000).toLocaleString('vi-VN') : 'Vừa xong'}
                                     </span>
                                 </div>
-                                <h3 className="text-white font-bold text-lg mb-1">{report.name} <span className="text-gray-500 font-normal text-sm">({report.phone})</span></h3>
-                                {report.scamPhone && <div className="text-red-400 text-sm mb-2 font-mono">SĐT Lừa đảo: {report.scamPhone}</div>}
-                                <p className="text-gray-300 text-sm bg-black/40 p-3 rounded border border-white/5 mt-2">
+                                <h3 className="text-white font-bold text-lg mb-1">{report.name}</h3>
+                                <div className="text-primary text-sm mb-3 flex items-center gap-2 font-mono">
+                                    <Mail size={14}/> <a href={`mailto:${report.email}`} className="hover:underline">{report.email}</a>
+                                </div>
+                                <div className="text-gray-300 text-sm bg-black/40 p-4 rounded-xl border border-white/5 mt-2 leading-relaxed">
                                     "{report.desc}"
-                                </p>
+                                </div>
+                                {report.attachmentUrl && (
+                                    <div className="mt-4">
+                                        <a href={report.attachmentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white/10 hover:bg-primary/20 hover:text-primary transition-colors border border-white/10 px-3 py-1.5 rounded-lg text-xs font-bold text-gray-300">
+                                            <Paperclip size={14}/> Xem tệp đính kèm <ExternalLink size={12}/>
+                                        </a>
+                                    </div>
+                                )}
                             </div>
-                            <div className="flex md:flex-col gap-2 justify-center border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-4">
+                            <div className="flex md:flex-col gap-2 justify-center border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-4 min-w-[140px]">
+                                <a 
+                                    href={`mailto:${report.email}?subject=${encodeURIComponent("Phản hồi báo cáo sự cố từ DEEPFENSE.AI")}&body=${encodeURIComponent(`Chào ${report.name},\n\nChúng tôi đã nhận được báo cáo của bạn về sự việc: "${report.desc}".\n\nĐội ngũ chuyên gia của chúng tôi đang tiến hành phân tích thông tin và sẽ phản hồi tư vấn chi tiết cho bạn trong thời gian sớm nhất.\n\nTrân trọng,\nĐội ngũ Hỗ trợ DEEPFENSE.AI`)}`}
+                                    className="p-3 rounded-lg flex items-center gap-2 text-xs font-bold w-full justify-center transition-colors bg-blue-600/20 text-blue-400 hover:bg-blue-600/40"
+                                >
+                                    <Mail size={16}/> Gửi Email
+                                </a>
                                 <button 
                                     onClick={() => toggleStatus(report.id, report.status)}
                                     className={`p-3 rounded-lg flex items-center gap-2 text-xs font-bold w-full justify-center transition-colors ${report.status === 'processed' ? 'bg-gray-800 text-gray-400' : 'bg-green-600 text-white hover:bg-green-500'}`}

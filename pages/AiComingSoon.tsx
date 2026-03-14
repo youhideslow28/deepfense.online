@@ -211,7 +211,7 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
       <div className="mb-24 max-w-[100vw] overflow-hidden">
         <h3 className="text-center font-bold text-gray-500 mb-8 md:mb-12 font-mono tracking-widest uppercase flex items-center justify-center gap-3 px-4">
              <Map size={24} className="text-purple-500" /> 
-             {lang === 'vi' ? 'LỘ TRÌNH PHÁT TRIỂN (Q4/2025 - Q1/2030)' : 'DEVELOPMENT ROADMAP (Q4/2025 - Q1/2030)'}
+             {lang === 'vi' ? 'LỘ TRÌNH PHÁT TRIỂN (Q4/2025 - Q4/2027)' : 'DEVELOPMENT ROADMAP (Q4/2025 - Q4/2027)'}
         </h3>
         
         {/* Hint for mobile users */}
@@ -283,42 +283,9 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                         hoverClass: "hover:border-pink-500/50",
                         hoverBg: "group-hover:bg-pink-500",
                         shadowHover: "group-hover:shadow-[0_0_15px_#ec4899]"
-                    },
-                    {
-                        time: "Q3/2028",
-                        title: lang === 'vi' ? 'Ứng dụng Di động' : 'Mobile App',
-                        desc: lang === 'vi' ? 'Mobile App 1-chạm tối ưu cho người lớn tuổi.' : 'Beta app optimized for elderly users.',
-                        icon: <Smartphone size={16} className="text-orange-400"/>,
-                        borderClass: "border-orange-500",
-                        textClass: "text-orange-400",
-                        hoverClass: "hover:border-orange-500/50",
-                        hoverBg: "group-hover:bg-orange-500",
-                        shadowHover: "group-hover:shadow-[0_0_15px_#f97316]"
-                    },
-                    {
-                        time: "Q2/2029",
-                        title: lang === 'vi' ? 'Giải pháp B2B' : 'B2B Solution',
-                        desc: lang === 'vi' ? 'Cung cấp API/SaaS bảo vệ eKYC ngân hàng.' : 'API/SaaS to protect bank eKYC systems.',
-                        icon: <Shield size={16} className="text-indigo-400"/>,
-                        borderClass: "border-indigo-500",
-                        textClass: "text-indigo-400",
-                        hoverClass: "hover:border-indigo-500/50",
-                        hoverBg: "group-hover:bg-indigo-500",
-                        shadowHover: "group-hover:shadow-[0_0_15px_#6366f1]"
-                    },
-                    {
-                        time: "Q1/2030",
-                        title: lang === 'vi' ? 'Hoàn thiện' : 'Ultimate',
-                        desc: lang === 'vi' ? 'Deepfense Touch tự động chặn gọi lừa đảo.' : 'Deepfense Touch blocks calls instantly.',
-                        icon: <Rocket size={16} className="text-green-400"/>,
-                        borderClass: "border-green-500",
-                        textClass: "text-green-400",
-                        hoverClass: "hover:border-green-500",
-                        hoverBg: "group-hover:bg-green-500",
-                        shadowHover: "group-hover:shadow-[0_0_20px_#22c55e]"
                     }
                 ].map((phase, index) => {
-                    const isLast = index === 7;
+                    const isLast = index === 4;
                     return (
                         <div key={index} className="w-[180px] md:w-[220px] shrink-0 snap-center relative group flex flex-col">
                             {/* Dot Point */}
@@ -327,15 +294,15 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                             </div>
                             
                             {/* Card Content */}
-                            <div className={`mt-8 bg-surface ${isLast ? 'border border-green-500/30' : 'border border-gray-800'} p-4 md:p-6 rounded-2xl ${phase.hoverClass} transition-colors h-full flex flex-col items-center text-center justify-center ${isLast ? 'relative overflow-hidden shadow-[0_0_30px_rgba(34,197,94,0.05)]' : ''}`}>
+                            <div className={`mt-8 bg-surface ${isLast ? 'border border-pink-500/30' : 'border border-gray-800'} p-4 md:p-6 rounded-2xl ${phase.hoverClass} transition-colors h-full flex flex-col items-center text-center justify-center ${isLast ? 'relative overflow-hidden shadow-[0_0_30px_rgba(236,72,153,0.05)]' : ''}`}>
                                 {isLast && (
-                                    <div className="inline-flex bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest mb-2">
-                                        {lang === 'vi' ? 'ĐỈNH CAO' : 'ULTIMATE'}
+                                    <div className="inline-flex bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest mb-2">
+                                        {lang === 'vi' ? 'MỤC TIÊU' : 'TARGET'}
                                     </div>
                                 )}
                                 
                                 <h4 className={`text-lg md:text-xl font-black text-white mb-2 tracking-tight ${isLast ? 'flex items-center gap-1.5' : ''}`}>
-                                    {phase.time} {isLast && <Rocket className="text-green-500" size={16}/>}
+                                    {phase.time} {isLast && <Cpu className="text-pink-500" size={16}/>}
                                 </h4>
                                 
                                 <h5 className={`text-[10px] md:text-[11px] font-bold ${phase.textClass} mb-3 uppercase tracking-widest flex items-center justify-center gap-1.5 leading-tight`}>

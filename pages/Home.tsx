@@ -25,14 +25,15 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
   const [protectedUsers, setProtectedUsers] = useState(0); // Đổi tên biến cho rõ nghĩa
   const [totalAttempts, setTotalAttempts] = useState(0);   // Biến mới: Tổng số lượt chơi
   
-  const [newsIndex, setNewsIndex] = useState(0);
   const [factIndex, setFactIndex] = useState(0);
   const [liveNews, setLiveNews] = useState<any[]>(NEWS_DATA[lang]); // State lưu tin tức realtime
+  const [displayedNews, setDisplayedNews] = useState<any[]>([]);
+  const [flippingIndex, setFlippingIndex] = useState<number | null>(null);
 
   // --- FETCH REAL-TIME NEWS (TỰ ĐỘNG HÓA) ---
   useEffect(() => {
     setLiveNews(NEWS_DATA[lang]); // Reset về tin mặc định khi đổi ngôn ngữ
-    setNewsIndex(0);
+    setDisplayedNews(Array.from({ length: 6 }).map((_, i) => NEWS_DATA[lang][i % NEWS_DATA[lang].length]));
 
     const fetchLiveNews = async () => {
       try {
@@ -64,6 +65,7 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
             };
           });
           setLiveNews(formattedNews); // Cập nhật tin thực tế vào hệ thống
+          setDisplayedNews(Array.from({ length: 6 }).map((_, i) => formattedNews[i % formattedNews.length]));
         }
       } catch (error) {
         console.error("Lỗi lấy tin tức tự động, sử dụng dữ liệu dự phòng.", error);
@@ -95,14 +97,33 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
 
   // --- AUTO TICKER EFFECT CẢNH BÁO & KIẾN THỨC ---
   useEffect(() => {
-    const newsTimer = setInterval(() => setNewsIndex(prev => (prev + 2) % liveNews.length), 6000); // 6s đổi 2 tin
-    const factTimer = setInterval(() => setFactIndex(prev => (prev + 4) % facts.length), 8000); // 8s đổi 4 kiến thức
+    const newsTimer = setInterval(() => {
+        if (liveNews.length <= 1) return;
+        const slotToUpdate = Math.floor(Math.random() * 6);
+        const nextNewsIndex = Math.floor(Math.random() * liveNews.length);
+        
+        setFlippingIndex(slotToUpdate);
+        
+        setTimeout(() => {
+            setDisplayedNews(prev => {
+                const newDisplay = [...prev];
+                newDisplay[slotToUpdate] = liveNews[nextNewsIndex];
+                return newDisplay;
+            });
+        }, 300); // Đổi data giữa lúc lật thẻ (300ms)
+        
+        setTimeout(() => {
+            setFlippingIndex(null); // Kết thúc hiệu ứng lật
+        }, 600);
+    }, 4000); // Cứ 4s lật 1 thẻ ngẫu nhiên
+
+    const factTimer = setInterval(() => setFactIndex(prev => (prev + 1) % facts.length), 6000); // 6s đổi 1 kiến thức
     
     return () => {
       clearInterval(newsTimer);
       clearInterval(factTimer);
     };
-  }, [liveNews.length, facts.length]);
+  }, [liveNews, facts.length]);
 
   // Reset game
   const resetGame = () => {
@@ -127,17 +148,8 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
       else setGamePhase('RESULT_LOSE');
   };
 
-  // Data cắt lát để hiển thị thực tế
-  const displayNews = [
-    liveNews[newsIndex % liveNews.length] || liveNews[0],
-    liveNews[(newsIndex + 1) % liveNews.length] || liveNews[0]
-  ];
-  const displayFacts = [
-    facts[factIndex % facts.length],
-    facts[(factIndex + 1) % facts.length],
-    facts[(factIndex + 2) % facts.length],
-    facts[(factIndex + 3) % facts.length]
-  ];
+  // Dữ liệu Kiến thức 1 items/lượt
+  const currentFact = facts[factIndex % facts.length];
 
   return (
     <div className="animate-in fade-in duration-500">
@@ -390,21 +402,24 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
                     </div>
                 </div>
              </div>
-             <div key={`news-ticker-${newsIndex}`} className="grid grid-cols-1 md:grid-cols-2 animate-in fade-in slide-in-from-right-4 duration-700">
-                {displayNews.map((news, index) => (
-                    <a href={news.url} target="_blank" rel="noopener noreferrer" key={index} className="p-6 border-b border-r border-white/5 transition-all relative flex flex-col hover:bg-white/5 group/news cursor-pointer">
+             <div className="grid grid-cols-1 md:grid-cols-2">
+                {displayedNews.map((news, index) => {
+                  if (!news) return null;
+                  return (
+                    <a href={news.url} target="_blank" rel="noopener noreferrer" key={index} className={`p-6 border-b border-r border-white/5 relative flex flex-col hover:bg-white/5 group/news cursor-pointer transition-all duration-300 transform origin-center min-h-[140px] ${flippingIndex === index ? 'scale-x-0 opacity-0' : 'scale-x-100 opacity-100'}`}>
                         <div className="flex items-center justify-between mb-3">
                             <span className="bg-secondary/10 text-secondary text-[8px] font-black px-2 py-0.5 rounded tracking-widest border border-secondary/20 uppercase flex items-center gap-1"><span className="w-1.5 h-1.5 bg-secondary rounded-full animate-pulse"></span>{news.tag}</span>
                             <span className="text-[9px] text-gray-500 font-mono italic">{news.date}</span>
                         </div>
-                        <h3 className="text-md font-bold text-white mb-2 leading-tight group-hover/news:text-secondary transition-colors">{news.title}</h3>
+                        <h3 className="text-md font-bold text-white mb-2 leading-tight group-hover/news:text-secondary transition-colors line-clamp-2">{news.title}</h3>
                         <p className="text-[11px] text-gray-400 line-clamp-2 italic leading-relaxed mb-4">{news.desc}</p>
                         <div className="mt-auto flex items-center justify-between">
                           <div className="text-[10px] text-secondary font-black uppercase tracking-tight">{lang === 'vi' ? 'THIỆT HẠI' : 'LOSS'}: {news.loss}</div>
                           <ExternalLink size={12} className="text-gray-600 group-hover/news:text-white transition-colors" />
                         </div>
                     </a>
-                ))}
+                  )
+                })}
              </div>
         </div>
         <div className="lg:col-span-4 flex flex-col gap-6">
@@ -423,21 +438,21 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
                     </div>
                  </div>
              </div>
-             <div className="bg-primary/5 border border-primary/20 rounded-3xl p-6 flex-1 shadow-xl relative overflow-hidden">
-                 <h4 className="text-primary font-black text-[10px] mb-6 uppercase tracking-widest border-b border-primary/10 pb-3 flex items-center justify-between">
+             <div className="bg-primary/5 border border-primary/20 rounded-3xl p-6 flex-1 shadow-xl relative overflow-hidden flex flex-col">
+                 <h4 className="text-primary font-black text-[10px] mb-4 uppercase tracking-widest border-b border-primary/10 pb-3 flex items-center justify-between shrink-0">
                     <span className="flex items-center gap-2"><Lightbulb size={14} /> {t.knowledge}</span>
                     <span className="text-[8px] bg-primary/10 text-primary px-2 py-0.5 rounded-full animate-pulse">AUTO-REFRESH</span>
                  </h4>
-                 <div key={`fact-ticker-${factIndex}`} className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-700">
-                    {displayFacts.map((f, i) => (
-                        <div key={i} className="text-[11px] text-gray-400 flex gap-3 bg-black/40 p-3 rounded-xl border border-white/5 shadow-inner">
-                            <div className="bg-primary/20 h-6 w-6 rounded flex items-center justify-center shrink-0"><ShieldCheck size={12} className="text-primary" /></div>
-                            <div className="flex flex-col">
-                                <strong className="text-gray-200 uppercase tracking-tight mb-0.5">{f.title}</strong>
-                                <span>{f.content}</span>
+                 <div key={`fact-ticker-${factIndex}`} className="animate-in fade-in slide-in-from-right-4 duration-500 flex-1 flex flex-col justify-center">
+                    <div className="text-[13px] text-gray-400 flex flex-col gap-4 bg-black/40 p-6 rounded-2xl border border-white/5 shadow-inner">
+                        <div className="flex items-center gap-4">
+                            <div className="bg-primary/20 h-12 w-12 rounded-xl flex items-center justify-center shrink-0">
+                                <ShieldCheck size={24} className="text-primary" />
                             </div>
+                            <strong className="text-gray-200 uppercase tracking-widest text-sm leading-tight">{currentFact?.title}</strong>
                         </div>
-                    ))}
+                        <p className="leading-relaxed italic text-[12px]">{currentFact?.content}</p>
+                    </div>
                  </div>
              </div>
         </div>

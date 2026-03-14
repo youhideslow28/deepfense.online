@@ -1,35 +1,68 @@
 
 import React, { useState } from 'react';
-import { Send, Phone, Mail, MapPin, ShieldCheck, Target, Globe, Heart, Zap, Users, GraduationCap, User, Fingerprint, Code } from 'lucide-react';
+import { Send, Phone, Mail, MapPin, ShieldCheck, Target, Globe, Heart, Zap, Users, GraduationCap, User, Fingerprint, Code, Paperclip, Loader2 } from 'lucide-react';
 import { Language } from '../types';
 import { TRANSLATIONS, PROJECT_METADATA } from '../data';
-import { db } from '../firebase';
+import { db, storage } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
   const t = TRANSLATIONS[lang];
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: '', phone: '', scamPhone: '', desc: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [formData, setFormData] = useState({ name: '', email: '', desc: '' });
+  const [file, setFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if(!formData.name || !formData.phone || !formData.desc) return;
+    setErrorMsg('');
     
+    // --- VALIDATION: Bắt buộc điền đúng ---
+    if (formData.name.trim().length < 2) {
+        setErrorMsg(lang === 'vi' ? 'Tên gọi quá ngắn (tối thiểu 2 ký tự).' : 'Name must be at least 2 characters.');
+        return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+        setErrorMsg(lang === 'vi' ? 'Địa chỉ email không hợp lệ.' : 'Invalid email address.');
+        return;
+    }
+    if (formData.desc.trim().length < 20) {
+        setErrorMsg(lang === 'vi' ? 'Mô tả sự cố quá ngắn. Vui lòng nhập chi tiết hơn (ít nhất 20 ký tự).' : 'Description too short, please provide more details (at least 20 chars).');
+        return;
+    }
+
+    setIsSubmitting(true);
     try {
+      let attachmentUrl = '';
+      if (file) {
+          const fileRef = ref(storage, `reports/${Date.now()}_${file.name}`);
+          await uploadBytes(fileRef, file);
+          attachmentUrl = await getDownloadURL(fileRef);
+      }
+
       // Gửi dữ liệu lên Firestore collection 'incident_reports'
       await addDoc(collection(db, "incident_reports"), {
-        ...formData,
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        desc: formData.desc.trim(),
+        attachmentUrl: attachmentUrl,
         submittedAt: serverTimestamp(), // Thời gian gửi
         lang: lang,
         status: 'new' // Trạng thái xử lý (để admin theo dõi sau này)
       });
 
       setSubmitted(true);
-      setFormData({ name: '', phone: '', scamPhone: '', desc: '' }); // Reset form về rỗng
+      setFormData({ name: '', email: '', desc: '' }); // Reset form về rỗng
+      setFile(null);
       setTimeout(() => setSubmitted(false), 3000);
     } catch (error) {
       console.error("Lỗi khi gửi báo cáo:", error);
       alert(lang === 'vi' ? 'Có lỗi xảy ra, vui lòng thử lại sau.' : 'An error occurred, please try again later.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -138,20 +171,36 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                 <Send className="text-primary" size={24}/> {t.report_form}
               </h3>
               <form onSubmit={handleSubmit} className="space-y-6">
+                  {errorMsg && (
+                      <div className="bg-red-500/10 border border-red-500/50 text-red-500 text-xs p-3 rounded-xl italic animate-in fade-in">
+                          ⚠ {errorMsg}
+                      </div>
+                  )}
                   <div className="space-y-1">
                       <label className="text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em] ml-2">{t.label_name}</label>
-                      <input type="text" className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                      <input type="text" placeholder={lang === 'vi' ? 'VD: Anna' : 'Ex: Anna'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                   </div>
                   <div className="space-y-1">
-                      <label className="text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em] ml-2">{t.label_phone}</label>
-                      <input type="text" className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+                      <label className="text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em] ml-2">{t.label_email}</label>
+                      <input type="email" placeholder="email@example.com" className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
                   </div>
                   <div className="space-y-1">
                       <label className="text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em] ml-2">{t.label_desc}</label>
-                      <textarea className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none h-40 resize-none transition-all" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
+                      <textarea placeholder={lang === 'vi' ? 'Vui lòng mô tả chi tiết sự việc (đối tượng giả danh ai, qua nền tảng nào...)' : 'Please describe the incident in detail...'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none h-32 resize-none transition-all" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
                   </div>
-                  <button type="submit" className="w-full bg-primary text-black font-black py-5 rounded-2xl hover:bg-white transition-all uppercase text-xs tracking-[0.3em] shadow-lg shadow-primary/20 mt-4">
-                    {t.send_report}
+                  <div className="space-y-1">
+                      <label className="text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em] ml-2">{t.label_attachment}</label>
+                      <div className="relative">
+                          <input type="file" id="file-upload" accept="image/*,video/*" className="hidden" onChange={e => setFile(e.target.files?.[0] || null)} />
+                          <label htmlFor="file-upload" className="w-full bg-black border border-white/10 border-dashed rounded-2xl p-4 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary/50 transition-colors text-gray-500 hover:text-primary">
+                              <Paperclip size={20} />
+                              <span className="text-xs font-mono">{file ? file.name : (lang === 'vi' ? 'Nhấp để chọn tệp' : 'Click to select file')}</span>
+                          </label>
+                      </div>
+                  </div>
+                  <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-black font-black py-5 rounded-2xl hover:bg-white transition-all uppercase text-xs tracking-[0.3em] shadow-lg shadow-primary/20 mt-4 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                    {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
+                    {isSubmitting ? (lang === 'vi' ? 'ĐANG XỬ LÝ...' : 'SENDING...') : t.send_report}
                   </button>
               </form>
           </div>
