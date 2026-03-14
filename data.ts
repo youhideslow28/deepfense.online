@@ -136,7 +136,9 @@ export const FUN_FACTS: Record<Language, FunFact[]> = {
     { title: "TRANG SỨC DÍNH", content: "Khuyên tai, vòng cổ thường bị mờ, tan chảy hoặc dính liền vào da thịt." },
     { title: "TÓC BAY", content: "Các sợi tóc con mỏng thường bị xóa mờ hoặc hòa lẫn vào phông nền phía sau." },
     { title: "ĐỘ TRỄ ÂM", content: "Khẩu hình miệng và âm thanh thường trễ nhau vài mili-giây, không khớp hoàn hảo." },
-    { title: "BÀN TAY SÁP", content: "Da tay trong video Deepfake thường trông quá mịn như sáp, thiếu nếp nhăn." }
+    { title: "BÀN TAY SÁP", content: "Da tay trong video Deepfake thường trông quá mịn như sáp, thiếu nếp nhăn." },
+    { title: "MẠCH MÁU DA", content: "AI hiện tại chưa thể giả lập được sự thay đổi màu sắc vi mô của da theo nhịp đập của tim (rPPG)." },
+    { title: "CẢM XÚC ĐỘT NGỘT", content: "Deepfake âm thanh rất tệ trong việc tạo ra tiếng thở dốc, tiếng khóc hoặc các biểu cảm gắt gỏng bất ngờ." }
   ],
   en: [
     { title: "3 SECONDS", content: "Modern AI only needs 3 seconds of original audio to clone your voice with 95% accuracy." },
@@ -150,7 +152,9 @@ export const FUN_FACTS: Record<Language, FunFact[]> = {
     { title: "JEWELRY", content: "Earrings and necklaces often appear blurry, melted, or fused to the skin." },
     { title: "HAIR BLENDING", content: "Fine hair strands are often blurred out or merged completely with the background." },
     { title: "AUDIO DELAY", content: "Lip movements and audio are often a few milliseconds out of sync." },
-    { title: "WAX HANDS", content: "Hand skin in Deepfake videos often looks too smooth, like wax, missing wrinkles." }
+    { title: "WAX HANDS", content: "Hand skin in Deepfake videos often looks too smooth, like wax, missing wrinkles." },
+    { title: "SKIN PULSE", content: "Current AI cannot simulate micro skin color changes caused by human heartbeats (rPPG)." },
+    { title: "SUDDEN EMOTIONS", content: "Audio deepfakes are terrible at generating heavy breathing, crying, or sudden emotional outbursts." }
   ]
 };
 
@@ -258,7 +262,13 @@ export const NEWS_DATA: Record<Language, NewsItem[]> = {
     { tag: "GIÁO DỤC", title: "Lừa đảo học phí sinh viên bằng video ảo", date: "02/2026", loss: "300 Triệu VNĐ", desc: "Giả mạo giáo viên gọi điện trực tiếp yêu cầu phụ huynh đóng học phí khẩn cấp.", url: "#" },
     { tag: "CHỨNG KHOÁN", title: "Deepfake lùa gà đầu tư tài chính ảo", date: "03/2026", loss: "15 Tỷ VNĐ", desc: "Tạo video giả mạo các chuyên gia kinh tế nổi tiếng để kêu gọi chuyển tiền đầu tư.", url: "#" },
     { tag: "TÌNH CẢM", title: "Mất trắng sau cuộc gọi với 'người yêu Tây'", date: "02/2026", loss: "2 Tỷ VNĐ", desc: "Kẻ gian dùng AI tạo khuôn mặt nam giới ngoại quốc gọi điện hẹn hò qua Telegram.", url: "#" },
-    { tag: "DOANH NGHIỆP", title: "Kế toán chuyển nhầm tiền do sếp gọi video", date: "01/2026", loss: "5 Tỷ VNĐ", desc: "Cuộc họp nội bộ bị giả mạo hoàn toàn từ hình ảnh đến giọng nói của Giám đốc.", url: "#" }
+    { tag: "DOANH NGHIỆP", title: "Kế toán chuyển nhầm tiền do sếp gọi video", date: "01/2026", loss: "5 Tỷ VNĐ", desc: "Cuộc họp nội bộ bị giả mạo hoàn toàn từ hình ảnh đến giọng nói của Giám đốc.", url: "#" },
+    { tag: "TOÀN CẦU", title: "Tập đoàn kỹ thuật Anh mất 25 triệu USD", date: "02/2024", loss: "25 Triệu USD", desc: "Nhân viên tài chính chuyển khoản sau cuộc họp video với 'Giám đốc' và 'đồng nghiệp' hoàn toàn do AI tạo ra.", url: "#" },
+    { tag: "CHÍNH TRỊ", title: "Deepfake can thiệp bầu cử tổng thống Mỹ", date: "01/2024", loss: "An ninh quốc gia", desc: "Hàng ngàn cử tri nhận được cuộc gọi tự động giả giọng Tổng thống khuyên không đi bỏ phiếu.", url: "#" },
+    { tag: "DOANH NGHIỆP", title: "Giám đốc điều hành Ferrari suýt sập bẫy", date: "07/2024", loss: "Trọng yếu", desc: "Kẻ gian dùng AI giả giọng CEO Ferrari nhắn tin và gọi điện yêu cầu thực hiện thương vụ thâu tóm bí mật.", url: "#" },
+    { tag: "HÀN QUỐC", title: "Lừa đảo tống tiền bằng video khiêu dâm giả", date: "08/2024", loss: "Danh dự & Tài sản", desc: "Trường đại học Hàn Quốc chấn động vì hàng loạt sinh viên nữ bị ghép mặt vào video nhạy cảm để tống tiền.", url: "#" },
+    { tag: "TÀI CHÍNH", title: "Giám đốc Binance bị giả mạo trên YouTube", date: "05/2024", loss: "Hàng triệu USD", desc: "Hàng loạt livestream dùng Deepfake người nổi tiếng quảng bá các dự án tiền mã hóa lừa đảo.", url: "#" },
+    { tag: "SINGAPORE", title: "Giả mạo con cái đi du học bị bắt cóc", date: "11/2024", loss: "1.2 Triệu USD", desc: "Phụ huynh nhận được video call con mình đang bị trói và khóc lóc kêu cứu, thực chất là do AI tạo ra.", url: "#" }
   ],
   en: [
     { tag: "HANOI", title: "Fake Police Officer Property Fraud", date: "11/2025", loss: "$100k", desc: "Subjects used Deepfake uniforms for video call scams via Zalo.", url: "https://vtv.vn" },
@@ -272,6 +282,12 @@ export const NEWS_DATA: Record<Language, NewsItem[]> = {
     { tag: "EDUCATION", title: "Student Tuition Fraud via Virtual Video", date: "02/2026", loss: "$12k", desc: "Fake teachers calling parents directly demanding urgent tuition payments.", url: "#" },
     { tag: "STOCK", title: "Deepfake Financial Investment Scam", date: "03/2026", loss: "$600k", desc: "Fake videos of famous economic experts urging people to transfer investment funds.", url: "#" },
     { tag: "ROMANCE", title: "Lost Everything to a 'Foreign Lover' Call", date: "02/2026", loss: "$80k", desc: "Scammers use AI to generate attractive foreign faces for romance scams on Telegram.", url: "#" },
-    { tag: "CORP", title: "Accountant Transfers Funds to Fake Boss", date: "01/2026", loss: "$200k", desc: "An entire internal meeting was faked, including the image and voice of the Director.", url: "#" }
+    { tag: "CORP", title: "Accountant Transfers Funds to Fake Boss", date: "01/2026", loss: "$200k", desc: "An entire internal meeting was faked, including the image and voice of the Director.", url: "#" },
+    { tag: "GLOBAL", title: "British engineering firm loses $25M", date: "02/2024", loss: "$25 Million", desc: "Finance worker tricked into transferring funds after a video call with an AI-generated 'CFO'.", url: "#" },
+    { tag: "POLITICS", title: "Deepfake President interferes with elections", date: "01/2024", loss: "National Security", desc: "Thousands of voters received robocalls faking the US President's voice advising against voting.", url: "#" },
+    { tag: "CORP", title: "Ferrari executive almost fell for a scam", date: "07/2024", loss: "Critical", desc: "Scammers used AI to fake the Ferrari CEO's voice in WhatsApp messages requesting secret transfers.", url: "#" },
+    { tag: "KOREA", title: "Sextortion using fake pornographic videos", date: "08/2024", loss: "Reputation & Assets", desc: "Korean university shocked as female students' faces were mapped onto explicit videos for extortion.", url: "#" },
+    { tag: "CRYPTO", title: "Binance CEO impersonated on YouTube", date: "05/2024", loss: "Millions of USD", desc: "Numerous livestreams used Deepfakes of celebrities to promote crypto scam projects.", url: "#" },
+    { tag: "SINGAPORE", title: "Fake kidnapping of international student", date: "11/2024", loss: "$1.2 Million", desc: "Parents received a video call of their child crying and tied up, completely generated by AI.", url: "#" }
   ]
 };

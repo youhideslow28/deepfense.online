@@ -439,9 +439,8 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
                  </div>
              </div>
              <div className="bg-primary/5 border border-primary/20 rounded-3xl p-6 flex-1 shadow-xl relative overflow-hidden flex flex-col">
-                 <h4 className="text-primary font-black text-[10px] mb-4 uppercase tracking-widest border-b border-primary/10 pb-3 flex items-center justify-between shrink-0">
+                 <h4 className="text-primary font-black text-[10px] mb-4 uppercase tracking-widest border-b border-primary/10 pb-3 flex items-center shrink-0">
                     <span className="flex items-center gap-2"><Lightbulb size={14} /> {t.knowledge}</span>
-                    <span className="text-[8px] bg-primary/10 text-primary px-2 py-0.5 rounded-full animate-pulse">AUTO-REFRESH</span>
                  </h4>
                  <div key={`fact-ticker-${factIndex}`} className="animate-in fade-in slide-in-from-right-4 duration-500 flex-1 flex flex-col justify-center">
                     <div className="text-[13px] text-gray-400 flex flex-col gap-4 bg-black/40 p-6 rounded-2xl border border-white/5 shadow-inner">
