@@ -20,34 +20,69 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
 
   const surveyQuestions = [
     {
-        id: 'q1_prior_knowledge',
-        vi: 'Trước khi trải nghiệm, tôi đã hiểu rõ về mức độ tinh vi của công nghệ Deepfake.',
-        en: 'Before this experience, I clearly understood the sophistication of Deepfake technology.'
+        id: 'q0_overconfidence',
+        vi: 'Trước khi làm bài test, tôi từng rất tự tin rằng mình có thể dễ dàng nhận ra một video Deepfake bằng mắt thường.',
+        en: 'Before the test, I was highly confident that I could easily spot a Deepfake video with my naked eye.'
     },
     {
-        id: 'q2_threat_perception',
-        vi: 'Tôi tin rằng Deepfake là một mối đe dọa nghiêm trọng đối với an toàn tài chính cá nhân.',
-        en: 'I believe Deepfake is a severe threat to personal financial safety.'
+        id: 'q1_vulnerability',
+        vi: 'Tôi tin rằng bản thân hoặc người thân trong gia đình có nguy cơ cao trở thành nạn nhân của tội phạm Deepfake.',
+        en: 'I believe that I or my family members are at high risk of becoming victims of Deepfake crimes.'
     },
     {
-        id: 'q3_system_trust',
-        vi: 'Các hệ thống AI phân tích tự động (như Deepfense) là thực sự cần thiết trong tương lai.',
-        en: 'Automated AI analysis systems (like Deepfense) are truly necessary in the future.'
+        id: 'q2_severity',
+        vi: 'Tôi nhận thức được lừa đảo bằng Deepfake có thể gây ra những tổn thương tâm lý và tài chính cực kỳ nghiêm trọng.',
+        en: 'I am aware that Deepfake scams can cause severely devastating psychological and financial damage.'
     },
     {
-        id: 'q4_self_efficacy',
-        vi: 'Sau bài kiểm tra, tôi tự tin hơn vào khả năng nhận diện hình ảnh/video giả mạo của mình.',
-        en: 'After the test, I am more confident in my ability to detect fake images/videos.'
+        id: 'q3_vigilance',
+        vi: 'Tôi luôn giữ tâm lý cảnh giác và nghi ngờ trước bất kỳ cuộc gọi hoặc tin nhắn nào liên quan đến việc chuyển tiền gấp.',
+        en: 'I always maintain a vigilant and skeptical mindset towards any calls or messages requesting urgent money transfers.'
     },
     {
-        id: 'q5_behavioral_intent_1',
-        vi: 'Tôi dự định sẽ thiết lập ngay "Mật mã gia đình" để phòng tránh các cuộc gọi lừa đảo.',
-        en: 'I intend to immediately set up a "Family Password" to prevent scam calls.'
+        id: 'q4_paranoia',
+        vi: 'Sau thử thách này, tôi cảm thấy bất an và bắt đầu nghi ngờ tính xác thực của cả những hình ảnh/video do người quen đăng tải.',
+        en: 'After this challenge, I feel insecure and have started doubting the authenticity of even images/videos posted by acquaintances.'
     },
     {
-        id: 'q6_behavioral_intent_2',
-        vi: 'Tôi sẵn sàng chia sẻ nền tảng giáo dục này cho người thân (đặc biệt là người lớn tuổi).',
-        en: 'I am willing to share this educational platform with relatives (especially the elderly).'
+        id: 'q5_tech_trust',
+        vi: 'Tôi tin rằng các hệ thống AI tự động (như Deepfense) là tấm khiên công nghệ bắt buộc phải có để đối trọng với hacker.',
+        en: 'I believe automated AI systems (like Deepfense) are a mandatory technological shield to counter hackers.'
+    },
+    {
+        id: 'q6_tech_anxiety',
+        vi: 'Sự phát triển quá nhanh của công nghệ AI tạo sinh khiến tôi lo sợ về việc mất kiểm soát quyền riêng tư cá nhân.',
+        en: 'The rapid development of generative AI makes me fearful about losing control over personal privacy.'
+    },
+    {
+        id: 'q7_self_efficacy_visual',
+        vi: 'Thử thách này giúp tôi cải thiện rõ rệt kỹ năng quan sát các bất thường vi mô (như khẩu hình, bóng đổ, tần suất chớp mắt).',
+        en: 'This challenge significantly improved my skills in observing micro-anomalies (like lip sync, shadows, blink rate).'
+    },
+    {
+        id: 'q8_self_efficacy_action',
+        vi: 'Tôi hoàn toàn tự tin vào khả năng áp dụng các biện pháp xác thực chéo (gọi lại bằng SIM mạng, đặt câu hỏi mẹo) khi có nghi ngờ.',
+        en: 'I am fully confident in applying cross-verification methods (cellular callback, asking trick questions) when in doubt.'
+    },
+    {
+        id: 'q9_habit_change',
+        vi: 'Tôi dự định sẽ thắt chặt quyền riêng tư và hạn chế tối đa việc chia sẻ hình ảnh/giọng nói rõ nét lên mạng xã hội công khai.',
+        en: 'I plan to tighten my privacy and minimize sharing clear images/voice recordings on public social media.'
+    },
+    {
+        id: 'q10_altruism',
+        vi: 'Tôi cảm thấy mình có trách nhiệm phải phổ biến các kiến thức phòng chống Deepfake này cho những người yếu thế (đặc biệt là người lớn tuổi).',
+        en: 'I feel a responsibility to disseminate this Deepfake prevention knowledge to vulnerable groups (especially the elderly).'
+    },
+    {
+        id: 'q11_mindset_shift',
+        vi: 'Trải nghiệm giáo dục này đã thực sự thay đổi tư duy và cách nhìn nhận của tôi về ranh giới giữa thế giới thực và thế giới ảo.',
+        en: 'This educational experience has truly shifted my mindset and perspective regarding the boundary between the real and virtual worlds.'
+    },
+    {
+        id: 'q12_behavioral_intent',
+        vi: 'Tôi cam kết sẽ thống nhất và thiết lập "Mật mã gia đình" hoặc từ khóa an toàn với người thân ngay sau hôm nay.',
+        en: 'I commit to agreeing upon and setting up a "Family Password" or safe keyword with my relatives right after today.'
     }
   ];
 
