@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Brain, Users, BarChart3, Loader2 } from 'lucide-react';
+import { Brain, Users, BarChart3 } from 'lucide-react';
 import { Language } from '../types';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
@@ -12,9 +12,13 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
     totalParticipants: 0,
     accuracy: 0,
     blocked: 0,
-    hardPassRate: 0, // Tỉ lệ qua màn khó
-    familyCodeRate: 0, // Tỉ lệ dùng mật mã gia đình
-    vigilanceAvg: 0 // Mức độ cảnh giác
+  });
+  const [psychoStats, setPsychoStats] = useState({
+    threatPerception: 0,
+    proactiveStance: 0,
+    selfEfficacy: 0,
+    behavioralIntent: 0,
+    techStance: 0,
   });
   
   useEffect(() => {
@@ -24,31 +28,41 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
         const gameSnap = await getDocs(collection(db, "game_results"));
         const totalGames = gameSnap.size;
         let totalScore = 0;
-        let hardPassCount = 0;
 
         gameSnap.forEach(doc => {
             const data = doc.data();
             const score = data.score || 0;
             totalScore += score;
-            // Giả sử > 8/10 là vượt qua cấp độ khó/xuất sắc
-            if (score >= 8) hardPassCount++;
         });
 
         // 2. Lấy dữ liệu SURVEYS
         const surveySnap = await getDocs(collection(db, "surveys"));
         const totalSurveys = surveySnap.size;
-        let familyCodeHigh = 0;
-        let vigilanceSum = 0;
+        
+        let threatPerceptionSum = 0;
+        let proactiveStanceSum = 0;
+        let selfEfficacySum = 0;
+        let behavioralIntentSum = 0;
+        let techStanceSum = 0;
+        let validSurveyCount = 0;
 
         surveySnap.forEach(doc => {
             const data = doc.data();
             const answers = data.answers || [];
-            // Dựa vào Challenge.tsx:
-            // Index 12 là câu hỏi về "Mật mã gia đình" (Action)
-            // Index 3 là câu hỏi về "Sẵn sàng áp dụng" (Readiness)
-            // Giả sử thang đo 0-4, chọn mức 3 hoặc 4 là Tốt
-            if (answers[12] >= 3) familyCodeHigh++;
-            if (answers[3] !== undefined) vigilanceSum += answers[3]; 
+            // Chỉ xử lý các khảo sát có đủ 13 câu trả lời (format mới)
+            if (answers.length >= 13) {
+                validSurveyCount++;
+                // Dimension 1: Threat Perception (q1, q2)
+                threatPerceptionSum += (answers[1] || 0) + (answers[2] || 0);
+                // Dimension 2: Proactive Stance (q3, q9)
+                proactiveStanceSum += (answers[3] || 0) + (answers[9] || 0);
+                // Dimension 3: Self Efficacy (q7, q8)
+                selfEfficacySum += (answers[7] || 0) + (answers[8] || 0);
+                // Dimension 4: Behavioral Intent (q12, q10)
+                behavioralIntentSum += (answers[12] || 0) + (answers[10] || 0);
+                // Dimension 5: Tech Stance (q5, q6-inverted)
+                techStanceSum += (answers[5] || 0) + (4 - (answers[6] || 0));
+            }
         });
 
         // 3. Tính toán
@@ -57,11 +71,18 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
             blocked: totalScore, // Mỗi câu đúng coi như chặn được 1 scam
             // Giả sử 1 game có 10 levels
             accuracy: totalGames > 0 ? Math.round((totalScore / (totalGames * 10)) * 100) : 0,
-            hardPassRate: totalGames > 0 ? Math.round((hardPassCount / totalGames) * 100) : 0,
-            familyCodeRate: totalSurveys > 0 ? Math.round((familyCodeHigh / totalSurveys) * 100) : 0,
-            // Chuyển thang điểm 0-4 sang phần trăm (val * 25)
-            vigilanceAvg: totalSurveys > 0 ? Math.round(((vigilanceSum / totalSurveys) / 4) * 100) : 0
         });
+
+        if (validSurveyCount > 0) {
+            const maxScorePerDim = 8; // 2 câu hỏi/chiều, mỗi câu max 4 điểm
+            setPsychoStats({
+                threatPerception: Math.round((threatPerceptionSum / (validSurveyCount * maxScorePerDim)) * 100),
+                proactiveStance: Math.round((proactiveStanceSum / (validSurveyCount * maxScorePerDim)) * 100),
+                selfEfficacy: Math.round((selfEfficacySum / (validSurveyCount * maxScorePerDim)) * 100),
+                behavioralIntent: Math.round((behavioralIntentSum / (validSurveyCount * maxScorePerDim)) * 100),
+                techStance: Math.round((techStanceSum / (validSurveyCount * maxScorePerDim)) * 100),
+            });
+        }
 
       } catch (error) {
         console.error("Error fetching analytics:", error);
@@ -76,19 +97,6 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
   const metricsLabels = lang === 'vi' 
     ? { participation: 'NGƯỜI LÀM THỬ THÁCH', blocked: 'SỐ CÂU TRẢ LỜI ĐÚNG', title: 'THỐNG KÊ THỬ THÁCH', status: 'DỮ LIỆU THỜI GIAN THỰC' }
     : { participation: 'CHALLENGE PARTICIPANTS', blocked: 'CORRECT ANSWERS', title: 'CHALLENGE STATS', status: 'REAL-TIME DATA' };
-
-  // Dữ liệu hiển thị dựa trên State đã tính toán
-  const displayData = {
-    metrics: [
-      { label: metricsLabels.participation, val: stats.totalParticipants.toLocaleString(), color: '#00F0FF' },
-      { label: metricsLabels.blocked, val: stats.blocked.toLocaleString(), color: '#FF2A6D' }
-    ],
-    psychology: [
-      { label: lang === 'vi' ? 'SỐ NGƯỜI VƯỢT QUA CẤP ĐỘ KHÓ' : 'HARD LEVEL COMPLETION', val: stats.hardPassRate },
-      { label: lang === 'vi' ? 'DỰ ĐỊNH DÙNG MẬT MÃ GIA ĐÌNH' : 'PLAN TO USE FAMILY CODE', val: stats.familyCodeRate },
-      { label: lang === 'vi' ? 'MỨC ĐỘ CẢNH GIÁC TRUNG BÌNH' : 'AVG VIGILANCE LEVEL', val: stats.vigilanceAvg }
-    ]
-  };
 
   return (
     <div className="bg-[#050505] border border-primary/20 rounded-3xl shadow-2xl h-full w-full flex flex-col font-mono relative overflow-hidden">
@@ -108,9 +116,12 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
 
       <div className="flex-1 relative p-6 flex flex-col items-center justify-center overflow-y-auto custom-scrollbar">
         {loading ? (
-            <div className="flex flex-col items-center gap-2 text-gray-500 animate-pulse">
-                <Loader2 className="animate-spin" size={32}/>
-                <span className="text-[10px] uppercase tracking-widest">Loading Data...</span>
+            <div className="w-full flex flex-col items-center gap-6 animate-pulse" aria-label="Loading analytics">
+                <div className="w-36 h-36 rounded-full bg-white/5 border-4 border-white/10" />
+                <div className="grid grid-cols-2 gap-4 w-full">
+                    <div className="h-20 bg-white/5 rounded-2xl" />
+                    <div className="h-20 bg-white/5 rounded-2xl" />
+                </div>
             </div>
         ) : activeTab === 'METRICS' ? (
           <div className="w-full flex flex-col items-center">
@@ -125,7 +136,10 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 w-full">
-              {displayData.metrics.map((s, i) => (
+              {[
+                  { label: metricsLabels.participation, val: stats.totalParticipants.toLocaleString(), color: '#00F0FF' },
+                  { label: metricsLabels.blocked, val: stats.blocked.toLocaleString(), color: '#FF2A6D' }
+              ].map((s, i) => (
                 <div key={i} className="bg-white/5 border border-white/5 rounded-2xl p-4 relative overflow-hidden text-center">
                   <div className="text-[8px] text-gray-500 font-black mb-2 uppercase tracking-widest">{s.label}</div>
                   <div className="text-xl font-black text-white" style={{ color: s.color }}>{s.val}</div>
@@ -134,26 +148,95 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
             </div>
           </div>
         ) : (
-          <div className="w-full space-y-5">
-             <div className="text-center mb-4">
-                <div className="text-[10px] text-gray-500 uppercase tracking-widest">{lang === 'vi' ? 'DỮ LIỆU TỪ BÀI KHẢO SÁT' : 'DATA FROM USER SURVEYS'}</div>
-             </div>
-             {displayData.psychology.map((t, i) => (
-                <div key={i} className="space-y-2">
-                    <div className="flex justify-between text-[9px] font-mono text-gray-400 uppercase tracking-widest font-black">
-                        <span>{t.label}</span>
-                        <span>{t.val}%</span>
-                    </div>
-                    <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${t.val}%` }}></div>
-                    </div>
-                </div>
-             ))}
+          <div className="w-full flex flex-col items-center justify-center animate-in fade-in duration-500">
+            <div className="text-center mb-4">
+                <div className="text-[10px] text-gray-400 uppercase tracking-widest">{lang === 'vi' ? 'PHÂN TÍCH TÂM LÝ HÀNH VI' : 'BEHAVIORAL PSYCHOLOGY ANALYSIS'}</div>
+                <p className="text-[8px] text-gray-600">{lang === 'vi' ? '(Dữ liệu tổng hợp từ khảo sát người dùng)' : '(Aggregated from user surveys)'}</p>
+            </div>
+            <RadarChart data={psychoStats} lang={lang} />
+            <div className="mt-4 text-center text-[10px] text-gray-500 italic max-w-xs">
+                {lang === 'vi' ? 'Biểu đồ mạng nhện thể hiện điểm trung bình của cộng đồng trên 5 khía cạnh tâm lý cốt lõi.' : 'Radar chart showing community average scores across 5 core psychological dimensions.'}
+            </div>
           </div>
         )}
       </div>
     </div>
   );
+};
+
+const RadarChart = ({ data, lang }: { data: any, lang: Language }) => {
+    const size = 240;
+    const center = size / 2;
+    const radius = size * 0.35;
+    const numSides = 5;
+    const angleSlice = (Math.PI * 2) / numSides;
+
+    const labels = lang === 'vi' 
+        ? ['Nhận thức Rủi ro', 'Lập trường Chủ động', 'Năng lực Tự vệ', 'Ý định Hành vi', 'Niềm tin Công nghệ']
+        : ['Threat Perception', 'Proactive Stance', 'Self-Efficacy', 'Behavioral Intent', 'Tech Stance'];
+    
+    const values = [
+        data.threatPerception,
+        data.proactiveStance,
+        data.selfEfficacy,
+        data.behavioralIntent,
+        data.techStance
+    ];
+
+    const getPoint = (value: number, index: number, r = radius) => {
+        const angle = angleSlice * index - Math.PI / 2;
+        const x = center + r * (value / 100) * Math.cos(angle);
+        const y = center + r * (value / 100) * Math.sin(angle);
+        return { x, y };
+    };
+
+    const points = values.map((val, i) => {
+        const { x, y } = getPoint(val, i);
+        return `${x},${y}`;
+    }).join(' ');
+
+    return (
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+            <g>
+                {/* Grid lines and axes */}
+                {[0.25, 0.5, 0.75, 1].map((val, i) => (
+                    <polygon 
+                        key={i}
+                        points={Array.from({ length: numSides }).map((_, j) => {
+                            const { x, y } = getPoint(100, j, radius * val);
+                            return `${x},${y}`;
+                        }).join(' ')}
+                        fill="none"
+                        stroke="rgba(255,255,255,0.05)"
+                        strokeWidth="1"
+                    />
+                ))}
+                {Array.from({ length: numSides }).map((_, i) => {
+                    const { x, y } = getPoint(100, i);
+                    return <line key={i} x1={center} y1={center} x2={x} y2={y} stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+                })}
+
+                {/* Data Polygon */}
+                <polygon points={points} fill="rgba(0, 240, 255, 0.2)" stroke="#00F0FF" strokeWidth="2" className="transition-all duration-1000" />
+
+                {/* Data Points */}
+                {values.map((val, i) => {
+                    const { x, y } = getPoint(val, i);
+                    return <circle key={i} cx={x} cy={y} r="3" fill="#00F0FF" />;
+                })}
+
+                {/* Labels */}
+                {labels.map((label, i) => {
+                    const { x, y } = getPoint(125, i); // Position labels outside the grid
+                    return (
+                        <text key={i} x={x} y={y} fill="#888" fontSize="8" textAnchor="middle" dominantBaseline="middle" className="font-mono uppercase">
+                            {label}
+                        </text>
+                    );
+                })}
+            </g>
+        </svg>
+    );
 };
 
 export default AnalyticsChart;

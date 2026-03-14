@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { collection, query, orderBy, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
-import { ShieldAlert, CheckCircle, Trash2, Lock, Eye, Loader2, Mail, Paperclip, ExternalLink } from 'lucide-react';
+import { ShieldAlert, CheckCircle, Trash2, Lock, Eye, Mail, Paperclip, ExternalLink, LogOut } from 'lucide-react';
 
 const Admin: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [reports, setReports] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Mật khẩu cứng (Lưu ý: Chỉ dùng cho demo/đồ án cá nhân)
-  const SECRET_PASS = "admin123"; 
-
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === SECRET_PASS) {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       setIsAuthenticated(true);
       fetchReports();
-    } else {
-      alert("Sai mật khẩu!");
+    } catch (error) {
+      alert("Sai thông tin đăng nhập hoặc tài khoản không tồn tại!");
     }
   };
 
@@ -70,6 +70,13 @@ const Admin: React.FC = () => {
             </div>
             <h2 className="text-white font-bold text-xl mb-6">QUẢN TRỊ VIÊN</h2>
             <input 
+                type="email" 
+                placeholder="Email quản trị..." 
+                className="w-full bg-black border border-white/20 rounded-lg p-3 text-white mb-4 focus:border-primary outline-none text-center"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <input 
                 type="password" 
                 placeholder="Nhập mật mã..." 
                 className="w-full bg-black border border-white/20 rounded-lg p-3 text-white mb-4 focus:border-primary outline-none text-center tracking-widest"
@@ -90,13 +97,26 @@ const Admin: React.FC = () => {
             <h2 className="text-2xl font-black text-white flex items-center gap-3">
                 <ShieldAlert className="text-red-500"/> DANH SÁCH BÁO CÁO ({reports.length})
             </h2>
-            <button onClick={fetchReports} className="text-primary text-xs font-bold uppercase hover:underline">
-                Làm mới dữ liệu
-            </button>
+            <div className="flex gap-4">
+                <button onClick={fetchReports} className="text-primary text-xs font-bold uppercase hover:underline">
+                    Làm mới dữ liệu
+                </button>
+                <button onClick={() => {signOut(auth); setIsAuthenticated(false);}} className="text-gray-500 text-xs font-bold uppercase hover:text-white flex items-center gap-1">
+                    <LogOut size={14}/> Đăng xuất
+                </button>
+            </div>
         </div>
 
         {loading ? (
-            <div className="flex justify-center py-20"><Loader2 className="animate-spin text-primary" size={40}/></div>
+            <div className="space-y-4">
+                {[1, 2, 3].map((i) => (
+                    <div key={i} className="p-6 rounded-xl border border-white/5 bg-surface animate-pulse flex flex-col gap-4">
+                        <div className="h-4 bg-white/10 rounded w-1/4"></div>
+                        <div className="h-6 bg-white/10 rounded w-1/2"></div>
+                        <div className="h-16 bg-white/5 rounded-xl w-full"></div>
+                    </div>
+                ))}
+            </div>
         ) : (
             <div className="grid gap-4">
                 {reports.map((report) => (

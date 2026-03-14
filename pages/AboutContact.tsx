@@ -69,7 +69,7 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
   return (
     <div className="animate-in fade-in duration-500 max-w-7xl mx-auto py-4">
        <div className="text-center mb-12">
-          <h2 className="text-4xl font-black text-white uppercase italic tracking-tighter mb-2">{t.about_us}</h2>
+          <h2 className="text-4xl font-black text-white uppercase tracking-tighter mb-2">{t.about_us}</h2>
           <div className="h-1.5 w-24 bg-primary mx-auto"></div>
        </div>
 
@@ -78,8 +78,8 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
           <div className="lg:col-span-7 space-y-8">
               <div className="bg-surface border border-white/5 rounded-3xl p-10 shadow-xl relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity"><Target size={120}/></div>
-                  <h3 className="text-primary font-black text-sm uppercase tracking-widest mb-6 italic flex items-center gap-2"><Target size={18}/> {t.mission}</h3>
-                  <p className="text-gray-400 text-md italic leading-relaxed">
+                  <h3 className="text-primary font-black text-sm uppercase tracking-widest mb-4 flex items-center gap-2"><Target size={18}/> {t.mission}</h3>
+                  <p className="text-gray-300 text-base leading-relaxed">
                     {lang === 'vi' 
                       ? "Phổ cập kiến thức phòng chống Deepfake cho 100% cộng đồng người dùng số tại Việt Nam, xây dựng mạng lưới lá chắn niềm tin vững chắc trước sự bùng nổ của trí tuệ nhân tạo."
                       : "Popularizing Deepfake prevention knowledge for 100% of digital users in Vietnam, building a strong shield of trust in the AI era."}
@@ -89,10 +89,10 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Box 1: Tầm nhìn */}
                   <div className="bg-surface border border-white/5 rounded-3xl p-8 shadow-xl hover:border-primary/40 transition-all group/box">
-                      <h3 className="font-black text-xs uppercase tracking-widest mb-4 italic flex items-center gap-2 text-primary group-hover/box:translate-x-1 transition-transform">
+                      <h3 className="font-black text-xs uppercase tracking-widest mb-4 flex items-center gap-2 text-primary group-hover/box:translate-x-1 transition-transform">
                         <Globe size={16}/> {lang === 'vi' ? 'TẦM NHÌN 2030' : 'VISION 2030'}
                       </h3>
-                      <p className="text-gray-500 text-xs italic leading-relaxed">
+                      <p className="text-gray-400 text-sm leading-relaxed">
                         {lang === 'vi' 
                           ? "Trở thành trung tâm dữ liệu và nhận diện Deepfake hàng đầu khu vực, hỗ trợ đắc lực cho các cơ quan chức năng trong việc xử lý tội phạm công nghệ cao."
                           : "Becoming the region's leading data and identification center for Deepfakes, effectively supporting authorities in high-tech crime processing."}
@@ -100,10 +100,10 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                   </div>
                   {/* Box 2: Bảo mật */}
                   <div className="bg-surface border border-white/5 rounded-3xl p-8 shadow-xl hover:border-success/40 transition-all group/box">
-                      <h3 className="font-black text-xs uppercase tracking-widest mb-4 italic flex items-center gap-2 text-success group-hover/box:translate-x-1 transition-transform">
+                      <h3 className="font-black text-xs uppercase tracking-widest mb-4 flex items-center gap-2 text-success group-hover/box:translate-x-1 transition-transform">
                         <ShieldCheck size={16}/> {lang === 'vi' ? 'BẢO MẬT TUYỆT ĐỐI' : 'ABSOLUTE PRIVACY'}
                       </h3>
-                      <p className="text-gray-500 text-xs italic leading-relaxed">
+                      <p className="text-gray-400 text-sm leading-relaxed">
                         {lang === 'vi' 
                           ? "Mọi thông tin báo cáo sự cố đều được mã hóa và bảo vệ nghiêm ngặt. Chúng tôi cam kết không tiết lộ danh tính người báo cáo trong mọi trường hợp."
                           : "All incident report information is encrypted and strictly protected. We commit to not disclosing reporters' identities under any circumstances."}
@@ -115,7 +115,7 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               <div className="bg-gradient-to-br from-purple-900/10 to-black border border-purple-500/30 rounded-3xl p-8 shadow-xl hover:border-purple-500 transition-all group/box relative overflow-hidden">
                   <div className="absolute -right-10 -bottom-10 opacity-10 rotate-12"><User size={200} /></div>
                   
-                  <h3 className="font-black text-xs uppercase tracking-widest mb-6 italic flex items-center gap-2 text-purple-400 group-hover/box:translate-x-1 transition-transform">
+                  <h3 className="font-black text-xs uppercase tracking-widest mb-6 flex items-center gap-2 text-purple-400 group-hover/box:translate-x-1 transition-transform">
                     <Code size={16}/> {t.team} (SOLO DEV)
                   </h3>
                   
@@ -126,13 +126,13 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                                   <span className="font-black text-xl">{author.name.charAt(0)}</span>
                               </div>
                               <div>
-                                  <div className="text-white font-black text-xl uppercase italic tracking-tight mb-1">
+                                  <div className="text-white font-black text-xl uppercase tracking-tight mb-1">
                                       {author.name}
                                   </div>
                                   <div className="inline-block bg-purple-500/20 text-purple-300 text-[10px] font-mono px-2 py-1 rounded mb-2 border border-purple-500/30">
                                       ID: {author.id}
                                   </div>
-                                  <div className="text-gray-400 text-xs italic">
+                                  <div className="text-gray-400 text-sm">
                                       {author.role}
                                   </div>
                                   <div className="mt-3 h-0.5 w-12 bg-purple-500/50"></div>
@@ -148,7 +148,7 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               </div>
 
               <div className="bg-surface border border-white/5 rounded-3xl p-8 shadow-xl">
-                  <h3 className="text-secondary font-black text-xs uppercase tracking-widest mb-6 italic">{t.contact_support}</h3>
+                  <h3 className="text-secondary font-black text-xs uppercase tracking-widest mb-6">{t.contact_support}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-400 font-mono">
                       <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors cursor-pointer"><Mail size={20} className="text-primary shrink-0"/> support@deepfense.vn</div>
                       <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors cursor-pointer"><Phone size={20} className="text-primary shrink-0"/> {t.cyber_security}: 069.219.4053</div>
@@ -163,33 +163,33 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               {submitted && (
                   <div className="absolute inset-0 bg-surface/95 backdrop-blur flex flex-col items-center justify-center z-10 animate-in fade-in">
                       <div className="text-6xl mb-6 animate-bounce">✅</div>
-                      <h3 className="text-success font-black text-2xl uppercase italic tracking-widest">{t.success_msg}</h3>
+                      <h3 className="text-success font-black text-2xl uppercase tracking-widest">{t.success_msg}</h3>
                       <p className="text-gray-500 text-xs mt-4 font-mono">ENCRYPTING_REPORT_DATA...</p>
                   </div>
               )}
-              <h3 className="text-white text-2xl font-black mb-8 uppercase italic tracking-tighter flex items-center gap-3">
+              <h3 className="text-white text-2xl font-black mb-8 uppercase tracking-tighter flex items-center gap-3">
                 <Send className="text-primary" size={24}/> {t.report_form}
               </h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                   {errorMsg && (
-                      <div className="bg-red-500/10 border border-red-500/50 text-red-500 text-xs p-3 rounded-xl italic animate-in fade-in">
+                      <div className="bg-red-500/10 border border-red-500/50 text-red-500 text-sm p-4 rounded-xl animate-in fade-in">
                           ⚠ {errorMsg}
                       </div>
                   )}
                   <div className="space-y-1">
-                      <label className="text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em] ml-2">{t.label_name}</label>
+                      <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_name}</label>
                       <input type="text" placeholder={lang === 'vi' ? 'VD: Anna' : 'Ex: Anna'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                   </div>
                   <div className="space-y-1">
-                      <label className="text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em] ml-2">{t.label_email}</label>
+                      <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_email}</label>
                       <input type="email" placeholder="email@example.com" className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
                   </div>
                   <div className="space-y-1">
-                      <label className="text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em] ml-2">{t.label_desc}</label>
+                      <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_desc}</label>
                       <textarea placeholder={lang === 'vi' ? 'Vui lòng mô tả chi tiết sự việc (đối tượng giả danh ai, qua nền tảng nào...)' : 'Please describe the incident in detail...'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none h-32 resize-none transition-all" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
                   </div>
                   <div className="space-y-1">
-                      <label className="text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em] ml-2">{t.label_attachment}</label>
+                      <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_attachment}</label>
                       <div className="relative">
                           <input type="file" id="file-upload" accept="image/*,video/*" className="hidden" onChange={e => setFile(e.target.files?.[0] || null)} />
                           <label htmlFor="file-upload" className="w-full bg-black border border-white/10 border-dashed rounded-2xl p-4 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary/50 transition-colors text-gray-500 hover:text-primary">

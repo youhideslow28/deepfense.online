@@ -159,7 +159,7 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
     <div className="animate-in fade-in duration-500">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 items-center">
         <div className="lg:col-span-7 text-center lg:text-left">
-          <h1 className="text-4xl md:text-6xl font-black text-white leading-tight mb-4 italic uppercase">
+          <h1 className="text-4xl md:text-6xl font-black text-white leading-tight mb-4 uppercase">
             {lang === 'vi' ? 'NỀN TẢNG ' : 'THE '}
             <span className="text-primary block md:inline">{lang === 'vi' ? 'PHÒNG CHỐNG DEEPFAKE' : 'DEEPFAKE DEFENSE'}</span>
           </h1>
@@ -204,10 +204,10 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
                     <div className="inline-flex items-center gap-2 bg-red-600 text-white w-fit px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3 animate-pulse mx-auto lg:mx-0">
                         <Gift size={12}/> {lang === 'vi' ? 'MINIGAME MÙA HÈ' : 'SUMMER MINIGAME'}
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-black text-orange-500 uppercase italic mb-2 tracking-tighter">
+                    <h2 className="text-2xl md:text-3xl font-black text-orange-500 uppercase mb-2 tracking-tighter">
                         {lang === 'vi' ? 'THÁM TỬ CYBER: VÉ DU LỊCH ẢO' : 'CYBER DETECTIVE: FAKE TICKETS'}
                     </h2>
-                    <p className="text-gray-300 italic text-sm mb-6 leading-relaxed">
+                    <p className="text-gray-300 text-sm mb-6 leading-relaxed">
                         {lang === 'vi' 
                             ? 'Có một cuộc gọi Video mời mua combo du lịch hè giá siêu rẻ. Hãy dùng "Kính lúp AI" để soi ra các điểm bất thường trên khuôn mặt người gọi!' 
                             : 'Incoming Video Call offering super cheap summer travel combo. Use "AI Magnifier" to spot facial anomalies!'}
@@ -375,7 +375,7 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
                 <div className="flex items-center gap-3">
                     <div className="bg-secondary/20 p-2 rounded-lg"><AlertTriangle className="text-secondary" size={20} /></div>
                     <div>
-                      <h2 className="text-white font-black text-sm tracking-widest uppercase italic leading-none">{t.warning_center}</h2>
+                      <h2 className="text-white font-black text-sm tracking-widest uppercase leading-none">{t.warning_center}</h2>
                       <p className="text-[9px] text-gray-500 font-mono uppercase tracking-tighter mt-1 flex items-center gap-2">
                           <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
                           LIVE_NETWORK_THREATS_MONITOR
@@ -392,8 +392,8 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
                             <span className="bg-secondary/10 text-secondary text-[8px] font-black px-2 py-0.5 rounded tracking-widest border border-secondary/20 uppercase flex items-center gap-1"><span className="w-1.5 h-1.5 bg-secondary rounded-full animate-pulse"></span>{news.tag}</span>
                             <span className="text-[9px] text-gray-500 font-mono italic">{news.date}</span>
                         </div>
-                        <h3 className="text-md font-bold text-white mb-2 leading-tight group-hover/news:text-secondary transition-colors line-clamp-2">{news.title}</h3>
-                        <p className="text-[11px] text-gray-400 line-clamp-2 italic leading-relaxed mb-4">{news.desc}</p>
+                        <h3 className="text-base font-bold text-white mb-2 leading-snug group-hover/news:text-secondary transition-colors line-clamp-2">{news.title}</h3>
+                        <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed mb-4">{news.desc}</p>
                         <div className="mt-auto flex items-center justify-between">
                           <div className="text-[10px] text-secondary font-black uppercase tracking-tight">{lang === 'vi' ? 'THIỆT HẠI' : 'LOSS'}: {news.loss}</div>
                           <ExternalLink size={12} className="text-gray-600 group-hover/news:text-white transition-colors" />
@@ -432,7 +432,7 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
                                 </div>
                                 <strong className="text-gray-200 uppercase tracking-widest text-sm leading-tight">{fact?.title}</strong>
                             </div>
-                            <p className="leading-relaxed italic text-[12px]">{fact?.content}</p>
+                            <p className="leading-relaxed text-xs text-gray-300">{fact?.content}</p>
                         </div>
                     ))}
                  </div>

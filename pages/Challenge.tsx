@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { LEVELS, TRANSLATIONS, SURVEY_SCALE } from '../data';
 import { GameState, Language } from '../types';
-import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2 } from 'lucide-react';
+import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2, ShieldQuestion, Share2, Facebook, Twitter } from 'lucide-react';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -17,6 +17,11 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
   const [surveyStep, setSurveyStep] = useState(0);
   const [surveyAnswers, setSurveyAnswers] = useState<number[]>([]);
   const [surveySent, setSurveySent] = useState(false);
+
+  // Anti-Bot States
+  const [captchaObj, setCaptchaObj] = useState({ num1: 0, num2: 0 });
+  const [captchaInput, setCaptchaInput] = useState('');
+  const [captchaError, setCaptchaError] = useState(false);
 
   const surveyQuestions = [
     {
@@ -101,6 +106,12 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
       show_result: false, 
       last_correct: null 
     };
+    
+    // Reset Anti-Bot
+    setCaptchaObj({ num1: Math.floor(Math.random() * 10), num2: Math.floor(Math.random() * 10) });
+    setCaptchaInput('');
+    setCaptchaError(false);
+    
     setGameState(newState);
     setWrongLevels([]);
     setShowSurvey(false);
@@ -167,6 +178,13 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
 
   const submitSurvey = () => {
     if (surveyAnswers.length < surveyQuestions.length) return;
+    
+    // Validate Human CAPTCHA
+    if (parseInt(captchaInput) !== captchaObj.num1 + captchaObj.num2) {
+        setCaptchaError(true);
+        return;
+    }
+    setCaptchaError(false);
     setSurveySent(true);
     
     // --- FIREBASE: LƯU KẾT QUẢ KHẢO SÁT ---
@@ -237,6 +255,27 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
         statusIcon = <ShieldAlert size={48} className="text-secondary" />;
         statusColor = "border-secondary bg-secondary/5";
     }
+    
+    const handleShare = async (platform: 'facebook' | 'twitter' | 'native') => {
+        const text = lang === 'vi' 
+            ? `Tôi vừa đạt ${score}/10 điểm trong Thử thách Thám tử Deepfake trên DEEPFENSE.AI! Bạn có đủ trình độ để vượt qua tôi?` 
+            : `I just scored ${score}/10 in the Deepfake Detective Challenge on DEEPFENSE.AI! Can you beat my score?`;
+        const url = window.location.origin;
+
+        if (platform === 'facebook') {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
+        } else if (platform === 'twitter') {
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        } else {
+            if (navigator.share) {
+                try { await navigator.share({ title: 'DEEPFENSE.AI', text, url }); } 
+                catch (err) { console.error('Error sharing:', err); }
+            } else {
+                navigator.clipboard.writeText(`${text} ${url}`);
+                alert(lang === 'vi' ? 'Đã sao chép liên kết để chia sẻ!' : 'Copied to clipboard!');
+            }
+        }
+    };
 
     return (
       <div className="max-w-4xl mx-auto py-6 md:py-10 animate-in zoom-in duration-500 px-4">
@@ -246,7 +285,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                 
                 <div className="flex items-center gap-3 mb-8">
                     <ClipboardList className="text-primary" size={24} />
-                    <h3 className="text-lg md:text-xl font-black text-white uppercase italic tracking-widest">
+                    <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-widest">
                         {lang === 'vi' ? 'ĐÁNH GIÁ CHỈ SỐ AN NINH TÂM LÝ' : 'PSYCHOLOGICAL SECURITY INDEX'}
                     </h3>
                 </div>
@@ -260,13 +299,13 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                 {surveySent ? (
                     <div className="animate-in fade-in py-10">
                         <CheckCircle2 size={64} className="text-success mx-auto mb-4" />
-                        <div className="text-success font-black text-xl uppercase italic">
+                        <div className="text-success font-black text-xl uppercase">
                             {lang === 'vi' ? 'DỮ LIỆU ĐÃ ĐƯỢC GHI NHẬN!' : 'DATA RECORDED SUCCESSFULLY!'}
                         </div>
                     </div>
                 ) : (
                     <div className="w-full max-w-2xl animate-in slide-in-from-right-4 duration-300">
-                        <h4 className="text-base md:text-lg text-white font-bold italic mb-10 leading-relaxed">
+                        <h4 className="text-lg md:text-xl text-white font-medium mb-10 leading-relaxed">
                             {surveyQuestions[surveyStep][lang]}
                         </h4>
 
@@ -285,12 +324,30 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                         </div>
 
                         {surveyStep === surveyQuestions.length - 1 && surveyAnswers.length === surveyQuestions.length && (
-                             <button 
-                                onClick={submitSurvey}
-                                className="bg-primary text-black px-12 md:px-16 py-5 rounded-xl font-black text-xs uppercase shadow-lg shadow-primary/20 hover:scale-105 transition-all flex items-center gap-3 mx-auto mt-4 w-full md:w-auto justify-center"
-                            >
-                                {lang === 'vi' ? 'XEM PHÂN TÍCH CUỐI CÙNG' : 'VIEW FINAL ANALYSIS'} <ChevronRight size={16}/>
-                            </button>
+                             <div className="flex flex-col items-center mt-6 w-full max-w-sm mx-auto">
+                                 <div className="bg-black/50 border border-white/10 rounded-xl p-4 w-full mb-4">
+                                     <div className="text-xs text-gray-400 mb-2 font-mono flex items-center justify-center gap-2">
+                                         <ShieldQuestion size={14} className="text-primary"/> 
+                                         {lang === 'vi' ? 'XÁC THỰC NGƯỜI THẬT' : 'HUMAN VERIFICATION'}
+                                     </div>
+                                     <div className="flex items-center justify-center gap-3">
+                                         <span className="text-xl font-bold text-white tracking-widest">{captchaObj.num1} + {captchaObj.num2} = </span>
+                                         <input 
+                                             type="number" 
+                                             value={captchaInput} 
+                                             onChange={(e) => setCaptchaInput(e.target.value)}
+                                             className={`w-16 bg-transparent border-b-2 text-center text-xl font-bold text-primary outline-none transition-colors ${captchaError ? 'border-red-500' : 'border-primary/50 focus:border-primary'}`}
+                                         />
+                                     </div>
+                                     {captchaError && <div className="text-red-500 text-[10px] mt-2 italic">{lang === 'vi' ? 'Kết quả chưa đúng!' : 'Incorrect answer!'}</div>}
+                                 </div>
+                                 <button 
+                                    onClick={submitSurvey}
+                                    className="bg-primary text-black px-12 md:px-16 py-5 rounded-xl font-black text-xs uppercase shadow-lg shadow-primary/20 hover:scale-105 transition-all flex items-center gap-3 w-full justify-center"
+                                >
+                                    {lang === 'vi' ? 'XEM PHÂN TÍCH CUỐI CÙNG' : 'VIEW FINAL ANALYSIS'} <ChevronRight size={16}/>
+                                </button>
+                             </div>
                         )}
                         
                         {surveyStep > 0 && (
@@ -307,11 +364,11 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                     <div className="mb-6">{statusIcon}</div>
                     
                     <div className="mb-8">
-                       <h2 className="text-2xl md:text-4xl font-black text-white mb-2 uppercase italic tracking-tighter leading-tight">{statusTitle}</h2>
+                       <h2 className="text-2xl md:text-4xl font-black text-white mb-2 uppercase tracking-tighter leading-tight">{statusTitle}</h2>
                        <div className="text-white/40 font-mono text-sm tracking-[0.4em] uppercase">{score}/10 {lang === 'vi' ? 'ĐIỂM CHÍNH XÁC' : 'ACCURACY SCORE'}</div>
                     </div>
 
-                    <p className="text-gray-300 italic max-w-xl mb-10 leading-relaxed text-sm md:text-base">{statusDesc}</p>
+                    <p className="text-gray-300 max-w-xl mb-10 leading-relaxed text-base">{statusDesc}</p>
                     
                     <div className="flex flex-col sm:flex-row justify-center gap-4 w-full">
                         <button onClick={startNewGame} className="bg-primary text-black px-12 py-4 rounded-xl font-black text-xs uppercase shadow-lg hover:scale-105 transition-all flex items-center justify-center gap-2">
@@ -321,11 +378,26 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                             {lang === 'vi' ? 'KẾT THÚC CHIẾN DỊCH' : 'END CAMPAIGN'}
                         </button>
                     </div>
+
+                    <div className="mt-8 pt-8 border-t border-white/10 w-full max-w-sm mx-auto">
+                        <p className="text-gray-400 text-[10px] uppercase tracking-widest font-bold mb-4">{lang === 'vi' ? 'CHIA SẺ KẾT QUẢ ĐỂ NÂNG CAO NHẬN THỨC' : 'SHARE RESULTS TO RAISE AWARENESS'}</p>
+                        <div className="flex justify-center gap-4">
+                            <button onClick={() => handleShare('facebook')} className="bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 p-3 rounded-full hover:bg-[#1877F2] hover:text-white hover:scale-110 transition-all shadow-lg" title="Share on Facebook">
+                                <Facebook size={18} />
+                            </button>
+                            <button onClick={() => handleShare('twitter')} className="bg-[#1DA1F2]/20 text-[#1DA1F2] border border-[#1DA1F2]/30 p-3 rounded-full hover:bg-[#1DA1F2] hover:text-white hover:scale-110 transition-all shadow-lg" title="Share on Twitter">
+                                <Twitter size={18} fill="currentColor" />
+                            </button>
+                            <button onClick={() => handleShare('native')} className="bg-white/10 text-white border border-white/20 p-3 rounded-full hover:bg-white hover:text-black hover:scale-110 transition-all shadow-lg" title={lang === 'vi' ? 'Chia sẻ / Copy' : 'Share / Copy'}>
+                                <Share2 size={18} />
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 {/* BẢNG PHÂN TÍCH ĐỒ THỊ */}
                 <div className="bg-surface border border-white/10 p-6 md:p-10 rounded-3xl mb-12 shadow-xl">
-                   <h3 className="text-lg md:text-xl font-black text-white uppercase italic tracking-widest mb-8 flex items-center gap-3 border-b border-white/5 pb-6">
+                   <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-widest mb-8 flex items-center gap-3 border-b border-white/5 pb-6">
                       <BarChart2 size={24} className="text-primary" />
                       {lang === 'vi' ? 'PHÂN TÍCH ĐỒ THỊ NĂNG LỰC NHẬN DIỆN' : 'DETECTION COMPETENCY GRAPH ANALYSIS'}
                    </h3>
@@ -368,14 +440,14 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
 
                 {wrongLevels.length > 0 && (
                   <div className="space-y-6">
-                    <h3 className="text-secondary font-black text-lg uppercase italic tracking-widest flex items-center gap-3">
+                    <h3 className="text-secondary font-black text-lg uppercase tracking-widest flex items-center gap-3">
                       <AlertCircle /> {lang === 'vi' ? 'CÁC LỖI CẦN KHẮC PHỤC' : 'ERRORS TO FIX'}
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                        {wrongLevels.map((lvl, idx) => (
                          <div key={idx} className="bg-secondary/5 border border-secondary/20 p-6 rounded-2xl flex flex-col">
-                            <div className="text-[10px] text-secondary font-black mb-2 uppercase tracking-tighter italic">{lvl.title}</div>
-                            <p className="text-white text-sm font-bold italic leading-relaxed">"{lvl.advice}"</p>
+                            <div className="text-[10px] text-secondary font-black mb-2 uppercase tracking-tighter">{lvl.title}</div>
+                            <p className="text-white text-sm font-medium leading-relaxed">"{lvl.advice}"</p>
                          </div>
                        ))}
                     </div>
@@ -386,31 +458,31 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
 
         {!showSurvey && (
             <div className="mt-12 bg-primary/5 border border-primary/20 p-8 rounded-3xl">
-               <h3 className="text-primary font-black text-lg uppercase italic tracking-widest mb-6 flex items-center gap-3">
+               <h3 className="text-primary font-black text-lg uppercase tracking-widest mb-6 flex items-center gap-3">
                   <ShieldCheck /> {lang === 'vi' ? 'CẨM NANG PHÒNG VỆ NHANH' : 'QUICK DEFENSE HANDBOOK'}
                </h3>
                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
                   <div className="bg-black/40 p-5 rounded-xl border border-white/5">
-                     <div className="text-primary font-bold mb-2 uppercase italic text-xs tracking-widest">
+                     <div className="text-primary font-bold mb-2 uppercase text-xs tracking-widest">
                         {lang === 'vi' ? '1. Quan sát' : '1. Observe'}
                      </div>
-                     <p className="text-gray-400 text-[11px] italic">
+                     <p className="text-gray-400 text-xs leading-relaxed">
                         {lang === 'vi' ? 'Nếu khuôn mặt quá mịn hoặc ánh sáng bóng loáng bất thường, hãy nghi ngờ ngay.' : 'If the face is too smooth or the lighting is unnaturally shiny, be suspicious immediately.'}
                      </p>
                   </div>
                   <div className="bg-black/40 p-5 rounded-xl border border-white/5">
-                     <div className="text-primary font-bold mb-2 uppercase italic text-xs tracking-widest">
+                     <div className="text-primary font-bold mb-2 uppercase text-xs tracking-widest">
                         {lang === 'vi' ? '2. Thử thách' : '2. Challenge'}
                      </div>
-                     <p className="text-gray-400 text-[11px] italic">
+                     <p className="text-gray-400 text-xs leading-relaxed">
                         {lang === 'vi' ? 'Yêu cầu người gọi vẫy tay trước mặt. AI sẽ bị lỗi hiển thị khi có vật che.' : 'Ask the caller to wave their hand in front of their face. AI glitches when obstructed.'}
                      </p>
                   </div>
                   <div className="bg-black/40 p-5 rounded-xl border border-white/5">
-                     <div className="text-primary font-bold mb-2 uppercase italic text-xs tracking-widest">
+                     <div className="text-primary font-bold mb-2 uppercase text-xs tracking-widest">
                         {lang === 'vi' ? '3. Xác minh' : '3. Verify'}
                      </div>
-                     <p className="text-gray-400 text-[11px] italic">
+                     <p className="text-gray-400 text-xs leading-relaxed">
                         {lang === 'vi' ? 'Gọi lại sim chính của người thân. Kẻ lừa đảo không thể nhận cuộc gọi GSM.' : 'Call back using the primary SIM number. Scammers cannot receive GSM calls.'}
                      </p>
                   </div>
@@ -434,7 +506,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                  <Zap size={14} className="text-primary" />
                  <span className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">{lang === 'vi' ? 'NHIỆM VỤ' : 'MISSION'} {gameState.current + 1}</span>
               </div>
-              <h3 className="text-white text-2xl md:text-3xl font-black italic uppercase tracking-tighter leading-none">{lvl.title}</h3>
+              <h3 className="text-white text-2xl md:text-3xl font-black uppercase tracking-tighter leading-none">{lvl.title}</h3>
           </div>
           <div className="text-right shrink-0">
               <div className="text-primary font-mono font-bold text-2xl leading-none">{gameState.current + 1}<span className="text-gray-800">/{gameState.levels.length}</span></div>
