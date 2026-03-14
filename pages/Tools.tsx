@@ -223,6 +223,7 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                             <li className="flex gap-4 items-start"><span className="text-success font-black mt-1">•</span> {lang === 'vi' ? 'Cập nhật mật mã định kỳ 3 tháng một lần để đảm bảo an toàn.' : 'Update the code every 3 months for safety.'}</li>
                         </ul>
                     </div>
+                </div>
             </KnowledgeItem>
         </div>
       )}
