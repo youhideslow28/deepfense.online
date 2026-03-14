@@ -103,13 +103,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage, lang, setLang, se
                 </div>
 
                 <h2 className="text-3xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 mb-2">
-                    Gửi Huyền
+                    Gửi em yêu
                 </h2>
                 <div className="h-0.5 w-12 bg-pink-500/50 mx-auto mb-6"></div>
 
                 <p className="text-gray-300 font-sans italic leading-relaxed mb-6 text-sm md:text-base">
-                    "Cảm ơn cậu vì đã luôn ở bên cạnh, tiếp thêm động lực để mình hoàn thiện sản phẩm này. <br/><br/>
-                    Dù là những việc ấy đối với cậu là nhỏ, nhưng tất cả đều trở nên ý nghĩa hơn khi có sự ủng hộ của cậu."
+                    "Cảm ơn em vì đã luôn ở bên cạnh, tiếp thêm động lực để anh hoàn thiện sản phẩm này. <br/><br/>
+                    Anh cũng muốn gửi lời xin lỗi chân thành nhất vì những lúc đã vô tình làm em buồn. Cảm ơn em vì đã luôn thấu hiểu và trở thành người yêu của anh."
                 </p>
 
                 <div className="text-[10px] text-pink-400/60 uppercase tracking-[0.3em] font-mono">
