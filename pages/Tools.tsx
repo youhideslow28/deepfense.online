@@ -22,8 +22,9 @@ const KnowledgeItem: React.FC<KnowledgeItemProps> = ({ title, children, icon }) 
             >
                 <div className="flex items-center gap-4">
                     <div className="text-primary">{icon}</div>
-                    <span className="font-black text-white text-sm uppercase tracking-wideste}</span>
-              sOpen ? <ChevronUp size={18} className="text-primary" /> : <ChevronDown size={18} className="text-gray-500" />}
+                    <span className="font-black text-white text-sm uppercase tracking-widest">{title}</span>
+                </div>
+                {isOpen ? <ChevronUp size={18} className="text-primary" /> : <ChevronDown size={18} className="text-gray-500" />}
             </button>
             {isOpen && (
                 <div className="p-8 border-t border-white/5 bg-black/40 animate-in slide-in-from-top-2 duration-200">
@@ -89,7 +90,8 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
       {activeTab === 'SCAN' && (
         <div className="animate-in slide-in-from-bottom-4 duration-500">
             <div className="text-center mb-12">
-                <h2 className="text-5xl fontv
+                <h2 className="text-5xl font-black mb-4 text-white uppercase tracking-tighter leading-none">{lang === 'vi' ? 'QUÉT RỦI RO' : 'RISK SCAN'}</h2>
+                <p className="text-gray-400 text-sm">{lang === 'vi'
                     ? 'Hãy đánh dấu các biểu hiện bất thường mà bạn quan sát được trong video call.'
                     : 'Check the abnormal signs observed during the video call.'}
                 </p>
@@ -104,7 +106,8 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                         </div>
                         <div className="p-8 space-y-4">
                             {cat.items.map((item) => (
-                         2          <div className={`shrink-0 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all duration-300 ${checks.has(item) ? 'bg-primary border-primary rotate-90 shadow-[0_0_10px_rgba(0,240,255,0.4)]' : 'border-gray-700 group-hover:border-primary/50'}`}>
+                                <label key={item} className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 cursor-pointer group transition-colors">
+                                    <div className={`shrink-0 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all duration-300 ${checks.has(item) ? 'bg-primary border-primary rotate-90 shadow-[0_0_10px_rgba(0,240,255,0.4)]' : 'border-gray-700 group-hover:border-primary/50'}`}>
                                         {checks.has(item) && <div className="w-2 h-2 bg-black rounded-sm" />}
                                     </div>
                                     <input type="checkbox" className="hidden" checked={checks.has(item)} onChange={() => toggleCheck(item)} />
@@ -113,6 +116,7 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                             ))}
                         </div>
                     </div>
+                ))}
             </div>
 
             <div className="text-center mb-16">
@@ -135,19 +139,25 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                                     <p className="text-gray-300 text-sm leading-relaxed">{lang === 'vi' ? 'Không phát hiện dấu hiệu giả mạo rõ rệt. Tuy nhiên, hãy luôn duy trì sự cảnh giác trước các yêu cầu chuyển tiền.' : 'No clear signs of deepfake detected. However, remain high vigilance regarding money transfers.'}</p>
                                 </div>
                             ) : result <= 2 ? (
-                                <div className="bg-warning/5 border-
+                                <div className="bg-warning/5 border-2 border-warning/30 rounded-3xl p-12 text-center relative overflow-hidden shadow-2xl">
+                                    <div className="text-6xl mb-8">⚠️</div>
+                                    <h3 className="text-warning font-black text-3xl mb-4 uppercase tracking-tighter">{lang === 'vi' ? 'RỦI RO TIỀM ẨN' : 'POTENTIAL RISK'}</h3>
                                     <p className="text-gray-300 text-sm leading-relaxed">{lang === 'vi' ? `Ghi nhận ${result} biểu hiện bất thường. Chúng tôi khuyến nghị bạn thực hiện xác minh chéo qua cuộc gọi GSM.` : `${result} anomalies recorded. Cross-verification via GSM call recommended.`}</p>
                                 </div>
                             ) : (
                                 <div className="bg-secondary/5 border-2 border-secondary/30 rounded-3xl p-12 text-center relative overflow-hidden shadow-2xl">
                                     <div className="text-6xl mb-8 animate-pulse">🚨</div>
                                     <h3 className="text-secondary font-black text-3xl mb-4 uppercase tracking-tighter">{lang === 'vi' ? 'NGUY HIỂM CỰC ĐỘ' : 'EXTREME DANGER'}</h3>
-                                    <p className="text-white font-bold text-sm leading-re{lang === 'vi' ? 'DẤU HIỆU LỪA ĐẢO RÕ RỆT. NGẮT KẾT NỐI NGAY LẬP TỨC VÀ KHÔNG CHUYỂN TIỀN!' : 'CLEAR DEEPFAKE SIGNS. DISCONNECT IMMEDIATELY AND DO NOT TRANSFER MONEY!'}</p>
+                                    <p className="text-white font-bold text-sm leading-relaxed">{lang === 'vi' ? 'DẤU HIỆU LỪA ĐẢO RÕ RỆT. NGẮT KẾT NỐI NGAY LẬP TỨC VÀ KHÔNG CHUYỂN TIỀN!' : 'CLEAR DEEPFAKE SIGNS. DISCONNECT IMMEDIATELY AND DO NOT TRANSFER MONEY!'}</p>
                                 </div>
+                            )}
+                        </div>
 
                         <div className="lg:col-span-7 bg-surface border border-white/5 rounded-3xl p-10 shadow-2xl">
                             <h3 className="text-white font-black text-[10px] mb-8 flex items-center gap-3 uppercase tracking-[0.3em] border-b border-white/5 pb-6">
-                                <ShieldCheck className="text-primary" size={20}/> {
+                                <ShieldCheck className="text-primary" size={20}/> {lang === 'vi' ? 'KẾ HOẠCH HÀNH ĐỘNG KHẨN CẤP' : 'EMERGENCY ACTION PLAN'}
+                            </h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                 {[
                                     { step: 1, title: lang === 'vi' ? 'DỪNG CUỘC GỌI' : 'STOP CALL', desc: lang === 'vi' ? 'Ngắt kết nối video ngay lập tức khi phát hiện nghi vấn.' : 'End the video connection immediately upon suspicion.' },
                                     { step: 2, title: lang === 'vi' ? 'XÁC THỰC NGOẠI TUYẾN' : 'OFFLINE VERIFY', desc: lang === 'vi' ? 'Gọi lại bằng sim điện thoại truyền thống hoặc gặp mặt trực tiếp.' : 'Call back via traditional SIM or meet in person.' },
@@ -155,8 +165,9 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                                     { step: 4, title: lang === 'vi' ? 'BÁO CÁO NHÀ CHỨC TRÁCH' : 'REPORT', desc: lang === 'vi' ? 'Thông báo cho ngân hàng và cơ quan công an gần nhất.' : 'Inform your bank and the nearest police department.' },
                                 ].map((item) => (
                                     <div key={item.step} className="flex gap-6 items-start">
-                                        <div className="h-10 w-10 bg-black border border-white/10 rounded-xl flex items-center justier shrink-0 text-primary font-mono font-bold text-sm shadow-inner">{item.step}</div>
-                                   <div className="text-white font-black text-xs uppercase tracking-widest mb-1.5">{item.title}</div>
+                                        <div className="h-10 w-10 bg-black border border-white/10 rounded-xl flex items-center justify-center shrink-0 text-primary font-mono font-bold text-sm shadow-inner">{item.step}</div>
+                                        <div>
+                                            <div className="text-white font-black text-xs uppercase tracking-widest mb-1.5">{item.title}</div>
                                             <p className="text-gray-400 text-xs leading-relaxed">{item.desc}</p>
                                         </div>
                                     </div>
@@ -170,6 +181,8 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
       )}
 
       {activeTab === 'KNOWLEDGE' && (
+        <div className="animate-in slide-in-from-bottom-4 duration-500">
+            <div className="text-center mb-12">
                 <h2 className="text-5xl font-black mb-4 text-white uppercase tracking-tighter leading-none">{lang === 'vi' ? 'KIẾN THỨC NỀN TẢNG' : 'CORE KNOWLEDGE'}</h2>
                 <p className="text-gray-400 text-sm">{lang === 'vi' ? 'Nâng cao nhận thức để tự bảo vệ mình trong không gian số' : 'Raise awareness to protect yourself in the digital space'}</p>
             </div>
@@ -184,7 +197,8 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                             </div>
                         ))}
                     </div>
-               // Fallback if structured data fails
+                </KnowledgeItem>
+            )) : (
                <div className="text-center py-20 text-gray-600 italic">Dữ liệu đang được cập nhật...</div>
             )}
 
@@ -194,7 +208,9 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                     <div className="bg-black/60 p-8 rounded-3xl border border-white/5 hover:border-primary/20 transition-all">
                         <div className="text-primary font-black text-xs mb-6 uppercase tracking-widest flex items-center gap-2">
                            <Brain size={14}/> {lang === 'vi' ? 'QUY TẮC "CHẬM LẠI 1 NHỊP"' : '"SLOW DOWN" RULE'}
-                        </div>pstart"><span className="text-primary font-black mt-1">•</span> {lang === 'vi' ? 'Luôn dành ít nhất 30 giây suy nghĩ trước khi thực hiện bất kỳ giao dịch nào.' : 'Always take at least 30 seconds to think before any transaction.'}</li>
+                        </div>
+                        <ul className="space-y-4">
+                            <li className="flex gap-4 items-start"><span className="text-primary font-black mt-1">•</span> {lang === 'vi' ? 'Luôn dành ít nhất 30 giây suy nghĩ trước khi thực hiện bất kỳ giao dịch nào.' : 'Always take at least 30 seconds to think before any transaction.'}</li>
                             <li className="flex gap-4 items-start"><span className="text-primary font-black mt-1">•</span> {lang === 'vi' ? 'Kiểm tra chéo: Dùng sim thường gọi lại cho người thân để xác nhận.' : 'Cross-check: Use normal SIM to call back relatives for confirmation.'}</li>
                         </ul>
                     </div>
