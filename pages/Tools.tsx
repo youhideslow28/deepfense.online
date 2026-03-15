@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { CHECKLIST_DATA, KNOWLEDGE_BASE } from '../data';
 import { Language } from '../types';
-import { ChevronDown, ChevronUp, ShieldCheck, Search, Zap, Brain, Activity, Info, Gavel, HeartHandshake, Laptop, Terminal, Link2, AlertOctagon, ScanLine, Fingerprint, Lock } from 'lucide-react';
+import { ChevronDown, ChevronUp, ShieldCheck, Search, Zap, Brain, Activity, Info, Gavel, HeartHandshake, Laptop, AlertOctagon, ScanLine, Fingerprint, ShieldAlert, CheckCircle, PhoneCall, RotateCcw, PhoneOff } from 'lucide-react';
 
 // Defined explicit interface for KnowledgeItem props
 interface KnowledgeItemProps {
@@ -54,64 +54,25 @@ interface ToolsProps {
 
 const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
   const [activeTab, setActiveTab] = useState<'SCAN' | 'KNOWLEDGE'>(initialTab);
-  const [checks, setChecks] = useState<Set<string>>(new Set());
-  const [result, setResult] = useState<number | null>(null);
-  
-  // State cho bộ quét văn bản/Link
-  const [textInput, setTextInput] = useState('');
-  const [isScanningText, setIsScanningText] = useState(false);
-  const [textLogs, setTextLogs] = useState<string[]>([]);
-  const [textResult, setTextResult] = useState<'SAFE' | 'WARNING' | 'DANGER' | null>(null);
 
-  const toggleCheck = (item: string) => {
-    const newChecks = new Set(checks);
-    if (newChecks.has(item)) newChecks.delete(item);
-    else newChecks.add(item);
-    setChecks(newChecks);
+  // State cho In-Call Protocol (Thực tế & Hành động nhanh)
+  const [test1, setTest1] = useState<'IDLE' | 'PASS' | 'FAIL'>('IDLE');
+  const [test2, setTest2] = useState<'IDLE' | 'PASS' | 'FAIL'>('IDLE');
+  const [test3, setTest3] = useState<'IDLE' | 'PASS' | 'FAIL'>('IDLE');
+  const [test4, setTest4] = useState<'IDLE' | 'PASS' | 'FAIL'>('IDLE');
+  const [test5, setTest5] = useState<'IDLE' | 'PASS' | 'FAIL'>('IDLE');
+
+  const resetTests = () => {
+      setTest1('IDLE');
+      setTest2('IDLE');
+      setTest3('IDLE');
+      setTest4('IDLE');
+      setTest5('IDLE');
   };
 
-  const handleTextScan = () => {
-      if (!textInput.trim()) return;
-      setIsScanningText(true);
-      setTextLogs([]);
-      setTextResult(null);
-
-      const mockLogs = [
-          "INITIALIZING THREAT INTELLIGENCE ENGINE...",
-          "EXTRACTING ENTITIES AND URLS...",
-          "CROSS-REFERENCING GLOBAL BLACKLISTS (APWG, PHISHTANK)...",
-          "ANALYZING NATURAL LANGUAGE PROCESSING (NLP) PATTERNS...",
-          "CHECKING URGENCY/MANIPULATION VECTORS..."
-      ];
-
-      mockLogs.forEach((log, index) => {
-          setTimeout(() => {
-              setTextLogs(prev => [...prev, log]);
-              if (index === mockLogs.length - 1) {
-                  setTimeout(() => {
-                      setIsScanningText(false);
-                      // Logic mô phỏng: Chứa chữ "ngân hàng", "chuyển tiền", "http" -> Nguy hiểm
-                      const lowerText = textInput.toLowerCase();
-                      if (lowerText.includes('http') || lowerText.includes('chuyển') || lowerText.includes('bank') || lowerText.includes('wire') || lowerText.includes('cấp cứu')) {
-                          setTextResult('DANGER');
-                      } else if (lowerText.includes('vay') || lowerText.includes('mượn') || lowerText.includes('loan')) {
-                          setTextResult('WARNING');
-                      } else {
-                          setTextResult('SAFE');
-                      }
-                  }, 800);
-              }
-          }, index * 600); // Mỗi 0.6s hiện 1 log
-      });
-  };
-
-  const analyzeRisk = () => {
-    setResult(checks.size);
-    setTimeout(() => {
-        const el = document.getElementById('risk-result');
-        el?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-  };
+  const isDanger = test1 === 'FAIL' || test2 === 'FAIL' || test3 === 'FAIL' || test4 === 'FAIL' || test5 === 'FAIL';
+  const isSafe = test1 === 'PASS' && test2 === 'PASS' && test3 === 'PASS' && test4 === 'PASS' && test5 === 'PASS';
+  const progressCount = [test1, test2, test3, test4, test5].filter(t => t !== 'IDLE').length;
 
   const getKnowledgeIcon = (category: string) => {
     if (category.includes('PHÁP') || category.includes('LAW')) return <Gavel size={20}/>;
@@ -130,7 +91,7 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                 onClick={() => setActiveTab('SCAN')}
                 className={`px-10 py-3.5 rounded-xl font-black text-xs transition-all flex items-center gap-2 tracking-[0.2em] uppercase ${activeTab === 'SCAN' ? 'bg-primary text-black shadow-lg shadow-primary/20' : 'text-gray-500 hover:text-white'}`}
             >
-                <Search size={14} /> QUICK SCAN
+                <PhoneCall size={14} /> LIVE VERIFICATION
             </button>
             <button 
                 onClick={() => setActiveTab('KNOWLEDGE')}
@@ -144,168 +105,192 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
       {activeTab === 'SCAN' && (
         <div className="animate-in slide-in-from-bottom-4 duration-500">
             <div className="text-center mb-12">
-                <h2 className="text-5xl font-black mb-4 text-white uppercase tracking-tighter leading-none">{lang === 'vi' ? 'TRUNG TÂM PHÂN TÍCH' : 'THREAT HUB'}</h2>
-                <p className="text-gray-400 text-sm">{lang === 'vi'
-                    ? 'Công cụ phân tích ngữ nghĩa và sinh trắc học video chuyên sâu.'
-                    : 'Deep semantics and video biometric analysis tool.'}
+                <h2 className="text-5xl font-black mb-4 text-white uppercase tracking-tighter leading-none">{lang === 'vi' ? 'GIAO THỨC KHẨN CẤP' : 'EMERGENCY PROTOCOL'}</h2>
+                <p className="text-gray-400 text-sm max-w-2xl mx-auto">{lang === 'vi'
+                    ? 'Bạn đang trong một cuộc gọi video có dấu hiệu mượn tiền? Đừng hoảng loạn. Bật loa ngoài và yêu cầu đối phương làm ngay 3 phép thử dưới đây!'
+                    : 'Are you in a suspicious video call asking for money? Turn on speakerphone and ask the caller to perform these 3 live tests immediately!'}
                 </p>
             </div>
 
-            {/* NEW MODULE: QUICK TEXT/LINK ANALYZER */}
+            {/* BẢNG KỊCH BẢN THỰC CHIẾN MỚI */}
             <div className="bg-surface border border-white/5 rounded-3xl p-6 md:p-8 shadow-2xl mb-16 relative overflow-hidden">
-                <div className="absolute top-0 right-0 opacity-5"><Terminal size={150} /></div>
-                <h3 className="text-white font-black text-sm uppercase tracking-[0.2em] mb-4 flex items-center gap-2 relative z-10">
-                    <ScanLine className="text-primary" size={18}/> {lang === 'vi' ? 'MÔ ĐUN QUÉT VĂN BẢN / LIÊN KẾT ĐÁNG NGỜ' : 'SUSPICIOUS TEXT/LINK SCANNER'}
-                </h3>
-                
-                <div className="flex flex-col md:flex-row gap-4 relative z-10">
-                    <div className="relative flex-1">
-                        <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
-                        <input 
-                            type="text" 
-                            value={textInput}
-                            onChange={(e) => setTextInput(e.target.value)}
-                            placeholder={lang === 'vi' ? "Dán tin nhắn, đường link hoặc email nghi ngờ vào đây..." : "Paste suspicious message, link, or email here..."}
-                            className="w-full bg-black/50 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:border-primary outline-none transition-colors"
-                        />
-                    </div>
-                    <button 
-                        onClick={handleTextScan}
-                        disabled={isScanningText || !textInput.trim()}
-                        className="bg-primary text-black px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0 flex items-center justify-center gap-2"
-                    >
-                        {isScanningText ? <ScanLine className="animate-spin" size={16}/> : <Terminal size={16}/>}
-                        {lang === 'vi' ? 'QUÉT DỮ LIỆU' : 'SCAN DATA'}
-                    </button>
-                </div>
+                 {/* Header Giao thức */}
+                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                     <h3 className="text-white font-black text-sm md:text-base uppercase tracking-[0.2em] flex items-center gap-2">
+                         <PhoneCall className="text-primary" size={20}/> 
+                         {lang === 'vi' ? 'KỊCH BẢN TƯƠNG TÁC TRỰC TIẾP' : 'LIVE VERIFICATION SCRIPT'}
+                     </h3>
+                     <div className="flex items-center gap-3">
+                         <span className="text-[10px] md:text-xs text-gray-500 font-mono tracking-widest bg-black/50 px-3 py-1.5 rounded-full border border-white/10">
+                             {progressCount}/5 {lang === 'vi' ? 'LƯỢT THỬ' : 'TESTS DONE'}
+                         </span>
+                         <button onClick={resetTests} className="text-gray-400 hover:text-white p-2 rounded-full bg-black/50 border border-white/10 hover:bg-white/10 transition-colors" title={lang === 'vi' ? 'Làm mới' : 'Reset'}>
+                             <RotateCcw size={16}/>
+                         </button>
+                     </div>
+                 </div>
 
-                {/* Scanner Terminal Output */}
-                {(textLogs.length > 0 || textResult) && (
-                    <div className="mt-6 bg-[#0a0a0a] border border-gray-800 rounded-xl p-4 font-mono text-[10px] sm:text-xs">
-                        <div className="flex items-center gap-2 mb-3 pb-3 border-b border-gray-800 text-gray-500">
-                            <Lock size={12} /> SECURE_TERMINAL_V2.0
-                        </div>
-                        <div className="space-y-2 mb-4">
-                            {textLogs.map((log, i) => (
-                                <div key={i} className="text-primary animate-in fade-in flex items-start gap-2">
-                                    <span className="text-gray-600">&gt;</span> {log}
-                                </div>
-                            ))}
-                            {isScanningText && <div className="text-gray-500 animate-pulse flex items-start gap-2"><span className="text-gray-600">&gt;</span> _</div>}
-                        </div>
-                        
-                        {textResult && (
-                            <div className={`p-4 rounded-lg border flex items-center justify-between animate-in slide-in-from-bottom-2 ${textResult === 'DANGER' ? 'bg-red-900/20 border-red-500/50 text-red-500' : textResult === 'WARNING' ? 'bg-yellow-900/20 border-yellow-500/50 text-yellow-500' : 'bg-green-900/20 border-green-500/50 text-green-500'}`}>
-                                <div className="flex items-center gap-3">
-                                    <AlertOctagon size={24} />
-                                    <div>
-                                        <div className="font-black tracking-widest uppercase">
-                                            {textResult === 'DANGER' ? (lang === 'vi' ? 'PHÁT HIỆN RỦI RO CAO' : 'HIGH RISK DETECTED') : 
-                                             textResult === 'WARNING' ? (lang === 'vi' ? 'CÓ DẤU HIỆU THAO TÚNG' : 'MANIPULATION SIGNS DETECTED') : 
-                                             (lang === 'vi' ? 'CHƯA THẤY BẤT THƯỜNG' : 'NO ANOMALIES FOUND')}
-                                        </div>
-                                        <div className="text-[10px] mt-1 opacity-80">
-                                            {textResult === 'DANGER' ? (lang === 'vi' ? 'Dữ liệu có chứa các từ khóa lừa đảo phổ biến hoặc liên kết độc hại.' : 'Data contains common scam keywords or malicious links.') : 
-                                             textResult === 'WARNING' ? (lang === 'vi' ? 'Ngôn từ mang tính thúc giục, vay mượn. Cần xác minh chéo.' : 'Urgent/borrowing language. Cross-verification needed.') : 
-                                             (lang === 'vi' ? 'Dữ liệu an toàn ở mức độ phân tích văn bản cơ bản.' : 'Data is safe at the basic text analysis level.')}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                )}
+                 {/* 3 Thẻ bài test Thực tiễn */}
+                 <div className="space-y-4 relative z-10">
+                     {/* TEST 1: CHUYỂN ĐỘNG KHÔNG GIAN */}
+                     <div className={`p-5 md:p-6 rounded-2xl border transition-all duration-300 ${test1 === 'PASS' ? 'border-green-500/50 bg-green-900/10' : test1 === 'FAIL' ? 'border-red-500/50 bg-red-900/20' : 'border-white/10 bg-black/40 hover:border-white/20'}`}>
+                         <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center">
+                             <div className="flex-1">
+                                 <div className="text-primary text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
+                                     {lang === 'vi' ? 'PHÉP THỬ #1: RỐI LOẠN KHÔNG GIAN' : 'TEST #1: SPATIAL DISTURBANCE'}
+                                 </div>
+                                 <p className="text-white font-bold text-[15px] md:text-lg italic mb-2 leading-snug">
+                                     🗣️ "{lang === 'vi' ? 'Màn hình bên em đang bị đứng hình, anh/chị đưa tay vẫy ngang mặt giúp em với?' : 'Could you wave your hand in front of your face? My screen is freezing.'}"
+                                 </p>
+                                 <p className="text-gray-400 text-xs font-mono">
+                                     {lang === 'vi' ? 'Mục đích: AI lừa đảo thường bị lỗi (xuyên thấu, đứt ngón tay) khi có vật thể che khuất mặt.' : 'Purpose: AI face-swaps glitch (transparency, melting fingers) when obstructed.'}
+                                 </p>
+                             </div>
+                             <div className="flex gap-2 w-full lg:w-auto shrink-0 mt-4 lg:mt-0">
+                                 <button onClick={() => setTest1('FAIL')} className={`flex-1 lg:flex-none px-4 py-3 md:py-4 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border ${test1 === 'FAIL' ? 'bg-red-600 text-white border-red-500 shadow-[0_0_15px_rgba(220,38,38,0.4)] scale-105' : 'bg-black text-gray-400 border-gray-800 hover:border-red-500/50 hover:text-red-500'}`}>
+                                     🚨 {lang === 'vi' ? 'Tay Bị Nhòe/Xuyên' : 'Hand Blurs/Melts'}
+                                 </button>
+                                 <button onClick={() => setTest1('PASS')} className={`flex-1 lg:flex-none px-4 py-3 md:py-4 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border ${test1 === 'PASS' ? 'bg-green-600 text-white border-green-500 shadow-[0_0_15px_rgba(22,163,74,0.4)] scale-105' : 'bg-black text-gray-400 border-gray-800 hover:border-green-500/50 hover:text-green-500'}`}>
+                                     ✅ {lang === 'vi' ? 'Tự Nhiên' : 'Looks Natural'}
+                                 </button>
+                             </div>
+                         </div>
+                     </div>
+
+                     {/* TEST 2: GÓC NGHIÊNG TỬ THẦN */}
+                     <div className={`p-5 md:p-6 rounded-2xl border transition-all duration-300 ${test2 === 'PASS' ? 'border-green-500/50 bg-green-900/10' : test2 === 'FAIL' ? 'border-red-500/50 bg-red-900/20' : 'border-white/10 bg-black/40 hover:border-white/20'}`}>
+                         <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center">
+                             <div className="flex-1">
+                                 <div className="text-blue-400 text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
+                                     {lang === 'vi' ? 'PHÉP THỬ #2: GÓC NGHIÊNG TỬ THẦN' : 'TEST #2: THE DEADLY PROFILE'}
+                                 </div>
+                                 <p className="text-white font-bold text-[15px] md:text-lg italic mb-2 leading-snug">
+                                     🗣️ "{lang === 'vi' ? 'Bên em loa bị vọng, anh/chị quay mặt hẳn sang ngang 90 độ nói lại giúp em với?' : 'Could you turn your head 90 degrees to the side? The connection is bad.'}"
+                                 </p>
+                                 <p className="text-gray-400 text-xs font-mono">
+                                     {lang === 'vi' ? 'Mục đích: Khi quay nghiêng hẳn, thuật toán nội suy viền mặt sẽ bị vỡ, làm mặt móp méo.' : 'Purpose: Deepfakes train on frontal faces. Turning sideways completely breaks the face boundary.'}
+                                 </p>
+                             </div>
+                             <div className="flex gap-2 w-full lg:w-auto shrink-0 mt-4 lg:mt-0">
+                                 <button onClick={() => setTest2('FAIL')} className={`flex-1 lg:flex-none px-4 py-3 md:py-4 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border ${test2 === 'FAIL' ? 'bg-red-600 text-white border-red-500 shadow-[0_0_15px_rgba(220,38,38,0.4)] scale-105' : 'bg-black text-gray-400 border-gray-800 hover:border-red-500/50 hover:text-red-500'}`}>
+                                     🚨 {lang === 'vi' ? 'Mặt Móp Méo' : 'Distorted Face'}
+                                 </button>
+                                 <button onClick={() => setTest2('PASS')} className={`flex-1 lg:flex-none px-4 py-3 md:py-4 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border ${test2 === 'PASS' ? 'bg-green-600 text-white border-green-500 shadow-[0_0_15px_rgba(22,163,74,0.4)] scale-105' : 'bg-black text-gray-400 border-gray-800 hover:border-green-500/50 hover:text-green-500'}`}>
+                                     ✅ {lang === 'vi' ? 'Tự Nhiên' : 'Looks Natural'}
+                                 </button>
+                             </div>
+                         </div>
+                     </div>
+
+                     {/* TEST 3: BẪY NGỮ CẢNH */}
+                     <div className={`p-5 md:p-6 rounded-2xl border transition-all duration-300 ${test3 === 'PASS' ? 'border-green-500/50 bg-green-900/10' : test3 === 'FAIL' ? 'border-red-500/50 bg-red-900/20' : 'border-white/10 bg-black/40 hover:border-white/20'}`}>
+                         <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center">
+                             <div className="flex-1">
+                                 <div className="text-yellow-400 text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
+                                     {lang === 'vi' ? 'PHÉP THỬ #3: BẪY NGỮ CẢNH TÂM LÝ' : 'TEST #3: CONTEXT TRAP'}
+                                 </div>
+                                 <p className="text-white font-bold text-[15px] md:text-lg italic mb-2 leading-snug">
+                                     🗣️ {lang === 'vi' ? 'Hỏi một câu có chi tiết sai sự thật. VD: "Hôm qua chó nhà chú bị ốm đã đỡ chưa?" (Dù nhà họ không nuôi chó).' : 'Ask a fake question: "Did your dog recover from yesterday?" (Even if they don\'t own a dog).'}
+                                 </p>
+                                 <p className="text-gray-400 text-xs font-mono">
+                                     {lang === 'vi' ? 'Mục đích: Kẻ gian dùng AI sẽ không biết những bí mật nhỏ. Phản ứng ấp úng là dấu hiệu cảnh báo cao.' : 'Purpose: Scammers don\'t know micro-details. Hesitation or evasion is a major red flag.'}
+                                 </p>
+                             </div>
+                             <div className="flex gap-2 w-full lg:w-auto shrink-0 mt-4 lg:mt-0">
+                                 <button onClick={() => setTest3('FAIL')} className={`flex-1 lg:flex-none px-4 py-3 md:py-4 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border ${test3 === 'FAIL' ? 'bg-red-600 text-white border-red-500 shadow-[0_0_15px_rgba(220,38,38,0.4)] scale-105' : 'bg-black text-gray-400 border-gray-800 hover:border-red-500/50 hover:text-red-500'}`}>
+                                     🚨 {lang === 'vi' ? 'Ấp Úng/Lảng Tránh' : 'Hesitates/Evades'}
+                                 </button>
+                                 <button onClick={() => setTest3('PASS')} className={`flex-1 lg:flex-none px-4 py-3 md:py-4 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border ${test3 === 'PASS' ? 'bg-green-600 text-white border-green-500 shadow-[0_0_15px_rgba(22,163,74,0.4)] scale-105' : 'bg-black text-gray-400 border-gray-800 hover:border-green-500/50 hover:text-green-500'}`}>
+                                     ✅ {lang === 'vi' ? 'Phản Xạ Bác Bỏ Ngay' : 'Corrects Immediately'}
+                                 </button>
+                             </div>
+                         </div>
+                     </div>
+
+                     {/* TEST 4: TƯƠNG TÁC VẬT LÝ (TÓC/MÁ) */}
+                     <div className={`p-5 md:p-6 rounded-2xl border transition-all duration-300 ${test4 === 'PASS' ? 'border-green-500/50 bg-green-900/10' : test4 === 'FAIL' ? 'border-red-500/50 bg-red-900/20' : 'border-white/10 bg-black/40 hover:border-white/20'}`}>
+                         <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center">
+                             <div className="flex-1">
+                                 <div className="text-purple-400 text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
+                                     {lang === 'vi' ? 'BƯỚC 4: YÊU CẦU VUỐT TÓC / CHẠM MẶT' : 'STEP 4: THE HAIR/FACE TOUCH TEST'}
+                                 </div>
+                                 <p className="text-white font-bold text-[15px] md:text-lg italic mb-2 leading-snug">
+                                     🗣️ "{lang === 'vi' ? 'Anh/chị vuốt tóc lên hoặc dùng ngón tay ấn nhẹ vào má xem camera bên em có bị giật không ạ?' : 'Could you run your fingers through your hair or press your cheek? I need to check the camera focus.'}"
+                                 </p>
+                                 <div className="text-gray-400 text-xs leading-relaxed">
+                                     <span className="text-white font-bold">{lang === 'vi' ? 'Lý do:' : 'Why:'}</span> {lang === 'vi' ? 'Sự đan xen giữa các ngón tay và kết cấu phức tạp như sợi tóc là "điểm mù" lớn nhất của phần mềm Deepfake hiện tại.' : 'The intersection between fingers and complex textures like hair is currently a huge blind spot for Deepfakes.'}
+                                     <br/>
+                                     <span className="text-purple-400 font-bold">{lang === 'vi' ? '👉 Hãy nhìn kỹ xem:' : '👉 Look closely:'}</span> {lang === 'vi' ? 'Ngón tay của họ có bị mờ hoặc hòa tan vào tóc không? Chỗ má bị ấn vào có bị nhòe thay vì lõm xuống tự nhiên không?' : 'Do their fingers melt or blur into their hair? Does the pressed cheek glitch instead of naturally indenting?'}
+                                 </div>
+                             </div>
+                             <div className="flex gap-2 w-full lg:w-auto shrink-0 mt-4 lg:mt-0">
+                                 <button onClick={() => setTest4('FAIL')} className={`flex-1 lg:flex-none px-4 py-3 md:py-4 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border ${test4 === 'FAIL' ? 'bg-red-600 text-white border-red-500 shadow-[0_0_15px_rgba(220,38,38,0.4)] scale-105' : 'bg-black text-gray-400 border-gray-800 hover:border-red-500/50 hover:text-red-500'}`}>
+                                     🚨 {lang === 'vi' ? 'Ngón Tay Bị Tan/Nhòe' : 'Fingers Melt/Blur'}
+                                 </button>
+                                 <button onClick={() => setTest4('PASS')} className={`flex-1 lg:flex-none px-4 py-3 md:py-4 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border ${test4 === 'PASS' ? 'bg-green-600 text-white border-green-500 shadow-[0_0_15px_rgba(22,163,74,0.4)] scale-105' : 'bg-black text-gray-400 border-gray-800 hover:border-green-500/50 hover:text-green-500'}`}>
+                                     ✅ {lang === 'vi' ? 'Rõ Ràng, Tự Nhiên' : 'Clear & Natural'}
+                                 </button>
+                             </div>
+                         </div>
+                     </div>
+
+                     {/* TEST 5: ÁNH SÁNG ĐỘNG (TRÙM CUỐI) */}
+                     <div className={`p-5 md:p-6 rounded-2xl border transition-all duration-300 ${test5 === 'PASS' ? 'border-green-500/50 bg-green-900/10' : test5 === 'FAIL' ? 'border-red-500/50 bg-red-900/20' : 'border-white/10 bg-black/40 hover:border-white/20'}`}>
+                         <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center">
+                             <div className="flex-1">
+                                 <div className="text-cyan-400 text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
+                                     {lang === 'vi' ? 'BƯỚC 5 (TRÙM CUỐI): ÁNH SÁNG ĐỘNG' : 'STEP 5 (ULTIMATE): DYNAMIC LIGHTING'}
+                                 </div>
+                                 <p className="text-white font-bold text-[15px] md:text-lg italic mb-2 leading-snug">
+                                     🗣️ "{lang === 'vi' ? 'Chỗ anh/chị hơi tối, anh/chị cầm điện thoại rọi đèn pin qua lại lên mặt, hoặc bật tắt công tắc đèn phòng giúp em với?' : 'Could you shine a flashlight on your face or quickly turn the room lights on and off?'}"
+                                 </p>
+                                 <div className="text-gray-400 text-xs leading-relaxed">
+                                     <span className="text-white font-bold">{lang === 'vi' ? 'Lý do:' : 'Why:'}</span> {lang === 'vi' ? 'Khuôn mặt AI thường được "in" cứng ánh sáng từ video gốc. Khi ánh sáng môi trường thay đổi đột ngột, AI không thể tạo ra bóng đổ theo thời gian thực.' : 'AI faces have baked-in static lighting. They completely fail to react to sudden, real-world light changes.'}
+                                     <br/>
+                                     <span className="text-cyan-400 font-bold">{lang === 'vi' ? '👉 Hãy nhìn kỹ xem:' : '👉 Look closely:'}</span> {lang === 'vi' ? 'Bóng đổ trên mũi, gò má có di chuyển theo luồng sáng không? Hay khuôn mặt vẫn sáng đều ảo trân và không hề đổi màu?' : 'Do shadows on the nose and cheeks shift with the light? Or does the face remain uniformly lit and flat?'}
+                                 </div>
+                             </div>
+                             <div className="flex gap-2 w-full lg:w-auto shrink-0 mt-4 lg:mt-0">
+                                 <button onClick={() => setTest5('FAIL')} className={`flex-1 lg:flex-none px-4 py-3 md:py-4 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border ${test5 === 'FAIL' ? 'bg-red-600 text-white border-red-500 shadow-[0_0_15px_rgba(220,38,38,0.4)] scale-105' : 'bg-black text-gray-400 border-gray-800 hover:border-red-500/50 hover:text-red-500'}`}>
+                                     🚨 {lang === 'vi' ? 'Mặt Trơ / Bóng Cố Định' : 'Static Light / Flat Face'}
+                                 </button>
+                                 <button onClick={() => setTest5('PASS')} className={`flex-1 lg:flex-none px-4 py-3 md:py-4 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border ${test5 === 'PASS' ? 'bg-green-600 text-white border-green-500 shadow-[0_0_15px_rgba(22,163,74,0.4)] scale-105' : 'bg-black text-gray-400 border-gray-800 hover:border-green-500/50 hover:text-green-500'}`}>
+                                     ✅ {lang === 'vi' ? 'Bóng Di Chuyển Thật' : 'Dynamic Shadows'}
+                                 </button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
+                 {/* Trạng thái Kết quả (Dynamic Result Area) */}
+                 {(isDanger || isSafe || progressCount > 0) && (
+                     <div className="mt-8 pt-8 border-t border-white/10 animate-in slide-in-from-bottom-4">
+                         {isDanger ? (
+                              <div className="bg-red-500/10 border-2 border-red-500 rounded-3xl p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-8 text-center md:text-left shadow-[0_0_40px_rgba(220,38,38,0.2)]">
+                                  <div className="bg-red-500 text-white p-5 rounded-full animate-pulse shrink-0 shadow-[0_0_20px_#ef4444]">
+                                      <PhoneOff size={40} />
+                                  </div>
+                                  <div className="flex-1">
+                                      <h3 className="text-red-500 font-black text-2xl md:text-3xl uppercase tracking-tighter mb-3 leading-tight">{lang === 'vi' ? '100% LÀ DEEPFAKE! CÚP MÁY NGAY!' : '100% DEEPFAKE! HANG UP NOW!'}</h3>
+                                      <p className="text-red-200/90 text-sm md:text-base leading-relaxed">{lang === 'vi' ? 'Hình ảnh đã bộc lộ sơ hở đặc trưng của thuật toán AI. Tuyệt đối KHÔNG chuyển tiền và KHÔNG cung cấp mã OTP. Cúp máy, chặn số và tự gọi lại bằng SIM mạng bình thường để xác minh!' : 'The video exhibits distinct generative AI artifacts. DO NOT transfer any money or provide OTP codes. Hang up, block the number, and call back using a regular cellular network to verify!'}</p>
+                                  </div>
+                              </div>
+                         ) : isSafe ? (
+                              <div className="bg-green-500/10 border border-green-500/50 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-5 text-center md:text-left">
+                                  <CheckCircle className="text-green-500 shrink-0" size={32} />
+                                  <div>
+                                      <h3 className="text-green-500 font-black text-lg uppercase tracking-tight mb-2">{lang === 'vi' ? 'CÁC PHÉP THỬ ĐỀU THÔNG QUA' : 'ALL TESTS PASSED'}</h3>
+                                      <p className="text-green-200/70 text-sm leading-relaxed">{lang === 'vi' ? 'Video có vẻ là thực tế. Tuy nhiên, nếu họ vẫn liên tục thúc giục bạn chuyển tiền gấp bằng mọi giá, hãy viện lý do và gọi lại xác minh.' : 'The video appears genuine. However, if they still forcefully urge you to transfer money, make an excuse and verify offline.'}</p>
+                                  </div>
+                              </div>
+                         ) : (
+                              <div className="text-center bg-black/30 py-4 rounded-xl border border-white/5 text-gray-500 text-xs font-mono animate-pulse flex items-center justify-center gap-3">
+                                  <ScanLine size={16}/> {lang === 'vi' ? 'HỆ THỐNG ĐANG ĐỢI KẾT QUẢ TỪ PHÍA BẠN...' : 'WAITING FOR YOUR OBSERVATION RESULTS...'}
+                              </div>
+                         )}
+                     </div>
+                 )}
             </div>
-
-            {/* VISUAL CHECKLIST SECTION */}
-            <div className="flex items-center gap-4 mb-8">
-                <div className="h-px bg-white/10 flex-1"></div>
-                <h3 className="text-gray-400 font-mono text-[10px] uppercase tracking-[0.3em] px-4">
-                    {lang === 'vi' ? 'MÔ ĐUN GIÁM ĐỊNH VIDEO TRỰC TIẾP' : 'LIVE VIDEO FORENSICS MODULE'}
-                </h3>
-                <div className="h-px bg-white/10 flex-1"></div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                {CHECKLIST_DATA[lang].map((cat) => (
-                    <div key={cat.category} className="bg-surface border border-white/5 rounded-3xl overflow-hidden shadow-xl hover:border-primary/20 transition-all group">
-                        <div className="bg-white/5 border-b border-white/5 p-6 flex items-center gap-3">
-                            <div className="h-2.5 w-2.5 bg-primary rounded-full animate-pulse"></div>
-                            <span className="font-black text-white text-xs uppercase tracking-[0.2em]">{cat.category}</span>
-                        </div>
-                        <div className="p-8 space-y-4">
-                            {cat.items.map((item) => (
-                                <label key={item} className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 cursor-pointer group transition-colors">
-                                    <div className={`shrink-0 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all duration-300 ${checks.has(item) ? 'bg-primary border-primary rotate-90 shadow-[0_0_10px_rgba(0,240,255,0.4)]' : 'border-gray-700 group-hover:border-primary/50'}`}>
-                                        {checks.has(item) && <div className="w-2 h-2 bg-black rounded-sm" />}
-                                    </div>
-                                    <input type="checkbox" className="hidden" checked={checks.has(item)} onChange={() => toggleCheck(item)} />
-                                    <span className={`text-[13px] transition-colors leading-relaxed ${checks.has(item) ? 'text-white font-bold' : 'text-gray-400'}`}>{item}</span>
-                                </label>
-                            ))}
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            <div className="text-center mb-16">
-                <button 
-                    onClick={analyzeRisk}
-                    className="bg-white text-black hover:bg-primary px-12 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all shadow-xl hover:shadow-primary/20 hover:scale-105 active:scale-95 flex items-center gap-3 mx-auto"
-                >
-                    <ActivityIcon size={18} /> {lang === 'vi' ? 'TỔNG HỢP & PHÂN TÍCH VIDEO' : 'COMPILE & ANALYZE VIDEO'}
-                </button>
-            </div>
-
-            {result !== null && (
-                <div id="risk-result" className="animate-in slide-in-from-bottom-8 duration-700 scroll-mt-24">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                        <div className="lg:col-span-5">
-                            {result === 0 ? (
-                                <div className="bg-success/5 border-2 border-success/30 rounded-3xl p-12 text-center relative overflow-hidden shadow-2xl">
-                                    <div className="text-6xl mb-8">✅</div>
-                                    <h3 className="text-success font-black text-3xl mb-4 uppercase tracking-tighter">{lang === 'vi' ? 'HỆ THỐNG AN TOÀN' : 'SYSTEM SECURE'}</h3>
-                                    <p className="text-gray-300 text-sm leading-relaxed">{lang === 'vi' ? 'Không phát hiện dấu hiệu giả mạo rõ rệt. Tuy nhiên, hãy luôn duy trì sự cảnh giác trước các yêu cầu chuyển tiền.' : 'No clear signs of deepfake detected. However, remain high vigilance regarding money transfers.'}</p>
-                                </div>
-                            ) : result <= 2 ? (
-                                <div className="bg-warning/5 border-2 border-warning/30 rounded-3xl p-12 text-center relative overflow-hidden shadow-2xl">
-                                    <div className="text-6xl mb-8">⚠️</div>
-                                    <h3 className="text-warning font-black text-3xl mb-4 uppercase tracking-tighter">{lang === 'vi' ? 'RỦI RO TIỀM ẨN' : 'POTENTIAL RISK'}</h3>
-                                    <p className="text-gray-300 text-sm leading-relaxed">{lang === 'vi' ? `Ghi nhận ${result} biểu hiện bất thường. Chúng tôi khuyến nghị bạn thực hiện xác minh chéo qua cuộc gọi GSM.` : `${result} anomalies recorded. Cross-verification via GSM call recommended.`}</p>
-                                </div>
-                            ) : (
-                                <div className="bg-secondary/5 border-2 border-secondary/30 rounded-3xl p-12 text-center relative overflow-hidden shadow-2xl">
-                                    <div className="text-6xl mb-8 animate-pulse">🚨</div>
-                                    <h3 className="text-secondary font-black text-3xl mb-4 uppercase tracking-tighter">{lang === 'vi' ? 'NGUY HIỂM CỰC ĐỘ' : 'EXTREME DANGER'}</h3>
-                                    <p className="text-white font-bold text-sm leading-relaxed">{lang === 'vi' ? 'DẤU HIỆU LỪA ĐẢO RÕ RỆT. NGẮT KẾT NỐI NGAY LẬP TỨC VÀ KHÔNG CHUYỂN TIỀN!' : 'CLEAR DEEPFAKE SIGNS. DISCONNECT IMMEDIATELY AND DO NOT TRANSFER MONEY!'}</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="lg:col-span-7 bg-surface border border-white/5 rounded-3xl p-10 shadow-2xl">
-                            <h3 className="text-white font-black text-[10px] mb-8 flex items-center gap-3 uppercase tracking-[0.3em] border-b border-white/5 pb-6">
-                                <ShieldCheck className="text-primary" size={20}/> {lang === 'vi' ? 'KẾ HOẠCH HÀNH ĐỘNG KHẨN CẤP' : 'EMERGENCY ACTION PLAN'}
-                            </h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                                {[
-                                    { step: 1, title: lang === 'vi' ? 'DỪNG CUỘC GỌI' : 'STOP CALL', desc: lang === 'vi' ? 'Ngắt kết nối video ngay lập tức khi phát hiện nghi vấn.' : 'End the video connection immediately upon suspicion.' },
-                                    { step: 2, title: lang === 'vi' ? 'XÁC THỰC NGOẠI TUYẾN' : 'OFFLINE VERIFY', desc: lang === 'vi' ? 'Gọi lại bằng sim điện thoại truyền thống hoặc gặp mặt trực tiếp.' : 'Call back via traditional SIM or meet in person.' },
-                                    { step: 3, title: lang === 'vi' ? 'KIỂM TRA SINH TRẮC' : 'BIOMETRIC TEST', desc: lang === 'vi' ? 'Yêu cầu người gọi đưa tay ngang mặt hoặc quay nghiêng 90 độ.' : 'Ask caller to wave hand across face or turn head 90 degrees.' },
-                                    { step: 4, title: lang === 'vi' ? 'BÁO CÁO NHÀ CHỨC TRÁCH' : 'REPORT', desc: lang === 'vi' ? 'Thông báo cho ngân hàng và cơ quan công an gần nhất.' : 'Inform your bank and the nearest police department.' },
-                                ].map((item) => (
-                                    <div key={item.step} className="flex gap-6 items-start">
-                                        <div className="h-10 w-10 bg-black border border-white/10 rounded-xl flex items-center justify-center shrink-0 text-primary font-mono font-bold text-sm shadow-inner">{item.step}</div>
-                                        <div>
-                                            <div className="text-white font-black text-xs uppercase tracking-widest mb-1.5">{item.title}</div>
-                                            <p className="text-gray-400 text-xs leading-relaxed">{item.desc}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
       )}
 
