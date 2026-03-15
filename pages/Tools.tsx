@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { CHECKLIST_DATA, KNOWLEDGE_BASE } from '../data';
 import { Language } from '../types';
-import { ChevronDown, ChevronUp, ShieldCheck, Search, Zap, Brain, Activity, Info, Gavel, HeartHandshake, Laptop } from 'lucide-react';
+import { ChevronDown, ChevronUp, ShieldCheck, Search, Zap, Brain, Activity, Info, Gavel, HeartHandshake, Laptop, Terminal, Link2, AlertOctagon, ScanLine, Fingerprint, Lock } from 'lucide-react';
 
 // Defined explicit interface for KnowledgeItem props
 interface KnowledgeItemProps {
@@ -15,22 +15,34 @@ interface KnowledgeItemProps {
 const KnowledgeItem: React.FC<KnowledgeItemProps> = ({ title, children, icon }) => {
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <div className="bg-surface border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary/50 shadow-lg mb-6">
-            <button 
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex items-center justify-between p-6 hover:bg-white/5 transition-colors text-left"
-            >
-                <div className="flex items-center gap-4">
-                    <div className="text-primary">{icon}</div>
-                    <span className="font-black text-white text-sm uppercase tracking-widest">{title}</span>
+        <div className={`relative group mb-8 transition-all duration-500 ${isOpen ? 'scale-[1.01]' : 'hover:scale-[1.01]'}`} style={{ perspective: '1000px' }}>
+            {/* Hologram Glow & Grid */}
+            <div className={`absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20 rounded-2xl blur-xl transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-60'}`}></div>
+            
+            <div className={`relative bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden transition-all duration-500 ${isOpen ? 'border-primary/50 shadow-[0_0_30px_rgba(0,240,255,0.15)]' : 'shadow-lg hover:border-primary/30'}`}>
+                {/* Hologram Scanline Effect */}
+                <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(0,240,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
+                {isOpen && <div className="absolute top-0 left-0 w-full h-1 bg-primary/50 shadow-[0_0_15px_#00F0FF] animate-[scan_3s_linear_infinite] opacity-70 pointer-events-none"></div>}
+
+                <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between p-6 relative z-10 text-left bg-gradient-to-r from-black/80 to-transparent">
+                    <div className="flex items-center gap-4">
+                        <div className={`p-3 rounded-xl border transition-colors ${isOpen ? 'bg-primary/20 border-primary/50 text-primary shadow-[0_0_15px_rgba(0,240,255,0.4)]' : 'bg-white/5 border-white/10 text-gray-400 group-hover:text-primary group-hover:border-primary/30'}`}>
+                            {icon}
+                        </div>
+                        <span className={`font-black text-sm md:text-base uppercase tracking-[0.2em] font-mono drop-shadow-md transition-colors ${isOpen ? 'text-primary' : 'text-white group-hover:text-primary/80'}`}>{title}</span>
+                    </div>
+                    <div className={`shrink-0 transition-transform duration-500 ${isOpen ? 'rotate-180 text-primary' : 'text-gray-500 group-hover:text-primary/50'}`}>
+                        <ChevronDown size={24} />
+                    </div>
+                </button>
+                <div className={`grid transition-all duration-500 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                    <div className="overflow-hidden">
+                        <div className="p-6 md:p-8 border-t border-primary/20 bg-primary/[0.02] relative z-10">
+                            {children}
+                        </div>
+                    </div>
                 </div>
-                {isOpen ? <ChevronUp size={18} className="text-primary" /> : <ChevronDown size={18} className="text-gray-500" />}
-            </button>
-            {isOpen && (
-                <div className="p-8 border-t border-white/5 bg-black/40 animate-in slide-in-from-top-2 duration-200">
-                    {children}
-                </div>
-            )}
+            </div>
         </div>
     )
 }
@@ -44,12 +56,53 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
   const [activeTab, setActiveTab] = useState<'SCAN' | 'KNOWLEDGE'>(initialTab);
   const [checks, setChecks] = useState<Set<string>>(new Set());
   const [result, setResult] = useState<number | null>(null);
+  
+  // State cho bộ quét văn bản/Link
+  const [textInput, setTextInput] = useState('');
+  const [isScanningText, setIsScanningText] = useState(false);
+  const [textLogs, setTextLogs] = useState<string[]>([]);
+  const [textResult, setTextResult] = useState<'SAFE' | 'WARNING' | 'DANGER' | null>(null);
 
   const toggleCheck = (item: string) => {
     const newChecks = new Set(checks);
     if (newChecks.has(item)) newChecks.delete(item);
     else newChecks.add(item);
     setChecks(newChecks);
+  };
+
+  const handleTextScan = () => {
+      if (!textInput.trim()) return;
+      setIsScanningText(true);
+      setTextLogs([]);
+      setTextResult(null);
+
+      const mockLogs = [
+          "INITIALIZING THREAT INTELLIGENCE ENGINE...",
+          "EXTRACTING ENTITIES AND URLS...",
+          "CROSS-REFERENCING GLOBAL BLACKLISTS (APWG, PHISHTANK)...",
+          "ANALYZING NATURAL LANGUAGE PROCESSING (NLP) PATTERNS...",
+          "CHECKING URGENCY/MANIPULATION VECTORS..."
+      ];
+
+      mockLogs.forEach((log, index) => {
+          setTimeout(() => {
+              setTextLogs(prev => [...prev, log]);
+              if (index === mockLogs.length - 1) {
+                  setTimeout(() => {
+                      setIsScanningText(false);
+                      // Logic mô phỏng: Chứa chữ "ngân hàng", "chuyển tiền", "http" -> Nguy hiểm
+                      const lowerText = textInput.toLowerCase();
+                      if (lowerText.includes('http') || lowerText.includes('chuyển') || lowerText.includes('bank') || lowerText.includes('wire') || lowerText.includes('cấp cứu')) {
+                          setTextResult('DANGER');
+                      } else if (lowerText.includes('vay') || lowerText.includes('mượn') || lowerText.includes('loan')) {
+                          setTextResult('WARNING');
+                      } else {
+                          setTextResult('SAFE');
+                      }
+                  }, 800);
+              }
+          }, index * 600); // Mỗi 0.6s hiện 1 log
+      });
   };
 
   const analyzeRisk = () => {
@@ -61,9 +114,10 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
   };
 
   const getKnowledgeIcon = (category: string) => {
-    if (category.includes('PHÁP LUẬT') || category.includes('LAW')) return <Gavel size={20}/>;
-    if (category.includes('ĐỜI SỐNG') || category.includes('LIFE')) return <HeartHandshake size={20}/>;
-    if (category.includes('DẤU HIỆU') || category.includes('SIGNS')) return <Activity size={20}/>;
+    if (category.includes('PHÁP') || category.includes('LAW')) return <Gavel size={20}/>;
+    if (category.includes('TÂM LÝ') || category.includes('PSYCH')) return <Brain size={20}/>;
+    if (category.includes('PHÁP Y') || category.includes('FORENSICS')) return <Fingerprint size={20}/>;
+    if (category.includes('TOÀN CẦU') || category.includes('GLOBAL')) return <Activity size={20}/>;
     return <Laptop size={20}/>;
   };
 
@@ -90,11 +144,86 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
       {activeTab === 'SCAN' && (
         <div className="animate-in slide-in-from-bottom-4 duration-500">
             <div className="text-center mb-12">
-                <h2 className="text-5xl font-black mb-4 text-white uppercase tracking-tighter leading-none">{lang === 'vi' ? 'QUÉT RỦI RO' : 'RISK SCAN'}</h2>
+                <h2 className="text-5xl font-black mb-4 text-white uppercase tracking-tighter leading-none">{lang === 'vi' ? 'TRUNG TÂM PHÂN TÍCH' : 'THREAT HUB'}</h2>
                 <p className="text-gray-400 text-sm">{lang === 'vi'
-                    ? 'Hãy đánh dấu các biểu hiện bất thường mà bạn quan sát được trong video call.'
-                    : 'Check the abnormal signs observed during the video call.'}
+                    ? 'Công cụ phân tích ngữ nghĩa và sinh trắc học video chuyên sâu.'
+                    : 'Deep semantics and video biometric analysis tool.'}
                 </p>
+            </div>
+
+            {/* NEW MODULE: QUICK TEXT/LINK ANALYZER */}
+            <div className="bg-surface border border-white/5 rounded-3xl p-6 md:p-8 shadow-2xl mb-16 relative overflow-hidden">
+                <div className="absolute top-0 right-0 opacity-5"><Terminal size={150} /></div>
+                <h3 className="text-white font-black text-sm uppercase tracking-[0.2em] mb-4 flex items-center gap-2 relative z-10">
+                    <ScanLine className="text-primary" size={18}/> {lang === 'vi' ? 'MÔ ĐUN QUÉT VĂN BẢN / LIÊN KẾT ĐÁNG NGỜ' : 'SUSPICIOUS TEXT/LINK SCANNER'}
+                </h3>
+                
+                <div className="flex flex-col md:flex-row gap-4 relative z-10">
+                    <div className="relative flex-1">
+                        <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                        <input 
+                            type="text" 
+                            value={textInput}
+                            onChange={(e) => setTextInput(e.target.value)}
+                            placeholder={lang === 'vi' ? "Dán tin nhắn, đường link hoặc email nghi ngờ vào đây..." : "Paste suspicious message, link, or email here..."}
+                            className="w-full bg-black/50 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:border-primary outline-none transition-colors"
+                        />
+                    </div>
+                    <button 
+                        onClick={handleTextScan}
+                        disabled={isScanningText || !textInput.trim()}
+                        className="bg-primary text-black px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0 flex items-center justify-center gap-2"
+                    >
+                        {isScanningText ? <ScanLine className="animate-spin" size={16}/> : <Terminal size={16}/>}
+                        {lang === 'vi' ? 'QUÉT DỮ LIỆU' : 'SCAN DATA'}
+                    </button>
+                </div>
+
+                {/* Scanner Terminal Output */}
+                {(textLogs.length > 0 || textResult) && (
+                    <div className="mt-6 bg-[#0a0a0a] border border-gray-800 rounded-xl p-4 font-mono text-[10px] sm:text-xs">
+                        <div className="flex items-center gap-2 mb-3 pb-3 border-b border-gray-800 text-gray-500">
+                            <Lock size={12} /> SECURE_TERMINAL_V2.0
+                        </div>
+                        <div className="space-y-2 mb-4">
+                            {textLogs.map((log, i) => (
+                                <div key={i} className="text-primary animate-in fade-in flex items-start gap-2">
+                                    <span className="text-gray-600">&gt;</span> {log}
+                                </div>
+                            ))}
+                            {isScanningText && <div className="text-gray-500 animate-pulse flex items-start gap-2"><span className="text-gray-600">&gt;</span> _</div>}
+                        </div>
+                        
+                        {textResult && (
+                            <div className={`p-4 rounded-lg border flex items-center justify-between animate-in slide-in-from-bottom-2 ${textResult === 'DANGER' ? 'bg-red-900/20 border-red-500/50 text-red-500' : textResult === 'WARNING' ? 'bg-yellow-900/20 border-yellow-500/50 text-yellow-500' : 'bg-green-900/20 border-green-500/50 text-green-500'}`}>
+                                <div className="flex items-center gap-3">
+                                    <AlertOctagon size={24} />
+                                    <div>
+                                        <div className="font-black tracking-widest uppercase">
+                                            {textResult === 'DANGER' ? (lang === 'vi' ? 'PHÁT HIỆN RỦI RO CAO' : 'HIGH RISK DETECTED') : 
+                                             textResult === 'WARNING' ? (lang === 'vi' ? 'CÓ DẤU HIỆU THAO TÚNG' : 'MANIPULATION SIGNS DETECTED') : 
+                                             (lang === 'vi' ? 'CHƯA THẤY BẤT THƯỜNG' : 'NO ANOMALIES FOUND')}
+                                        </div>
+                                        <div className="text-[10px] mt-1 opacity-80">
+                                            {textResult === 'DANGER' ? (lang === 'vi' ? 'Dữ liệu có chứa các từ khóa lừa đảo phổ biến hoặc liên kết độc hại.' : 'Data contains common scam keywords or malicious links.') : 
+                                             textResult === 'WARNING' ? (lang === 'vi' ? 'Ngôn từ mang tính thúc giục, vay mượn. Cần xác minh chéo.' : 'Urgent/borrowing language. Cross-verification needed.') : 
+                                             (lang === 'vi' ? 'Dữ liệu an toàn ở mức độ phân tích văn bản cơ bản.' : 'Data is safe at the basic text analysis level.')}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+
+            {/* VISUAL CHECKLIST SECTION */}
+            <div className="flex items-center gap-4 mb-8">
+                <div className="h-px bg-white/10 flex-1"></div>
+                <h3 className="text-gray-400 font-mono text-[10px] uppercase tracking-[0.3em] px-4">
+                    {lang === 'vi' ? 'MÔ ĐUN GIÁM ĐỊNH VIDEO TRỰC TIẾP' : 'LIVE VIDEO FORENSICS MODULE'}
+                </h3>
+                <div className="h-px bg-white/10 flex-1"></div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
@@ -122,9 +251,9 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
             <div className="text-center mb-16">
                 <button 
                     onClick={analyzeRisk}
-                    className="bg-primary text-black px-12 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 flex items-center gap-3 mx-auto"
+                    className="bg-white text-black hover:bg-primary px-12 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all shadow-xl hover:shadow-primary/20 hover:scale-105 active:scale-95 flex items-center gap-3 mx-auto"
                 >
-                    <ActivityIcon size={18} /> {lang === 'vi' ? 'BẮT ĐẦU PHÂN TÍCH RỦI RO' : 'START RISK ANALYSIS'}
+                    <ActivityIcon size={18} /> {lang === 'vi' ? 'TỔNG HỢP & PHÂN TÍCH VIDEO' : 'COMPILE & ANALYZE VIDEO'}
                 </button>
             </div>
 
@@ -181,50 +310,79 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
       )}
 
       {activeTab === 'KNOWLEDGE' && (
-        <div className="animate-in slide-in-from-bottom-4 duration-500">
-            <div className="text-center mb-12">
-                <h2 className="text-5xl font-black mb-4 text-white uppercase tracking-tighter leading-none">{lang === 'vi' ? 'KIẾN THỨC NỀN TẢNG' : 'CORE KNOWLEDGE'}</h2>
-                <p className="text-gray-400 text-sm">{lang === 'vi' ? 'Nâng cao nhận thức để tự bảo vệ mình trong không gian số' : 'Raise awareness to protect yourself in the digital space'}</p>
+        <div className="animate-in fade-in duration-700 relative">
+            <style>{`
+              @keyframes scan {
+                0% { transform: translateY(-100%); opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { transform: translateY(1000px); opacity: 0; }
+              }
+              @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-5px); }
+              }
+            `}</style>
+            
+            <div className="text-center mb-16 relative">
+                {/* Hologram Header Decor */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 rounded-full blur-[80px] pointer-events-none"></div>
+                <h2 className="text-4xl md:text-5xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white via-primary to-white uppercase tracking-tighter leading-none relative z-10 animate-pulse">
+                    {lang === 'vi' ? 'THƯ VIỆN LƯU TRỮ HOLOGRAM' : 'HOLOGRAM DATABANK'}
+                </h2>
+                <p className="text-primary/80 text-sm font-mono tracking-widest relative z-10">
+                    {lang === 'vi' ? 'TRUY CẬP DỮ LIỆU... ĐÃ MỞ KHÓA' : 'ACCESSING DATA... UNLOCKED'}
+                </p>
             </div>
             
-            {KNOWLEDGE_BASE[lang] ? KNOWLEDGE_BASE[lang].map((cat: any, idx: number) => (
-                <KnowledgeItem key={idx} title={cat.category} icon={getKnowledgeIcon(cat.category)}>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {cat.items.map((item: any, i: number) => (
-                            <div key={i} className="bg-black/40 p-6 rounded-2xl border border-white/5 hover:border-primary/20 transition-all group">
-                                <h4 className="text-primary font-black text-[10px] uppercase tracking-widest mb-3">{item.title}</h4>
-                                <p className="text-xs text-gray-300 leading-relaxed">{item.content}</p>
+            <div className="relative z-10 max-w-5xl mx-auto">
+                {KNOWLEDGE_BASE[lang] ? KNOWLEDGE_BASE[lang].map((cat: any, idx: number) => (
+                    <KnowledgeItem key={idx} title={cat.category} icon={getKnowledgeIcon(cat.category)}>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {cat.items.map((item: any, i: number) => (
+                                <div key={i} className="relative group/card bg-black/80 p-6 rounded-xl border border-primary/20 hover:border-primary transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(0,240,255,0.2)] animate-[float_4s_ease-in-out_infinite]" style={{ animationDelay: `${i * 0.2}s` }}>
+                                    {/* Decorator elements for sci-fi datacube look */}
+                                    <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary rounded-tl-sm transition-all group-hover/card:w-4 group-hover/card:h-4"></div>
+                                    <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-primary rounded-tr-sm transition-all group-hover/card:w-4 group-hover/card:h-4"></div>
+                                    <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-primary rounded-bl-sm transition-all group-hover/card:w-4 group-hover/card:h-4"></div>
+                                    <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary rounded-br-sm transition-all group-hover/card:w-4 group-hover/card:h-4"></div>
+                                    
+                                    <h4 className="text-primary font-black text-[12px] uppercase tracking-widest mb-4 font-mono group-hover/card:text-white transition-colors">{item.title}</h4>
+                                    <p className="text-xs text-gray-400 leading-relaxed font-mono opacity-80 group-hover/card:opacity-100 transition-opacity group-hover/card:text-primary/90">{item.content}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </KnowledgeItem>
+                )) : (
+                   <div className="text-center py-20 text-primary/50 italic font-mono animate-pulse">DOWNLOADING SECURE DATA...</div>
+                )}
+
+                {/* Default Hardcoded knowledge for safety */}
+                <KnowledgeItem title={lang === 'vi' ? "🛡️ GIAO THỨC PHÒNG VỆ" : "🛡️ DEFENSE PROTOCOL"} icon={<ShieldCheck size={20}/>}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[12px] text-gray-300 leading-relaxed">
+                        <div className="relative group/card bg-black/80 p-8 rounded-2xl border border-primary/20 hover:border-primary transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.15)] overflow-hidden">
+                            <div className="absolute top-0 right-0 bg-primary text-black font-bold text-[8px] px-2 py-1 rounded-bl-lg font-mono">PROTOCOL_01</div>
+                            <div className="text-primary font-black text-sm mb-6 uppercase tracking-widest flex items-center gap-3 font-mono">
+                               <Brain size={18} className="animate-pulse"/> {lang === 'vi' ? 'QUY TẮC "CHẬM LẠI 1 NHỊP"' : '"SLOW DOWN" RULE'}
                             </div>
-                        ))}
+                            <ul className="space-y-4 font-mono text-xs">
+                                <li className="flex gap-4 items-start"><span className="text-primary font-black mt-1 opacity-70">&gt;</span> {lang === 'vi' ? 'Luôn dành ít nhất 30 giây suy nghĩ trước khi thực hiện bất kỳ giao dịch nào.' : 'Always take at least 30 seconds to think before any transaction.'}</li>
+                                <li className="flex gap-4 items-start"><span className="text-primary font-black mt-1 opacity-70">&gt;</span> {lang === 'vi' ? 'Kiểm tra chéo: Dùng sim thường gọi lại cho người thân để xác nhận.' : 'Cross-check: Use normal SIM to call back relatives for confirmation.'}</li>
+                            </ul>
+                        </div>
+                        <div className="relative group/card bg-black/80 p-8 rounded-2xl border border-success/20 hover:border-success transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] overflow-hidden">
+                            <div className="absolute top-0 right-0 bg-success text-black font-bold text-[8px] px-2 py-1 rounded-bl-lg font-mono">PROTOCOL_02</div>
+                            <div className="text-success font-black text-sm mb-6 uppercase tracking-widest flex items-center gap-3 font-mono">
+                               <HeartHandshake size={18} className="animate-pulse"/> {lang === 'vi' ? 'MẬT MÃ GIA ĐÌNH' : 'FAMILY CODE'}
+                            </div>
+                            <ul className="space-y-4 font-mono text-xs">
+                                <li className="flex gap-4 items-start"><span className="text-success font-black mt-1 opacity-70">&gt;</span> {lang === 'vi' ? 'Thiết lập một từ khóa bí mật hoặc một câu hỏi riêng tư mà chỉ người thân mới trả lời được.' : 'Establish a keyword or private question only family members can answer.'}</li>
+                                <li className="flex gap-4 items-start"><span className="text-success font-black mt-1 opacity-70">&gt;</span> {lang === 'vi' ? 'Cập nhật mật mã định kỳ 3 tháng một lần để đảm bảo an toàn.' : 'Update the code every 3 months for safety.'}</li>
+                            </ul>
+                        </div>
                     </div>
                 </KnowledgeItem>
-            )) : (
-               <div className="text-center py-20 text-gray-600 italic">Dữ liệu đang được cập nhật...</div>
-            )}
-
-            {/* Default Hardcoded knowledge for safety */}
-            <KnowledgeItem title={lang === 'vi' ? "🛡️ CHIẾN LƯỢC PHÒNG VỆ" : "🛡️ DEFENSE STRATEGY"} icon={<ShieldCheck size={20}/>}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[12px] text-gray-300 leading-relaxed">
-                    <div className="bg-black/60 p-8 rounded-3xl border border-white/5 hover:border-primary/20 transition-all">
-                        <div className="text-primary font-black text-xs mb-6 uppercase tracking-widest flex items-center gap-2">
-                           <Brain size={14}/> {lang === 'vi' ? 'QUY TẮC "CHẬM LẠI 1 NHỊP"' : '"SLOW DOWN" RULE'}
-                        </div>
-                        <ul className="space-y-4">
-                            <li className="flex gap-4 items-start"><span className="text-primary font-black mt-1">•</span> {lang === 'vi' ? 'Luôn dành ít nhất 30 giây suy nghĩ trước khi thực hiện bất kỳ giao dịch nào.' : 'Always take at least 30 seconds to think before any transaction.'}</li>
-                            <li className="flex gap-4 items-start"><span className="text-primary font-black mt-1">•</span> {lang === 'vi' ? 'Kiểm tra chéo: Dùng sim thường gọi lại cho người thân để xác nhận.' : 'Cross-check: Use normal SIM to call back relatives for confirmation.'}</li>
-                        </ul>
-                    </div>
-                    <div className="bg-black/60 p-8 rounded-3xl border border-white/5 hover:border-success/20 transition-all">
-                        <div className="text-success font-black text-xs mb-6 uppercase tracking-widest flex items-center gap-2">
-                           <HeartHandshake size={14}/> {lang === 'vi' ? 'MẬT MÃ GIA ĐÌNH' : 'FAMILY CODE'}
-                        </div>
-                        <ul className="space-y-4">
-                            <li className="flex gap-4 items-start"><span className="text-success font-black mt-1">•</span> {lang === 'vi' ? 'Thiết lập một từ khóa bí mật hoặc một câu hỏi riêng tư mà chỉ người thân mới trả lời được.' : 'Establish a keyword or private question only family members can answer.'}</li>
-                            <li className="flex gap-4 items-start"><span className="text-success font-black mt-1">•</span> {lang === 'vi' ? 'Cập nhật mật mã định kỳ 3 tháng một lần để đảm bảo an toàn.' : 'Update the code every 3 months for safety.'}</li>
-                        </ul>
-                    </div>
-                </div>
-            </KnowledgeItem>
+            </div>
         </div>
       )}
     </div>

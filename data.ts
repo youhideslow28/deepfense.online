@@ -161,53 +161,69 @@ export const FUN_FACTS: Record<Language, FunFact[]> = {
 export const KNOWLEDGE_BASE: Record<Language, any[]> = {
   vi: [
     {
-      category: "🛡️ PHÒNG VỆ ĐỜI SỐNG (DỄ NHỚ)",
+      category: "🔬 PHÂN TÍCH PHÁP Y KỸ THUẬT SỐ (FORENSICS)",
       items: [
-        { title: "Quy tắc 30 giây", content: "Khi nhận cuộc gọi khẩn cấp, hãy im lặng 30 giây để quan sát kỹ cử động mắt và miệng của người gọi." },
-        { title: "Mật mã gia đình", content: "Hãy cùng người thân thiết lập một 'từ khóa bí mật'. Nếu người gọi không biết từ này, đó chắc chắn là Deepfake." },
-        { title: "Cử động bất ngờ", content: "Yêu cầu người gọi đưa tay ngang mặt hoặc xoay đầu. AI hiện tại thường bị lỗi nhòe hình khi có vật thể che mặt." }
+        { title: "Công nghệ rPPG (Nhịp tim quang học)", content: "Mắt người không thấy, nhưng AI có thể phân tích sự thay đổi vi mô của màu da theo mỗi nhịp đập của tim. Deepfake hiện tại hoàn toàn thất bại trong việc giả lập rPPG tự nhiên." },
+        { title: "Quang phổ âm thanh (Audio Spectrogram)", content: "Deepfake Voice thường để lại các 'cặn âm' (artifacts) ở tần số cao mà người thường không nghe thấy. Dưới lăng kính quang phổ, giọng thật mượt mà, giọng AI có những vết đứt gãy hình khối." },
+        { title: "Lỗi nội suy không gian (Spatial Glitches)", content: "Khi nhân vật AI đưa tay vò đầu hoặc che mặt, thuật toán nội suy (Inpainting) sẽ bị quá tải, khiến các ngón tay hòa tan vào tóc hoặc mặt bị biến dạng vật lý." }
       ]
     },
     {
-      category: "⚙️ DẤU HIỆU KỸ THUẬT",
+      category: "🌍 BỐI CẢNH ĐE DỌA TOÀN CẦU (GLOBAL THREAT)",
       items: [
-        { title: "Inpainting là gì?", content: "Kỹ thuật AI cho phép xóa bỏ hoặc thêm thắt vật thể vào video gốc một cách hoàn hảo, làm thay đổi hoàn toàn bối cảnh sự việc." },
-        { title: "Lỗi ánh sáng động", content: "AI thường gặp khó khăn trong việc mô phỏng ánh sáng phản chiếu từ môi trường lên mắt kính hoặc trang sức kim loại." },
-        { title: "Ranh giới gương mặt", content: "Khu vực giữa mặt và tai, hoặc ranh giới tóc thường có hiện tượng mờ nhòe bất thường (blurring) khi đối tượng di chuyển nhanh." }
+        { title: "CaaS (Cybercrime-as-a-Service)", content: "Lừa đảo đã trở thành 'Dịch vụ'. Tội phạm trên Dark Web giờ đây cho thuê các phần mềm Deepfake theo tháng (SaaS) với giá chỉ từ $50, tích hợp sẵn kịch bản và data rò rỉ." },
+        { title: "Zero-Day Deepfake", content: "Các thuật toán tạo sinh mới ra mắt (như Sora, Voice Engine) liên tục tạo ra các 'Zero-Day Deepfake' - những video giả mạo hoàn hảo đến mức các công cụ diệt virus truyền thống không thể nhận diện." },
+        { title: "Tấn công phi tập trung xuyên biên giới", content: "Kẻ tấn công ở Đông Âu có thể dùng AI mô phỏng hoàn hảo giọng nói địa phương của người Việt Nam thông qua các trạm trung chuyển tín hiệu ảo (SIP Spoofing)." }
       ]
     },
     {
-      category: "⚖️ PHÁP LUẬT VIỆT NAM",
+      category: "🧠 THAO TÚNG TÂM LÝ (SOCIAL ENGINEERING)",
       items: [
-        { title: "Tội lừa đảo chiếm đoạt tài sản", content: "Theo Điều 174 Bộ luật Hình sự 2015, hành vi sử dụng công nghệ cao (Deepfake) để lừa đảo có thể bị phạt tù từ 2 năm đến chung thân tùy mức độ thiệt hại." },
-        { title: "Nghị định 13/2023/NĐ-CP", content: "Quy định nghiêm ngặt về bảo vệ dữ liệu cá nhân. Việc sử dụng hình ảnh người khác tạo Deepfake khi chưa được phép là vi phạm pháp luật." },
-        { title: "Xử phạt tin giả (NĐ 15/2020)", content: "Hành vi cung cấp, chia sẻ thông tin giả mạo, sai sự thật trên mạng xã hội có thể bị xử phạt hành chính từ 10 đến 20 triệu đồng." }
+        { title: "Tam giác thao túng: Khẩn cấp - Thẩm quyền - Cô lập", content: "Kẻ lừa đảo không chỉ dùng AI. Chúng kết hợp: Tạo tình huống khẩn cấp (tai nạn), Giả mạo thẩm quyền (Công an), và Yêu cầu giữ bí mật (Cô lập nạn nhân)." },
+        { title: "Đánh cắp ngữ cảnh (Context Hijacking)", content: "Hacker sử dụng dữ liệu rò rỉ từ mạng xã hội để AI 'nhại' lại chính xác cách xưng hô, thói quen, và những bí mật nhỏ nhất của người thân bạn." },
+        { title: "Hội chứng mù quáng kỹ thuật số", content: "Khi não bộ tiếp nhận hình ảnh khuôn mặt quen thuộc qua video, cơ chế phòng vệ sinh học tự động hạ xuống, khiến chúng ta bỏ qua các điểm vô lý rành rành." }
+      ]
+    },
+    {
+      category: "📜 KHUNG PHÁP LÝ & TIÊU CHUẨN QUỐC TẾ",
+      items: [
+        { title: "Đạo luật EU AI Act (Châu Âu)", content: "Đạo luật AI đầu tiên trên thế giới yêu cầu mọi nội dung do AI tạo ra (Deepfake) bắt buộc phải dán nhãn (Watermark) minh bạch. Vi phạm có thể bị phạt tới 7% doanh thu toàn cầu." },
+        { title: "Tiêu chuẩn NIST AI RMF (Hoa Kỳ)", content: "Khung quản lý rủi ro AI của Viện Tiêu chuẩn Mỹ yêu cầu các tập đoàn công nghệ phải có cơ chế kiểm tra tính xác thực của dữ liệu đầu vào và đầu ra." },
+        { title: "Nghị định 13/2023 & Bộ luật Hình sự (Việt Nam)", content: "Việc thu thập khuôn mặt, giọng nói trái phép vi phạm NĐ 13 về Dữ liệu cá nhân. Dùng Deepfake chiếm đoạt tài sản chịu khung hình phạt tối đa là tù chung thân." }
       ]
     }
   ],
   en: [
     {
-      category: "🛡️ LIFE DEFENSE (EASY TO REMEMBER)",
+      category: "🔬 ADVANCED DIGITAL FORENSICS",
       items: [
-        { title: "30-Second Rule", content: "When receiving an emergency call, stay silent for 30 seconds to closely observe the caller's eye and mouth movements." },
-        { title: "Family Password", content: "Establish a 'secret keyword' with relatives. If the caller doesn't know this word, it's definitely a Deepfake." },
-        { title: "Unexpected Movement", content: "Ask the caller to wave their hand in front of their face or turn their head. Current AI often glitches when objects cover the face." }
+        { title: "rPPG Technology (Optical Heart Rate)", content: "Invisible to the human eye, AI can analyze micro-changes in skin color per heartbeat. Current Deepfakes completely fail to simulate natural rPPG." },
+        { title: "Audio Spectrogram Analysis", content: "Deepfake voices leave high-frequency 'artifacts'. Under a spectrogram, a real human voice is smooth, while AI voices show blocky discontinuities." },
+        { title: "Spatial Interpolation Glitches", content: "When an AI character rubs their head or covers their face, the Inpainting algorithm overloads, causing fingers to melt into hair or physical facial distortion." }
       ]
     },
     {
-      category: "⚙️ TECHNICAL SIGNS",
+      category: "🌍 GLOBAL THREAT LANDSCAPE",
       items: [
-        { title: "What is Inpainting?", content: "AI technique that allows seamlessly removing or adding objects to original videos, completely changing the context." },
-        { title: "Dynamic Light Glitch", content: "AI often struggles to simulate environmental light reflecting off glasses or metallic jewelry." },
-        { title: "Facial Boundaries", content: "The area between face and ears, or the hairline, often shows abnormal blurring when the subject moves fast." }
+        { title: "CaaS (Cybercrime-as-a-Service)", content: "Scamming is now a service. Criminals on the Dark Web rent out Deepfake software (SaaS) starting at $50/month, fully integrated with scripts and leaked data." },
+        { title: "Zero-Day Deepfakes", content: "Newly released generative models (like Sora, Voice Engine) constantly create 'Zero-Day Deepfakes' - videos so perfect that traditional antivirus tools cannot detect them." },
+        { title: "Decentralized Cross-Border Attacks", content: "Attackers in Eastern Europe can use AI to perfectly simulate a local Vietnamese accent through virtual signal relays (SIP Spoofing)." }
       ]
     },
     {
-      category: "⚖️ VIETNAMESE LAW",
+      category: "🧠 PSYCHOLOGICAL MANIPULATION (SOCIAL ENG.)",
       items: [
-        { title: "Property appropriation fraud", content: "Under Article 174 of the 2015 Penal Code, using Deepfake for fraud can lead to imprisonment from 2 years to life." },
-        { title: "Decree 13/2023/ND-CP", content: "Strict personal data protection. Unauthorized Deepfake creation using others' images is illegal." },
-        { title: "Fake news penalty (D 15/2020)", content: "Providing or sharing fake, untruthful information on social media can be fined 10 to 20 million VND." }
+        { title: "The Manipulation Triangle", content: "Scammers combine AI with: Creating Urgency (accident), Spoofing Authority (Police), and Demanding Secrecy (Isolating the victim)." },
+        { title: "Context Hijacking", content: "Hackers use leaked social media data so the AI 'mimics' the exact tone, habits, and smallest secrets of your loved ones." },
+        { title: "Digital Blindness Syndrome", content: "When the brain sees a familiar face on video, biological defense mechanisms automatically drop, causing us to ignore obvious logical flaws." }
+      ]
+    },
+    {
+      category: "📜 INT. LEGAL FRAMEWORKS & STANDARDS",
+      items: [
+        { title: "EU AI Act (Europe)", content: "The world's first AI law requires all AI-generated content (Deepfakes) to be transparently watermarked. Violations risk fines up to 7% of global revenue." },
+        { title: "NIST AI RMF (USA)", content: "The US National Institute of Standards and Technology's AI Risk Management Framework requires tech giants to have mechanisms verifying input/output authenticity." },
+        { title: "Decree 13/2023 & Penal Code (Vietnam)", content: "Unauthorized collection of face/voice violates Decree 13 on Privacy. Using Deepfakes for fraud carries a maximum penalty of life imprisonment." }
       ]
     }
   ]

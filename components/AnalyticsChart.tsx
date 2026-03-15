@@ -149,13 +149,11 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
           </div>
         ) : (
           <div className="w-full flex flex-col items-center justify-center animate-in fade-in duration-500">
-            <div className="text-center mb-4">
-                <div className="text-[10px] text-gray-400 uppercase tracking-widest">{lang === 'vi' ? 'PHÂN TÍCH TÂM LÝ HÀNH VI' : 'BEHAVIORAL PSYCHOLOGY ANALYSIS'}</div>
-                <p className="text-[8px] text-gray-600">{lang === 'vi' ? '(Dữ liệu tổng hợp từ khảo sát người dùng)' : '(Aggregated from user surveys)'}</p>
+            <div className="text-center mb-2">
+                <div className="text-[10px] text-primary/80 font-bold uppercase tracking-widest">{lang === 'vi' ? 'CHỈ SỐ TÂM LÝ' : 'BEHAVIORAL INDEX'}</div>
             </div>
-            <RadarChart data={psychoStats} lang={lang} />
-            <div className="mt-4 text-center text-[10px] text-gray-500 italic max-w-xs">
-                {lang === 'vi' ? 'Biểu đồ mạng nhện thể hiện điểm trung bình của cộng đồng trên 5 khía cạnh tâm lý cốt lõi.' : 'Radar chart showing community average scores across 5 core psychological dimensions.'}
+            <div className="w-full max-w-[240px] flex items-center justify-center">
+                <RadarChart data={psychoStats} lang={lang} />
             </div>
           </div>
         )}
@@ -165,6 +163,8 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
 };
 
 const RadarChart = ({ data, lang }: { data: any, lang: Language }) => {
+    const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
+
     const size = 240;
     const center = size / 2;
     const radius = size * 0.35;
@@ -172,8 +172,8 @@ const RadarChart = ({ data, lang }: { data: any, lang: Language }) => {
     const angleSlice = (Math.PI * 2) / numSides;
 
     const labels = lang === 'vi' 
-        ? ['Nhận thức Rủi ro', 'Lập trường Chủ động', 'Năng lực Tự vệ', 'Ý định Hành vi', 'Niềm tin Công nghệ']
-        : ['Threat Perception', 'Proactive Stance', 'Self-Efficacy', 'Behavioral Intent', 'Tech Stance'];
+        ? ['NHẬN THỨC', 'CHỦ ĐỘNG', 'TỰ VỆ', 'HÀNH VI', 'NIỀM TIN']
+        : ['AWARENESS', 'PROACTIVE', 'DEFENSE', 'INTENT', 'TRUST'];
     
     const values = [
         data.threatPerception,
@@ -222,18 +222,48 @@ const RadarChart = ({ data, lang }: { data: any, lang: Language }) => {
                 {/* Data Points */}
                 {values.map((val, i) => {
                     const { x, y } = getPoint(val, i);
-                    return <circle key={i} cx={x} cy={y} r="3" fill="#00F0FF" />;
+                    return (
+                        <g key={i}>
+                            <circle 
+                                cx={x} cy={y} 
+                                r={hoveredIndex === i ? "6" : "3"} 
+                                fill={hoveredIndex === i ? "#fff" : "#00F0FF"} 
+                                className="transition-all duration-300 shadow-[0_0_10px_#00F0FF]" 
+                            />
+                            {/* Vùng vô hình to hơn để dễ dàng bắt sự kiện rê chuột */}
+                            <circle cx={x} cy={y} r="15" fill="transparent" className="cursor-pointer outline-none" onMouseEnter={() => setHoveredIndex(i)} onMouseLeave={() => setHoveredIndex(null)} />
+                        </g>
+                    );
                 })}
 
                 {/* Labels */}
                 {labels.map((label, i) => {
-                    const { x, y } = getPoint(125, i); // Position labels outside the grid
+                    const { x, y } = getPoint(120, i); // Bring labels slightly closer to chart
                     return (
-                        <text key={i} x={x} y={y} fill="#888" fontSize="8" textAnchor="middle" dominantBaseline="middle" className="font-mono uppercase">
+                        <text key={i} x={x} y={y} fill="#aaa" fontSize="9" fontWeight="bold" textAnchor="middle" dominantBaseline="middle" className="font-mono tracking-widest">
                             {label}
                         </text>
                     );
                 })}
+
+                {/* Tooltip hiển thị số liệu */}
+                {hoveredIndex !== null && (
+                    <g className="pointer-events-none animate-in zoom-in duration-200">
+                        <rect 
+                            x={getPoint(values[hoveredIndex], hoveredIndex).x - 22} 
+                            y={getPoint(values[hoveredIndex], hoveredIndex).y - 32} 
+                            width="44" height="20" rx="4"
+                            fill="rgba(0, 0, 0, 0.85)" stroke="#00F0FF" strokeWidth="1"
+                        />
+                        <text 
+                            x={getPoint(values[hoveredIndex], hoveredIndex).x} 
+                            y={getPoint(values[hoveredIndex], hoveredIndex).y - 18} 
+                            fill="#fff" fontSize="11" fontWeight="bold" textAnchor="middle" className="font-mono tracking-wider"
+                        >
+                            {values[hoveredIndex]}%
+                        </text>
+                    </g>
+                )}
             </g>
         </svg>
     );
