@@ -1,12 +1,9 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-// HÀM MÔ PHỎNG: KẾT NỐI API BẢO MẬT THỰC TẾ (PHISHTANK / CHỐNG LỪA ĐẢO)
+// HÀM KIỂM TRA TỪ KHÓA ĐÁNG NGỜ TRONG URL ĐƯỢC GỬI LÊN
 async function checkUrlWithSecurityAPIs(url) {
-  // Trong thực tế, bạn sẽ dùng fetch() để gọi API của Google Safe Browsing hoặc PhishTank ở đây.
-  // Ví dụ: await fetch(`https://safebrowsing.googleapis.com/v4/threatMatches:find?key=YOUR_API_KEY`, {...})
-  
-  // Hiện tại mô phỏng logic: Nếu URL có chứa chữ "nganhang", "nhanqua", "vip" -> Cảnh báo lừa đảo
+  // Logic quét tại chỗ: Nếu URL có chứa chữ "nganhang", "nhanqua", "vip" -> Cảnh báo lừa đảo
   const suspiciousKeywords = ['nganhang', 'nhanqua', 'vip', 'khuyenmai', 'xyz', 'free'];
   const isSuspicious = suspiciousKeywords.some(keyword => url.toLowerCase().includes(keyword));
 
@@ -29,7 +26,7 @@ export default async function handler(req, res) {
   // Lấy nguồn gốc của yêu cầu
   const origin = req.headers.origin || req.headers.referer || '';
   // Các tên miền được phép gọi API (Sửa lại tên miền Vercel của bạn nếu cần)
-  const allowedDomains = ['localhost', '127.0.0.1', 'deepfense-ai.vercel.app']; 
+  const allowedDomains = ['localhost', '127.0.0.1', 'deepfense-ai.vercel.app', 'deepfense.online']; 
   
   const isAllowed = allowedDomains.some(domain => origin.includes(domain));
   if (origin && !isAllowed) {
@@ -59,13 +56,14 @@ export default async function handler(req, res) {
 
     // Định nghĩa System Instruction dựa trên ngôn ngữ và ngữ cảnh website được gửi lên
     const systemInstruction = `
-      You are DEEPFENSE AGENT, the official AI security assistant and platform guide for DEEPFENSE.AI.
+      You are DEEPFENSE AGENT, the official AI security assistant and platform guide for DEEPFENSE.ONLINE.
       Current Language: ${lang === 'vi' ? 'Vietnamese' : 'English'}.
       Current Time: March 2026.
 
-      === ABOUT DEEPFENSE.AI (PLATFORM INFO) ===
-      - Project Name: DEEPFENSE.AI - Deepfake Defense Platform.
+      === ABOUT DEEPFENSE.ONLINE (PLATFORM INFO) ===
+      - Project Name: DEEPFENSE.ONLINE - Deepfake Defense Platform.
       - Author: Hồ Xuân Nguyễn (Student ID: 25NS039, VKU University - Solo Developer).
+      - Official Email: deepfense@gmail.com
       - Mission: Educate the community on Deepfake prevention and provide AI-based defense tools against high-tech scams.
       - Website Sections (Guide users here if needed):
         1. HOME (Trang chủ): Dashboard, real-time scam news, quick tips.
@@ -82,7 +80,7 @@ export default async function handler(req, res) {
       
       RULES:
       1. Always respond in ${lang === 'vi' ? 'Vietnamese' : 'English'}.
-      2. IF asked about the website, author, or how to use a feature, refer to the "ABOUT DEEPFENSE.AI" section.
+      2. IF asked about the website, author, or how to use a feature, refer to the "ABOUT DEEPFENSE.ONLINE" section.
       3. IF asked about Deepfakes, scams, or news, USE the "KNOWLEDGE BASE" and "DỮ LIỆU BẢO MẬT THỜI GIAN THỰC". Act as a top-tier cybersecurity expert in 2026.
       4. IF the user asks about very recent events not in the Knowledge Base, use your Google Search tool to find the latest news.
       5. BE EXTREMELY CONCISE: Get straight to the point immediately. Keep responses under 3-4 short sentences max. Do not ramble. Use short bullet points (-) only when necessary.

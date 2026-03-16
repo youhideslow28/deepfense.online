@@ -4,7 +4,7 @@ import { EnhancedLevelData, ChecklistItem, NewsItem, FunFact, PersonalityQuestio
 // --- DIGITAL SIGNATURE / CHỮ KÝ SỐ ---
 // Chế độ Solo Developer: Hồ Xuân Nguyễn - 25NS039
 export const PROJECT_METADATA = {
-  name: "DEEPFENSE.AI",
+  name: "DEEPFENSE.ONLINE",
   version: "1.0.0-Solo-Release",
   build_date: new Date().toLocaleDateString('vi-VN'),
   authors: [
@@ -13,7 +13,8 @@ export const PROJECT_METADATA = {
   university: "Vietnam-Korea University of Information and Communication Technology (VKU)",
   department: "Khoa Kỹ thuật Máy tính & Điện tử (Computer Engineering & Electronics)",
   instructor: "", // Đã xóa theo yêu cầu
-  license: "Copyright © 2025 Hồ Xuân Nguyễn (25NS039)"
+  license: "Copyright © 2025 Hồ Xuân Nguyễn (25NS039)",
+  email: "deepfense@gmail.com"
 };
 
 export const TRANSLATIONS: Record<Language, any> = {
@@ -45,8 +46,7 @@ export const TRANSLATIONS: Record<Language, any> = {
     label_name: "Tên gọi (Nickname)",
     label_email: "Địa chỉ Email",
     label_attachment: "Đính kèm (Ảnh/Video)",
-    label_desc: "Chi tiết sự cố",
-    partners_title: "THAM KHẢO DỮ LIỆU TỪ NHỮNG NGUỒN UY TÍN"
+    label_desc: "Chi tiết sự cố"
   },
   en: {
     hero_badge: "AI SECURITY MONITORING SYSTEM",
@@ -76,8 +76,7 @@ export const TRANSLATIONS: Record<Language, any> = {
     label_name: "Display Name",
     label_email: "Email Address",
     label_attachment: "Attachment (Image/Video)",
-    label_desc: "Incident Details",
-    partners_title: "DATA REFERENCED FROM REPUTABLE SOURCES"
+    label_desc: "Incident Details"
   }
 };
 

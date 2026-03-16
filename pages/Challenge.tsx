@@ -258,8 +258,8 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
     
     const handleShare = async (platform: 'facebook' | 'twitter' | 'native') => {
         const text = lang === 'vi' 
-            ? `Tôi vừa đạt ${score}/10 điểm trong Thử thách Thám tử Deepfake trên DEEPFENSE.AI! Bạn có đủ trình độ để vượt qua tôi?` 
-            : `I just scored ${score}/10 in the Deepfake Detective Challenge on DEEPFENSE.AI! Can you beat my score?`;
+            ? `Tôi vừa đạt ${score}/10 điểm trong Thử thách Thám tử Deepfake trên DEEPFENSE.ONLINE! Bạn có đủ trình độ để vượt qua tôi?` 
+            : `I just scored ${score}/10 in the Deepfake Detective Challenge on DEEPFENSE.ONLINE! Can you beat my score?`;
         const url = window.location.origin;
 
         if (platform === 'facebook') {
@@ -268,7 +268,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
         } else {
             if (navigator.share) {
-                try { await navigator.share({ title: 'DEEPFENSE.AI', text, url }); } 
+                try { await navigator.share({ title: 'DEEPFENSE.ONLINE', text, url }); } 
                 catch (err) { console.error('Error sharing:', err); }
             } else {
                 navigator.clipboard.writeText(`${text} ${url}`);

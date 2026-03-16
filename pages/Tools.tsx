@@ -313,11 +313,8 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                 {/* Hologram Header Decor */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 rounded-full blur-[80px] pointer-events-none"></div>
                 <h2 className="text-4xl md:text-5xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white via-primary to-white uppercase tracking-tighter leading-none relative z-10 animate-pulse">
-                    {lang === 'vi' ? 'THƯ VIỆN LƯU TRỮ HOLOGRAM' : 'HOLOGRAM DATABANK'}
+                    {lang === 'vi' ? 'NỘI DUNG KIẾN THỨC' : 'KNOWLEDGE CONTENT'}
                 </h2>
-                <p className="text-primary/80 text-sm font-mono tracking-widest relative z-10">
-                    {lang === 'vi' ? 'TRUY CẬP DỮ LIỆU... ĐÃ MỞ KHÓA' : 'ACCESSING DATA... UNLOCKED'}
-                </p>
             </div>
             
             <div className="relative z-10 max-w-5xl mx-auto">
