@@ -6,7 +6,7 @@ import { ShieldAlert, CheckCircle, Trash2, Lock, Eye, Mail, Paperclip, ExternalL
 
 const Admin: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('deepfense@gmail.com');
   const [password, setPassword] = useState('');
   const [reports, setReports] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);

@@ -61,7 +61,7 @@ export default async function handler(req, res) {
       Current Time: March 2026.
 
       === ABOUT DEEPFENSE.ONLINE (PLATFORM INFO) ===
-      - Project Name: DEEPFENSE.ONLINE - Deepfake Defense Platform.
+      - Project Name: DEEPFENSE - Dự án huấn luyện nhận dạng deepfake.
       - Author: Hồ Xuân Nguyễn (Student ID: 25NS039, VKU University - Solo Developer).
       - Official Email: deepfense@gmail.com
       - Mission: Educate the community on Deepfake prevention and provide AI-based defense tools against high-tech scams.

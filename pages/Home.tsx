@@ -160,8 +160,8 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 items-center">
         <div className="lg:col-span-7 text-center lg:text-left">
           <h1 className="text-4xl md:text-6xl font-black text-white leading-tight mb-4 uppercase">
-            {lang === 'vi' ? 'NỀN TẢNG ' : 'THE '}
-            <span className="text-primary block md:inline">{lang === 'vi' ? 'PHÒNG CHỐNG DEEPFAKE' : 'DEEPFAKE DEFENSE'}</span>
+            {lang === 'vi' ? 'DỰ ÁN HUẤN LUYỆN ' : 'DEEPFAKE DETECTION '}
+            <span className="text-primary block md:inline">{lang === 'vi' ? 'NHẬN DẠNG DEEPFAKE' : 'TRAINING PROJECT'}</span>
           </h1>
           {/* LIVE COUNTER BADGE */}
           <div className="flex flex-wrap gap-3 mb-6">

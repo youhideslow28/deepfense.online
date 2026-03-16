@@ -20,8 +20,8 @@ export const PROJECT_METADATA = {
 export const TRANSLATIONS: Record<Language, any> = {
   vi: {
     hero_badge: "HỆ THỐNG GIÁM SÁT AN NINH AI",
-    hero_title: "NỀN TẢNG PHÒNG CHỐNG DEEPFAKE",
-    hero_desc: "Dự án giáo dục cộng đồng về Deepfake. Hãy trang bị kiến thức để bảo vệ bản thân và gia đình trước các cuộc tấn công AI tinh vi.",
+    hero_title: "DỰ ÁN HUẤN LUYỆN NHẬN DẠNG DEEPFAKE",
+    hero_desc: "Dự án huấn luyện cộng đồng về Deepfake. Hãy trang bị kiến thức để bảo vệ bản thân và gia đình trước các cuộc tấn công AI tinh vi.",
     btn_scan: "QUÉT RỦI RO",
     btn_challenge: "THỬ THÁCH",
     btn_ai: "MOBILE APP & DATA",
@@ -50,8 +50,8 @@ export const TRANSLATIONS: Record<Language, any> = {
   },
   en: {
     hero_badge: "AI SECURITY MONITORING SYSTEM",
-    hero_title: "DEEPFAKE DEFENSE PLATFORM",
-    hero_desc: "Community education project on Deepfakes. Empower yourself with knowledge to protect your family against sophisticated AI attacks.",
+    hero_title: "DEEPFAKE DETECTION TRAINING PROJECT",
+    hero_desc: "Community training project on Deepfakes. Empower yourself with knowledge to protect your family against sophisticated AI attacks.",
     btn_scan: "RISK SCAN",
     btn_challenge: "CHALLENGE",
     btn_ai: "MOBILE APP & DATA",

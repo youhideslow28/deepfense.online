@@ -17,7 +17,7 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
             <Cpu size={14} /> {lang === 'vi' ? 'DỰ ÁN ĐANG PHÁT TRIỂN' : 'PROJECT UNDER DEVELOPMENT'}
         </div>
         <h1 className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tight">
-          DEEPFENSE<span className="text-purple-500">.AI</span>
+          DEEPFENSE<span className="text-purple-500"> AI</span>
         </h1>
         <p className="text-lg md:text-xl text-white font-mono mb-6 bg-surface inline-block px-4 py-2 rounded border border-gray-800">
              {lang === 'vi' ? '"Khi AI tấn công, hãy dùng AI để phòng thủ."' : '"When AI attacks, use AI to defend."'}
@@ -231,8 +231,8 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                 {[
                     {
                         time: "Q4/2025",
-                        title: lang === 'vi' ? 'Nền tảng Giáo dục' : 'Edu Platform',
-                        desc: lang === 'vi' ? 'Ra mắt nền tảng & công cụ kiểm tra rủi ro.' : 'Launch platform & risk detection tools.',
+                        title: lang === 'vi' ? 'Dự án Giáo dục' : 'Edu Project',
+                        desc: lang === 'vi' ? 'Ra mắt dự án & công cụ kiểm tra rủi ro.' : 'Launch project & risk detection tools.',
                         icon: <GraduationCap size={16} className="text-purple-400"/>,
                         borderClass: "border-purple-500",
                         textClass: "text-purple-400",
