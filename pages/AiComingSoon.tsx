@@ -88,26 +88,26 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                         <div className="absolute top-0 left-0 w-full h-1 bg-purple-500 shadow-[0_0_10px_#a855f7] animate-[scan_2s_ease-in-out_infinite]"></div>
                         
                         <div className="bg-black/60 p-3 rounded border border-purple-500/30 flex items-center gap-3">
-                            <ScanEye className="text-purple-400" size={20} />
+                            <BrainCircuit className="text-purple-400" size={20} />
                             <div>
-                                <div className="text-xs font-bold text-white">{lang === 'vi' ? 'THỊ GIÁC MÁY TÍNH' : 'COMPUTER VISION'}</div>
-                                <div className="text-[9px] text-gray-500">{lang === 'vi' ? 'Phân tích điểm ảnh, ánh sáng' : 'Pixel and lighting analysis'}</div>
+                                <div className="text-xs font-bold text-white">{lang === 'vi' ? 'PHÂN TÍCH MẠNG NƠ-RON' : 'NEURAL DISCRIMINATOR'}</div>
+                                <div className="text-[9px] text-gray-500">{lang === 'vi' ? 'Quét nhiễu không gian tiềm ẩn (Latent Space)' : 'Detecting GAN & Diffusion artifacts'}</div>
                             </div>
                         </div>
 
                         <div className="bg-black/60 p-3 rounded border border-blue-500/30 flex items-center gap-3">
-                            <ActivityIcon className="text-blue-400" size={20} />
+                            <Fingerprint className="text-blue-400" size={20} />
                             <div>
-                                <div className="text-xs font-bold text-white">{lang === 'vi' ? 'PHÂN TÍCH PHỔ ÂM' : 'ACOUSTIC ANALYSIS'}</div>
-                                <div className="text-[9px] text-gray-500">{lang === 'vi' ? 'Đồng bộ khẩu hình & Giọng' : 'Lip-sync & Voice sync'}</div>
+                                <div className="text-xs font-bold text-white">{lang === 'vi' ? 'XÁC THỰC C2PA & WATERMARK' : 'C2PA & WATERMARK AUTH'}</div>
+                                <div className="text-[9px] text-gray-500">{lang === 'vi' ? 'Truy xuất chữ ký số và nguồn gốc tệp' : 'Cryptographic provenance verification'}</div>
                             </div>
                         </div>
 
                         <div className="bg-black/60 p-3 rounded border border-green-500/30 flex items-center gap-3">
-                            <Fingerprint className="text-green-400" size={20} />
+                            <ActivityIcon className="text-green-400" size={20} />
                             <div>
-                                <div className="text-xs font-bold text-white">{lang === 'vi' ? 'SINH TRẮC HỌC' : 'BIOMETRICS'}</div>
-                                <div className="text-[9px] text-gray-500">{lang === 'vi' ? 'Nhịp thở, mạch đập' : 'Breathing, pulse rate'}</div>
+                                <div className="text-xs font-bold text-white">{lang === 'vi' ? 'BIỂU HIỆN TRUNG THỰC' : 'PHYSIOLOGICAL TRUTH'}</div>
+                                <div className="text-[9px] text-gray-500">{lang === 'vi' ? 'Quét mạch máu rPPG & Vi rung động' : 'rPPG heart-rate & Micro-vibrations'}</div>
                             </div>
                         </div>
                     </div>
