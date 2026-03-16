@@ -258,12 +258,12 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
     
     const handleShare = async (platform: 'facebook' | 'twitter' | 'native') => {
         const text = lang === 'vi' 
-            ? `Tôi vừa đạt ${score}/10 điểm trong Thử thách Thám tử Deepfake trên DEEPFENSE.ONLINE! Bạn có đủ trình độ để vượt qua tôi?` 
-            : `I just scored ${score}/10 in the Deepfake Detective Challenge on DEEPFENSE.ONLINE! Can you beat my score?`;
+            ? `🎮 Tôi vừa đạt điểm tuyệt đối ${score}/10 trong Thử thách Thám tử Deepfake! 🛡️\nCông nghệ AI thật đáng sợ, mọi người vào kiểm tra trình độ nhận diện của mình nhé!` 
+            : `🎮 I just scored ${score}/10 in the Deepfake Detective Challenge! 🛡️\nAI is getting scary. Test your detection skills now!`;
         const url = window.location.origin;
 
         if (platform === 'facebook') {
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
         } else if (platform === 'twitter') {
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
         } else {
