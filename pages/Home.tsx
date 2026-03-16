@@ -162,7 +162,7 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
             </button>
           </div>
         </div>
-        <div className="lg:col-span-5 h-[300px] md:h-[380px] w-full"><AnalyticsChart lang={lang} /></div>
+        <div className="lg:col-span-5 h-[300px] md:h-[380px] w-full max-w-full overflow-hidden"><AnalyticsChart lang={lang} /></div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">

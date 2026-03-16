@@ -214,19 +214,14 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
              {lang === 'vi' ? 'LỘ TRÌNH PHÁT TRIỂN (Q4/2025 - Q4/2027)' : 'DEVELOPMENT ROADMAP (Q4/2025 - Q4/2027)'}
         </h3>
         
-        {/* Hint for mobile users */}
-        <div className="text-center text-gray-600 text-[10px] uppercase tracking-widest mb-6 animate-pulse flex justify-center items-center gap-2 md:hidden">
-            <ArrowRight size={12}/> {lang === 'vi' ? 'Vuốt ngang để xem tiếp' : 'Swipe to see more'} <ArrowRight size={12}/>
-        </div>
-
-        {/* Horizontal Scrollable Container */}
+        {/* Responsive Container: Vertical on Mobile, Horizontal on Desktop */}
         <div 
-            className="flex overflow-x-auto pb-12 pt-4 px-4 md:px-8 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="pb-12 pt-4 px-4 md:px-8"
         >
-            <div className="flex gap-4 md:gap-5 relative min-w-max mx-auto items-stretch">
-                {/* Continuous Horizontal Connecting Line */}
-                <div className="absolute top-[9px] left-[90px] right-[90px] md:left-[110px] md:right-[110px] h-0.5 bg-gradient-to-r from-purple-500 via-yellow-500 to-green-500 opacity-40"></div>
+            <div className="flex flex-col md:flex-row gap-8 md:gap-5 relative items-stretch max-w-5xl mx-auto">
+                {/* Continuous Connecting Line - Vertical on Mobile, Horizontal on Desktop */}
+                <div className="absolute left-[90px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-yellow-500 to-green-500 opacity-40 md:hidden"></div>
+                <div className="absolute top-[9px] left-[90px] right-[90px] h-0.5 bg-gradient-to-r from-purple-500 via-yellow-500 to-green-500 opacity-40 hidden md:block"></div>
 
                 {[
                     {
@@ -287,14 +282,14 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                 ].map((phase, index) => {
                     const isCurrent = index === 1; // Nhấn mạnh vào Q1/2026
                     return (
-                        <div key={index} className="w-[180px] md:w-[220px] shrink-0 snap-center relative group flex flex-col">
+                        <div key={index} className="w-full md:w-[220px] relative group flex flex-row md:flex-col items-center md:items-stretch gap-6 md:gap-0">
                             {/* Dot Point */}
-                            <div className={`w-5 h-5 rounded-full bg-black border-4 ${phase.borderClass} absolute top-0 left-1/2 -translate-x-1/2 z-10 ${phase.hoverBg} ${phase.shadowHover} transition-all duration-300 ${isCurrent ? '!w-6 !h-6 -top-0.5 flex items-center justify-center' : ''}`}>
+                            <div className={`w-5 h-5 rounded-full bg-black border-4 ${phase.borderClass} absolute left-[81px] md:left-1/2 md:-translate-x-1/2 top-1/2 -translate-y-1/2 md:top-0 md:translate-y-0 z-10 ${phase.hoverBg} ${phase.shadowHover} transition-all duration-300 ${isCurrent ? '!w-6 !h-6 flex items-center justify-center' : ''}`}>
                                 {isCurrent && <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>}
                             </div>
                             
-                            {/* Card Content */}
-                            <div className={`mt-8 bg-surface ${isCurrent ? 'border border-blue-500/30' : 'border border-gray-800'} p-4 md:p-6 rounded-2xl ${phase.hoverClass} transition-colors h-full flex flex-col items-center text-center justify-center ${isCurrent ? 'relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.15)]' : ''}`}>
+                            {/* Card Content - Fixed layout for mobile to not overlap line */}
+                            <div className={`md:mt-8 ml-28 md:ml-0 bg-surface ${isCurrent ? 'border border-blue-500/30' : 'border border-gray-800'} p-4 md:p-6 rounded-2xl ${phase.hoverClass} transition-colors flex-1 md:h-full flex flex-col items-center text-center justify-center ${isCurrent ? 'relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.15)]' : ''}`}>
                                 {isCurrent && (
                                     <div className="inline-flex bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest mb-2">
                                         {lang === 'vi' ? 'HIỆN TẠI' : 'CURRENT'}
