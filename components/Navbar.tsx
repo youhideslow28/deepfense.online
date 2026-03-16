@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { PageType, Language, Season } from '../types';
 import { Shield, Home, Swords, Cpu, Info, Bot, Sun, Menu, X, Power, Heart, Stars, Sparkles } from 'lucide-react';
@@ -61,13 +60,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage, lang, setLang, se
     if (timerRef.current) {
         clearTimeout(timerRef.current);
     }
-    // Không thực hiện toggle ở đây nữa để tránh xung đột touch/mouse
   };
 
   // Xử lý click: Chỉ chạy nếu không phải là kết quả của việc nhấn giữ
   const handleSeasonClick = (e: React.MouseEvent) => {
       if (ignoreClick.current) {
-          // Reset flag và chặn toggle
           ignoreClick.current = false;
           e.preventDefault();
           e.stopPropagation();
@@ -78,11 +75,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage, lang, setLang, se
 
   return (
     <>
-      {/* --- EASTER EGG MODAL (DEDICATED TO HUYỀN) --- */}
+      {/* --- EASTER EGG MODAL --- */}
       {showEasterEgg && (
         <div className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 animate-in fade-in duration-1000">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {/* Background stars effect */}
                 <div className="absolute top-10 left-10 text-pink-500/20 animate-pulse"><Stars size={40} /></div>
                 <div className="absolute bottom-20 right-20 text-purple-500/20 animate-pulse delay-700"><Stars size={60} /></div>
                 <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-pink-600/10 rounded-full blur-[100px] animate-pulse"></div>
