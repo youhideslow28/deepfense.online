@@ -411,7 +411,7 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
                  <div className="space-y-4">
                     <div className="flex justify-between items-center bg-black/60 p-4 rounded-2xl border border-white/5 hover:border-secondary/30 transition-colors">
                         <span className="text-[10px] text-gray-400 font-bold uppercase">{t.police}</span>
-                        <span className="text-secondary font-black text-2xl tracking-tighter">113</span>
+                        <span className="text-secondary font-black text-md tracking-tighter">113</span>
                     </div>
                     <div className="flex justify-between items-center bg-black/60 p-4 rounded-2xl border border-white/5 hover:border-secondary/30 transition-colors">
                         <span className="text-[10px] text-gray-400 font-bold uppercase">{t.cyber_security}</span>
