@@ -200,9 +200,9 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                     : 'Received a blackmail video? A suspicious recording? Send it to Smart Agent. AI analyzes acoustic spectrum and metadata to determine if the file is real or AI-generated.'}
               </p>
               <ul className="space-y-3 text-sm text-gray-400">
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Soi lỗi Pixel & Artifacts' : 'Detect Pixel & Artifact errors'}</li>
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Kiểm tra đồng bộ khẩu hình (Lip-sync)' : 'Check Lip-sync'}</li>
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Trợ lý chat tư vấn pháp lý & cách xử lý' : 'Legal chat assistant & handling guide'}</li>
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Truy xuất nguồn gốc & Chữ ký số C2PA' : 'Provenance & C2PA Digital Signature Auth'}</li>
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Giải mã Artifacts không gian tiềm ẩn (Latent Space)' : 'Latent Space Artifact Decoding'}</li>
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Trợ lý AI Expert & Phân tích Forensic 2026' : '2026 Expert AI & Forensic Analysis'}</li>
               </ul>
           </div>
       </div>
