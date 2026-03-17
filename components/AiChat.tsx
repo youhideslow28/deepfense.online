@@ -36,11 +36,11 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
 
     // --- BƯỚC 1: CHUẨN BỊ DỮ LIỆU WEBSITE ĐỂ NẠP CHO AI ---
     const websiteContext = {
-        introduction: "DEEPFENSE.AI is a cybersecurity platform protecting users against Deepfakes.",
+        introduction: "DEEPFENSE.ONLINE is a cybersecurity platform protecting users against Deepfakes.",
         data_sources: {
-            referenced_sources: "APWG, GASA, PhishTank, OpenPhish, URLHaus.",
-            community: "ChongLuaDao.vn (500k+ members).",
-            technology: "AI Real-time analysis + Community reporting."
+            referenced_sources: 
+            community:
+            technology: 
         },
         features: {
             scan_tool: "Checklist to detect deepfake signs in video calls.",
