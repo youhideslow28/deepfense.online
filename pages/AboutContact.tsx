@@ -150,8 +150,8 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               <div className="bg-surface border border-white/5 rounded-3xl p-8 shadow-xl">
                   <h3 className="text-secondary font-black text-xs uppercase tracking-widest mb-6">{t.contact_support}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-400 font-mono">
-                      <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors cursor-pointer"><Mail size={20} className="text-primary shrink-0"/> support@deepfense.vn</div>
-                      <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors cursor-pointer"><Phone size={20} className="text-primary shrink-0"/> {t.cyber_security}: 069.219.4053</div>
+                      <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors cursor-pointer"><Mail size={20} className="text-primary shrink-0"/> deepfense@gmail.com</div>
+                      <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors cursor-pointer"><Phone size={20} className="text-primary shrink-0"/> {t.cyber_security}: 0123456789</div>
                       <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 md:col-span-2"><MapPin size={20} className="text-primary shrink-0"/> VKU University Lab, Danang, Vietnam</div>
                   </div>
               </div>
