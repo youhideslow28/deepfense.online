@@ -5,15 +5,16 @@ import { EnhancedLevelData, ChecklistItem, NewsItem, FunFact, PersonalityQuestio
 // Chế độ Solo Developer: Hồ Xuân Nguyễn - 25NS039
 export const PROJECT_METADATA = {
   name: "DEEPFENSE.ONLINE",
-  version: "1.0.0-Solo-Release",
+  version: "1.1.0-Team-Release",
   build_date: new Date().toLocaleDateString('vi-VN'),
   authors: [
-    { name: "Hồ Xuân Nguyễn", id: "25NS039", role: "Fullstack Developer / Project Lead" }
+    { name: "Hồ Xuân Nguyễn", id: "25NS039", role: "Fullstack Developer / Project Lead" },
+    { name: "Nguyễn Nhất Huy", id: "25NS020", role: "Frontend Developer / Security Analyst" }
   ],
   university: "Vietnam-Korea University of Information and Communication Technology (VKU)",
   department: "Khoa Kỹ thuật Máy tính & Điện tử (Computer Engineering & Electronics)",
   instructor: "", // Đã xóa theo yêu cầu
-  license: "Copyright © 2025 Hồ Xuân Nguyễn (25NS039)",
+  license: "Copyright © 2025 Hồ Xuân Nguyễn (25NS039) & Nguyễn Nhất Huy (25NS020)",
   email: "deepfense@gmail.com"
 };
 
@@ -31,7 +32,7 @@ export const TRANSLATIONS: Record<Language, any> = {
     about_us: "VỀ CHÚNG TÔI & LIÊN HỆ",
     mission: "SỨ MỆNH",
     vision: "TẦM NHÌN",
-    team: "TÁC GIẢ DỰ ÁN", 
+    team: "NHÓM TÁC GIẢ DỰ ÁN", 
     report_form: "BÁO CÁO SỰ CỐ",
     send_report: "GỬI BÁO CÁO",
     success_msg: "GỬI THÀNH CÔNG!",
@@ -61,7 +62,7 @@ export const TRANSLATIONS: Record<Language, any> = {
     about_us: "ABOUT US & CONTACT",
     mission: "MISSION",
     vision: "VISION",
-    team: "PROJECT AUTHOR",
+    team: "PROJECT AUTHORS",
     report_form: "REPORT AN INCIDENT",
     send_report: "SEND REPORT",
     success_msg: "SENT SUCCESSFULLY!",

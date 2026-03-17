@@ -62,7 +62,7 @@ export default async function handler(req, res) {
 
       === ABOUT DEEPFENSE.ONLINE (PLATFORM INFO) ===
       - Project Name: DEEPFENSE - Dự án huấn luyện nhận dạng deepfake.
-      - Author: Hồ Xuân Nguyễn (Student ID: 25NS039, VKU University - Solo Developer).
+      - Authors: Hồ Xuân Nguyễn (25NS039) & Nguyễn Nhất Huy (25NS020) - VKU University.
       - Official Email: deepfense@gmail.com
       - Mission: Educate the community on Deepfake prevention and provide AI-based defense tools against high-tech scams.
       - Website Sections (Guide users here if needed):
