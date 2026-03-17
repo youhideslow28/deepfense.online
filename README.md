@@ -1,4 +1,4 @@
-# DEEPFENSE.ONLINE - AI Security & Deepfake Detection Training
+# DEEPFENSE.ONLINE - DEEPFAKE DETECTION TRAINING PROJECT
 Dự án huấn luyện cộng đồng nhận diện Deepfake và các hình thức lừa đảo AI tinh vi.
 
 ## 🚀 Tính năng chính
