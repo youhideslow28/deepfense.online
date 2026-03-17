@@ -26,9 +26,9 @@ const Contact: React.FC = () => {
               <div className="bg-surface border border-border rounded-lg p-6">
                   <div className="font-mono text-success text-sm font-bold mb-4">KÊNH HỖ TRỢ</div>
                   <div className="space-y-3 text-sm text-gray-300">
-                      <div className="flex items-center gap-3"><Mail size={16} /> support@deepfense.vn</div>
+                      <div className="flex items-center gap-3"><Mail size={16} /> deepfense@gmail.com</div>
                       <div className="flex items-center gap-3"><Phone size={16} /> 1900 1234</div>
-                      <div className="flex items-center gap-3"><MapPin size={16} /> LOP 25NS - KHOA KTMT&DT - VKU</div>
+                      <div className="flex items-center gap-3"><MapPin size={16} /> LỚP 25NS - KHOA KTMT&DT - VKU</div>
                   </div>
               </div>
 

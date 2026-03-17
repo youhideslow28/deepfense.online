@@ -1,14 +1,20 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# DEEPFENSE.ONLINE - AI Security & Deepfake Detection Training
+Dự án huấn luyện cộng đồng nhận diện Deepfake và các hình thức lừa đảo AI tinh vi.
 
-## Run Locally
+## 🚀 Tính năng chính
+- **Risk Scan**: Kiểm tra các URL và nội dung đáng ngờ.
+- **Deepfake Challenge**: Thử thách 10 cấp độ nhận diện video AI.
+- **AI Agent**: Trợ lý bảo mật hỗ trợ giải đáp thắc mắc thời gian thực.
 
-**Prerequisites:**  Node.js
+## 🛠️ Công nghệ sử dụng
+- **Frontend**: React (Vite), Tailwind CSS, Lucide Icons.
+- **Backend**: Vercel Serverless Functions.
+- **AI Engine**: Google Gemini 2.5 Flash API.
+- **Database**: Firebase (Firestore & Auth).
 
+## 👤 Tác giả
+- **Hồ Xuân Nguyễn** (MSV: 25NS039)
+- Trường Đại học Công nghệ Thông tin và Truyền thông Việt - Hàn (VKU).
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+*Bản quyền © 2025 Hồ Xuân Nguyễn. Mọi quyền được bảo lưu.*
