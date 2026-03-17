@@ -38,9 +38,9 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
     const websiteContext = {
         introduction: "DEEPFENSE.ONLINE is a cybersecurity platform protecting users against Deepfakes.",
         data_sources: {
-            referenced_sources: 
-            community:
-            technology: 
+            referenced_sources: "",
+            community: "",
+            technology: ""
         },
         features: {
             scan_tool: "Checklist to detect deepfake signs in video calls.",
