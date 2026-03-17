@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Bot, ScanLine, Sparkles } from 'lucide-react';
 import { Language } from '../types';
 import { TRANSLATIONS, LEVELS, KNOWLEDGE_BASE, CHECKLIST_DATA, NEWS_DATA, FUN_FACTS } from '../data';
-import { GoogleGenAI } from "@google/genai";
 import ReactMarkdown from 'react-markdown';
 
 const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
@@ -58,40 +57,23 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
 
     const contextString = JSON.stringify(websiteContext, null, 2);
 
-    // --- BƯỚC 2: CẤU HÌNH SYSTEM INSTRUCTION ---
-    const systemInstruction = `
-      You are DEEPFENSE AGENT - an AI security assistant.
-      Current Language: ${lang === 'vi' ? 'Vietnamese' : 'English'}.
-      
-      === YOUR KNOWLEDGE BASE ===
-      ${contextString}
-      ===========================
-
-      RULES:
-      1. Always respond in ${lang === 'vi' ? 'Vietnamese' : 'English'}.
-      2. If asked about data sources, mention that we REFERENCE data from PhishTank, APWG, and ChongLuaDao.vn. Do NOT claim they are direct business partners.
-      3. Use the KNOWLEDGE BASE to answer.
-      4. Be concise, professional, and helpful.
-    `;
-
     try {
-      if (!process.env.API_KEY) {
-          throw new Error("Missing API_KEY");
-      }
-
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const modelResponse = await ai.models.generateContent({
-          model: 'gemini-3-flash-preview',
-          contents: newHistory.map(m => ({
-              role: m.role,
-              parts: [{ text: m.text }]
-          })),
-          config: { systemInstruction }
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          messages: newHistory,
+          lang: lang,
+          context: contextString
+        })
       });
 
-      const text = modelResponse.text || (lang === 'vi' 
-          ? "Xin lỗi, tôi chưa hiểu rõ câu hỏi." 
-          : "I apologize, I didn't catch that.");
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const data = await response.json();
+      const text = data.text;
           
       setMessages(prev => [...prev, { role: 'model', text }]);
 
