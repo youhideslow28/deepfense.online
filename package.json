@@ -1,7 +1,8 @@
 {
-  "name": "deepfense-ai",
+  "name": "deepfense-official",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "description": "AI Security & Deepfake Detection Training Platform by Ho Xuan Nguyen & Nguyen Nhat Huy",
   "type": "module",
   "scripts": {
     "dev": "vite",

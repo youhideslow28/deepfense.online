@@ -26,7 +26,12 @@ export default async function handler(req, res) {
   // Lấy nguồn gốc của yêu cầu
   const origin = req.headers.origin || req.headers.referer || '';
   // Các tên miền được phép gọi API (Sửa lại tên miền Vercel của bạn nếu cần)
-  const allowedDomains = ['localhost', '127.0.0.1', 'deepfense-ai.vercel.app', 'deepfense.online']; 
+  const allowedDomains = [
+    'localhost', 
+    '127.0.0.1',
+    'deepfense.online',
+    'www.deepfense.online',
+  ]; 
   
   const isAllowed = allowedDomains.some(domain => origin.includes(domain));
   if (origin && !isAllowed) {
