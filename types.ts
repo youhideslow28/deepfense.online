@@ -1,5 +1,5 @@
 
-export type PageType = "HOME" | "TOOLS" | "CHALLENGE" | "AI_PROJECT" | "ABOUT_CONTACT";
+export type PageType = "HOME" | "TOOLS" | "CHALLENGE" | "AI_PROJECT" | "ABOUT_CONTACT" | "ADMIN";
 export type Language = "vi" | "en";
 export type Season = "SPRING" | "SUMMER" | "AUTUMN" | "WINTER" | "NORMAL";
 

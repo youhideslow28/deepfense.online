@@ -181,7 +181,8 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
     const match = url.match(regExp);
     const videoId = (match && match[2].length === 11) ? match[2] : null;
-    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0` : url;
+    // Thêm controls=0 và modestbranding=1 để giấu thanh tiến trình và logo, tránh lộ nội dung video
+    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&controls=0&modestbranding=1` : url;
   };
 
   if (gameState && gameState.finished) {

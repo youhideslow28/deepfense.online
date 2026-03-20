@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Language } from '../types';
 import { UploadCloud, AlertTriangle, CheckCircle2, Activity, ScanLine, BrainCircuit, FileSearch, ShieldCheck, BookOpen, Scale, BookText } from 'lucide-react';
 import { KNOWLEDGE_BASE } from '../data';
 
 interface ToolsProps {
-  initialTab?: 'SCAN' | 'KNOWLEDGE';
   lang: Language;
 }
 
-const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
-  const [activeTab, setActiveTab] = useState<'SCAN' | 'KNOWLEDGE'>(initialTab);
+const Tools: React.FC<ToolsProps> = ({ lang }) => {
+  const location = useLocation();
+  const initialTab = location.state?.tab || 'SCAN';
+  const [activeTab, setActiveTab] = useState<'SCAN' | 'KNOWLEDGE'>(initialTab as 'SCAN' | 'KNOWLEDGE');
   const [activeKnowledgeCat, setActiveKnowledgeCat] = useState(0);
   
   // --- BEHAVIORAL SCANNER STATES ---
@@ -215,8 +217,8 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
             <h3 className="text-secondary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-start sm:items-center gap-3 border-b border-secondary/10 pb-4">
                <FileSearch size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
                <div className="flex items-center gap-2 flex-wrap w-full">
-                 <span>{lang === 'vi' ? '2. PHÁP Y DỮ LIỆU TỆP' : '2. DIGITAL FORENSICS SCAN'}</span>
-                 <span className="bg-secondary/20 text-secondary text-[9px] px-2 py-0.5 rounded-full animate-pulse border border-secondary/30 tracking-widest ml-auto sm:ml-0 mt-0.5">{lang === 'vi' ? 'BETA THỬ NGHIỆM' : 'BETA TEST'}</span>
+                 <span>{lang === 'vi' ? '2. MÔ PHỎNG PHÁP Y (DEMO)' : '2. FORENSICS SIMULATION (DEMO)'}</span>
+                 <span className="bg-red-500/20 text-red-500 text-[9px] px-2 py-0.5 rounded-full animate-pulse border border-red-500/30 tracking-widest ml-auto sm:ml-0 mt-0.5">{lang === 'vi' ? 'SIMULATION ONLY' : 'SIMULATION ONLY'}</span>
                </div>
             </h3>
             
@@ -293,8 +295,8 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                          </div>
                          <p className="text-gray-400 text-[11px] mb-6 leading-relaxed">
                            {lang === 'vi' 
-                              ? 'Dữ liệu quang phổ và phân tích pixel cho thấy dấu hiệu của thuật toán nội suy hình ảnh. Tuy nhiên, các kỹ thuật vượt rào (anti-forensics) của tội phạm đang rất tiên tiến. Khuyến nghị kết hợp với "Quét Ngữ Cảnh Hành Vi" để có kết luận cuối cùng.'
-                              : 'Spectrogram and pixel analysis show signs of image interpolation algorithms. However, criminal anti-forensics are advanced. Highly recommend combining with "Context Scan" for final conclusion.'}
+                              ? '[ĐÂY LÀ TÍNH NĂNG MÔ PHỎNG] - Trên thực tế, hệ thống sẽ phân tích quang phổ và pixel. Hiện tại tính năng này đang trong quá trình phát triển (Roadmap Q4/2027).'
+                              : '[SIMULATION MODE] - In reality, the system would analyze spectrograms. This feature is under development (Roadmap Q4/2027).'}
                          </p>
                          <button onClick={() => setFile(null)} className="w-full text-white border border-white/20 hover:bg-white hover:text-black py-3 rounded-xl text-xs font-bold transition-all">
                            {lang === 'vi' ? 'QUÉT TỆP KHÁC' : 'SCAN ANOTHER FILE'}

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Brain, Users, BarChart3 } from 'lucide-react';
 import { Language } from '../types';
 import { db } from '../firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, getCountFromServer, getAggregateFromServer, sum, query, limit, orderBy } from 'firebase/firestore';
 
 const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
   const [activeTab, setActiveTab] = useState<'METRICS' | 'PSYCHOLOGY'>('METRICS');
@@ -25,19 +25,19 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
     const fetchData = async () => {
       try {
         // 1. Lấy dữ liệu GAME RESULTS
-        const gameSnap = await getDocs(collection(db, "game_results"));
-        const totalGames = gameSnap.size;
-        let totalScore = 0;
-
-        gameSnap.forEach(doc => {
-            const data = doc.data();
-            const score = data.score || 0;
-            totalScore += score;
-        });
+        const gameRef = collection(db, "game_results");
+        const [countSnap, aggrSnap] = await Promise.all([
+          getCountFromServer(gameRef),
+          getAggregateFromServer(gameRef, { totalScore: sum('score') })
+        ]);
+        
+        const totalGames = countSnap.data().count;
+        const totalScore = aggrSnap.data().totalScore || 0;
 
         // 2. Lấy dữ liệu SURVEYS
-        const surveySnap = await getDocs(collection(db, "surveys"));
-        const totalSurveys = surveySnap.size;
+        // GIỚI HẠN LẤY 200 BẢN GHI GẦN NHẤT ĐỂ TRÁNH QUÁ TẢI FIRESTORE READS BILLING
+        const qSurveys = query(collection(db, "surveys"), orderBy("created_at", "desc"), limit(200));
+        const surveySnap = await getDocs(qSurveys);
         
         let threatPerceptionSum = 0;
         let proactiveStanceSum = 0;

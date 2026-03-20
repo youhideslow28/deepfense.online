@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { collection, query, orderBy, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { collection, query, orderBy, getDocs, updateDoc, doc, deleteDoc, limit } from 'firebase/firestore';
 import { ShieldAlert, CheckCircle, Trash2, Lock, Eye, Mail, Paperclip, ExternalLink, LogOut } from 'lucide-react';
 
 const Admin: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [email, setEmail] = useState('deepfense@gmail.com');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [reports, setReports] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+        fetchReports();
+      } else {
+        setIsAuthenticated(false);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +37,7 @@ const Admin: React.FC = () => {
   const fetchReports = async () => {
     setLoading(true);
     try {
-      const q = query(collection(db, "incident_reports"), orderBy("submittedAt", "desc"));
+      const q = query(collection(db, "incident_reports"), orderBy("submittedAt", "desc"), limit(100));
       const querySnapshot = await getDocs(q);
       const data = querySnapshot.docs.map(doc => ({
         id: doc.id,

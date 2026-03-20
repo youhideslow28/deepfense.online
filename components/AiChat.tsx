@@ -48,10 +48,13 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
             mobile_app: "Upcoming app with 'Deepfense Touch' overlay and real-time scanning."
         },
         database: {
-            challenges: LEVELS[lang],
-            knowledge_base: KNOWLEDGE_BASE[lang],
+            // CHỈ TRUYỀN VÀO NHỮNG KIẾN THỨC CỐT LÕI ĐỂ TIẾT KIỆM TOKEN VÀ TỐI ƯU TỐC ĐỘ
+            knowledge_base: KNOWLEDGE_BASE[lang].map((cat: any) => ({
+                category: cat.category,
+                topics: cat.items.map((i: any) => i.title) // Chỉ lấy title, AI tự biết sinh ra content
+            })),
             checklist: CHECKLIST_DATA[lang],
-            recent_scams: NEWS_DATA[lang]
+            // Lược bỏ bớt NEWS_DATA và LEVELS để tránh rác prompt
         }
     };
 

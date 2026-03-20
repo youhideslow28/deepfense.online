@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { PageType, Language, Season } from '../types';
+import { Language, Season } from '../types';
+import { useNavigate } from 'react-router-dom';
 import { NEWS_DATA, FUN_FACTS, TRANSLATIONS } from '../data';
 import { Activity, Play, AlertTriangle, Lightbulb, PhoneCall, Cpu, ShieldCheck, Scan, ExternalLink } from 'lucide-react';
 import AnalyticsChart from '../components/AnalyticsChart';
 import { db } from '../firebase';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, getCountFromServer, query, where } from 'firebase/firestore';
 import DeepfakeRunner from '../components/DeepfakeRunner';
 
 interface HomeProps {
@@ -34,6 +35,15 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
 
     const fetchLiveNews = async () => {
       try {
+        // --- BỘ NHỚ ĐỆM (CACHE) ĐỂ CHỐNG DDOS API MIỄN PHÍ ---
+        const cachedNews = sessionStorage.getItem(`news_cache_${lang}`);
+        if (cachedNews) {
+            const parsedData = JSON.parse(cachedNews);
+            setLiveNews(parsedData);
+            setDisplayedNews(Array.from({ length: 6 }).map((_, i) => parsedData[i % parsedData.length]));
+            return;
+        }
+
         // Tìm kiếm trên Google News theo ngôn ngữ
         const query = lang === 'vi' ? 'deepfake lừa đảo' : 'deepfake scam';
         const langCode = lang === 'vi' ? 'vi' : 'en-US';
@@ -64,6 +74,8 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
           });
           setLiveNews(formattedNews); // Cập nhật tin thực tế vào hệ thống
           setDisplayedNews(Array.from({ length: 6 }).map((_, i) => formattedNews[i % formattedNews.length]));
+          // Lưu vào Session Storage
+          sessionStorage.setItem(`news_cache_${lang}`, JSON.stringify(formattedNews));
         }
       } catch (error) {
         console.error("Lỗi lấy tin tức tự động, sử dụng dữ liệu dự phòng.", error);
@@ -75,22 +87,20 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
 
   // --- FIREBASE: LẮNG NGHE SỐ LƯỢNG NGƯỜI THAM GIA (REAL-TIME) ---
   useEffect(() => {
-    // Chỉ tính là "Đã được bảo vệ" nếu đạt điểm >= 9 (trên 85% của 10 câu)
-    const qProtected = query(collection(db, "game_results"), where("score", ">=", 9));
-    const unsubscribeProtected = onSnapshot(qProtected, (snapshot) => {
-        setProtectedUsers(snapshot.size);
-    });
-
-    // Tính tổng số lượt tham gia (kể cả chưa đạt)
-    const qTotal = collection(db, "game_results");
-    const unsubscribeTotal = onSnapshot(qTotal, (snapshot) => {
-        setTotalAttempts(snapshot.size);
-    });
-
-    return () => {
-        unsubscribeProtected();
-        unsubscribeTotal();
+    const fetchStats = async () => {
+      try {
+        const qProtected = query(collection(db, "game_results"), where("score", ">=", 9));
+        const snapProtected = await getCountFromServer(qProtected);
+        setProtectedUsers(snapProtected.data().count);
+        
+        const qTotal = collection(db, "game_results");
+        const snapTotal = await getCountFromServer(qTotal);
+        setTotalAttempts(snapTotal.data().count);
+      } catch (error) {
+        console.error("Lỗi đếm số liệu:", error);
+      }
     };
+    fetchStats();
   }, []);
 
   // --- AUTO TICKER EFFECT CẢNH BÁO & KIẾN THỨC ---
@@ -126,7 +136,7 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
   // --- XỬ LÝ HIỂN THỊ MINI GAME KHI BẬT MÙA HÈ ---
   useEffect(() => {
     if (season === 'SUMMER') {
-      setShowMiniGame(true);
+      setShowMiniGame(false); // Tạm ẩn mini game theo yêu cầu
     } else {
       setShowMiniGame(false);
     }
@@ -162,13 +172,13 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
 
           <p className="text-base md:text-lg text-gray-400 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed border-l-0 lg:border-l-2 border-primary lg:pl-4">{t.hero_desc}</p>
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center lg:justify-start">
-            <button onClick={() => { setPage('TOOLS'); setToolTab('SCAN'); }} className="bg-primary text-black hover:bg-white px-8 py-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 uppercase tracking-widest shadow-lg shadow-primary/20">
+            <button onClick={() => navigate('/tools', { state: { tab: 'SCAN' }})} className="bg-primary text-black hover:bg-white px-8 py-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 uppercase tracking-widest shadow-lg shadow-primary/20">
               <Activity size={16} /> {t.btn_scan}
             </button>
-            <button onClick={() => setPage('AI_PROJECT')} className="bg-purple-600 text-white hover:bg-purple-500 px-8 py-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 uppercase tracking-widest shadow-lg shadow-purple-500/20">
+            <button onClick={() => navigate('/ai-project')} className="bg-purple-600 text-white hover:bg-purple-500 px-8 py-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 uppercase tracking-widest shadow-lg shadow-purple-500/20">
               <Cpu size={16} /> {t.btn_ai}
             </button>
-            <button onClick={() => setPage('CHALLENGE')} className="bg-black border border-secondary text-secondary hover:bg-secondary hover:text-white px-8 py-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 uppercase tracking-widest">
+            <button onClick={() => navigate('/challenge')} className="bg-black border border-secondary text-secondary hover:bg-secondary hover:text-white px-8 py-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 uppercase tracking-widest">
               <Play size={16} /> {t.btn_challenge}
             </button>
           </div>
@@ -176,10 +186,10 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
         <div className="lg:col-span-5 h-[300px] md:h-[380px] w-full max-w-full overflow-hidden"><AnalyticsChart lang={lang} /></div>
       </div>
 
-      {/* MINI GAME (HIỂN THỊ KHI BẬT MÙA HÈ VÀ CHƯA BỊ TẮT) */}
-      {season === 'SUMMER' && showMiniGame && (
+      {/* MINI GAME (ĐÃ TẠM ẨN) */}
+      {/* {season === 'SUMMER' && showMiniGame && (
           <DeepfakeRunner lang={lang} onClose={() => setShowMiniGame(false)} />
-      )}
+      )} */}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
         <div className="lg:col-span-8 bg-surface border border-white/5 rounded-3xl overflow-hidden flex flex-col shadow-2xl">

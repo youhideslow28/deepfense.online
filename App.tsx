@@ -1,10 +1,11 @@
 
 import React, { useState, Suspense, lazy, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import MatrixBackground from './components/MatrixBackground';
 import SummerEffects from './components/SummerEffects';
 import AiChat from './components/AiChat';
-import { PageType, Language, Season } from './types';
+import { Language, Season } from './types';
 import { TRANSLATIONS, PROJECT_METADATA } from './data';
 import { Shield } from 'lucide-react';
 import SEO from './components/SEO';
@@ -17,6 +18,23 @@ const AboutContact = lazy(() => import('./pages/AboutContact'));
 const AiComingSoon = lazy(() => import('./pages/AiComingSoon'));
 const Admin = lazy(() => import('./pages/Admin'));
 
+// --- THÊM NGAY CÁI ERROR BOUNDARY VÀO ĐỂ CỨU APP KHỎI CRASH KHI LAZY LOAD LỖI ---
+class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasError: boolean}> {
+  constructor(props: {children: React.ReactNode}) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) {
+      return <div className="text-center text-red-500 py-20 font-mono">⚠️ CHUNK LOAD FAILED! Vui lòng làm mới trang (F5).</div>;
+    }
+    return this.props.children;
+  }
+}
+
 const LoadingFallback = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
     <div className="flex flex-col items-center gap-4">
@@ -26,17 +44,24 @@ const LoadingFallback = () => (
   </div>
 );
 
-const App: React.FC = () => {
-  const [page, setPage] = useState<PageType>('HOME');
+// Component tự động cuộn lên đầu trang khi chuyển Route
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname]);
+  return null;
+};
+
+const AppContent: React.FC = () => {
   const [lang, setLang] = useState<Language>('vi');
-  const [season, setSeason] = useState<any>('SUMMER'); 
-  const [toolTab, setToolTab] = useState<'SCAN' | 'KNOWLEDGE'>('SCAN');
+  const [season, setSeason] = useState<Season>('SUMMER'); // Bỏ ngay cái <any> vô học này đi!
   const t = TRANSLATIONS[lang];
+  const location = useLocation();
 
   // --- DIGITAL SIGNATURE (CONSOLE WATERMARK) ---
   // Khi giáo viên mở Console (F12), họ sẽ thấy thông tin bản quyền này.
   useEffect(() => {
-    console.clear();
     const styleTitle = "color: #00F0FF; font-size: 20px; font-weight: bold; background: #000; padding: 10px; border: 2px solid #00F0FF; border-radius: 5px;";
     const styleText = "color: #E0E0E0; font-size: 12px; background: #111; padding: 4px;";
     
@@ -57,26 +82,14 @@ const App: React.FC = () => {
     console.log(`%cWARNING: This project is the intellectual property of Ho Xuan Nguyen (25NS039).`, "color: red; font-weight: bold;");
   }, []);
 
-  const renderPage = () => {
-    switch (page) {
-      case 'HOME': return <Home setPage={setPage} setToolTab={setToolTab} lang={lang} season={season} />;
-      case 'TOOLS': return <Tools initialTab={toolTab} lang={lang} />;
-      case 'CHALLENGE': return <Challenge lang={lang} />;
-      case 'AI_PROJECT': return <AiComingSoon lang={lang} />;
-      case 'ABOUT_CONTACT': return <AboutContact lang={lang} />;
-      case 'ADMIN' as any: return <Admin />; 
-      default: return <Home setPage={setPage} setToolTab={setToolTab} lang={lang} season={season} />;
-    }
-  };
-
   // Tiêu đề động tùy theo trang đang mở
   const getPageTitle = () => {
-    switch (page) {
-      case 'HOME': return lang === 'vi' ? 'Trang chủ' : 'Home';
-      case 'TOOLS': return lang === 'vi' ? 'Hệ thống Quét Rủi Ro' : 'Risk Scanner';
-      case 'CHALLENGE': return lang === 'vi' ? 'Thử thách Thám tử' : 'Detective Challenge';
-      case 'AI_PROJECT': return lang === 'vi' ? 'Dự án AI Deepfense' : 'AI Project';
-      case 'ABOUT_CONTACT': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
+    switch (location.pathname) {
+      case '/': return lang === 'vi' ? 'Trang chủ' : 'Home';
+      case '/tools': return lang === 'vi' ? 'Hệ thống Quét Rủi Ro' : 'Risk Scanner';
+      case '/challenge': return lang === 'vi' ? 'Thử thách Thám tử' : 'Detective Challenge';
+      case '/ai-project': return lang === 'vi' ? 'Dự án AI Deepfense' : 'AI Project';
+      case '/contact': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
       default: return '';
     }
   };
@@ -85,13 +98,12 @@ const App: React.FC = () => {
     <div className="min-h-screen flex flex-col font-sans selection:bg-primary/30 selection:text-white relative bg-[#050505]">
       <SEO title={getPageTitle()} lang={lang} />
 
+      <ScrollToTop />
       <MatrixBackground />
       {/* Chỉ hiện hiệu ứng Hè khi là mùa Hè và ở trang chủ */}
-      {page === 'HOME' && season === 'SUMMER' && <SummerEffects />}
+      {location.pathname === '/' && season === 'SUMMER' && <SummerEffects />}
       
       <Navbar 
-        currentPage={page} 
-        setPage={setPage} 
         lang={lang} 
         setLang={setLang} 
         season={season}
@@ -99,9 +111,19 @@ const App: React.FC = () => {
       />
       
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12 max-w-7xl z-10">
-        <Suspense fallback={<LoadingFallback />}>
-            {renderPage()}
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingFallback />}>
+              <Routes>
+                <Route path="/" element={<Home lang={lang} season={season} />} />
+                <Route path="/tools" element={<Tools lang={lang} />} />
+                <Route path="/challenge" element={<Challenge lang={lang} />} />
+                <Route path="/ai-project" element={<AiComingSoon lang={lang} />} />
+                <Route path="/contact" element={<AboutContact lang={lang} />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="*" element={<Home lang={lang} season={season} />} />
+              </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </main>
       
       <AiChat lang={lang} />
@@ -113,9 +135,9 @@ const App: React.FC = () => {
             NEURAL DEFENSE PROTOCOL ACTIVE
         </div>
         <div className="text-[9px] text-gray-700 font-mono flex flex-col items-center gap-2">
-            <button onClick={() => setPage('ADMIN' as any)} className="hover:text-primary transition-colors opacity-50 hover:opacity-100">
+            <Link to="/admin" className="hover:text-primary transition-colors opacity-50 hover:opacity-100">
                [ SYSTEM_ADMIN_ACCESS ]
-            </button>
+            </Link>
             © 2025 DEEPFENSE. Developed by Ho Xuan Nguyen (25NS039).<br/>
             {PROJECT_METADATA.license}
         </div>
@@ -123,5 +145,11 @@ const App: React.FC = () => {
     </div>
   );
 };
+
+const App: React.FC = () => (
+  <Router>
+    <AppContent />
+  </Router>
+);
 
 export default App;

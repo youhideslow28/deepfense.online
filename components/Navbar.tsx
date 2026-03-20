@@ -40,9 +40,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage, lang, setLang, se
     }
   };
 
-  const handleNavClick = (id: PageType) => {
-    setPage(id);
-    setIsMenuOpen(false); // Đóng menu khi chọn
+  const handleNavClick = (path: string) => {
+    navigate(path);
+    setIsMenuOpen(false);
   };
 
   // --- LONG PRESS LOGIC FOR EASTER EGG ---
@@ -121,7 +121,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage, lang, setLang, se
           <div className="flex items-center justify-between h-16 md:h-24">
             
             {/* LOGO AREA */}
-            <div className="flex items-center gap-3 md:gap-4 cursor-pointer group" onClick={() => setPage('HOME')}>
+            <Link to="/" className="flex items-center gap-3 md:gap-4 cursor-pointer group">
               <Shield className="text-primary group-hover:scale-110 transition-transform duration-500 shrink-0" size={28} />
               <div className="flex flex-col">
                 <h1 className="font-serif text-xl md:text-3xl font-black tracking-tighter text-white leading-none">DEEPFENSE</h1>
@@ -130,7 +130,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage, lang, setLang, se
                     <span className="font-mono text-[0.6rem] text-primary tracking-[0.4em] uppercase font-bold opacity-60">DEEPFAKE PROTECTION</span>
                 </div>
               </div>
-            </div>
+            </Link>
 
             {/* DESKTOP NAV & CONTROLS */}
             <div className="flex items-center gap-2 md:gap-4">
@@ -138,14 +138,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage, lang, setLang, se
               {/* Desktop Menu */}
               <nav className="hidden lg:flex items-center gap-2">
                 {navItems.map((item) => (
-                  <button key={item.id} onClick={() => setPage(item.id)}
+                  <Link key={item.path} to={item.path}
                     className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-black font-mono transition-all duration-500 uppercase tracking-widest
-                      ${currentPage === item.id ? 'text-primary bg-primary/5' : 'text-gray-500 hover:text-white'}`}
+                      ${location.pathname === item.path ? 'text-primary bg-primary/5' : 'text-gray-500 hover:text-white'}`}
                   >
                     {item.icon}
                     <span>{item.label}</span>
-                    {currentPage === item.id && <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-primary"></span>}
-                  </button>
+                    {location.pathname === item.path && <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-primary"></span>}
+                  </Link>
                 ))}
               </nav>
 
@@ -206,9 +206,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage, lang, setLang, se
           <div className="lg:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 animate-in slide-in-from-top-5 duration-300">
             <div className="flex flex-col p-4 space-y-2">
               {navItems.map((item) => (
-                <button key={item.id} onClick={() => handleNavClick(item.id)}
+                <button key={item.path} onClick={() => handleNavClick(item.path)}
                   className={`flex items-center gap-4 px-4 py-4 rounded-xl text-xs font-black font-mono transition-all uppercase tracking-widest
-                    ${currentPage === item.id ? 'bg-primary/10 text-primary border border-primary/20' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+                    ${location.pathname === item.path ? 'bg-primary/10 text-primary border border-primary/20' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
                 >
                   {item.icon}
                   {item.label}

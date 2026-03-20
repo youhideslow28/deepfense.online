@@ -35,9 +35,10 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
     }
     
     // --- ANTI-XSS (Cross-Site Scripting) VALIDATION ---
-    const xssRegex = /<[^>]*>?/gm; // Biểu thức chính quy quét các thẻ HTML/Script
-    if (xssRegex.test(formData.desc) || xssRegex.test(formData.name)) {
-        setErrorMsg(lang === 'vi' ? 'LỖI BẢO MẬT: Phát hiện ký tự mã hóa bất hợp pháp. Vui lòng không nhập mã HTML/Script.' : 'SECURITY ERROR: Illegal characters detected. No HTML/Script allowed.');
+    // Quét cụ thể các thẻ có khả năng gây hại thay vì cấm mọi dấu ngoặc nhọn
+    const xssRegex = /<(script|iframe|object|embed|form|svg|math|base|html|body|link|meta|style|title|applet)[^>]*>/i;
+    if (xssRegex.test(formData.desc.toLowerCase()) || xssRegex.test(formData.name.toLowerCase())) {
+        setErrorMsg(lang === 'vi' ? 'LỖI BẢO MẬT: Chứa thẻ HTML không hợp lệ.' : 'SECURITY ERROR: Invalid HTML tags detected.');
         return;
     }
 
@@ -45,6 +46,20 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
     try {
       let attachmentUrl = '';
       if (file) {
+          // --- FILE VALIDATION (CHỐNG SPAM STORAGE VÀ MÃ ĐỘC) ---
+          const MAX_SIZE = 5 * 1024 * 1024; // Giới hạn cứng 5MB
+          if (file.size > MAX_SIZE) {
+              setErrorMsg(lang === 'vi' ? 'LỖI: Tệp đính kèm vượt quá 5MB. Giới hạn dung lượng để bảo vệ hệ thống.' : 'ERROR: File exceeds 5MB limit.');
+              setIsSubmitting(false);
+              return;
+          }
+          const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'video/mp4'];
+          if (!allowedTypes.includes(file.type)) {
+              setErrorMsg(lang === 'vi' ? 'LỖI: Chỉ chấp nhận ảnh (JPG, PNG, WEBP) hoặc Video MP4.' : 'ERROR: Invalid file format. Only JPG, PNG, WEBP, MP4 allowed.');
+              setIsSubmitting(false);
+              return;
+          }
+
           const fileRef = ref(storage, `reports/${Date.now()}_${file.name}`);
           await uploadBytes(fileRef, file);
           attachmentUrl = await getDownloadURL(fileRef);

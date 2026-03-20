@@ -3,12 +3,16 @@ import { GoogleGenAI } from "@google/genai";
 
 // HÀM KIỂM TRA TỪ KHÓA ĐÁNG NGỜ TRONG URL ĐƯỢC GỬI LÊN
 async function checkUrlWithSecurityAPIs(url) {
-  // Logic quét tại chỗ: Nếu URL có chứa chữ "nganhang", "nhanqua", "vip" -> Cảnh báo lừa đảo
-  const suspiciousKeywords = ['nganhang', 'nhanqua', 'vip', 'khuyenmai', 'xyz', 'free'];
-  const isSuspicious = suspiciousKeywords.some(keyword => url.toLowerCase().includes(keyword));
+  // CHÚ Ý: Logic quét tại chỗ (Heuristics cơ bản). Cần tích hợp VirusTotal API cho Production.
+  // Quét các dạng tấn công Homograph (giả mạo ký tự) hoặc các từ khóa nhạy cảm đi kèm đuôi lạ
+  const suspiciousPattern = /(nganhang|nhanqua|khuyenmai|vip|free|nhantien|vnid|dinhdanh).*\.(xyz|top|pw|cc|tk|ml|cf|gq|online)/i;
+  const isSuspicious = suspiciousPattern.test(url.toLowerCase());
+  const isShortLink = /(bit\.ly|tinyurl\.com|cutt\.ly|is\.gd)/i.test(url.toLowerCase());
 
   if (isSuspicious) {
     return `[HỆ THỐNG QUÉT LIVE]: URL ${url} ĐÃ BỊ ĐÁNH DẤU LÀ TRANG WEB LỪA ĐẢO / ĐỘC HẠI. THIỆT HẠI NẾU TRUY CẬP: MẤT TÀI KHOẢN.`;
+  } else if (isShortLink) {
+    return `[HỆ THỐNG QUÉT LIVE]: URL ${url} LÀ LINK RÚT GỌN ẨN DANH. ĐÂY LÀ THỦ ĐOẠN THƯỜNG GẶP ĐỂ CHE GIẤU MÃ ĐỘC. TUYỆT ĐỐI KHÔNG CLICK.`;
   } else if (url.includes('deepfense.vn') || url.includes('vtv.vn')) {
     return `[HỆ THỐNG QUÉT LIVE]: URL ${url} LÀ TRANG WEB AN TOÀN, ĐÃ ĐƯỢC XÁC MINH.`;
   } else {
@@ -17,11 +21,6 @@ async function checkUrlWithSecurityAPIs(url) {
 }
 
 export default async function handler(req, res) {
-  // --- SECURITY HEADERS ---
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'DENY');
-  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-  res.setHeader('Content-Security-Policy', "default-src 'self'");
 
   // Chỉ chấp nhận method POST
   if (req.method !== 'POST') {
