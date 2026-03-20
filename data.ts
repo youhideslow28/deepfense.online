@@ -161,69 +161,165 @@ export const FUN_FACTS: Record<Language, FunFact[]> = {
 export const KNOWLEDGE_BASE: Record<Language, any[]> = {
   vi: [
     {
-      category: "🔬 PHÂN TÍCH PHÁP Y KỸ THUẬT SỐ (FORENSICS)",
+      category: " CƠ BẢN VỀ DEEPFAKE & AI TẠO SINH",
       items: [
-        { title: "Công nghệ rPPG (Nhịp tim quang học)", content: "Mắt người không thấy, nhưng AI có thể phân tích sự thay đổi vi mô của màu da theo mỗi nhịp đập của tim. Deepfake hiện tại hoàn toàn thất bại trong việc giả lập rPPG tự nhiên." },
-        { title: "Quang phổ âm thanh (Audio Spectrogram)", content: "Deepfake Voice thường để lại các 'cặn âm' (artifacts) ở tần số cao mà người thường không nghe thấy. Dưới lăng kính quang phổ, giọng thật mượt mà, giọng AI có những vết đứt gãy hình khối." },
-        { title: "Lỗi nội suy không gian (Spatial Glitches)", content: "Khi nhân vật AI đưa tay vò đầu hoặc che mặt, thuật toán nội suy (Inpainting) sẽ bị quá tải, khiến các ngón tay hòa tan vào tóc hoặc mặt bị biến dạng vật lý." }
+        { title: "Định nghĩa Deepfake", content: "Là sự kết hợp giữa 'Deep learning' (Học sâu) và 'Fake' (Giả mạo). Kỹ thuật này sử dụng AI để thay thế khuôn mặt, giọng nói hoặc cử chỉ của một người bằng người khác một cách chân thực." },
+        { title: "Nguyên lý hoạt động (GANs)", content: "Mạng đối nghịch sinh (Generative Adversarial Networks) gồm 2 phần: 'Generator' (Kẻ tạo giả) cố gắng tạo ra ảnh thật nhất có thể, và 'Discriminator' (Cảnh sát) cố gắng phân biệt ảnh thật/giả. Chúng huấn luyện lẫn nhau đến khi ảnh giả không thể bị phát hiện." },
+        { title: "Mô hình Khuếch tán (Diffusion Models)", content: "Công nghệ mới thay thế GANs (như Midjourney, Stable Diffusion), hoạt động bằng cách thêm nhiễu vào dữ liệu rồi học cách khử nhiễu để tạo ra hình ảnh/video mới hoàn toàn từ văn bản mô tả." }
       ]
     },
     {
-      category: "🌍 BỐI CẢNH ĐE DỌA TOÀN CẦU (GLOBAL THREAT)",
+      category: "🚀 CÔNG NGHỆ DEEPFAKE MỚI NHẤT 2026",
       items: [
-        { title: "CaaS (Cybercrime-as-a-Service)", content: "Lừa đảo đã trở thành 'Dịch vụ'. Tội phạm trên Dark Web giờ đây cho thuê các phần mềm Deepfake theo tháng (SaaS) với giá chỉ từ $50, tích hợp sẵn kịch bản và data rò rỉ." },
-        { title: "Zero-Day Deepfake", content: "Các thuật toán tạo sinh mới ra mắt (như Sora, Voice Engine) liên tục tạo ra các 'Zero-Day Deepfake' - những video giả mạo hoàn hảo đến mức các công cụ diệt virus truyền thống không thể nhận diện." },
-        { title: "Tấn công phi tập trung xuyên biên giới", content: "Kẻ tấn công ở Đông Âu có thể dùng AI mô phỏng hoàn hảo giọng nói địa phương của người Việt Nam thông qua các trạm trung chuyển tín hiệu ảo (SIP Spoofing)." }
+        { title: "Real-time Deepfake (Độ trễ bằng 0)", content: "Các công cụ trên Dark Web hiện cho phép hoán đổi khuôn mặt và giọng nói trực tiếp trên các cuộc gọi video Zalo/Messenger/Teams mà không bị giật lag, vượt qua cả các bước kiểm tra vẫy tay cơ bản." },
+        { title: "Zero-Shot Voice Cloning", content: "Công nghệ AI âm thanh thế hệ mới chỉ cần 3-5 giây mẫu âm thanh gốc để nhân bản hoàn hảo giọng nói của bất kỳ ai, bao gồm cả nhịp thở, ngữ điệu và các biểu cảm phức tạp như cười, khóc." },
+        { title: "AI Text-to-Video (Sora & beyond)", content: "Khả năng tạo ra các video dài vài phút với độ chân thực vật lý hoàn hảo chỉ từ một dòng văn bản mô tả, đe dọa trực tiếp đến tính xác thực của camera an ninh và bằng chứng video trước tòa." }
       ]
     },
     {
-      category: "🧠 THAO TÚNG TÂM LÝ (SOCIAL ENGINEERING)",
+      category: "🧠 THAO TÚNG TÂM LÝ & KỊCH BẢN",
       items: [
-        { title: "Tam giác thao túng: Khẩn cấp - Thẩm quyền - Cô lập", content: "Kẻ lừa đảo không chỉ dùng AI. Chúng kết hợp: Tạo tình huống khẩn cấp (tai nạn), Giả mạo thẩm quyền (Công an), và Yêu cầu giữ bí mật (Cô lập nạn nhân)." },
-        { title: "Đánh cắp ngữ cảnh (Context Hijacking)", content: "Hacker sử dụng dữ liệu rò rỉ từ mạng xã hội để AI 'nhại' lại chính xác cách xưng hô, thói quen, và những bí mật nhỏ nhất của người thân bạn." },
-        { title: "Hội chứng mù quáng kỹ thuật số", content: "Khi não bộ tiếp nhận hình ảnh khuôn mặt quen thuộc qua video, cơ chế phòng vệ sinh học tự động hạ xuống, khiến chúng ta bỏ qua các điểm vô lý rành rành." }
+        { title: "Tam giác thao túng: Khẩn cấp - Thẩm quyền - Cô lập", content: "Tội phạm không chỉ dùng AI. Chúng tạo tình huống cấp bách (tai nạn cấp cứu), giả danh quyền lực (Công an, Cơ quan Thuế), và yêu cầu nạn nhân ra chỗ vắng để gọi điện nhằm cô lập hoàn toàn." },
+        { title: "Đánh cắp ngữ cảnh (Context Hijacking)", content: "Sử dụng dữ liệu rò rỉ từ mạng xã hội, hacker dùng AI để nhại lại chính xác thói quen, cách xưng hô và những bí mật nhỏ nhất của người thân bạn để phá vỡ sự hoài nghi." },
+        { title: "Hội chứng mù quáng kỹ thuật số", content: "Khi não bộ tiếp nhận hình ảnh khuôn mặt người quen qua video, cơ chế phòng vệ sinh học tự động hạ xuống, khiến chúng ta bỏ qua các điểm vô lý rành rành về mặt logic hình ảnh." }
       ]
     },
     {
-      category: "📜 KHUNG PHÁP LÝ & TIÊU CHUẨN QUỐC TẾ",
+      category: "🇻🇳 LUẬT PHÁP VIỆT NAM VỀ AI & AN NINH",
       items: [
-        { title: "Đạo luật EU AI Act (Châu Âu)", content: "Đạo luật AI đầu tiên trên thế giới yêu cầu mọi nội dung do AI tạo ra (Deepfake) bắt buộc phải dán nhãn (Watermark) minh bạch. Vi phạm có thể bị phạt tới 7% doanh thu toàn cầu." },
-        { title: "Tiêu chuẩn NIST AI RMF (Hoa Kỳ)", content: "Khung quản lý rủi ro AI của Viện Tiêu chuẩn Mỹ yêu cầu các tập đoàn công nghệ phải có cơ chế kiểm tra tính xác thực của dữ liệu đầu vào và đầu ra." },
-        { title: "Nghị định 13/2023 & Bộ luật Hình sự (Việt Nam)", content: "Việc thu thập khuôn mặt, giọng nói trái phép vi phạm NĐ 13 về Dữ liệu cá nhân. Dùng Deepfake chiếm đoạt tài sản chịu khung hình phạt tối đa là tù chung thân." }
+        { title: "Luật An ninh mạng (2018) & Bộ luật Hình sự", content: "Sử dụng Deepfake để lừa đảo chiếm đoạt tài sản cấu thành tội phạm theo Điều 290 Bộ luật Hình sự. Khung hình phạt cao nhất có thể lên đến 20 năm tù hoặc tù chung thân." },
+        { title: "Nghị định 13/2023/NĐ-CP (Dữ liệu cá nhân)", content: "Khuôn mặt và giọng nói được xếp vào nhóm 'Dữ liệu cá nhân nhạy cảm'. Việc thu thập, sử dụng hình ảnh người khác để huấn luyện AI hoặc cắt ghép mà không có sự đồng ý là vi phạm pháp luật nghiêm trọng." },
+        { title: "Luật Viễn thông (sửa đổi 2023)", content: "Tăng cường định danh chính chủ (eKYC) đối với thuê bao di động. Tội phạm sử dụng Deepfake để qua mặt eKYC mở tài khoản ngân hàng rác sẽ bị truy cứu trách nhiệm hình sự về tội làm giả tài liệu của cơ quan, tổ chức." }
+      ]
+    },
+    {
+      category: "⚖️ LUẬT QUỐC TẾ & QUYỀN CON NGƯỜI",
+      items: [
+        { title: "Đạo luật EU AI Act (Châu Âu 2024)", content: "Đạo luật AI toàn diện đầu tiên trên thế giới. Bắt buộc mọi nội dung tạo bởi AI (Deepfake) phải được dán nhãn (Watermark) rõ ràng. Cấm hoàn toàn AI nhận diện cảm xúc tại nơi làm việc và AI lừa đảo. Phạt vi phạm lên đến 35 triệu Euro hoặc 7% doanh thu toàn cầu." },
+        { title: "Liên Hợp Quốc (UN) & Quyền con người", content: "Hội đồng Nhân quyền LHQ nhấn mạnh việc sử dụng Deepfake vi phạm nghiêm trọng Điều 12 Tuyên ngôn Quốc tế Nhân quyền (Quyền riêng tư) và Điều 19 (Tự do ngôn luận) khi bị lạm dụng để tạo tin giả, can thiệp bầu cử hoặc khiêu dâm không đồng thuận." },
+        { title: "Luật pháp Hoa Kỳ & Tiêu chuẩn NIST", content: "Khung quản lý rủi ro AI (AI RMF) của NIST yêu cầu các công nghệ tạo sinh phải có cơ chế xác thực đầu ra. Nhiều bang tại Mỹ (California, Texas) đã hình sự hóa hành vi sử dụng Deepfake trong bầu cử và trả thù cá nhân." }
+      ]
+    },
+    {
+      category: "🔬 KỸ THUẬT GIÁM ĐỊNH PHÁP Y (FORENSICS)",
+      items: [
+        { title: "Công nghệ rPPG (Nhịp tim quang học)", content: "Mắt người không thể thấy, nhưng máy quét pháp y có thể phân tích sự thay đổi vi mô của màu da theo mỗi nhịp đập của tim. Deepfake hiện tại hoàn toàn thất bại trong việc giả lập rPPG tự nhiên của con người." },
+        { title: "Quang phổ âm thanh (Audio Spectrogram)", content: "Dưới lăng kính quang phổ, giọng người thật rất mượt mà. Trong khi đó, giọng tạo bởi AI Voice thường để lại các 'cặn âm' (artifacts) và những vết đứt gãy hình khối rõ rệt ở dải tần số cao." },
+        { title: "Phân tích siêu dữ liệu mã hóa (C2PA/EXIF)", content: "Tiêu chuẩn C2PA cho phép đính kèm 'chữ ký số' mã hóa vào hình ảnh/video ngay từ lúc được chụp bằng camera vật lý. Nếu một tệp bị AI can thiệp chỉnh sửa, chuỗi chữ ký số nguồn gốc này sẽ bị gãy vỡ." }
+      ]
+    },
+    {
+      category: "🛡️ BẢO VỆ DỮ LIỆU CÁ NHÂN & PHÒNG NGỪA",
+      items: [
+        { title: "Nguyên tắc Zero-Trust (Không tin tưởng ai)", content: "Không tin tưởng bất cứ ai trên không gian mạng, kể cả người thân, nếu có yêu cầu liên quan đến tài chính hoặc dữ liệu nhạy cảm. Luôn xác thực chéo qua kênh khác (gọi điện thoại di động trực tiếp bằng mạng viễn thông GSM)." },
+        { title: "Từ khóa an toàn (Family Password)", content: "Thiết lập một mật mã hoặc câu hỏi bí mật riêng biệt với người thân trong gia đình. Kẻ lừa đảo dù có AI tạo giọng nói giống đến đâu cũng không thể biết trước từ khóa này." },
+        { title: "Hạn chế dấu chân kỹ thuật số (Digital Footprint)", content: "Hạn chế đăng tải hình ảnh khuôn mặt rõ nét, video có giọng nói gốc và thông tin cá nhân lên mạng xã hội ở chế độ công khai để tránh bị AI của tin tặc thu thập làm dữ liệu huấn luyện (Training Data)." }
+      ]
+    },
+    {
+      category: "🦹 CÁC NHÓM TỘI PHẠM MẠNG ĐIỂN HÌNH",
+      items: [
+        { title: "Tội phạm mạng có tổ chức (Organized Cybercrime)", content: "Các băng đảng lừa đảo xuyên quốc gia hiện nay vận hành như một tập đoàn, chia nhỏ các khâu: thu thập dữ liệu (data broker), tạo Deepfake, viết kịch bản thao túng tâm lý và mạng lưới rửa tiền tiền ảo." },
+        { title: "Mô hình CaaS (Cybercrime-as-a-Service)", content: "Lừa đảo đã trở thành một 'dịch vụ'. Một người không có chút kiến thức lập trình nào vẫn có thể lên Dark Web thuê bộ công cụ AI Deepfake và kịch bản lừa đảo với giá chỉ từ vài chục USD/tháng." },
+        { title: "Tấn công phi tập trung qua SIP Spoofing", content: "Hacker sử dụng các trạm trung chuyển tín hiệu ảo (SIP Spoofing) để ngụy trang địa chỉ IP và số điện thoại hiển thị trên màn hình, khiến việc điều tra và truy vết của cơ quan chức năng gặp rất nhiều khó khăn." }
+      ]
+    },
+    {
+      category: "📉 TÁC ĐỘNG ĐẾN XÃ HỘI VÀ KINH TẾ",
+      items: [
+        { title: "Khủng hoảng niềm tin (Trust Crisis)", content: "Khi ranh giới giữa thật và giả bị xóa nhòa, con người có xu hướng nghi ngờ mọi thông tin. Điều này làm suy yếu sự gắn kết xã hội, phá vỡ các mối quan hệ kỹ thuật số và gây tâm lý hoang mang đám đông." },
+        { title: "Thiệt hại tài chính khổng lồ", content: "Chỉ trong vài năm, các vụ lừa đảo mạo danh bằng Deepfake đã gây thiệt hại hàng chục tỷ USD cho các tập đoàn tài chính, ngân hàng và người dùng cá nhân trên toàn cầu." },
+        { title: "Nguy cơ với an ninh quốc gia & chính trị", content: "Deepfake đang được sử dụng làm vũ khí thông tin để bôi nhọ chính trị gia, thao túng kết quả bầu cử, tạo tin giả về thị trường chứng khoán và kích động bạo loạn, đe dọa trực tiếp đến sự ổn định của một quốc gia." }
+      ]
+    },
+    {
+      category: "🔮 TƯƠNG LAI CỦA AN NINH MẠNG VÀ AI",
+      items: [
+        { title: "Cuộc chiến AI đối kháng AI", content: "Một cuộc chạy đua vũ trang không hồi kết giữa các mô hình AI tạo sinh (như Deepfake) và mô hình phân tích pháp y (như Deepfense). Các hệ thống phòng thủ sẽ phải liên tục cập nhật theo thời gian thực để đối phó với Zero-day Deepfake." },
+        { title: "Tiêu chuẩn xác thực phần cứng", content: "Các nhà sản xuất máy ảnh và điện thoại di động trong tương lai sẽ bắt buộc tích hợp chip mã hóa phần cứng để đóng dấu nguồn gốc (Cryptography Watermark) trực tiếp vào file ảnh/video ngay tại khoảnh khắc bấm máy." },
+        { title: "Trợ lý bảo mật cá nhân ảo", content: "Mỗi người dùng số sẽ được trang bị một AI Agent (như dự án Deepfense đang xây dựng) hoạt động ngầm trên thiết bị, tự động phân tích và chặn các tín hiệu lừa đảo đa phương tiện ngay lập tức trước khi người dùng kịp bị thao túng." }
       ]
     }
   ],
   en: [
     {
-      category: "🔬 ADVANCED DIGITAL FORENSICS",
+      category: " DEEPFAKE & GENERATIVE AI BASICS",
       items: [
-        { title: "rPPG Technology (Optical Heart Rate)", content: "Invisible to the human eye, AI can analyze micro-changes in skin color per heartbeat. Current Deepfakes completely fail to simulate natural rPPG." },
-        { title: "Audio Spectrogram Analysis", content: "Deepfake voices leave high-frequency 'artifacts'. Under a spectrogram, a real human voice is smooth, while AI voices show blocky discontinuities." },
-        { title: "Spatial Interpolation Glitches", content: "When an AI character rubs their head or covers their face, the Inpainting algorithm overloads, causing fingers to melt into hair or physical facial distortion." }
+        { title: "Deepfake Definition", content: "A portmanteau of 'Deep learning' and 'Fake'. It uses Artificial Intelligence to replace a person's face, voice, or gestures with someone else's with extreme realism." },
+        { title: "How it works (GANs)", content: "Generative Adversarial Networks consist of two parts: a 'Generator' trying to create the most realistic fake images, and a 'Discriminator' acting as a detective to distinguish real from fake. They train against each other until fakes become undetectable." },
+        { title: "Diffusion Models", content: "The new technology replacing GANs (used in Midjourney, Stable Diffusion). It works by adding noise to data and learning to denoise it to create entirely new, highly detailed media from text prompts." }
       ]
     },
     {
-      category: "🌍 GLOBAL THREAT LANDSCAPE",
+      category: "🚀 LATEST DEEPFAKE TECHNOLOGIES 2026",
       items: [
-        { title: "CaaS (Cybercrime-as-a-Service)", content: "Scamming is now a service. Criminals on the Dark Web rent out Deepfake software (SaaS) starting at $50/month, fully integrated with scripts and leaked data." },
-        { title: "Zero-Day Deepfakes", content: "Newly released generative models (like Sora, Voice Engine) constantly create 'Zero-Day Deepfakes' - videos so perfect that traditional antivirus tools cannot detect them." },
-        { title: "Decentralized Cross-Border Attacks", content: "Attackers in Eastern Europe can use AI to perfectly simulate a local Vietnamese accent through virtual signal relays (SIP Spoofing)." }
+        { title: "Real-time Deepfake (Zero Latency)", content: "Dark Web tools now allow seamless, live face and voice swapping on Zoom, Teams, and Zalo without lag, bypassing even basic 'wave hand in front of face' security checks." },
+        { title: "Zero-Shot Voice Cloning", content: "Next-generation audio AI requires only 3 to 5 seconds of original voice samples to perfectly clone anyone's voice, replicating breathing patterns, intonations, and complex emotions (laughing, crying)." },
+        { title: "AI Text-to-Video (Sora & Beyond)", content: "The capability to generate multi-minute videos with perfect physical realism from a single text prompt. This directly threatens the legal authenticity of security cameras and video evidence in court." }
       ]
     },
     {
-      category: "🧠 PSYCHOLOGICAL MANIPULATION (SOCIAL ENG.)",
+      category: "🧠 PSYCHOLOGICAL MANIPULATION & SCAMS",
       items: [
-        { title: "The Manipulation Triangle", content: "Scammers combine AI with: Creating Urgency (accident), Spoofing Authority (Police), and Demanding Secrecy (Isolating the victim)." },
-        { title: "Context Hijacking", content: "Hackers use leaked social media data so the AI 'mimics' the exact tone, habits, and smallest secrets of your loved ones." },
-        { title: "Digital Blindness Syndrome", content: "When the brain sees a familiar face on video, biological defense mechanisms automatically drop, causing us to ignore obvious logical flaws." }
+        { title: "Manipulation Triangle: Urgency, Authority, Isolation", content: "Criminals don't just rely on AI. They engineer extreme urgency (accidents), spoof authority figures (Police, Tax officials), and demand victims move to a quiet place to ensure complete isolation." },
+        { title: "Context Hijacking", content: "Exploiting leaked social media data, hackers use AI to accurately mimic habits, speaking styles, nicknames, and the smallest secrets of your loved ones to completely disarm your skepticism." },
+        { title: "Digital Blindness Syndrome", content: "When the human brain perceives the face of a loved one on video, biological defense mechanisms instinctively drop, causing victims to completely ignore blatant logical flaws in the visual data." }
       ]
     },
     {
-      category: "📜 INT. LEGAL FRAMEWORKS & STANDARDS",
+      category: "🇻🇳 VIETNAM LAWS ON AI & CYBERSECURITY",
       items: [
-        { title: "EU AI Act (Europe)", content: "The world's first AI law requires all AI-generated content (Deepfakes) to be transparently watermarked. Violations risk fines up to 7% of global revenue." },
-        { title: "NIST AI RMF (USA)", content: "The US National Institute of Standards and Technology's AI Risk Management Framework requires tech giants to have mechanisms verifying input/output authenticity." },
-        { title: "Decree 13/2023 & Penal Code (Vietnam)", content: "Unauthorized collection of face/voice violates Decree 13 on Privacy. Using Deepfakes for fraud carries a maximum penalty of life imprisonment." }
+        { title: "Cybersecurity Law (2018) & Penal Code", content: "Using Deepfakes for fraudulent property appropriation constitutes a severe crime under Article 290 of the Penal Code. The maximum penalty can range up to 20 years in prison or life imprisonment." },
+        { title: "Decree 13/2023/ND-CP (Personal Data)", content: "Faces and voices are legally classified as 'Sensitive Personal Data'. Collecting or using someone's image to train AI or for manipulation without explicit consent is a severe violation." },
+        { title: "Telecommunications Law (Amended 2023)", content: "Mandates strict biometric identity verification (eKYC) for SIM cards. Criminals caught using Deepfakes to bypass eKYC for 'burner' bank accounts will face criminal prosecution for forging official documents." }
+      ]
+    },
+    {
+      category: "⚖️ INTERNATIONAL LAW & HUMAN RIGHTS",
+      items: [
+        { title: "EU AI Act (Europe 2024)", content: "The world's first comprehensive AI legislation. Mandates that all AI-generated content (Deepfakes) must be clearly watermarked. Scam AIs and workplace emotion-recognition AIs are outright banned. Fines reach up to €35M or 7% of global turnover." },
+        { title: "United Nations (UN) & Human Rights", content: "The UN Human Rights Council stresses that malicious Deepfakes severely violate Article 12 (Right to Privacy) and Article 19 (Freedom of Expression) of the Universal Declaration of Human Rights, especially regarding election disinformation and non-consensual imagery." },
+        { title: "US Laws & NIST Standards", content: "The NIST AI Risk Management Framework demands tech giants integrate output authentication mechanisms. Multiple US states (CA, TX) have criminalized Deepfake usage in political campaigns and for personal revenge." }
+      ]
+    },
+    {
+      category: "🔬 DIGITAL FORENSICS TECHNIQUES",
+      items: [
+        { title: "rPPG Technology (Optical Heart Rate)", content: "Invisible to the naked eye, forensic scanners analyze micro-changes in pixel colors corresponding to human heartbeats. Current Deepfakes completely fail to simulate this natural biological rPPG pulse." },
+        { title: "Audio Spectrogram Analysis", content: "Under a spectrogram, a genuine human voice flows smoothly. AI-generated cloned voices leave noticeable high-frequency 'artifacts' and blocky discontinuities that machines can easily detect." },
+        { title: "Encrypted Metadata Analysis (C2PA/EXIF)", content: "The C2PA standard embeds a cryptographic 'digital signature' into media at the exact moment of physical camera capture. If AI tampers with the file, this provenance signature chain shatters." }
+      ]
+    },
+    {
+      category: "🛡️ PERSONAL DATA PROTECTION & PREVENTION",
+      items: [
+        { title: "Zero-Trust Principle", content: "Never trust anyone online automatically, even family members, if requests involve finance or sensitive data. Always cross-verify via a different channel (e.g., a direct cellular GSM call)." },
+        { title: "Family Safe Keyword", content: "Establish a unique secret password or trick question with family members. Scammers, no matter how perfectly their AI clones a voice, will not know this predetermined keyword." },
+        { title: "Minimize Digital Footprint", content: "Restrict posting high-res facial images, original voice videos, and personal info publicly on social media to prevent hackers' AI from harvesting your data for training." }
+      ]
+    },
+    {
+      category: "🦹 PROMINENT CYBERCRIME THREAT ACTORS",
+      items: [
+        { title: "Organized Cybercrime Syndicates", content: "Transnational gangs now operate like modern corporations, compartmentalizing tasks: data brokers, Deepfake generation, psychological scriptwriters, and crypto money laundering networks." },
+        { title: "Cybercrime-as-a-Service (CaaS)", content: "Scam tools are offered as services on the Dark Web. Even individuals with no IT knowledge can rent Deepfake kits and scam scripts for a low monthly fee." },
+        { title: "Decentralized Attacks via SIP Spoofing", content: "Hackers use virtual signal relays (SIP Spoofing) to mask their IP and caller ID, making tracking and investigation by law enforcement extremely difficult." }
+      ]
+    },
+    {
+      category: "📉 SOCIO-ECONOMIC IMPACTS",
+      items: [
+        { title: "Crisis of Trust", content: "When the boundary between real and fake blurs, society tends to doubt all information. This undermines social cohesion, fractures digital relationships, and causes mass paranoia." },
+        { title: "Massive Financial Losses", content: "In just a few years, Deepfake impersonation scams have caused tens of billions of dollars in losses to financial corporations, banks, and individual users globally." },
+        { title: "National Security & Political Threats", content: "Deepfakes are weaponized as information warfare to smear politicians, manipulate elections, fake stock market news, and incite riots, directly threatening national stability." }
+      ]
+    },
+    {
+      category: "🔮 FUTURE OF CYBERSECURITY & AI",
+      items: [
+        { title: "AI vs. AI Arms Race", content: "An ongoing war between generative models (Deepfakes) and forensic analysis models (Deepfense). Defense systems must continuously update in real-time to combat Zero-day fakes." },
+        { title: "Hardware Authentication Standards", content: "Future camera and smartphone manufacturers will integrate hardware encryption chips to embed cryptographic watermarks directly into media at the exact moment of physical capture." },
+        { title: "Personal Security AI Agents", content: "Every digital user will be equipped with a background AI Agent (like the Deepfense project) on their devices, automatically analyzing and blocking multimedia scam signals before psychological manipulation occurs." }
       ]
     }
   ]

@@ -7,6 +7,7 @@ import AiChat from './components/AiChat';
 import { PageType, Language, Season } from './types';
 import { TRANSLATIONS, PROJECT_METADATA } from './data';
 import { Shield } from 'lucide-react';
+import SEO from './components/SEO';
 
 // Lazy loading các trang để giảm tải ban đầu
 const Home = lazy(() => import('./pages/Home'));
@@ -62,8 +63,22 @@ const App: React.FC = () => {
     }
   };
 
+  // Tiêu đề động tùy theo trang đang mở
+  const getPageTitle = () => {
+    switch (page) {
+      case 'HOME': return lang === 'vi' ? 'Trang chủ' : 'Home';
+      case 'TOOLS': return lang === 'vi' ? 'Hệ thống Quét Rủi Ro' : 'Risk Scanner';
+      case 'CHALLENGE': return lang === 'vi' ? 'Thử thách Thám tử' : 'Detective Challenge';
+      case 'AI_PROJECT': return lang === 'vi' ? 'Dự án AI Deepfense' : 'AI Project';
+      case 'ABOUT_CONTACT': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
+      default: return '';
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-primary/30 selection:text-white relative bg-[#050505]">
+      <SEO title={getPageTitle()} lang={lang} />
+
       <MatrixBackground />
       {/* Chỉ hiện hiệu ứng Hè khi là mùa Hè và ở trang chủ */}
       {page === 'HOME' && season === 'SUMMER' && <SummerEffects />}
