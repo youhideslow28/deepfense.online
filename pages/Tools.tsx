@@ -212,8 +212,12 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
 
           {/* COLUMN 2: FORENSICS SCANNER */}
           <div className="bg-surface border border-secondary/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(255,42,109,0.05)] relative overflow-hidden flex flex-col">
-            <h3 className="text-secondary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-center gap-3 border-b border-secondary/10 pb-4">
-               <FileSearch size={20} /> {lang === 'vi' ? '2. PHÁP Y DỮ LIỆU TỆP' : '2. DIGITAL FORENSICS SCAN'}
+            <h3 className="text-secondary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-start sm:items-center gap-3 border-b border-secondary/10 pb-4">
+               <FileSearch size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
+               <div className="flex items-center gap-2 flex-wrap w-full">
+                 <span>{lang === 'vi' ? '2. PHÁP Y DỮ LIỆU TỆP' : '2. DIGITAL FORENSICS SCAN'}</span>
+                 <span className="bg-secondary/20 text-secondary text-[9px] px-2 py-0.5 rounded-full animate-pulse border border-secondary/30 tracking-widest ml-auto sm:ml-0 mt-0.5">{lang === 'vi' ? 'BETA THỬ NGHIỆM' : 'BETA TEST'}</span>
+               </div>
             </h3>
             
             <div className="flex-1 flex flex-col justify-center">
