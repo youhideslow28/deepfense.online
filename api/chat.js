@@ -17,6 +17,12 @@ async function checkUrlWithSecurityAPIs(url) {
 }
 
 export default async function handler(req, res) {
+  // --- SECURITY HEADERS ---
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  res.setHeader('Content-Security-Policy', "default-src 'self'");
+
   // Chỉ chấp nhận method POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });

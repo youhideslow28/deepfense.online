@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Language } from '../types';
-import { UploadCloud, AlertTriangle, CheckCircle2, Activity, ScanLine, BrainCircuit, FileSearch, ShieldCheck } from 'lucide-react';
+import { UploadCloud, AlertTriangle, CheckCircle2, Activity, ScanLine, BrainCircuit, FileSearch, ShieldCheck, BookOpen, Scale, BookText } from 'lucide-react';
+import { KNOWLEDGE_BASE } from '../data';
 
 interface ToolsProps {
   initialTab?: 'SCAN' | 'KNOWLEDGE';
@@ -8,7 +9,8 @@ interface ToolsProps {
 }
 
 const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
-  const [scanMode, setScanMode] = useState<'BEHAVIOR' | 'FORENSICS'>('BEHAVIOR');
+  const [activeTab, setActiveTab] = useState<'SCAN' | 'KNOWLEDGE'>(initialTab);
+  const [activeKnowledgeCat, setActiveKnowledgeCat] = useState(0);
   
   // --- BEHAVIORAL SCANNER STATES ---
   const [step, setStep] = useState(0);
@@ -106,85 +108,92 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto animate-in fade-in duration-500 py-6">
+    <div className="max-w-7xl mx-auto animate-in fade-in duration-500 py-6 px-4">
       <div className="text-center mb-10">
         <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4 flex items-center justify-center gap-3">
-          <ScanLine className="text-primary" size={40} />
-          {lang === 'vi' ? 'HỆ THỐNG QUÉT RỦI RO' : 'RISK SCAN SYSTEM'}
+          {activeTab === 'SCAN' ? <ScanLine className="text-primary" size={40} /> : <BookOpen className="text-primary" size={40} />}
+          {activeTab === 'SCAN' ? (lang === 'vi' ? 'HỆ THỐNG QUÉT RỦI RO' : 'RISK SCAN SYSTEM') : (lang === 'vi' ? 'THƯ VIỆN KIẾN THỨC' : 'KNOWLEDGE LIBRARY')}
         </h2>
-        <p className="text-gray-400 text-sm max-w-2xl mx-auto leading-relaxed">
-          {lang === 'vi' 
-            ? 'Khi AI có thể giả mạo 99% hình ảnh và giọng nói, mắt thường không còn đáng tin cậy. Hãy sử dụng hệ thống đánh giá ngữ cảnh hành vi và pháp y kỹ thuật số để xác thực thông tin.'
-            : 'When AI can spoof 99% of visuals and audio, the naked eye is no longer reliable. Use our behavioral context assessment and digital forensics to verify information.'}
+        <p className="text-gray-400 text-sm max-w-3xl mx-auto leading-relaxed">
+          {activeTab === 'SCAN' 
+            ? (lang === 'vi' ? 'Khi AI giả mạo được 99% hình ảnh/giọng nói, mắt thường không còn đáng tin. Hãy kết hợp đánh giá ngữ cảnh hành vi và pháp y dữ liệu để xác thực.' : 'Combine behavioral context assessment and digital forensics for comprehensive verification.')
+            : (lang === 'vi' ? 'Hệ thống lưu trữ thông tin chuyên sâu về công nghệ Deepfake, cơ chế thao túng tâm lý và hệ thống luật pháp hiện hành bảo vệ quyền con người.' : 'Comprehensive repository on Deepfake tech, psychological manipulation, and legal frameworks.')}
         </p>
       </div>
 
-      {/* Chuyển đổi Mode Quét */}
-      <div className="flex bg-surface p-2 rounded-2xl border border-white/5 mb-8 w-fit mx-auto shadow-xl">
+      {/* TABS CONTROLLER */}
+      <div className="flex flex-wrap justify-center bg-surface p-2 rounded-2xl border border-white/5 mb-12 w-fit mx-auto shadow-xl gap-2">
         <button 
-          onClick={() => setScanMode('BEHAVIOR')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${scanMode === 'BEHAVIOR' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white'}`}
+          onClick={() => setActiveTab('SCAN')}
+          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'SCAN' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
-          <BrainCircuit size={16} /> {lang === 'vi' ? 'QUÉT NGỮ CẢNH (KHUYÊN DÙNG)' : 'CONTEXT SCAN (REC.)'}
+          <ScanLine size={16} /> {lang === 'vi' ? 'TRUNG TÂM QUÉT' : 'SCAN CENTER'}
         </button>
         <button 
-          onClick={() => setScanMode('FORENSICS')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${scanMode === 'FORENSICS' ? 'bg-secondary text-white' : 'text-gray-500 hover:text-white'}`}
+          onClick={() => setActiveTab('KNOWLEDGE')}
+          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'KNOWLEDGE' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
-          <FileSearch size={16} /> {lang === 'vi' ? 'PHÁP Y DỮ LIỆU TỆP' : 'DATA FORENSICS'}
+          <Scale size={16} /> {lang === 'vi' ? 'KIẾN THỨC & LUẬT PHÁP' : 'KNOWLEDGE & LAW'}
         </button>
       </div>
 
-      {/* MODE 1: QUÉT NGỮ CẢNH HÀNH VI */}
-      {scanMode === 'BEHAVIOR' && (
-        <div className="bg-surface border border-primary/20 rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden animate-in zoom-in-95 duration-300">
+      {/* MODE: SCAN CENTER (Dual Columns Layout) */}
+      {activeTab === 'SCAN' && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in slide-in-from-bottom-6 duration-500">
+          {/* COLUMN 1: BEHAVIORAL SCANNER */}
+          <div className="bg-surface border border-primary/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col">
+            <h3 className="text-primary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-center gap-3 border-b border-primary/10 pb-4">
+               <BrainCircuit size={20} /> {lang === 'vi' ? '1. QUÉT NGỮ CẢNH HÀNH VI' : '1. BEHAVIORAL CONTEXT SCAN'}
+            </h3>
+            
+            <div className="flex-1 flex flex-col justify-center">
            {!analysisComplete ? (
-             <div className="max-w-2xl mx-auto">
-               <div className="flex justify-between items-center mb-8">
+             <div className="w-full">
+               <div className="flex justify-between items-center mb-6">
                   <span className="text-primary font-mono text-xs uppercase font-bold tracking-widest flex items-center gap-2">
                     <Activity size={14}/> {lang === 'vi' ? 'THU THẬP DỮ LIỆU LOGIC' : 'GATHERING LOGIC DATA'}
                   </span>
                   <span className="text-gray-500 font-mono text-xs font-bold">{step + 1} / {behaviorQuestions.length}</span>
                </div>
                
-               <div className="h-1.5 bg-black rounded-full mb-10 overflow-hidden border border-white/5">
+               <div className="h-1.5 bg-black rounded-full mb-8 overflow-hidden border border-white/5">
                  <div className="h-full bg-primary transition-all duration-500" style={{ width: `${((step + 1) / behaviorQuestions.length) * 100}%` }}></div>
                </div>
 
-               <h3 className="text-xl md:text-2xl font-medium text-white mb-10 leading-relaxed text-center min-h-[120px] flex items-center justify-center">
+               <h3 className="text-lg md:text-xl font-medium text-white mb-10 leading-relaxed text-center min-h-[100px] flex items-center justify-center">
                  "{behaviorQuestions[step].q}"
                </h3>
 
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <button onClick={() => handleAnswer(true)} className="bg-red-500/10 border border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white py-6 rounded-2xl font-black text-sm uppercase tracking-widest transition-all active:scale-95">
+                  <button onClick={() => handleAnswer(true)} className="bg-red-500/10 border border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active:scale-95">
                     {lang === 'vi' ? 'CÓ (ĐÁNG NGỜ)' : 'YES (SUSPICIOUS)'}
                   </button>
-                  <button onClick={() => handleAnswer(false)} className="bg-green-500/10 border border-green-500/30 text-green-500 hover:bg-green-500 hover:text-white py-6 rounded-2xl font-black text-sm uppercase tracking-widest transition-all active:scale-95">
+                  <button onClick={() => handleAnswer(false)} className="bg-green-500/10 border border-green-500/30 text-green-500 hover:bg-green-500 hover:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active:scale-95">
                     {lang === 'vi' ? 'KHÔNG (BÌNH THƯỜNG)' : 'NO (NORMAL)'}
                   </button>
                </div>
              </div>
            ) : (
              <div className="text-center animate-in zoom-in duration-500">
-               <div className="inline-block p-8 rounded-full mb-6 border-4 shadow-2xl relative bg-black" 
+               <div className="inline-block p-6 rounded-full mb-6 border-4 shadow-2xl relative bg-black" 
                     style={{ 
                       borderColor: riskScore >= 60 ? '#EF4444' : riskScore >= 30 ? '#EAB308' : '#22C55E',
                       boxShadow: `0 0 40px ${riskScore >= 60 ? 'rgba(239, 68, 68, 0.3)' : riskScore >= 30 ? 'rgba(234, 179, 8, 0.3)' : 'rgba(34, 197, 94, 0.3)'}`
                     }}>
-                  {riskScore >= 60 ? <AlertTriangle size={64} className="text-red-500 animate-pulse" /> : 
-                   riskScore >= 30 ? <Activity size={64} className="text-yellow-500" /> : 
-                   <ShieldCheck size={64} className="text-green-500" />}
+                  {riskScore >= 60 ? <AlertTriangle size={48} className="text-red-500 animate-pulse" /> : 
+                   riskScore >= 30 ? <Activity size={48} className="text-yellow-500" /> : 
+                   <ShieldCheck size={48} className="text-green-500" />}
                </div>
                
                <div className="text-gray-400 font-mono text-xs mb-2 uppercase tracking-widest">
                   {lang === 'vi' ? 'CHỈ SỐ RỦI RO THAO TÚNG:' : 'MANIPULATION RISK INDEX:'}
                </div>
-               <h3 className="text-5xl font-black text-white mb-6 tracking-tighter"
+               <h3 className="text-4xl font-black text-white mb-6 tracking-tighter"
                    style={{ color: riskScore >= 60 ? '#EF4444' : riskScore >= 30 ? '#EAB308' : '#22C55E' }}>
                  {Math.min(riskScore, 100)}%
                </h3>
                
-               <p className="text-gray-300 max-w-2xl mx-auto mb-10 text-base leading-relaxed p-6 bg-black/40 rounded-2xl border border-white/5">
+               <p className="text-gray-300 mb-8 text-sm leading-relaxed p-5 bg-black/40 rounded-2xl border border-white/5">
                   {riskScore >= 60 
                     ? (lang === 'vi' ? 'CẢNH BÁO ĐỎ: Kịch bản trùng khớp cao với các chiến dịch lừa đảo Deepfake tinh vi. Đối tượng đang dùng các biện pháp tâm lý để bẻ gãy phòng vệ của bạn. TUYỆT ĐỐI KHÔNG CHUYỂN TIỀN. Hãy dập máy và gọi lại qua mạng viễn thông di động gốc (GSM).' : 'RED ALERT: High match with sophisticated Deepfake scam campaigns. Psychological manipulation detected. DO NOT TRANSFER MONEY. Hang up and callback via standard cellular network.')
                     : riskScore >= 30 
@@ -193,42 +202,46 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                   }
                </p>
 
-               <button onClick={resetBehaviorScan} className="bg-white/5 text-white hover:bg-white hover:text-black border border-white/10 px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest transition-all">
+               <button onClick={resetBehaviorScan} className="w-full bg-white/5 text-white hover:bg-white hover:text-black border border-white/10 py-4 rounded-xl font-bold text-xs uppercase tracking-widest transition-all">
                   {lang === 'vi' ? 'TIẾN HÀNH QUÉT TRƯỜNG HỢP MỚI' : 'SCAN ANOTHER CASE'}
                </button>
              </div>
            )}
-        </div>
-      )}
+            </div>
+          </div>
 
-      {/* MODE 2: GIÁM ĐỊNH PHÁP Y TỆP MÔ PHỎNG */}
-      {scanMode === 'FORENSICS' && (
-        <div className="bg-surface border border-secondary/20 rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(255,42,109,0.05)] animate-in zoom-in-95 duration-300">
+          {/* COLUMN 2: FORENSICS SCANNER */}
+          <div className="bg-surface border border-secondary/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(255,42,109,0.05)] relative overflow-hidden flex flex-col">
+            <h3 className="text-secondary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-center gap-3 border-b border-secondary/10 pb-4">
+               <FileSearch size={20} /> {lang === 'vi' ? '2. PHÁP Y DỮ LIỆU TỆP' : '2. DIGITAL FORENSICS SCAN'}
+            </h3>
+            
+            <div className="flex-1 flex flex-col justify-center">
            {!file ? (
-             <div className="border-2 border-dashed border-white/10 rounded-3xl p-12 text-center hover:border-secondary/50 hover:bg-secondary/5 transition-all bg-black/40 group relative cursor-pointer">
+             <div className="border-2 border-dashed border-white/10 rounded-3xl p-8 md:p-12 text-center hover:border-secondary/50 hover:bg-secondary/5 transition-all bg-black/40 group relative cursor-pointer h-full flex flex-col justify-center items-center">
                 <input 
                   type="file" 
                   accept="image/*,video/*,audio/*" 
                   onChange={handleFileUpload}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                 />
-                <div className="bg-secondary/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                  <UploadCloud size={36} className="text-secondary" />
+                <div className="bg-secondary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                  <UploadCloud size={32} className="text-secondary" />
                 </div>
-                <h3 className="text-white font-bold text-xl mb-2">
+                <h3 className="text-white font-bold text-lg mb-2">
                   {lang === 'vi' ? 'Tải tệp đa phương tiện lên để giám định vi mô' : 'Upload media file for micro-forensics'}
                 </h3>
                 <p className="text-gray-500 text-sm mb-8">
                   {lang === 'vi' ? 'Hỗ trợ: JPG, PNG, MP4, MP3, WAV (Tối đa 50MB)' : 'Supports: JPG, PNG, MP4, MP3, WAV (Max 50MB)'}
                 </p>
-                <div className="inline-flex bg-secondary text-black px-8 py-4 rounded-xl text-xs font-black uppercase tracking-widest items-center gap-2 group-hover:bg-white transition-colors shadow-lg shadow-secondary/20">
+                <div className="inline-flex bg-secondary text-black px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest items-center gap-2 group-hover:bg-white transition-colors shadow-lg shadow-secondary/20">
                   <FileSearch size={16} /> {lang === 'vi' ? 'CHỌN TỆP PHÂN TÍCH' : 'SELECT FILE TO ANALYZE'}
                 </div>
              </div>
            ) : (
-             <div className="max-w-3xl mx-auto">
-               <div className="flex items-center gap-4 bg-black/60 p-5 rounded-2xl border border-white/10 mb-8 shadow-inner">
-                 <FileSearch size={28} className="text-secondary shrink-0" />
+             <div className="w-full">
+               <div className="flex items-center gap-4 bg-black/60 p-4 rounded-2xl border border-white/10 mb-6 shadow-inner">
+                 <FileSearch size={24} className="text-secondary shrink-0" />
                  <div className="flex-1 min-w-0">
                    <div className="text-white font-bold text-sm truncate mb-1">{file.name}</div>
                    <div className="text-gray-400 font-mono text-xs">{(file.size / (1024 * 1024)).toFixed(2)} MB • {file.type || 'Unknown Format'}</div>
@@ -239,14 +252,14 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                </div>
 
                {!isScanning && scanProgress === 0 ? (
-                 <button onClick={startForensicsScan} className="w-full bg-secondary text-white hover:bg-white hover:text-black py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all shadow-lg flex items-center justify-center gap-3">
+                 <button onClick={startForensicsScan} className="w-full bg-secondary text-white hover:bg-white hover:text-black py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] transition-all shadow-lg flex items-center justify-center gap-3 mt-8">
                    <Activity size={18} /> {lang === 'vi' ? 'KHỞI ĐỘNG MÁY QUÉT PHÁP Y' : 'START FORENSICS SCANNER'}
                  </button>
                ) : (
-                 <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 font-mono relative overflow-hidden shadow-2xl">
+                 <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-5 font-mono relative overflow-hidden shadow-2xl">
                     {isScanning && <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-secondary/10 via-secondary to-secondary/10 animate-[pulse_1s_ease-in-out_infinite]"></div>}
                     
-                    <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                    <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
                       <span className="text-secondary font-bold text-xs flex items-center gap-2 tracking-widest">
                         {isScanning ? <Activity size={14} className="animate-spin" /> : <CheckCircle2 size={14} />} 
                         {lang === 'vi' ? 'FORENSICS_TERMINAL_V2' : 'FORENSICS_TERMINAL_V2'}
@@ -254,32 +267,32 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                       <span className="text-white text-xs font-black">{scanProgress}%</span>
                     </div>
                     
-                    <div className="space-y-4 min-h-[220px]">
+                    <div className="space-y-3 min-h-[180px]">
                       {scanLogs.map((log, idx) => (
-                        <div key={idx} className="text-gray-400 text-xs flex items-start gap-3 animate-in slide-in-from-bottom-2 duration-300">
+                        <div key={idx} className="text-gray-400 text-[11px] flex items-start gap-2 animate-in slide-in-from-bottom-2 duration-300">
                           <span className="text-secondary mt-0.5">root@deepfense:~#</span> 
                           <span className="leading-relaxed">{log}</span>
                         </div>
                       ))}
                       {isScanning && (
-                         <div className="text-gray-500 text-xs flex items-start gap-3 animate-pulse">
+                         <div className="text-gray-500 text-[11px] flex items-start gap-2 animate-pulse">
                             <span className="text-secondary mt-0.5">root@deepfense:~#</span> _
                          </div>
                       )}
                     </div>
 
                     {scanProgress === 100 && (
-                      <div className="mt-8 pt-6 border-t border-white/10 text-center animate-in fade-in duration-700">
-                         <div className="inline-block bg-secondary/10 border border-secondary/30 text-secondary px-6 py-3 rounded-lg text-sm font-bold mb-4 flex items-center gap-2 mx-auto">
-                            <AlertTriangle size={18} /> 
+                      <div className="mt-6 pt-5 border-t border-white/10 text-center animate-in fade-in duration-700">
+                         <div className="inline-block bg-secondary/10 border border-secondary/30 text-secondary px-4 py-2 rounded-lg text-xs font-bold mb-4 flex items-center gap-2 mx-auto">
+                            <AlertTriangle size={14} /> 
                             {lang === 'vi' ? 'PHÁT HIỆN DẤU VẾT BẤT THƯỜNG (CẦN XÁC MINH)' : 'ANOMALIES DETECTED (VERIFICATION NEEDED)'}
                          </div>
-                         <p className="text-gray-400 text-xs mb-6 max-w-xl mx-auto leading-relaxed">
+                         <p className="text-gray-400 text-[11px] mb-6 leading-relaxed">
                            {lang === 'vi' 
                               ? 'Dữ liệu quang phổ và phân tích pixel cho thấy dấu hiệu của thuật toán nội suy hình ảnh. Tuy nhiên, các kỹ thuật vượt rào (anti-forensics) của tội phạm đang rất tiên tiến. Khuyến nghị kết hợp với "Quét Ngữ Cảnh Hành Vi" để có kết luận cuối cùng.'
                               : 'Spectrogram and pixel analysis show signs of image interpolation algorithms. However, criminal anti-forensics are advanced. Highly recommend combining with "Context Scan" for final conclusion.'}
                          </p>
-                         <button onClick={() => setFile(null)} className="text-white border border-white/20 hover:bg-white hover:text-black px-8 py-3 rounded-xl text-xs font-bold transition-all">
+                         <button onClick={() => setFile(null)} className="w-full text-white border border-white/20 hover:bg-white hover:text-black py-3 rounded-xl text-xs font-bold transition-all">
                            {lang === 'vi' ? 'QUÉT TỆP KHÁC' : 'SCAN ANOTHER FILE'}
                          </button>
                       </div>
@@ -288,6 +301,51 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                )}
              </div>
            )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODE: KNOWLEDGE & LAW */}
+      {activeTab === 'KNOWLEDGE' && (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-in slide-in-from-bottom-6 duration-500">
+           {/* Sidebar */}
+           <div className="lg:col-span-4 flex flex-col gap-3">
+              {KNOWLEDGE_BASE[lang].map((cat, idx) => (
+                  <button 
+                    key={idx}
+                    onClick={() => setActiveKnowledgeCat(idx)}
+                    className={`text-left p-5 rounded-2xl font-bold text-xs md:text-sm tracking-widest transition-all border shadow-lg flex items-center gap-3 ${activeKnowledgeCat === idx ? 'bg-primary/10 border-primary/50 text-primary scale-105' : 'bg-black/60 border-white/5 text-gray-400 hover:border-white/20 hover:text-white'}`}
+                  >
+                    <BookText size={18} className="shrink-0" />
+                    <span className="leading-snug">{cat.category}</span>
+                  </button>
+              ))}
+           </div>
+           
+           {/* Content Box */}
+           <div className="lg:col-span-8 bg-surface border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden h-fit">
+               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
+               <div key={activeKnowledgeCat} className="animate-in fade-in slide-in-from-right-8 duration-500">
+                  <h3 className="text-xl md:text-2xl font-black text-white mb-8 text-primary border-b border-white/10 pb-6 flex items-center gap-3">
+                     <Scale size={28} className="text-primary" />
+                     {KNOWLEDGE_BASE[lang][activeKnowledgeCat].category}
+                  </h3>
+                  <div className="space-y-6">
+                     {KNOWLEDGE_BASE[lang][activeKnowledgeCat].items.map((item, idx) => (
+                        <div key={idx} className="bg-black/60 p-6 md:p-8 rounded-2xl border border-white/5 group hover:border-primary/30 transition-all hover:bg-black/80 hover:shadow-[0_0_20px_rgba(0,240,255,0.05)]">
+                           <h4 className="text-base md:text-lg font-bold text-white mb-4 flex items-start gap-3">
+                              <ShieldCheck size={20} className="text-primary group-hover:scale-125 transition-transform mt-0.5 shrink-0" /> 
+                              <span className="leading-tight">{item.title}</span>
+                           </h4>
+                           <p className="text-gray-400 text-sm md:text-base leading-relaxed text-justify">
+                              {item.content}
+                           </p>
+                        </div>
+                     ))}
+                  </div>
+               </div>
+           </div>
         </div>
       )}
     </div>

@@ -33,6 +33,13 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
         setErrorMsg(lang === 'vi' ? 'Mô tả sự cố quá ngắn. Vui lòng nhập chi tiết hơn (ít nhất 20 ký tự).' : 'Description too short, please provide more details (at least 20 chars).');
         return;
     }
+    
+    // --- ANTI-XSS (Cross-Site Scripting) VALIDATION ---
+    const xssRegex = /<[^>]*>?/gm; // Biểu thức chính quy quét các thẻ HTML/Script
+    if (xssRegex.test(formData.desc) || xssRegex.test(formData.name)) {
+        setErrorMsg(lang === 'vi' ? 'LỖI BẢO MẬT: Phát hiện ký tự mã hóa bất hợp pháp. Vui lòng không nhập mã HTML/Script.' : 'SECURITY ERROR: Illegal characters detected. No HTML/Script allowed.');
+        return;
+    }
 
     setIsSubmitting(true);
     try {

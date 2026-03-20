@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { LEVELS, TRANSLATIONS, SURVEY_SCALE } from '../data';
 import { GameState, Language } from '../types';
-import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2, ShieldQuestion, Share2, Facebook, Twitter } from 'lucide-react';
+import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2, ShieldQuestion, Share2, Facebook, Twitter, Users } from 'lucide-react';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -17,6 +17,8 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
   const [surveyStep, setSurveyStep] = useState(0);
   const [surveyAnswers, setSurveyAnswers] = useState<number[]>([]);
   const [surveySent, setSurveySent] = useState(false);
+  const [demoAge, setDemoAge] = useState<string>('');
+  const [showDemo, setShowDemo] = useState(true);
 
   // Anti-Bot States
   const [captchaObj, setCaptchaObj] = useState({ num1: 0, num2: 0 });
@@ -25,69 +27,34 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
 
   const surveyQuestions = [
     {
-        id: 'q0_overconfidence',
-        vi: 'Trước khi làm bài test, tôi từng rất tự tin rằng mình có thể dễ dàng nhận ra một video Deepfake bằng mắt thường.',
-        en: 'Before the test, I was highly confident that I could easily spot a Deepfake video with my naked eye.'
+        id: 'q1_zalo_scam',
+        vi: 'Tôi thường xuyên nhận được hoặc nghe kể về các cuộc gọi video Zalo mờ nhòe, âm thanh chập chờn hối thúc chuyển tiền viện phí/tai nạn.',
+        en: 'I often receive or hear about blurry Zalo video calls with glitchy audio urging urgent money transfers.'
     },
     {
-        id: 'q1_vulnerability',
-        vi: 'Tôi tin rằng bản thân hoặc người thân trong gia đình có nguy cơ cao trở thành nạn nhân của tội phạm Deepfake.',
-        en: 'I believe that I or my family members are at high risk of becoming victims of Deepfake crimes.'
+        id: 'q2_vneid_police',
+        vi: 'Tôi biết rất rõ Cơ quan Công an, Cán bộ phường KHÔNG BAO GIỜ làm việc qua điện thoại hay yêu cầu cài đặt app, cung cấp mã định danh VNeID.',
+        en: 'I know clearly that Police and Tax authorities NEVER work over the phone or request app installs/VNeID codes.'
     },
     {
-        id: 'q2_severity',
-        vi: 'Tôi nhận thức được lừa đảo bằng Deepfake có thể gây ra những tổn thương tâm lý và tài chính cực kỳ nghiêm trọng.',
-        en: 'I am aware that Deepfake scams can cause severely devastating psychological and financial damage.'
+        id: 'q3_cross_check',
+        vi: 'Nếu người thân nhắn tin mượn tiền, tôi sẽ lập tức gọi điện thoại thông thường (mạng di động GSM) để xác thực lại giọng nói thật.',
+        en: 'If a relative messages to borrow money, I will immediately call via standard cellular network (GSM) to verify.'
     },
     {
-        id: 'q3_vigilance',
-        vi: 'Tôi luôn giữ tâm lý cảnh giác và nghi ngờ trước bất kỳ cuộc gọi hoặc tin nhắn nào liên quan đến việc chuyển tiền gấp.',
-        en: 'I always maintain a vigilant and skeptical mindset towards any calls or messages requesting urgent money transfers.'
+        id: 'q4_family_pwd',
+        vi: 'Gia đình tôi đã (hoặc cam kết sẽ) thiết lập một "Mật mã bí mật" (ví dụ: tên thú cưng cũ) để hỏi lại nhau ngay khi có cuộc gọi nghi ngờ.',
+        en: 'My family has (or commits to) establishing a "Secret Password" (e.g., old pet name) to verify each other.'
     },
     {
-        id: 'q4_paranoia',
-        vi: 'Sau thử thách này, tôi cảm thấy bất an và bắt đầu nghi ngờ tính xác thực của cả những hình ảnh/video do người quen đăng tải.',
-        en: 'After this challenge, I feel insecure and have started doubting the authenticity of even images/videos posted by acquaintances.'
+        id: 'q5_social_media',
+        vi: 'Tôi dự định sẽ hạn chế đăng tải hình ảnh cá nhân rõ nét và video có giọng nói gốc trên nền tảng công khai (TikTok, Facebook).',
+        en: 'I plan to restrict posting clear personal images and original voice videos on public platforms.'
     },
     {
-        id: 'q5_tech_trust',
-        vi: 'Tôi tin rằng các hệ thống AI tự động (như Deepfense) là tấm khiên công nghệ bắt buộc phải có để đối trọng với hacker.',
-        en: 'I believe automated AI systems (like Deepfense) are a mandatory technological shield to counter hackers.'
-    },
-    {
-        id: 'q6_tech_anxiety',
-        vi: 'Sự phát triển quá nhanh của công nghệ AI tạo sinh khiến tôi lo sợ về việc mất kiểm soát quyền riêng tư cá nhân.',
-        en: 'The rapid development of generative AI makes me fearful about losing control over personal privacy.'
-    },
-    {
-        id: 'q7_self_efficacy_visual',
-        vi: 'Thử thách này giúp tôi cải thiện rõ rệt kỹ năng quan sát các bất thường vi mô (như khẩu hình, bóng đổ, tần suất chớp mắt).',
-        en: 'This challenge significantly improved my skills in observing micro-anomalies (like lip sync, shadows, blink rate).'
-    },
-    {
-        id: 'q8_self_efficacy_action',
-        vi: 'Tôi hoàn toàn tự tin vào khả năng áp dụng các biện pháp xác thực chéo (gọi lại bằng SIM mạng, đặt câu hỏi mẹo) khi có nghi ngờ.',
-        en: 'I am fully confident in applying cross-verification methods (cellular callback, asking trick questions) when in doubt.'
-    },
-    {
-        id: 'q9_habit_change',
-        vi: 'Tôi dự định sẽ thắt chặt quyền riêng tư và hạn chế tối đa việc chia sẻ hình ảnh/giọng nói rõ nét lên mạng xã hội công khai.',
-        en: 'I plan to tighten my privacy and minimize sharing clear images/voice recordings on public social media.'
-    },
-    {
-        id: 'q10_altruism',
-        vi: 'Tôi cảm thấy mình có trách nhiệm phải phổ biến các kiến thức phòng chống Deepfake này cho những người yếu thế (đặc biệt là người lớn tuổi).',
-        en: 'I feel a responsibility to disseminate this Deepfake prevention knowledge to vulnerable groups (especially the elderly).'
-    },
-    {
-        id: 'q11_mindset_shift',
-        vi: 'Trải nghiệm giáo dục này đã thực sự thay đổi tư duy và cách nhìn nhận của tôi về ranh giới giữa thế giới thực và thế giới ảo.',
-        en: 'This educational experience has truly shifted my mindset and perspective regarding the boundary between the real and virtual worlds.'
-    },
-    {
-        id: 'q12_behavioral_intent',
-        vi: 'Tôi cam kết sẽ thống nhất và thiết lập "Mật mã gia đình" hoặc từ khóa an toàn với người thân ngay sau hôm nay.',
-        en: 'I commit to agreeing upon and setting up a "Family Password" or safe keyword with my relatives right after today.'
+        id: 'q6_elderly_risk',
+        vi: 'Tôi cảm thấy cực kỳ lo lắng cho người lớn tuổi (ông bà, cha mẹ) vì họ dễ tin người và ít am hiểu về công nghệ ghép mặt Deepfake.',
+        en: 'I feel extremely worried for the elderly as they are highly trusting and lack knowledge of Deepfake tech.'
     }
   ];
 
@@ -118,6 +85,8 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
     setSurveyStep(0);
     setSurveyAnswers([]);
     setSurveySent(false);
+    setDemoAge('');
+    setShowDemo(true);
   };
 
   const handleChoice = (choice: 1 | 2) => {
@@ -190,6 +159,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
     // --- FIREBASE: LƯU KẾT QUẢ KHẢO SÁT ---
     try {
       const surveyData = {
+        age_group: demoAge,
         answers: surveyAnswers, // Mảng các câu trả lời (0-4)
         questions_map: surveyQuestions.map(q => q.id), // Map thứ tự câu hỏi
         created_at: serverTimestamp(),
@@ -302,6 +272,27 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                         <div className="text-success font-black text-xl uppercase">
                             {lang === 'vi' ? 'DỮ LIỆU ĐÃ ĐƯỢC GHI NHẬN!' : 'DATA RECORDED SUCCESSFULLY!'}
                         </div>
+                    </div>
+                ) : showDemo ? (
+                    <div className="w-full max-w-xl animate-in slide-in-from-right-4 duration-300">
+                        <Users className="text-primary mx-auto mb-6" size={48} />
+                        <h4 className="text-lg md:text-2xl text-white font-black mb-8 leading-relaxed">
+                            {lang === 'vi' ? 'Vui lòng chọn nhóm tuổi của bạn để tiếp tục:' : 'Please select your age group to continue:'}
+                        </h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                            {['Dưới 18 Tuổi', '18 - 24 Tuổi', '25 - 40 Tuổi', 'Trên 40 Tuổi'].map(age => (
+                                <button 
+                                    key={age}
+                                    onClick={() => { setDemoAge(age); setShowDemo(false); }}
+                                    className="bg-surface border-2 border-white/10 hover:border-primary text-gray-300 hover:text-white p-6 rounded-2xl font-black text-base transition-all active:scale-95 group"
+                                >
+                                    <span className="group-hover:scale-110 inline-block transition-transform">{age}</span>
+                                </button>
+                            ))}
+                        </div>
+                        <p className="text-gray-500 text-xs italic px-4">
+                            {lang === 'vi' ? '*Dữ liệu nhân khẩu học được thu thập ẩn danh, phục vụ trực tiếp cho báo cáo phân tích nhận thức cộng đồng.' : '*Demographic data is collected anonymously for research purposes.'}
+                        </p>
                     </div>
                 ) : (
                     <div className="w-full max-w-2xl animate-in slide-in-from-right-4 duration-300">
