@@ -5,6 +5,7 @@ import { Activity, Play, AlertTriangle, Lightbulb, PhoneCall, Cpu, ShieldCheck, 
 import AnalyticsChart from '../components/AnalyticsChart';
 import { db } from '../firebase';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import DeepfakeRunner from '../components/DeepfakeRunner';
 
 interface HomeProps {
   setPage: (page: PageType) => void;
@@ -21,6 +22,7 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
   const [totalAttempts, setTotalAttempts] = useState(0);   // Biến mới: Tổng số lượt chơi
   
   const [factIndex, setFactIndex] = useState(0);
+  const [showMiniGame, setShowMiniGame] = useState(false);
   const [liveNews, setLiveNews] = useState<any[]>(NEWS_DATA[lang]); // State lưu tin tức realtime
   const [displayedNews, setDisplayedNews] = useState<any[]>([]);
   const [flippingIndex, setFlippingIndex] = useState<number | null>(null);
@@ -121,6 +123,15 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
     };
   }, [liveNews, facts.length]);
 
+  // --- XỬ LÝ HIỂN THỊ MINI GAME KHI BẬT MÙA HÈ ---
+  useEffect(() => {
+    if (season === 'SUMMER') {
+      setShowMiniGame(true);
+    } else {
+      setShowMiniGame(false);
+    }
+  }, [season]);
+
   // Dữ liệu Kiến thức (Lấy 2 items/lượt)
   const displayFacts = [
       facts[factIndex % facts.length],
@@ -164,6 +175,11 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
         </div>
         <div className="lg:col-span-5 h-[300px] md:h-[380px] w-full max-w-full overflow-hidden"><AnalyticsChart lang={lang} /></div>
       </div>
+
+      {/* MINI GAME (HIỂN THỊ KHI BẬT MÙA HÈ VÀ CHƯA BỊ TẮT) */}
+      {season === 'SUMMER' && showMiniGame && (
+          <DeepfakeRunner lang={lang} onClose={() => setShowMiniGame(false)} />
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
         <div className="lg:col-span-8 bg-surface border border-white/5 rounded-3xl overflow-hidden flex flex-col shadow-2xl">
