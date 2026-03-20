@@ -1,10 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Language } from '../types';
-import { Play, RotateCcw, ShieldAlert, Crosshair, X, Heart } from 'lucide-react';
+import { Play, RotateCcw, ShieldAlert, Crosshair, X, Heart, Trophy } from 'lucide-react';
 
 interface DeepfakeRunnerProps {
   lang: Language;
   onClose: () => void;
+}
+
+interface LeaderboardEntry {
+  name: string;
+  score: number;
 }
 
 const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
@@ -12,7 +17,11 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
   const [gameState, setGameState] = useState<'START' | 'PLAYING' | 'GAMEOVER'>('START');
   const [score, setScore] = useState(0);
   const [health, setHealth] = useState(3);
-  const [highScore, setHighScore] = useState(0);
+  
+  // Leaderboard States
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [playerName, setPlayerName] = useState('');
+  const [isEligibleForLeaderboard, setIsEligibleForLeaderboard] = useState(false);
 
   const gameRef = useRef({
     frames: 0,
@@ -36,9 +45,34 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
   };
 
   useEffect(() => {
-    const savedScore = localStorage.getItem('deepfense_shooter_hs');
-    if (savedScore) setHighScore(parseInt(savedScore));
+    // Load Leaderboard từ LocalStorage
+    const lb = localStorage.getItem('deepfense_leaderboard');
+    if (lb) {
+        setLeaderboard(JSON.parse(lb));
+    } else {
+        // Dữ liệu mẫu ban đầu nếu chưa có ai chơi
+        const defaultLb = [
+            { name: 'NEO_HACKER', score: 500 },
+            { name: 'CYBER_COP', score: 300 },
+            { name: 'ROOKIE', score: 100 }
+        ];
+        setLeaderboard(defaultLb);
+        localStorage.setItem('deepfense_leaderboard', JSON.stringify(defaultLb));
+    }
   }, []);
+
+  // Xử lý lưu điểm lên Bảng Xếp Hạng
+  const handleSubmitScore = () => {
+      if (!playerName.trim()) return;
+      const newLb = [...leaderboard, { name: playerName.toUpperCase().slice(0, 10), score: gameRef.current.score }]
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3); // Giữ top 3
+      
+      setLeaderboard(newLb);
+      localStorage.setItem('deepfense_leaderboard', JSON.stringify(newLb));
+      setIsEligibleForLeaderboard(false);
+      setPlayerName('');
+  };
 
   useEffect(() => {
     if (gameState !== 'PLAYING') return;
@@ -169,12 +203,14 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
       ctx.shadowBlur = 0;
 
       // 4. ENEMIES
-      const diffMultiplier = 1 + Math.floor(gameRef.current.frames / 600) * 0.2;
-      if (gameRef.current.frames % Math.max(30, Math.floor(80 / diffMultiplier)) === 0) {
+      // Giảm tốc độ tăng tiến độ khó, khởi đầu chậm hơn để người chơi làm quen
+      const diffMultiplier = 1 + Math.floor(gameRef.current.frames / 1200) * 0.15; 
+      if (gameRef.current.frames % Math.max(45, Math.floor(120 / diffMultiplier)) === 0) {
           const type = Math.random();
-          let hp = 1, speed = 2 * diffMultiplier, emoji = emojis[0];
-          if (type > 0.8) { hp = 3; speed = 1 * diffMultiplier; emoji = '🤖'; } // Tank
-          else if (type > 0.5) { speed = 4 * diffMultiplier; emoji = '🎙️'; } // Fast
+          // Tốc độ cơ bản chậm hơn nhiều so với trước
+          let hp = 1, speed = 1.2 * diffMultiplier, emoji = emojis[0];
+          if (type > 0.8) { hp = 3; speed = 0.8 * diffMultiplier; emoji = '🤖'; } // Tank (Chậm)
+          else if (type > 0.5) { speed = 2.5 * diffMultiplier; emoji = '🎙️'; } // Fast (Nhanh)
 
           enemies.push({
               x: Math.random() * (canvas.width - 40) + 20,
@@ -240,9 +276,13 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
               if (gameRef.current.health <= 0) {
                   gameRef.current.isGameOver = true;
                   setGameState('GAMEOVER');
-                  if (gameRef.current.score > highScore) {
-                      setHighScore(gameRef.current.score);
-                      localStorage.setItem('deepfense_shooter_hs', gameRef.current.score.toString());
+                  
+                  // Kiểm tra xem có đủ điều kiện vào Top 3 Leaderboard không
+                  const isTop3 = leaderboard.length < 3 || gameRef.current.score > leaderboard[leaderboard.length - 1]?.score;
+                  if (isTop3 && gameRef.current.score > 0) {
+                      setIsEligibleForLeaderboard(true);
+                  } else {
+                      setIsEligibleForLeaderboard(false);
                   }
               }
           }
@@ -284,51 +324,110 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
           <X size={16} />
       </button>
 
-      <div className="flex justify-between items-center mb-4 font-mono text-sm relative z-10 px-2">
-         <div className="flex items-center gap-2 font-black text-primary uppercase tracking-widest"><Crosshair size={18}/> {lang === 'vi' ? 'NEURAL DEFENDER' : 'NEURAL DEFENDER'}</div>
-         <div className="flex items-center gap-6">
-             <div className="flex gap-1">
-                 {[...Array(3)].map((_, i) => (
-                     <Heart key={i} size={16} className={i < health ? "fill-secondary text-secondary" : "text-gray-700"} />
-                 ))}
-             </div>
-             <div className="text-gray-500 font-bold hidden sm:block">HI-SCORE: <span className="text-white">{highScore}</span></div>
-             <div className="text-primary font-bold">SCORE: <span className="text-2xl text-white">{score}</span></div>
-         </div>
-      </div>
-
-      <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 bg-black cursor-crosshair shadow-inner">
-         <canvas ref={canvasRef} className="w-full block touch-none" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-1 md:p-2">
          
-         {gameState === 'START' && (
-           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center p-4">
-              <div className="text-5xl mb-6 drop-shadow-[0_0_15px_rgba(0,240,255,0.8)]">🚀</div>
-              <h3 className="text-white font-black text-2xl md:text-3xl uppercase tracking-widest mb-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">
-                {lang === 'vi' ? 'TIÊU DIỆT VIRUS DEEPFAKE' : 'DESTROY DEEPFAKE VIRUS'}
-              </h3>
-              <p className="text-gray-400 text-xs md:text-sm mb-8 text-center max-w-md">
-                {lang === 'vi' ? 'Vuốt hoặc di chuyển chuột để điều khiển Tường Lửa bảo vệ dữ liệu. Đừng để chúng lọt qua!' : 'Swipe or move mouse to control Firewall. Do not let them pass!'}
-              </p>
-              <button onClick={startMatch} className="bg-primary text-black px-10 py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:scale-105 transition-transform flex items-center gap-3 shadow-[0_0_30px_rgba(0,240,255,0.4)]">
-                <Play size={18}/> {lang === 'vi' ? 'KHỞI ĐỘNG HỆ THỐNG' : 'SYSTEM START'}
-              </button>
-           </div>
-         )}
+         {/* --- CỘT TRÁI: KHU VỰC CHƠI GAME --- */}
+         <div className="lg:col-span-2 flex flex-col">
+             <div className="flex justify-between items-center mb-4 font-mono text-sm relative z-10 px-2">
+                <div className="flex items-center gap-2 font-black text-primary uppercase tracking-widest"><Crosshair size={18}/> {lang === 'vi' ? 'NEURAL DEFENDER' : 'NEURAL DEFENDER'}</div>
+                <div className="flex items-center gap-6">
+                    <div className="flex gap-1">
+                        {[...Array(3)].map((_, i) => (
+                            <Heart key={i} size={16} className={i < health ? "fill-secondary text-secondary" : "text-gray-700"} />
+                        ))}
+                    </div>
+                    <div className="text-primary font-bold">SCORE: <span className="text-2xl text-white">{score}</span></div>
+                </div>
+             </div>
 
-         {gameState === 'GAMEOVER' && (
-           <div className="absolute inset-0 bg-red-900/80 backdrop-blur-md flex flex-col items-center justify-center animate-in zoom-in duration-300">
-              <ShieldAlert size={64} className="text-white mb-4 animate-bounce drop-shadow-xl" />
-              <h3 className="text-white font-black text-4xl md:text-5xl uppercase tracking-tighter mb-2">
-                {lang === 'vi' ? 'HỆ THỐNG BỊ XUYÊN THỦNG!' : 'SYSTEM BREACHED!'}
-              </h3>
-              <p className="text-red-200 text-sm mb-8 px-4 text-center">
-                {lang === 'vi' ? `Bạn đã ghi được ${score} điểm. Tội phạm mạng sẽ không bao giờ dừng lại!` : `You scored ${score} points. Cybercriminals never stop!`}
-              </p>
-              <button onClick={startMatch} className="bg-white text-black px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary hover:text-black transition-colors flex items-center gap-2 shadow-2xl">
-                <RotateCcw size={16}/> {lang === 'vi' ? 'PHỤC HỒI HỆ THỐNG' : 'RESTORE SYSTEM'}
-              </button>
-           </div>
-         )}
+             <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 bg-black cursor-crosshair shadow-inner min-h-[350px]">
+                <canvas ref={canvasRef} className="w-full block touch-none" />
+                
+                {gameState === 'START' && (
+                  <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center p-4 z-50">
+                     <div className="text-5xl mb-6 drop-shadow-[0_0_15px_rgba(0,240,255,0.8)]">🚀</div>
+                     <h3 className="text-white font-black text-2xl md:text-3xl uppercase tracking-widest mb-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">
+                       {lang === 'vi' ? 'TIÊU DIỆT VIRUS DEEPFAKE' : 'DESTROY DEEPFAKE VIRUS'}
+                     </h3>
+                     <p className="text-gray-400 text-xs md:text-sm mb-8 text-center max-w-md">
+                       {lang === 'vi' ? 'Vuốt hoặc di chuyển chuột để điều khiển Tường Lửa. Nhịp độ sẽ chậm rãi ban đầu và tăng tốc dần!' : 'Swipe or move mouse to control Firewall. Starts slow, speeds up later!'}
+                     </p>
+                     <button onClick={startMatch} className="bg-primary text-black px-10 py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:scale-105 transition-transform flex items-center gap-3 shadow-[0_0_30px_rgba(0,240,255,0.4)]">
+                       <Play size={18}/> {lang === 'vi' ? 'KHỞI ĐỘNG HỆ THỐNG' : 'SYSTEM START'}
+                     </button>
+                  </div>
+                )}
+
+                {gameState === 'GAMEOVER' && (
+                  <div className="absolute inset-0 bg-red-900/80 backdrop-blur-md flex flex-col items-center justify-center animate-in zoom-in duration-300 z-50">
+                     <ShieldAlert size={56} className="text-white mb-2 animate-bounce drop-shadow-xl" />
+                     <h3 className="text-white font-black text-3xl md:text-4xl uppercase tracking-tighter mb-2">
+                       {lang === 'vi' ? 'HỆ THỐNG BỊ XUYÊN THỦNG!' : 'SYSTEM BREACHED!'}
+                     </h3>
+                     <p className="text-red-200 text-sm mb-6 px-4 text-center">
+                       {lang === 'vi' ? `Bạn đã ghi được ${score} điểm.` : `You scored ${score} points.`}
+                     </p>
+
+                     {isEligibleForLeaderboard ? (
+                        <div className="bg-black/60 p-5 rounded-2xl border-2 border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.3)] flex flex-col items-center animate-in slide-in-from-bottom-4">
+                           <div className="text-yellow-400 font-black mb-4 text-sm flex items-center gap-2 tracking-widest"><Trophy size={18}/> TOP 3 ACHIEVED!</div>
+                           <div className="flex gap-2">
+                              <input 
+                                type="text" 
+                                maxLength={10}
+                                placeholder="ENTER NAME" 
+                                className="bg-black border-2 border-white/20 text-white px-4 py-2 rounded-xl outline-none focus:border-yellow-500 text-center font-mono uppercase w-40 font-bold"
+                                value={playerName}
+                                onChange={e => setPlayerName(e.target.value.toUpperCase())}
+                                onKeyDown={e => e.key === 'Enter' && handleSubmitScore()}
+                              />
+                              <button onClick={handleSubmitScore} className="bg-yellow-500 text-black px-5 py-2 font-black rounded-xl hover:bg-white transition-colors shadow-lg">SAVE</button>
+                           </div>
+                        </div>
+                     ) : (
+                        <button onClick={startMatch} className="bg-white text-black px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary hover:text-black transition-colors flex items-center gap-2 shadow-2xl mt-2">
+                           <RotateCcw size={16}/> {lang === 'vi' ? 'PHỤC HỒI HỆ THỐNG' : 'RESTORE SYSTEM'}
+                        </button>
+                     )}
+                  </div>
+                )}
+             </div>
+         </div>
+
+         {/* --- CỘT PHẢI: BẢNG XẾP HẠNG (LEADERBOARD) --- */}
+         <div className="lg:col-span-1 bg-black/60 border border-primary/20 rounded-2xl p-5 flex flex-col shadow-[0_0_30px_rgba(0,240,255,0.05)] relative overflow-hidden">
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 blur-[50px] rounded-full"></div>
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-purple-500"></div>
+            
+            <h3 className="text-white font-black text-center mb-6 tracking-widest uppercase flex items-center justify-center gap-2 relative z-10">
+                <Trophy size={20} className="text-yellow-400"/> {lang === 'vi' ? 'BẢNG PHONG THẦN' : 'LEADERBOARD'}
+            </h3>
+            
+            <div className="flex-1 flex flex-col gap-4 relative z-10">
+                {leaderboard.map((entry, i) => (
+                    <div key={i} className={`p-4 rounded-xl border relative overflow-hidden flex items-center justify-between group transition-transform hover:scale-[1.02] ${i === 0 ? 'bg-gradient-to-r from-yellow-500/20 to-black border-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.2)]' : i === 1 ? 'bg-gradient-to-r from-gray-400/10 to-black border-gray-400/50' : 'bg-gradient-to-r from-orange-700/20 to-black border-orange-700/50'}`}>
+                        {i === 0 && <div className="absolute top-0 right-0 w-16 h-16 bg-yellow-500/10 rounded-full blur-xl animate-pulse"></div>}
+                        <div className="flex items-center gap-3">
+                            <span className={`text-2xl font-black italic ${i === 0 ? 'text-yellow-500' : i === 1 ? 'text-gray-300' : 'text-orange-500'}`}>#{i+1}</span>
+                            <span className="text-white font-bold tracking-wider">{entry.name}</span>
+                        </div>
+                        <span className={`font-mono font-black text-lg ${i === 0 ? 'text-yellow-400' : 'text-primary'}`}>{entry.score}</span>
+                    </div>
+                ))}
+                
+                {/* Hiển thị dòng trống nếu chưa đủ 3 người */}
+                {[...Array(Math.max(0, 3 - leaderboard.length))].map((_, i) => (
+                    <div key={`empty-${i}`} className="p-4 rounded-xl border border-white/5 bg-white/5 flex items-center justify-between opacity-50">
+                        <div className="flex items-center gap-3">
+                            <span className="text-2xl font-black italic text-gray-700">#{leaderboard.length + i + 1}</span>
+                            <span className="text-gray-600 font-bold tracking-wider">---</span>
+                        </div>
+                        <span className="font-mono font-black text-lg text-gray-700">0</span>
+                    </div>
+                ))}
+            </div>
+         </div>
+         
       </div>
     </div>
   );

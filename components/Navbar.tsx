@@ -1,21 +1,23 @@
 import React, { useState, useRef } from 'react';
-import { PageType, Language, Season } from '../types';
+import { Language, Season } from '../types';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Shield, Home, Swords, Cpu, Info, Bot, Sun, Menu, X, Power, Heart, Stars, Sparkles } from 'lucide-react';
 import { TRANSLATIONS } from '../data';
 
 interface NavbarProps {
-  currentPage: PageType;
-  setPage: (page: PageType) => void;
   lang: Language;
   setLang: (l: Language) => void;
   season: Season;
   setSeason: (s: Season) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage, lang, setLang, season, setSeason }) => {
+const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   
+  const location = useLocation();
+  const navigate = useNavigate();
+
   // Refs cho việc xử lý Long Press
   const timerRef = useRef<any>(null);
   const isLongPress = useRef(false);
@@ -23,12 +25,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage, lang, setLang, se
 
   const t = TRANSLATIONS[lang];
   
-  const navItems: { id: PageType; label: string; icon: React.ReactNode }[] = [
-    { id: 'HOME', label: lang === 'vi' ? 'TRANG CHỦ' : 'HOME', icon: <Home size={14} /> },
-    { id: 'TOOLS', label: lang === 'vi' ? 'CÔNG CỤ' : 'TOOLS', icon: <Cpu size={14} /> },
-    { id: 'CHALLENGE', label: lang === 'vi' ? 'THỬ THÁCH' : 'CHALLENGE', icon: <Swords size={14} /> },
-    { id: 'AI_PROJECT', label: lang === 'vi' ? 'DỰ ÁN AI' : 'AI PROJECT', icon: <Bot size={14} /> },
-    { id: 'ABOUT_CONTACT', label: lang === 'vi' ? 'VỀ CHÚNG TÔI' : 'ABOUT US', icon: <Info size={14} /> },
+  const navItems: { path: string; label: string; icon: React.ReactNode }[] = [
+    { path: '/', label: lang === 'vi' ? 'TRANG CHỦ' : 'HOME', icon: <Home size={14} /> },
+    { path: '/tools', label: lang === 'vi' ? 'CÔNG CỤ' : 'TOOLS', icon: <Cpu size={14} /> },
+    { path: '/challenge', label: lang === 'vi' ? 'THỬ THÁCH' : 'CHALLENGE', icon: <Swords size={14} /> },
+    { path: '/ai-project', label: lang === 'vi' ? 'DỰ ÁN AI' : 'AI PROJECT', icon: <Bot size={14} /> },
+    { path: '/contact', label: lang === 'vi' ? 'VỀ CHÚNG TÔI' : 'ABOUT US', icon: <Info size={14} /> },
   ];
 
   // Logic chuyển đổi: Chỉ toggle giữa SUMMER và NORMAL

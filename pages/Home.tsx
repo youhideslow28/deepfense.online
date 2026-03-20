@@ -9,15 +9,14 @@ import { collection, getCountFromServer, query, where } from 'firebase/firestore
 import DeepfakeRunner from '../components/DeepfakeRunner';
 
 interface HomeProps {
-  setPage: (page: PageType) => void;
-  setToolTab: (tab: 'SCAN' | 'KNOWLEDGE') => void;
   lang: Language;
   season: Season;
 }
 
-const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
+const Home: React.FC<HomeProps> = ({ lang, season }) => {
   const t = TRANSLATIONS[lang];
   const facts = FUN_FACTS[lang];
+  const navigate = useNavigate();
   
   const [protectedUsers, setProtectedUsers] = useState(0); // Đổi tên biến cho rõ nghĩa
   const [totalAttempts, setTotalAttempts] = useState(0);   // Biến mới: Tổng số lượt chơi
@@ -136,7 +135,7 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
   // --- XỬ LÝ HIỂN THỊ MINI GAME KHI BẬT MÙA HÈ ---
   useEffect(() => {
     if (season === 'SUMMER') {
-      setShowMiniGame(false); // Tạm ẩn mini game theo yêu cầu
+      setShowMiniGame(true); // Đem mini game trở lại
     } else {
       setShowMiniGame(false);
     }
@@ -186,10 +185,10 @@ const Home: React.FC<HomeProps> = ({ setPage, setToolTab, lang, season }) => {
         <div className="lg:col-span-5 h-[300px] md:h-[380px] w-full max-w-full overflow-hidden"><AnalyticsChart lang={lang} /></div>
       </div>
 
-      {/* MINI GAME (ĐÃ TẠM ẨN) */}
-      {/* {season === 'SUMMER' && showMiniGame && (
+      {/* MINI GAME (HIỂN THỊ KHI BẬT MÙA HÈ VÀ CHƯA BỊ TẮT) */}
+      {season === 'SUMMER' && showMiniGame && (
           <DeepfakeRunner lang={lang} onClose={() => setShowMiniGame(false)} />
-      )} */}
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
         <div className="lg:col-span-8 bg-surface border border-white/5 rounded-3xl overflow-hidden flex flex-col shadow-2xl">
