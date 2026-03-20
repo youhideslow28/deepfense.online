@@ -311,7 +311,7 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-in slide-in-from-bottom-6 duration-500">
            {/* Sidebar */}
            <div className="lg:col-span-4 flex flex-col gap-3">
-              {KNOWLEDGE_BASE[lang].map((cat, idx) => (
+              {KNOWLEDGE_BASE[lang].map((cat: any, idx: number) => (
                   <button 
                     key={idx}
                     onClick={() => setActiveKnowledgeCat(idx)}
@@ -332,7 +332,7 @@ const Tools: React.FC<ToolsProps> = ({ initialTab = 'SCAN', lang }) => {
                      {KNOWLEDGE_BASE[lang][activeKnowledgeCat].category}
                   </h3>
                   <div className="space-y-6">
-                     {KNOWLEDGE_BASE[lang][activeKnowledgeCat].items.map((item, idx) => (
+                     {KNOWLEDGE_BASE[lang][activeKnowledgeCat].items.map((item: any, idx: number) => (
                         <div key={idx} className="bg-black/60 p-6 md:p-8 rounded-2xl border border-white/5 group hover:border-primary/30 transition-all hover:bg-black/80 hover:shadow-[0_0_20px_rgba(0,240,255,0.05)]">
                            <h4 className="text-base md:text-lg font-bold text-white mb-4 flex items-start gap-3">
                               <ShieldCheck size={20} className="text-primary group-hover:scale-125 transition-transform mt-0.5 shrink-0" /> 
