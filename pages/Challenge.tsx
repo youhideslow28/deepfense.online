@@ -19,6 +19,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
   const [surveySent, setSurveySent] = useState(false);
   const [demoAge, setDemoAge] = useState<string>('');
   const [showDemo, setShowDemo] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Anti-Bot States
   const [captchaObj, setCaptchaObj] = useState({ num1: 0, num2: 0 });
@@ -145,8 +146,8 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
     }
   };
 
-  const submitSurvey = () => {
-    if (surveyAnswers.length < surveyQuestions.length) return;
+  const submitSurvey = async () => {
+    if (surveyAnswers.length < surveyQuestions.length || isSubmitting) return;
     
     // Validate Human CAPTCHA
     if (parseInt(captchaInput) !== captchaObj.num1 + captchaObj.num2) {
@@ -154,6 +155,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
         return;
     }
     setCaptchaError(false);
+    setIsSubmitting(true);
     setSurveySent(true);
     
     // --- FIREBASE: LƯU KẾT QUẢ KHẢO SÁT ---
@@ -166,7 +168,8 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
         lang: lang,
         // Có thể link với game result trước đó nếu muốn phức tạp hơn
       };
-      addDoc(collection(db, "surveys"), surveyData);
+      await addDoc(collection(db, "surveys"), surveyData);
+      setSurveySent(true);
     } catch (e) {
       console.error("Error saving survey: ", e);
     }
@@ -226,6 +229,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
         statusIcon = <ShieldAlert size={48} className="text-secondary" />;
         statusColor = "border-secondary bg-secondary/5";
     }
+    setIsSubmitting(false);
     
     const handleShare = async (platform: 'facebook' | 'twitter' | 'native') => {
         const text = lang === 'vi' 
@@ -335,9 +339,10 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                                  </div>
                                  <button 
                                     onClick={submitSurvey}
-                                    className="bg-primary text-black px-12 md:px-16 py-5 rounded-xl font-black text-xs uppercase shadow-lg shadow-primary/20 hover:scale-105 transition-all flex items-center gap-3 w-full justify-center"
+                                    disabled={isSubmitting}
+                                    className={`px-12 md:px-16 py-5 rounded-xl font-black text-xs uppercase shadow-lg transition-all flex items-center gap-3 w-full justify-center ${isSubmitting ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'bg-primary text-black hover:scale-105 shadow-primary/20'}`}
                                 >
-                                    {lang === 'vi' ? 'XEM PHÂN TÍCH CUỐI CÙNG' : 'VIEW FINAL ANALYSIS'} <ChevronRight size={16}/>
+                                    {isSubmitting ? (lang === 'vi' ? 'ĐANG XỬ LÝ...' : 'PROCESSING...') : (lang === 'vi' ? 'XEM PHÂN TÍCH CUỐI CÙNG' : 'VIEW FINAL ANALYSIS')} <ChevronRight size={16}/>
                                 </button>
                              </div>
                         )}

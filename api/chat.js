@@ -39,7 +39,9 @@ export default async function handler(req, res) {
   ]; 
   
   const isAllowed = allowedDomains.some(domain => origin.includes(domain));
-  if (origin && !isAllowed) {
+  // CHỮA CHÁY: Parse đúng hostname để so sánh, tránh vụ dùng .includes() bị bypass
+  const isStrictlyAllowed = allowedDomains.some(domain => origin === `http://${domain}` || origin === `https://${domain}`);
+  if (origin && !isStrictlyAllowed) {
     console.warn(`Blocked API request from unauthorized origin: ${origin}`);
     return res.status(403).json({ error: 'Forbidden: Unauthorized Origin. DEEPFENSE Security System Blocked This Request.' });
   }
@@ -52,7 +54,8 @@ export default async function handler(req, res) {
 
     // 1. TÌM KIẾM URL TRONG TIN NHẮN CUỐI CÙNG CỦA NGƯỜI DÙNG
     const lastUserMessage = messages[messages.length - 1]?.text || "";
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    // Regex bắt cực mạnh: Bắt cả link có http/https VÀ các tên miền viết trần (như "lscam.com", "vtv.vn/tin-tuc")
+    const urlRegex = /((?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*))/g;
     const extractedUrls = lastUserMessage.match(urlRegex);
 
     let liveScanData = "";

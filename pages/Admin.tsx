@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { collection, query, orderBy, getDocs, updateDoc, doc, deleteDoc, limit } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, updateDoc, doc, deleteDoc, limit } from 'firebase/firestore';
 import { ShieldAlert, CheckCircle, Trash2, Lock, Eye, Mail, Paperclip, ExternalLink, LogOut } from 'lucide-react';
 
 const Admin: React.FC = () => {
@@ -15,7 +15,6 @@ const Admin: React.FC = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsAuthenticated(true);
-        fetchReports();
       } else {
         setIsAuthenticated(false);
       }
@@ -23,31 +22,35 @@ const Admin: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
+  // Tự động lắng nghe Data Real-time khi đã Đăng nhập
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    setLoading(true);
+    
+    const q = query(collection(db, "incident_reports"), orderBy("submittedAt", "desc"), limit(100));
+    const unsubscribeData = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setReports(data);
+      setLoading(false);
+    }, (error) => {
+      console.error("Lỗi Real-time fetch:", error);
+      setLoading(false);
+    });
+
+    return () => unsubscribeData();
+  }, [isAuthenticated]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setIsAuthenticated(true);
-      fetchReports();
     } catch (error) {
       alert("Sai thông tin đăng nhập hoặc tài khoản không tồn tại!");
     }
-  };
-
-  const fetchReports = async () => {
-    setLoading(true);
-    try {
-      const q = query(collection(db, "incident_reports"), orderBy("submittedAt", "desc"), limit(100));
-      const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setReports(data);
-    } catch (error) {
-      console.error("Error fetching reports:", error);
-    }
-    setLoading(false);
   };
 
   const toggleStatus = async (id: string, currentStatus: string) => {
@@ -56,8 +59,7 @@ const Admin: React.FC = () => {
         await updateDoc(doc(db, "incident_reports", id), {
             status: newStatus
         });
-        // Cập nhật state local
-        setReports(reports.map(r => r.id === id ? { ...r, status: newStatus } : r));
+        // KHÔNG CẦN setReports local nữa vì onSnapshot đã tự động bắt event update
     } catch (error) {
         console.error("Error updating status:", error);
     }
@@ -67,7 +69,7 @@ const Admin: React.FC = () => {
       if(!window.confirm("Bạn chắc chắn muốn xóa báo cáo này?")) return;
       try {
           await deleteDoc(doc(db, "incident_reports", id));
-          setReports(reports.filter(r => r.id !== id));
+          // Tương tự, onSnapshot tự động cập nhật UI khi doc bị xóa
       } catch (error) {
           console.error("Error deleting:", error);
       }
@@ -110,9 +112,6 @@ const Admin: React.FC = () => {
                 <ShieldAlert className="text-red-500"/> DANH SÁCH BÁO CÁO ({reports.length})
             </h2>
             <div className="flex gap-4">
-                <button onClick={fetchReports} className="text-primary text-xs font-bold uppercase hover:underline">
-                    Làm mới dữ liệu
-                </button>
                 <button onClick={() => {signOut(auth); setIsAuthenticated(false);}} className="text-gray-500 text-xs font-bold uppercase hover:text-white flex items-center gap-1">
                     <LogOut size={14}/> Đăng xuất
                 </button>

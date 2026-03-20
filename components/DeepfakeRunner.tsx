@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Language } from '../types';
 import { Play, RotateCcw, ShieldAlert, Crosshair, X, Heart, Trophy } from 'lucide-react';
+import { db } from '../firebase';
+import { collection, addDoc, serverTimestamp, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
 
 interface DeepfakeRunnerProps {
   lang: Language;
@@ -29,6 +31,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
     health: 3,
     isGameOver: false,
     playerX: 0,
+    weaponLevel: 1,
   });
 
   const startMatch = () => {
@@ -41,37 +44,49 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
       health: 3,
       isGameOver: false,
       playerX: canvasRef.current ? canvasRef.current.width / 2 : 150,
+      weaponLevel: 1,
     };
   };
 
   useEffect(() => {
-    // Load Leaderboard từ LocalStorage
-    const lb = localStorage.getItem('deepfense_leaderboard');
-    if (lb) {
-        setLeaderboard(JSON.parse(lb));
-    } else {
-        // Dữ liệu mẫu ban đầu nếu chưa có ai chơi
-        const defaultLb = [
-            { name: 'NEO_HACKER', score: 500 },
-            { name: 'CYBER_COP', score: 300 },
-            { name: 'ROOKIE', score: 100 }
-        ];
-        setLeaderboard(defaultLb);
-        localStorage.setItem('deepfense_leaderboard', JSON.stringify(defaultLb));
-    }
+    // Load Leaderboard từ Firebase Firestore realtime
+    const q = query(collection(db, "minigame_leaderboard"), orderBy("score", "desc"), limit(3));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const lbData: LeaderboardEntry[] = [];
+      snapshot.forEach((doc) => {
+        lbData.push({ name: doc.data().name, score: doc.data().score });
+      });
+      
+      if (lbData.length === 0) {
+         // Dữ liệu mẫu nếu chưa có ai chơi
+         setLeaderboard([
+             { name: 'NEO_HACKER', score: 500 },
+             { name: 'CYBER_COP', score: 300 },
+             { name: 'ROOKIE', score: 100 }
+         ]);
+      } else {
+         setLeaderboard(lbData);
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   // Xử lý lưu điểm lên Bảng Xếp Hạng
-  const handleSubmitScore = () => {
+  const handleSubmitScore = async () => {
       if (!playerName.trim()) return;
-      const newLb = [...leaderboard, { name: playerName.toUpperCase().slice(0, 10), score: gameRef.current.score }]
-          .sort((a, b) => b.score - a.score)
-          .slice(0, 3); // Giữ top 3
       
-      setLeaderboard(newLb);
-      localStorage.setItem('deepfense_leaderboard', JSON.stringify(newLb));
-      setIsEligibleForLeaderboard(false);
-      setPlayerName('');
+      try {
+          await addDoc(collection(db, "minigame_leaderboard"), {
+              name: playerName.toUpperCase().slice(0, 10),
+              score: gameRef.current.score,
+              played_at: serverTimestamp()
+          });
+          setIsEligibleForLeaderboard(false);
+          setPlayerName('');
+      } catch (error) {
+          console.error("Error saving score:", error);
+      }
   };
 
   useEffect(() => {
@@ -90,8 +105,9 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
     updateSize();
     window.addEventListener('resize', updateSize);
 
-    let bullets: { x: number, y: number, speed: number }[] = [];
-    let enemies: { x: number, y: number, size: number, speed: number, hp: number, emoji: string, type: number, wobbleOffset: number }[] = [];
+    let bullets: { x: number, y: number, vx: number, vy: number }[] = [];
+    let enemies: { x: number, y: number, size: number, speed: number, hp: number, maxHp: number, emoji: string, type: number, wobbleOffset: number }[] = [];
+    let powerups: { x: number, y: number, speed: number }[] = [];
     let particles: { x: number, y: number, vx: number, vy: number, life: number, color: string }[] = [];
 
     const emojis = ['🎭', '🎙️', '🤖'];
@@ -174,8 +190,21 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
       
       // Auto shoot
       if (gameRef.current.frames % 12 === 0) {
-          bullets.push({ x: px - 10, y: py, speed: 12 });
-          bullets.push({ x: px + 10, y: py, speed: 12 });
+          const level = gameRef.current.weaponLevel;
+          if (level === 1) {
+              bullets.push({ x: px - 10, y: py, vx: 0, vy: 12 });
+              bullets.push({ x: px + 10, y: py, vx: 0, vy: 12 });
+          } else if (level === 2) {
+              bullets.push({ x: px, y: py - 10, vx: 0, vy: 12 });
+              bullets.push({ x: px - 15, y: py, vx: -2, vy: 12 });
+              bullets.push({ x: px + 15, y: py, vx: 2, vy: 12 });
+          } else {
+              bullets.push({ x: px, y: py - 10, vx: 0, vy: 12 });
+              bullets.push({ x: px - 15, y: py, vx: -2, vy: 12 });
+              bullets.push({ x: px + 15, y: py, vx: 2, vy: 12 });
+              bullets.push({ x: px - 25, y: py + 10, vx: -4, vy: 12 });
+              bullets.push({ x: px + 25, y: py + 10, vx: 4, vy: 12 });
+          }
       }
 
       // Draw Player Ship (Tech Shield)
@@ -196,27 +225,35 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
       ctx.shadowBlur = 10;
       for (let i = bullets.length - 1; i >= 0; i--) {
           let b = bullets[i];
-          b.y -= b.speed;
-          ctx.fillRect(b.x - 2, b.y, 4, 15);
-          if (b.y < 0) bullets.splice(i, 1);
+          b.y -= b.vy;
+          b.x += b.vx;
+          ctx.save();
+          ctx.translate(b.x, b.y);
+          ctx.rotate(b.vx * 0.05); // Xoay hướng đạn chéo sao cho tự nhiên
+          ctx.fillRect(-2, 0, 4, 15);
+          ctx.restore();
+          if (b.y < 0 || b.x < 0 || b.x > canvas.width) bullets.splice(i, 1);
       }
       ctx.shadowBlur = 0;
 
       // 4. ENEMIES
-      // Giảm tốc độ tăng tiến độ khó, khởi đầu chậm hơn để người chơi làm quen
-      const diffMultiplier = 1 + Math.floor(gameRef.current.frames / 1200) * 0.15; 
-      if (gameRef.current.frames % Math.max(45, Math.floor(120 / diffMultiplier)) === 0) {
+      // ĐIỀU CHỈNH ĐỂ GAME KÉO DÀI KHOẢNG 5 PHÚT TƯƠNG TÁC (Thuyết trình)
+      // Giả sử 60 khung hình/giây -> 3600 khung hình = 1 phút.
+      const minutesPlaying = gameRef.current.frames / 3600;
+      // Tăng chậm rãi ở 1-2 phút đầu, bùng nổ độ khó ở phút thứ 4-5
+      const diffMultiplier = 1 + (minutesPlaying * 0.5) + Math.pow(minutesPlaying, 2) * 0.3; 
+      
+      if (gameRef.current.frames % Math.max(12, Math.floor(120 / diffMultiplier)) === 0) {
           const type = Math.random();
-          // Tốc độ cơ bản chậm hơn nhiều so với trước
           let hp = 1, speed = 1.2 * diffMultiplier, emoji = emojis[0];
-          if (type > 0.8) { hp = 3; speed = 0.8 * diffMultiplier; emoji = '🤖'; } // Tank (Chậm)
-          else if (type > 0.5) { speed = 2.5 * diffMultiplier; emoji = '🎙️'; } // Fast (Nhanh)
+          if (type > 0.8) { hp = Math.floor(3 + minutesPlaying * 2); speed = 0.8 * diffMultiplier; emoji = '🤖'; } // Tank (Máu tăng dần theo thời gian)
+          else if (type > 0.5) { speed = 2.2 * diffMultiplier; emoji = '🎙️'; } // Fast (Nhanh)
 
           enemies.push({
               x: Math.random() * (canvas.width - 40) + 20,
               y: -30,
               size: 25,
-              speed, hp, emoji, type, wobbleOffset: Math.random() * Math.PI * 2
+              speed, hp, maxHp: hp, emoji, type, wobbleOffset: Math.random() * Math.PI * 2
           });
       }
 
@@ -228,18 +265,18 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
           
           // Wobble effect for normal enemies
           let renderX = e.x;
-          if (e.hp === 1 && e.speed < 3) {
+          if (e.maxHp === 1 && e.speed < 3) {
               renderX += Math.sin(gameRef.current.frames * 0.05 + e.wobbleOffset) * 2;
           }
 
           ctx.fillText(e.emoji, renderX, e.y);
           
           // HP Bar for tanks
-          if (e.hp > 1) {
+          if (e.maxHp > 1) {
               ctx.fillStyle = 'red';
               ctx.fillRect(renderX - 10, e.y - 35, 20, 4);
               ctx.fillStyle = '#05FF00';
-              ctx.fillRect(renderX - 10, e.y - 35, 20 * (e.hp / 3), 4);
+              ctx.fillRect(renderX - 10, e.y - 35, 20 * (Math.max(0, e.hp) / e.maxHp), 4);
           }
 
           // Collision with Bullets
@@ -258,6 +295,11 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
               createExplosion(renderX, e.y);
               gameRef.current.score += (e.type > 0.8 ? 50 : 10);
               setScore(gameRef.current.score);
+
+              // 10% cơ hội rớt ra vật phẩm nâng cấp tia đạn
+              if (Math.random() < 0.1) {
+                  powerups.push({ x: renderX, y: e.y, speed: 2 });
+              }
               enemies.splice(i, 1);
               continue;
           }
@@ -278,7 +320,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                   setGameState('GAMEOVER');
                   
                   // Kiểm tra xem có đủ điều kiện vào Top 3 Leaderboard không
-                  const isTop3 = leaderboard.length < 3 || gameRef.current.score > leaderboard[leaderboard.length - 1]?.score;
+                  const isTop3 = leaderboard.length < 3 || gameRef.current.score > (leaderboard[leaderboard.length - 1]?.score || 0);
                   if (isTop3 && gameRef.current.score > 0) {
                       setIsEligibleForLeaderboard(true);
                   } else {
@@ -286,6 +328,31 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                   }
               }
           }
+      }
+
+      // 4.5 POWERUPS VÀ XỬ LÝ ĂN ITEM
+      ctx.font = '24px Arial';
+      for (let i = powerups.length - 1; i >= 0; i--) {
+          let p = powerups[i];
+          p.y += p.speed;
+          
+          ctx.shadowColor = '#00F0FF';
+          ctx.shadowBlur = 15;
+          ctx.fillText('⚡', p.x, p.y);
+          ctx.shadowBlur = 0;
+          
+          // Va chạm giữa Player và Vật phẩm ⚡
+          if (Math.abs(p.x - px) < 30 && Math.abs(p.y - py) < 30) {
+              if (gameRef.current.weaponLevel < 3) {
+                  gameRef.current.weaponLevel++;
+              } else {
+                  gameRef.current.score += 100; // Đã max cấp thì cộng điểm
+              }
+              setScore(gameRef.current.score);
+              powerups.splice(i, 1);
+              continue;
+          }
+          if (p.y > canvas.height + 20) powerups.splice(i, 1);
       }
 
       // 5. PARTICLES
