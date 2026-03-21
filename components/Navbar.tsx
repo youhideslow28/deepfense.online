@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Language, Season } from '../types';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Shield, Home, Swords, Cpu, Info, Bot, Sun, Menu, X, Power, Heart, Stars, Sparkles } from 'lucide-react';
+import { Shield, Home, Swords, Cpu, Info, Bot, Sun, Menu, X, Power } from 'lucide-react';
 import { TRANSLATIONS } from '../data';
 
 interface NavbarProps {
@@ -13,15 +13,9 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showEasterEgg, setShowEasterEgg] = useState(false);
   
   const location = useLocation();
   const navigate = useNavigate();
-
-  // Refs cho việc xử lý Long Press
-  const timerRef = useRef<any>(null);
-  const isLongPress = useRef(false);
-  const ignoreClick = useRef(false); // Flag để chặn sự kiện click nếu đã là long press
 
   const t = TRANSLATIONS[lang];
   
@@ -32,13 +26,6 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason }) => 
     { path: '/ai-project', label: lang === 'vi' ? 'DỰ ÁN AI' : 'AI PROJECT', icon: <Bot size={14} /> },
     { path: '/contact', label: lang === 'vi' ? 'VỀ CHÚNG TÔI' : 'ABOUT US', icon: <Info size={14} /> },
   ];
-
-  // --- DỌN RÁC TIMEOUT KHI UNMOUNT ---
-  React.useEffect(() => {
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, []);
 
   // Logic chuyển đổi: Chỉ toggle giữa SUMMER và NORMAL
   const toggleSeason = () => {
@@ -54,76 +41,8 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason }) => 
     setIsMenuOpen(false);
   };
 
-  // --- LONG PRESS LOGIC FOR EASTER EGG ---
-  const startPress = () => {
-    isLongPress.current = false;
-    ignoreClick.current = false;
-    timerRef.current = setTimeout(() => {
-        isLongPress.current = true;
-        ignoreClick.current = true; // Đánh dấu đây là long press để onClick bỏ qua
-        setShowEasterEgg(true);
-    }, 1800); // Nhấn giữ 1.8s sẽ kích hoạt
-  };
-
-  const endPress = () => {
-    if (timerRef.current) {
-        clearTimeout(timerRef.current);
-    }
-  };
-
-  // Xử lý click: Chỉ chạy nếu không phải là kết quả của việc nhấn giữ
-  const handleSeasonClick = (e: React.MouseEvent) => {
-      if (ignoreClick.current) {
-          ignoreClick.current = false;
-          e.preventDefault();
-          e.stopPropagation();
-          return;
-      }
-      toggleSeason();
-  };
-
   return (
     <>
-      {/* --- EASTER EGG MODAL --- */}
-      {showEasterEgg && (
-        <div className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 animate-in fade-in duration-1000">
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-10 left-10 text-pink-500/20 animate-pulse"><Stars size={40} /></div>
-                <div className="absolute bottom-20 right-20 text-purple-500/20 animate-pulse delay-700"><Stars size={60} /></div>
-                <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-pink-600/10 rounded-full blur-[100px] animate-pulse"></div>
-            </div>
-
-            <div className="relative max-w-md w-full bg-gradient-to-br from-gray-900 to-black border border-pink-500/30 rounded-3xl p-8 text-center shadow-[0_0_50px_rgba(236,72,153,0.3)] flex flex-col items-center">
-                <button 
-                    onClick={() => setShowEasterEgg(false)}
-                    className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors"
-                >
-                    <X size={24} />
-                </button>
-
-                <div className="mb-6 relative">
-                    <div className="absolute inset-0 bg-pink-500 blur-xl opacity-50 rounded-full animate-pulse"></div>
-                    <Heart size={64} className="text-pink-500 relative z-10 fill-pink-500/20" />
-                    <Sparkles size={24} className="text-yellow-200 absolute -top-2 -right-2 animate-spin-slow" />
-                </div>
-
-                <h2 className="text-3xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 mb-2">
-                    Gửi em yêu
-                </h2>
-                <div className="h-0.5 w-12 bg-pink-500/50 mx-auto mb-6"></div>
-
-                <p className="text-gray-300 font-sans italic leading-relaxed mb-6 text-sm md:text-base">
-                    "Cảm ơn em vì đã luôn ở bên cạnh, tiếp thêm động lực để anh hoàn thiện sản phẩm này. <br/><br/>
-                    Anh cũng muốn gửi lời xin lỗi chân thành nhất vì những lúc đã vô tình làm em buồn. Cảm ơn em vì đã luôn thấu hiểu và trở thành người yêu của anh."
-                </p>
-
-                <div className="text-[10px] text-pink-400/60 uppercase tracking-[0.3em] font-mono">
-                    SPECIAL THANKS TO YOU
-                </div>
-            </div>
-        </div>
-      )}
-
       {/* --- MAIN NAVBAR --- */}
       <div className="sticky top-0 z-[100] w-full bg-black/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -168,13 +87,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason }) => 
 
                  {/* Season Switcher - With Long Press Easter Egg */}
                  <button 
-                     onMouseDown={startPress}
-                     onMouseUp={endPress}
-                     onMouseLeave={endPress}
-                     onTouchStart={startPress}
-                     onTouchEnd={endPress}
-                     onClick={handleSeasonClick}
-                     onContextMenu={(e) => e.preventDefault()} // Ngăn menu chuột phải trên mobile khi nhấn giữ
+                     onClick={toggleSeason}
                      className="relative group outline-none ml-1 select-none touch-manipulation z-50"
                      title={season === 'SUMMER' ? 'Summer Off' : 'Summer On'}
                  >

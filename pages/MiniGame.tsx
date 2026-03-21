@@ -9,8 +9,10 @@ interface MiniGameProps {
 const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [gameState, setGameState] = useState<'START' | 'PLAYING' | 'GAMEOVER'>('START');
+  const [gameState, setGameState] = useState<'START' | 'PLAYING' | 'GAMEOVER' | 'VICTORY'>('START');
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   // Game variables (Dùng Ref để không gây re-render React)
   const gameRef = useRef({
@@ -18,6 +20,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
     speed: 6,
     score: 0,
     isGameOver: false,
+    spawnTimer: 0,
   });
 
   const startMatch = () => {
@@ -25,9 +28,10 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
     setScore(0);
     gameRef.current = {
       frames: 0,
-      speed: 6,
+      speed: window.innerWidth < 500 ? 4.5 : 6, // Mobile bắt đầu với tốc độ chậm hơn một chút
       score: 0,
       isGameOver: false,
+      spawnTimer: 0,
     };
   };
 
@@ -54,12 +58,16 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
 
     // Object definitions
     const groundY = canvas.height - 50;
+    // Tối ưu hóa kích thước cho thiết bị di động
+    const isMobile = canvas.width < 500;
+    const objSize = isMobile ? 32 : 40;
+
     const player = {
-      x: 50,
-      y: groundY - 40,
-      size: 40,
+      x: isMobile ? 30 : 50,
+      y: groundY - objSize,
+      size: objSize,
       dy: 0,
-      jumpPower: -14,
+      jumpPower: isMobile ? -12.5 : -14, // Nhảy nhẹ hơn trên mobile để tiếp đất nhanh hơn
       gravity: 0.8,
       grounded: true,
     };
@@ -104,9 +112,12 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
       // Xóa canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Tăng độ khó dần
+      // Tăng độ khó dần (Endless & Impossible mode)
       gameRef.current.frames++;
-      if (gameRef.current.frames % 500 === 0) gameRef.current.speed += 0.5;
+      
+      // Tăng tốc mượt mà. Trong 5-7 phút (18.000 - 25.000 frames) tốc độ và tần suất spawn sẽ tạo thành Impossible game
+      gameRef.current.speed += 0.0005;
+      if (gameRef.current.speed > 24) gameRef.current.speed = 24;
 
       // --- DRAW BACKGROUND (Summer Cyberpunk) ---
       // Mặt trời hoàng hôn
@@ -155,16 +166,18 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
       ctx.fillText('🛡️', player.x, player.y + player.size - 5);
 
       // --- OBSTACLES ---
-      // Sinh chướng ngại vật ngẫu nhiên
-      const spawnRate = Math.max(60, 120 - Math.floor(gameRef.current.frames / 20));
-      if (gameRef.current.frames % spawnRate === 0) {
+      gameRef.current.spawnTimer--;
+      if (gameRef.current.spawnTimer <= 0) {
         obstacles.push({
           x: canvas.width,
-          y: groundY - 40,
-          size: 40,
+          y: groundY - objSize,
+          size: objSize,
           emoji: obstacleTypes[Math.floor(Math.random() * obstacleTypes.length)],
           passed: false
         });
+        
+        // Khoảng cách spawn giảm dần. Khi đạt mốc 5-7 phút, spawnTimer sẽ nhỏ hơn khoảng không gian của 1 cú nhảy -> KHÔNG THỂ QUA ĐƯỢC
+        gameRef.current.spawnTimer = Math.max(18, 120 - Math.floor(gameRef.current.frames / 150));
       }
 
       for (let i = 0; i < obstacles.length; i++) {
@@ -181,7 +194,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
         }
 
         // Xét va chạm (Hitbox thu nhỏ một chút để game dễ thở hơn)
-        const hitMargin = 10;
+        const hitMargin = isMobile ? 8 : 10;
         if (
           player.x < obs.x + obs.size - hitMargin &&
           player.x + player.size - hitMargin > obs.x &&
