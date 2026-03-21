@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { LEVELS, TRANSLATIONS, SURVEY_SCALE } from '../data';
 import { GameState, Language } from '../types';
+import { useNavigate } from 'react-router-dom';
 import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2, ShieldQuestion, Share2, Facebook, Twitter, Users } from 'lucide-react';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -25,6 +26,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
   const [captchaObj, setCaptchaObj] = useState({ num1: 0, num2: 0 });
   const [captchaInput, setCaptchaInput] = useState('');
   const [captchaError, setCaptchaError] = useState(false);
+  const navigate = useNavigate();
 
   const surveyQuestions = [
     {
@@ -91,7 +93,8 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
   };
 
   const handleChoice = (choice: 1 | 2) => {
-    if (!gameState) return;
+    // BẢO MẬT: Chặn Double-Click spam để hack vượt mốc điểm tuyệt đối
+    if (!gameState || gameState.show_result) return;
     const currentLevel = gameState.levels[gameState.current];
     const isCorrect = currentLevel.fake_pos === choice;
     
@@ -115,7 +118,6 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
         setShowSurvey(true);
 
         // --- FIREBASE: LƯU KẾT QUẢ GAME ---
-        try {
           const gameResult = {
             score: gameState.score,
             wrong_count: gameState.wrong_count,
@@ -127,10 +129,8 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                total_levels: gameState.levels.length
             }
           };
-          addDoc(collection(db, "game_results"), gameResult);
-        } catch (e) {
-          console.error("Error saving game result: ", e);
-        }
+          addDoc(collection(db, "game_results"), gameResult)
+            .catch(e => console.error("Error saving game result: ", e));
     } else {
         setGameState(prev => prev ? ({ ...prev, current: prev.current + 1, show_result: false }) : null);
     }
@@ -246,8 +246,9 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                 try { await navigator.share({ title: 'DEEPFENSE.ONLINE', text, url }); } 
                 catch (err) { console.error('Error sharing:', err); }
             } else {
-                navigator.clipboard.writeText(`${text} ${url}`);
-                alert(lang === 'vi' ? 'Đã sao chép liên kết để chia sẻ!' : 'Copied to clipboard!');
+                navigator.clipboard.writeText(`${text} ${url}`)
+                    .then(() => alert(lang === 'vi' ? 'Đã sao chép liên kết để chia sẻ!' : 'Copied to clipboard!'))
+                    .catch(() => alert(lang === 'vi' ? 'Lỗi trình duyệt: Không thể sao chép.' : 'Browser Error: Cannot copy.'));
             }
         }
     };
@@ -371,7 +372,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                         <button onClick={startNewGame} className="bg-primary text-black px-12 py-4 rounded-xl font-black text-xs uppercase shadow-lg hover:scale-105 transition-all flex items-center justify-center gap-2">
                             <RotateCcw size={14} /> {lang === 'vi' ? 'LUYỆN TẬP LẠI' : 'PRACTICE AGAIN'}
                         </button>
-                        <button onClick={() => window.location.reload()} className="bg-white/5 text-white border border-white/10 px-12 py-4 rounded-xl font-black text-xs uppercase hover:bg-white/10 transition-all">
+                        <button onClick={() => navigate('/')} className="bg-white/5 text-white border border-white/10 px-12 py-4 rounded-xl font-black text-xs uppercase hover:bg-white/10 transition-all">
                             {lang === 'vi' ? 'KẾT THÚC CHIẾN DỊCH' : 'END CAMPAIGN'}
                         </button>
                     </div>
@@ -492,8 +493,8 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
 
   if (!gameState) return null;
 
-  const lvl = gameState.levels[gameState.current] as any;
-  const progress = ((gameState.current) / gameState.levels.length) * 100;
+  const lvl = gameState.levels[gameState.current];
+  const progress = ((gameState.current + 1) / gameState.levels.length) * 100;
 
   return (
     <div className="max-w-4xl mx-auto py-4 px-4 animate-in fade-in duration-500">
@@ -517,6 +518,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
       <div className="space-y-6">
           <div className="relative bg-black border border-white/10 rounded-3xl overflow-hidden aspect-video shadow-2xl">
             <iframe 
+                title={`Deepfake Challenge Level ${gameState.current + 1}`}
                 src={getEmbedUrl(lvl.video_url)} 
                 className="w-full h-full" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -18,7 +18,17 @@ export const PROJECT_METADATA = {
   email: "deepfense@gmail.com"
 };
 
-export const TRANSLATIONS: Record<Language, any> = {
+export interface TranslationData {
+  hero_badge: string; hero_title: string; hero_desc: string; btn_scan: string;
+  btn_challenge: string; btn_ai: string; warning_center: string; hotline: string;
+  knowledge: string; about_us: string; mission: string; vision: string; team: string;
+  report_form: string; send_report: string; success_msg: string; contact_support: string;
+  police: string; cyber_security: string; footer_rights: string; agent_welcome: string;
+  agent_placeholder: string; result_pass: string; result_fail: string; label_name: string;
+  label_email: string; label_attachment: string; label_desc: string;
+}
+
+export const TRANSLATIONS: Record<Language, TranslationData> = {
   vi: {
     hero_badge: "HỆ THỐNG GIÁM SÁT AN NINH AI",
     hero_title: "DỰ ÁN HUẤN LUYỆN NHẬN DẠNG DEEPFAKE",
@@ -158,7 +168,12 @@ export const FUN_FACTS: Record<Language, FunFact[]> = {
   ]
 };
 
-export const KNOWLEDGE_BASE: Record<Language, any[]> = {
+interface KnowledgeCategory {
+  category: string;
+  items: { title: string; content: string; }[];
+}
+
+export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
   vi: [
     {
       category: " CƠ BẢN VỀ DEEPFAKE & AI TẠO SINH",

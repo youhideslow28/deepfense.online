@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Language, Season } from '../types';
+import { Language, Season, NewsItem } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { NEWS_DATA, FUN_FACTS, TRANSLATIONS } from '../data';
 import { Activity, Play, AlertTriangle, Lightbulb, PhoneCall, Cpu, ShieldCheck, Scan, ExternalLink } from 'lucide-react';
@@ -23,24 +23,30 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
   
   const [factIndex, setFactIndex] = useState(0);
   const [showMiniGame, setShowMiniGame] = useState(false);
-  const [liveNews, setLiveNews] = useState<any[]>(NEWS_DATA[lang]); // State lưu tin tức realtime
-  const [displayedNews, setDisplayedNews] = useState<any[]>([]);
+  const [liveNews, setLiveNews] = useState<NewsItem[]>(NEWS_DATA[lang]); // State lưu tin tức realtime
+  const [displayedNews, setDisplayedNews] = useState<NewsItem[]>([]);
   const [flippingIndex, setFlippingIndex] = useState<number | null>(null);
 
   // --- FETCH REAL-TIME NEWS (TỰ ĐỘNG HÓA) ---
   useEffect(() => {
+    let ignore = false;
     setLiveNews(NEWS_DATA[lang]); // Reset về tin mặc định khi đổi ngôn ngữ
     setDisplayedNews(Array.from({ length: 6 }).map((_, i) => NEWS_DATA[lang][i % NEWS_DATA[lang].length]));
 
     const fetchLiveNews = async () => {
       try {
         // --- BỘ NHỚ ĐỆM (CACHE) ĐỂ CHỐNG DDOS API MIỄN PHÍ ---
-        const cachedNews = sessionStorage.getItem(`news_cache_${lang}`);
-        if (cachedNews) {
-            const parsedData = JSON.parse(cachedNews);
-            setLiveNews(parsedData);
-            setDisplayedNews(Array.from({ length: 6 }).map((_, i) => parsedData[i % parsedData.length]));
-            return;
+        const cacheKey = `news_cache_${lang}`;
+        const cacheTimeKey = `news_cache_time_${lang}`;
+        const cachedNews = sessionStorage.getItem(cacheKey);
+        const cachedTime = sessionStorage.getItem(cacheTimeKey);
+        
+        // Chỉ tái sử dụng tin tức nếu chưa qua 15 phút (900,000 ms)
+        if (cachedNews && cachedTime && (Date.now() - parseInt(cachedTime) < 900000)) {
+             const parsedData = JSON.parse(cachedNews);
+             setLiveNews(parsedData);
+             setDisplayedNews(Array.from({ length: 6 }).map((_, i) => parsedData[i % parsedData.length]));
+             return;
         }
 
         // Tìm kiếm trên Google News theo ngôn ngữ
@@ -71,10 +77,12 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
               url: item.link
             };
           });
+          if (ignore) return;
           setLiveNews(formattedNews); // Cập nhật tin thực tế vào hệ thống
           setDisplayedNews(Array.from({ length: 6 }).map((_, i) => formattedNews[i % formattedNews.length]));
           // Lưu vào Session Storage
-          sessionStorage.setItem(`news_cache_${lang}`, JSON.stringify(formattedNews));
+          sessionStorage.setItem(cacheKey, JSON.stringify(formattedNews));
+          sessionStorage.setItem(cacheTimeKey, Date.now().toString());
         }
       } catch (error) {
         console.error("Lỗi lấy tin tức tự động, sử dụng dữ liệu dự phòng.", error);
@@ -82,6 +90,9 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     };
 
     fetchLiveNews();
+    return () => {
+      ignore = true;
+    };
   }, [lang]);
 
   // --- FIREBASE: LẮNG NGHE SỐ LƯỢNG NGƯỜI THAM GIA (REAL-TIME) ---
@@ -104,6 +115,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
   // --- AUTO TICKER EFFECT CẢNH BÁO & KIẾN THỨC ---
   useEffect(() => {
+    let isMounted = true;
     const newsTimer = setInterval(() => {
         if (liveNews.length <= 1) return;
         const slotToUpdate = Math.floor(Math.random() * 6);
@@ -112,6 +124,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         setFlippingIndex(slotToUpdate);
         
         setTimeout(() => {
+            if (!isMounted) return;
             setDisplayedNews(prev => {
                 const newDisplay = [...prev];
                 newDisplay[slotToUpdate] = liveNews[nextNewsIndex];
@@ -120,6 +133,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         }, 300); // Đổi data giữa lúc lật thẻ (300ms)
         
         setTimeout(() => {
+            if (!isMounted) return;
             setFlippingIndex(null); // Kết thúc hiệu ứng lật
         }, 600);
     }, 4000); // Cứ 4s lật 1 thẻ ngẫu nhiên
@@ -127,6 +141,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     const factTimer = setInterval(() => setFactIndex(prev => (prev + 2) % facts.length), 6000); // 6s đổi 2 kiến thức
     
     return () => {
+      isMounted = false;
       clearInterval(newsTimer);
       clearInterval(factTimer);
     };

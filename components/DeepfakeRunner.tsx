@@ -17,13 +17,14 @@ interface LeaderboardEntry {
 const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [gameState, setGameState] = useState<'START' | 'PLAYING' | 'GAMEOVER'>('START');
-  const [score, setScore] = useState(0);
   const [health, setHealth] = useState(3);
+  const scoreDisplayRef = useRef<HTMLSpanElement>(null);
   
   // Leaderboard States
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [playerName, setPlayerName] = useState('');
   const [isEligibleForLeaderboard, setIsEligibleForLeaderboard] = useState(false);
+  const leaderboardRef = useRef<LeaderboardEntry[]>([]);
 
   const gameRef = useRef({
     frames: 0,
@@ -36,7 +37,6 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
 
   const startMatch = () => {
     setGameState('PLAYING');
-    setScore(0);
     setHealth(3);
     gameRef.current = {
       frames: 0,
@@ -46,6 +46,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
       playerX: canvasRef.current ? canvasRef.current.width / 2 : 150,
       weaponLevel: 1,
     };
+    if (scoreDisplayRef.current) scoreDisplayRef.current.innerText = "0";
   };
 
   useEffect(() => {
@@ -66,6 +67,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
          ]);
       } else {
          setLeaderboard(lbData);
+         leaderboardRef.current = lbData;
       }
     });
 
@@ -144,9 +146,19 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
     };
 
     let animationId: number;
+    let lastTime = 0;
+    const fps = 60;
+    const interval = 1000 / fps;
 
-    const loop = () => {
+    const loop = (currentTime: number) => {
       if (gameRef.current.isGameOver) return;
+      animationId = requestAnimationFrame(loop);
+
+      if (!lastTime) lastTime = currentTime;
+      const deltaTime = currentTime - lastTime;
+      if (deltaTime < interval) return;
+      lastTime = currentTime - (deltaTime % interval);
+
       gameRef.current.frames++;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -294,7 +306,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
           if (e.hp <= 0) {
               createExplosion(renderX, e.y);
               gameRef.current.score += (e.type > 0.8 ? 50 : 10);
-              setScore(gameRef.current.score);
+              if (scoreDisplayRef.current) scoreDisplayRef.current.innerText = gameRef.current.score.toString();
 
               // 10% cơ hội rớt ra vật phẩm nâng cấp tia đạn
               if (Math.random() < 0.1) {
@@ -320,7 +332,8 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                   setGameState('GAMEOVER');
                   
                   // Kiểm tra xem có đủ điều kiện vào Top 3 Leaderboard không
-                  const isTop3 = leaderboard.length < 3 || gameRef.current.score > (leaderboard[leaderboard.length - 1]?.score || 0);
+                  const currentLb = leaderboardRef.current;
+                  const isTop3 = currentLb.length < 3 || gameRef.current.score > (currentLb[currentLb.length - 1]?.score || 0);
                   if (isTop3 && gameRef.current.score > 0) {
                       setIsEligibleForLeaderboard(true);
                   } else {
@@ -348,7 +361,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
               } else {
                   gameRef.current.score += 100; // Đã max cấp thì cộng điểm
               }
-              setScore(gameRef.current.score);
+              if (scoreDisplayRef.current) scoreDisplayRef.current.innerText = gameRef.current.score.toString();
               powerups.splice(i, 1);
               continue;
           }
@@ -371,9 +384,6 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
           }
       }
 
-      if (!gameRef.current.isGameOver) {
-        animationId = requestAnimationFrame(loop);
-      }
     };
 
     animationId = requestAnimationFrame(loop);
@@ -382,7 +392,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
       cancelAnimationFrame(animationId);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('resize', updateSize);
-      canvas.removeEventListener('touchmove', onTouchMove);
+      canvas.removeEventListener('touchmove', onTouchMove, { passive: false } as EventListenerOptions);
     };
   }, [gameState]);
 
@@ -404,7 +414,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                             <Heart key={i} size={16} className={i < health ? "fill-secondary text-secondary" : "text-gray-700"} />
                         ))}
                     </div>
-                    <div className="text-primary font-bold">SCORE: <span className="text-2xl text-white">{score}</span></div>
+                    <div className="text-primary font-bold">SCORE: <span ref={scoreDisplayRef} className="text-2xl text-white">0</span></div>
                 </div>
              </div>
 
@@ -433,7 +443,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                        {lang === 'vi' ? 'HỆ THỐNG BỊ XUYÊN THỦNG!' : 'SYSTEM BREACHED!'}
                      </h3>
                      <p className="text-red-200 text-sm mb-6 px-4 text-center">
-                       {lang === 'vi' ? `Bạn đã ghi được ${score} điểm.` : `You scored ${score} points.`}
+                       {lang === 'vi' ? `Bạn đã ghi được ${gameRef.current.score} điểm.` : `You scored ${gameRef.current.score} points.`}
                      </p>
 
                      {isEligibleForLeaderboard ? (

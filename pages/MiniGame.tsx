@@ -9,10 +9,8 @@ interface MiniGameProps {
 const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [gameState, setGameState] = useState<'START' | 'PLAYING' | 'GAMEOVER'>('START');
-  const [gameState, setGameState] = useState<'START' | 'PLAYING' | 'GAMEOVER' | 'VICTORY'>('START');
-  const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const scoreDisplayRef = useRef<HTMLSpanElement>(null);
 
   // Game variables (Dùng Ref để không gây re-render React)
   const gameRef = useRef({
@@ -25,7 +23,6 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
 
   const startMatch = () => {
     setGameState('PLAYING');
-    setScore(0);
     gameRef.current = {
       frames: 0,
       speed: window.innerWidth < 500 ? 4.5 : 6, // Mobile bắt đầu với tốc độ chậm hơn một chút
@@ -33,6 +30,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
       isGameOver: false,
       spawnTimer: 0,
     };
+    if (scoreDisplayRef.current) scoreDisplayRef.current.innerText = "0";
   };
 
   useEffect(() => {
@@ -105,9 +103,18 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
     canvas.addEventListener('mousedown', jump); // Chuột trái cũng tính là nhảy
 
     let animationId: number;
+    let lastTime = 0;
+    const fps = 60;
+    const interval = 1000 / fps;
 
-    const loop = () => {
+    const loop = (currentTime: number) => {
       if (gameRef.current.isGameOver) return;
+      animationId = requestAnimationFrame(loop);
+
+      if (!lastTime) lastTime = currentTime;
+      const deltaTime = currentTime - lastTime;
+      if (deltaTime < interval) return;
+      lastTime = currentTime - (deltaTime % interval);
 
       // Xóa canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -190,7 +197,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
         if (!obs.passed && obs.x + obs.size < player.x) {
           obs.passed = true;
           gameRef.current.score += 10;
-          setScore(gameRef.current.score);
+          if (scoreDisplayRef.current) scoreDisplayRef.current.innerText = gameRef.current.score.toString();
         }
 
         // Xét va chạm (Hitbox thu nhỏ một chút để game dễ thở hơn)
@@ -213,9 +220,6 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
       // Dọn rác
       obstacles = obstacles.filter(obs => obs.x + obs.size > 0);
 
-      if (!gameRef.current.isGameOver) {
-        animationId = requestAnimationFrame(loop);
-      }
     };
 
     animationId = requestAnimationFrame(loop);
@@ -223,7 +227,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener('keydown', handleKeyDown);
-      canvas.removeEventListener('touchstart', handleTouch);
+      canvas.removeEventListener('touchstart', handleTouch, { passive: false } as EventListenerOptions);
       canvas.removeEventListener('mousedown', jump);
     };
   }, [gameState]);
@@ -240,7 +244,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
 
       <div className="bg-surface border-2 border-white/10 rounded-3xl p-4 md:p-8 shadow-2xl relative overflow-hidden">
         <div className="flex justify-between items-center mb-4 font-mono text-sm">
-           <div className="text-primary font-bold">SCORE: <span className="text-2xl text-white">{score}</span></div>
+           <div className="text-primary font-bold">SCORE: <span ref={scoreDisplayRef} className="text-2xl text-white">0</span></div>
            <div className="text-gray-500 font-bold">HI-SCORE: <span className="text-xl text-white">{highScore}</span></div>
         </div>
 

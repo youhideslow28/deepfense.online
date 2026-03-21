@@ -45,6 +45,9 @@ const MatrixBackground: React.FC = () => {
     const animate = (currentTime: number) => {
       animationId = requestAnimationFrame(animate);
 
+      // BẢO VỆ HIỆU NĂNG: Dừng vẽ Canvas khi người dùng chuyển Tab khác (Tiết kiệm Pin/CPU)
+      if (document.hidden) return;
+
       const deltaTime = currentTime - lastTime;
       if (deltaTime > interval) {
           lastTime = currentTime - (deltaTime % interval);

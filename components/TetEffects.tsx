@@ -14,9 +14,6 @@ const TetEffects: React.FC = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    const items: any[] = [];
-    const maxItems = 30; // Số lượng vật thể
-
     class Particle {
       x: number;
       y: number;
@@ -82,6 +79,9 @@ const TetEffects: React.FC = () => {
         ctx.restore();
       }
     }
+
+    const items: Particle[] = [];
+    const maxItems = 30;
 
     const init = () => {
       for (let i = 0; i < maxItems; i++) {

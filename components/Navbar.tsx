@@ -17,8 +17,6 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason }) => 
   const location = useLocation();
   const navigate = useNavigate();
 
-  const t = TRANSLATIONS[lang];
-  
   const navItems: { path: string; label: string; icon: React.ReactNode }[] = [
     { path: '/', label: lang === 'vi' ? 'TRANG CHỦ' : 'HOME', icon: <Home size={14} /> },
     { path: '/tools', label: lang === 'vi' ? 'CÔNG CỤ' : 'TOOLS', icon: <Cpu size={14} /> },
@@ -32,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason }) => 
     if (season === 'SUMMER') {
         setSeason('NORMAL');
     } else {
-        setSeason('SUMMER' as any);
+        setSeason('SUMMER');
     }
   };
 

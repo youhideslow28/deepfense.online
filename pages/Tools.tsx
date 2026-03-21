@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Language } from '../types';
 import { UploadCloud, AlertTriangle, CheckCircle2, Activity, ScanLine, BrainCircuit, FileSearch, ShieldCheck, BookOpen, Scale, BookText } from 'lucide-react';
@@ -13,11 +13,19 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
   const initialTab = location.state?.tab || 'SCAN';
   const [activeTab, setActiveTab] = useState<'SCAN' | 'KNOWLEDGE'>(initialTab as 'SCAN' | 'KNOWLEDGE');
   const [activeKnowledgeCat, setActiveKnowledgeCat] = useState(0);
+
+  // Đồng bộ hóa Tab khi Navigation đẩy state mới tới (Tránh lỗi kẹt Tab)
+  React.useEffect(() => {
+    if (location.state?.tab) {
+      setActiveTab(location.state.tab as 'SCAN' | 'KNOWLEDGE');
+    }
+  }, [location.state]);
   
   // --- BEHAVIORAL SCANNER STATES ---
   const [step, setStep] = useState(0);
   const [riskScore, setRiskScore] = useState(0);
   const [analysisComplete, setAnalysisComplete] = useState(false);
+  const lockRef = useRef(false);
 
   const behaviorQuestions = lang === 'vi' ? [
     { q: "Người gọi có yêu cầu bạn chuyển tiền gấp, đọc mã OTP hoặc truy cập một đường link lạ không?", weight: 40 },
@@ -34,6 +42,10 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
   ];
 
   const handleAnswer = (isYes: boolean) => {
+    // Ngăn chặn bấm liên tục 2 lần gây lỗi Out of Bounds mảng câu hỏi
+    if (lockRef.current) return;
+    lockRef.current = true;
+
     if (isYes) {
       setRiskScore(prev => prev + behaviorQuestions[step].weight);
     }
@@ -43,6 +55,8 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
     } else {
       setAnalysisComplete(true);
     }
+
+    setTimeout(() => { lockRef.current = false; }, 200);
   };
 
   const resetBehaviorScan = () => {
@@ -56,7 +70,8 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
   const [scanLogs, setScanLogs] = useState<string[]>([]);
-  const intervalRef = React.useRef<any>(null);
+  const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -76,6 +91,9 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
 
   const startForensicsScan = () => {
     if (!file) return;
+    // Dọn dẹp tiến trình cũ trước khi khởi động tiến trình mới
+    if (intervalRef.current) clearInterval(intervalRef.current);
+
     setIsScanning(true);
     setScanProgress(0);
     setScanLogs([]);
@@ -234,6 +252,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
            {!file ? (
              <div className="border-2 border-dashed border-white/10 rounded-3xl p-8 md:p-12 text-center hover:border-secondary/50 hover:bg-secondary/5 transition-all bg-black/40 group relative cursor-pointer h-full flex flex-col justify-center items-center">
                 <input 
+                  ref={fileInputRef}
                   type="file" 
                   accept="image/*,video/*,audio/*" 
                   onChange={handleFileUpload}
@@ -260,7 +279,13 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                    <div className="text-white font-bold text-sm truncate mb-1">{file.name}</div>
                    <div className="text-gray-400 font-mono text-xs">{(file.size / (1024 * 1024)).toFixed(2)} MB • {file.type || 'Unknown Format'}</div>
                  </div>
-                 <button onClick={() => setFile(null)} className="text-gray-500 hover:text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-colors">
+                 <button 
+                    onClick={() => { 
+                        setFile(null); 
+                        if (fileInputRef.current) fileInputRef.current.value = '';
+                        if (intervalRef.current) clearInterval(intervalRef.current); 
+                    }} 
+                    className="text-gray-500 hover:text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-colors">
                     ĐÓNG
                  </button>
                </div>
@@ -306,7 +331,12 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                               ? '[ĐÂY LÀ TÍNH NĂNG MÔ PHỎNG] - Trên thực tế, hệ thống sẽ phân tích quang phổ và pixel. Hiện tại tính năng này đang trong quá trình phát triển (Roadmap Q4/2027).'
                               : '[SIMULATION MODE] - In reality, the system would analyze spectrograms. This feature is under development (Roadmap Q4/2027).'}
                          </p>
-                         <button onClick={() => setFile(null)} className="w-full text-white border border-white/20 hover:bg-white hover:text-black py-3 rounded-xl text-xs font-bold transition-all">
+                         <button 
+                            onClick={() => {
+                                setFile(null);
+                                if (fileInputRef.current) fileInputRef.current.value = '';
+                            }} 
+                            className="w-full text-white border border-white/20 hover:bg-white hover:text-black py-3 rounded-xl text-xs font-bold transition-all">
                            {lang === 'vi' ? 'QUÉT TỆP KHÁC' : 'SCAN ANOTHER FILE'}
                          </button>
                       </div>
@@ -325,7 +355,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-in slide-in-from-bottom-6 duration-500">
            {/* Sidebar */}
            <div className="lg:col-span-4 flex flex-col gap-3">
-              {KNOWLEDGE_BASE[lang].map((cat: any, idx: number) => (
+              {KNOWLEDGE_BASE[lang].map((cat, idx) => (
                   <button 
                     key={idx}
                     onClick={() => setActiveKnowledgeCat(idx)}
@@ -346,7 +376,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                      {KNOWLEDGE_BASE[lang][activeKnowledgeCat].category}
                   </h3>
                   <div className="space-y-6">
-                     {KNOWLEDGE_BASE[lang][activeKnowledgeCat].items.map((item: any, idx: number) => (
+                     {KNOWLEDGE_BASE[lang][activeKnowledgeCat].items.map((item, idx) => (
                         <div key={idx} className="bg-black/60 p-6 md:p-8 rounded-2xl border border-white/5 group hover:border-primary/30 transition-all hover:bg-black/80 hover:shadow-[0_0_20px_rgba(0,240,255,0.05)]">
                            <h4 className="text-base md:text-lg font-bold text-white mb-4 flex items-start gap-3">
                               <ShieldCheck size={20} className="text-primary group-hover:scale-125 transition-transform mt-0.5 shrink-0" /> 

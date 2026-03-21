@@ -22,50 +22,92 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
   });
   
   useEffect(() => {
+    let isMounted = true;
     const fetchData = async () => {
       try {
         // 1. Lấy dữ liệu GAME RESULTS
-        const gameRef = collection(db, "game_results");
-        const [countSnap, aggrSnap] = await Promise.all([
-          getCountFromServer(gameRef),
-          getAggregateFromServer(gameRef, { totalScore: sum('score') })
-        ]);
-        
-        const totalGames = countSnap.data().count;
-        const totalScore = aggrSnap.data().totalScore || 0;
+        const gameCacheKey = 'deepfense_game_stats_cache';
+        const gameCacheTime = sessionStorage.getItem(gameCacheKey + '_time');
+        let totalGames = 0;
+        let totalScore = 0;
+
+        if (sessionStorage.getItem(gameCacheKey) && gameCacheTime && (Date.now() - parseInt(gameCacheTime) < 5 * 60 * 1000)) {
+            try {
+                const cachedData = JSON.parse(sessionStorage.getItem(gameCacheKey)!);
+                totalGames = cachedData.totalGames;
+                totalScore = cachedData.totalScore;
+            } catch (error) {
+                console.warn("Lỗi đọc cache Game Stats, xóa cache.");
+                sessionStorage.removeItem(gameCacheKey);
+            }
+        } else {
+            const gameRef = collection(db, "game_results");
+            const [countSnap, aggrSnap] = await Promise.all([
+              getCountFromServer(gameRef),
+              getAggregateFromServer(gameRef, { totalScore: sum('score') })
+            ]);
+            totalGames = countSnap.data().count;
+            totalScore = aggrSnap.data().totalScore || 0;
+            sessionStorage.setItem(gameCacheKey, JSON.stringify({ totalGames, totalScore }));
+            sessionStorage.setItem(gameCacheKey + '_time', Date.now().toString());
+        }
 
         // 2. Lấy dữ liệu SURVEYS
-        // GIỚI HẠN LẤY 200 BẢN GHI GẦN NHẤT ĐỂ TRÁNH QUÁ TẢI FIRESTORE READS BILLING
-        const qSurveys = query(collection(db, "surveys"), orderBy("created_at", "desc"), limit(200));
-        const surveySnap = await getDocs(qSurveys);
-        
-        let threatPerceptionSum = 0;
-        let proactiveStanceSum = 0;
-        let selfEfficacySum = 0;
-        let behavioralIntentSum = 0;
-        let techStanceSum = 0;
-        let validSurveyCount = 0;
+        // BẢO VỆ TÀI NGUYÊN: Caching dữ liệu để không đốt cháy 50.000 reads/ngày của Firebase
+        const cacheKey = 'deepfense_psycho_cache';
+        const cacheTime = sessionStorage.getItem(cacheKey + '_time');
+        let finalPsychoStats = { ...psychoStats };
 
-        surveySnap.forEach(doc => {
-            const data = doc.data();
-            const answers = data.answers || [];
-            // Chỉ xử lý các khảo sát có đủ 13 câu trả lời (format mới)
-            if (answers.length >= 13) {
-                validSurveyCount++;
-                // Dimension 1: Threat Perception (q1, q2)
-                threatPerceptionSum += (answers[1] || 0) + (answers[2] || 0);
-                // Dimension 2: Proactive Stance (q3, q9)
-                proactiveStanceSum += (answers[3] || 0) + (answers[9] || 0);
-                // Dimension 3: Self Efficacy (q7, q8)
-                selfEfficacySum += (answers[7] || 0) + (answers[8] || 0);
-                // Dimension 4: Behavioral Intent (q12, q10)
-                behavioralIntentSum += (answers[12] || 0) + (answers[10] || 0);
-                // Dimension 5: Tech Stance (q5, q6-inverted)
-                techStanceSum += (answers[5] || 0) + (4 - (answers[6] || 0));
+        if (sessionStorage.getItem(cacheKey) && cacheTime && (Date.now() - parseInt(cacheTime) < 5 * 60 * 1000)) {
+            // Tái sử dụng dữ liệu nếu chưa qua 5 phút
+            try {
+                finalPsychoStats = JSON.parse(sessionStorage.getItem(cacheKey)!);
+                setPsychoStats(finalPsychoStats);
+            } catch (error) {
+                console.warn("Lỗi đọc cache Psycho Stats, xóa cache.");
+                sessionStorage.removeItem(cacheKey);
             }
-        });
+        } else {
+            const qSurveys = query(collection(db, "surveys"), orderBy("created_at", "desc"), limit(200));
+            const surveySnap = await getDocs(qSurveys);
+            
+            let threatPerceptionSum = 0;
+            let proactiveStanceSum = 0;
+            let selfEfficacySum = 0;
+            let behavioralIntentSum = 0;
+            let techStanceSum = 0;
+            let validSurveyCount = 0;
+
+            surveySnap.forEach(doc => {
+                const data = doc.data();
+                const answers = data.answers || [];
+                if (answers.length >= 13) {
+                    validSurveyCount++;
+                    threatPerceptionSum += (answers[1] || 0) + (answers[2] || 0);
+                    proactiveStanceSum += (answers[3] || 0) + (answers[9] || 0);
+                    selfEfficacySum += (answers[7] || 0) + (answers[8] || 0);
+                    behavioralIntentSum += (answers[12] || 0) + (answers[10] || 0);
+                    techStanceSum += (answers[5] || 0) + (4 - (answers[6] || 0));
+                }
+            });
+
+            if (validSurveyCount > 0) {
+                const maxScorePerDim = 8;
+                finalPsychoStats = {
+                    threatPerception: Math.round((threatPerceptionSum / (validSurveyCount * maxScorePerDim)) * 100),
+                    proactiveStance: Math.round((proactiveStanceSum / (validSurveyCount * maxScorePerDim)) * 100),
+                    selfEfficacy: Math.round((selfEfficacySum / (validSurveyCount * maxScorePerDim)) * 100),
+                    behavioralIntent: Math.round((behavioralIntentSum / (validSurveyCount * maxScorePerDim)) * 100),
+                    techStance: Math.round((techStanceSum / (validSurveyCount * maxScorePerDim)) * 100),
+                };
+                setPsychoStats(finalPsychoStats);
+                sessionStorage.setItem(cacheKey, JSON.stringify(finalPsychoStats));
+                sessionStorage.setItem(cacheKey + '_time', Date.now().toString());
+            }
+        }
 
         // 3. Tính toán
+        if (!isMounted) return;
         setStats({
             totalParticipants: totalGames,
             blocked: totalScore, // Mỗi câu đúng coi như chặn được 1 scam
@@ -73,18 +115,8 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
             accuracy: totalGames > 0 ? Math.round((totalScore / (totalGames * 10)) * 100) : 0,
         });
 
-        if (validSurveyCount > 0) {
-            const maxScorePerDim = 8; // 2 câu hỏi/chiều, mỗi câu max 4 điểm
-            setPsychoStats({
-                threatPerception: Math.round((threatPerceptionSum / (validSurveyCount * maxScorePerDim)) * 100),
-                proactiveStance: Math.round((proactiveStanceSum / (validSurveyCount * maxScorePerDim)) * 100),
-                selfEfficacy: Math.round((selfEfficacySum / (validSurveyCount * maxScorePerDim)) * 100),
-                behavioralIntent: Math.round((behavioralIntentSum / (validSurveyCount * maxScorePerDim)) * 100),
-                techStance: Math.round((techStanceSum / (validSurveyCount * maxScorePerDim)) * 100),
-            });
-        }
-
       } catch (error) {
+        if (!isMounted) return;
         console.error("Error fetching analytics:", error);
       } finally {
         setLoading(false);
@@ -92,6 +124,9 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
     };
 
     fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const metricsLabels = lang === 'vi' 

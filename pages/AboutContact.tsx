@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Send, Phone, Mail, MapPin, ShieldCheck, Target, Globe, Heart, Zap, Users, GraduationCap, User, Fingerprint, Code, Paperclip, Loader2 } from 'lucide-react';
 import { Language } from '../types';
 import { TRANSLATIONS, PROJECT_METADATA } from '../data';
@@ -14,6 +14,7 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [formData, setFormData] = useState({ name: '', email: '', desc: '' });
   const [file, setFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,8 +61,19 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               return;
           }
 
+          // BẢO MẬT LAYER 2: Không chỉ tin tưởng MIME Type, phải kiểm tra gắt gao Đuôi tệp (Extension)
+          const fileExtension = file.name.split('.').pop()?.toLowerCase();
+          const safeExtensions = ['jpg', 'jpeg', 'png', 'webp', 'mp4'];
+          if (!fileExtension || !safeExtensions.includes(fileExtension)) {
+              setErrorMsg(lang === 'vi' ? 'LỖI BẢO MẬT: Định dạng tệp không được phép.' : 'SECURITY ERROR: File extension not allowed.');
+              setIsSubmitting(false);
+              return;
+          }
+
           // Xử lý sanitize tên file: chỉ giữ lại chữ cái, số và dấu chấm, cắt độ dài
-          const safeFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_').substring(0, 50);
+          const parts = file.name.split('.');
+          const ext = parts.length > 1 ? '.' + parts.pop()?.toLowerCase() : '';
+          const safeFileName = parts.join('_').replace(/[^a-zA-Z0-9.-]/g, '_').substring(0, 40) + ext;
           const fileRef = ref(storage, `reports/${Date.now()}_${safeFileName}`);
           await uploadBytes(fileRef, file);
           attachmentUrl = await getDownloadURL(fileRef);
@@ -81,6 +93,7 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
       setSubmitted(true);
       setFormData({ name: '', email: '', desc: '' }); // Reset form về rỗng
       setFile(null);
+      if (fileInputRef.current) fileInputRef.current.value = '';
       setTimeout(() => setSubmitted(false), 3000);
     } catch (error) {
       console.error("Lỗi khi gửi báo cáo:", error);
@@ -215,7 +228,15 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                   <div className="space-y-1">
                       <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_attachment}</label>
                       <div className="relative">
-                          <input type="file" disabled={isSubmitting} id="file-upload" accept="image/*,video/*" className="hidden" onChange={e => setFile(e.target.files?.[0] || null)} />
+                          <input 
+                              ref={fileInputRef} 
+                              type="file" 
+                              disabled={isSubmitting} 
+                              id="file-upload" 
+                              accept="image/*,video/*" 
+                              className="hidden" 
+                              onChange={e => setFile(e.target.files?.[0] || null)} 
+                          />
                           <label htmlFor="file-upload" className={`w-full bg-black border border-white/10 border-dashed rounded-2xl p-4 flex flex-col items-center justify-center gap-2 transition-colors text-gray-500 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary/50 hover:text-primary'}`}>
                               <Paperclip size={20} />
                               <span className="text-xs font-mono">{file ? file.name : (lang === 'vi' ? 'Nhấp để chọn tệp' : 'Click to select file')}</span>

@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { collection, query, orderBy, onSnapshot, updateDoc, doc, deleteDoc, limit } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, updateDoc, doc, deleteDoc, limit, Timestamp } from 'firebase/firestore';
 import { ShieldAlert, CheckCircle, Trash2, Lock, Eye, Mail, Paperclip, ExternalLink, LogOut } from 'lucide-react';
+
+interface IncidentReport {
+  id: string;
+  name: string;
+  email: string;
+  desc: string;
+  status: string;
+  attachmentUrl?: string;
+  submittedAt?: Timestamp; 
+}
 
 const Admin: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [reports, setReports] = useState<any[]>([]);
+  const [reports, setReports] = useState<IncidentReport[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState('');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -18,6 +30,7 @@ const Admin: React.FC = () => {
       } else {
         setIsAuthenticated(false);
       }
+      setIsAuthChecking(false);
     });
     return () => unsubscribe();
   }, []);
@@ -33,7 +46,7 @@ const Admin: React.FC = () => {
         id: doc.id,
         ...doc.data()
       }));
-      setReports(data);
+      setReports(data as IncidentReport[]);
       setLoading(false);
     }, (error) => {
       console.error("Lỗi Real-time fetch:", error);
@@ -48,8 +61,9 @@ const Admin: React.FC = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setIsAuthenticated(true);
+      setLoginError('');
     } catch (error) {
-      alert("Sai thông tin đăng nhập hoặc tài khoản không tồn tại!");
+      setLoginError("Sai thông tin đăng nhập hoặc tài khoản không tồn tại!");
     }
   };
 
@@ -75,6 +89,14 @@ const Admin: React.FC = () => {
       }
   }
 
+  if (isAuthChecking) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+         <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   if (!isAuthenticated) {
     return (
       <div className="flex items-center justify-center min-h-[60vh] animate-in fade-in">
@@ -97,6 +119,7 @@ const Admin: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
+            {loginError && <div className="text-red-500 text-xs font-bold mb-4 font-mono animate-bounce">{loginError}</div>}
             <button type="submit" className="w-full bg-primary text-black font-bold py-3 rounded-lg hover:bg-white transition-colors">
                 TRUY CẬP
             </button>

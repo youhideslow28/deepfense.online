@@ -12,6 +12,23 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  // CHỐNG BÀO MÒN CPU: Tính toán Context 1 lần duy nhất thay vì mỗi lần bấm Gửi
+  const websiteContextString = React.useMemo(() => {
+      const context = {
+          introduction: "DEEPFENSE.ONLINE is a cybersecurity platform protecting users against Deepfakes.",
+          features: { scan_tool: "Checklist to detect deepfake signs.", challenge: "10 levels to spot fake videos." },
+          database: {
+              knowledge_base: KNOWLEDGE_BASE[lang].map((cat) => ({
+                  category: cat.category,
+                  topics: cat.items.map((i) => i.title)
+              })),
+              checklist: CHECKLIST_DATA[lang],
+          }
+      };
+      return JSON.stringify(context, null, 2);
+  }, [lang]);
 
   useEffect(() => {
     setMessages([{ role: 'model', text: t.agent_welcome }]);
@@ -20,6 +37,14 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  // TỐI ƯU HIỆU NĂNG: Đóng băng object components để React không phá hủy chat history mỗi khi gõ phím
+  const markdownComponents = React.useMemo(() => ({
+      p: ({node, ...props}: any) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
+      ul: ({node, ...props}: any) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
+      li: ({node, ...props}: any) => <li className="pl-1 marker:text-primary" {...props} />,
+      strong: ({node, ...props}: any) => <strong className="font-bold text-primary" {...props} />,
+  }), []);
 
   useEffect(() => {
     scrollToBottom();
@@ -34,42 +59,21 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
     setMessages(newHistory);
     setLoading(true);
 
-    // --- BƯỚC 1: CHUẨN BỊ DỮ LIỆU WEBSITE ĐỂ NẠP CHO AI ---
-    const websiteContext = {
-        introduction: "DEEPFENSE.ONLINE is a cybersecurity platform protecting users against Deepfakes.",
-        data_sources: {
-            referenced_sources: "",
-            community: "",
-            technology: ""
-        },
-        features: {
-            scan_tool: "Checklist to detect deepfake signs in video calls.",
-            challenge: "A game with 10 levels to spot fake videos.",
-            mobile_app: "Upcoming app with 'Deepfense Touch' overlay and real-time scanning."
-        },
-        database: {
-            // CHỈ TRUYỀN VÀO NHỮNG KIẾN THỨC CỐT LÕI ĐỂ TIẾT KIỆM TOKEN VÀ TỐI ƯU TỐC ĐỘ
-            knowledge_base: KNOWLEDGE_BASE[lang].map((cat: any) => ({
-                category: cat.category,
-                topics: cat.items.map((i: any) => i.title) // Chỉ lấy title, AI tự biết sinh ra content
-            })),
-            checklist: CHECKLIST_DATA[lang],
-            // Lược bỏ bớt NEWS_DATA và LEVELS để tránh rác prompt
-        }
-    };
-
-    const contextString = JSON.stringify(websiteContext, null, 2);
+    // Dọn dẹp request cũ nếu người dùng spam liên tục
+    if (abortControllerRef.current) abortControllerRef.current.abort();
+    abortControllerRef.current = new AbortController();
 
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
+        signal: abortControllerRef.current.signal,
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           messages: newHistory,
           lang: lang,
-          context: contextString
+          context: websiteContextString
         })
       });
 
@@ -81,6 +85,8 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
       setMessages(prev => [...prev, { role: 'model', text }]);
 
     } catch (clientError: any) {
+      if (clientError.name === 'AbortError') return; // Bỏ qua nếu là do cố tình Hủy request
+
       console.error("Chat Error:", clientError);
       let errorMsg = lang === 'vi' ? "Hệ thống đang bảo trì, vui lòng thử lại sau." : "System maintenance, please try again later.";
       
@@ -94,7 +100,14 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
     }
   };
 
+  // Dọn rác khi Component unmount (Đóng Chat)
+  useEffect(() => {
+      return () => abortControllerRef.current?.abort();
+  }, []);
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
+    // NGĂN CHẶN LỖI BỘ GÕ (IME): Khi gõ tiếng Việt có dấu, phím Enter sẽ không kích hoạt gửi nhầm
+    if (e.nativeEvent.isComposing) return;
     if (e.key === 'Enter') handleSend();
   };
 
@@ -121,12 +134,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                         <div className={`max-w-[85%] rounded-lg p-2.5 md:p-3 text-xs md:text-sm ${msg.role === 'user' ? 'bg-primary/20 border border-primary/50 text-white rounded-tr-none' : 'bg-gray-800/80 border border-gray-700 text-gray-200 rounded-tl-none'}`}>
                             {msg.role === 'model' ? (
                                 <ReactMarkdown
-                                    components={{
-                                        p: ({node, ...props}: any) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
-                                        ul: ({node, ...props}: any) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
-                                        li: ({node, ...props}: any) => <li className="pl-1 marker:text-primary" {...props} />,
-                                        strong: ({node, ...props}: any) => <strong className="font-bold text-primary" {...props} />,
-                                    }}
+                                    components={markdownComponents}
                                 >
                                     {msg.text}
                                 </ReactMarkdown>
