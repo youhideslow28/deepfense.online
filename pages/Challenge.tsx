@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { LEVELS, TRANSLATIONS, SURVEY_SCALE } from '../data';
-import { GameState, Language, EnhancedLevelData } from '../types';
+import { GameState, Language, LevelData } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2, ShieldQuestion, Share2, Facebook, Twitter, Users } from 'lucide-react';
 import { db } from '../firebase';
@@ -13,7 +13,7 @@ interface ChallengeProps {
 
 const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
   const [gameState, setGameState] = useState<GameState | null>(null);
-  const [wrongLevels, setWrongLevels] = useState<EnhancedLevelData[]>([]);
+  const [wrongLevels, setWrongLevels] = useState<LevelData[]>([]);
   const [showSurvey, setShowSurvey] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
   const [surveyStep, setSurveyStep] = useState(0);

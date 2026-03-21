@@ -134,7 +134,9 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
         setScanProgress(Math.floor(((currentLog + 1) / logs.length) * 100));
         currentLog++;
       } else {
-        clearInterval(intervalRef.current);
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
         setIsScanning(false);
       }
     }, 800); // Mỗi bước chạy 0.8s
