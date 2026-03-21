@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { db, auth } from '../firebase';
+import { db, auth, storage } from '../firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { collection, query, orderBy, onSnapshot, updateDoc, doc, deleteDoc, limit, Timestamp } from 'firebase/firestore';
+import { ref, deleteObject } from 'firebase/storage';
 import { ShieldAlert, CheckCircle, Trash2, Lock, Eye, Mail, Paperclip, ExternalLink, LogOut } from 'lucide-react';
 
 interface IncidentReport {
@@ -79,9 +80,19 @@ const Admin: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: string, attachmentUrl?: string) => {
       if(!window.confirm("Bạn chắc chắn muốn xóa báo cáo này?")) return;
       try {
+          // BẢO VỆ TÀI NGUYÊN: Xóa file đính kèm trên Storage trước khi xóa Document để tránh Rò rỉ dữ liệu (Storage Leak)
+          if (attachmentUrl) {
+              try {
+                  const fileRef = ref(storage, attachmentUrl);
+                  await deleteObject(fileRef);
+              } catch (storageErr) {
+                  console.warn("Lỗi xóa tệp hoặc tệp không tồn tại:", storageErr);
+              }
+          }
+          
           await deleteDoc(doc(db, "incident_reports", id));
           // Tương tự, onSnapshot tự động cập nhật UI khi doc bị xóa
       } catch (error) {
@@ -197,7 +208,7 @@ const Admin: React.FC = () => {
                                     {report.status === 'processed' ? 'Mở lại' : 'Hoàn tất'}
                                 </button>
                                 <button 
-                                    onClick={() => handleDelete(report.id)}
+                                    onClick={() => handleDelete(report.id, report.attachmentUrl)}
                                     className="p-3 rounded-lg bg-red-900/20 text-red-500 hover:bg-red-900/40 flex items-center gap-2 text-xs font-bold w-full justify-center"
                                 >
                                     <Trash2 size={16}/> Xóa

@@ -27,6 +27,9 @@ class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasErr
   static getDerivedStateFromError() {
     return { hasError: true };
   }
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error("🔥 REACT FATAL ERROR CAUGHT:", error, errorInfo);
+  }
   render() {
     if (this.state.hasError) {
       return <div className="text-center text-red-500 py-20 font-mono">⚠️ CHUNK LOAD FAILED! Vui lòng làm mới trang (F5).</div>;

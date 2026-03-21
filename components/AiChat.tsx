@@ -13,6 +13,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const isMountedRef = useRef(true);
 
   // CHỐNG BÀO MÒN CPU: Tính toán Context 1 lần duy nhất thay vì mỗi lần bấm Gửi
   const websiteContextString = React.useMemo(() => {
@@ -39,11 +40,11 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
   };
 
   // TỐI ƯU HIỆU NĂNG: Đóng băng object components để React không phá hủy chat history mỗi khi gõ phím
-  const markdownComponents = React.useMemo(() => ({
-      p: ({node, ...props}: any) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
-      ul: ({node, ...props}: any) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
-      li: ({node, ...props}: any) => <li className="pl-1 marker:text-primary" {...props} />,
-      strong: ({node, ...props}: any) => <strong className="font-bold text-primary" {...props} />,
+  const markdownComponents = React.useMemo<any>(() => ({
+      p: ({node, ...props}: {node?: unknown, [key: string]: unknown}) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
+      ul: ({node, ...props}: {node?: unknown, [key: string]: unknown}) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
+      li: ({node, ...props}: {node?: unknown, [key: string]: unknown}) => <li className="pl-1 marker:text-primary" {...props} />,
+      strong: ({node, ...props}: {node?: unknown, [key: string]: unknown}) => <strong className="font-bold text-primary" {...props} />,
   }), []);
 
   useEffect(() => {
@@ -96,13 +97,18 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
 
       setMessages(prev => [...prev, { role: 'model', text: errorMsg }]);
     } finally {
-      setLoading(false);
+      if (isMountedRef.current) {
+          setLoading(false);
+      }
     }
   };
 
   // Dọn rác khi Component unmount (Đóng Chat)
   useEffect(() => {
-      return () => abortControllerRef.current?.abort();
+      return () => {
+          isMountedRef.current = false;
+          abortControllerRef.current?.abort();
+      };
   }, []);
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

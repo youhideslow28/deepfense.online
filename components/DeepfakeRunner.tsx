@@ -24,7 +24,9 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [playerName, setPlayerName] = useState('');
   const [isEligibleForLeaderboard, setIsEligibleForLeaderboard] = useState(false);
+  const [isSubmittingScore, setIsSubmittingScore] = useState(false);
   const leaderboardRef = useRef<LeaderboardEntry[]>([]);
+  const isMountedRef = useRef(true);
 
   const gameRef = useRef({
     frames: 0,
@@ -50,6 +52,10 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
   };
 
   useEffect(() => {
+    return () => { isMountedRef.current = false; };
+  }, []);
+
+  useEffect(() => {
     // Load Leaderboard từ Firebase Firestore realtime
     const q = query(collection(db, "minigame_leaderboard"), orderBy("score", "desc"), limit(3));
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -59,12 +65,13 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
       });
       
       if (lbData.length === 0) {
-         // Dữ liệu mẫu nếu chưa có ai chơi
-         setLeaderboard([
+         const dummyData = [
              { name: 'NEO_HACKER', score: 500 },
              { name: 'CYBER_COP', score: 300 },
              { name: 'ROOKIE', score: 100 }
-         ]);
+         ];
+         setLeaderboard(dummyData);
+         leaderboardRef.current = dummyData; // FIX: Đồng bộ dữ liệu giả vào Ref
       } else {
          setLeaderboard(lbData);
          leaderboardRef.current = lbData;
@@ -76,18 +83,24 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
 
   // Xử lý lưu điểm lên Bảng Xếp Hạng
   const handleSubmitScore = async () => {
-      if (!playerName.trim()) return;
+      if (!playerName.trim() || isSubmittingScore) return;
       
+      setIsSubmittingScore(true);
       try {
           await addDoc(collection(db, "minigame_leaderboard"), {
               name: playerName.toUpperCase().slice(0, 10),
               score: gameRef.current.score,
               played_at: serverTimestamp()
           });
+          if (!isMountedRef.current) return;
           setIsEligibleForLeaderboard(false);
           setPlayerName('');
       } catch (error) {
           console.error("Error saving score:", error);
+      } finally {
+          if (isMountedRef.current) {
+              setIsSubmittingScore(false);
+          }
       }
   };
 
@@ -102,7 +115,10 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
     const updateSize = () => {
       canvas.width = canvas.parentElement?.clientWidth || window.innerWidth - 32;
       canvas.height = 350;
-      gameRef.current.playerX = canvas.width / 2;
+      // UX BUG FIX: Không reset vị trí người chơi về giữa màn hình khi bị trigger resize trên mobile (do ẩn/hiện thanh địa chỉ)
+      if (gameRef.current.playerX === 0 || gameRef.current.playerX > canvas.width) {
+          gameRef.current.playerX = canvas.width / 2;
+      }
     };
     updateSize();
     window.addEventListener('resize', updateSize);
@@ -452,6 +468,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                            <div className="flex gap-2">
                               <input 
                                 type="text" 
+                                disabled={isSubmittingScore}
                                 maxLength={10}
                                 placeholder="ENTER NAME" 
                                 className="bg-black border-2 border-white/20 text-white px-4 py-2 rounded-xl outline-none focus:border-yellow-500 text-center font-mono uppercase w-40 font-bold"
@@ -459,7 +476,9 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                                 onChange={e => setPlayerName(e.target.value.toUpperCase())}
                                 onKeyDown={e => e.key === 'Enter' && handleSubmitScore()}
                               />
-                              <button onClick={handleSubmitScore} className="bg-yellow-500 text-black px-5 py-2 font-black rounded-xl hover:bg-white transition-colors shadow-lg">SAVE</button>
+                              <button onClick={handleSubmitScore} disabled={isSubmittingScore} className="bg-yellow-500 text-black px-5 py-2 font-black rounded-xl hover:bg-white transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                                {isSubmittingScore ? '...' : 'SAVE'}
+                              </button>
                            </div>
                         </div>
                      ) : (

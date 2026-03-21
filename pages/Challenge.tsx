@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { LEVELS, TRANSLATIONS, SURVEY_SCALE } from '../data';
-import { GameState, Language } from '../types';
+import { GameState, Language, EnhancedLevelData } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2, ShieldQuestion, Share2, Facebook, Twitter, Users } from 'lucide-react';
 import { db } from '../firebase';
@@ -13,8 +13,9 @@ interface ChallengeProps {
 
 const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
   const [gameState, setGameState] = useState<GameState | null>(null);
-  const [wrongLevels, setWrongLevels] = useState<any[]>([]);
+  const [wrongLevels, setWrongLevels] = useState<EnhancedLevelData[]>([]);
   const [showSurvey, setShowSurvey] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
   const [surveyStep, setSurveyStep] = useState(0);
   const [surveyAnswers, setSurveyAnswers] = useState<number[]>([]);
   const [surveySent, setSurveySent] = useState(false);
@@ -27,43 +28,92 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
   const [captchaInput, setCaptchaInput] = useState('');
   const [captchaError, setCaptchaError] = useState(false);
   const navigate = useNavigate();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isMountedRef = useRef(true);
 
   const surveyQuestions = [
     {
-        id: 'q1_zalo_scam',
-        vi: 'Tôi thường xuyên nhận được hoặc nghe kể về các cuộc gọi video Zalo mờ nhòe, âm thanh chập chờn hối thúc chuyển tiền viện phí/tai nạn.',
-        en: 'I often receive or hear about blurry Zalo video calls with glitchy audio urging urgent money transfers.'
+        id: 'q0_usage',
+        vi: 'Tôi thường xuyên sử dụng mạng xã hội và các ứng dụng gọi video (Zalo, Messenger, Telegram).',
+        en: 'I frequently use social media and video calling apps (Zalo, Messenger, Telegram).'
     },
     {
-        id: 'q2_vneid_police',
-        vi: 'Tôi biết rất rõ Cơ quan Công an, Cán bộ phường KHÔNG BAO GIỜ làm việc qua điện thoại hay yêu cầu cài đặt app, cung cấp mã định danh VNeID.',
-        en: 'I know clearly that Police and Tax authorities NEVER work over the phone or request app installs/VNeID codes.'
+        id: 'q1_threat_me',
+        vi: 'Tôi tin rằng công nghệ Deepfake hiện nay có thể dễ dàng lừa đảo bản thân tôi hoặc gia đình.',
+        en: 'I believe Deepfake tech today can easily deceive me or my family.'
     },
     {
-        id: 'q3_cross_check',
-        vi: 'Nếu người thân nhắn tin mượn tiền, tôi sẽ lập tức gọi điện thoại thông thường (mạng di động GSM) để xác thực lại giọng nói thật.',
-        en: 'If a relative messages to borrow money, I will immediately call via standard cellular network (GSM) to verify.'
+        id: 'q2_threat_impact',
+        vi: 'Hậu quả tài chính và tinh thần nếu bị lừa đảo bằng AI là vô cùng nghiêm trọng và khó khắc phục.',
+        en: 'The financial and mental consequences of AI scams are extremely severe.'
     },
     {
-        id: 'q4_family_pwd',
-        vi: 'Gia đình tôi đã (hoặc cam kết sẽ) thiết lập một "Mật mã bí mật" (ví dụ: tên thú cưng cũ) để hỏi lại nhau ngay khi có cuộc gọi nghi ngờ.',
-        en: 'My family has (or commits to) establishing a "Secret Password" (e.g., old pet name) to verify each other.'
+        id: 'q3_proactive_learn',
+        vi: 'Tôi luôn chủ động tìm hiểu và cập nhật các thủ đoạn lừa đảo công nghệ cao mới nhất.',
+        en: 'I actively learn and update myself on the latest high-tech scam methods.'
     },
     {
-        id: 'q5_social_media',
-        vi: 'Tôi dự định sẽ hạn chế đăng tải hình ảnh cá nhân rõ nét và video có giọng nói gốc trên nền tảng công khai (TikTok, Facebook).',
-        en: 'I plan to restrict posting clear personal images and original voice videos on public platforms.'
+        id: 'q4_anxiety',
+        vi: 'Tôi cảm thấy vô cùng lo lắng và bất an trước sự phát triển mất kiểm soát của Trí tuệ nhân tạo.',
+        en: 'I feel highly anxious about the uncontrolled development of AI.'
     },
     {
-        id: 'q6_elderly_risk',
-        vi: 'Tôi cảm thấy cực kỳ lo lắng cho người lớn tuổi (ông bà, cha mẹ) vì họ dễ tin người và ít am hiểu về công nghệ ghép mặt Deepfake.',
-        en: 'I feel extremely worried for the elderly as they are highly trusting and lack knowledge of Deepfake tech.'
+        id: 'q5_tech_regulate',
+        vi: 'Tôi cho rằng cần có luật pháp kiểm soát chặt chẽ và đóng dấu bản quyền cho mọi video tạo bằng AI.',
+        en: 'I believe AI-generated videos must be strictly regulated and watermarked.'
+    },
+    {
+        id: 'q6_tech_blindness',
+        vi: 'Tôi thường có xu hướng tin tưởng ngay vào những hình ảnh/video mắt mình nhìn thấy trên màn hình.',
+        en: 'I tend to immediately trust the images/videos I see on my screen.'
+    },
+    {
+        id: 'q7_efficacy_detect',
+        vi: 'Sau thử thách này, tôi tự tin mình có khả năng nhận diện được các dấu hiệu lỗi của video Deepfake.',
+        en: 'After this challenge, I am confident in my ability to detect Deepfake artifacts.'
+    },
+    {
+        id: 'q8_efficacy_verify',
+        vi: 'Tôi biết chính xác mình cần phải làm gì (hỏi câu hỏi mẹo, yêu cầu vẫy tay) khi nhận cuộc gọi nghi ngờ.',
+        en: 'I know exactly what to do (ask trick questions, request hand waves) if a call is suspicious.'
+    },
+    {
+        id: 'q9_proactive_pwd',
+        vi: 'Gia đình tôi đã (hoặc cam kết sẽ) thiết lập một "Mật mã bí mật" để xác thực nhau khi có biến cố.',
+        en: 'My family has established (or will establish) a secret password for emergencies.'
+    },
+    {
+        id: 'q10_intent_gsm',
+        vi: 'Nếu người thân gọi video mượn tiền, tôi sẽ lập tức cúp máy và gọi lại bằng mạng viễn thông di động (GSM).',
+        en: 'If asked for money on video, I will hang up and call back via standard cellular network (GSM).'
+    },
+    {
+        id: 'q11_footprint',
+        vi: 'Tôi trước đây thường vô tư đăng tải hình ảnh khuôn mặt rõ nét và video có giọng nói lên mạng ở chế độ công khai.',
+        en: 'I used to post clear face photos and voice videos publicly without second thoughts.'
+    },
+    {
+        id: 'q12_intent_hide',
+        vi: 'Tôi dự định sẽ hạn chế chia sẻ dữ liệu sinh trắc học (khuôn mặt, giọng nói) bừa bãi trên không gian mạng.',
+        en: 'I plan to restrict sharing my biometric data (face, voice) carelessly online.'
+    },
+    {
+        id: 'q13_share',
+        vi: 'Tôi sẽ chia sẻ ứng dụng DEEPFENSE này cho bạn bè và người lớn tuổi trong gia đình để cùng phòng tránh.',
+        en: 'I will share this DEEPFENSE app with friends and elderly family members.'
     }
   ];
 
   useEffect(() => {
     startNewGame();
   }, [lang]);
+
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   const startNewGame = () => {
     const newState: GameState = { 
@@ -85,6 +135,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
     setGameState(newState);
     setWrongLevels([]);
     setShowSurvey(false);
+    setShowIntro(true);
     setSurveyStep(0);
     setSurveyAnswers([]);
     setSurveySent(false);
@@ -156,7 +207,6 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
     }
     setCaptchaError(false);
     setIsSubmitting(true);
-    setSurveySent(true);
     
     // --- FIREBASE: LƯU KẾT QUẢ KHẢO SÁT ---
     try {
@@ -169,14 +219,18 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
         // Có thể link với game result trước đó nếu muốn phức tạp hơn
       };
       await addDoc(collection(db, "surveys"), surveyData);
-      setSurveySent(true);
+      if (isMountedRef.current) setSurveySent(true);
     } catch (e) {
       console.error("Error saving survey: ", e);
+    } finally {
+      if (isMountedRef.current) setIsSubmitting(false);
     }
 
-    setTimeout(() => {
-        setShowSurvey(false);
-    }, 2000);
+    if (isMountedRef.current) {
+        timeoutRef.current = setTimeout(() => {
+            if (isMountedRef.current) setShowSurvey(false);
+        }, 2000);
+    }
   };
 
   const getEmbedUrl = (url: string) => {
@@ -266,17 +320,44 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                     </h3>
                 </div>
 
-                <div className="flex gap-2 mb-10 flex-wrap justify-center">
+                <div className="flex gap-1.5 md:gap-2 mb-10 flex-wrap justify-center max-w-full">
                     {surveyQuestions.map((_, idx) => (
-                        <div key={idx} className={`h-1.5 w-6 md:w-8 rounded-full transition-all duration-500 ${idx <= surveyStep ? 'bg-primary' : 'bg-gray-800'}`}></div>
+                        <div key={idx} className={`h-1.5 w-4 md:w-6 rounded-full transition-all duration-500 ${idx <= surveyStep ? 'bg-primary shadow-[0_0_8px_rgba(0,240,255,0.5)]' : 'bg-gray-800'}`}></div>
                     ))}
                 </div>
+                {!showIntro && !surveySent && (
+                    <div className="flex gap-1.5 md:gap-2 mb-10 flex-wrap justify-center max-w-full">
+                        {surveyQuestions.map((_, idx) => (
+                            <div key={idx} className={`h-1.5 w-4 md:w-6 rounded-full transition-all duration-500 ${idx <= surveyStep ? 'bg-primary shadow-[0_0_8px_rgba(0,240,255,0.5)]' : 'bg-gray-800'}`}></div>
+                        ))}
+                    </div>
+                )}
 
                 {surveySent ? (
                     <div className="animate-in fade-in py-10">
                         <CheckCircle2 size={64} className="text-success mx-auto mb-4" />
                         <div className="text-success font-black text-xl uppercase">
                             {lang === 'vi' ? 'DỮ LIỆU ĐÃ ĐƯỢC GHI NHẬN!' : 'DATA RECORDED SUCCESSFULLY!'}
+                        </div>
+                    </div>
+                ) : showIntro ? (
+                    <div className="w-full max-w-xl animate-in slide-in-from-right-4 duration-300 py-4 mx-auto">
+                        <div className="text-5xl md:text-6xl mb-6">🤝</div>
+                        <h4 className="text-xl md:text-2xl text-white font-black mb-4 leading-relaxed uppercase tracking-widest text-primary">
+                            {lang === 'vi' ? 'CHUNG TAY VÌ CỘNG ĐỒNG SỐ' : 'JOIN THE DIGITAL COMMUNITY'}
+                        </h4>
+                        <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-8 px-4 text-justify md:text-center">
+                            {lang === 'vi' 
+                                ? 'Chúc mừng bạn đã xuất sắc vượt qua thử thách! Nhằm mục đích xây dựng một bộ dữ liệu nghiên cứu hành vi phòng chống lừa đảo mạng cho cộng đồng, rất mong bạn dành thêm ít phút để hoàn thành bảng khảo sát này. Mọi ý kiến đóng góp của bạn đều ẩn danh và vô cùng quý giá đối với dự án.' 
+                                : 'Congratulations on completing the challenge! To build a behavioral research dataset for community cybersecurity, please take a few minutes to complete this survey. Your input is anonymous and highly valuable to our project.'}
+                        </p>
+                        <div className="flex flex-col sm:flex-row justify-center gap-4">
+                            <button 
+                                onClick={() => setShowIntro(false)}
+                                className="bg-primary text-black px-8 py-4 rounded-xl font-black text-xs uppercase transition-all hover:scale-105 shadow-lg shadow-primary/20 w-full sm:w-auto"
+                            >
+                                {lang === 'vi' ? 'ĐỒNG Ý ĐÓNG GÓP Ý KIẾN' : 'AGREE TO CONTRIBUTE'}
+                            </button>
                         </div>
                     </div>
                 ) : showDemo ? (

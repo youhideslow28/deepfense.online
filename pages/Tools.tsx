@@ -14,6 +14,11 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
   const [activeTab, setActiveTab] = useState<'SCAN' | 'KNOWLEDGE'>(initialTab as 'SCAN' | 'KNOWLEDGE');
   const [activeKnowledgeCat, setActiveKnowledgeCat] = useState(0);
 
+  // BẢO VỆ CRASH: Reset lại chỉ mục Danh mục Kiến thức nếu ngôn ngữ bị đổi đột ngột
+  React.useEffect(() => {
+      setActiveKnowledgeCat(0);
+  }, [lang]);
+
   // Đồng bộ hóa Tab khi Navigation đẩy state mới tới (Tránh lỗi kẹt Tab)
   React.useEffect(() => {
     if (location.state?.tab) {

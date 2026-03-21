@@ -30,6 +30,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
         const gameCacheTime = sessionStorage.getItem(gameCacheKey + '_time');
         let totalGames = 0;
         let totalScore = 0;
+        let fetchGameFromFirebase = false;
 
         if (sessionStorage.getItem(gameCacheKey) && gameCacheTime && (Date.now() - parseInt(gameCacheTime) < 5 * 60 * 1000)) {
             try {
@@ -39,8 +40,13 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
             } catch (error) {
                 console.warn("Lỗi đọc cache Game Stats, xóa cache.");
                 sessionStorage.removeItem(gameCacheKey);
+                fetchGameFromFirebase = true;
             }
         } else {
+            fetchGameFromFirebase = true;
+        }
+        
+        if (fetchGameFromFirebase) {
             const gameRef = collection(db, "game_results");
             const [countSnap, aggrSnap] = await Promise.all([
               getCountFromServer(gameRef),
@@ -57,6 +63,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
         const cacheKey = 'deepfense_psycho_cache';
         const cacheTime = sessionStorage.getItem(cacheKey + '_time');
         let finalPsychoStats = { ...psychoStats };
+        let fetchPsychoFromFirebase = false;
 
         if (sessionStorage.getItem(cacheKey) && cacheTime && (Date.now() - parseInt(cacheTime) < 5 * 60 * 1000)) {
             // Tái sử dụng dữ liệu nếu chưa qua 5 phút
@@ -66,8 +73,13 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
             } catch (error) {
                 console.warn("Lỗi đọc cache Psycho Stats, xóa cache.");
                 sessionStorage.removeItem(cacheKey);
+                fetchPsychoFromFirebase = true;
             }
         } else {
+            fetchPsychoFromFirebase = true;
+        }
+        
+        if (fetchPsychoFromFirebase) {
             const qSurveys = query(collection(db, "surveys"), orderBy("created_at", "desc"), limit(200));
             const surveySnap = await getDocs(qSurveys);
             
@@ -197,7 +209,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
   );
 };
 
-const RadarChart = ({ data, lang }: { data: any, lang: Language }) => {
+const RadarChart = ({ data, lang }: { data: Record<string, number>, lang: Language }) => {
     const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
 
     const size = 240;

@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Send, Phone, Mail, MapPin, ShieldCheck, Target, Globe, Heart, Zap, Users, GraduationCap, User, Fingerprint, Code, Paperclip, Loader2 } from 'lucide-react';
 import { Language } from '../types';
 import { TRANSLATIONS, PROJECT_METADATA } from '../data';
@@ -15,6 +15,11 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
   const [formData, setFormData] = useState({ name: '', email: '', desc: '' });
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+      return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,7 +99,7 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
       setFormData({ name: '', email: '', desc: '' }); // Reset form về rỗng
       setFile(null);
       if (fileInputRef.current) fileInputRef.current.value = '';
-      setTimeout(() => setSubmitted(false), 3000);
+      timeoutRef.current = setTimeout(() => setSubmitted(false), 3000);
     } catch (error) {
       console.error("Lỗi khi gửi báo cáo:", error);
       alert(lang === 'vi' ? 'Có lỗi xảy ra, vui lòng thử lại sau.' : 'An error occurred, please try again later.');

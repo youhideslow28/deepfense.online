@@ -63,7 +63,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         const data = await response.json();
         
         if (data.status === 'ok' && data.items && data.items.length > 0) {
-          const formattedNews = data.items.map((item: any) => {
+          const formattedNews = data.items.map((item: { pubDate: string; description: string; title: string; link: string }) => {
             const pubDate = new Date(item.pubDate);
             const dateStr = `${pubDate.getDate()}/${pubDate.getMonth() + 1}/${pubDate.getFullYear()}`;
             const cleanDesc = item.description.replace(/<[^>]*>?/gm, '').substring(0, 110) + '...'; // Lọc bỏ HTML
@@ -81,8 +81,12 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
           setLiveNews(formattedNews); // Cập nhật tin thực tế vào hệ thống
           setDisplayedNews(Array.from({ length: 6 }).map((_, i) => formattedNews[i % formattedNews.length]));
           // Lưu vào Session Storage
-          sessionStorage.setItem(cacheKey, JSON.stringify(formattedNews));
-          sessionStorage.setItem(cacheTimeKey, Date.now().toString());
+          try {
+            sessionStorage.setItem(cacheKey, JSON.stringify(formattedNews));
+            sessionStorage.setItem(cacheTimeKey, Date.now().toString());
+          } catch (storageError) {
+            console.warn("Trình duyệt ẩn danh hoặc bộ nhớ đầy, bỏ qua tính năng Cache.");
+          }
         }
       } catch (error) {
         console.error("Lỗi lấy tin tức tự động, sử dụng dữ liệu dự phòng.", error);
@@ -97,20 +101,26 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
   // --- FIREBASE: LẮNG NGHE SỐ LƯỢNG NGƯỜI THAM GIA (REAL-TIME) ---
   useEffect(() => {
+    let isMounted = true;
     const fetchStats = async () => {
       try {
         const qProtected = query(collection(db, "game_results"), where("score", ">=", 9));
         const snapProtected = await getCountFromServer(qProtected);
+        if (!isMounted) return;
         setProtectedUsers(snapProtected.data().count);
         
         const qTotal = collection(db, "game_results");
         const snapTotal = await getCountFromServer(qTotal);
+        if (!isMounted) return;
         setTotalAttempts(snapTotal.data().count);
       } catch (error) {
         console.error("Lỗi đếm số liệu:", error);
       }
     };
     fetchStats();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // --- AUTO TICKER EFFECT CẢNH BÁO & KIẾN THỨC ---

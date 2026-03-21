@@ -50,7 +50,7 @@ export default async function handler(req, res) {
     const { messages, lang, context } = req.body;
     
     // BẢO VỆ SERVERLESS: Ngăn chặn tấn công làm sập logic bằng payload rỗng/sai định dạng
-    if (!messages || !Array.isArray(messages)) {
+    if (!messages || !Array.isArray(messages) || messages.some(m => !m.text || typeof m.text !== 'string')) {
       return res.status(400).json({ error: 'Bad Request: Invalid payload structure.' });
     }
     
@@ -67,9 +67,11 @@ export default async function handler(req, res) {
     
     // 2. NẾU CÓ URL -> GỌI API QUÉT THỰC TẾ TRƯỚC KHI HỎI GEMINI
     if (extractedUrls && extractedUrls.length > 0) {
-        const urlToCheck = extractedUrls[0]; // Lấy link đầu tiên
-        const scanResult = await checkUrlWithSecurityAPIs(urlToCheck);
-        liveScanData = `\n\n=== DỮ LIỆU BẢO MẬT THỜI GIAN THỰC (VỪA QUÉT) ===\n${scanResult}\n==================================================`;
+        // Chỉ quét tối đa 3 link để tránh Hacker spam quá tải API Serverless
+        const urlsToCheck = extractedUrls.slice(0, 3); 
+        const scanPromises = urlsToCheck.map(url => checkUrlWithSecurityAPIs(url));
+        const scanResults = await Promise.all(scanPromises);
+        liveScanData = `\n\n=== DỮ LIỆU BẢO MẬT THỜI GIAN THỰC (VỪA QUÉT) ===\n${scanResults.join('\n')}\n==================================================`;
     }
 
     // Định nghĩa System Instruction dựa trên ngôn ngữ và ngữ cảnh website được gửi lên
