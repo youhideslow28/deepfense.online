@@ -29,10 +29,34 @@ class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasErr
   }
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error("🔥 REACT FATAL ERROR CAUGHT:", error, errorInfo);
+    
+    // Tự động tải lại trang nếu lỗi là do Chunk Load Failed (thường do cập nhật phiên bản mới)
+    const isChunkLoadFailed = error.name === 'ChunkLoadError' || error.message.includes('dynamically imported module');
+    if (isChunkLoadFailed) {
+      // Dùng sessionStorage để tránh lặp vô tận nếu thực sự file bị lỗi 404 vĩnh viễn
+      const reloadCount = parseInt(sessionStorage.getItem('chunk_reload_count') || '0', 10);
+      if (reloadCount < 1) {
+        sessionStorage.setItem('chunk_reload_count', '1');
+        window.location.reload();
+      }
+    }
   }
   render() {
     if (this.state.hasError) {
-      return <div className="text-center text-red-500 py-20 font-mono">⚠️ CHUNK LOAD FAILED! Vui lòng làm mới trang (F5).</div>;
+      return (
+        <div className="flex flex-col items-center justify-center py-20 font-mono text-center px-4 animate-in fade-in">
+          <div className="text-red-500 text-xl font-bold mb-4">⚠️ LỖI ĐỒNG BỘ PHIÊN BẢN</div>
+          <p className="text-gray-400 text-sm mb-8 max-w-md">
+            Hệ thống vừa nhận được một bản cập nhật mới hoặc kết nối mạng của bạn bị gián đoạn. Vui lòng tải lại trang để tiếp tục.
+          </p>
+          <button 
+            onClick={() => { sessionStorage.removeItem('chunk_reload_count'); window.location.reload(); }}
+            className="bg-primary text-black px-8 py-3 rounded-xl font-bold uppercase tracking-widest hover:bg-white transition-colors"
+          >
+            TẢI LẠI TRANG
+          </button>
+        </div>
+      );
     }
     return this.props.children;
   }
