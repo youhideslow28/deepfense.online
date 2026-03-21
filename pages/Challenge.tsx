@@ -320,11 +320,6 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                     </h3>
                 </div>
 
-                <div className="flex gap-1.5 md:gap-2 mb-10 flex-wrap justify-center max-w-full">
-                    {surveyQuestions.map((_, idx) => (
-                        <div key={idx} className={`h-1.5 w-4 md:w-6 rounded-full transition-all duration-500 ${idx <= surveyStep ? 'bg-primary shadow-[0_0_8px_rgba(0,240,255,0.5)]' : 'bg-gray-800'}`}></div>
-                    ))}
-                </div>
                 {!showIntro && !surveySent && (
                     <div className="flex gap-1.5 md:gap-2 mb-10 flex-wrap justify-center max-w-full">
                         {surveyQuestions.map((_, idx) => (
@@ -348,8 +343,8 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
                         </h4>
                         <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-8 px-4 text-justify md:text-center">
                             {lang === 'vi' 
-                                ? 'Chúc mừng bạn đã xuất sắc vượt qua thử thách! Nhằm mục đích xây dựng một bộ dữ liệu nghiên cứu hành vi phòng chống lừa đảo mạng cho cộng đồng, rất mong bạn dành thêm ít phút để hoàn thành bảng khảo sát này. Mọi ý kiến đóng góp của bạn đều ẩn danh và vô cùng quý giá đối với dự án.' 
-                                : 'Congratulations on completing the challenge! To build a behavioral research dataset for community cybersecurity, please take a few minutes to complete this survey. Your input is anonymous and highly valuable to our project.'}
+                                ? 'Chúc mừng bạn đã xuất sắc vượt qua thử thách! Để xem bảng điểm chi tiết và phân tích các lỗi sai bạn vừa mắc phải, xin vui lòng dành ít phút hoàn thành khảo sát dưới đây. Mọi ý kiến đóng góp của bạn đều ẩn danh và vô cùng quý giá để xây dựng bộ dữ liệu bảo vệ cộng đồng.' 
+                                : 'Congratulations on completing the challenge! To view your detailed score and analyze the mistakes you made, please take a few minutes to complete the survey below. Your anonymous input is highly valuable for building our community defense dataset.'}
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
                             <button 
