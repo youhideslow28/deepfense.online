@@ -208,7 +208,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 {displayedNews.map((news, index) => {
                   if (!news) return null;
                   return (
-                    <a href={news.url} target="_blank" rel="noopener noreferrer" key={index} className={`p-6 border-b border-r border-white/5 relative flex flex-col hover:bg-white/5 group/news cursor-pointer transition-all duration-300 transform origin-center min-h-[140px] ${flippingIndex === index ? 'scale-x-0 opacity-0' : 'scale-x-100 opacity-100'}`}>
+                    <a href={news.url} target="_blank" rel="noopener noreferrer" key={`${news.url}-${index}`} className={`p-6 border-b border-r border-white/5 relative flex flex-col hover:bg-white/5 group/news cursor-pointer transition-all duration-300 transform origin-center min-h-[140px] ${flippingIndex === index ? 'scale-x-0 opacity-0' : 'scale-x-100 opacity-100'}`}>
                         <div className="flex items-center justify-between mb-3">
                             <span className="bg-secondary/10 text-secondary text-[8px] font-black px-2 py-0.5 rounded tracking-widest border border-secondary/20 uppercase flex items-center gap-1"><span className="w-1.5 h-1.5 bg-secondary rounded-full animate-pulse"></span>{news.tag}</span>
                             <span className="text-[9px] text-gray-500 font-mono italic">{news.date}</span>

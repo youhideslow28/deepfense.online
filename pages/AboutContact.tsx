@@ -60,7 +60,9 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               return;
           }
 
-          const fileRef = ref(storage, `reports/${Date.now()}_${file.name}`);
+          // Xử lý sanitize tên file: chỉ giữ lại chữ cái, số và dấu chấm, cắt độ dài
+          const safeFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_').substring(0, 50);
+          const fileRef = ref(storage, `reports/${Date.now()}_${safeFileName}`);
           await uploadBytes(fileRef, file);
           attachmentUrl = await getDownloadURL(fileRef);
       }
@@ -200,21 +202,21 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                   )}
                   <div className="space-y-1">
                       <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_name}</label>
-                      <input type="text" placeholder={lang === 'vi' ? 'VD: Anna' : 'Ex: Anna'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                      <input type="text" disabled={isSubmitting} placeholder={lang === 'vi' ? 'VD: Anna' : 'Ex: Anna'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                   </div>
                   <div className="space-y-1">
                       <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_email}</label>
-                      <input type="email" placeholder="email@example.com" className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                      <input type="email" disabled={isSubmitting} placeholder="email@example.com" className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
                   </div>
                   <div className="space-y-1">
                       <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_desc}</label>
-                      <textarea placeholder={lang === 'vi' ? 'Vui lòng mô tả chi tiết sự việc (đối tượng giả danh ai, qua nền tảng nào...)' : 'Please describe the incident in detail...'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none h-32 resize-none transition-all" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
+                      <textarea disabled={isSubmitting} placeholder={lang === 'vi' ? 'Vui lòng mô tả chi tiết sự việc (đối tượng giả danh ai, qua nền tảng nào...)' : 'Please describe the incident in detail...'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none h-32 resize-none transition-all disabled:opacity-50 disabled:cursor-not-allowed" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
                   </div>
                   <div className="space-y-1">
                       <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_attachment}</label>
                       <div className="relative">
-                          <input type="file" id="file-upload" accept="image/*,video/*" className="hidden" onChange={e => setFile(e.target.files?.[0] || null)} />
-                          <label htmlFor="file-upload" className="w-full bg-black border border-white/10 border-dashed rounded-2xl p-4 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary/50 transition-colors text-gray-500 hover:text-primary">
+                          <input type="file" disabled={isSubmitting} id="file-upload" accept="image/*,video/*" className="hidden" onChange={e => setFile(e.target.files?.[0] || null)} />
+                          <label htmlFor="file-upload" className={`w-full bg-black border border-white/10 border-dashed rounded-2xl p-4 flex flex-col items-center justify-center gap-2 transition-colors text-gray-500 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary/50 hover:text-primary'}`}>
                               <Paperclip size={20} />
                               <span className="text-xs font-mono">{file ? file.name : (lang === 'vi' ? 'Nhấp để chọn tệp' : 'Click to select file')}</span>
                           </label>

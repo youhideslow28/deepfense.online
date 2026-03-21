@@ -381,6 +381,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('resize', updateSize);
       canvas.removeEventListener('touchmove', onTouchMove);
     };
   }, [gameState]);

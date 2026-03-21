@@ -33,6 +33,13 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason }) => 
     { path: '/contact', label: lang === 'vi' ? 'VỀ CHÚNG TÔI' : 'ABOUT US', icon: <Info size={14} /> },
   ];
 
+  // --- DỌN RÁC TIMEOUT KHI UNMOUNT ---
+  React.useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
   // Logic chuyển đổi: Chỉ toggle giữa SUMMER và NORMAL
   const toggleSeason = () => {
     if (season === 'SUMMER') {

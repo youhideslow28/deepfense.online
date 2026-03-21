@@ -56,6 +56,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
   const [scanLogs, setScanLogs] = useState<string[]>([]);
+  const intervalRef = React.useRef<any>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -63,8 +64,15 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
       setIsScanning(false);
       setScanProgress(0);
       setScanLogs([]);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     }
   };
+
+  React.useEffect(() => {
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
 
   const startForensicsScan = () => {
     if (!file) return;
@@ -97,13 +105,13 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
     const logs = lang === 'vi' ? logsVi : logsEn;
     
     let currentLog = 0;
-    const interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       if (currentLog < logs.length) {
         setScanLogs(prev => [...prev, logs[currentLog]]);
         setScanProgress(Math.floor(((currentLog + 1) / logs.length) * 100));
         currentLog++;
       } else {
-        clearInterval(interval);
+        clearInterval(intervalRef.current);
         setIsScanning(false);
       }
     }, 800); // Mỗi bước chạy 0.8s
