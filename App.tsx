@@ -19,20 +19,21 @@ const AiComingSoon = lazy(() => import('./pages/AiComingSoon'));
 const Admin = lazy(() => import('./pages/Admin'));
 
 // --- THÊM NGAY CÁI ERROR BOUNDARY VÀO ĐỂ CỨU APP KHỎI CRASH KHI LAZY LOAD LỖI ---
-class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasError: boolean}> {
+class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasError: boolean, errorMsg: string, isChunkError: boolean}> {
   constructor(props: {children: React.ReactNode}) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, errorMsg: '', isChunkError: false };
   }
-  static getDerivedStateFromError() {
-    return { hasError: true };
+  static getDerivedStateFromError(error: Error) {
+    // Phân biệt rõ giữa lỗi tải mạng (Chunk) và lỗi sập code (Crash)
+    const isChunkError = error.name === 'ChunkLoadError' || error.message.includes('dynamically imported module');
+    return { hasError: true, errorMsg: error.message, isChunkError };
   }
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error("🔥 REACT FATAL ERROR CAUGHT:", error, errorInfo);
     
     // Tự động tải lại trang nếu lỗi là do Chunk Load Failed (thường do cập nhật phiên bản mới)
-    const isChunkLoadFailed = error.name === 'ChunkLoadError' || error.message.includes('dynamically imported module');
-    if (isChunkLoadFailed) {
+    if (this.state.isChunkError) {
       // Dùng sessionStorage để tránh lặp vô tận nếu thực sự file bị lỗi 404 vĩnh viễn
       const reloadCount = parseInt(sessionStorage.getItem('chunk_reload_count') || '0', 10);
       if (reloadCount < 1) {
@@ -45,9 +46,13 @@ class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasErr
     if (this.state.hasError) {
       return (
         <div className="flex flex-col items-center justify-center py-20 font-mono text-center px-4 animate-in fade-in">
-          <div className="text-red-500 text-xl font-bold mb-4">⚠️ LỖI ĐỒNG BỘ PHIÊN BẢN</div>
+          <div className="text-red-500 text-xl font-bold mb-4">
+            {this.state.isChunkError ? "⚠️ LỖI ĐỒNG BỘ PHIÊN BẢN" : "⚠️ ĐÃ XẢY RA LỖI HỆ THỐNG (CRASH)"}
+          </div>
           <p className="text-gray-400 text-sm mb-8 max-w-md">
-            Hệ thống vừa nhận được một bản cập nhật mới hoặc kết nối mạng của bạn bị gián đoạn. Vui lòng tải lại trang để tiếp tục.
+            {this.state.isChunkError 
+              ? "Hệ thống vừa nhận được một bản cập nhật mới hoặc kết nối mạng của bạn bị gián đoạn. Vui lòng tải lại trang để tiếp tục." 
+              : `Chi tiết lỗi: ${this.state.errorMsg}`}
           </p>
           <button 
             onClick={() => { sessionStorage.removeItem('chunk_reload_count'); window.location.reload(); }}

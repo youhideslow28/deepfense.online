@@ -141,6 +141,7 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
     setSurveySent(false);
     setDemoAge('');
     setShowDemo(true);
+    setIsSubmitting(false);
   };
 
   const handleChoice = (choice: 1 | 2) => {
@@ -283,7 +284,6 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
         statusIcon = <ShieldAlert size={48} className="text-secondary" />;
         statusColor = "border-secondary bg-secondary/5";
     }
-    setIsSubmitting(false);
     
     const handleShare = async (platform: 'facebook' | 'twitter' | 'native') => {
         const text = lang === 'vi' 
