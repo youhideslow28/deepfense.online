@@ -3,20 +3,52 @@ import { GoogleGenAI } from "@google/genai";
 
 // HÀM KIỂM TRA TỪ KHÓA ĐÁNG NGỜ TRONG URL ĐƯỢC GỬI LÊN
 async function checkUrlWithSecurityAPIs(url) {
-  // CHÚ Ý: Logic quét tại chỗ (Heuristics cơ bản). Cần tích hợp VirusTotal API cho Production.
-  // Quét các dạng tấn công Homograph (giả mạo ký tự) hoặc các từ khóa nhạy cảm đi kèm đuôi lạ
+  const virustotalKey = process.env.VIRUSTOTAL_API_KEY;
+  
+  if (virustotalKey) {
+    try {
+      // VirusTotal API v3 - URL Scan
+      const urlId = Buffer.from(url).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+      const response = await fetch(`https://www.virustotal.com/api/v3/urls/${urlId}`, {
+        method: 'GET',
+        headers: {
+          'x-apikey': virustotalKey,
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const stats = data.data?.attributes?.last_analysis_stats;
+        
+        if (stats) {
+          if (stats.malicious > 0 || stats.suspicious > 0) {
+            return `[HỆ THỐNG QUÉT LIVE - VIRUSTOTAL]: URL ${url} ĐÃ BỊ PHÁT HIỆN LÀ ĐỘC HẠI (${stats.malicious} phần mềm báo cáo đỏ). TUYỆT ĐỐI KHÔNG TRUY CẬP.`;
+          } else if (stats.harmless > 0) {
+            return `[HỆ THỐNG QUÉT LIVE - VIRUSTOTAL]: URL ${url} BƯỚC ĐẦU AN TOÀN (${stats.harmless} phần mềm xác nhận). TUY NHIÊN CẢNH GIÁC NẾU ĐÂY LÀ YÊU CẦU CHUYỂN TIỀN.`;
+          }
+        }
+      } else if (response.status !== 404) {
+         console.warn(`VirusTotal API error: ${response.status}`);
+      }
+    } catch (err) {
+      console.error("Lỗi khi quét VirusTotal:", err);
+    }
+  }
+
+  // --- FALLBACK: Heuristics cơ bản nếu không có key hoặc VirusTotal chưa có data ---
   const suspiciousPattern = /(nganhang|nhanqua|khuyenmai|vip|free|nhantien|vnid|dinhdanh).*\.(xyz|top|pw|cc|tk|ml|cf|gq|online)/i;
   const isSuspicious = suspiciousPattern.test(url.toLowerCase());
   const isShortLink = /(bit\.ly|tinyurl\.com|cutt\.ly|is\.gd)/i.test(url.toLowerCase());
 
   if (isSuspicious) {
-    return `[HỆ THỐNG QUÉT LIVE]: URL ${url} ĐÃ BỊ ĐÁNH DẤU LÀ TRANG WEB LỪA ĐẢO / ĐỘC HẠI. THIỆT HẠI NẾU TRUY CẬP: MẤT TÀI KHOẢN.`;
+    return `[HỆ THỐNG QUÉT LIVE]: URL ${url} ĐÃ BỊ ĐÁNH DẤU LÀ TRANG WEB LỪA ĐẢO / ĐỘC HẠI (Phân tích Heuristic). THIỆT HẠI NẾU TRUY CẬP: MẤT TÀI KHOẢN.`;
   } else if (isShortLink) {
     return `[HỆ THỐNG QUÉT LIVE]: URL ${url} LÀ LINK RÚT GỌN ẨN DANH. ĐÂY LÀ THỦ ĐOẠN THƯỜNG GẶP ĐỂ CHE GIẤU MÃ ĐỘC. TUYỆT ĐỐI KHÔNG CLICK.`;
   } else if (url.includes('deepfense.vn') || url.includes('vtv.vn')) {
     return `[HỆ THỐNG QUÉT LIVE]: URL ${url} LÀ TRANG WEB AN TOÀN, ĐÃ ĐƯỢC XÁC MINH.`;
   } else {
-    return `[HỆ THỐNG QUÉT LIVE]: URL ${url} chưa có trong danh sách đen, nhưng domain còn rất mới. Cần cảnh giác cao độ.`;
+    return `[HỆ THỐNG QUÉT LIVE]: URL ${url} chưa bị lộ dấu hiệu độc hại rành rành, nhưng luôn cần cảnh giác.`;
   }
 }
 

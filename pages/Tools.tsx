@@ -75,15 +75,21 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
   const [scanLogs, setScanLogs] = useState<string[]>([]);
+  const [scanResult, setScanResult] = useState<{riskScore: number, analysisLines: string[]} | null>(null);
   const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+      const selectedFile = e.target.files[0];
+      if (selectedFile.size > 4.5 * 1024 * 1024) {
+        alert(lang === 'vi' ? 'LƯU Ý: Vercel Free Tier giới hạn kích thước tệp upload 4.5MB. Tệp lớn hơn sẽ chuyển sang chế độ MÔ PHỎNG.' : 'NOTICE: Vercel Free Tier limits payloads to 4.5MB. Larger files will fallback to SIMULATION mode.');
+      }
+      setFile(selectedFile);
       setIsScanning(false);
       setScanProgress(0);
       setScanLogs([]);
+      setScanResult(null);
       if (intervalRef.current) clearInterval(intervalRef.current);
     }
   };
@@ -94,52 +100,113 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
     };
   }, []);
 
-  const startForensicsScan = () => {
+  const startForensicsScan = async () => {
     if (!file) return;
-    // Dọn dẹp tiến trình cũ trước khi khởi động tiến trình mới
     if (intervalRef.current) clearInterval(intervalRef.current);
 
     setIsScanning(true);
     setScanProgress(0);
     setScanLogs([]);
+    setScanResult(null);
 
-    const logsVi = [
+    const isSimulationMode = file.size > 4.5 * 1024 * 1024;
+
+    const baseLogsVi = [
       "Khởi tạo Engine Phân tích Đa phương thức...",
       "Đang trích xuất siêu dữ liệu (EXIF/Metadata)...",
       `Kích thước tệp: ${(file.size / 1024).toFixed(2)} KB. Định dạng: ${file.type || 'unknown'}`,
-      "Chạy thuật toán dò tìm quang phổ âm thanh (Audio Spectrogram)...",
-      "Quét lỗi nội suy không gian (Spatial Glitches)...",
-      "Phân tích vi mô nhịp tim quang học (rPPG) từ dữ liệu điểm ảnh...",
-      "Đang đối chiếu với cơ sở dữ liệu Zero-Day Deepfake...",
-      "Phân tích hoàn tất. Đang tổng hợp báo cáo mã hóa..."
     ];
-
-    const logsEn = [
+    
+    const baseLogsEn = [
       "Initializing Multimodal Analysis Engine...",
       "Extracting Metadata (EXIF)...",
       `File size: ${(file.size / 1024).toFixed(2)} KB. Format: ${file.type || 'unknown'}`,
-      "Running Audio Spectrogram detection algorithms...",
-      "Scanning for Spatial Interpolation Glitches...",
-      "Analyzing optical heart rate (rPPG) from pixel data...",
-      "Cross-referencing with Zero-Day Deepfake database...",
-      "Analysis complete. Compiling encrypted report..."
     ];
 
-    const logs = lang === 'vi' ? logsVi : logsEn;
-    
     let currentLog = 0;
+    const initialLogs = lang === 'vi' ? baseLogsVi : baseLogsEn;
+    
     intervalRef.current = setInterval(() => {
-      if (currentLog < logs.length) {
-        setScanLogs(prev => [...prev, logs[currentLog]]);
-        setScanProgress(Math.floor(((currentLog + 1) / logs.length) * 100));
-        currentLog++;
-      } else {
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
+        if (currentLog < initialLogs.length) {
+            setScanLogs(prev => [...prev, initialLogs[currentLog]]);
+            setScanProgress(Math.floor(((currentLog + 1) / 10) * 100)); // Lấy 30% đầu
+            currentLog++;
+        } else {
+            clearInterval(intervalRef.current!);
+            processActualScan(isSimulationMode); 
         }
-        setIsScanning(false);
-      }
-    }, 800); // Mỗi bước chạy 0.8s
+    }, 700);
+
+    const processActualScan = async (demo: boolean) => {
+        setScanLogs(prev => [...prev, lang === 'vi' ? "Giao tiếp với AI Gemini Forensics Core..." : "Connecting to AI Gemini Forensics Core..."]);
+        setScanProgress(40);
+
+        if (demo) {
+            runMockScan();
+            return;
+        }
+
+        try {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = async () => {
+                const base64_data = reader.result as string;
+                
+                try {
+                    const response = await fetch('/api/scan-media', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ base64_data, mime_type: file.type || 'application/octet-stream', lang })
+                    });
+                    
+                    if (!response.ok) throw new Error("API Error");
+                    
+                    const result = await response.json();
+                    
+                    setScanProgress(100);
+                    setIsScanning(false);
+                    setScanLogs(prev => [...prev, lang === 'vi' ? "Phân tích AI hoàn tất." : "AI Analysis complete."]);
+                    setScanResult(result);
+
+                } catch (err) {
+                    console.error("Lỗi gọi Scan Media API:", err);
+                    runMockScan(); 
+                }
+            };
+            reader.onerror = () => runMockScan();
+        } catch (err) {
+            runMockScan();
+        }
+    };
+
+    const runMockScan = () => {
+        const mockLogs = lang === 'vi' ? [
+            "Quét lỗi nội suy không gian (Spatial Glitches)...",
+            "Phân tích vi mô nhịp tim quang học (rPPG)...",
+            "Đang đối chiếu với cơ sở dữ liệu Zero-Day Deepfake...",
+            "Phân tích hoàn tất. Chế độ MÔ PHỎNG."
+        ] : [
+            "Scanning for Spatial Interpolation Glitches...",
+            "Analyzing optical heart rate (rPPG)...",
+            "Cross-referencing with Zero-Day Deepfake database...",
+            "Analysis complete. SIMULATION mode."
+        ];
+
+        let i = 0;
+        let p = 40;
+        const mockInterval = setInterval(() => {
+            if (i < mockLogs.length) {
+                setScanLogs(prev => [...prev, mockLogs[i]]);
+                p += 15;
+                setScanProgress(Math.min(p, 100));
+                i++;
+            } else {
+                 clearInterval(mockInterval);
+                 setScanProgress(100);
+                 setIsScanning(false);
+            }
+        }, 800);
+    };
   };
 
   return (
@@ -327,7 +394,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                       )}
                     </div>
 
-                    {scanProgress === 100 && (
+                    {scanProgress === 100 && !scanResult && (
                       <div className="mt-6 pt-5 border-t border-white/10 text-center animate-in fade-in duration-700">
                          <div className="inline-block bg-secondary/10 border border-secondary/30 text-secondary px-4 py-2 rounded-lg text-xs font-bold mb-4 flex items-center gap-2 mx-auto">
                             <AlertTriangle size={14} /> 
@@ -335,15 +402,48 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                          </div>
                          <p className="text-gray-400 text-[11px] mb-6 leading-relaxed">
                            {lang === 'vi' 
-                              ? '[ĐÂY LÀ TÍNH NĂNG MÔ PHỎNG] - Trên thực tế, hệ thống sẽ phân tích quang phổ và pixel. Hiện tại tính năng này đang trong quá trình phát triển (Roadmap Q4/2027).'
-                              : '[SIMULATION MODE] - In reality, the system would analyze spectrograms. This feature is under development (Roadmap Q4/2027).'}
+                              ? '[ĐÂY LÀ TÍNH NĂNG MÔ PHỎNG] - Trên thực tế, hệ thống sẽ phân tích quang phổ và pixel. Tệp quá lớn hoặc API thất bại nên hệ thống hiển thị kết quả mô phỏng.'
+                              : '[SIMULATION MODE] - File too large or API failed, falling back to simulated results.'}
                          </p>
                          <button 
                             onClick={() => {
                                 setFile(null);
+                                setScanResult(null);
                                 if (fileInputRef.current) fileInputRef.current.value = '';
                             }} 
                             className="w-full text-white border border-white/20 hover:bg-white hover:text-black py-3 rounded-xl text-xs font-bold transition-all">
+                           {lang === 'vi' ? 'QUÉT TỆP KHÁC' : 'SCAN ANOTHER FILE'}
+                         </button>
+                      </div>
+                    )}
+
+                    {scanProgress === 100 && scanResult && (
+                      <div className="mt-6 pt-5 border-t border-white/10 text-left animate-in fade-in duration-700">
+                         <div className={`p-4 rounded-xl border mb-4 font-sans shadow-[0_0_20px_rgba(0,0,0,0.5)] ${scanResult.riskScore >= 70 ? 'bg-red-500/10 border-red-500/30' : scanResult.riskScore >= 40 ? 'bg-yellow-500/10 border-yellow-500/30' : 'bg-green-500/10 border-green-500/30'}`}>
+                             <div className="flex justify-between items-center mb-2">
+                                 <span className="font-bold text-xs uppercase text-gray-300">{lang === 'vi' ? 'KẾT QUẢ ĐÁNH GIÁ (AI FLASH):' : 'EVALUATION SCORE (AI FLASH):'}</span>
+                                 <span className={`text-xl font-black ${scanResult.riskScore >= 70 ? 'text-red-500' : scanResult.riskScore >= 40 ? 'text-yellow-500' : 'text-green-500'}`}>
+                                    {scanResult.riskScore}% RISK
+                                 </span>
+                             </div>
+                             
+                             <ul className="space-y-2 mt-4 text-sm text-gray-300 border-t border-white/10 pt-4">
+                                {scanResult.analysisLines.map((line, idx) => (
+                                    <li key={idx} className="flex gap-2 items-start">
+                                        <ShieldCheck size={16} className="text-secondary mt-1 shrink-0" />
+                                        <span className="leading-relaxed whitespace-pre-line">{line}</span>
+                                    </li>
+                                ))}
+                             </ul>
+                         </div>
+
+                         <button 
+                            onClick={() => {
+                                setFile(null);
+                                setScanResult(null);
+                                if (fileInputRef.current) fileInputRef.current.value = '';
+                            }} 
+                            className="w-full text-white border border-white/20 hover:bg-secondary hover:text-white hover:border-secondary py-3 rounded-xl text-xs font-bold transition-all mt-2">
                            {lang === 'vi' ? 'QUÉT TỆP KHÁC' : 'SCAN ANOTHER FILE'}
                          </button>
                       </div>
