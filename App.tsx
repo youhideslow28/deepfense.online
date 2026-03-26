@@ -14,6 +14,7 @@ import SEO from './components/SEO';
 const Home = lazy(() => import('./pages/Home'));
 const Challenge = lazy(() => import('./pages/Challenge'));
 const Tools = lazy(() => import('./pages/Tools'));
+const CrisisHub = lazy(() => import('./pages/CrisisHub'));
 const AboutContact = lazy(() => import('./pages/AboutContact'));
 const AiComingSoon = lazy(() => import('./pages/AiComingSoon'));
 const Admin = lazy(() => import('./pages/Admin'));
@@ -119,6 +120,7 @@ const AppContent: React.FC = () => {
     switch (location.pathname) {
       case '/': return lang === 'vi' ? 'Trang chủ' : 'Home';
       case '/tools': return lang === 'vi' ? 'Hệ thống Quét Rủi Ro' : 'Risk Scanner';
+      case '/crisis-hub': return lang === 'vi' ? 'Ứng Cứu Khẩn Cấp' : 'Crisis Hub';
       case '/challenge': return lang === 'vi' ? 'Thử thách Thám tử' : 'Detective Challenge';
       case '/ai-project': return lang === 'vi' ? 'Dự án AI Deepfense' : 'AI Project';
       case '/contact': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
@@ -148,10 +150,11 @@ const AppContent: React.FC = () => {
               <Routes>
                 <Route path="/" element={<Home lang={lang} season={season} />} />
                 <Route path="/tools" element={<Tools lang={lang} />} />
+                <Route path="/crisis-hub" element={<CrisisHub lang={lang} />} />
                 <Route path="/challenge" element={<Challenge lang={lang} />} />
                 <Route path="/ai-project" element={<AiComingSoon lang={lang} />} />
                 <Route path="/contact" element={<AboutContact lang={lang} />} />
-                <Route path="/admin" element={<Admin />} />
+                <Route path="/admin" element={<Admin lang={lang} />} />
                 <Route path="*" element={<Home lang={lang} season={season} />} />
               </Routes>
           </Suspense>
