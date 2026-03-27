@@ -23,8 +23,10 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
   const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (messages.length > 0 || isTyping) {
+      chatEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [messages, isTyping]);
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
