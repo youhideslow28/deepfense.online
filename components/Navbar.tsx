@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Language, Season } from '../types';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Shield, Menu, X, Home, Cpu, Swords, Bot, Info, Sun, Power, HeartPulse } from 'lucide-react';
+import { Shield, Menu, X, Home, Cpu, Swords, Bot, Info, Sun, Power, HeartPulse, Target } from 'lucide-react';
 import { TRANSLATIONS } from '../data';
 
 interface NavbarProps {
@@ -21,6 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason }) => 
     { path: '/', label: lang === 'vi' ? 'TRANG CHỦ' : 'HOME', icon: <Home size={14} /> },
     { path: '/tools', label: lang === 'vi' ? 'CÔNG CỤ' : 'TOOLS', icon: <Cpu size={14} /> },
     { path: '/crisis-hub', label: lang === 'vi' ? 'ỨNG CỨU SOS' : 'CRISIS SOS', icon: <HeartPulse size={14} /> },
+    { path: '/simulator', label: lang === 'vi' ? 'MÔ PHỎNG LỪA ĐẢO' : 'SCAM SIMULATOR', icon: <Target size={14} /> },
     { path: '/challenge', label: lang === 'vi' ? 'THỬ THÁCH' : 'CHALLENGE', icon: <Swords size={14} /> },
     { path: '/ai-project', label: lang === 'vi' ? 'DỰ ÁN AI' : 'AI PROJECT', icon: <Bot size={14} /> },
     { path: '/contact', label: lang === 'vi' ? 'VỀ CHÚNG TÔI' : 'ABOUT US', icon: <Info size={14} /> },
