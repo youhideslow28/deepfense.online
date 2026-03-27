@@ -20,8 +20,6 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason }) => 
   const navItems: { path: string; label: string; icon: React.ReactNode }[] = [
     { path: '/', label: lang === 'vi' ? 'TRANG CHỦ' : 'HOME', icon: <Home size={14} /> },
     { path: '/tools', label: lang === 'vi' ? 'CÔNG CỤ' : 'TOOLS', icon: <Cpu size={14} /> },
-    { path: '/crisis-hub', label: lang === 'vi' ? 'ỨNG CỨU SOS' : 'CRISIS SOS', icon: <HeartPulse size={14} /> },
-    { path: '/simulator', label: lang === 'vi' ? 'MÔ PHỎNG LỪA ĐẢO' : 'SCAM SIMULATOR', icon: <Target size={14} /> },
     { path: '/challenge', label: lang === 'vi' ? 'THỬ THÁCH' : 'CHALLENGE', icon: <Swords size={14} /> },
     { path: '/ai-project', label: lang === 'vi' ? 'DỰ ÁN AI' : 'AI PROJECT', icon: <Bot size={14} /> },
     { path: '/contact', label: lang === 'vi' ? 'VỀ CHÚNG TÔI' : 'ABOUT US', icon: <Info size={14} /> },

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Language } from '../types';
 import { UploadCloud, AlertTriangle, CheckCircle2, Activity, ScanLine, BrainCircuit, FileSearch, ShieldCheck, BookOpen, Scale, BookText, Lock, Download } from 'lucide-react';
 import { KNOWLEDGE_BASE } from '../data';
-
+import CrisisHub from './CrisisHub';
 interface ToolsProps {
   lang: Language;
 }
@@ -11,7 +11,7 @@ interface ToolsProps {
 const Tools: React.FC<ToolsProps> = ({ lang }) => {
   const location = useLocation();
   const initialTab = location.state?.tab || 'SCAN';
-  const [activeTab, setActiveTab] = useState<'SCAN' | 'KNOWLEDGE' | 'PROTECT'>(initialTab as 'SCAN' | 'KNOWLEDGE' | 'PROTECT');
+  const [activeTab, setActiveTab] = useState<'SCAN' | 'KNOWLEDGE' | 'PROTECT' | 'CRISIS'>(initialTab as 'SCAN' | 'KNOWLEDGE' | 'PROTECT' | 'CRISIS');
   const [activeKnowledgeCat, setActiveKnowledgeCat] = useState(0);
 
   // BẢO VỆ CRASH: Reset lại chỉ mục Danh mục Kiến thức nếu ngôn ngữ bị đổi đột ngột
@@ -22,7 +22,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
   // Đồng bộ hóa Tab khi Navigation đẩy state mới tới (Tránh lỗi kẹt Tab)
   React.useEffect(() => {
     if (location.state?.tab) {
-      setActiveTab(location.state.tab as 'SCAN' | 'KNOWLEDGE' | 'PROTECT');
+      setActiveTab(location.state.tab as 'SCAN' | 'KNOWLEDGE' | 'PROTECT' | 'CRISIS');
     }
   }, [location.state]);
   
@@ -317,14 +317,16 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
     <div className="max-w-7xl mx-auto animate-in fade-in duration-500 py-6 px-4">
       <div className="text-center mb-10">
         <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4 flex items-center justify-center gap-3">
-          {activeTab === 'SCAN' ? <ScanLine className="text-primary" size={40} /> : activeTab === 'PROTECT' ? <ShieldCheck className="text-green-500" size={40} /> : <BookOpen className="text-primary" size={40} />}
-          {activeTab === 'SCAN' ? (lang === 'vi' ? 'HỆ THỐNG QUÉT RỦI RO' : 'RISK SCAN SYSTEM') : activeTab === 'PROTECT' ? (lang === 'vi' ? 'TRUNG TÂM BẢO VỆ' : 'PROACTIVE SHIELD') : (lang === 'vi' ? 'THƯ VIỆN KIẾN THỨC' : 'KNOWLEDGE LIBRARY')}
+          {activeTab === 'SCAN' ? <ScanLine className="text-primary" size={40} /> : activeTab === 'PROTECT' ? <ShieldCheck className="text-green-500" size={40} /> : activeTab === 'CRISIS' ? <AlertTriangle className="text-red-500" size={40} /> : <BookOpen className="text-primary" size={40} />}
+          {activeTab === 'SCAN' ? (lang === 'vi' ? 'HỆ THỐNG QUÉT RỦI RO' : 'RISK SCAN SYSTEM') : activeTab === 'PROTECT' ? (lang === 'vi' ? 'TRUNG TÂM BẢO VỆ' : 'PROACTIVE SHIELD') : activeTab === 'CRISIS' ? (lang === 'vi' ? 'TRUNG TÂM ỨNG CỨU SOS' : 'CRISIS HUB SOS') : (lang === 'vi' ? 'THƯ VIỆN KIẾN THỨC' : 'KNOWLEDGE LIBRARY')}
         </h2>
         <p className="text-gray-400 text-sm max-w-3xl mx-auto leading-relaxed">
           {activeTab === 'SCAN' 
             ? (lang === 'vi' ? 'Khi AI giả mạo được 99% hình ảnh/giọng nói, mắt thường không còn đáng tin. Hãy kết hợp đánh giá ngữ cảnh hành vi và pháp y dữ liệu để xác thực.' : 'Combine behavioral context assessment and digital forensics for comprehensive verification.')
             : activeTab === 'PROTECT'
             ? (lang === 'vi' ? 'Bảo vệ ảnh cá nhân trên mạng xã hội. Lớp khiên thuật toán này sẽ chèn nhiễu đối kháng (Adversarial Noise) để làm mù các hệ thống AI cố đánh cắp khuôn mặt bạn.' : 'Protect personal photos online. This algorithmic shield injects adversarial noise to blind AI systems attempting to clone your face.')
+            : activeTab === 'CRISIS'
+            ? (lang === 'vi' ? 'Hệ thống hỗ trợ nạn nhân giải quyết hậu quả sau lừa đảo. Tạo đơn tố giác chuẩn pháp lý, tư vấn quy trình phong tỏa tài sản và sơ cứu tâm lý khẩn cấp.' : 'Post-scam crisis management system. Generate legal reports, asset freeze guidance, and physiological first aid.')
             : (lang === 'vi' ? 'Hệ thống lưu trữ chi tiết công nghệ Deepfake, cơ chế thao túng tâm lý và hệ thống quy phạm pháp luật bảo vệ quyền con người.' : 'Comprehensive repository on Deepfake tech, psychological manipulation, and legal frameworks.')}
         </p>
       </div>
@@ -348,6 +350,12 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'KNOWLEDGE' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
           <Scale size={16} /> {lang === 'vi' ? 'KIẾN THỨC & LUẬT' : 'KNOWLEDGE & LAW'}
+        </button>
+        <button 
+          onClick={() => setActiveTab('CRISIS')}
+          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'CRISIS' ? 'bg-red-500 text-black shadow-[0_0_20px_rgba(239,68,68,0.3)]' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+        >
+          <AlertTriangle size={16} /> {lang === 'vi' ? 'ỨNG CỨU SOS' : 'CRISIS HUB'}
         </button>
       </div>
 
@@ -845,6 +853,13 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                   </div>
                </div>
            </div>
+        </div>
+      )}
+
+      {/* MODE: CRISIS HUB */}
+      {activeTab === 'CRISIS' && (
+        <div className="animate-in slide-in-from-bottom-6 duration-500">
+           <CrisisHub lang={lang} />
         </div>
       )}
     </div>

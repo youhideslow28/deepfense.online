@@ -20,13 +20,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
   const [status, setStatus] = useState<'playing' | 'failed' | 'success' | 'idle'>('idle');
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const scenario = [
-    { delay: 1000, text: 'Trần Văn Hoàng (Giám đốc) đã tham gia cuộc trò chuyện.' },
-    { delay: 2500, text: 'Chào em, anh là Hoàng bên Cty ABC. Em còn giữ quỹ công ty tháng này đúng không?' },
-    { delay: 4000, text: 'Anh đang kẹt tiền gấp để thanh toán hóa đơn đối tác. Em chuyển nhanh 50 triệu vào STK này nhé: 123456789 - TRAN VAN HOANG - Vietcombank' },
-    { delay: 6000, text: 'Anh đang bận họp không gọi lại được. Nhanh nhé em, không làm lỡ việc công ty.' },
-    { delay: 8000, text: 'Em chuyển xong chụp lại biên lai cho anh duyệt luôn nha.' }
-  ];
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -45,23 +39,48 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
   const startSimulation = () => {
     setStarted(true);
     setStatus('playing');
-    setMessages([]);
     setTimer(0);
-    triggerScenario(0);
+    setMessages([
+      { id: Date.now(), sender: 'ai', text: lang === 'vi' ? 'Chào em, anh là Hoàng (Giám đốc). Vẫn giữ quỹ cty đúng ko? Anh đang họp kẹt tiền thanh toán đối tác. Chuyển gấp 50 triệu vào STK: 123456789 - TRAN VAN HOANG - Vietcombank. Nhanh lên nhé.' : 'Hi, it\'s Hoang (CEO). Need 50M urgently to pay a partner invoice, I am in a meeting. Transfer to: 123456789 - TRAN VAN HOANG - Vietcombank right now.' }
+    ]);
   };
 
-  const triggerScenario = (index: number) => {
-    if (index >= scenario.length) return;
-    setTimeout(() => {
-      setMessages((prev) => [...prev, { id: Date.now(), sender: 'ai', text: scenario[index].text }]);
-      triggerScenario(index + 1);
-    }, scenario[index].delay - (index > 0 ? scenario[index - 1].delay : 0));
-  };
-
-  const handleSend = () => {
-    if (!inputStr.trim()) return;
-    setMessages((prev) => [...prev, { id: Date.now(), sender: 'user', text: inputStr }]);
+  const handleSend = async () => {
+    if (!inputStr.trim() || isTyping) return;
+    
+    const userMessage = inputStr;
+    const newMessages: ChatMessage[] = [...messages, { id: Date.now(), sender: 'user', text: userMessage }];
+    setMessages(newMessages);
     setInputStr('');
+    setIsTyping(true);
+
+    try {
+        const apiMessages = newMessages.map(m => ({
+            role: m.sender === 'ai' ? 'model' : 'user',
+            text: m.text
+        }));
+
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                messages: apiMessages,
+                lang,
+                mode: 'simulator'
+            })
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'ai', text: data.text }]);
+        } else {
+            setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'ai', text: lang === 'vi' ? "Lỗi kết nối. Thử lại sau." : "Connection error." }]);
+        }
+    } catch (e) {
+        setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'ai', text: "Lỗi kết nối API." }]);
+    } finally {
+        setIsTyping(false);
+    }
   };
 
   const handleTransfer = () => {
@@ -167,7 +186,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                   </div>
                 </div>
              ))}
-             {started && messages.length === 0 && (
+             {isTyping && (
                 <div className="flex justify-start">
                    <div className="bg-gray-800 text-gray-400 text-xs p-2 rounded-2xl">...đang gõ</div>
                 </div>
@@ -184,10 +203,11 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                       value={inputStr} 
                       onChange={(e) => setInputStr(e.target.value)} 
                       onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                      placeholder="Nhắn tin lại..." 
-                      className="flex-grow bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 transition-colors pointer-events-none"
+                      disabled={isTyping}
+                      placeholder="Trò chuyện hoặc bắt bẻ..." 
+                      className="flex-grow bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 transition-colors"
                     />
-                    <button className="absolute right-4 text-gray-500 uppercase text-xs font-bold pointer-events-none">Send</button>
+                    <button onClick={handleSend} disabled={isTyping} className="absolute right-4 text-purple-500 hover:text-purple-400 uppercase text-xs font-bold">GỬI</button>
                     {/* Fake typing protection for simulation feel */}
                   </div>
                   

@@ -196,13 +196,13 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
               </div>
               <p className="text-gray-300 mb-6 leading-relaxed text-sm md:text-base">
                   {lang === 'vi' 
-                    ? 'Bạn nhận được một video tống tiền? Một đoạn ghi âm đáng ngờ? Hãy gửi nó cho Smart Agent. AI sẽ phân tích quang phổ âm thanh và metadata để xác định nguồn gốc file là thật hay do máy tạo.'
-                    : 'Received a blackmail video? A suspicious recording? Send it to Smart Agent. AI analyzes acoustic spectrum and metadata to determine if the file is real or AI-generated.'}
+                    ? 'Được vận hành bởi lõi mô hình ngôn ngữ lớn Gemini 2.5 Flash siêu tốc, Smart Agent không chỉ là một công cụ quét file thông thường. Bạn nhận được video tống tiền? Nó sẽ bóc tách siêu dữ liệu từng frame ảnh. Bạn bị lôi kéo vào nhóm chat dụ dỗ đầu tư? AI sẽ phân tích quy luật thao túng tâm lý học tội phạm của kẻ gian và bẻ gãy kịch bản lừa đảo ngay lập tức.'
+                    : 'Powered by the ultra-fast Gemini 2.5 Flash LLM core, Smart Agent is more than just a file scanner. Received a blackmail video? It extracts metadata frame-by-frame. Pulled into a shady investment group chat? The AI analyzes criminal psychological manipulation patterns and shatters the scam script instantly.'}
               </p>
               <ul className="space-y-3 text-sm text-gray-400">
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Truy xuất nguồn gốc & Chữ ký số C2PA' : 'Provenance & C2PA Digital Signature Auth'}</li>
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Giải mã Artifacts không gian tiềm ẩn (Latent Space)' : 'Latent Space Artifact Decoding'}</li>
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Trợ lý AI Expert & Phân tích Forensic 2026' : '2026 Expert AI & Forensic Analysis'}</li>
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Tốc độ phản xạ siêu tốc nhờ cấu trúc Gemini 2.5 Flash' : 'Ultra-fast reflexes powered by Gemini 2.5 Flash architecture'}</li>
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Năng lực Multi-modal: Quét chéo Đồng thời Text, Video, Âm thanh' : 'Multi-modal capability: Cross-scan Text, Video, Audio simultaneously'}</li>
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Truy xuất nguồn gốc & Chữ ký số C2PA (Pháp y kỹ thuật số)' : 'Digital Forensics: Provenance & C2PA Signature Extraction'}</li>
               </ul>
           </div>
       </div>

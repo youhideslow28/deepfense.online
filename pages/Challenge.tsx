@@ -6,12 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2, ShieldQuestion, Share2, Facebook, Twitter, Users } from 'lucide-react';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import Simulator from './Simulator';
 
 interface ChallengeProps {
   lang: Language;
 }
 
-const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
+const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [wrongLevels, setWrongLevels] = useState<LevelData[]>([]);
   const [showSurvey, setShowSurvey] = useState(false);
@@ -641,6 +642,31 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
             </div>
           )}
       </div>
+    </div>
+  );
+};
+
+const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
+  const [activeTab, setActiveTab] = useState<'DETECTIVE' | 'SIMULATOR'>('DETECTIVE');
+  
+  return (
+    <div className="animate-in fade-in duration-500">
+       <div className="flex flex-wrap justify-center bg-surface p-2 rounded-2xl border border-white/5 mb-8 w-fit mx-auto shadow-xl gap-2 mt-4 px-2">
+        <button 
+          onClick={() => setActiveTab('DETECTIVE')}
+          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'DETECTIVE' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+        >
+          <Eye size={16} /> {lang === 'vi' ? 'THÁM TỬ DEEPFAKE' : 'DEEPFAKE DETECTIVE'}
+        </button>
+        <button 
+          onClick={() => setActiveTab('SIMULATOR')}
+          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'SIMULATOR' ? 'bg-secondary text-white shadow-[0_0_20px_rgba(255,42,109,0.3)]' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+        >
+          <Brain size={16} /> {lang === 'vi' ? 'MÔ PHỎNG LỪA ĐẢO' : 'SCAM SIMULATOR'}
+        </button>
+      </div>
+
+      {activeTab === 'DETECTIVE' ? <DetectiveGame lang={lang} /> : <Simulator lang={lang} />}
     </div>
   );
 };
