@@ -157,7 +157,7 @@ const AppContent: React.FC = () => {
                 <Route path="/challenge" element={<Challenge lang={lang} />} />
                 <Route path="/ai-project" element={<AiComingSoon lang={lang} />} />
                 <Route path="/contact" element={<AboutContact lang={lang} />} />
-                <Route path="/admin" element={<Admin lang={lang} />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route path="*" element={<Home lang={lang} season={season} />} />
               </Routes>
           </Suspense>
