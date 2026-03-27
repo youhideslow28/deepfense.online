@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Cpu, Fingerprint, ScanEye, Shield, Smartphone, FileSearch, ArrowRight, ArrowDown, Video, Mic, UploadCloud, Eye, BrainCircuit, Play, Map, GraduationCap, MonitorSmartphone, SmartphoneNfc, Rocket, Bot } from 'lucide-react';
+import { Cpu, Fingerprint, ScanEye, Shield, Smartphone, FileSearch, ArrowRight, ArrowDown, Video, Mic, UploadCloud, Eye, BrainCircuit, Play, Map, GraduationCap, MonitorSmartphone, SmartphoneNfc, Rocket } from 'lucide-react';
 import { Language } from '../types';
 
 interface AiComingSoonProps {
@@ -180,63 +180,30 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
               </ul>
           </div>
 
-          {/* Solution 2: AI Agent */}
+          {/* Solution 2: File Analysis Agent */}
           <div className="bg-surface border border-gray-800 rounded-xl p-6 md:p-8 hover:border-blue-500 transition-colors group relative overflow-hidden">
               <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Bot size={150} />
+                  <Shield size={150} />
               </div>
-              <div className="flex items-center gap-4 mb-6 relative z-10">
-                  <div className="bg-blue-500/20 p-3 rounded-full text-blue-400 shrink-0 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-                      <Bot size={32} />
+              <div className="flex items-center gap-4 mb-6">
+                  <div className="bg-blue-500/20 p-3 rounded-full text-blue-400 shrink-0">
+                      <FileSearch size={32} />
                   </div>
                   <div>
-                      <h3 className="text-xl md:text-2xl font-bold text-white">DEEPFENSE AI AGENT</h3>
-                      <p className="text-xs text-blue-400 font-mono">{lang === 'vi' ? 'TRỢ LÝ ẢO BẢO MẬT' : 'SECURITY VIRTUAL ASSISTANT'}</p>
+                      <h3 className="text-xl md:text-2xl font-bold text-white">SMART AGENT</h3>
+                      <p className="text-xs text-blue-400 font-mono">{lang === 'vi' ? 'PHÂN TÍCH CHUYÊN SÂU' : 'IN-DEPTH ANALYSIS'}</p>
                   </div>
               </div>
-              
-              <div className="relative z-10 space-y-5">
-                  <div className="bg-gradient-to-r from-blue-900/30 to-transparent border-l-4 border-blue-500 p-4 rounded-r-xl">
-                     <p className="text-blue-100/90 text-sm md:text-base italic leading-relaxed font-serif">
-                       {lang === 'vi' ? '"Xin chào, tôi là AI Agent của dự án DEEPFENSE, được vận hành bởi lõi siêu trí tuệ Gemini 2.5 Flash."' : '"Hello, I am the DEEPFENSE AI Agent, powered by the Gemini 2.5 Flash core."'}
-                     </p>
-                  </div>
-                  
-                  <p className="text-gray-300 text-sm md:text-base leading-relaxed bg-black/40 p-4 rounded-xl border border-white/5">
-                     <strong className="text-blue-400 font-black block mb-1 uppercase text-xs tracking-widest">{lang === 'vi' ? 'Nhiệm vụ của tôi là:' : 'My mission is:'}</strong> 
-                     {lang === 'vi' ? 'Trở thành một chuyên gia pháp y kỹ thuật số cá nhân của bạn. Tôi ở đây để phân tích, bóc tách và cảnh báo mọi dạng kịch bản thao túng tâm lý học tội phạm hoặc làm giả nội dung số Deepfake.' : 'To be your personal digital forensics expert. I am here to analyze and alert you of any criminal psychological manipulation or digital content forgery.'}
-                  </p>
-                  
-                  <div className="pt-2">
-                     <strong className="text-white text-sm md:text-base block mb-4 flex items-center gap-2">
-                         <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                         {lang === 'vi' ? 'Tôi có thể hỗ trợ bạn các chức năng sau:' : 'I can assist you with the following functions:'}
-                     </strong>
-                     <ul className="space-y-4 text-sm text-gray-400">
-                         <li className="flex gap-4 items-start bg-surface/50 p-3 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors">
-                             <div className="bg-blue-500/20 text-blue-400 p-2 rounded-lg mt-0.5 shrink-0"><Eye size={16} /></div>
-                             <div>
-                                 <strong className="text-gray-200 block mb-1">{lang === 'vi' ? 'Quét Đa phương thức (Multi-modal)' : 'Multi-modal Scanning'}</strong>
-                                 <span className="leading-relaxed text-xs md:text-sm">{lang === 'vi' ? 'Diễn giải trực tiếp video, ảnh chụp màn hình Zalo, đoạn ghi âm để truy tìm dấu vết chỉnh sửa AI.' : 'Interpret videos, screenshots, and audio to trace forged signatures.'}</span>
-                             </div>
-                         </li>
-                         <li className="flex gap-4 items-start bg-surface/50 p-3 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors">
-                             <div className="bg-blue-500/20 text-blue-400 p-2 rounded-lg mt-0.5 shrink-0"><BrainCircuit size={16} /></div>
-                             <div>
-                                 <strong className="text-gray-200 block mb-1">{lang === 'vi' ? 'Phân tích Kịch bản Lừa đảo' : 'Scam Script Analysis'}</strong>
-                                 <span className="leading-relaxed text-xs md:text-sm">{lang === 'vi' ? 'Đọc tin nhắn rác, link lạ, hay thư tống tiền để vạch trần thủ đoạn lừa gạt tiền bạc.' : 'Read spam messages, strange links, or blackmail letters to expose tricks.'}</span>
-                             </div>
-                         </li>
-                         <li className="flex gap-4 items-start bg-surface/50 p-3 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors">
-                             <div className="bg-blue-500/20 text-blue-400 p-2 rounded-lg mt-0.5 shrink-0"><Shield size={16} /></div>
-                             <div>
-                                 <strong className="text-gray-200 block mb-1">{lang === 'vi' ? 'Kế hoạch Sơ cứu Khẩn cấp' : 'Emergency First Aid'}</strong>
-                                 <span className="leading-relaxed text-xs md:text-sm">{lang === 'vi' ? 'Đưa ra lời khuyên tâm lý bình tĩnh và vạch lộ trình báo công an, đóng băng tài khoản khi bạn lỡ sập bẫy.' : 'Provide calming advice and urgent legal steps when you are compromised.'}</span>
-                             </div>
-                         </li>
-                     </ul>
-                  </div>
-              </div>
+              <p className="text-gray-300 mb-6 leading-relaxed text-sm md:text-base">
+                  {lang === 'vi' 
+                    ? 'Được vận hành bởi lõi mô hình ngôn ngữ lớn Gemini 2.5 Flash siêu tốc, Smart Agent không chỉ là một công cụ quét file thông thường. Bạn nhận được video tống tiền? Nó sẽ bóc tách siêu dữ liệu từng frame ảnh. Bạn bị lôi kéo vào nhóm chat dụ dỗ đầu tư? AI sẽ phân tích quy luật thao túng tâm lý học tội phạm của kẻ gian và bẻ gãy kịch bản lừa đảo ngay lập tức.'
+                    : 'Powered by the ultra-fast Gemini 2.5 Flash LLM core, Smart Agent is more than just a file scanner. Received a blackmail video? It extracts metadata frame-by-frame. Pulled into a shady investment group chat? The AI analyzes criminal psychological manipulation patterns and shatters the scam script instantly.'}
+              </p>
+              <ul className="space-y-3 text-sm text-gray-400">
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Tốc độ phản xạ siêu tốc nhờ cấu trúc Gemini 2.5 Flash' : 'Ultra-fast reflexes powered by Gemini 2.5 Flash architecture'}</li>
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Năng lực Multi-modal: Quét chéo Đồng thời Text, Video, Âm thanh' : 'Multi-modal capability: Cross-scan Text, Video, Audio simultaneously'}</li>
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Truy xuất nguồn gốc & Chữ ký số C2PA (Pháp y kỹ thuật số)' : 'Digital Forensics: Provenance & C2PA Signature Extraction'}</li>
+              </ul>
           </div>
       </div>
 
