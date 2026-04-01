@@ -169,10 +169,6 @@ const AppContent: React.FC = () => {
       
       <footer className="border-t border-white/5 py-12 mt-12 bg-black/80 text-center z-10 backdrop-blur-md relative overflow-hidden">
         <div className="font-serif font-black tracking-widest text-2xl text-white/10 mb-2 italic">DEEPFENSE</div>
-        <div className="text-[10px] text-gray-600 uppercase tracking-[0.3em] mb-4 font-mono leading-loose">
-            DEEPFENSE FINAL VER | PROJECT 2025<br/>
-            NEURAL DEFENSE PROTOCOL ACTIVE
-        </div>
         <div className="text-[9px] text-gray-700 font-mono flex flex-col items-center gap-2">
             <Link to="/admin" className="hover:text-primary transition-colors opacity-50 hover:opacity-100">
                [ SYSTEM_ADMIN_ACCESS ]

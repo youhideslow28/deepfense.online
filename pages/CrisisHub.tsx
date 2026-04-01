@@ -61,18 +61,18 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
           {t.btn_first_aid}
         </button>
         <button
-          onClick={() => setActiveTab('hotspot')}
-          className={`px-6 py-3 rounded-xl font-bold uppercase tracking-widest text-sm transition-all focus:outline-none flex items-center gap-2 ${activeTab === 'hotspot' ? 'bg-orange-500/20 text-orange-500 border border-orange-500/50' : 'bg-black/40 text-gray-400 border border-white/10 hover:border-white/30'}`}
-        >
-          <MapPin size={18} />
-          {t.btn_hotspot}
-        </button>
-        <button
           onClick={() => setActiveTab('report')}
           className={`px-6 py-3 rounded-xl font-bold uppercase tracking-widest text-sm transition-all focus:outline-none flex items-center gap-2 ${activeTab === 'report' ? 'bg-red-500/20 text-red-500 border border-red-500/50' : 'bg-black/40 text-gray-400 border border-white/10 hover:border-white/30'}`}
         >
           <FileText size={18} />
           {t.btn_report_pdf}
+        </button>
+        <button
+          onClick={() => setActiveTab('hotspot')}
+          className={`px-6 py-3 rounded-xl font-bold uppercase tracking-widest text-sm transition-all focus:outline-none flex items-center gap-2 ${activeTab === 'hotspot' ? 'bg-orange-500/20 text-orange-500 border border-orange-500/50' : 'bg-black/40 text-gray-400 border border-white/10 hover:border-white/30'}`}
+        >
+          <MapPin size={18} />
+          {t.btn_hotspot}
         </button>
       </div>
 
@@ -176,20 +176,6 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                       <p className="text-xs text-gray-400">{lang === 'vi' ? 'Báo cáo website lừa đảo trực tiếp cho Google để bảo vệ người dùng toàn cầu.' : 'Report phishing sites directly to Google to protect global users.'}</p>
                    </a>
 
-                   {/* FBI IC3 */}
-                   <a href="https://www.ic3.gov/" target="_blank" rel="noopener noreferrer" className="bg-gray-800/40 border border-white/30 p-5 rounded-2xl hover:border-primary transition-all group sm:col-span-2">
-                      <div className="flex items-center justify-between mb-3">
-                         <div className="flex items-center gap-3">
-                            <div className="bg-gray-700 p-2 rounded-lg text-white">
-                               <Search size={20} />
-                            </div>
-                            <h4 className="font-bold text-white text-sm uppercase">{t.btn_ic3_report}</h4>
-                         </div>
-                         <ExternalLink size={14} className="text-white group-hover:text-primary" />
-                      </div>
-                      <p className="text-xs text-gray-300 font-medium">{lang === 'vi' ? 'Trung tâm Khiếu nại Tội phạm Internet của FBI. Chuyên tiếp nhận các vụ lừa đảo xuyên biên giới quy mô lớn.' : 'FBI Internet Crime Complaint Center. Specialized in large-scale cross-border fraud.'}</p>
-                   </a>
-
                    {/* VNeID (Now with Link) */}
                    <a href="https://vneid.gov.vn/" target="_blank" rel="noopener noreferrer" className="bg-yellow-500/10 border border-yellow-500/20 p-5 rounded-2xl hover:bg-yellow-500/20 transition-all group">
                       <div className="flex items-center justify-between mb-3">
@@ -217,6 +203,20 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                       </div>
                       <p className="text-xs text-gray-500 italic">{t.zalo_oa_desc}</p>
                    </a>
+
+                   {/* FBI IC3 */}
+                   <a href="https://www.ic3.gov/" target="_blank" rel="noopener noreferrer" className="bg-gray-800/40 border border-white/30 p-5 rounded-2xl hover:border-primary transition-all group sm:col-span-2">
+                      <div className="flex items-center justify-between mb-3">
+                         <div className="flex items-center gap-3">
+                            <div className="bg-gray-700 p-2 rounded-lg text-white">
+                               <Search size={20} />
+                            </div>
+                            <h4 className="font-bold text-white text-sm uppercase">{t.btn_ic3_report}</h4>
+                         </div>
+                         <ExternalLink size={14} className="text-white group-hover:text-primary" />
+                      </div>
+                      <p className="text-xs text-gray-300 font-medium">{lang === 'vi' ? 'Trung tâm Khiếu nại Tội phạm Internet của FBI. Chuyên tiếp nhận các vụ lừa đảo xuyên biên giới quy mô lớn.' : 'FBI Internet Crime Complaint Center. Specialized in large-scale cross-border fraud.'}</p>
+                   </a>
                  </div>
                </div>
            </div>
@@ -237,21 +237,32 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
               </p>
               
               <div className="aspect-[21/9] w-full bg-[#0a0f12] rounded-xl border border-white/10 relative overflow-hidden flex items-center justify-center">
-                  <div className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/e6/Vietnam_map_provinces.svg')] bg-contain bg-center bg-no-repeat opacity-20 filter invert"></div>
+                  <div className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/e6/Vietnam_map_provinces.svg')] bg-contain bg-center bg-no-repeat opacity-40 filter invert"></div>
                   
                   {/* Fake Hotspots */}
                   <div className="absolute top-[30%] left-[45%] w-8 h-8 bg-red-500 rounded-full blur-[20px] animate-pulse"></div>
-                  <div className="absolute top-[30%] left-[45%] bg-black/80 text-xs px-2 py-1 rounded border border-red-500 text-red-400 translate-x-4 -translate-y-4">Hà Nội (High)</div>
+                  <div className="absolute top-[30%] left-[45%] bg-black/80 text-[10px] px-2 py-1 rounded border border-red-500 text-red-400 translate-x-4 -translate-y-4">Hà Nội (High)</div>
 
-                  <div className="absolute top-[65%] left-[50%] w-12 h-12 bg-red-600 rounded-full blur-[25px] flex items-center justify-center animate-pulse animation-delay-500"></div>
-                  <div className="absolute top-[65%] left-[50%] bg-black/80 text-xs px-2 py-1 rounded border border-red-500 text-red-500 translate-x-4 -translate-y-4">TP.HCM (Critical)</div>
+                  <div className="absolute top-[65%] left-[51%] w-12 h-12 bg-red-600 rounded-full blur-[25px] flex items-center justify-center animate-pulse animation-delay-500"></div>
+                  <div className="absolute top-[65%] left-[51%] bg-black/80 text-[10px] px-2 py-1 rounded border border-red-500 text-red-500 translate-x-4 -translate-y-4">TP.HCM (Critical)</div>
 
                   <div className="absolute top-[45%] left-[55%] w-6 h-6 bg-orange-500 rounded-full blur-[15px] animate-pulse animation-delay-1000"></div>
-                  <div className="absolute top-[45%] left-[55%] bg-black/80 text-xs px-2 py-1 rounded border border-orange-500 text-orange-400 translate-x-4 -translate-y-4">Đà Nẵng (Medium)</div>
+                  <div className="absolute top-[45%] left-[55%] bg-black/80 text-[10px] px-2 py-1 rounded border border-orange-500 text-orange-400 translate-x-4 -translate-y-4">Đà Nẵng (Medium)</div>
+
+                  {/* Quần đảo Hoàng Sa & Trường Sa - Khẳng định chủ quyền */}
+                  <div className="absolute top-[48%] left-[68%] flex flex-col items-center gap-1 group/island">
+                     <div className="w-2 h-2 bg-yellow-500 rounded-full shadow-[0_0_10px_rgba(234,179,8,0.5)] animate-pulse"></div>
+                     <div className="bg-black/60 backdrop-blur-sm text-[8px] px-1.5 py-0.5 rounded border border-yellow-500/30 text-yellow-500 font-bold uppercase tracking-tighter">Hoàng Sa</div>
+                  </div>
+
+                  <div className="absolute top-[78%] left-[72%] flex flex-col items-center gap-1 group/island">
+                     <div className="w-2 h-2 bg-yellow-500 rounded-full shadow-[0_0_10px_rgba(234,179,8,0.5)] animate-pulse animation-delay-700"></div>
+                     <div className="bg-black/60 backdrop-blur-sm text-[8px] px-1.5 py-0.5 rounded border border-yellow-500/30 text-yellow-500 font-bold uppercase tracking-tighter">Trường Sa</div>
+                  </div>
                   
-                  <div className="z-10 bg-black/50 backdrop-blur-sm px-6 py-3 rounded-xl border border-white/10 flex items-center gap-3">
-                    <ShieldAlert className="text-yellow-500" />
-                    <span className="font-mono text-sm tracking-widest text-gray-300">LIVE THREAT MAP ACTIVATED</span>
+                  <div className="absolute bottom-4 right-6 text-[8px] font-mono text-gray-500 flex flex-col items-end opacity-50">
+                    <div>TERRITORY_INTEGRITY_VERIFIED</div>
+                    <div>DATA_SOURCE: DEEPFENSE_INTEL_NETWORK</div>
                   </div>
               </div>
             </div>

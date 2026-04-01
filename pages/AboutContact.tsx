@@ -118,9 +118,9 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-7xl mx-auto">
           {/* Main Info */}
           <div className="lg:col-span-7 space-y-8">
-              <div className="bg-surface border border-white/5 rounded-3xl p-10 shadow-xl relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity"><Target size={120}/></div>
-                  <h3 className="text-primary font-black text-sm uppercase tracking-widest mb-4 flex items-center gap-2"><Target size={18}/> {t.mission}</h3>
+              <div className="bg-surface border border-white/5 rounded-3xl p-10 shadow-xl relative overflow-hidden group hover:border-primary/40 hover:shadow-[0_0_40px_rgba(0,240,255,0.1)] transition-all duration-500">
+                  <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500"><Target size={120}/></div>
+                  <h3 className="text-primary font-black text-sm uppercase tracking-widest mb-4 flex items-center gap-2 group-hover:translate-x-1 transition-transform duration-300"><Target size={18}/> {t.mission}</h3>
                   <p className="text-gray-300 text-base leading-relaxed">
                     {lang === 'vi' 
                       ? "Phổ cập kiến thức phòng chống Deepfake cho 100% cộng đồng người dùng số tại Việt Nam, xây dựng mạng lưới lá chắn niềm tin vững chắc trước sự bùng nổ của trí tuệ nhân tạo."
@@ -130,8 +130,8 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Box 1: Tầm nhìn */}
-                  <div className="bg-surface border border-white/5 rounded-3xl p-8 shadow-xl hover:border-primary/40 transition-all group/box">
-                      <h3 className="font-black text-xs uppercase tracking-widest mb-4 flex items-center gap-2 text-primary group-hover/box:translate-x-1 transition-transform">
+                  <div className="bg-surface border border-white/5 rounded-3xl p-8 shadow-xl hover:border-primary/40 hover:shadow-[0_0_40px_rgba(0,240,255,0.1)] transition-all duration-500 group/box">
+                      <h3 className="font-black text-xs uppercase tracking-widest mb-4 flex items-center gap-2 text-primary group-hover/box:translate-x-1 transition-transform duration-300">
                         <Globe size={16}/> {lang === 'vi' ? 'TẦM NHÌN 2030' : 'VISION 2030'}
                       </h3>
                       <p className="text-gray-400 text-sm leading-relaxed">
@@ -158,7 +158,7 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                   <div className="absolute -right-10 -bottom-10 opacity-10 rotate-12"><User size={200} /></div>
                   
                   <h3 className="font-black text-xs uppercase tracking-widest mb-6 flex items-center gap-2 text-purple-400 group-hover/box:translate-x-1 transition-transform">
-                    <Code size={16}/> {t.team} (SOLO DEV)
+                    <Code size={16}/> {t.team}
                   </h3>
                   
                   <div className="flex flex-col gap-4 relative z-10">
@@ -193,8 +193,8 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                   <h3 className="text-secondary font-black text-xs uppercase tracking-widest mb-6">{t.contact_support}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-400 font-mono">
                       <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors cursor-pointer"><Mail size={20} className="text-primary shrink-0"/> deepfense@gmail.com</div>
-                      <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors cursor-pointer"><Phone size={20} className="text-primary shrink-0"/> {t.cyber_security}: 0123456789</div>
-                      <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 md:col-span-2"><MapPin size={20} className="text-primary shrink-0"/> VKU University Lab, Danang, Vietnam</div>
+                      <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors cursor-pointer"><Phone size={20} className="text-primary shrink-0"/> {lang === 'vi' ? 'HOTLINE CÁ NHÂN' : 'PERSONAL HOTLINE'}: 0828250475</div>
+                      <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 md:col-span-2"><MapPin size={20} className="text-primary shrink-0"/> LỚP 25NS, VKU, DA NANG, VIET NAM</div>
                   </div>
               </div>
           </div>
