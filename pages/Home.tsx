@@ -268,7 +268,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                     <div className="bg-white/20 p-4 rounded-2xl text-white group-hover:scale-110 transition-transform"><PhoneCall size={32} /></div>
                     <div>
                         <div className="text-white font-black text-lg tracking-widest uppercase leading-none">{t.hotline}</div>
-                        <div className="text-white/80 text-[10px] mt-2 font-mono uppercase tracking-tighter italic">24/7 EMERGENCY RESPONSE</div>
+                        <div className="text-white/80 text-[10px] mt-2 font-mono uppercase tracking-tighter italic">{t.hotline_subtext}</div>
                     </div>
                 </div>
                 <div className="text-white/40 group-hover:text-white transition-colors"><AlertTriangle size={32} /></div>

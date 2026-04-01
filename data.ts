@@ -36,6 +36,7 @@ export interface TranslationData {
   tools_protect_btn: string; crisis_hub: string;
   btn_ncsc_report: string; btn_chongluadao_report: string; btn_safebrowsing_report: string;
   btn_ic3_report: string; btn_a05_hotline: string; vneid_desc: string; zalo_oa_desc: string;
+  hotline_subtext: string;
 }
 
 export const TRANSLATIONS: Record<Language, TranslationData> = {
@@ -106,7 +107,8 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     btn_ic3_report: "TỐ GIÁC QUỐC TẾ (FBI - IC3)",
     btn_a05_hotline: "HOTLINE A05 - BỘ CÔNG AN",
     vneid_desc: "Sử dụng tính năng Tố giác tội phạm ngay trên ứng dụng VNeID chính thức.",
-    zalo_oa_desc: "Tìm và quan tâm Zalo OA của Công an tỉnh/thành phố để nhận hỗ trợ nhanh."
+    zalo_oa_desc: "Tìm và quan tâm Zalo OA của Công an tỉnh/thành phố để nhận hỗ trợ nhanh.",
+    hotline_subtext: "HÀNH ĐỘNG SỚM NGAY"
   },
   en: {
     hero_badge: "AI SECURITY MONITORING SYSTEM",
@@ -174,8 +176,9 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     btn_safebrowsing_report: "MALICIOUS LINK (GOOGLE)",
     btn_ic3_report: "INTERNATIONAL REPORT (FBI - IC3)",
     btn_a05_hotline: "A05 HOTLINE - VIETNAM POLICE",
-    vneid_desc: "Use the Crime Reporting feature on the official VNeID application.",
-    zalo_oa_desc: "Search and follow the Official Zalo OA of your local Provincial Police."
+    vneid_desc: "Use the Crime Reporting feature directly on the official VNeID app.",
+    zalo_oa_desc: "Search for and follow the Zalo OA of Provincial/City Police for quick support.",
+    hotline_subtext: "ACT EARLY NOW"
   }
 };
 
