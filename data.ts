@@ -47,7 +47,7 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     btn_challenge: "THỬ THÁCH",
     btn_ai: "MOBILE APP & DATA",
     warning_center: "TRUNG TÂM CẢNH BÁO",
-    hotline: "BÁO CÁO LỪA ĐẢO NGAY",
+    hotline: "BÁO CÁO LỪA ĐẢO",
     knowledge: "BẠN CÓ BIẾT?",
     about_us: "VỀ CHÚNG TÔI & LIÊN HỆ",
     mission: "SỨ MỆNH",
