@@ -1,4 +1,3 @@
-
 import { EnhancedLevelData, ChecklistItem, NewsItem, FunFact, PersonalityQuestion, Language } from './types';
 
 // --- DIGITAL SIGNATURE / CHỮ KÝ SỐ ---
@@ -50,7 +49,7 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     police: "CẢNH SÁT 113",
     cyber_security: "AN NINH MẠNG",
     footer_rights: "BẢO LƯU MỌI QUYỀN.",
-    agent_welcome: "**Xin chào! Tôi là trợ lý ảo DEEPFENSE AGENT.**\n\n**Nhiệm vụ của tôi:** Trở thành một chuyên gia pháp y kỹ thuật số, giúp bạn phân tích, bóc tách và cảnh báo rủi ro thao túng tâm lý hoặc làm giả số Deepfake.\n\n**Tôi có thể hỗ trợ bạn các chức năng sau:**\n- **Quét Đa phương thức:** Nhận diện lỗi AI trong hình ảnh, video (Bạn có thể gửi đường link).\n- **Phân tích Kịch bản:** Vạch trần thủ đoạn lừa đảo qua tin nhắn tống tiền, kêu gọi đầu tư.\n- **Sơ cứu Tâm lý:** Hướng dẫn từng bước xử lý khẩn cấp khi bị lộ lọt dữ liệu.\n\n*Hãy nhắn tin hoặc dán đường link vào đây để tôi kiểm tra nhé!*",
+    agent_welcome: "**Xin chào! Tôi là trợ lý ảo DEEPFENSE AGENT.**\n\n**Tôi có thể hỗ trợ bạn các chức năng sau:**\n- **Quét Đa phương thức:** Nhận diện lỗi AI trong hình ảnh, video (Bạn có thể gửi đường link).\n- **Phân tích Kịch bản:** Vạch trần thủ đoạn lừa đảo qua tin nhắn tống tiền, kêu gọi đầu tư.\n- **Sơ cứu Tâm lý:** Hướng dẫn từng bước xử lý khẩn cấp khi bị lộ lọt dữ liệu.\n\n*Hãy nhắn tin hoặc dán đường link vào đây để tôi kiểm tra nhé!*",
     agent_placeholder: "Dán link hoặc hỏi về AI lừa đảo...",
     result_pass: "AN TOÀN",
     result_fail: "NGUY HIỂM",
@@ -80,7 +79,7 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     police: "POLICE 113",
     cyber_security: "CYBER SECURITY",
     footer_rights: "ALL RIGHTS RESERVED.",
-    agent_welcome: "**Hello! I am your DEEPFENSE AGENT.**\n\n**My mission:** To act as your personal digital forensics expert, analyzing and alerting you to psychological manipulation and Deepfake forgery.\n\n**I can assist you with the following:**\n- **Multi-modal Scanning:** Detect AI flaws in images or videos (You can send me a link).\n- **Scam Script Analysis:** Expose fraud tactics in spam messages and fake investments.\n- **Emergency First Aid:** Provide step-by-step guidance when data is compromised.\n\n*Please send a message or paste a suspicious link here for me to check!*",
+    agent_welcome: "**Hello! I am your DEEPFENSE AGENT.**\n\n**I can assist you with the following:**\n- **Multi-modal Scanning:** Detect AI flaws in images or videos (You can send me a link).\n- **Scam Script Analysis:** Expose fraud tactics in spam messages and fake investments.\n- **Emergency First Aid:** Provide step-by-step guidance when data is compromised.\n\n*Please send a message or paste a suspicious link here for me to check!*",
     agent_placeholder: "Paste a link or ask questions...",
     result_pass: "SECURE",
     result_fail: "DANGER",
@@ -208,51 +207,11 @@ export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
       ]
     },
     {
-      category: "⚖️ LUẬT QUỐC TẾ & QUYỀN CON NGƯỜI",
-      items: [
-        { title: "Đạo luật EU AI Act (Châu Âu 2024)", content: "Đạo luật AI toàn diện đầu tiên trên thế giới. Bắt buộc mọi nội dung tạo bởi AI (Deepfake) phải được dán nhãn (Watermark) rõ ràng. Cấm hoàn toàn AI nhận diện cảm xúc tại nơi làm việc và AI lừa đảo. Phạt vi phạm lên đến 35 triệu Euro hoặc 7% doanh thu toàn cầu." },
-        { title: "Liên Hợp Quốc (UN) & Quyền con người", content: "Hội đồng Nhân quyền LHQ nhấn mạnh việc sử dụng Deepfake vi phạm nghiêm trọng Điều 12 Tuyên ngôn Quốc tế Nhân quyền (Quyền riêng tư) và Điều 19 (Tự do ngôn luận) khi bị lạm dụng để tạo tin giả, can thiệp bầu cử hoặc khiêu dâm không đồng thuận." },
-        { title: "Luật pháp Hoa Kỳ & Tiêu chuẩn NIST", content: "Khung quản lý rủi ro AI (AI RMF) của NIST yêu cầu các công nghệ tạo sinh phải có cơ chế xác thực đầu ra. Nhiều bang tại Mỹ (California, Texas) đã hình sự hóa hành vi sử dụng Deepfake trong bầu cử và trả thù cá nhân." }
-      ]
-    },
-    {
-      category: "🔬 KỸ THUẬT GIÁM ĐỊNH PHÁP Y (FORENSICS)",
-      items: [
-        { title: "Công nghệ rPPG (Nhịp tim quang học)", content: "Mắt người không thể thấy, nhưng máy quét pháp y có thể phân tích sự thay đổi vi mô của màu da theo mỗi nhịp đập của tim. Deepfake hiện tại hoàn toàn thất bại trong việc giả lập rPPG tự nhiên của con người." },
-        { title: "Quang phổ âm thanh (Audio Spectrogram)", content: "Dưới lăng kính quang phổ, giọng người thật rất mượt mà. Trong khi đó, giọng tạo bởi AI Voice thường để lại các 'cặn âm' (artifacts) và những vết đứt gãy hình khối rõ rệt ở dải tần số cao." },
-        { title: "Phân tích siêu dữ liệu mã hóa (C2PA/EXIF)", content: "Tiêu chuẩn C2PA cho phép đính kèm 'chữ ký số' mã hóa vào hình ảnh/video ngay từ lúc được chụp bằng camera vật lý. Nếu một tệp bị AI can thiệp chỉnh sửa, chuỗi chữ ký số nguồn gốc này sẽ bị gãy vỡ." }
-      ]
-    },
-    {
       category: "🛡️ BẢO VỆ DỮ LIỆU CÁ NHÂN & PHÒNG NGỪA",
       items: [
         { title: "Nguyên tắc Zero-Trust (Không tin tưởng ai)", content: "Không tin tưởng bất cứ ai trên không gian mạng, kể cả người thân, nếu có yêu cầu liên quan đến tài chính hoặc dữ liệu nhạy cảm. Luôn xác thực chéo qua kênh khác (gọi điện thoại di động trực tiếp bằng mạng viễn thông GSM)." },
         { title: "Từ khóa an toàn (Family Password)", content: "Thiết lập một mật mã hoặc câu hỏi bí mật riêng biệt với người thân trong gia đình. Kẻ lừa đảo dù có AI tạo giọng nói giống đến đâu cũng không thể biết trước từ khóa này." },
         { title: "Hạn chế dấu chân kỹ thuật số (Digital Footprint)", content: "Hạn chế đăng tải hình ảnh khuôn mặt rõ nét, video có giọng nói gốc và thông tin cá nhân lên mạng xã hội ở chế độ công khai để tránh bị AI của tin tặc thu thập làm dữ liệu huấn luyện (Training Data)." }
-      ]
-    },
-    {
-      category: "🦹 CÁC NHÓM TỘI PHẠM MẠNG ĐIỂN HÌNH",
-      items: [
-        { title: "Tội phạm mạng có tổ chức (Organized Cybercrime)", content: "Các băng đảng lừa đảo xuyên quốc gia hiện nay vận hành như một tập đoàn, chia nhỏ các khâu: thu thập dữ liệu (data broker), tạo Deepfake, viết kịch bản thao túng tâm lý và mạng lưới rửa tiền tiền ảo." },
-        { title: "Mô hình CaaS (Cybercrime-as-a-Service)", content: "Lừa đảo đã trở thành một 'dịch vụ'. Một người không có chút kiến thức lập trình nào vẫn có thể lên Dark Web thuê bộ công cụ AI Deepfake và kịch bản lừa đảo với giá chỉ từ vài chục USD/tháng." },
-        { title: "Tấn công phi tập trung qua SIP Spoofing", content: "Hacker sử dụng các trạm trung chuyển tín hiệu ảo (SIP Spoofing) để ngụy trang địa chỉ IP và số điện thoại hiển thị trên màn hình, khiến việc điều tra và truy vết của cơ quan chức năng gặp rất nhiều khó khăn." }
-      ]
-    },
-    {
-      category: "📉 TÁC ĐỘNG ĐẾN XÃ HỘI VÀ KINH TẾ",
-      items: [
-        { title: "Khủng hoảng niềm tin (Trust Crisis)", content: "Khi ranh giới giữa thật và giả bị xóa nhòa, con người có xu hướng nghi ngờ mọi thông tin. Điều này làm suy yếu sự gắn kết xã hội, phá vỡ các mối quan hệ kỹ thuật số và gây tâm lý hoang mang đám đông." },
-        { title: "Thiệt hại tài chính khổng lồ", content: "Chỉ trong vài năm, các vụ lừa đảo mạo danh bằng Deepfake đã gây thiệt hại hàng chục tỷ USD cho các tập đoàn tài chính, ngân hàng và người dùng cá nhân trên toàn cầu." },
-        { title: "Nguy cơ với an ninh quốc gia & chính trị", content: "Deepfake đang được sử dụng làm vũ khí thông tin để bôi nhọ chính trị gia, thao túng kết quả bầu cử, tạo tin giả về thị trường chứng khoán và kích động bạo loạn, đe dọa trực tiếp đến sự ổn định của một quốc gia." }
-      ]
-    },
-    {
-      category: "🔮 TƯƠNG LAI CỦA AN NINH MẠNG VÀ AI",
-      items: [
-        { title: "Cuộc chiến AI đối kháng AI", content: "Một cuộc chạy đua vũ trang không hồi kết giữa các mô hình AI tạo sinh (như Deepfake) và mô hình phân tích pháp y (như Deepfense). Các hệ thống phòng thủ sẽ phải liên tục cập nhật theo thời gian thực để đối phó với Zero-day Deepfake." },
-        { title: "Tiêu chuẩn xác thực phần cứng", content: "Các nhà sản xuất máy ảnh và điện thoại di động trong tương lai sẽ bắt buộc tích hợp chip mã hóa phần cứng để đóng dấu nguồn gốc (Cryptography Watermark) trực tiếp vào file ảnh/video ngay tại khoảnh khắc bấm máy." },
-        { title: "Trợ lý bảo mật cá nhân ảo", content: "Mỗi người dùng số sẽ được trang bị một AI Agent (như dự án Deepfense đang xây dựng) hoạt động ngầm trên thiết bị, tự động phân tích và chặn các tín hiệu lừa đảo đa phương tiện ngay lập tức trước khi người dùng kịp bị thao túng." }
       ]
     }
   ],
@@ -282,30 +241,6 @@ export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
       ]
     },
     {
-      category: "🇻🇳 VIETNAM LAWS ON AI & CYBERSECURITY",
-      items: [
-        { title: "Cybersecurity Law (2018) & Penal Code", content: "Using Deepfakes for fraudulent property appropriation constitutes a severe crime under Article 290 of the Penal Code. The maximum penalty can range up to 20 years in prison or life imprisonment." },
-        { title: "Decree 13/2023/ND-CP (Personal Data)", content: "Faces and voices are legally classified as 'Sensitive Personal Data'. Collecting or using someone's image to train AI or for manipulation without explicit consent is a severe violation." },
-        { title: "Telecommunications Law (Amended 2023)", content: "Mandates strict biometric identity verification (eKYC) for SIM cards. Criminals caught using Deepfakes to bypass eKYC for 'burner' bank accounts will face criminal prosecution for forging official documents." }
-      ]
-    },
-    {
-      category: "⚖️ INTERNATIONAL LAW & HUMAN RIGHTS",
-      items: [
-        { title: "EU AI Act (Europe 2024)", content: "The world's first comprehensive AI legislation. Mandates that all AI-generated content (Deepfakes) must be clearly watermarked. Scam AIs and workplace emotion-recognition AIs are outright banned. Fines reach up to €35M or 7% of global turnover." },
-        { title: "United Nations (UN) & Human Rights", content: "The UN Human Rights Council stresses that malicious Deepfakes severely violate Article 12 (Right to Privacy) and Article 19 (Freedom of Expression) of the Universal Declaration of Human Rights, especially regarding election disinformation and non-consensual imagery." },
-        { title: "US Laws & NIST Standards", content: "The NIST AI Risk Management Framework demands tech giants integrate output authentication mechanisms. Multiple US states (CA, TX) have criminalized Deepfake usage in political campaigns and for personal revenge." }
-      ]
-    },
-    {
-      category: "🔬 DIGITAL FORENSICS TECHNIQUES",
-      items: [
-        { title: "rPPG Technology (Optical Heart Rate)", content: "Invisible to the naked eye, forensic scanners analyze micro-changes in pixel colors corresponding to human heartbeats. Current Deepfakes completely fail to simulate this natural biological rPPG pulse." },
-        { title: "Audio Spectrogram Analysis", content: "Under a spectrogram, a genuine human voice flows smoothly. AI-generated cloned voices leave noticeable high-frequency 'artifacts' and blocky discontinuities that machines can easily detect." },
-        { title: "Encrypted Metadata Analysis (C2PA/EXIF)", content: "The C2PA standard embeds a cryptographic 'digital signature' into media at the exact moment of physical camera capture. If AI tampers with the file, this provenance signature chain shatters." }
-      ]
-    },
-    {
       category: "🛡️ PERSONAL DATA PROTECTION & PREVENTION",
       items: [
         { title: "Zero-Trust Principle", content: "Never trust anyone online automatically, even family members, if requests involve finance or sensitive data. Always cross-verify via a different channel (e.g., a direct cellular GSM call)." },
@@ -314,27 +249,11 @@ export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
       ]
     },
     {
-      category: "🦹 PROMINENT CYBERCRIME THREAT ACTORS",
+      category: "🔬 DIGITAL FORENSICS TECHNIQUES",
       items: [
-        { title: "Organized Cybercrime Syndicates", content: "Transnational gangs now operate like modern corporations, compartmentalizing tasks: data brokers, Deepfake generation, psychological scriptwriters, and crypto money laundering networks." },
-        { title: "Cybercrime-as-a-Service (CaaS)", content: "Scam tools are offered as services on the Dark Web. Even individuals with no IT knowledge can rent Deepfake kits and scam scripts for a low monthly fee." },
-        { title: "Decentralized Attacks via SIP Spoofing", content: "Hackers use virtual signal relays (SIP Spoofing) to mask their IP and caller ID, making tracking and investigation by law enforcement extremely difficult." }
-      ]
-    },
-    {
-      category: "📉 SOCIO-ECONOMIC IMPACTS",
-      items: [
-        { title: "Crisis of Trust", content: "When the boundary between real and fake blurs, society tends to doubt all information. This undermines social cohesion, fractures digital relationships, and causes mass paranoia." },
-        { title: "Massive Financial Losses", content: "In just a few years, Deepfake impersonation scams have caused tens of billions of dollars in losses to financial corporations, banks, and individual users globally." },
-        { title: "National Security & Political Threats", content: "Deepfakes are weaponized as information warfare to smear politicians, manipulate elections, fake stock market news, and incite riots, directly threatening national stability." }
-      ]
-    },
-    {
-      category: "🔮 FUTURE OF CYBERSECURITY & AI",
-      items: [
-        { title: "AI vs. AI Arms Race", content: "An ongoing war between generative models (Deepfakes) and forensic analysis models (Deepfense). Defense systems must continuously update in real-time to combat Zero-day fakes." },
-        { title: "Hardware Authentication Standards", content: "Future camera and smartphone manufacturers will integrate hardware encryption chips to embed cryptographic watermarks directly into media at the exact moment of physical capture." },
-        { title: "Personal Security AI Agents", content: "Every digital user will be equipped with a background AI Agent (like the Deepfense project) on their devices, automatically analyzing and blocking multimedia scam signals before psychological manipulation occurs." }
+        { title: "rPPG Technology (Optical Heart Rate)", content: "Invisible to the naked eye, forensic scanners analyze micro-changes in pixel colors corresponding to human heartbeats. Current Deepfakes completely fail to simulate this natural biological rPPG pulse." },
+        { title: "Audio Spectrogram Analysis", content: "Under a spectrogram, a genuine human voice flows smoothly. AI-generated cloned voices leave noticeable high-frequency 'artifacts' and blocky discontinuities that machines can easily detect." },
+        { title: "Encrypted Metadata Analysis (C2PA/EXIF)", content: "The C2PA standard embeds a cryptographic 'digital signature' into media at the exact moment of physical camera capture. If AI tampers with the file, this provenance signature chain shatters." }
       ]
     }
   ]
@@ -362,43 +281,43 @@ export const PERSONALITY_QUESTIONS: Record<Language, PersonalityQuestion[]> = {
 
 export const NEWS_DATA: Record<Language, NewsItem[]> = {
   vi: [
-    { tag: "HÀ NỘI", title: "Giả mạo Công an lừa đảo chiếm đoạt tài sản", date: "11/2025", loss: "Hàng tỷ VNĐ", desc: "Đối tượng dùng Deepfake mặc quân phục để gọi video lừa đảo người dân qua Zalo.", url: "https://vtv.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "TP.HCM", title: "Chiêu trò 'người thân cấp cứu' bằng Deepfake", date: "10/2025", loss: "Hàng trăm triệu VNĐ", desc: "Kẻ xấu giả giọng và mặt con cái đang cấp cứu để hối thúc cha mẹ chuyển tiền gấp.", url: "https://tuoitre.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "CẢNH BÁO", title: "Cuộc gọi video vay tiền bùng phát cuối năm", date: "12/2025", loss: "Hàng tỷ VNĐ/nạn nhân", desc: "Tội phạm lợi dụng dịp lễ tết để giả mạo người thân vay tiền, mượn vốn khẩn cấp.", url: "https://dantri.com.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "TÍN DỤNG", title: "Giả mạo nhân viên ngân hàng qua Zalo", date: "01/2026", loss: "Toàn bộ số dư", desc: "Dùng Deepfake mặc đồng phục ngân hàng yêu cầu khách hàng đọc mã OTP.", url: "https://vneconomy.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "GIÁO DỤC", title: "Lừa đảo học phí sinh viên bằng video ảo", date: "02/2026", loss: "Hàng chục triệu VNĐ", desc: "Giả mạo giáo viên gọi điện trực tiếp yêu cầu phụ huynh đóng học phí khẩn cấp.", url: "https://giaoduc.net.vn/tim-kiem.htm?keywords=deepfake" },
     { tag: "CHỨNG KHOÁN", title: "Deepfake lùa gà đầu tư tài chính ảo", date: "03/2026", loss: "Hàng trăm tỷ VNĐ", desc: "Tạo video giả mạo các chuyên gia kinh tế nổi tiếng để kêu gọi chuyển tiền đầu tư.", url: "https://cafef.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "TÌNH CẢM", title: "Mất trắng sau cuộc gọi với 'người yêu Tây'", date: "02/2026", loss: "Toàn bộ gia sản", desc: "Kẻ gian dùng AI tạo khuôn mặt nam giới ngoại quốc gọi điện hẹn hò qua Telegram.", url: "https://vietnamnet.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "DOANH NGHIỆP", title: "Kế toán chuyển nhầm 5 tỷ do sếp gọi video", date: "01/2026", loss: "Nhiều tỷ VNĐ", desc: "Cuộc họp nội bộ bị giả mạo hoàn toàn từ hình ảnh đến giọng nói của Giám đốc.", url: "https://vtv.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "NGÂN HÀNG", title: "Cảnh báo lừa đảo qua mặt eKYC khuôn mặt", date: "07/2025", loss: "Dữ liệu sinh trắc học", desc: "Tội phạm dùng Deepfake vượt qua hệ thống xác thực của một số tổ chức tài chính.", url: "https://vnexpress.net/tim-kiem.htm?keywords=deepfake" },
-    { tag: "GIẢI TRÍ", title: "Làn sóng ghép mặt nghệ sĩ vào video nhạy cảm", date: "06/2025", loss: "Danh dự & Sự nghiệp", desc: "Công nghệ Deepfake khiêu dâm tấn công các nghệ sĩ gây bức xúc dư luận.", url: "https://thanhnien.vn/tim-kiem.htm?keywords=deepfake" },
     { tag: "TOÀN CẦU", title: "Video Deepfake Chủ tịch FED gây chao đảo thị trường", date: "03/2026", loss: "Hàng tỷ USD", desc: "Video giả mạo Chủ tịch FED tuyên bố tăng lãi suất khẩn cấp khiến thị trường chứng khoán hoảng loạn bán tháo.", url: "https://www.bloomberg.com/search?q=deepfake" },
     { tag: "MỸ", title: "Lừa đảo hoàn thuế IRS bằng giọng nói AI", date: "03/2026", loss: "Hàng chục triệu USD", desc: "Hàng triệu người Mỹ nhận được cuộc gọi giả giọng nhân viên sở thuế đe dọa thu hồi tài sản.", url: "https://www.wsj.com/search?q=deepfake" },
-    { tag: "CHÂU ÂU", title: "Hội đồng quản trị ảo lừa công ty 40 triệu Euro", date: "02/2026", loss: "40 Triệu Euro", desc: "Giám đốc tài chính bị lừa chuyển tiền sau cuộc họp video với 5 thành viên HĐQT đều là Deepfake.", url: "https://www.bbc.com/search?q=deepfake" },
     { tag: "TÀI CHÍNH", title: "Deepfake CEO sàn Crypto lừa đảo Airdrop 15 triệu USD", date: "03/2026", loss: "15 Triệu USD", desc: "Livestream dùng AI tạo hình ảnh CEO nổi tiếng để dụ dỗ người dùng kết nối ví và chiếm đoạt tài sản.", url: "https://cointelegraph.com/search?q=deepfake" },
-    { tag: "HÀN QUỐC", title: "Streamer AI bán hàng hiệu giả mạo trên nền tảng lớn", date: "01/2026", loss: "Hàng triệu Won", desc: "Sử dụng Deepfake tạo ra các KOL nổi tiếng livestream bán hàng giả mạo, lừa đảo hàng chục ngàn người.", url: "https://koreajoongangdaily.hankooki.com/search?q=deepfake" },
     { tag: "NHẬT BẢN", title: "Bê bối video giả mạo ứng cử viên chính trị", date: "03/2026", loss: "Uy tín chính trị", desc: "Video Deepfake quay cảnh ứng cử viên nhận hối lộ bị phát tán diện rộng ngay trước thềm bầu cử.", url: "https://japantoday.com/search?q=deepfake" },
+    { tag: "CÔNG NGHỆ", title: "Công cụ Deepfake Live thế hệ mới trên Dark Web", date: "03/2026", loss: "Mối đe dọa toàn cầu", desc: "Phát hiện phần mềm cho phép biến đổi khuôn mặt và giọng nói ngay lập tức trên Zoom/Teams với độ trễ bằng 0.", url: "https://www.wired.com/search?q=deepfake" },
+    { tag: "GIÁO DỤC", title: "Lừa đảo học phí sinh viên bằng video ảo", date: "02/2026", loss: "Hàng chục triệu VNĐ", desc: "Giả mạo giáo viên gọi điện trực tiếp yêu cầu phụ huynh đóng học phí khẩn cấp.", url: "https://giaoduc.net.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "TÌNH CẢM", title: "Mất trắng sau cuộc gọi với 'người yêu Tây'", date: "02/2026", loss: "Toàn bộ gia sản", desc: "Kẻ gian dùng AI tạo khuôn mặt nam giới ngoại quốc gọi điện hẹn hò qua Telegram.", url: "https://vietnamnet.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "CHÂU ÂU", title: "Hội đồng quản trị ảo lừa công ty 40 triệu Euro", date: "02/2026", loss: "40 Triệu Euro", desc: "Giám đốc tài chính bị lừa chuyển tiền sau cuộc họp video với 5 thành viên HĐQT đều là Deepfake.", url: "https://www.bbc.com/search?q=deepfake" },
     { tag: "SINGAPORE", title: "Tấn công vượt rào eKYC ngân hàng bằng Deepfake 3D", date: "02/2026", loss: "Nghiêm trọng", desc: "Tội phạm mạng sử dụng mặt nạ Deepfake 3D thời gian thực để vượt qua hệ thống nhận diện khuôn mặt.", url: "https://www.straitstimes.com/search?q=deepfake" },
-    { tag: "CÔNG NGHỆ", title: "Công cụ Deepfake Live thế hệ mới trên Dark Web", date: "03/2026", loss: "Mối đe dọa toàn cầu", desc: "Phát hiện phần mềm cho phép biến đổi khuôn mặt và giọng nói ngay lập tức trên Zoom/Teams với độ trễ bằng 0.", url: "https://www.wired.com/search?q=deepfake" }
+    { tag: "TÍN DỤNG", title: "Giả mạo nhân viên ngân hàng qua Zalo", date: "01/2026", loss: "Toàn bộ số dư", desc: "Dùng Deepfake mặc đồng phục ngân hàng yêu cầu khách hàng đọc mã OTP.", url: "https://vneconomy.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "DOANH NGHIỆP", title: "Kế toán chuyển nhầm 5 tỷ do sếp gọi video", date: "01/2026", loss: "Nhiều tỷ VNĐ", desc: "Cuộc họp nội bộ bị giả mạo hoàn toàn từ hình ảnh đến giọng nói của Giám đốc.", url: "https://vtv.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "HÀN QUỐC", title: "Streamer AI bán hàng hiệu giả mạo trên nền tảng lớn", date: "01/2026", loss: "Hàng triệu Won", desc: "Sử dụng Deepfake tạo ra các KOL nổi tiếng livestream bán hàng giả mạo, lừa đảo hàng chục ngàn người.", url: "https://koreajoongangdaily.hankooki.com/search?q=deepfake" },
+    { tag: "CẢNH BÁO", title: "Cuộc gọi video vay tiền bùng phát cuối năm", date: "12/2025", loss: "Hàng tỷ VNĐ/nạn nhân", desc: "Tội phạm lợi dụng dịp lễ tết để giả mạo người thân vay tiền, mượn vốn khẩn cấp.", url: "https://dantri.com.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "HÀ NỘI", title: "Giả mạo Công an lừa đảo chiếm đoạt tài sản", date: "11/2025", loss: "Hàng tỷ VNĐ", desc: "Đối tượng dùng Deepfake mặc quân phục để gọi video lừa đảo người dân qua Zalo.", url: "https://vtv.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "TP.HCM", title: "Chiêu trò 'người thân cấp cứu' bằng Deepfake", date: "10/2025", loss: "Hàng trăm triệu VNĐ", desc: "Kẻ xấu giả giọng và mặt con cái đang cấp cứu để hối thúc cha mẹ chuyển tiền gấp.", url: "https://tuoitre.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "NGÂN HÀNG", title: "Cảnh báo lừa đảo qua mặt eKYC khuôn mặt", date: "07/2025", loss: "Dữ liệu sinh trắc học", desc: "Tội phạm dùng Deepfake vượt qua hệ thống xác thực của một số tổ chức tài chính.", url: "https://vnexpress.net/tim-kiem.htm?keywords=deepfake" },
+    { tag: "GIẢI TRÍ", title: "Làn sóng ghép mặt nghệ sĩ vào video nhạy cảm", date: "06/2025", loss: "Danh dự & Sự nghiệp", desc: "Công nghệ Deepfake khiêu dâm tấn công các nghệ sĩ gây bức xúc dư luận.", url: "https://thanhnien.vn/tim-kiem.htm?keywords=deepfake" }
   ],
   en: [
-    { tag: "HANOI", title: "Fake Police impersonation to steal property", date: "11/2025", loss: "Billions of VND", desc: "Subjects used Deepfake uniforms to make scam video calls to citizens via Zalo.", url: "https://vtv.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "HCMC", title: "'Relative in ER' scam using Deepfake", date: "10/2025", loss: "Hundreds of millions VND", desc: "Scammers spoofed a child's voice and face in an emergency to rush parents into wiring money.", url: "https://tuoitre.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "WARNING", title: "End-of-year video call loan scams surge", date: "12/2025", loss: "Billions of VND/victim", desc: "Criminals exploit the holiday season to impersonate relatives and ask for urgent loans.", url: "https://dantri.com.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "CREDIT", title: "Fake bank staff requesting OTP via Zalo", date: "01/2026", loss: "Entire Bank Balance", desc: "Scammers wore Deepfaked bank uniforms to trick victims into sharing their OTP codes.", url: "https://vneconomy.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "EDUCATION", title: "Student tuition fraud via virtual video calls", date: "02/2026", loss: "Tens of millions VND", desc: "Fake teachers called parents directly via video to demand urgent tuition payments.", url: "https://giaoduc.net.vn/tim-kiem.htm?keywords=deepfake" },
     { tag: "STOCK", title: "Deepfake scams luring financial investors", date: "03/2026", loss: "Hundreds of billions VND", desc: "AI-generated videos of famous economic experts urged people to invest in fake platforms.", url: "https://cafef.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "ROMANCE", title: "Lost everything to a fake 'Foreign Lover' call", date: "02/2026", loss: "Life Savings", desc: "Scammers used AI to generate attractive foreign faces for romance scams on Telegram.", url: "https://vietnamnet.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "CORP", title: "Accountant wires $200k after fake boss video call", date: "01/2026", loss: "Billions of VND", desc: "An internal corporate meeting was entirely faked, including the image and voice of the Director.", url: "https://vtv.vn/tim-kiem.htm?keywords=deepfake" },
-    { tag: "BANKING", title: "Warning on Deepfakes bypassing eKYC systems", date: "07/2025", loss: "Biometric Data", desc: "Criminals successfully used Deepfakes to bypass facial authentication systems of several banks.", url: "https://vnexpress.net/tim-kiem.htm?keywords=deepfake" },
-    { tag: "ENT", title: "Wave of celebrities mapped into explicit videos", date: "06/2025", loss: "Honor & Career", desc: "Pornographic Deepfake wave attacking artists caused public outrage and legal action.", url: "https://thanhnien.vn/tim-kiem.htm?keywords=deepfake" },
     { tag: "GLOBAL", title: "Deepfake FED Chair Video Crashes Markets", date: "03/2026", loss: "Billions USD", desc: "A highly realistic AI video of the FED Chair announcing emergency rate hikes caused panic selling.", url: "https://www.bloomberg.com/search?q=deepfake" },
     { tag: "USA", title: "IRS Tax Scam Using AI Voice Cloning", date: "03/2026", loss: "Tens of Millions USD", desc: "Millions of Americans received cloned voice calls from fake tax agents threatening asset seizure.", url: "https://www.wsj.com/search?q=deepfake" },
-    { tag: "EUROPE", title: "Virtual Board Meeting Scams Company of €40M", date: "02/2026", loss: "€40 Million", desc: "A CFO wired funds after attending a video call where five board members were actually real-time Deepfakes.", url: "https://www.bbc.com/search?q=deepfake" },
     { tag: "CRYPTO", title: "Deepfake Crypto CEO Drains $15M via Fake Airdrop", date: "03/2026", loss: "$15 Million", desc: "An AI-generated livestream of a prominent CEO tricked users into connecting wallets and losing funds.", url: "https://cointelegraph.com/search?q=deepfake" },
-    { tag: "KOREA", title: "AI Streamers Scam Millions in Fake Luxury Sales", date: "01/2026", loss: "Millions of Won", desc: "Deepfaked popular KOLs were used in live commerce to sell counterfeit luxury goods to thousands.", url: "https://koreajoongangdaily.hankooki.com/search?q=deepfake" },
     { tag: "JAPAN", title: "Political Candidate Deepfake Scandal", date: "03/2026", loss: "Political Reputation", desc: "A hyper-realistic video showing a candidate accepting bribes went viral days before a major election.", url: "https://japantoday.com/search?q=deepfake" },
+    { tag: "TECH", title: "Zero-Latency Live Deepfake Tool on Dark Web", date: "03/2026", loss: "Global Threat", desc: "A new software enables instant face and voice swapping on Zoom/Teams with virtually zero latency.", url: "https://www.wired.com/search?q=deepfake" },
+    { tag: "EDUCATION", title: "Student tuition fraud via virtual video calls", date: "02/2026", loss: "Tens of millions VND", desc: "Fake teachers called parents directly via video to demand urgent tuition payments.", url: "https://giaoduc.net.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "ROMANCE", title: "Lost everything to a fake 'Foreign Lover' call", date: "02/2026", loss: "Life Savings", desc: "Scammers used AI to generate attractive foreign faces for romance scams on Telegram.", url: "https://vietnamnet.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "EUROPE", title: "Virtual Board Meeting Scams Company of €40M", date: "02/2026", loss: "€40 Million", desc: "A CFO wired funds after attending a video call where five board members were actually real-time Deepfakes.", url: "https://www.bbc.com/search?q=deepfake" },
     { tag: "SINGAPORE", title: "3D Deepfake Bypasses Bank eKYC Systems", date: "02/2026", loss: "Critical", desc: "Cybercriminals utilized real-time 3D Deepfake masks to successfully bypass bank facial recognition protocols.", url: "https://www.straitstimes.com/search?q=deepfake" },
-    { tag: "TECH", title: "Zero-Latency Live Deepfake Tool on Dark Web", date: "03/2026", loss: "Global Threat", desc: "A new software enables instant face and voice swapping on Zoom/Teams with virtually zero latency.", url: "https://www.wired.com/search?q=deepfake" }
+    { tag: "CREDIT", title: "Fake bank staff requesting OTP via Zalo", date: "01/2026", loss: "Entire Bank Balance", desc: "Scammers wore Deepfaked bank uniforms to trick victims into sharing their OTP codes.", url: "https://vneconomy.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "CORP", title: "Accountant wires $200k after fake boss video call", date: "01/2026", loss: "Billions of VND", desc: "An internal corporate meeting was entirely faked, including the image and voice of the Director.", url: "https://vtv.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "KOREA", title: "AI Streamers Scam Millions in Fake Luxury Sales", date: "01/2026", loss: "Millions of Won", desc: "Deepfaked popular KOLs were used in live commerce to sell counterfeit luxury goods to thousands.", url: "https://koreajoongangdaily.hankooki.com/search?q=deepfake" },
+    { tag: "WARNING", title: "End-of-year video call loan scams surge", date: "12/2025", loss: "Billions of VND/victim", desc: "Criminals exploit the holiday season to impersonate relatives and ask for urgent loans.", url: "https://dantri.com.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "HANOI", title: "Fake Police impersonation to steal property", date: "11/2025", loss: "Billions of VND", desc: "Subjects used Deepfake uniforms to make scam video calls to citizens via Zalo.", url: "https://vtv.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "HCMC", title: "'Relative in ER' scam using Deepfake", date: "10/2025", loss: "Hundreds of millions VND", desc: "Scammers spoofed a child's voice and face in an emergency to rush parents into wiring money.", url: "https://tuoitre.vn/tim-kiem.htm?keywords=deepfake" },
+    { tag: "BANKING", title: "Warning on Deepfakes bypassing eKYC systems", date: "07/2025", loss: "Biometric Data", desc: "Criminals successfully used Deepfakes to bypass facial authentication systems of several banks.", url: "https://vnexpress.net/tim-kiem.htm?keywords=deepfake" },
+    { tag: "ENT", title: "Wave of celebrities mapped into explicit videos", date: "06/2025", loss: "Honor & Career", desc: "Pornographic Deepfake wave attacking artists caused public outrage and legal action.", url: "https://thanhnien.vn/tim-kiem.htm?keywords=deepfake" }
   ]
 };

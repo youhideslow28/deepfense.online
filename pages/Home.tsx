@@ -31,7 +31,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
   useEffect(() => {
     let ignore = false;
     setLiveNews(NEWS_DATA[lang]); // Reset về tin mặc định khi đổi ngôn ngữ
-    setDisplayedNews(Array.from({ length: 6 }).map((_, i) => NEWS_DATA[lang][i % NEWS_DATA[lang].length]));
+    setDisplayedNews(NEWS_DATA[lang].slice(0, 6)); 
 
     const fetchLiveNews = async () => {
       try {
@@ -45,7 +45,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         if (cachedNews && cachedTime && (Date.now() - parseInt(cachedTime) < 900000)) {
              const parsedData = JSON.parse(cachedNews);
              setLiveNews(parsedData);
-             setDisplayedNews(Array.from({ length: 6 }).map((_, i) => parsedData[i % parsedData.length]));
+             setDisplayedNews(parsedData.slice(0, 6));
              return;
         }
 
@@ -78,8 +78,16 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             };
           });
           if (ignore) return;
-          setLiveNews(formattedNews); // Cập nhật tin thực tế vào hệ thống
-          setDisplayedNews(Array.from({ length: 6 }).map((_, i) => formattedNews[i % formattedNews.length]));
+          
+          // Sắp xếp tin tức theo thời gian thực (Giảm dần)
+          const sortedNews = [...formattedNews].sort((a, b) => {
+              const dateA = a.date.split('/').reverse().join('');
+              const dateB = b.date.split('/').reverse().join('');
+              return dateB.localeCompare(dateA);
+          });
+
+          setLiveNews(sortedNews);
+          setDisplayedNews(sortedNews.slice(0, 6)); // Lấy chính xác 6 tin mới nhất
           // Lưu vào Session Storage
           try {
             sessionStorage.setItem(cacheKey, JSON.stringify(formattedNews));
@@ -123,39 +131,22 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     };
   }, []);
 
-  // --- AUTO TICKER EFFECT CẢNH BÁO & KIẾN THỨC ---
+  // --- AUTO TICKER EFFECT KIẾN THỨC ---
   useEffect(() => {
     let isMounted = true;
-    const newsTimer = setInterval(() => {
-        if (liveNews.length <= 1) return;
-        const slotToUpdate = Math.floor(Math.random() * 6);
-        const nextNewsIndex = Math.floor(Math.random() * liveNews.length);
-        
-        setFlippingIndex(slotToUpdate);
-        
-        setTimeout(() => {
-            if (!isMounted) return;
-            setDisplayedNews(prev => {
-                const newDisplay = [...prev];
-                newDisplay[slotToUpdate] = liveNews[nextNewsIndex];
-                return newDisplay;
-            });
-        }, 300); // Đổi data giữa lúc lật thẻ (300ms)
-        
-        setTimeout(() => {
-            if (!isMounted) return;
-            setFlippingIndex(null); // Kết thúc hiệu ứng lật
-        }, 600);
-    }, 4000); // Cứ 4s lật 1 thẻ ngẫu nhiên
-
-    const factTimer = setInterval(() => setFactIndex(prev => (prev + 2) % facts.length), 6000); // 6s đổi 2 kiến thức
+    
+    // Gỡ bỏ logic newsTimer cũ vì gây "loạn xạ" (nhảy tin tức ngẫu nhiên)
+    // Giữ lại factTimer để đổi kiến thức hữu ích
+    const factTimer = setInterval(() => {
+        if (!isMounted) return;
+        setFactIndex(prev => (prev + 2) % facts.length);
+    }, 6000); 
     
     return () => {
       isMounted = false;
-      clearInterval(newsTimer);
       clearInterval(factTimer);
     };
-  }, [liveNews, facts.length]);
+  }, [facts.length]);
 
   // --- XỬ LÝ HIỂN THỊ MINI GAME KHI BẬT MÙA HÈ ---
   useEffect(() => {
