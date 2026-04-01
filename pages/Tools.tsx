@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { 
   ScanLine, 
   ShieldCheck, 
@@ -43,7 +44,14 @@ const behaviorQuestionsEn = [
 
 const Tools: React.FC<ToolsProps> = ({ lang }) => {
   const t = TRANSLATIONS[lang];
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState<'SCAN' | 'PROTECT' | 'CRISIS' | 'KNOWLEDGE'>('SCAN');
+
+  useEffect(() => {
+    if (location.state && (location.state as any).targetTab) {
+      setActiveTab((location.state as any).targetTab);
+    }
+  }, [location]);
   
   // State for Behavioral Scan
   const [step, setStep] = useState(0);
@@ -307,7 +315,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
           onClick={() => setActiveTab('KNOWLEDGE')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'KNOWLEDGE' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
-          <Scale size={16} /> {t.knowledge}
+          <Scale size={16} /> {t.tools_knowledge_title}
         </button>
         <button 
           onClick={() => setActiveTab('CRISIS')}

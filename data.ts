@@ -264,101 +264,69 @@ interface KnowledgeCategory {
 export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
   vi: [
     {
-      category: "LUẬT PHÁP QUỐC TẾ & LIÊN HỢP QUỐC",
+      category: "KIẾN THỨC VỀ DEEPFAKE",
       items: [
-        { title: "Nghị quyết Liên Hợp Quốc về AI (2024)", content: "Đây là văn bản lịch sử mang tính toàn cầu đầu tiên, thúc đẩy việc phát triển các hệ thống AI an toàn, bảo mật và đáng tin cậy. Nghị quyết nhấn mạnh rằng việc phát triển AI phải đi đôi với bảo vệ quyền con người, bất kể là trong môi trường thực hay không gian số." },
-        { title: "Đạo luật Trí tuệ Nhân tạo của EU (EU AI Act)", content: "Bộ luật toàn diện nhất thế giới phân loại AI theo mức độ rủi ro. Deepfake được xếp vào nhóm bắt buộc phải minh bạch: Mọi nội dung do AI tạo ra phải được dán nhãn rõ ràng để người dân không bị nhầm lẫn." },
-        { title: "Tuyên bố Bletchley (2023)", content: "Sự cam kết của 28 quốc gia hàng đầu về công nghệ nhằm kiểm soát rủi ro từ các mô hình AI tiên tiến nhất (Frontier AI), tập trung vào việc ngăn chặn AI bị lợi dụng cho tội phạm mạng và lừa đảo quy mô lớn." }
+        { title: "Định nghĩa Deepfake", content: "Là sự kết hợp giữa 'Deep learning' và 'Fake'. Công nghệ này sử dụng trí tuệ nhân tạo để thay thế khuôn mặt, giọng nói và cử chỉ của một người bằng một người khác một cách chân thực nhất." },
+        { title: "Mạng đối nghịch sinh (GANs)", content: "Vũ khí cốt lõi của Deepfake gồm 2 phần: 'Generator' (Kẻ tạo giả) cố gắng tạo ra ảnh thật và 'Discriminator' (Cảnh sát) cố gắng phân lừa ảnh thật/giả. Chúng 'đấu' nhau liên tục đến khi ảnh giả hoàn hảo như thật." },
+        { title: "Mô hình Khuếch tán (Diffusion)", content: "Công nghệ mới thay thế GANs (dùng trong Midjourney, Stable Diffusion), hoạt động bằng cách thêm nhiễu vào dữ liệu rồi học cách khử nhiễu để tạo ra hình ảnh/video mới hoàn toàn từ văn bản." }
       ]
     },
     {
-      category: "QUYỀN CON NGƯỜI TRONG KỶ NGUYÊN SỐ",
+      category: "CÔNG NGHỆ MỚI NHẤT (2025-2026)",
       items: [
-        { title: "Quyền bảo vệ danh dự & phẩm giá", content: "Tuyên ngôn Quốc tế về Nhân quyền khẳng định không ai bị xâm phạm đời tư hoặc bị tấn công vào danh dự. Deepfake khiêu dâm hoặc bôi nhọ là hành vi vi phạm nhân quyền nghiêm trọng nhất hiện nay." },
-        { title: "Quyền bất khả xâm phạm về hình ảnh", content: "Mỗi cá nhân có quyền kiểm soát tuyệt đối việc sử dụng khuôn mặt và giọng nói của mình. Việc thu thập dữ liệu trái phép để huấn luyện AI mà không được sự đồng ý là hành vi xâm phạm quyền tự do cá nhân." },
-        { title: "Quyền được biết (Right to Know)", content: "Trong một xã hội dân chủ, mọi người có quyền được thông báo nếu họ đang giao tiếp với một thực thể trí tuệ nhân tạo, nhằm đảm bảo tính minh bạch và tránh các hành vi thao túng tâm lý." }
+        { title: "Real-time Video Call Swap", content: "Các công cụ hiện nay cho phép hoán đổi khuôn mặt trực tiếp trên các ứng dụng như Zoom, Zalo hay Messenger với độ trễ gần như bằng không, vượt qua được cả các bước kiểm tra vẫy tay cơ bản." },
+        { title: "Zero-Shot Voice Cloning", content: "AI thế hệ mới chỉ cần đúng 3 giây mẫu âm thanh gốc để nhân bản hoàn hảo giọng nói của bất kỳ ai, bao gồm cả nhịp thở, ngữ điệu và các biểu cảm phức tạp như cười hay khóc." },
+        { title: "Text-to-Video vật lý hoàn hảo", content: "Khả năng tạo ra các đoạn video dài với độ chân thực về vật lý (ánh sáng, trọng lực) hoàn hảo chỉ từ một dòng văn bản mô tả, khiến việc phân biệt bằng mắt thường gần như bất khả thi." }
       ]
     },
     {
-      category: "BẢN QUYỀN & SỞ HỮU TRÍ TUỆ",
+      category: "PHÁP LUẬT LIÊN QUAN",
       items: [
-        { title: "Quyền sở hữu đặc điểm cá nhân (Right of Publicity)", content: "Pháp luật hiện đại bắt đầu công nhận hình ảnh, giọng nói và phong cách cá nhân là một loại tài sản trí tuệ. Nghệ sĩ và người dùng có quyền ngăn chặn việc AI sao chép thần thái của mình để trục lợi." },
-        { title: "Dữ liệu huấn luyện trái phép", content: "Hầu hết các AI Deepfake được huấn luyện trên hàng tỷ hình ảnh quét từ Internet mà không xin phép. Đây được coi là hành vi vi phạm bản quyền dữ liệu quy mô lớn nhất trong lịch sử nhân loại." },
-        { title: "Tiêu chuẩn xác thực nội dung (C2PA)", content: "Một liên minh công nghệ toàn cầu (Adobe, Microsoft...) đã tạo ra tiêu chuẩn C2PA - nhúng 'chữ ký số' vào metadata của ảnh chụp thực tế để phân biệt tệp tin gốc với tệp tin đã qua xử lý AI." }
+        { title: "Nghị định 13/2023/NĐ-CP (Việt Nam)", content: "Văn bản pháp lý nền tảng về Bảo vệ dữ liệu cá nhân. Việc sử dụng hình ảnh, giọng nói (dữ liệu sinh trắc học) của người khác để tạo Deepfake mà không được sự đồng ý là hành vi vi phạm pháp luật nghiêm trọng." },
+        { title: "Bộ luật Hình sự (Điều 174 & 155)", content: "Tội lừa đảo chiếm đoạt tài sản (sử dụng Deepfake để vay tiền/tống tiền) và Tội làm nhục người khác (ghép mặt vào nội dung nhạy cảm) có thể bị phạt tù lên đến 20 năm hoặc chung thân." },
+        { title: "Đạo luật AI của EU (EU AI Act)", content: "Bộ luật toàn diện đầu tiên trên thế giới bắt buộc mọi nội dung do AI tạo ra (Deepfake) phải được dán nhãn minh bạch, nếu không sẽ bị cấm lưu hành và xử phạt nặng." }
       ]
     },
     {
-      category: "TÂM LÝ HỌC DEEPFAKE & TÁC ĐỘNG XÃ HỘI",
+      category: "LIÊN HỢP QUỐC & QUYỀN CON NGƯỜI",
       items: [
-        { title: "Xói mòn niềm tin (The Liar's Dividend)", content: "Khi Deepfake phổ biến, người ta bắt đầu nghi ngờ ngay cả những video thật. Điều này tạo cơ hội cho kẻ gian phủ nhận các bằng chứng phạm tội thực sự bằng cách tuyên bố: 'Đó chỉ là Deepfake'." },
-        { title: "Hội chứng PTSD kỹ thuật số", content: "Các nghiên cứu tâm lý học chỉ ra rằng nạn nhân của Deepfake chịu đựng những tổn thương tinh thần, sự trầm cảm và lo âu tương đương với các vụ bạo lực thể xác ngoài đời thực." },
-        { title: "Cơ chế mù quáng kỹ thuật số", content: "Bộ não con người có xu hướng tự động tin vào hình ảnh khuôn mặt người quen qua màn hình. Tội phạm lợi dụng điểm yếu sinh học này để thực hiện các cuộc gọi lừa đảo 'chớp nhoáng' khiến nạn nhân không kịp nghi ngờ." }
-      ]
-    },
-    {
-      category: "CƠ BẢN VỀ DEEPFAKE & AI TẠO SINH",
-      items: [
-        { title: "Định nghĩa Deepfake", content: "Là sự kết hợp giữa 'Deep learning' (Học sâu) và 'Fake' (Giả mạo). Kỹ thuật này sử dụng AI để thay thế khuôn mặt, giọng nói hoặc cử chỉ của một người bằng người khác một cách chân thực." },
-        { title: "Nguyên lý hoạt động (GANs)", content: "Mạng đối nghịch sinh (Generative Adversarial Networks) gồm 2 phần: 'Generator' (Kẻ tạo giả) cố gắng tạo ra ảnh thật nhất có thể, và 'Discriminator' (Cảnh sát) cố gắng phân biệt ảnh thật/giả. Chúng huấn luyện lẫn nhau đến khi ảnh giả không thể bị phát hiện." },
-        { title: "Mô hình Khuếch tán (Diffusion Models)", content: "Công nghệ mới thay thế GANs (như Midjourney, Stable Diffusion), hoạt động bằng cách thêm nhiễu vào dữ liệu rồi học cách khử nhiễu để tạo ra hình ảnh/video mới hoàn toàn từ văn bản mô tả." }
-      ]
-    },
-    {
-      category: "CÔNG NGHỆ DEEPFAKE MỚI NHẤT 2026",
-      items: [
-        { title: "Real-time Deepfake (Độ trễ bằng 0)", content: "Các công cụ trên Dark Web hiện cho phép hoán đổi khuôn mặt và giọng nói trực tiếp trên các cuộc gọi video Zalo/Messenger/Teams mà không bị giật lag, vượt qua cả các bước kiểm tra vẫy tay cơ bản." },
-        { title: "Zero-Shot Voice Cloning", content: "Công nghệ AI âm thanh thế hệ mới chỉ cần 3-5 giây mẫu âm thanh gốc để nhân bản hoàn hảo giọng nói của bất kỳ ai, bao gồm cả nhịp thở, ngữ điệu và các biểu cảm phức tạp như cười, khóc." },
-        { title: "AI Text-to-Video (Sora & beyond)", content: "Khả năng tạo ra các video dài vài phút với độ chân thực vật lý hoàn hảo chỉ từ một dòng văn bản mô tả, đe dọa trực tiếp đến tính xác thực của camera an ninh và bằng chứng video trước tòa." }
+        { title: "Nghị quyết LHQ về AI (2024)", content: "Nghị quyết lịch sử đầu tiên được 193 quốc gia thông qua, khẳng định việc phát triển AI phải đi đôi với bảo vệ quyền con người, sự riêng tư và thúc đẩy an ninh mạng toàn cầu." },
+        { title: "Quyền bảo vệ danh dự & phẩm giá", content: "Tuyên ngôn Quốc tế về Nhân quyền khẳng định hình ảnh và danh dự cá nhân là bất khả xâm phạm. Deepfake bôi nhọ được coi là một trong những mối đe dọa nhân quyền lớn nhất kỷ nguyên số." },
+        { title: "Quyền được biết (Right to Know)", content: "Con người có quyền được thông báo nếu họ đang giao tiếp với một thực thể trí tuệ nhân tạo, nhằm đảm bảo tính minh bạch và tránh các hành vi thao túng tâm lý quy mô lớn." }
       ]
     }
   ],
   en: [
     {
-      category: "INTERNATIONAL LAW & UNITED NATIONS",
+      category: "DEEPFAKE FUNDAMENTALS",
       items: [
-        { title: "UN Resolution on AI (2024)", content: "The first global landmark document promoting safe, secure, and trustworthy AI systems. It emphasizes that human rights must be protected alongside AI development, both online and offline." },
-        { title: "European Union AI Act", content: "The world's first comprehensive legal framework for AI. Deepfakes are classified under transparency obligations: all AI-generated content must be clearly labeled to prevent public deception." },
-        { title: "The Bletchley Declaration (2023)", content: "A commitment by 28 nations to manage risks from 'Frontier AI' models, focusing on preventing AI from being exploited for cybercrime and large-scale fraud." }
+        { title: "Deepfake Definition", content: "A combination of 'Deep learning' and 'Fake'. This technology uses Artificial Intelligence to replace a person's face, voice, and gestures with another person's with extreme realism." },
+        { title: "Generative Adversarial Networks (GANs)", content: "The core engine consisting of two parts: a 'Generator' trying to create fake images and a 'Discriminator' (Detective) trying to distinguish them. They train against each other until fakes look real." },
+        { title: "Diffusion Models", content: "A new technology replacing GANs (used in Midjourney, Stable Diffusion). It works by adding noise to data and learning to denoise it to create highly detailed media from text prompts." }
       ]
     },
     {
-      category: "HUMAN RIGHTS IN THE DIGITAL AGE",
+      category: "LATEST TECH (2025-2026)",
       items: [
-        { title: "Right to Honor & Dignity", content: "The Universal Declaration of Human Rights affirms that no one shall be subjected to attacks on their reputation. Non-consensual deepfakes are among the most severe violations of digital dignity today." },
-        { title: "Inviolability of Personal Image", content: "Every individual has the right to control the use of their face and voice. Scraping biometric data without consent to train AI models is a direct violation of personal freedom." },
-        { title: "Right to Know", content: "In a democratic society, individuals have the right to be informed when they are interacting with an AI entity, ensuring transparency and preventing psychological manipulation." }
+        { title: "Zero-Latency Real-time Swap", content: "Current tools allow seamless face swapping on Zoom, Zalo, or Messenger with nearly zero latency, capable of bypassing basic 'move your hand' security checks." },
+        { title: "Zero-Shot Voice Cloning", content: "Next-gen AI requires only 3 seconds of original audio to perfectly clone anyone's voice, including breathing patterns, intonations, and complex emotions." },
+        { title: "Physically Realistic Text-to-Video", content: "The capability to generate multi-minute videos with perfect physical realism (lighting, gravity) from a single text prompt, making visual detection impossible for humans." }
       ]
     },
     {
-      category: "COPYRIGHT & INTELLECTUAL PROPERTY",
+      category: "LEGAL FRAMEWORKS",
       items: [
-        { title: "Right of Publicity", content: "Modern law is recognizing personal traits (face, voice, style) as a type of intellectual property. Creators have the legal right to prevent AI from mimicking their persona for profit." },
-        { title: "Unauthorized Training Data", content: "Most Deepfake engines are trained on billions of scraped images without permission. This is considered the largest-scale data copyright infringement in human history." },
-        { title: "C2PA Verification Standard", content: "A tech alliance (Adobe, Microsoft...) created C2PA - embedding digital provenance into camera metadata to distinguish original files from AI-manipulated ones." }
+        { title: "Decree 13/2023/ND-CP (Vietnam)", content: "The fundamental legal text on Personal Data Protection. Using others' biometrics (face, voice) to create Deepfakes without consent is a serious legal violation in Vietnam." },
+        { title: "Criminal Code (Fraud & Slander)", content: "Using Deepfakes for fraud, extortion, or character assassination (pornographic mapping) can lead up to 20 years or life imprisonment under international and local laws." },
+        { title: "EU AI Act", content: "The world's first comprehensive AI law mandating that all AI-generated content (Deepfakes) must be transparently labeled to prevent public deception." }
       ]
     },
     {
-      category: "DEEPFAKE PSYCHOLOGY & SOCIAL IMPACT",
+      category: "UN & HUMAN RIGHTS",
       items: [
-        { title: "Erosion of Trust (The Liar's Dividend)", content: "When deepfakes become common, people start doubting real videos. This allows criminals to deny true evidence of wrongdoing by simply claiming: 'It's just a deepfake'." },
-        { title: "Digital PTSD", content: "Psychological studies indicate that deepfake victims suffer emotional trauma, depression, and anxiety levels comparable to victims of physical violence in the real world." },
-        { title: "Digital Blindness Mechanism", content: "The human brain is biologically wired to trust familiar faces on screens. Scammers exploit this exploit to conduct 'lightning-fast' fraud calls before the victim can question logic." }
-      ]
-    },
-    {
-      category: "DEEPFAKE & GENERATIVE AI BASICS",
-      items: [
-        { title: "Deepfake Definition", content: "A portmanteau of 'Deep learning' and 'Fake'. It uses Artificial Intelligence to replace a person's face, voice, or gestures with someone else's with extreme realism." },
-        { title: "How it works (GANs)", content: "Generative Adversarial Networks consist of two parts: a 'Generator' trying to create the most realistic fake images, and a 'Discriminator' acting as a detective to distinguish real from fake. They train against each other until fakes become undetectable." },
-        { title: "Diffusion Models", content: "The new technology replacing GANs (used in Midjourney, Stable Diffusion). It works by adding noise to data and learning to denoise it to create entirely new, highly detailed media from text prompts." }
-      ]
-    },
-    {
-      category: "LATEST DEEPFAKE TECHNOLOGIES 2026",
-      items: [
-        { title: "Real-time Deepfake (Zero Latency)", content: "Dark Web tools now allow seamless, live face and voice swapping on Zoom, Teams, and Zalo without lag, bypassing even basic 'wave hand in front of face' security checks." },
-        { title: "Zero-Shot Voice Cloning", content: "Next-generation audio AI requires only 3 to 5 seconds of original voice samples to perfectly clone anyone's voice, replicating breathing patterns, intonations, and complex emotions (laughing, crying)." },
-        { title: "AI Text-to-Video (Sora & Beyond)", content: "The capability to generate multi-minute videos with perfect physical realism from a single text prompt. This directly threatens the legal authenticity of security cameras and video evidence in court." }
+        { title: "UN Resolution on AI (2024)", content: "The first historic resolution adopted by 193 countries, affirming that AI development must be coupled with the protection of human rights, privacy, and global cybersecurity." },
+        { title: "Right to Digital Honor & Dignity", content: "The Universal Declaration of Human Rights affirms that personal image and honor are inviolable. Deepfake defamation is considered one of the largest digital human rights threats." },
+        { title: "The Right to Know", content: "Humans have the right to be informed when interacting with an AI entity, ensuring transparency and preventing large-scale psychological manipulation." }
       ]
     }
   ]

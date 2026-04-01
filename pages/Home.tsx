@@ -206,7 +206,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
           <p className="text-base md:text-lg text-gray-400 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed border-l-0 lg:border-l-2 border-primary lg:pl-4">{t.hero_desc}</p>
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center lg:justify-start">
-            <button onClick={() => navigate('/tools', { state: { tab: 'SCAN' }})} className="bg-primary text-black hover:bg-white px-8 py-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 uppercase tracking-widest shadow-lg shadow-primary/20">
+            <button onClick={() => navigate('/tools', { state: { targetTab: 'SCAN' }})} className="bg-primary text-black hover:bg-white px-8 py-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 uppercase tracking-widest shadow-lg shadow-primary/20">
               <Activity size={16} /> {t.btn_scan}
             </button>
             <button onClick={() => navigate('/ai-project')} className="bg-purple-600 text-white hover:bg-purple-500 px-8 py-4 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 uppercase tracking-widest shadow-lg shadow-purple-500/20">
@@ -263,7 +263,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         </div>
 
         <div className="lg:col-span-4 flex flex-col gap-6">
-             <div onClick={() => navigate('/crisis', { state: { tab: 'first-aid' }})} className="bg-red-600 rounded-3xl p-8 flex items-center justify-between group cursor-pointer hover:bg-red-500 transition-all shadow-lg shadow-red-600/20">
+             <div onClick={() => navigate('/tools', { state: { tab: 'CRISIS' }})} className="bg-red-600 rounded-3xl p-8 flex items-center justify-between group cursor-pointer hover:bg-red-500 transition-all shadow-lg shadow-red-600/20">
                 <div className="flex items-center gap-4">
                     <div className="bg-white/20 p-4 rounded-2xl text-white group-hover:scale-110 transition-transform"><PhoneCall size={32} /></div>
                     <div>

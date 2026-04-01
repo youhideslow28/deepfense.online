@@ -15,8 +15,8 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
   const [activeTab, setActiveTab] = useState<'report' | 'first-aid' | 'hotspot'>('first-aid');
 
   useEffect(() => {
-    if (location.state?.tab) {
-      setActiveTab(location.state.tab);
+    if (location.state?.subTab) {
+      setActiveTab(location.state.subTab);
     }
   }, [location.state]);
   
