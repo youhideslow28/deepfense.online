@@ -266,33 +266,45 @@ export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
     {
       category: "KIẾN THỨC VỀ DEEPFAKE",
       items: [
-        { title: "Định nghĩa Deepfake", content: "Là sự kết hợp giữa 'Deep learning' và 'Fake'. Công nghệ này sử dụng trí tuệ nhân tạo để thay thế khuôn mặt, giọng nói và cử chỉ của một người bằng một người khác một cách chân thực nhất." },
-        { title: "Mạng đối nghịch sinh (GANs)", content: "Vũ khí cốt lõi của Deepfake gồm 2 phần: 'Generator' (Kẻ tạo giả) cố gắng tạo ra ảnh thật và 'Discriminator' (Cảnh sát) cố gắng phân lừa ảnh thật/giả. Chúng 'đấu' nhau liên tục đến khi ảnh giả hoàn hảo như thật." },
-        { title: "Mô hình Khuếch tán (Diffusion)", content: "Công nghệ mới thay thế GANs (dùng trong Midjourney, Stable Diffusion), hoạt động bằng cách thêm nhiễu vào dữ liệu rồi học cách khử nhiễu để tạo ra hình ảnh/video mới hoàn toàn từ văn bản." }
+        { title: "Âm thanh Deepfake & Voice Cloning", content: "Chỉ cần 3-10 giây mẫu giọng nói từ video trên MXH, AI có thể nhái giọng bất kỳ ai để thực hiện các cuộc gọi lừa đảo CEO Fraud hoặc mạo danh người thân đang gặp nạn. Tỷ lệ khớp giọng hiện nay đã vượt quá 95%." },
+        { title: "Hoán đổi khuôn mặt trực tiếp (Live Swapping)", content: "Sử dụng các công cụ như DeepFaceLive để thay thế khuôn mặt ngay thời gian thực trong các cuộc gọi video trên Zoom hay Google Meet. Kẻ xấu thường dùng thêm OBS để phát tín hiệu giả vào luồng camera." },
+        { title: "Mạng đối kháng không gian (GANs)", content: "Kỹ thuật cốt lõi tạo ra Deepfake bằng cách cho 2 mạng AI (Generator và Discriminator) 'đấu' với nhau để tạo ra hình ảnh giả trông như thật. GAN fingerprint là dấu vân tay thuật toán mà Deepfense đang cố gắng truy vết." },
+        { title: "Dấu hiệu nhận diện sơ đẳng (Artifacts)", content: "Hãy quan sát những điểm pixel bị nhòe ở vùng biên, chuyển động miệng không khớp với âm thanh (Lip-sync error) hoặc hiện tượng mắt không chớp. Deepfake cũ thường gặp khó khăn trong việc mô phỏng phản xạ sinh học này." },
+        { title: "Lỗi nội suy khung hình (Interpolation)", content: "Deepfake video thường được tạo ra bằng cách nội suy các khung hình. Khi nhân vật di chuyển nhanh hoặc có vật thể cắt ngang mặt, AI thường để lại các vệt mờ hoặc bóng ma (ghosting) rất đặc trưng." },
+        { title: "Deepfake toàn thân (Full-body)", content: "Không chỉ dừng lại ở khuôn mặt, AI hiện đại có thể giả mạo cả vóc dáng và điệu bộ di chuyển (gait analysis), khiến việc nhận diện qua hình thể trở nên phức tạp hơn." }
       ]
     },
     {
       category: "CÔNG NGHỆ MỚI NHẤT (2025-2026)",
       items: [
-        { title: "Real-time Video Call Swap", content: "Các công cụ hiện nay cho phép hoán đổi khuôn mặt trực tiếp trên các ứng dụng như Zoom, Zalo hay Messenger với độ trễ gần như bằng không, vượt qua được cả các bước kiểm tra vẫy tay cơ bản." },
-        { title: "Zero-Shot Voice Cloning", content: "AI thế hệ mới chỉ cần đúng 3 giây mẫu âm thanh gốc để nhân bản hoàn hảo giọng nói của bất kỳ ai, bao gồm cả nhịp thở, ngữ điệu và các biểu cảm phức tạp như cười hay khóc." },
-        { title: "Text-to-Video vật lý hoàn hảo", content: "Khả năng tạo ra các đoạn video dài với độ chân thực về vật lý (ánh sáng, trọng lực) hoàn hảo chỉ từ một dòng văn bản mô tả, khiến việc phân biệt bằng mắt thường gần như bất khả thi." }
+        { title: "rPPG (Remote Heartbeat Detection)", content: "Công nghệ tiên tiến nhất phân tích sự thay đổi siêu vi của sắc tố da do máu lưu thông theo nhịp tim. Deepfake chỉ là các lớp pixel tĩnh nên không có nhịp tim, đây là 'gót chân Achilles' của mọi AI giả mạo." },
+        { title: "Tiêu chuẩn C2PA & Provenance", content: "Một hệ thống 'hộ chiếu số' cho hình ảnh được liên minh bởi Google, Adobe và Microsoft. Nó cho phép kiểm tra nguồn gốc bức ảnh có được tạo ra bởi AI (như Midjourney, Sora) hay là ảnh thật từ ống kính máy ảnh." },
+        { title: "Mô hình Khuếch tán (Diffusion Models)", content: "Công nghệ (như Sora, OpenAI) cho phép tạo video mượt mà và có chiều sâu vật lý hơn GAN. Deepfense đang cập nhật Engine mới để nhận diện được các nhiễu cấu trúc đặc trưng của mô hình Khuếch tán." },
+        { title: "AI Watermarking (Thủy vân số)", content: "Các hãng công nghệ lớn bắt đầu nhúng các mã định danh không thể xóa rời vào metadata và pixel của ảnh AI. Việc phát hiện các watermark này giúp khẳng định 100% nội dung là do máy tạo ra." },
+        { title: "Zero-shot Voice Synthesis", content: "Khả năng tổng hợp giọng nói cực kỳ tinh vi mà không cần huấn luyện mô hình lâu dài, chỉ cần một câu chào hỏi đơn giản của nạn nhân thu thập từ một cuộc gọi nhầm số." },
+        { title: "Digital Identity Wallets", content: "Giải pháp lưu trữ định danh số trên Blockchain, cho phép người dùng xác thực chính chủ mà không cần lộ lọt dữ liệu sinh trắc học lên internet chuyên dùng để chống Deepfake." }
       ]
     },
     {
       category: "PHÁP LUẬT LIÊN QUAN",
       items: [
-        { title: "Nghị định 13/2023/NĐ-CP (Việt Nam)", content: "Văn bản pháp lý nền tảng về Bảo vệ dữ liệu cá nhân. Việc sử dụng hình ảnh, giọng nói (dữ liệu sinh trắc học) của người khác để tạo Deepfake mà không được sự đồng ý là hành vi vi phạm pháp luật nghiêm trọng." },
+        { title: "Nghị định 13/2023/NĐ-CP (Việt Nam)", content: "Văn bản pháp lý nền tảng về Bảo vệ dữ liệu cá nhân. Việc sử dụng hình ảnh, giọng nói (dữ liệu sinh trắc học) của người khác để tạo Deepfake trái phép là hành vi vi phạm pháp luật nghiêm trọng." },
         { title: "Bộ luật Hình sự (Điều 174 & 155)", content: "Tội lừa đảo chiếm đoạt tài sản (sử dụng Deepfake để vay tiền/tống tiền) và Tội làm nhục người khác (ghép mặt vào nội dung nhạy cảm) có thể bị phạt tù lên đến 20 năm hoặc chung thân." },
-        { title: "Đạo luật AI của EU (EU AI Act)", content: "Bộ luật toàn diện đầu tiên trên thế giới bắt buộc mọi nội dung do AI tạo ra (Deepfake) phải được dán nhãn minh bạch, nếu không sẽ bị cấm lưu hành và xử phạt nặng." }
+        { title: "Luật AI của Liên minh Châu Âu (EU AI Act)", content: "Bộ luật toàn diện đầu tiên trên thế giới bắt buộc mọi nội dung do AI tạo ra (Deepfake) phải được dán nhãn minh bạch, nếu không sẽ bị phạt đến 35 triệu Euro." },
+        { title: "Trách nhiệm của nền tảng (Platform Liability)", content: "Các mạng xã hội như Facebook, TikTok bắt đầu bị ràng buộc pháp lý trong việc gỡ bỏ nội dung Deepfake độc hại trong vòng 24h kể từ khi nhận báo cáo từ nạn nhân." },
+        { title: "Quyền được lãng quên (Right to be Forgotten)", content: "Người dân có quyền yêu cầu các công cụ tìm kiếm và mạng xã hội xóa bỏ vĩnh viễn các nội dung Deepfake giả mạo mình sau khi đã có kết luận từ cơ quan chức năng." },
+        { title: "Sắc lệnh hành pháp AI của Mỹ", content: "Yêu cầu các nhà phát triển AI quy mô lớn phải chia sẻ kết quả kiểm tra an toàn với chính phủ và thực hiện dán nhãn nội dung để bảo vệ người tiêu dùng." }
       ]
     },
     {
       category: "LIÊN HỢP QUỐC & QUYỀN CON NGƯỜI",
       items: [
-        { title: "Nghị quyết LHQ về AI (2024)", content: "Nghị quyết lịch sử đầu tiên được 193 quốc gia thông qua, khẳng định việc phát triển AI phải đi đôi với bảo vệ quyền con người, sự riêng tư và thúc đẩy an ninh mạng toàn cầu." },
-        { title: "Quyền bảo vệ danh dự & phẩm giá", content: "Tuyên ngôn Quốc tế về Nhân quyền khẳng định hình ảnh và danh dự cá nhân là bất khả xâm phạm. Deepfake bôi nhọ được coi là một trong những mối đe dọa nhân quyền lớn nhất kỷ nguyên số." },
-        { title: "Quyền được biết (Right to Know)", content: "Con người có quyền được thông báo nếu họ đang giao tiếp với một thực thể trí tuệ nhân tạo, nhằm đảm bảo tính minh bạch và tránh các hành vi thao túng tâm lý quy mô lớn." }
+        { title: "Nghị quyết LHQ về AI (03/2024)", content: "Nghị quyết lịch sử đầu tiên được 193 quốc gia thông qua, khẳng định việc phát triển AI phải đi đôi với bảo vệ quyền con người, sự riêng tư và thúc đẩy an ninh mạng toàn cầu." },
+        { title: "Quyền bảo vệ danh dự & phẩm giá", content: "Tuyên ngôn Quốc tế về Nhân quyền khẳng định hình ảnh và danh dự cá nhân là bất khả xâm phạm. Deepfake bôi nhọ được coi là mối đe dọa nhân quyền lớn nhất kỷ nguyên số." },
+        { title: "Quyền được biết (Right to Know)", content: "Con người có quyền được thông báo nếu họ đang giao tiếp với một thực thể trí tuệ nhân tạo, nhằm đảm bảo tính minh bạch và tránh các hành vi thao túng tâm lý." },
+        { title: "Bảo vệ trẻ em trực tuyến", content: "LHQ ưu tiên việc chống lại các vụ bắt nạt học đường và tạo nội dung lừa đảo nhắm vào trẻ em bằng AI, coi đây là tội ác nghiêm trọng chống lại thế hệ tương lai." },
+        { title: "Bình đẳng số (Digital Equity)", content: "Cảnh báo về việc Deepfake có thể bị sử dụng để tấn công các nhóm thiểu số hoặc gây ra sự kỳ thị xã hội thông qua các hình ảnh giả mạo mang tính định kiến." },
+        { title: "Dignity in AI Age", content: "LHQ nhấn mạnh việc tạo nội dung khiêu dâm không đồng thuận bằng AI (NCII) là hành vi vi phạm nhân quyền nghiêm trọng, yêu cầu sự can thiệp pháp lý toàn cầu." }
       ]
     }
   ],
