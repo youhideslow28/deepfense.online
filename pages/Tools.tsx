@@ -1,67 +1,88 @@
-import React, { useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { 
+  ScanLine, 
+  ShieldCheck, 
+  AlertTriangle, 
+  Search, 
+  UploadCloud, 
+  Download, 
+  CheckCircle2, 
+  Activity, 
+  FileSearch,
+  FileText,
+  HeartHandshake,
+  MapPin,
+  Scale,
+  BrainCircuit,
+  Lock,
+  BookOpen
+} from 'lucide-react';
 import { Language } from '../types';
-import { UploadCloud, AlertTriangle, CheckCircle2, Activity, ScanLine, BrainCircuit, FileSearch, ShieldCheck, BookOpen, Scale, BookText, Lock, Download } from 'lucide-react';
-import { KNOWLEDGE_BASE } from '../data';
+import { TRANSLATIONS, KNOWLEDGE_BASE } from '../data';
 import CrisisHub from './CrisisHub';
+
 interface ToolsProps {
   lang: Language;
 }
 
+const behaviorQuestions = [
+  { q: "Đối phương có yêu cầu bạn thực hiện các hành động khẩn cấp về tài chính không?", risk: 30 },
+  { q: "Giọng nói hoặc hình ảnh có các dấu hiệu giật lag, nhiễu pixel hoặc khẩu hình không khớp?", risk: 25 },
+  { q: "Đối phương có từ chối thực hiện các yêu cầu xác thực như vẫy tay trước mặt hoặc quay đầu không?", risk: 20 },
+  { q: "Lý do liên lạc có tính chất đe dọa, tống tiền hoặc đánh vào lòng thương cảm cực độ không?", risk: 15 },
+  { q: "Bạn có nhận thấy các lỗi logic trong câu chuyện của đối phương không?", risk: 10 }
+];
+
+const behaviorQuestionsEn = [
+  { q: "Does the person request urgent financial actions or money transfers?", risk: 30 },
+  { q: "Are there signs of lag, pixel distortion, or lip-sync mismatch in the video/audio?", risk: 25 },
+  { q: "Does the person refuse verification requests like waving hands or turning their head?", risk: 20 },
+  { q: "Is the reason for contact threatening, blackmailing, or overly emotional?", risk: 15 },
+  { q: "Do you notice logical inconsistencies in the person's story?", risk: 10 }
+];
+
 const Tools: React.FC<ToolsProps> = ({ lang }) => {
-  const location = useLocation();
-  const initialTab = location.state?.tab || 'SCAN';
-  const [activeTab, setActiveTab] = useState<'SCAN' | 'KNOWLEDGE' | 'PROTECT' | 'CRISIS'>(initialTab as 'SCAN' | 'KNOWLEDGE' | 'PROTECT' | 'CRISIS');
-  const [activeKnowledgeCat, setActiveKnowledgeCat] = useState(0);
-
-  // BẢO VỆ CRASH: Reset lại chỉ mục Danh mục Kiến thức nếu ngôn ngữ bị đổi đột ngột
-  React.useEffect(() => {
-      setActiveKnowledgeCat(0);
-  }, [lang]);
-
-  // Đồng bộ hóa Tab khi Navigation đẩy state mới tới (Tránh lỗi kẹt Tab)
-  React.useEffect(() => {
-    if (location.state?.tab) {
-      setActiveTab(location.state.tab as 'SCAN' | 'KNOWLEDGE' | 'PROTECT' | 'CRISIS');
-    }
-  }, [location.state]);
+  const t = TRANSLATIONS[lang];
+  const [activeTab, setActiveTab] = useState<'SCAN' | 'PROTECT' | 'CRISIS' | 'KNOWLEDGE'>('SCAN');
   
-  // --- BEHAVIORAL SCANNER STATES ---
+  // State for Behavioral Scan
   const [step, setStep] = useState(0);
   const [riskScore, setRiskScore] = useState(0);
   const [analysisComplete, setAnalysisComplete] = useState(false);
-  const lockRef = useRef(false);
+  const questions = lang === 'vi' ? behaviorQuestions : behaviorQuestionsEn;
 
-  const behaviorQuestions = lang === 'vi' ? [
-    { q: "Người gọi có yêu cầu bạn chuyển tiền gấp, đọc mã OTP hoặc truy cập một đường link lạ không?", weight: 40 },
-    { q: "Tình huống có mang tính chất cực kỳ khẩn cấp (tai nạn, cấp cứu, khóa tài khoản) buộc bạn phải làm ngay không?", weight: 30 },
-    { q: "Cuộc gọi được thực hiện qua các ứng dụng OTT (Zalo, Messenger, Telegram) thay vì mạng viễn thông (GSM) thông thường?", weight: 15 },
-    { q: "Người gọi có trốn tránh việc trả lời các câu hỏi bí mật, hoặc viện lý do mic/cam hỏng khi bị yêu cầu làm hành động xác thực?", weight: 20 },
-    { q: "Chất lượng cuộc gọi có hiện tượng giật lag, mờ nhòe, hoặc âm thanh bị vang, mất tự nhiên không?", weight: 10 },
-  ] : [
-    { q: "Did the caller ask you to transfer money urgently, provide an OTP, or click a strange link?", weight: 40 },
-    { q: "Was the situation framed as an extreme emergency (accident, account locked) requiring immediate action?", weight: 30 },
-    { q: "Was the call made via OTT apps (Zalo, Messenger, Telegram) instead of a standard cellular (GSM) network?", weight: 15 },
-    { q: "Did the caller avoid answering secret questions, or claim their mic/cam is broken when asked to verify?", weight: 20 },
-    { q: "Did the call quality suffer from lag, blurriness, or unnatural/echoing audio?", weight: 10 },
-  ];
+  // State for Forensics Scan
+  const [file, setFile] = useState<File | null>(null);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanProgress, setScanProgress] = useState(0);
+  const [scanLogs, setScanLogs] = useState<string[]>([]);
+  const [scanResult, setScanResult] = useState<{riskScore: number, analysisLines: string[]} | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // State for Face Shield
+  const [shieldFile, setShieldFile] = useState<File | null>(null);
+  const [shieldImage, setShieldImage] = useState<string | null>(null);
+  const [isShielding, setIsShielding] = useState(false);
+  const [shieldProgress, setShieldProgress] = useState(0);
+  const [protectedDataUrl, setProtectedDataUrl] = useState<string | null>(null);
+  const shieldInputRef = useRef<HTMLInputElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // State for Liveness
+  const [livenessActive, setLivenessActive] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // State for Knowledge
+  const [activeKnowledgeCat, setActiveKnowledgeCat] = useState(0);
 
   const handleAnswer = (isYes: boolean) => {
-    // Ngăn chặn bấm liên tục 2 lần gây lỗi Out of Bounds mảng câu hỏi
-    if (lockRef.current) return;
-    lockRef.current = true;
-
-    if (isYes) {
-      setRiskScore(prev => prev + behaviorQuestions[step].weight);
-    }
-    
-    if (step < behaviorQuestions.length - 1) {
-      setStep(prev => prev + 1);
+    if (isYes) setRiskScore(prev => prev + questions[step].risk);
+    if (step < questions.length - 1) {
+      setStep(step + 1);
     } else {
       setAnalysisComplete(true);
     }
-
-    setTimeout(() => { lockRef.current = false; }, 200);
   };
 
   const resetBehaviorScan = () => {
@@ -70,27 +91,54 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
     setAnalysisComplete(false);
   };
 
-  // --- FORENSICS SCANNER STATES ---
-  const [file, setFile] = useState<File | null>(null);
-  const [isScanning, setIsScanning] = useState(false);
-  const [scanProgress, setScanProgress] = useState(0);
-  const [scanLogs, setScanLogs] = useState<string[]>([]);
-  const [scanResult, setScanResult] = useState<{riskScore: number, analysisLines: string[]} | null>(null);
-  const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+        setFile(selectedFile);
+        setScanResult(null);
+        setScanProgress(0);
+        setScanLogs([]);
+    }
+  };
 
-  // --- LIVENESS SCANNER STATES ---
-  const [livenessActive, setLivenessActive] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const handleShieldUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+        setShieldFile(selectedFile);
+        setProtectedDataUrl(null);
+        setShieldProgress(0);
+        const reader = new FileReader();
+        reader.onload = (ev) => setShieldImage(ev.target?.result as string);
+        reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  const applyFaceShield = () => {
+    if (!shieldImage) return;
+    setIsShielding(true);
+    setShieldProgress(0);
+    
+    let p = 0;
+    const interval = setInterval(() => {
+        p += 2;
+        setShieldProgress(p);
+        if (p >= 100) {
+            clearInterval(interval);
+            setTimeout(() => {
+                setProtectedDataUrl(shieldImage); // Mock protected image
+                setIsShielding(false);
+            }, 500);
+        }
+    }, 50);
+  };
 
   const toggleLiveness = async () => {
     if (livenessActive) {
-      if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject as MediaStream;
-        stream.getTracks().forEach(track => track.stop());
-        videoRef.current.srcObject = null;
-      }
       setLivenessActive(false);
+      if (videoRef.current && videoRef.current.srcObject) {
+         const stream = videoRef.current.srcObject as MediaStream;
+         stream.getTracks().forEach(track => track.stop());
+      }
     } else {
       setLivenessActive(true);
       try {
@@ -99,104 +147,14 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
           videoRef.current.srcObject = stream;
         }
       } catch (err) {
-        alert(lang === 'vi' ? 'Không thể truy cập Camera. Vui lòng cấp quyền.' : 'Cannot access camera. Please grant permission.');
+        console.error("Camera access denied:", err);
         setLivenessActive(false);
       }
     }
   };
 
-  // --- FACE SHIELD STATES ---
-  const [shieldFile, setShieldFile] = useState<File | null>(null);
-  const [shieldImage, setShieldImage] = useState<string | null>(null);
-  const [isShielding, setIsShielding] = useState(false);
-  const [shieldProgress, setShieldProgress] = useState(0);
-  const [protectedDataUrl, setProtectedDataUrl] = useState<string | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const shieldInputRef = useRef<HTMLInputElement>(null);
-
-  const handleShieldUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const selected = e.target.files[0];
-      setShieldFile(selected);
-      setProtectedDataUrl(null);
-      setShieldProgress(0);
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-         if (ev.target) setShieldImage(ev.target.result as string);
-       };
-       reader.readAsDataURL(selected);
-    }
-  };
-
-  const applyFaceShield = () => {
-    if (!shieldImage || !canvasRef.current) return;
-    setIsShielding(true);
-    setShieldProgress(0);
-    setProtectedDataUrl(null);
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const img = new Image();
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
-
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-
-      // Fawkes-style Adversarial Perturbation (Simulation/Demo)
-      // Thêm nhiễu loạn ngẫu nhiên ở dải RGB để giấu đặc trưng mắt/miệng khỏi GAN
-      let progress = 0;
-      const totalPixels = data.length;
-      
-      const interval = setInterval(() => {
-          progress += 5;
-          setShieldProgress(Math.min(progress, 100));
-          if (progress >= 100) {
-              clearInterval(interval);
-              for (let i = 0; i < totalPixels; i += 4) {
-                 const noise = Math.floor(Math.random() * 8) - 4; 
-                 data[i] = Math.min(255, Math.max(0, data[i] + noise));     // Red
-                 data[i+1] = Math.min(255, Math.max(0, data[i+1] + noise)); // Green
-                 data[i+2] = Math.min(255, Math.max(0, data[i+2] + noise)); // Blue
-                 // Alpha remains unchanged
-              }
-              ctx.putImageData(imageData, 0, 0);
-              
-              // Watermark Metadata
-              ctx.font = "12px monospace";
-              ctx.fillStyle = "rgba(0, 240, 255, 0.4)";
-              ctx.fillText("DEEPFENSE-FAWKES-SHIELDED", 10, canvas.height - 10);
-
-              setProtectedDataUrl(canvas.toDataURL('image/png'));
-              setIsShielding(false);
-          }
-      }, 80);
-    };
-    img.src = shieldImage;
-  };
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      if (selectedFile.size > 4.5 * 1024 * 1024) {
-        alert(lang === 'vi' ? 'LƯU Ý: Vercel Free Tier giới hạn kích thước tệp upload 4.5MB. Tệp lớn hơn sẽ chuyển sang chế độ MÔ PHỎNG.' : 'NOTICE: Vercel Free Tier limits payloads to 4.5MB. Larger files will fallback to SIMULATION mode.');
-      }
-      setFile(selectedFile);
-      setIsScanning(false);
-      setScanProgress(0);
-      setScanLogs([]);
-      setScanResult(null);
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    }
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
       if (videoRef.current && videoRef.current.srcObject) {
          const stream = videoRef.current.srcObject as MediaStream;
          stream.getTracks().forEach(track => track.stop());
@@ -318,16 +276,16 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
       <div className="text-center mb-10">
         <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4 flex items-center justify-center gap-3">
           {activeTab === 'SCAN' ? <ScanLine className="text-primary" size={40} /> : activeTab === 'PROTECT' ? <ShieldCheck className="text-green-500" size={40} /> : activeTab === 'CRISIS' ? <AlertTriangle className="text-red-500" size={40} /> : <BookOpen className="text-primary" size={40} />}
-          {activeTab === 'SCAN' ? (lang === 'vi' ? 'HỆ THỐNG QUÉT RỦI RO' : 'RISK SCAN SYSTEM') : activeTab === 'PROTECT' ? (lang === 'vi' ? 'TRUNG TÂM BẢO VỆ' : 'PROACTIVE SHIELD') : activeTab === 'CRISIS' ? (lang === 'vi' ? 'TRUNG TÂM ỨNG CỨU SOS' : 'CRISIS HUB SOS') : (lang === 'vi' ? 'THƯ VIỆN KIẾN THỨC' : 'KNOWLEDGE LIBRARY')}
+          {activeTab === 'SCAN' ? t.tools_scan_title : activeTab === 'PROTECT' ? t.tools_protect_title : activeTab === 'CRISIS' ? t.crisis_title : t.tools_knowledge_title}
         </h2>
         <p className="text-gray-400 text-sm max-w-3xl mx-auto leading-relaxed">
           {activeTab === 'SCAN' 
-            ? (lang === 'vi' ? 'Khi AI giả mạo được 99% hình ảnh/giọng nói, mắt thường không còn đáng tin. Hãy kết hợp đánh giá ngữ cảnh hành vi và pháp y dữ liệu để xác thực.' : 'Combine behavioral context assessment and digital forensics for comprehensive verification.')
+            ? t.tools_scan_desc
             : activeTab === 'PROTECT'
-            ? (lang === 'vi' ? 'Bảo vệ ảnh cá nhân trên mạng xã hội. Lớp khiên thuật toán này sẽ chèn nhiễu đối kháng (Adversarial Noise) để làm mù các hệ thống AI cố đánh cắp khuôn mặt bạn.' : 'Protect personal photos online. This algorithmic shield injects adversarial noise to blind AI systems attempting to clone your face.')
+            ? t.tools_protect_desc
             : activeTab === 'CRISIS'
-            ? (lang === 'vi' ? 'Hệ thống hỗ trợ nạn nhân giải quyết hậu quả sau lừa đảo. Tạo đơn tố giác chuẩn pháp lý, tư vấn quy trình phong tỏa tài sản và sơ cứu tâm lý khẩn cấp.' : 'Post-scam crisis management system. Generate legal reports, asset freeze guidance, and physiological first aid.')
-            : (lang === 'vi' ? 'Hệ thống lưu trữ chi tiết công nghệ Deepfake, cơ chế thao túng tâm lý và hệ thống quy phạm pháp luật bảo vệ quyền con người.' : 'Comprehensive repository on Deepfake tech, psychological manipulation, and legal frameworks.')}
+            ? t.crisis_desc
+            : t.tools_knowledge_desc}
         </p>
       </div>
 
@@ -337,25 +295,25 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
           onClick={() => setActiveTab('SCAN')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'SCAN' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
-          <ScanLine size={16} /> {lang === 'vi' ? 'TRUNG TÂM QUÉT' : 'SCAN CENTER'}
+          <ScanLine size={16} /> {t.btn_scan}
         </button>
         <button 
           onClick={() => setActiveTab('PROTECT')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'PROTECT' ? 'bg-green-500 text-black shadow-[0_0_20px_rgba(34,197,94,0.3)]' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
-          <ShieldCheck size={16} /> {lang === 'vi' ? 'KHIÊN CHỐNG AI' : 'ANTI-AI SHIELD'}
+          <ShieldCheck size={16} /> {t.tools_protect_btn}
         </button>
         <button 
           onClick={() => setActiveTab('KNOWLEDGE')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'KNOWLEDGE' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
-          <Scale size={16} /> {lang === 'vi' ? 'KIẾN THỨC & LUẬT' : 'KNOWLEDGE & LAW'}
+          <Scale size={16} /> {t.knowledge}
         </button>
         <button 
           onClick={() => setActiveTab('CRISIS')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'CRISIS' ? 'bg-red-500 text-black shadow-[0_0_20px_rgba(239,68,68,0.3)]' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
-          <AlertTriangle size={16} /> {lang === 'vi' ? 'ỨNG CỨU SOS' : 'CRISIS HUB'}
+          <AlertTriangle size={16} /> {t.crisis_hub}
         </button>
       </div>
 
@@ -376,15 +334,15 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                   <span className="text-primary font-mono text-xs uppercase font-bold tracking-widest flex items-center gap-2">
                     <Activity size={14}/> {lang === 'vi' ? 'THU THẬP DỮ LIỆU LOGIC' : 'GATHERING LOGIC DATA'}
                   </span>
-                  <span className="text-gray-500 font-mono text-xs font-bold">{step + 1} / {behaviorQuestions.length}</span>
+                  <span className="text-gray-500 font-mono text-xs font-bold">{step + 1} / {questions.length}</span>
                </div>
                
                <div className="h-1.5 bg-black rounded-full mb-8 overflow-hidden border border-white/5">
-                 <div className="h-full bg-primary transition-all duration-500" style={{ width: `${((step + 1) / behaviorQuestions.length) * 100}%` }}></div>
+                 <div className="h-full bg-primary transition-all duration-500" style={{ width: `${((step + 1) / questions.length) * 100}%` }}></div>
                </div>
 
                <h3 className="text-lg md:text-xl font-medium text-white mb-10 leading-relaxed text-center min-h-[100px] flex items-center justify-center">
-                 "{behaviorQuestions[step].q}"
+                 "{questions[step].q}"
                </h3>
 
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -481,7 +439,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                         if (intervalRef.current) clearInterval(intervalRef.current); 
                     }} 
                     className="text-gray-500 hover:text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-colors">
-                    ĐÓNG
+                    {lang === 'vi' ? 'ĐÓNG' : 'CLOSE'}
                  </button>
                </div>
 
@@ -506,24 +464,6 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                       <span className="text-white text-xs font-black">{scanProgress}%</span>
                     </div>
                     
-                    {/* AUDIO SPECTROGRAM MOCK */}
-                    {isScanning && (
-                       <div className="w-full h-16 bg-black/50 border border-secondary/20 rounded-lg mb-4 flex items-end justify-between px-2 pb-1 gap-1 overflow-hidden" style={{ minHeight: '64px' }}>
-                          {[...Array(30)].map((_, i) => {
-                             const isRed = Math.random() > 0.85;
-                             return (
-                               <div key={i} className={`w-full rounded-t-sm origin-bottom`} 
-                                    style={{ 
-                                      backgroundColor: isRed ? '#ef4444' : '#00f0ff',
-                                      animation: `eq ${0.4 + Math.random()}s ease-in-out infinite`,
-                                      animationDelay: `${Math.random()}s`
-                                    }}>
-                               </div>
-                             );
-                          })}
-                       </div>
-                    )}
-
                     <div className="space-y-3 min-h-[120px] max-h-[200px] overflow-y-auto">
                       {scanLogs.map((log, idx) => (
                         <div key={idx} className="text-gray-400 text-[11px] flex items-start gap-2 animate-in slide-in-from-bottom-2 duration-300">
@@ -546,8 +486,8 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                          </div>
                          <p className="text-gray-400 text-[11px] mb-6 leading-relaxed">
                            {lang === 'vi' 
-                              ? '[ĐÂY LÀ TÍNH NĂNG MÔ PHỎNG] - Trên thực tế, hệ thống sẽ phân tích quang phổ và pixel. Tệp quá lớn hoặc API thất bại nên hệ thống hiển thị kết quả mô phỏng.'
-                              : '[SIMULATION MODE] - File too large or API failed, falling back to simulated results.'}
+                               ? '[ĐÂY LÀ TÍNH NĂNG MÔ PHỎNG] - Trên thực tế, hệ thống sẽ phân tích quang phổ và pixel. Tệp quá lớn hoặc API thất bại nên hệ thống hiển thị kết quả mô phỏng.'
+                               : '[SIMULATION MODE] - File too large or API failed, falling back to simulated results.'}
                          </p>
                          <button 
                             onClick={() => {
@@ -623,31 +563,23 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
             </button>
           ) : (
             <div className="w-full flex flex-col lg:flex-row gap-6 items-stretch animate-in zoom-in duration-500">
-              {/* CỘT CAMERA */}
               <div className="flex-1 bg-black rounded-2xl border-2 border-dashed border-[#00f0ff]/30 relative overflow-hidden min-h-[300px] flex items-center justify-center">
                 <video ref={videoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover opacity-80" />
-                {/* Overlay HUD Radar */}
                 <div className="absolute inset-x-8 inset-y-8 border border-[#00f0ff]/50 rounded-lg pointer-events-none">
                     <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#00f0ff] rounded-tl-lg"></div>
                     <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#00f0ff] rounded-tr-lg"></div>
                     <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-[#00f0ff] rounded-bl-lg"></div>
                     <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-[#00f0ff] rounded-br-lg"></div>
-                    {/* Thanh quét dọc */}
                     <div style={{ animation: "scan 2s linear infinite" }} className="absolute top-0 left-0 w-full h-[2px] bg-[#00f0ff] shadow-[0_0_15px_2px_#00f0ff] opacity-80"></div>
-                    {/* Điểm nhận diện trán/má */}
-                    <div className="absolute top-[30%] left-[30%] w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_#f00]"></div>
-                    <div className="absolute top-[50%] right-[30%] w-2 h-2 bg-red-500 rounded-full animate-[pulse_1.5s_ease-in-out_infinite] shadow-[0_0_8px_#f00]"></div>
                 </div>
               </div>
               
-              {/* CỘT PHÂN TÍCH */}
               <div className="w-full lg:w-[350px] bg-black border border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-2xl">
                 <div>
                     <div className="text-[#00f0ff] font-mono text-xs uppercase font-bold tracking-widest mb-4 flex items-center justify-between">
                       <span>{lang === 'vi' ? 'LƯU LƯỢNG MÁU (rPPG)' : 'BLOOD FLOW (rPPG)'}</span>
                       <span className="text-green-500 animate-pulse bg-green-500/10 px-2 py-1 rounded">72 BPM</span>
                     </div>
-                    {/* Biểu đồ giả lập rPPG bằng CSS SVG */}
                     <div className="h-24 w-full border border-[#00f0ff]/20 bg-[#00f0ff]/5 rounded-lg flex items-center justify-center overflow-hidden relative mb-8">
                         <div className="absolute inset-0 flex items-center px-0 opacity-100 w-[200%] animate-[slide-left_2s_linear_infinite]">
                           <svg width="100%" height="100" viewBox="0 0 400 100" preserveAspectRatio="none">
@@ -686,10 +618,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
       {/* MODE: PROACTIVE SHIELD */}
       {activeTab === 'PROTECT' && (
         <div className="bg-surface border border-green-500/30 rounded-3xl p-6 md:p-10 shadow-[0_0_50px_rgba(34,197,94,0.05)] relative overflow-hidden animate-in slide-in-from-bottom-6 duration-500">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none"></div>
-          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-             {/* Cột Tải Ảnh + Info */}
              <div className="flex flex-col gap-6">
                 <div>
                   <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-3">
@@ -697,9 +626,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                      {lang === 'vi' ? 'KHIÊN CHỐNG AI (FAWKES)' : 'ANTI-AI FAWKES SHIELD'}
                   </h3>
                   <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                     {lang === 'vi' 
-                        ? 'Công nghệ Adversarial Perturbation (Nhiễu đối kháng) bơm các pixel siêu nhỏ vào ảnh gốc. Mắt thường không thể nhìn thấy sự khác biệt, nhưng nó sẽ "làm mù" thuật toán của các mô hình AI/GAN muốn trích xuất khuôn mặt bạn để làm Deepfake.' 
-                        : 'Adversarial Perturbation tech injects micro-pixels into the original image. Invisible to the naked eye, it completely shatters AI models attempting to extract your face for Deepfakes.'}
+                     {t.tools_protect_desc}
                   </p>
                 </div>
 
@@ -734,27 +661,9 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                       {isShielding ? (lang === 'vi' ? 'ĐANG TIÊM NHIỄU ĐỐI KHÁNG...' : 'INJECTING ADVERSARIAL NOISE...') : (lang === 'vi' ? 'KÍCH HOẠT KHIÊN TÀNG HÌNH' : 'ACTIVATE INVISIBLE SHIELD')}
                    </button>
                 )}
-                
-                {isShielding && (
-                  <div className="mt-4">
-                     <div className="flex justify-between items-center text-[10px] text-green-500 font-bold tracking-widest mb-2 font-mono">
-                        <span>{lang === 'vi' ? 'XUNG ĐỘT PIXEL' : 'PIXEL CLOAKING'}</span>
-                        <span>{shieldProgress}%</span>
-                     </div>
-                     <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-full bg-green-500 transition-all duration-100 ease-out relative" style={{ width: `${shieldProgress}%` }}>
-                           <div className="absolute top-0 right-0 w-8 h-full bg-white/50 blur-sm"></div>
-                        </div>
-                     </div>
-                  </div>
-                )}
              </div>
 
-             {/* Cột Màn hình Preview / So sánh */}
              <div className="bg-black border border-white/5 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center min-h-[400px]">
-                {/* Canvas ẩn để xử lý ảnh thuật toán */}
-                <canvas ref={canvasRef} className="hidden" />
-                
                 {!shieldImage ? (
                    <div className="text-gray-600 flex flex-col items-center max-w-[200px] text-center p-8">
                      <ShieldCheck size={48} className="text-gray-800 mb-4 opacity-50" />
@@ -769,32 +678,6 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                         alt="Preview" 
                         className={`max-w-full max-h-[500px] object-contain ${isShielding ? 'opacity-50 grayscale' : 'opacity-100'} transition-all duration-300`} 
                       />
-                      
-                      {/* Hiệu ứng Matrix/Lưới khi đang xử lý */}
-                      {isShielding && (
-                         <div className="absolute inset-0 opacity-30 animate-pulse mix-blend-overlay" style={{ background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #22c55e 2px, #22c55e 4px)' }}></div>
-                      )}
-                      {isShielding && (
-                         <div style={{ animation: "scan 2s linear infinite" }} className="absolute top-0 left-0 w-full h-1 bg-green-500 shadow-[0_0_20px_2px_#22c55e]"></div>
-                      )}
-
-                      {/* Hiệu ứng Mắt GAN sau khi bị làm nhiễu */}
-                      {protectedDataUrl && (
-                        <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md border border-green-500/50 p-3 rounded-xl pointer-events-none transform transition-transform group-hover:scale-105 z-20">
-                           <div className="flex items-center gap-2 mb-2">
-                             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                             <span className="text-[10px] text-green-500 font-bold tracking-widest uppercase">{lang === 'vi' ? 'Góc nhìn của GAN AI' : 'GAN AI VIEW'}</span>
-                           </div>
-                           <div className="w-24 h-24 border border-green-500/30 overflow-hidden relative">
-                               <img src={protectedDataUrl} className="w-full h-full object-cover blur-[8px] contrast-200 saturate-200 filter" alt="GAN view" />
-                               <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                                  <span className="text-red-500 font-black text-[10px] bg-black/80 px-1 border border-red-500/50 transform -rotate-12">FACE NOT FOUND</span>
-                               </div>
-                           </div>
-                        </div>
-                      )}
-
-                      {/* Nút Tải xuống */}
                       {protectedDataUrl && (
                          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20">
                             <a 

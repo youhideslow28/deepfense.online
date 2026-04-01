@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Target, MessageSquare, Timer, AlertTriangle, ShieldCheck, XCircle, Send, Play } from 'lucide-react';
 import { Language } from '../types';
+import { TRANSLATIONS } from '../data';
 
 interface SimulatorProps {
   lang: Language;
@@ -13,6 +14,7 @@ interface ChatMessage {
 }
 
 const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
+  const t = TRANSLATIONS[lang];
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputStr, setInputStr] = useState('');
   const [started, setStarted] = useState(false);
@@ -43,7 +45,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
     setStatus('playing');
     setTimer(0);
     setMessages([
-      { id: Date.now(), sender: 'ai', text: lang === 'vi' ? 'Chào em, anh là Hoàng (Giám đốc). Vẫn giữ quỹ cty đúng ko? Anh đang họp kẹt tiền thanh toán đối tác. Chuyển gấp 50 triệu vào STK: 123456789 - TRAN VAN HOANG - Vietcombank. Nhanh lên nhé.' : 'Hi, it\'s Hoang (CEO). Need 50M urgently to pay a partner invoice, I am in a meeting. Transfer to: 123456789 - TRAN VAN HOANG - Vietcombank right now.' }
+      { id: Date.now(), sender: 'ai', text: lang === 'vi' ? 'Chào em, anh là Hoàng (Giám đốc). Vẫn giữ quỹ cty đúng ko? Anh đang họp kẹt tiền thanh toán đối tác. Chuyển gấp 50 triệu vào STK: 123456789 - TRAN VAN HOANG - Vietcombank. Nhanh lên nhé.' : 'Hi, it\'s Hoang (CEO). Need 50M VND urgently to pay a partner invoice, I am in a meeting. Transfer to: 123456789 - TRAN VAN HOANG - Vietcombank right now.' }
     ]);
   };
 
@@ -79,7 +81,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
             setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'ai', text: lang === 'vi' ? "Lỗi kết nối. Thử lại sau." : "Connection error." }]);
         }
     } catch (e) {
-        setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'ai', text: "Lỗi kết nối API." }]);
+        setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'ai', text: lang === 'vi' ? "Lỗi kết nối API." : "API Connection error." }]);
     } finally {
         setIsTyping(false);
     }
@@ -99,12 +101,10 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
       <div className="border-l-4 border-purple-500 pl-4 mb-8">
         <h1 className="text-4xl font-black text-white uppercase tracking-wider mb-2 flex items-center gap-3">
           <Target className="text-purple-500" size={36} />
-          {lang === 'vi' ? 'BẪY NHẬN THỨC (MÔ PHỎNG)' : 'CONFIDENCE SIMULATOR'}
+          {t.simulator_title}
         </h1>
         <p className="text-gray-400 max-w-2xl">
-          {lang === 'vi' 
-            ? 'Đo lường thời gian sập bẫy của bạn. Hệ thống sẽ đóng vai kẻ lừa đảo bằng kịch bản AI tạo ra.' 
-            : 'Measure your trap time. The system will act as a scammer using an AI-generated scenario.'}
+          {t.simulator_desc}
         </p>
       </div>
 
@@ -116,20 +116,20 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
              <Timer size={48} className={status === 'playing' ? 'text-yellow-500 animate-pulse' : 'text-gray-500'} />
              <div className="text-6xl font-mono mt-4 mb-2 font-black text-white">{timer}s</div>
              <p className="text-gray-400 text-sm uppercase tracking-widest text-center">
-                {lang === 'vi' ? 'THỜI GIAN NHẬN DIỆN' : 'DETECTION TIME'}
+                {t.detection_time}
              </p>
            </div>
 
            {status === 'idle' && (
              <div className="bg-purple-900/20 border border-purple-500/30 rounded-2xl p-6 text-center">
-               <h3 className="font-bold text-white mb-2">Sẵn sàng thử thách?</h3>
-               <p className="text-sm text-gray-300 mb-6">Bạn sẽ nhận được tin nhắn từ "Sếp". Hãy tỉnh táo quyết định bước tiếp theo.</p>
+               <h3 className="font-bold text-white mb-2">{lang === 'vi' ? 'Sẵn sàng thử thách?' : 'Ready for the challenge?'}</h3>
+               <p className="text-sm text-gray-300 mb-6">{lang === 'vi' ? 'Bạn sẽ nhận được tin nhắn từ "Sếp". Hãy tỉnh táo quyết định bước tiếp theo.' : 'You will receive a message from the "CEO". Stay sharp and decide your next move.'}</p>
                <button 
                  onClick={startSimulation}
                  className="w-full bg-purple-600 hover:bg-purple-500 text-white p-4 rounded-xl font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
                >
                  <Play size={20} />
-                 Start Simulation
+                 {t.start_sim}
                </button>
              </div>
            )}
@@ -137,24 +137,28 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
            {status === 'failed' && (
              <div className="bg-red-900/20 border border-red-500/30 rounded-2xl p-6 text-center animate-in zoom-in fade-in">
                <XCircle size={48} className="text-red-500 mx-auto mb-4" />
-               <h3 className="text-2xl font-bold text-white mb-2">BẠN ĐÃ MẮC BẪY</h3>
-               <p className="text-gray-300 mb-4">Bạn mất <strong className="text-red-400">{timer} giây</strong> để quy hàng trước kịch bản tâm lý.</p>
+               <h3 className="text-2xl font-bold text-white mb-2">{t.trap_msg}</h3>
+               <p className="text-gray-300 mb-4">
+                  {lang === 'vi' ? 'Bạn mất' : 'It took you'} <strong className="text-red-400">{timer} {lang === 'vi' ? 'giây' : 'seconds'}</strong> {lang === 'vi' ? 'để quy hàng trước kịch bản tâm lý.' : 'to fall for the script.'}
+               </p>
                <div className="bg-black/50 p-4 rounded-xl text-left border border-white/10 text-sm text-gray-400">
-                  ⚠️ <strong>Bài học:</strong> Kẻ lừa đảo tạo ra áp lực <strong className="text-red-400">thời gian</strong> và sự uy quyền (Giám đốc) khiến não bộ bỏ qua bước xác minh.
+                  ⚠️ <strong>{lang === 'vi' ? 'Bài học:' : 'Lesson:'}</strong> {t.trap_lesson}
                </div>
-               <button onClick={startSimulation} className="mt-4 text-purple-400 hover:text-white underline underline-offset-4 text-sm font-bold uppercase">Thử lại (Retest)</button>
+               <button onClick={startSimulation} className="mt-4 text-purple-400 hover:text-white underline underline-offset-4 text-sm font-bold uppercase">{t.retest}</button>
              </div>
            )}
 
            {status === 'success' && (
              <div className="bg-green-900/20 border border-green-500/30 rounded-2xl p-6 text-center animate-in zoom-in fade-in">
                <ShieldCheck size={48} className="text-green-500 mx-auto mb-4" />
-               <h3 className="text-2xl font-bold text-white mb-2">XÁC MINH THÀNH CÔNG</h3>
-               <p className="text-gray-300 mb-4">Bạn chỉ mất <strong className="text-green-400">{timer} giây</strong> để nhận diện ra đây là một kịch bản lừa đảo qua mạng.</p>
+               <h3 className="text-2xl font-bold text-white mb-2">{t.verify_msg}</h3>
+               <p className="text-gray-300 mb-4">
+                  {lang === 'vi' ? 'Bạn chỉ mất' : 'It only took you'} <strong className="text-green-400">{timer} {lang === 'vi' ? 'giây' : 'seconds'}</strong> {lang === 'vi' ? 'để nhận diện ra đây là một kịch bản lừa đảo qua mạng.' : 'to recognize this scam script.'}
+               </p>
                <div className="bg-black/50 p-4 rounded-xl text-left border border-white/10 text-sm text-gray-400">
-                  ✅ <strong>Lý do đúng:</strong> Bạn không bị áp lực thời gian (tạo ra bởi đối tượng lừa đảo) khống chế và báo cáo kịp thời thủ đoạn lạ.
+                  ✅ <strong>{lang === 'vi' ? 'Lý do đúng:' : 'Reason:'}</strong> {t.verify_reason}
                </div>
-               <button onClick={startSimulation} className="mt-4 text-purple-400 hover:text-white underline underline-offset-4 text-sm font-bold uppercase">Chơi lại (Replay)</button>
+               <button onClick={startSimulation} className="mt-4 text-purple-400 hover:text-white underline underline-offset-4 text-sm font-bold uppercase">{t.replay}</button>
              </div>
            )}
         </div>
@@ -166,13 +170,13 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center font-bold text-white">TVH</div>
               <div>
-                <h3 className="font-bold text-white">Trần Văn Hoàng (CEO)</h3>
+                <h3 className="font-bold text-white">{lang === 'vi' ? 'Trần Văn Hoàng (CEO)' : 'Hoang Tran (CEO)'}</h3>
                 <p className="text-xs text-green-400">Online</p>
               </div>
             </div>
             {status === 'playing' && (
               <div className="flex gap-2">
-                 <button onClick={handleReport} className="bg-green-600/20 hover:bg-green-600 text-green-500 hover:text-white border border-green-500/50 hover:border-green-600 text-xs px-3 py-1.5 rounded uppercase font-bold transition-colors">Báo cáo Scam</button>
+                 <button onClick={handleReport} className="bg-green-600/20 hover:bg-green-600 text-green-500 hover:text-white border border-green-500/50 hover:border-green-600 text-xs px-3 py-1.5 rounded uppercase font-bold transition-colors">{t.report_scam}</button>
               </div>
             )}
           </div>
@@ -190,7 +194,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
              ))}
              {isTyping && (
                 <div className="flex justify-start">
-                   <div className="bg-gray-800 text-gray-400 text-xs p-2 rounded-2xl">...đang gõ</div>
+                   <div className="bg-gray-800 text-gray-400 text-xs p-2 rounded-2xl">{lang === 'vi' ? '...đang gõ' : '...typing'}</div>
                 </div>
              )}
              <div ref={chatEndRef}></div>
@@ -206,32 +210,30 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                       onChange={(e) => setInputStr(e.target.value)} 
                       onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                       disabled={isTyping}
-                      placeholder="Trò chuyện hoặc bắt bẻ..." 
+                      placeholder={t.chat_placeholder} 
                       className="flex-grow bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 transition-colors"
                     />
-                    <button onClick={handleSend} disabled={isTyping} className="absolute right-4 text-purple-500 hover:text-purple-400 uppercase text-xs font-bold">GỬI</button>
-                    {/* Fake typing protection for simulation feel */}
+                    <button onClick={handleSend} disabled={isTyping} className="absolute right-4 text-purple-500 hover:text-purple-400 uppercase text-xs font-bold">{lang === 'vi' ? 'GỬI' : 'SEND'}</button>
                   </div>
                   
-                  {/* Action Buttons to test psychology */}
                   <div className="flex gap-2 justify-end">
                     <button 
                       onClick={handleTransfer}
                       className="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded-xl text-sm font-bold uppercase transition-colors"
                     >
-                      XÁC NHẬN CHUYỂN
+                      {t.transfer_btn}
                     </button>
                     <button 
                       onClick={handleReport}
                       className="bg-black border border-white/20 hover:border-green-500 text-gray-300 hover:text-green-500 px-6 py-2 rounded-xl text-sm font-bold uppercase transition-colors"
                     >
-                      TỪ CHỐI / BÁO CÁO
+                      {t.reject_btn}
                     </button>
                   </div>
                 </div>
              ) : (
                 <div className="text-center text-gray-500 text-sm p-2 uppercase font-mono tracking-wider">
-                  {status === 'idle' ? 'KHUNG CHAT CHƯA KÍCH HOẠT' : 'PHIÊN GIAO DỊCH ĐÃ KẾT THÚC'}
+                  {status === 'idle' ? t.chat_inactive : t.session_ended}
                 </div>
              )}
           </div>

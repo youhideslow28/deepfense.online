@@ -180,29 +180,29 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
               </ul>
           </div>
 
-          {/* Solution 2: File Analysis Agent */}
-          <div className="bg-surface border border-gray-800 rounded-xl p-6 md:p-8 hover:border-blue-500 transition-colors group relative overflow-hidden">
+          {/* Solution 2: Browser Extension */}
+          <div className="bg-surface border border-gray-800 rounded-xl p-6 md:p-8 hover:border-emerald-500 transition-colors group relative overflow-hidden">
               <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Shield size={150} />
+                  <MonitorSmartphone size={150} />
               </div>
               <div className="flex items-center gap-4 mb-6">
-                  <div className="bg-blue-500/20 p-3 rounded-full text-blue-400 shrink-0">
-                      <FileSearch size={32} />
+                  <div className="bg-emerald-500/20 p-3 rounded-full text-emerald-400 shrink-0">
+                      <MonitorSmartphone size={32} />
                   </div>
                   <div>
-                      <h3 className="text-xl md:text-2xl font-bold text-white">SMART AGENT</h3>
-                      <p className="text-xs text-blue-400 font-mono">{lang === 'vi' ? 'PHÂN TÍCH CHUYÊN SÂU' : 'IN-DEPTH ANALYSIS'}</p>
+                      <h3 className="text-xl md:text-2xl font-bold text-white">DEEPFENSE EXTENSION</h3>
+                      <p className="text-xs text-emerald-400 font-mono">{lang === 'vi' ? 'BROWSER GUARDIAN' : 'BROWSER GUARDIAN'}</p>
                   </div>
               </div>
               <p className="text-gray-300 mb-6 leading-relaxed text-sm md:text-base">
                   {lang === 'vi' 
-                    ? 'Được vận hành bởi lõi mô hình ngôn ngữ lớn Gemini 2.5 Flash siêu tốc, Smart Agent không chỉ là một công cụ quét file thông thường. Bạn nhận được video tống tiền? Nó sẽ bóc tách siêu dữ liệu từng frame ảnh. Bạn bị lôi kéo vào nhóm chat dụ dỗ đầu tư? AI sẽ phân tích quy luật thao túng tâm lý học tội phạm của kẻ gian và bẻ gãy kịch bản lừa đảo ngay lập tức.'
-                    : 'Powered by the ultra-fast Gemini 2.5 Flash LLM core, Smart Agent is more than just a file scanner. Received a blackmail video? It extracts metadata frame-by-frame. Pulled into a shady investment group chat? The AI analyzes criminal psychological manipulation patterns and shatters the scam script instantly.'}
+                    ? 'Một tiện ích mở rộng (Extension) mạnh mẽ dành cho Chrome, Edge và Safari. AI sẽ hoạt động như một lớp màng lọc bảo vệ trực tiếp trên trình duyệt của bạn, tự động phân tích mọi nội dung đa phương tiện khi bạn lướt web, giúp ngăn chặn lừa đảo ngay từ nguồn phát.'
+                    : 'A powerful browser extension for Chrome, Edge, and Safari. AI acts as a direct filtering shield on your browser, automatically analyzing all multimedia content as you surf the web, stopping scams at the source.'}
               </p>
               <ul className="space-y-3 text-sm text-gray-400">
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Tốc độ phản xạ siêu tốc nhờ cấu trúc Gemini 2.5 Flash' : 'Ultra-fast reflexes powered by Gemini 2.5 Flash architecture'}</li>
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Năng lực Multi-modal: Quét chéo Đồng thời Text, Video, Âm thanh' : 'Multi-modal capability: Cross-scan Text, Video, Audio simultaneously'}</li>
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Truy xuất nguồn gốc & Chữ ký số C2PA (Pháp y kỹ thuật số)' : 'Digital Forensics: Provenance & C2PA Signature Extraction'}</li>
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Quét Deepfake thời gian thực trên YouTube, Facebook, X (Twitter)' : 'Real-time Deepfake scanning on YouTube, Facebook, X'}</li>
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Cảnh báo Website giả mạo cơ quan nhà nước & trang lừa đảo' : 'Anti-Phishing: Alerts for fake government & scam websites'}</li>
+                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Tích hợp kiểm tra nguồn gốc hình ảnh qua chữ ký số C2PA' : 'Integrated provenance check via C2PA digital signatures'}</li>
               </ul>
           </div>
       </div>
@@ -270,9 +270,9 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                     },
                     {
                         time: "Q4/2027",
-                        title: lang === 'vi' ? 'AI Trợ lý ảo' : 'Virtual AI Assistant',
-                        desc: lang === 'vi' ? 'Smart Agent phân tích chuyên sâu file media.' : 'Smart Agent for media authentication.',
-                        icon: <Cpu size={16} className="text-pink-400"/>,
+                        title: lang === 'vi' ? 'Hệ sinh thái Toàn diện' : 'Complete Ecosystem',
+                        desc: lang === 'vi' ? 'Kết nối Deepfense trên mọi thiết bị và nền tảng.' : 'Deepfense connected across all devices.',
+                        icon: <SmartphoneNfc size={16} className="text-pink-400"/>,
                         borderClass: "border-pink-500",
                         textClass: "text-pink-400",
                         hoverClass: "hover:border-pink-500/50",

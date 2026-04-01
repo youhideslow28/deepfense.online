@@ -18,30 +18,28 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
   const facts = FUN_FACTS[lang];
   const navigate = useNavigate();
   
-  const [protectedUsers, setProtectedUsers] = useState(0); // Đổi tên biến cho rõ nghĩa
-  const [totalAttempts, setTotalAttempts] = useState(0);   // Biến mới: Tổng số lượt chơi
+  const [protectedUsers, setProtectedUsers] = useState(0); 
+  const [totalAttempts, setTotalAttempts] = useState(0);   
   
   const [factIndex, setFactIndex] = useState(0);
   const [showMiniGame, setShowMiniGame] = useState(false);
-  const [liveNews, setLiveNews] = useState<NewsItem[]>(NEWS_DATA[lang]); // State lưu tin tức realtime
+  const [liveNews, setLiveNews] = useState<NewsItem[]>(NEWS_DATA[lang]); 
   const [displayedNews, setDisplayedNews] = useState<NewsItem[]>([]);
   const [flippingIndex, setFlippingIndex] = useState<number | null>(null);
 
-  // --- FETCH REAL-TIME NEWS (TỰ ĐỘNG HÓA) ---
+  // --- FETCH REAL-TIME NEWS ---
   useEffect(() => {
     let ignore = false;
-    setLiveNews(NEWS_DATA[lang]); // Reset về tin mặc định khi đổi ngôn ngữ
+    setLiveNews(NEWS_DATA[lang]); 
     setDisplayedNews(NEWS_DATA[lang].slice(0, 6)); 
 
     const fetchLiveNews = async () => {
       try {
-        // --- BỘ NHỚ ĐỆM (CACHE) ĐỂ CHỐNG DDOS API MIỄN PHÍ ---
         const cacheKey = `news_cache_${lang}`;
         const cacheTimeKey = `news_cache_time_${lang}`;
         const cachedNews = sessionStorage.getItem(cacheKey);
         const cachedTime = sessionStorage.getItem(cacheTimeKey);
         
-        // Chỉ tái sử dụng tin tức nếu chưa qua 15 phút (900,000 ms)
         if (cachedNews && cachedTime && (Date.now() - parseInt(cachedTime) < 900000)) {
              const parsedData = JSON.parse(cachedNews);
              setLiveNews(parsedData);
@@ -49,14 +47,12 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
              return;
         }
 
-        // Tìm kiếm trên Google News theo ngôn ngữ
-        const query = lang === 'vi' ? 'deepfake lừa đảo' : 'deepfake scam';
+        const queryStr = lang === 'vi' ? 'deepfake lừa đảo' : 'deepfake scam';
         const langCode = lang === 'vi' ? 'vi' : 'en-US';
         const gl = lang === 'vi' ? 'VN' : 'US';
         const ceid = lang === 'vi' ? 'VN:vi' : 'US:en';
         
-        // Dùng rss2json API (miễn phí) để chuyển RSS thành JSON và vượt qua CORS
-        const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=${langCode}&gl=${gl}&ceid=${ceid}`;
+        const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(queryStr)}&hl=${langCode}&gl=${gl}&ceid=${ceid}`;
         const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
         
         const response = await fetch(apiUrl);
@@ -66,20 +62,20 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
           const formattedNews = data.items.map((item: { pubDate: string; description: string; title: string; link: string }) => {
             const pubDate = new Date(item.pubDate);
             const dateStr = `${pubDate.getDate()}/${pubDate.getMonth() + 1}/${pubDate.getFullYear()}`;
-            const cleanDesc = item.description.replace(/<[^>]*>?/gm, '').substring(0, 110) + '...'; // Lọc bỏ HTML
+            const cleanDesc = item.description.replace(/<[^>]*>?/gm, '').substring(0, 110) + '...';
 
             return {
-              tag: lang === 'vi' ? "TIN MỚI (LIVE)" : "LATEST",
-              title: item.title.split(' - ')[0], // Cắt bỏ tên tòa soạn ở đuôi
+              tag: t.latest_live,
+              title: item.title.split(' - ')[0], 
               date: dateStr,
-              loss: lang === 'vi' ? "Chưa xác định" : "TBD",
+              loss: t.tbd,
               desc: cleanDesc,
               url: item.link
             };
           });
+
           if (ignore) return;
           
-          // Sắp xếp tin tức theo thời gian thực (Giảm dần)
           const sortedNews = [...formattedNews].sort((a, b) => {
               const dateA = a.date.split('/').reverse().join('');
               const dateB = b.date.split('/').reverse().join('');
@@ -87,17 +83,16 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
           });
 
           setLiveNews(sortedNews);
-          setDisplayedNews(sortedNews.slice(0, 6)); // Lấy chính xác 6 tin mới nhất
-          // Lưu vào Session Storage
+          setDisplayedNews(sortedNews.slice(0, 6)); 
           try {
             sessionStorage.setItem(cacheKey, JSON.stringify(formattedNews));
             sessionStorage.setItem(cacheTimeKey, Date.now().toString());
           } catch (storageError) {
-            console.warn("Trình duyệt ẩn danh hoặc bộ nhớ đầy, bỏ qua tính năng Cache.");
+            console.warn("Cache storage error.");
           }
         }
       } catch (error) {
-        console.error("Lỗi lấy tin tức tự động, sử dụng dữ liệu dự phòng.", error);
+        console.error("News fetch error.", error);
       }
     };
 
@@ -105,9 +100,9 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     return () => {
       ignore = true;
     };
-  }, [lang]);
+  }, [lang, t.latest_live, t.tbd]);
 
-  // --- FIREBASE: LẮNG NGHE SỐ LƯỢNG NGƯỜI THAM GIA (REAL-TIME) ---
+  // --- FIREBASE STATS ---
   useEffect(() => {
     let isMounted = true;
     const fetchStats = async () => {
@@ -122,7 +117,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         if (!isMounted) return;
         setTotalAttempts(snapTotal.data().count);
       } catch (error) {
-        console.error("Lỗi đếm số liệu:", error);
+        console.error("Stats count error:", error);
       }
     };
     fetchStats();
@@ -131,11 +126,11 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     };
   }, []);
 
-  // --- AUTO TICKER EFFECT CẢNH BÁO & KIẾN THỨC ---
+  // --- AUTO TICKER EFFECT ---
   useEffect(() => {
     let isMounted = true;
     let currentSlot = 0;
-    let newsPoolIndex = 6; // Bắt đầu lấy từ tin thứ 7 trong pool
+    let newsPoolIndex = 6; 
 
     const newsTimer = setInterval(() => {
         if (!isMounted || liveNews.length <= 6) return;
@@ -161,7 +156,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
         currentSlot++;
         newsPoolIndex++;
-    }, 5000); // Đổi tin mỗi 5 giây để người dùng kịp đọc
+    }, 5000);
 
     const factTimer = setInterval(() => {
         if (!isMounted) return;
@@ -175,16 +170,14 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     };
   }, [liveNews, facts.length]);
 
-  // --- XỬ LÝ HIỂN THỊ MINI GAME KHI BẬT MÙA HÈ ---
   useEffect(() => {
     if (season === 'SUMMER') {
-      setShowMiniGame(true); // Đem mini game trở lại
+      setShowMiniGame(true);
     } else {
       setShowMiniGame(false);
     }
   }, [season]);
 
-  // Dữ liệu Kiến thức (Lấy 2 items/lượt)
   const displayFacts = [
       facts[factIndex % facts.length],
       facts[(factIndex + 1) % facts.length]
@@ -198,7 +191,6 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             {lang === 'vi' ? 'DỰ ÁN HUẤN LUYỆN ' : 'DEEPFAKE DETECTION '}
             <span className="text-primary block md:inline">{lang === 'vi' ? 'NHẬN DẠNG DEEPFAKE' : 'TRAINING PROJECT'}</span>
           </h1>
-          {/* LIVE COUNTER BADGE */}
           <div className="flex flex-wrap gap-3 mb-6">
             {protectedUsers > 0 && (
                 <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 text-primary px-4 py-1.5 rounded-full text-xs font-bold animate-pulse">
@@ -228,7 +220,6 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         <div className="lg:col-span-5 h-[300px] md:h-[380px] w-full max-w-full overflow-hidden"><AnalyticsChart lang={lang} /></div>
       </div>
 
-      {/* MINI GAME (HIỂN THỊ KHI BẬT MÙA HÈ VÀ CHƯA BỊ TẮT) */}
       {season === 'SUMMER' && showMiniGame && (
           <DeepfakeRunner lang={lang} onClose={() => setShowMiniGame(false)} />
       )}
@@ -248,58 +239,57 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 </div>
              </div>
              <div className="grid grid-cols-1 md:grid-cols-2">
-                {displayedNews.map((news, index) => {
-                  if (!news) return null;
-                  return (
-                    <a href={news.url} target="_blank" rel="noopener noreferrer" key={`${news.url}-${index}`} className={`p-6 border-b border-r border-white/5 relative flex flex-col hover:bg-white/5 group/news cursor-pointer transition-all duration-300 transform origin-center min-h-[140px] ${flippingIndex === index ? 'scale-x-0 opacity-0' : 'scale-x-100 opacity-100'}`}>
-                        <div className="flex items-center justify-between mb-3">
-                            <span className="bg-secondary/10 text-secondary text-[8px] font-black px-2 py-0.5 rounded tracking-widest border border-secondary/20 uppercase flex items-center gap-1"><span className="w-1.5 h-1.5 bg-secondary rounded-full animate-pulse"></span>{news.tag}</span>
-                            <span className="text-[9px] text-gray-500 font-mono italic">{news.date}</span>
-                        </div>
-                        <h3 className="text-base font-bold text-white mb-2 leading-snug group-hover/news:text-secondary transition-colors line-clamp-2">{news.title}</h3>
-                        <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed mb-4">{news.desc}</p>
-                        <div className="mt-auto flex items-center justify-between">
-                          <div className="text-[10px] text-secondary font-black uppercase tracking-tight">{lang === 'vi' ? 'THIỆT HẠI' : 'LOSS'}: {news.loss}</div>
-                          <ExternalLink size={12} className="text-gray-600 group-hover/news:text-white transition-colors" />
-                        </div>
-                    </a>
-                  )
-                })}
+                {displayedNews.map((item, idx) => (
+                  <a 
+                    key={idx} 
+                    href={item.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className={`p-6 border-b border-white/5 hover:bg-white/[0.02] transition-all flex flex-col gap-3 group relative overflow-hidden ${flippingIndex === idx ? 'animate-pulse opacity-50' : ''}`}
+                  >
+                    <div className="flex items-center justify-between">
+                       <span className="bg-red-500/10 text-red-500 text-[9px] font-bold px-2 py-0.5 rounded tracking-widest uppercase">{item.tag}</span>
+                       <span className="text-gray-600 text-[10px] font-mono">{item.date}</span>
+                    </div>
+                    <h3 className="text-white font-bold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">{item.title}</h3>
+                    <p className="text-gray-500 text-[11px] leading-relaxed line-clamp-2">{item.desc}</p>
+                    <div className="flex items-center justify-between mt-auto pt-2">
+                       <span className="text-[9px] text-gray-400 uppercase tracking-tighter">{lang === 'vi' ? 'Thiệt hại:' : 'Loss:'} <span className="text-red-400 font-bold">{item.loss}</span></span>
+                       <ExternalLink size={12} className="text-gray-700 group-hover:text-primary" />
+                    </div>
+                  </a>
+                ))}
              </div>
         </div>
+
         <div className="lg:col-span-4 flex flex-col gap-6">
-             <div className="bg-secondary/5 border border-secondary/20 rounded-3xl p-6 shadow-xl relative overflow-hidden group">
-                 <h4 className="text-secondary font-black text-[10px] mb-6 uppercase tracking-widest border-b border-secondary/10 pb-3 flex items-center gap-2">
-                    <PhoneCall size={14} /> {t.hotline}
-                 </h4>
-                 <div className="space-y-4">
-                    <div className="flex justify-between items-center bg-black/60 p-4 rounded-2xl border border-white/5 hover:border-secondary/30 transition-colors">
-                        <span className="text-[10px] text-gray-400 font-bold uppercase">{t.police}</span>
-                        <span className="text-secondary font-black text-md tracking-tighter">113</span>
+             <div className="bg-surface border border-white/5 rounded-3xl p-6 flex-grow shadow-2xl relative overflow-hidden group">
+                <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="bg-primary/20 p-2 rounded-lg"><Lightbulb className="text-primary" size={20} /></div>
+                        <h2 className="text-white font-black text-sm tracking-widest uppercase leading-none">{t.knowledge}</h2>
                     </div>
-                    <div className="flex justify-between items-center bg-black/60 p-4 rounded-2xl border border-white/5 hover:border-secondary/30 transition-colors">
-                        <span className="text-[10px] text-gray-400 font-bold uppercase">{t.cyber_security}</span>
-                        <span className="text-secondary font-black text-md tracking-tighter">069.219.4053</span>
+                    <div className="space-y-6">
+                        {displayFacts.map((fact, fidx) => (
+                          <div key={fidx} className="animate-in slide-in-from-right duration-700 delay-150">
+                             <div className="text-[10px] text-primary font-bold tracking-[0.2em] uppercase mb-2">FACT #{factIndex + fidx + 1}</div>
+                             <h4 className="text-white font-black text-lg mb-2 uppercase leading-tight italic">{fact.title}</h4>
+                             <p className="text-gray-400 text-xs leading-relaxed">{fact.content}</p>
+                          </div>
+                        ))}
                     </div>
-                 </div>
+                </div>
              </div>
-             <div className="bg-primary/5 border border-primary/20 rounded-3xl p-6 flex-1 shadow-xl relative overflow-hidden flex flex-col">
-                 <h4 className="text-primary font-black text-[10px] mb-4 uppercase tracking-widest border-b border-primary/10 pb-3 flex items-center shrink-0">
-                    <span className="flex items-center gap-2"><Lightbulb size={14} /> {t.knowledge}</span>
-                 </h4>
-                 <div key={`fact-ticker-${factIndex}`} className="animate-in fade-in slide-in-from-right-4 duration-500 flex-1 flex flex-col justify-center gap-4">
-                    {displayFacts.map((fact, idx) => (
-                        <div key={idx} className="text-[13px] text-gray-400 flex flex-col gap-3 bg-black/40 p-5 rounded-2xl border border-white/5 shadow-inner">
-                            <div className="flex items-center gap-4">
-                                <div className="bg-primary/20 h-10 w-10 rounded-xl flex items-center justify-center shrink-0">
-                                    <ShieldCheck size={20} className="text-primary" />
-                                </div>
-                                <strong className="text-gray-200 uppercase tracking-widest text-sm leading-tight">{fact?.title}</strong>
-                            </div>
-                            <p className="leading-relaxed text-xs text-gray-300">{fact?.content}</p>
-                        </div>
-                    ))}
-                 </div>
+
+             <div onClick={() => navigate('/crisis')} className="bg-red-600 rounded-3xl p-6 flex items-center justify-between group cursor-pointer hover:bg-red-500 transition-all shadow-lg shadow-red-600/20">
+                <div className="flex items-center gap-4">
+                    <div className="bg-white/20 p-3 rounded-2xl text-white group-hover:scale-110 transition-transform"><PhoneCall size={24} /></div>
+                    <div>
+                        <div className="text-white font-black text-sm tracking-widest uppercase leading-none">{t.hotline}</div>
+                        <div className="text-white/80 text-[10px] mt-1 font-mono uppercase tracking-tighter italic">24/7 EMERGENCY RESPONSE</div>
+                    </div>
+                </div>
+                <div className="text-white/40 group-hover:text-white transition-colors"><AlertTriangle size={24} /></div>
              </div>
         </div>
       </div>

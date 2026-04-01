@@ -25,6 +25,12 @@ export interface TranslationData {
   police: string; cyber_security: string; footer_rights: string; agent_welcome: string;
   agent_placeholder: string; result_pass: string; result_fail: string; label_name: string;
   label_email: string; label_attachment: string; label_desc: string;
+  simulator_title: string; simulator_desc: string; detection_time: string; start_sim: string;
+  trap_msg: string; trap_lesson: string; verify_msg: string; verify_reason: string;
+  retest: string; replay: string; report_scam: string; chat_placeholder: string;
+  transfer_btn: string; reject_btn: string; chat_inactive: string; session_ended: string;
+  crisis_title: string; crisis_desc: string; btn_report_pdf: string; btn_first_aid: string;
+  btn_hotspot: string; report_locked: string; latest_live: string; tbd: string;
 }
 
 export const TRANSLATIONS: Record<Language, TranslationData> = {
@@ -56,7 +62,31 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     label_name: "Tên gọi (Nickname)",
     label_email: "Địa chỉ Email",
     label_attachment: "Đính kèm (Ảnh/Video)",
-    label_desc: "Chi tiết sự cố"
+    label_desc: "Chi tiết sự cố",
+    simulator_title: "BẪY NHẬN THỨC (MÔ PHỎNG)",
+    simulator_desc: "Đo lường thời gian sập bẫy của bạn. Hệ thống sẽ đóng vai kẻ lừa đảo bằng kịch bản AI tạo ra.",
+    detection_time: "THỜI GIAN NHẬN DIỆN",
+    start_sim: "Bắt đầu Mô phỏng",
+    trap_msg: "BẠN ĐÃ MẮC BẪY",
+    trap_lesson: "Kẻ lừa đảo tạo ra áp lực thời gian và sự uy quyền khiến não bộ bỏ qua bước xác minh.",
+    verify_msg: "XÁC MINH THÀNH CÔNG",
+    verify_reason: "Bạn không bị áp lực thời gian khống chế và báo cáo kịp thời thủ đoạn lạ.",
+    retest: "Thử lại (Retest)",
+    replay: "Chơi lại (Replay)",
+    report_scam: "Báo cáo Scam",
+    chat_placeholder: "Trò chuyện hoặc bắt bẻ...",
+    transfer_btn: "XÁC NHẬN CHUYỂN",
+    reject_btn: "TỪ CHỐI / BÁO CÁO",
+    chat_inactive: "KHUNG CHAT CHƯA KÍCH HOẠT",
+    session_ended: "PHIÊN GIAO DỊCH ĐÃ KẾT THÚC",
+    crisis_title: "TRUNG TÂM ỨNG CỨU",
+    crisis_desc: "Cổng hỗ trợ khẩn cấp nạn nhân của tội phạm công nghệ cao và lừa đảo Deepfake.",
+    btn_report_pdf: "Đơn Tố Giác (PDF)",
+    btn_first_aid: "Sơ Cứu Tâm Lý",
+    btn_hotspot: "Bản Đồ Điểm Nóng",
+    report_locked: "Tính năng này hiện chỉ hỗ trợ các văn bản pháp lý tiếng Việt.",
+    latest_live: "TIN MỚI (LIVE)",
+    tbd: "Chưa xác định"
   },
   en: {
     hero_badge: "AI SECURITY MONITORING SYSTEM",
@@ -86,7 +116,31 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     label_name: "Display Name",
     label_email: "Email Address",
     label_attachment: "Attachment (Image/Video)",
-    label_desc: "Incident Details"
+    label_desc: "Incident Details",
+    simulator_title: "CONFIDENCE SIMULATOR",
+    simulator_desc: "Measure your reaction time to scams. The AI will play the role of a scammer with generated scripts.",
+    detection_time: "DETECTION TIME",
+    start_sim: "Start Simulation",
+    trap_msg: "YOU FELL FOR THE TRAP",
+    trap_lesson: "Scammers create time pressure and authority to bypass your verification logic.",
+    verify_msg: "VERIFIED SUCCESSFULLY",
+    verify_reason: "You were not manipulated by time pressure and reported the anomaly promptly.",
+    retest: "Retest",
+    replay: "Replay",
+    report_scam: "Report Scam",
+    chat_placeholder: "Chat or challenge them...",
+    transfer_btn: "CONFIRM TRANSFER",
+    reject_btn: "REJECT / REPORT",
+    chat_inactive: "CHAT BOX INACTIVE",
+    session_ended: "SESSION ENDED",
+    crisis_title: "CRISIS HUB",
+    crisis_desc: "Emergency support portal for victims of high-tech crimes and Deepfake fraud.",
+    btn_report_pdf: "Report Form (PDF)",
+    btn_first_aid: "Psychological First Aid",
+    btn_hotspot: "Hotspot Map",
+    report_locked: "This feature currently only supports Vietnamese legal documents.",
+    latest_live: "LATEST NEWS (LIVE)",
+    tbd: "TBD"
   }
 };
 
@@ -175,6 +229,38 @@ interface KnowledgeCategory {
 export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
   vi: [
     {
+      category: "LUẬT PHÁP QUỐC TẾ & LIÊN HỢP QUỐC",
+      items: [
+        { title: "Nghị quyết Liên Hợp Quốc về AI (2024)", content: "Đây là văn bản lịch sử mang tính toàn cầu đầu tiên, thúc đẩy việc phát triển các hệ thống AI an toàn, bảo mật và đáng tin cậy. Nghị quyết nhấn mạnh rằng việc phát triển AI phải đi đôi với bảo vệ quyền con người, bất kể là trong môi trường thực hay không gian số." },
+        { title: "Đạo luật Trí tuệ Nhân tạo của EU (EU AI Act)", content: "Bộ luật toàn diện nhất thế giới phân loại AI theo mức độ rủi ro. Deepfake được xếp vào nhóm bắt buộc phải minh bạch: Mọi nội dung do AI tạo ra phải được dán nhãn rõ ràng để người dân không bị nhầm lẫn." },
+        { title: "Tuyên bố Bletchley (2023)", content: "Sự cam kết của 28 quốc gia hàng đầu về công nghệ nhằm kiểm soát rủi ro từ các mô hình AI tiên tiến nhất (Frontier AI), tập trung vào việc ngăn chặn AI bị lợi dụng cho tội phạm mạng và lừa đảo quy mô lớn." }
+      ]
+    },
+    {
+      category: "QUYỀN CON NGƯỜI TRONG KỶ NGUYÊN SỐ",
+      items: [
+        { title: "Quyền bảo vệ danh dự & phẩm giá", content: "Tuyên ngôn Quốc tế về Nhân quyền khẳng định không ai bị xâm phạm đời tư hoặc bị tấn công vào danh dự. Deepfake khiêu dâm hoặc bôi nhọ là hành vi vi phạm nhân quyền nghiêm trọng nhất hiện nay." },
+        { title: "Quyền bất khả xâm phạm về hình ảnh", content: "Mỗi cá nhân có quyền kiểm soát tuyệt đối việc sử dụng khuôn mặt và giọng nói của mình. Việc thu thập dữ liệu trái phép để huấn luyện AI mà không được sự đồng ý là hành vi xâm phạm quyền tự do cá nhân." },
+        { title: "Quyền được biết (Right to Know)", content: "Trong một xã hội dân chủ, mọi người có quyền được thông báo nếu họ đang giao tiếp với một thực thể trí tuệ nhân tạo, nhằm đảm bảo tính minh bạch và tránh các hành vi thao túng tâm lý." }
+      ]
+    },
+    {
+      category: "BẢN QUYỀN & SỞ HỮU TRÍ TUỆ",
+      items: [
+        { title: "Quyền sở hữu đặc điểm cá nhân (Right of Publicity)", content: "Pháp luật hiện đại bắt đầu công nhận hình ảnh, giọng nói và phong cách cá nhân là một loại tài sản trí tuệ. Nghệ sĩ và người dùng có quyền ngăn chặn việc AI sao chép thần thái của mình để trục lợi." },
+        { title: "Dữ liệu huấn luyện trái phép", content: "Hầu hết các AI Deepfake được huấn luyện trên hàng tỷ hình ảnh quét từ Internet mà không xin phép. Đây được coi là hành vi vi phạm bản quyền dữ liệu quy mô lớn nhất trong lịch sử nhân loại." },
+        { title: "Tiêu chuẩn xác thực nội dung (C2PA)", content: "Một liên minh công nghệ toàn cầu (Adobe, Microsoft...) đã tạo ra tiêu chuẩn C2PA - nhúng 'chữ ký số' vào metadata của ảnh chụp thực tế để phân biệt tệp tin gốc với tệp tin đã qua xử lý AI." }
+      ]
+    },
+    {
+      category: "TÂM LÝ HỌC DEEPFAKE & TÁC ĐỘNG XÃ HỘI",
+      items: [
+        { title: "Xói mòn niềm tin (The Liar's Dividend)", content: "Khi Deepfake phổ biến, người ta bắt đầu nghi ngờ ngay cả những video thật. Điều này tạo cơ hội cho kẻ gian phủ nhận các bằng chứng phạm tội thực sự bằng cách tuyên bố: 'Đó chỉ là Deepfake'." },
+        { title: "Hội chứng PTSD kỹ thuật số", content: "Các nghiên cứu tâm lý học chỉ ra rằng nạn nhân của Deepfake chịu đựng những tổn thương tinh thần, sự trầm cảm và lo âu tương đương với các vụ bạo lực thể xác ngoài đời thực." },
+        { title: "Cơ chế mù quáng kỹ thuật số", content: "Bộ não con người có xu hướng tự động tin vào hình ảnh khuôn mặt người quen qua màn hình. Tội phạm lợi dụng điểm yếu sinh học này để thực hiện các cuộc gọi lừa đảo 'chớp nhoáng' khiến nạn nhân không kịp nghi ngờ." }
+      ]
+    },
+    {
       category: "CƠ BẢN VỀ DEEPFAKE & AI TẠO SINH",
       items: [
         { title: "Định nghĩa Deepfake", content: "Là sự kết hợp giữa 'Deep learning' (Học sâu) và 'Fake' (Giả mạo). Kỹ thuật này sử dụng AI để thay thế khuôn mặt, giọng nói hoặc cử chỉ của một người bằng người khác một cách chân thực." },
@@ -189,33 +275,41 @@ export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
         { title: "Zero-Shot Voice Cloning", content: "Công nghệ AI âm thanh thế hệ mới chỉ cần 3-5 giây mẫu âm thanh gốc để nhân bản hoàn hảo giọng nói của bất kỳ ai, bao gồm cả nhịp thở, ngữ điệu và các biểu cảm phức tạp như cười, khóc." },
         { title: "AI Text-to-Video (Sora & beyond)", content: "Khả năng tạo ra các video dài vài phút với độ chân thực vật lý hoàn hảo chỉ từ một dòng văn bản mô tả, đe dọa trực tiếp đến tính xác thực của camera an ninh và bằng chứng video trước tòa." }
       ]
-    },
-    {
-      category: "THAO TÚNG TÂM LÝ & KỊCH BẢN",
-      items: [
-        { title: "Tam giác thao túng: Khẩn cấp - Thẩm quyền - Cô lập", content: "Tội phạm không chỉ dùng AI. Chúng tạo tình huống cấp bách (tai nạn cấp cứu), giả danh quyền lực (Công an, Cơ quan Thuế), và yêu cầu nạn nhân ra chỗ vắng để gọi điện nhằm cô lập hoàn toàn." },
-        { title: "Đánh cắp ngữ cảnh (Context Hijacking)", content: "Sử dụng dữ liệu rò rỉ từ mạng xã hội, hacker dùng AI để nhại lại chính xác thói quen, cách xưng hô và những bí mật nhỏ nhất của người thân bạn để phá vỡ sự hoài nghi." },
-        { title: "Hội chứng mù quáng kỹ thuật số", content: "Khi não bộ tiếp nhận hình ảnh khuôn mặt người quen qua video, cơ chế phòng vệ sinh học tự động hạ xuống, khiến chúng ta bỏ qua các điểm vô lý rành rành về mặt logic hình ảnh." }
-      ]
-    },
-    {
-      category: "LUẬT PHÁP VIỆT NAM VỀ AI & AN NINH",
-      items: [
-        { title: "Luật An ninh mạng (2018) & Bộ luật Hình sự", content: "Sử dụng Deepfake để lừa đảo chiếm đoạt tài sản cấu thành tội phạm theo Điều 290 Bộ luật Hình sự. Khung hình phạt cao nhất có thể lên đến 20 năm tù hoặc tù chung thân." },
-        { title: "Nghị định 13/2023/NĐ-CP (Dữ liệu cá nhân)", content: "Khuôn mặt và giọng nói được xếp vào nhóm 'Dữ liệu cá nhân nhạy cảm'. Việc thu thập, sử dụng hình ảnh người khác để huấn luyện AI hoặc cắt ghép mà không có sự đồng ý là vi phạm pháp luật nghiêm trọng." },
-        { title: "Luật Viễn thông (sửa đổi 2023)", content: "Tăng cường định danh chính chủ (eKYC) đối với thuê bao di động. Tội phạm sử dụng Deepfake để qua mặt eKYC mở tài khoản ngân hàng rác sẽ bị truy cứu trách nhiệm hình sự về tội làm giả tài liệu của cơ quan, tổ chức." }
-      ]
-    },
-    {
-      category: "BẢO VỆ DỮ LIỆU CÁ NHÂN & PHÒNG NGỪA",
-      items: [
-        { title: "Nguyên tắc Zero-Trust (Không tin tưởng ai)", content: "Không tin tưởng bất cứ ai trên không gian mạng, kể cả người thân, nếu có yêu cầu liên quan đến tài chính hoặc dữ liệu nhạy cảm. Luôn xác thực chéo qua kênh khác (gọi điện thoại di động trực tiếp bằng mạng viễn thông GSM)." },
-        { title: "Từ khóa an toàn (Family Password)", content: "Thiết lập một mật mã hoặc câu hỏi bí mật riêng biệt với người thân trong gia đình. Kẻ lừa đảo dù có AI tạo giọng nói giống đến đâu cũng không thể biết trước từ khóa này." },
-        { title: "Hạn chế dấu chân kỹ thuật số (Digital Footprint)", content: "Hạn chế đăng tải hình ảnh khuôn mặt rõ nét, video có giọng nói gốc và thông tin cá nhân lên mạng xã hội ở chế độ công khai để tránh bị AI của tin tặc thu thập làm dữ liệu huấn luyện (Training Data)." }
-      ]
     }
   ],
   en: [
+    {
+      category: "INTERNATIONAL LAW & UNITED NATIONS",
+      items: [
+        { title: "UN Resolution on AI (2024)", content: "The first global landmark document promoting safe, secure, and trustworthy AI systems. It emphasizes that human rights must be protected alongside AI development, both online and offline." },
+        { title: "European Union AI Act", content: "The world's first comprehensive legal framework for AI. Deepfakes are classified under transparency obligations: all AI-generated content must be clearly labeled to prevent public deception." },
+        { title: "The Bletchley Declaration (2023)", content: "A commitment by 28 nations to manage risks from 'Frontier AI' models, focusing on preventing AI from being exploited for cybercrime and large-scale fraud." }
+      ]
+    },
+    {
+      category: "HUMAN RIGHTS IN THE DIGITAL AGE",
+      items: [
+        { title: "Right to Honor & Dignity", content: "The Universal Declaration of Human Rights affirms that no one shall be subjected to attacks on their reputation. Non-consensual deepfakes are among the most severe violations of digital dignity today." },
+        { title: "Inviolability of Personal Image", content: "Every individual has the right to control the use of their face and voice. Scraping biometric data without consent to train AI models is a direct violation of personal freedom." },
+        { title: "Right to Know", content: "In a democratic society, individuals have the right to be informed when they are interacting with an AI entity, ensuring transparency and preventing psychological manipulation." }
+      ]
+    },
+    {
+      category: "COPYRIGHT & INTELLECTUAL PROPERTY",
+      items: [
+        { title: "Right of Publicity", content: "Modern law is recognizing personal traits (face, voice, style) as a type of intellectual property. Creators have the legal right to prevent AI from mimicking their persona for profit." },
+        { title: "Unauthorized Training Data", content: "Most Deepfake engines are trained on billions of scraped images without permission. This is considered the largest-scale data copyright infringement in human history." },
+        { title: "C2PA Verification Standard", content: "A tech alliance (Adobe, Microsoft...) created C2PA - embedding digital provenance into camera metadata to distinguish original files from AI-manipulated ones." }
+      ]
+    },
+    {
+      category: "DEEPFAKE PSYCHOLOGY & SOCIAL IMPACT",
+      items: [
+        { title: "Erosion of Trust (The Liar's Dividend)", content: "When deepfakes become common, people start doubting real videos. This allows criminals to deny true evidence of wrongdoing by simply claiming: 'It's just a deepfake'." },
+        { title: "Digital PTSD", content: "Psychological studies indicate that deepfake victims suffer emotional trauma, depression, and anxiety levels comparable to victims of physical violence in the real world." },
+        { title: "Digital Blindness Mechanism", content: "The human brain is biologically wired to trust familiar faces on screens. Scammers exploit this exploit to conduct 'lightning-fast' fraud calls before the victim can question logic." }
+      ]
+    },
     {
       category: "DEEPFAKE & GENERATIVE AI BASICS",
       items: [
@@ -230,30 +324,6 @@ export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
         { title: "Real-time Deepfake (Zero Latency)", content: "Dark Web tools now allow seamless, live face and voice swapping on Zoom, Teams, and Zalo without lag, bypassing even basic 'wave hand in front of face' security checks." },
         { title: "Zero-Shot Voice Cloning", content: "Next-generation audio AI requires only 3 to 5 seconds of original voice samples to perfectly clone anyone's voice, replicating breathing patterns, intonations, and complex emotions (laughing, crying)." },
         { title: "AI Text-to-Video (Sora & Beyond)", content: "The capability to generate multi-minute videos with perfect physical realism from a single text prompt. This directly threatens the legal authenticity of security cameras and video evidence in court." }
-      ]
-    },
-    {
-      category: "PSYCHOLOGICAL MANIPULATION & SCAMS",
-      items: [
-        { title: "Manipulation Triangle: Urgency, Authority, Isolation", content: "Criminals don't just rely on AI. They engineer extreme urgency (accidents), spoof authority figures (Police, Tax officials), and demand victims move to a quiet place to ensure complete isolation." },
-        { title: "Context Hijacking", content: "Exploiting leaked social media data, hackers use AI to accurately mimic habits, speaking styles, nicknames, and the smallest secrets of your loved ones to completely disarm your skepticism." },
-        { title: "Digital Blindness Syndrome", content: "When the human brain perceives the face of a loved one on video, biological defense mechanisms instinctively drop, causing victims to completely ignore blatant logical flaws in the visual data." }
-      ]
-    },
-    {
-      category: "PERSONAL DATA PROTECTION & PREVENTION",
-      items: [
-        { title: "Zero-Trust Principle", content: "Never trust anyone online automatically, even family members, if requests involve finance or sensitive data. Always cross-verify via a different channel (e.g., a direct cellular GSM call)." },
-        { title: "Family Safe Keyword", content: "Establish a unique secret password or trick question with family members. Scammers, no matter how perfectly their AI clones a voice, will not know this predetermined keyword." },
-        { title: "Minimize Digital Footprint", content: "Restrict posting high-res facial images, original voice videos, and personal info publicly on social media to prevent hackers' AI from harvesting your data for training." }
-      ]
-    },
-    {
-      category: "DIGITAL FORENSICS TECHNIQUES",
-      items: [
-        { title: "rPPG Technology (Optical Heart Rate)", content: "Invisible to the naked eye, forensic scanners analyze micro-changes in pixel colors corresponding to human heartbeats. Current Deepfakes completely fail to simulate this natural biological rPPG pulse." },
-        { title: "Audio Spectrogram Analysis", content: "Under a spectrogram, a genuine human voice flows smoothly. AI-generated cloned voices leave noticeable high-frequency 'artifacts' and blocky discontinuities that machines can easily detect." },
-        { title: "Encrypted Metadata Analysis (C2PA/EXIF)", content: "The C2PA standard embeds a cryptographic 'digital signature' into media at the exact moment of physical camera capture. If AI tampers with the file, this provenance signature chain shatters." }
       ]
     }
   ]
