@@ -131,22 +131,49 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     };
   }, []);
 
-  // --- AUTO TICKER EFFECT KIẾN THỨC ---
+  // --- AUTO TICKER EFFECT CẢNH BÁO & KIẾN THỨC ---
   useEffect(() => {
     let isMounted = true;
-    
-    // Gỡ bỏ logic newsTimer cũ vì gây "loạn xạ" (nhảy tin tức ngẫu nhiên)
-    // Giữ lại factTimer để đổi kiến thức hữu ích
+    let currentSlot = 0;
+    let newsPoolIndex = 6; // Bắt đầu lấy từ tin thứ 7 trong pool
+
+    const newsTimer = setInterval(() => {
+        if (!isMounted || liveNews.length <= 6) return;
+        
+        const slotToUpdate = currentSlot % 6;
+        const nextNewsItem = liveNews[newsPoolIndex % liveNews.length];
+        
+        setFlippingIndex(slotToUpdate);
+        
+        setTimeout(() => {
+            if (!isMounted) return;
+            setDisplayedNews(prev => {
+                const newDisplay = [...prev];
+                newDisplay[slotToUpdate] = nextNewsItem;
+                return newDisplay;
+            });
+        }, 300);
+        
+        setTimeout(() => {
+            if (!isMounted) return;
+            setFlippingIndex(null);
+        }, 600);
+
+        currentSlot++;
+        newsPoolIndex++;
+    }, 5000); // Đổi tin mỗi 5 giây để người dùng kịp đọc
+
     const factTimer = setInterval(() => {
         if (!isMounted) return;
         setFactIndex(prev => (prev + 2) % facts.length);
-    }, 6000); 
+    }, 8000); 
     
     return () => {
       isMounted = false;
+      clearInterval(newsTimer);
       clearInterval(factTimer);
     };
-  }, [facts.length]);
+  }, [liveNews, facts.length]);
 
   // --- XỬ LÝ HIỂN THỊ MINI GAME KHI BẬT MÙA HÈ ---
   useEffect(() => {

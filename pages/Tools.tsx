@@ -824,7 +824,6 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                     onClick={() => setActiveKnowledgeCat(idx)}
                     className={`text-left p-5 rounded-2xl font-bold text-xs md:text-sm tracking-widest transition-all border shadow-lg flex items-center gap-3 ${activeKnowledgeCat === idx ? 'bg-primary/10 border-primary/50 text-primary scale-105' : 'bg-black/60 border-white/5 text-gray-400 hover:border-white/20 hover:text-white'}`}
                   >
-                    <BookText size={18} className="shrink-0" />
                     <span className="leading-snug">{cat.category}</span>
                   </button>
               ))}
@@ -835,14 +834,12 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
                <div key={activeKnowledgeCat} className="animate-in fade-in slide-in-from-right-8 duration-500">
                   <h3 className="text-xl md:text-2xl font-black text-white mb-8 text-primary border-b border-white/10 pb-6 flex items-center gap-3">
-                     <Scale size={28} className="text-primary" />
                      {KNOWLEDGE_BASE[lang][activeKnowledgeCat].category}
                   </h3>
                   <div className="space-y-6">
                      {KNOWLEDGE_BASE[lang][activeKnowledgeCat].items.map((item, idx) => (
                         <div key={idx} className="bg-black/60 p-6 md:p-8 rounded-2xl border border-white/5 group hover:border-primary/30 transition-all hover:bg-black/80 hover:shadow-[0_0_20px_rgba(0,240,255,0.05)]">
                            <h4 className="text-base md:text-lg font-bold text-white mb-4 flex items-start gap-3">
-                              <ShieldCheck size={20} className="text-primary group-hover:scale-125 transition-transform mt-0.5 shrink-0" /> 
                               <span className="leading-tight">{item.title}</span>
                            </h4>
                            <p className="text-gray-400 text-sm md:text-base leading-relaxed text-justify">
