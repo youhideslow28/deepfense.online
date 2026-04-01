@@ -263,7 +263,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         </div>
 
         <div className="lg:col-span-4 flex flex-col gap-6">
-             <div onClick={() => navigate('/tools', { state: { tab: 'CRISIS' }})} className="bg-red-600 rounded-3xl p-8 flex items-center justify-between group cursor-pointer hover:bg-red-500 transition-all shadow-lg shadow-red-600/20">
+             <div onClick={() => navigate('/tools/crisis')} className="bg-red-600 rounded-3xl p-8 flex items-center justify-between group cursor-pointer hover:bg-red-500 transition-all shadow-lg shadow-red-600/20">
                 <div className="flex items-center gap-4">
                     <div className="bg-white/20 p-4 rounded-2xl text-white group-hover:scale-110 transition-transform"><PhoneCall size={32} /></div>
                     <div>
