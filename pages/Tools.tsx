@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { 
   ScanLine, 
   ShieldCheck, 
@@ -45,13 +45,25 @@ const behaviorQuestionsEn = [
 const Tools: React.FC<ToolsProps> = ({ lang }) => {
   const t = TRANSLATIONS[lang];
   const location = useLocation();
+  const { tab } = useParams<{ tab?: string }>();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'SCAN' | 'PROTECT' | 'CRISIS' | 'KNOWLEDGE'>('SCAN');
 
   useEffect(() => {
-    if (location.state && (location.state as any).targetTab) {
-      setActiveTab((location.state as any).targetTab);
+    if (tab) {
+      const normalizedTab = tab.toUpperCase();
+      if (['SCAN', 'PROTECT', 'CRISIS', 'KNOWLEDGE'].includes(normalizedTab)) {
+        setActiveTab(normalizedTab as any);
+      }
+    } else {
+      setActiveTab('SCAN');
     }
-  }, [location]);
+  }, [tab]);
+
+  const handleTabChange = (newTab: 'SCAN' | 'PROTECT' | 'CRISIS' | 'KNOWLEDGE') => {
+    setActiveTab(newTab);
+    navigate(`/tools/${newTab.toLowerCase()}`);
+  };
   
   // State for Behavioral Scan
   const [step, setStep] = useState(0);
@@ -300,25 +312,25 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
       {/* TABS CONTROLLER */}
       <div className="flex flex-wrap justify-center bg-surface p-2 rounded-2xl border border-white/5 mb-12 w-fit mx-auto shadow-xl gap-2">
         <button 
-          onClick={() => setActiveTab('SCAN')}
+          onClick={() => handleTabChange('SCAN')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'SCAN' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
           <ScanLine size={16} /> {t.btn_scan}
         </button>
         <button 
-          onClick={() => setActiveTab('PROTECT')}
+          onClick={() => handleTabChange('PROTECT')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'PROTECT' ? 'bg-green-500 text-black shadow-[0_0_20px_rgba(34,197,94,0.3)]' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
           <ShieldCheck size={16} /> {t.tools_protect_btn}
         </button>
         <button 
-          onClick={() => setActiveTab('KNOWLEDGE')}
+          onClick={() => handleTabChange('KNOWLEDGE')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'KNOWLEDGE' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
           <Scale size={16} /> {t.tools_knowledge_title}
         </button>
         <button 
-          onClick={() => setActiveTab('CRISIS')}
+          onClick={() => handleTabChange('CRISIS')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'CRISIS' ? 'bg-red-500 text-black shadow-[0_0_20px_rgba(239,68,68,0.3)]' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
           <AlertTriangle size={16} /> {t.crisis_hub}

@@ -122,7 +122,14 @@ const AppContent: React.FC = () => {
       case '/challenge': return lang === 'vi' ? 'Thử thách Thám tử' : 'Detective Challenge';
       case '/ai-project': return lang === 'vi' ? 'Dự án AI Deepfense' : 'AI Project';
       case '/contact': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
-      default: return '';
+      default: 
+        if (location.pathname.startsWith('/tools')) {
+          if (location.pathname.includes('crisis')) return lang === 'vi' ? 'Trung tâm Ứng cứu' : 'Crisis Hub';
+          if (location.pathname.includes('protect')) return lang === 'vi' ? 'Khiên bảo vệ' : 'AI Shield';
+          if (location.pathname.includes('knowledge')) return lang === 'vi' ? 'Kiến thức & Pháp luật' : 'Law & Knowledge';
+          return lang === 'vi' ? 'Hệ thống Quét Rủi ro' : 'Risk Scanner';
+        }
+        return '';
     }
   };
 
@@ -147,7 +154,7 @@ const AppContent: React.FC = () => {
           <Suspense fallback={<LoadingFallback />}>
               <Routes>
                 <Route path="/" element={<Home lang={lang} season={season} />} />
-                <Route path="/tools" element={<Tools lang={lang} />} />
+                <Route path="/tools/:tab?" element={<Tools lang={lang} />} />
                 <Route path="/challenge" element={<Challenge lang={lang} />} />
                 <Route path="/ai-project" element={<AiComingSoon lang={lang} />} />
                 <Route path="/contact" element={<AboutContact lang={lang} />} />
