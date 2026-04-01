@@ -31,6 +31,9 @@ export interface TranslationData {
   transfer_btn: string; reject_btn: string; chat_inactive: string; session_ended: string;
   crisis_title: string; crisis_desc: string; btn_report_pdf: string; btn_first_aid: string;
   btn_hotspot: string; report_locked: string; latest_live: string; tbd: string;
+  tools_scan_title: string; tools_protect_title: string; tools_knowledge_title: string;
+  tools_scan_desc: string; tools_protect_desc: string; tools_knowledge_desc: string;
+  tools_protect_btn: string; crisis_hub: string;
 }
 
 export const TRANSLATIONS: Record<Language, TranslationData> = {
@@ -86,7 +89,15 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     btn_hotspot: "Bản Đồ Điểm Nóng",
     report_locked: "Tính năng này hiện chỉ hỗ trợ các văn bản pháp lý tiếng Việt.",
     latest_live: "TIN MỚI (LIVE)",
-    tbd: "Chưa xác định"
+    tbd: "Chưa xác định",
+    tools_scan_title: "QUÉT & GIÁM ĐỊNH",
+    tools_protect_title: "KHIÊN BẢO VỆ",
+    tools_knowledge_title: "PHÁP LUẬT & KIẾN THỨC",
+    tools_scan_desc: "Hệ thống phân tích đa tầng giúp phát hiện các dấu hiệu can thiệp của AI trong dữ liệu nghe nhìn và kịch bản hành vi.",
+    tools_protect_desc: "Công nghệ Fawkes giúp tiêm các điểm nhiễu tàng hình vào ảnh cá nhân, khiến các mô hình AI không thể nhận diện hoặc huấn luyện trái phép trên khuôn mặt bạn.",
+    tools_knowledge_desc: "Thông tin tổng hợp về các đạo luật AI mới nhất, quyền con người trong kỷ nguyên số và các nguyên lý kỹ thuật của Deepfake.",
+    tools_protect_btn: "KHIÊN AI",
+    crisis_hub: "TRUNG TÂM GIÚP ĐỠ"
   },
   en: {
     hero_badge: "AI SECURITY MONITORING SYSTEM",
@@ -140,7 +151,15 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     btn_hotspot: "Hotspot Map",
     report_locked: "This feature currently only supports Vietnamese legal documents.",
     latest_live: "LATEST NEWS (LIVE)",
-    tbd: "TBD"
+    tbd: "TBD",
+    tools_scan_title: "SCAN & FORENSICS",
+    tools_protect_title: "PROTECTIVE SHIELD",
+    tools_knowledge_title: "LAW & KNOWLEDGE",
+    tools_scan_desc: "Multi-layered analysis system to detect AI intervention in audiovisual data and behavioral scripts.",
+    tools_protect_desc: "Fawkes technology injects invisible adversarial noise into personal photos, preventing AI models from recognizing or unauthorized training on your face.",
+    tools_knowledge_desc: "Comprehensive information on the latest AI laws, human rights in the digital age, and technical principles of Deepfakes.",
+    tools_protect_btn: "AI SHIELD",
+    crisis_hub: "CRISIS HUB"
   }
 };
 
