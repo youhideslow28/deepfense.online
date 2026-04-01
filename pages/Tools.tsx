@@ -16,7 +16,11 @@ import {
   Scale,
   BrainCircuit,
   Lock,
-  BookOpen
+  BookOpen,
+  Globe,
+  Zap,
+  Binary,
+  LifeBuoy
 } from 'lucide-react';
 import { Language } from '../types';
 import { TRANSLATIONS, KNOWLEDGE_BASE } from '../data';
@@ -99,10 +103,25 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
   const handleAnswer = (isYes: boolean) => {
     if (isYes) setRiskScore(prev => prev + questions[step].risk);
     if (step < questions.length - 1) {
-      setStep(step + 1);
+      setStep(prev => prev + 1);
     } else {
       setAnalysisComplete(true);
     }
+  };
+
+  // Icon mapping for Knowledge Categories
+  const getKnowledgeIcon = (index: number) => {
+    const icons = [
+      <BookOpen size={18} />,     // AI Basics
+      <ShieldCheck size={18} />,  // Prevention
+      <LifeBuoy size={18} />,     // Response
+      <Binary size={18} />,      // Forensics
+      <Scale size={18} />,       // VN Law
+      <Globe size={18} />,       // International Law
+      <BrainCircuit size={18} />, // UNESCO Ethics
+      <Zap size={18} />           // Future Trends
+    ];
+    return icons[index] || <FileText size={18} />;
   };
 
   const resetBehaviorScan = () => {
@@ -748,14 +767,17 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
       {activeTab === 'KNOWLEDGE' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-in slide-in-from-bottom-6 duration-500">
            {/* Sidebar */}
-           <div className="lg:col-span-4 flex flex-col gap-3">
+           <div className="lg:col-span-4 flex flex-col gap-2">
               {KNOWLEDGE_BASE[lang].map((cat, idx) => (
                   <button 
                     key={idx}
                     onClick={() => setActiveKnowledgeCat(idx)}
-                    className={`text-left p-5 rounded-2xl font-bold text-xs md:text-sm tracking-widest transition-all border shadow-lg flex items-center gap-3 ${activeKnowledgeCat === idx ? 'bg-primary/10 border-primary/50 text-primary scale-105' : 'bg-black/60 border-white/5 text-gray-400 hover:border-white/20 hover:text-white'}`}
+                    className={`text-left p-4 rounded-xl font-bold text-[10px] md:text-xs tracking-widest transition-all border shadow-lg flex items-center gap-3 ${activeKnowledgeCat === idx ? 'bg-primary text-black border-primary' : 'bg-black/40 border-white/5 text-gray-400 hover:border-white/20 hover:text-white'}`}
                   >
-                    <span className="leading-snug">{cat.category}</span>
+                    <span className={activeKnowledgeCat === idx ? 'text-black' : 'text-primary'}>
+                       {getKnowledgeIcon(idx)}
+                    </span>
+                    <span className="leading-snug uppercase">{cat.category}</span>
                   </button>
               ))}
            </div>
@@ -764,7 +786,10 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
            <div className="lg:col-span-8 bg-surface border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden h-fit">
                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
                <div key={activeKnowledgeCat} className="animate-in fade-in slide-in-from-right-8 duration-500">
-                  <h3 className="text-xl md:text-2xl font-black text-white mb-8 text-primary border-b border-white/10 pb-6 flex items-center gap-3">
+                  <h3 className="text-xl md:text-2xl font-black text-white mb-6 text-primary border-b border-white/10 pb-6 flex items-center gap-4">
+                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                        {getKnowledgeIcon(activeKnowledgeCat)}
+                     </div>
                      {KNOWLEDGE_BASE[lang][activeKnowledgeCat].category}
                   </h3>
                   <div className="space-y-6">

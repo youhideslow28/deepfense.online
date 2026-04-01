@@ -264,81 +264,117 @@ interface KnowledgeCategory {
 export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
   vi: [
     {
-      category: "KIẾN THỨC VỀ DEEPFAKE",
+      category: "AI & DEEPFAKE CĂN BẢN",
       items: [
-        { title: "Âm thanh Deepfake & Voice Cloning", content: "Chỉ cần 3-10 giây mẫu giọng nói từ video trên MXH, AI có thể nhái giọng bất kỳ ai để thực hiện các cuộc gọi lừa đảo CEO Fraud hoặc mạo danh người thân đang gặp nạn. Tỷ lệ khớp giọng hiện nay đã vượt quá 95%." },
-        { title: "Hoán đổi khuôn mặt trực tiếp (Live Swapping)", content: "Sử dụng các công cụ như DeepFaceLive để thay thế khuôn mặt ngay thời gian thực trong các cuộc gọi video trên Zoom hay Google Meet. Kẻ xấu thường dùng thêm OBS để phát tín hiệu giả vào luồng camera." },
-        { title: "Mạng đối kháng không gian (GANs)", content: "Kỹ thuật cốt lõi tạo ra Deepfake bằng cách cho 2 mạng AI (Generator và Discriminator) 'đấu' với nhau để tạo ra hình ảnh giả trông như thật. GAN fingerprint là dấu vân tay thuật toán mà Deepfense đang cố gắng truy vết." },
-        { title: "Dấu hiệu nhận diện sơ đẳng (Artifacts)", content: "Hãy quan sát những điểm pixel bị nhòe ở vùng biên, chuyển động miệng không khớp với âm thanh (Lip-sync error) hoặc hiện tượng mắt không chớp. Deepfake cũ thường gặp khó khăn trong việc mô phỏng phản xạ sinh học này." },
-        { title: "Lỗi nội suy khung hình (Interpolation)", content: "Deepfake video thường được tạo ra bằng cách nội suy các khung hình. Khi nhân vật di chuyển nhanh hoặc có vật thể cắt ngang mặt, AI thường để lại các vệt mờ hoặc bóng ma (ghosting) rất đặc trưng." },
-        { title: "Deepfake toàn thân (Full-body)", content: "Không chỉ dừng lại ở khuôn mặt, AI hiện đại có thể giả mạo cả vóc dáng và điệu bộ di chuyển (gait analysis), khiến việc nhận diện qua hình thể trở nên phức tạp hơn." }
+        { title: "Deepfake là gì?", content: "Sự kết hợp giữa 'Deep learning' và 'Fake'. AI sử dụng dữ liệu hình ảnh/giọng nói để tạo ra các nội dung giả mạo nhưng cực kỳ chân thực." },
+        { title: "Cơ chế GANs", content: "Sử dụng hai mạng AI đấu với nhau: một mạng tạo giả và một mạng kiểm định, giúp tạo ra sản phẩm hoàn hảo nhất." }
       ]
     },
     {
-      category: "CÔNG NGHỆ MỚI NHẤT (2025-2026)",
+      category: "CẨM NANG PHÒNG CHỐNG",
       items: [
-        { title: "rPPG (Remote Heartbeat Detection)", content: "Công nghệ tiên tiến nhất phân tích sự thay đổi siêu vi của sắc tố da do máu lưu thông theo nhịp tim. Deepfake chỉ là các lớp pixel tĩnh nên không có nhịp tim, đây là 'gót chân Achilles' của mọi AI giả mạo." },
-        { title: "Tiêu chuẩn C2PA & Provenance", content: "Một hệ thống 'hộ chiếu số' cho hình ảnh được liên minh bởi Google, Adobe và Microsoft. Nó cho phép kiểm tra nguồn gốc bức ảnh có được tạo ra bởi AI (như Midjourney, Sora) hay là ảnh thật từ ống kính máy ảnh." },
-        { title: "Mô hình Khuếch tán (Diffusion Models)", content: "Công nghệ (như Sora, OpenAI) cho phép tạo video mượt mà và có chiều sâu vật lý hơn GAN. Deepfense đang cập nhật Engine mới để nhận diện được các nhiễu cấu trúc đặc trưng của mô hình Khuếch tán." },
-        { title: "AI Watermarking (Thủy vân số)", content: "Các hãng công nghệ lớn bắt đầu nhúng các mã định danh không thể xóa rời vào metadata và pixel của ảnh AI. Việc phát hiện các watermark này giúp khẳng định 100% nội dung là do máy tạo ra." },
-        { title: "Zero-shot Voice Synthesis", content: "Khả năng tổng hợp giọng nói cực kỳ tinh vi mà không cần huấn luyện mô hình lâu dài, chỉ cần một câu chào hỏi đơn giản của nạn nhân thu thập từ một cuộc gọi nhầm số." },
-        { title: "Digital Identity Wallets", content: "Giải pháp lưu trữ định danh số trên Blockchain, cho phép người dùng xác thực chính chủ mà không cần lộ lọt dữ liệu sinh trắc học lên internet chuyên dùng để chống Deepfake." }
+        { title: "Thiết lập Mật mã Gia đình", content: "Thỏa thuận một từ khóa bí mật chỉ người thân biết để xác thực danh tính khi nhận cuộc gọi yêu cầu chuyển tiền gấp." },
+        { title: "Quy tắc 10 giây", content: "Khi nhận cuộc gọi video nghi vấn, hãy yêu cầu đối phương vẫy tay trước mặt hoặc quay đầu sang trái/phải để kiểm tra lỗi pixel." }
       ]
     },
     {
-      category: "PHÁP LUẬT LIÊN QUAN",
+      category: "QUY TRÌNH ỨNG CỨU",
       items: [
-        { title: "Nghị định 13/2023/NĐ-CP (Việt Nam)", content: "Văn bản pháp lý nền tảng về Bảo vệ dữ liệu cá nhân. Việc sử dụng hình ảnh, giọng nói (dữ liệu sinh trắc học) của người khác để tạo Deepfake trái phép là hành vi vi phạm pháp luật nghiêm trọng." },
-        { title: "Bộ luật Hình sự (Điều 174 & 155)", content: "Tội lừa đảo chiếm đoạt tài sản (sử dụng Deepfake để vay tiền/tống tiền) và Tội làm nhục người khác (ghép mặt vào nội dung nhạy cảm) có thể bị phạt tù lên đến 20 năm hoặc chung thân." },
-        { title: "Luật AI của Liên minh Châu Âu (EU AI Act)", content: "Bộ luật toàn diện đầu tiên trên thế giới bắt buộc mọi nội dung do AI tạo ra (Deepfake) phải được dán nhãn minh bạch, nếu không sẽ bị phạt đến 35 triệu Euro." },
-        { title: "Trách nhiệm của nền tảng (Platform Liability)", content: "Các mạng xã hội như Facebook, TikTok bắt đầu bị ràng buộc pháp lý trong việc gỡ bỏ nội dung Deepfake độc hại trong vòng 24h kể từ khi nhận báo cáo từ nạn nhân." },
-        { title: "Quyền được lãng quên (Right to be Forgotten)", content: "Người dân có quyền yêu cầu các công cụ tìm kiếm và mạng xã hội xóa bỏ vĩnh viễn các nội dung Deepfake giả mạo mình sau khi đã có kết luận từ cơ quan chức năng." },
-        { title: "Sắc lệnh hành pháp AI của Mỹ", content: "Yêu cầu các nhà phát triển AI quy mô lớn phải chia sẻ kết quả kiểm tra an toàn với chính phủ và thực hiện dán nhãn nội dung để bảo vệ người tiêu dùng." }
+        { title: "Cách xử lý tức thì", content: "Ngắt kết nối, không chuyển tiền, thông báo cho người thân và báo cáo ngay cho cơ quan chức năng qua VNeID hoặc NCSC." },
+        { title: "Bảo vệ bằng chứng", content: "Chụp ảnh màn hình, lưu ghi âm cuộc gọi và giữ lại các thông tin tài khoản ngân hàng của kẻ lừa đảo để phục vụ điều tra." }
       ]
     },
     {
-      category: "LIÊN HỢP QUỐC & QUYỀN CON NGƯỜI",
+      category: "CÔNG NGHỆ GIÁM ĐỊNH AI",
       items: [
-        { title: "Nghị quyết LHQ về AI (03/2024)", content: "Nghị quyết lịch sử đầu tiên được 193 quốc gia thông qua, khẳng định việc phát triển AI phải đi đôi với bảo vệ quyền con người, sự riêng tư và thúc đẩy an ninh mạng toàn cầu." },
-        { title: "Quyền bảo vệ danh dự & phẩm giá", content: "Tuyên ngôn Quốc tế về Nhân quyền khẳng định hình ảnh và danh dự cá nhân là bất khả xâm phạm. Deepfake bôi nhọ được coi là mối đe dọa nhân quyền lớn nhất kỷ nguyên số." },
-        { title: "Quyền được biết (Right to Know)", content: "Con người có quyền được thông báo nếu họ đang giao tiếp với một thực thể trí tuệ nhân tạo, nhằm đảm bảo tính minh bạch và tránh các hành vi thao túng tâm lý." },
-        { title: "Bảo vệ trẻ em trực tuyến", content: "LHQ ưu tiên việc chống lại các vụ bắt nạt học đường và tạo nội dung lừa đảo nhắm vào trẻ em bằng AI, coi đây là tội ác nghiêm trọng chống lại thế hệ tương lai." },
-        { title: "Bình đẳng số (Digital Equity)", content: "Cảnh báo về việc Deepfake có thể bị sử dụng để tấn công các nhóm thiểu số hoặc gây ra sự kỳ thị xã hội thông qua các hình ảnh giả mạo mang tính định kiến." },
-        { title: "Dignity in AI Age", content: "LHQ nhấn mạnh việc tạo nội dung khiêu dâm không đồng thuận bằng AI (NCII) là hành vi vi phạm nhân quyền nghiêm trọng, yêu cầu sự can thiệp pháp lý toàn cầu." }
+        { title: "rPPG (Nhịp tim từ xa)", content: "Mắt người không thấy được, nhưng AI có thể quét sự thay đổi màu sắc vi mô của da theo nhịp tim để xác định đó là người thật." },
+        { title: "C2PA (Hộ chiếu Nội dung)", content: "Tiêu chuẩn toàn cầu giúp dán nhãn 'nguồn gốc' cho hình ảnh, giúp biết được ảnh chụp từ camera hay tạo ra từ AI." }
+      ]
+    },
+    {
+      category: "PHÁP LUẬT VIỆT NAM",
+      items: [
+        { title: "Nghị định 13/2023/NĐ-CP", content: "Văn bản cao nhất về bảo vệ dữ liệu cá nhân. Xử lý dữ liệu sinh trắc học trái phép là hành vi vi phạm pháp luật đặc biệt nghiêm trọng." },
+        { title: "Điều 174 Bộ luật Hình sự", content: "Tội lừa đảo chiếm đoạt tài sản bằng công nghệ cao có khung hình phạt lên đến 20 năm tù hoặc chung thân." }
+      ]
+    },
+    {
+      category: "LUẬT PHÁP QUỐC TẾ",
+      items: [
+        { title: "Đạo luật AI của EU", content: "Luật AI đầu tiên thế giới, yêu cầu mọi nội dung do AI tạo ra (Deepfake) phải được dán nhãn minh bạch 'AI-generated'." },
+        { title: "Tiêu chuẩn Trung Quốc & Mỹ", content: "Cả hai quốc gia đều bắt buộc nhúng watermark (thủy vân) ẩn vào các sản phẩm của các mô hình AI lớn như ChatGPT hay Sora." }
+      ]
+    },
+    {
+      category: "ĐẠO ĐỨC AI (UNESCO)",
+      items: [
+        { title: "Khung Đạo đức UNESCO", content: "Khẳng định AI phải phục vụ con người, không được xâm phạm quyền riêng tư và phải chịu sự kiểm soát của con người (Human Agency)." },
+        { title: "Quyền bảo vệ Danh tính", content: "Coi khuôn mặt kỹ thuật số là một phần của nhân phẩm, mọi hành vi bôi nhọ bằng AI là vi phạm nhân quyền nghiêm trọng." }
+      ]
+    },
+    {
+      category: "XU HƯỚNG & TƯƠNG LAI",
+      items: [
+        { title: "Dự báo 2027", content: "Thiệt hại do lừa đảo AI có thể vượt 40 tỷ USD toàn cầu. Tin tặc sẽ sử dụng AI tự động để 'tấn công theo dây chuyền'." },
+        { title: "Niềm tin Kỹ thuật số", content: "Xu hướng chuyển dịch sang các giải pháp bảo mật phi tập trung (Blockchain) để xác thực 'Con người thật' thay vì chỉ dùng mật khẩu." }
       ]
     }
   ],
   en: [
     {
-      category: "DEEPFAKE FUNDAMENTALS",
+      category: "AI & DEEPFAKE BASICS",
       items: [
-        { title: "Deepfake Definition", content: "A combination of 'Deep learning' and 'Fake'. This technology uses Artificial Intelligence to replace a person's face, voice, and gestures with another person's with extreme realism." },
-        { title: "Generative Adversarial Networks (GANs)", content: "The core engine consisting of two parts: a 'Generator' trying to create fake images and a 'Discriminator' (Detective) trying to distinguish them. They train against each other until fakes look real." },
-        { title: "Diffusion Models", content: "A new technology replacing GANs (used in Midjourney, Stable Diffusion). It works by adding noise to data and learning to denoise it to create highly detailed media from text prompts." }
+        { title: "What is Deepfake?", content: "A blend of 'Deep learning' and 'Fake'. AI uses audiovisual data to create highly realistic synthetic content." },
+        { title: "How GANs Work", content: "Two AI networks (Generator & Discriminator) compete to create and verify images until they reach perfection." }
       ]
     },
     {
-      category: "LATEST TECH (2025-2026)",
+      category: "PREVENTION GUIDE",
       items: [
-        { title: "Zero-Latency Real-time Swap", content: "Current tools allow seamless face swapping on Zoom, Zalo, or Messenger with nearly zero latency, capable of bypassing basic 'move your hand' security checks." },
-        { title: "Zero-Shot Voice Cloning", content: "Next-gen AI requires only 3 seconds of original audio to perfectly clone anyone's voice, including breathing patterns, intonations, and complex emotions." },
-        { title: "Physically Realistic Text-to-Video", content: "The capability to generate multi-minute videos with perfect physical realism (lighting, gravity) from a single text prompt, making visual detection impossible for humans." }
+        { title: "Family Security Codeword", content: "Establish a secret word known only to your family to verify identities during urgent money requests." },
+        { title: "The 10-Second Rule", content: "During suspicious video calls, ask the person to wave their hand or turn their head to check for pixel glitches." }
       ]
     },
     {
-      category: "LEGAL FRAMEWORKS",
+      category: "RESPONSE PLAYBOOK",
       items: [
-        { title: "Decree 13/2023/ND-CP (Vietnam)", content: "The fundamental legal text on Personal Data Protection. Using others' biometrics (face, voice) to create Deepfakes without consent is a serious legal violation in Vietnam." },
-        { title: "Criminal Code (Fraud & Slander)", content: "Using Deepfakes for fraud, extortion, or character assassination (pornographic mapping) can lead up to 20 years or life imprisonment under international and local laws." },
-        { title: "EU AI Act", content: "The world's first comprehensive AI law mandating that all AI-generated content (Deepfakes) must be transparently labeled to prevent public deception." }
+        { title: "Immediate Actions", content: "Disconnect, do not transfer money, notify relatives, and report via official channels like VNeID or NCSC." },
+        { title: "Preserving Evidence", content: "Take screenshots, save call recordings, and keep the fraudster's bank account details for investigation." }
       ]
     },
     {
-      category: "UN & HUMAN RIGHTS",
+      category: "FORENSICS TECHNOLOGY",
       items: [
-        { title: "UN Resolution on AI (2024)", content: "The first historic resolution adopted by 193 countries, affirming that AI development must be coupled with the protection of human rights, privacy, and global cybersecurity." },
-        { title: "Right to Digital Honor & Dignity", content: "The Universal Declaration of Human Rights affirms that personal image and honor are inviolable. Deepfake defamation is considered one of the largest digital human rights threats." },
-        { title: "The Right to Know", content: "Humans have the right to be informed when interacting with an AI entity, ensuring transparency and preventing large-scale psychological manipulation." }
+        { title: "rPPG (Remote Heartbeat)", content: "Invisible to humans, AI can scan micro-skin color changes driven by heartbeats to verify real-life status." },
+        { title: "C2PA Standards", content: "A global standard for media provenance, labeling whether content is camera-original or AI-generated." }
+      ]
+    },
+    {
+      category: "VIETNAM LAW",
+      items: [
+        { title: "Decree 13/2023/ND-CP", content: "The core legal framework for personal data protection. Unauthorized biometric data processing is a severe violation." },
+        { title: "Criminal Code Art 174", content: "Fraudulent property appropriation via high-tech carries penalties up to 20 years or life imprisonment." }
+      ]
+    },
+    {
+      category: "INTERNATIONAL LAW",
+      items: [
+        { title: "EU AI Act", content: "The world's first AI law requiring all AI-generated content (Deepfakes) to be transparently labeled." },
+        { title: "US & China Labeling Laws", content: "Both nations mandate embedding invisible watermarks into products from major AI models like ChatGPT or Sora." }
+      ]
+    },
+    {
+      category: "AI ETHICS (UNESCO)",
+      items: [
+        { title: "UNESCO Framework", content: "Affirms that AI must serve humanity, respect privacy, and remain under human agency and oversight." },
+        { title: "Identity Integrity Rights", content: "Treats the digital face as part of human dignity; AI defamation is seen as a major human rights violation." }
+      ]
+    },
+    {
+      category: "FUTURE TRENDS",
+      items: [
+        { title: "2027 Projections", content: "AI fraud losses may exceed $40 billion globally. Hackers will use automated AI for 'chain-reaction' attacks." },
+        { title: "Digital Trust Era", content: "A shift toward decentralized security (Blockchain) to verify 'Real Human' status instead of relying solely on passwords." }
       ]
     }
   ]
