@@ -160,8 +160,8 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
     const factTimer = setInterval(() => {
         if (!isMounted) return;
-        setFactIndex(prev => (prev + 1) % facts.length);
-    }, 8000); 
+        setFactIndex(prev => (prev + 2) % facts.length);
+    }, 10000); 
     
     return () => {
       isMounted = false;
@@ -178,7 +178,10 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     }
   }, [season]);
 
-  const currentFact = facts[factIndex % facts.length];
+  const displayFacts = [
+      facts[factIndex % facts.length],
+      facts[(factIndex + 1) % facts.length]
+  ];
 
   return (
     <div className="animate-in fade-in duration-500">
@@ -260,7 +263,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         </div>
 
         <div className="lg:col-span-4 flex flex-col gap-6">
-             <div onClick={() => navigate('/crisis')} className="bg-red-600 rounded-3xl p-8 flex items-center justify-between group cursor-pointer hover:bg-red-500 transition-all shadow-lg shadow-red-600/20">
+             <div onClick={() => navigate('/crisis', { state: { tab: 'first-aid' }})} className="bg-red-600 rounded-3xl p-8 flex items-center justify-between group cursor-pointer hover:bg-red-500 transition-all shadow-lg shadow-red-600/20">
                 <div className="flex items-center gap-4">
                     <div className="bg-white/20 p-4 rounded-2xl text-white group-hover:scale-110 transition-transform"><PhoneCall size={32} /></div>
                     <div>
@@ -271,22 +274,35 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 <div className="text-white/40 group-hover:text-white transition-colors"><AlertTriangle size={32} /></div>
              </div>
 
-             <div className="bg-surface border border-white/5 rounded-3xl p-8 flex-grow shadow-2xl relative overflow-hidden group min-h-[250px] flex items-center">
-                <div className="relative z-10 w-full">
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="bg-primary/20 p-2 rounded-lg"><Lightbulb className="text-primary" size={24} /></div>
-                        <h2 className="text-white font-black text-sm tracking-widest uppercase leading-none">{t.knowledge}</h2>
-                    </div>
-                    <div className="space-y-6">
-                        <div key={factIndex} className="animate-in slide-in-from-right duration-700">
-                             <div className="text-xs text-primary font-bold tracking-[0.3em] uppercase mb-4 opacity-50">FACT #{factIndex + 1}</div>
-                             <h4 className="text-white font-black text-2xl mb-4 uppercase leading-tight italic decoration-primary/30 decoration-4">{currentFact.title}</h4>
-                             <p className="text-gray-400 text-sm leading-relaxed max-w-sm">{currentFact.content}</p>
+             <div className="bg-surface border border-white/5 rounded-3xl p-8 flex-grow shadow-2xl relative overflow-hidden group min-h-[400px]">
+                <div className="relative z-10 w-full h-full flex flex-col">
+                    <div className="flex items-center gap-3 mb-10 pb-4 border-b border-white/5">
+                        <div className="bg-primary/20 p-2.5 rounded-xl"><Lightbulb className="text-primary" size={24} /></div>
+                        <div>
+                            <h2 className="text-white font-black text-sm tracking-[0.2em] uppercase leading-none">{t.knowledge}</h2>
+                            <div className="h-1 w-8 bg-primary/40 mt-2"></div>
                         </div>
                     </div>
+                    
+                    <div className="flex-1 flex flex-col justify-around gap-8">
+                        {displayFacts.map((fact, idx) => (
+                           <div key={`${factIndex}-${idx}`} className="animate-in slide-in-from-right duration-700 delay-150 relative pl-6 border-l-2 border-primary/20 hover:border-primary transition-colors">
+                                <div className="absolute -left-[5px] top-0 w-2 h-2 bg-primary rounded-full shadow-[0_0_8px_rgba(0,240,255,0.8)]"></div>
+                                <div className="text-[10px] text-primary/60 font-mono font-bold tracking-widest uppercase mb-2">FACT #{ (factIndex + idx) % facts.length + 1 }</div>
+                                <h4 className="text-white font-black text-lg mb-3 uppercase leading-tight italic">{fact.title}</h4>
+                                <p className="text-gray-400 text-xs leading-relaxed line-clamp-3">{fact.content}</p>
+                           </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-10 flex gap-1 items-center justify-center opacity-30">
+                        {Array.from({ length: Math.ceil(facts.length / 2) }).map((_, i) => (
+                            <div key={i} className={`h-1 rounded-full transition-all duration-500 ${Math.floor(factIndex / 2) === i ? 'w-6 bg-primary' : 'w-2 bg-white/20'}`}></div>
+                        ))}
+                    </div>
                 </div>
-                <div className="absolute -bottom-10 -right-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                    <Lightbulb size={180} />
+                <div className="absolute -bottom-16 -right-16 opacity-[0.03] group-hover:opacity-[0.07] transition-all duration-1000 group-hover:rotate-12 group-hover:scale-110">
+                    <Lightbulb size={280} />
                 </div>
              </div>
         </div>

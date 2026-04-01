@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ShieldAlert, FileText, HeartHandshake, MapPin, Download, AlertTriangle, Send, CheckCircle2, Lock, ShieldCheck, Globe, Phone, ExternalLink, Search } from 'lucide-react';
 import { Language } from '../types';
 import { TRANSLATIONS } from '../data';
@@ -9,8 +10,15 @@ interface CrisisHubProps {
 
 const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
   const t = TRANSLATIONS[lang];
+  const location = useLocation();
   // Thay đổi tab mặc định thành 'first-aid' (Sơ cứu tâm lý) theo yêu cầu người dùng
   const [activeTab, setActiveTab] = useState<'report' | 'first-aid' | 'hotspot'>('first-aid');
+
+  useEffect(() => {
+    if (location.state?.tab) {
+      setActiveTab(location.state.tab);
+    }
+  }, [location.state]);
   
   // State form
   const [formData, setFormData] = useState({
