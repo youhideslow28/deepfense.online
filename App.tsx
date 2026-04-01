@@ -17,6 +17,7 @@ const Tools = lazy(() => import('./pages/Tools'));
 const AboutContact = lazy(() => import('./pages/AboutContact'));
 const AiComingSoon = lazy(() => import('./pages/AiComingSoon'));
 const Admin = lazy(() => import('./pages/Admin'));
+const CrisisHub = lazy(() => import('./pages/CrisisHub'));
 
 // --- THÊM NGAY CÁI ERROR BOUNDARY VÀO ĐỂ CỨU APP KHỎI CRASH KHI LAZY LOAD LỖI ---
 class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasError: boolean, errorMsg: string, isChunkError: boolean}> {
@@ -122,6 +123,7 @@ const AppContent: React.FC = () => {
       case '/challenge': return lang === 'vi' ? 'Thử thách Thám tử' : 'Detective Challenge';
       case '/ai-project': return lang === 'vi' ? 'Dự án AI Deepfense' : 'AI Project';
       case '/contact': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
+      case '/crisis': return lang === 'vi' ? 'Trung tâm Ứng cứu' : 'Crisis Hub';
       default: return '';
     }
   };
@@ -152,6 +154,7 @@ const AppContent: React.FC = () => {
                 <Route path="/ai-project" element={<AiComingSoon lang={lang} />} />
                 <Route path="/contact" element={<AboutContact lang={lang} />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/crisis" element={<CrisisHub lang={lang} />} />
                 <Route path="*" element={<Home lang={lang} season={season} />} />
               </Routes>
           </Suspense>
