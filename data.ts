@@ -34,6 +34,8 @@ export interface TranslationData {
   tools_scan_title: string; tools_protect_title: string; tools_knowledge_title: string;
   tools_scan_desc: string; tools_protect_desc: string; tools_knowledge_desc: string;
   tools_protect_btn: string; crisis_hub: string;
+  btn_ncsc_report: string; btn_chongluadao_report: string; btn_safebrowsing_report: string;
+  btn_ic3_report: string; btn_a05_hotline: string; vneid_desc: string; zalo_oa_desc: string;
 }
 
 export const TRANSLATIONS: Record<Language, TranslationData> = {
@@ -97,7 +99,14 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     tools_protect_desc: "Công nghệ Fawkes giúp tiêm các điểm nhiễu tàng hình vào ảnh cá nhân, khiến các mô hình AI không thể nhận diện hoặc huấn luyện trái phép trên khuôn mặt bạn.",
     tools_knowledge_desc: "Thông tin tổng hợp về các đạo luật AI mới nhất, quyền con người trong kỷ nguyên số và các nguyên lý kỹ thuật của Deepfake.",
     tools_protect_btn: "KHIÊN AI",
-    crisis_hub: "TRUNG TÂM GIÚP ĐỠ"
+    crisis_hub: "TRUNG TÂM GIÚP ĐỠ",
+    btn_ncsc_report: "BÁO CÁO NCSC (VIỆT NAM)",
+    btn_chongluadao_report: "CHỐNG LỪA ĐẢO (VIỆT NAM)",
+    btn_safebrowsing_report: "LIÊN KẾT ĐỘC HẠI (GOOGLE)",
+    btn_ic3_report: "TỐ GIÁC QUỐC TẾ (FBI - IC3)",
+    btn_a05_hotline: "HOTLINE A05 - BỘ CÔNG AN",
+    vneid_desc: "Sử dụng tính năng Tố giác tội phạm ngay trên ứng dụng VNeID chính thức.",
+    zalo_oa_desc: "Tìm và quan tâm Zalo OA của Công an tỉnh/thành phố để nhận hỗ trợ nhanh."
   },
   en: {
     hero_badge: "AI SECURITY MONITORING SYSTEM",
@@ -159,7 +168,14 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     tools_protect_desc: "Fawkes technology injects invisible adversarial noise into personal photos, preventing AI models from recognizing or unauthorized training on your face.",
     tools_knowledge_desc: "Comprehensive information on the latest AI laws, human rights in the digital age, and technical principles of Deepfakes.",
     tools_protect_btn: "AI SHIELD",
-    crisis_hub: "CRISIS HUB"
+    crisis_hub: "CRISIS HUB",
+    btn_ncsc_report: "NCSC REPORT (VIETNAM)",
+    btn_chongluadao_report: "CHONG LUA DAO (VIETNAM)",
+    btn_safebrowsing_report: "MALICIOUS LINK (GOOGLE)",
+    btn_ic3_report: "INTERNATIONAL REPORT (FBI - IC3)",
+    btn_a05_hotline: "A05 HOTLINE - VIETNAM POLICE",
+    vneid_desc: "Use the Crime Reporting feature on the official VNeID application.",
+    zalo_oa_desc: "Search and follow the Official Zalo OA of your local Provincial Police."
   }
 };
 

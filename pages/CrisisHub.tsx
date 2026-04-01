@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldAlert, FileText, HeartHandshake, MapPin, Download, AlertTriangle, Send, CheckCircle2, Lock } from 'lucide-react';
+import { ShieldAlert, FileText, HeartHandshake, MapPin, Download, AlertTriangle, Send, CheckCircle2, Lock, ShieldCheck, Globe, Phone, ExternalLink, Search } from 'lucide-react';
 import { Language } from '../types';
 import { TRANSLATIONS } from '../data';
 
@@ -106,33 +106,105 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                 </div>
               </div>
               
-              <div className="bg-black/40 border border-white/10 p-8 rounded-2xl backdrop-blur-md flex flex-col justify-center">
-                <h3 className="text-xl font-bold text-white mb-6 uppercase tracking-widest">{t.contact_support}</h3>
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-red-500/20 p-3 rounded-full text-red-500 mt-1">
-                      <AlertTriangle size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-lg text-red-400">{t.police}</h4>
-                      <p className="text-sm text-gray-400">
-                        {lang === 'vi' ? 'Gọi ngay nếu bị đe dọa trực tiếp tới tính mạng hoặc danh dự trong thời gian thực.' : 'Call immediately if your life or honor is threatened in real-time.'}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="bg-green-500/20 p-3 rounded-full text-green-500 mt-1">
-                      <ShieldAlert size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-lg text-green-400">{t.cyber_security}</h4>
-                      <p className="text-sm text-gray-400">
-                        {lang === 'vi' ? 'Trực thuộc Công an cấp Tỉnh/TP để nộp đơn trình báo bản cứng (PDF ở Tab 1).' : 'Directly under Provincial/City Police to submit hard-copy reports (PDF in Tab 1).'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+               <div className="space-y-6">
+                 <h3 className="text-xl font-bold text-white uppercase tracking-widest flex items-center gap-2">
+                   <ShieldCheck className="text-primary" size={24} />
+                   {t.contact_support}
+                 </h3>
+                 
+                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                   {/* A05 Hotline */}
+                   <div className="bg-red-500/10 border border-red-500/20 p-5 rounded-2xl hover:bg-red-500/20 transition-all">
+                      <div className="flex items-center gap-3 mb-3">
+                         <div className="bg-red-500/20 p-2 rounded-lg text-red-500">
+                            <Phone size={20} />
+                         </div>
+                         <h4 className="font-bold text-red-400 text-sm uppercase">{t.btn_a05_hotline}</h4>
+                      </div>
+                      <p className="text-xs text-gray-400 mb-4">{lang === 'vi' ? 'Đường dây nóng Cục An ninh mạng & Phòng chống tội phạm công nghệ cao.' : 'Hotline of the Cyber Security and High-Tech Crime Prevention Department.'}</p>
+                      <a href="tel:0692194053" className="text-white font-black text-lg tracking-widest hover:text-red-500 transition-colors">069.219.4053</a>
+                   </div>
+
+                   {/* NCSC Report */}
+                   <a href="https://canhbao.ncsc.gov.vn" target="_blank" rel="noopener noreferrer" className="bg-blue-500/10 border border-blue-500/20 p-5 rounded-2xl hover:bg-blue-500/20 transition-all group">
+                      <div className="flex items-center justify-between mb-3">
+                         <div className="flex items-center gap-3">
+                            <div className="bg-blue-500/20 p-2 rounded-lg text-blue-500">
+                               <ShieldAlert size={20} />
+                            </div>
+                            <h4 className="font-bold text-blue-400 text-sm uppercase">{t.btn_ncsc_report}</h4>
+                         </div>
+                         <ExternalLink size={14} className="text-gray-600 group-hover:text-blue-500" />
+                      </div>
+                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'Cổng cảnh báo an toàn thông tin Việt Nam (NCSC Việt Nam).' : 'Vietnam Information Security Warning Portal (NCSC Vietnam).'}</p>
+                   </a>
+
+                   {/* ChongLuaDao */}
+                   <a href="https://chongluadao.vn" target="_blank" rel="noopener noreferrer" className="bg-green-500/10 border border-green-500/20 p-5 rounded-2xl hover:bg-green-500/20 transition-all group">
+                      <div className="flex items-center justify-between mb-3">
+                         <div className="flex items-center gap-3">
+                            <div className="bg-green-500/20 p-2 rounded-lg text-green-500">
+                               <ShieldCheck size={20} />
+                            </div>
+                            <h4 className="font-bold text-green-400 text-sm uppercase">{t.btn_chongluadao_report}</h4>
+                         </div>
+                         <ExternalLink size={14} className="text-gray-600 group-hover:text-green-500" />
+                      </div>
+                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'Dự án cộng đồng bảo vệ người dùng khỏi website độc hại và lừa đảo.' : 'Community project protecting users from malicious and scam websites.'}</p>
+                   </a>
+
+                   {/* VNeID */}
+                   <div className="bg-yellow-500/10 border border-yellow-500/20 p-5 rounded-2xl">
+                      <div className="flex items-center gap-3 mb-3">
+                         <div className="bg-yellow-500/20 p-2 rounded-lg text-yellow-500">
+                            <FileText size={20} />
+                         </div>
+                         <h4 className="font-bold text-yellow-400 text-sm uppercase">VNeID APP</h4>
+                      </div>
+                      <p className="text-xs text-gray-400">{t.vneid_desc}</p>
+                   </div>
+
+                   {/* Zalo OA */}
+                   <div className="bg-cyan-500/10 border border-cyan-500/20 p-5 rounded-2xl">
+                      <div className="flex items-center gap-3 mb-3">
+                         <div className="bg-cyan-500/20 p-2 rounded-lg text-cyan-500">
+                            <Search size={20} />
+                         </div>
+                         <h4 className="font-bold text-cyan-400 text-sm uppercase">ZALO OA POLICE</h4>
+                      </div>
+                      <p className="text-xs text-gray-400">{t.zalo_oa_desc}</p>
+                   </div>
+
+                   {/* Safe Browsing */}
+                   <a href="https://safebrowsing.google.com/safebrowsing/report_phish/" target="_blank" rel="noopener noreferrer" className="bg-white/5 border border-white/10 p-5 rounded-2xl hover:bg-white/10 transition-all group">
+                      <div className="flex items-center justify-between mb-3">
+                         <div className="flex items-center gap-3">
+                            <div className="bg-white/20 p-2 rounded-lg text-white">
+                               <Globe size={20} />
+                            </div>
+                            <h4 className="font-bold text-gray-300 text-sm uppercase">{t.btn_safebrowsing_report}</h4>
+                         </div>
+                         <ExternalLink size={14} className="text-gray-600 group-hover:text-white" />
+                      </div>
+                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'Báo cáo website lừa đảo trực tiếp cho Google để bảo vệ người dùng toàn cầu.' : 'Report phishing sites directly to Google to protect global users.'}</p>
+                   </a>
+
+                   {/* FBI IC3 */}
+                   <a href="https://www.ic3.gov/" target="_blank" rel="noopener noreferrer" className="bg-black border border-white/10 p-5 rounded-2xl hover:border-white/30 transition-all group sm:col-span-2">
+                      <div className="flex items-center justify-between mb-3">
+                         <div className="flex items-center gap-3">
+                            <div className="bg-gray-800 p-2 rounded-lg text-gray-400">
+                               <Search size={20} />
+                            </div>
+                            <h4 className="font-bold text-gray-400 text-sm uppercase">{t.btn_ic3_report}</h4>
+                         </div>
+                         <ExternalLink size={14} className="text-gray-600 group-hover:text-white" />
+                      </div>
+                      <p className="text-xs text-gray-500">{lang === 'vi' ? 'Trung tâm Khiếu nại Tội phạm Internet của FBI. Chuyên tiếp nhận các vụ lừa đảo xuyên biên giới quy mô lớn.' : 'FBI Internet Crime Complaint Center. Specialized in large-scale cross-border fraud.'}</p>
+                   </a>
+                 </div>
+               </div>
            </div>
         )}
 
