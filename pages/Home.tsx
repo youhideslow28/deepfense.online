@@ -160,7 +160,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
     const factTimer = setInterval(() => {
         if (!isMounted) return;
-        setFactIndex(prev => (prev + 2) % facts.length);
+        setFactIndex(prev => (prev + 1) % facts.length);
     }, 8000); 
     
     return () => {
@@ -178,10 +178,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     }
   }, [season]);
 
-  const displayFacts = [
-      facts[factIndex % facts.length],
-      facts[(factIndex + 1) % facts.length]
-  ];
+  const currentFact = facts[factIndex % facts.length];
 
   return (
     <div className="animate-in fade-in duration-500">
@@ -263,33 +260,34 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         </div>
 
         <div className="lg:col-span-4 flex flex-col gap-6">
-             <div className="bg-surface border border-white/5 rounded-3xl p-6 flex-grow shadow-2xl relative overflow-hidden group">
-                <div className="relative z-10">
-                    <div className="flex items-center gap-3 mb-6">
-                        <div className="bg-primary/20 p-2 rounded-lg"><Lightbulb className="text-primary" size={20} /></div>
+             <div onClick={() => navigate('/crisis')} className="bg-red-600 rounded-3xl p-8 flex items-center justify-between group cursor-pointer hover:bg-red-500 transition-all shadow-lg shadow-red-600/20">
+                <div className="flex items-center gap-4">
+                    <div className="bg-white/20 p-4 rounded-2xl text-white group-hover:scale-110 transition-transform"><PhoneCall size={32} /></div>
+                    <div>
+                        <div className="text-white font-black text-lg tracking-widest uppercase leading-none">{t.hotline}</div>
+                        <div className="text-white/80 text-[10px] mt-2 font-mono uppercase tracking-tighter italic">24/7 EMERGENCY RESPONSE</div>
+                    </div>
+                </div>
+                <div className="text-white/40 group-hover:text-white transition-colors"><AlertTriangle size={32} /></div>
+             </div>
+
+             <div className="bg-surface border border-white/5 rounded-3xl p-8 flex-grow shadow-2xl relative overflow-hidden group min-h-[250px] flex items-center">
+                <div className="relative z-10 w-full">
+                    <div className="flex items-center gap-3 mb-8">
+                        <div className="bg-primary/20 p-2 rounded-lg"><Lightbulb className="text-primary" size={24} /></div>
                         <h2 className="text-white font-black text-sm tracking-widest uppercase leading-none">{t.knowledge}</h2>
                     </div>
                     <div className="space-y-6">
-                        {displayFacts.map((fact, fidx) => (
-                          <div key={fidx} className="animate-in slide-in-from-right duration-700 delay-150">
-                             <div className="text-[10px] text-primary font-bold tracking-[0.2em] uppercase mb-2">FACT #{factIndex + fidx + 1}</div>
-                             <h4 className="text-white font-black text-lg mb-2 uppercase leading-tight italic">{fact.title}</h4>
-                             <p className="text-gray-400 text-xs leading-relaxed">{fact.content}</p>
-                          </div>
-                        ))}
+                        <div key={factIndex} className="animate-in slide-in-from-right duration-700">
+                             <div className="text-xs text-primary font-bold tracking-[0.3em] uppercase mb-4 opacity-50">FACT #{factIndex + 1}</div>
+                             <h4 className="text-white font-black text-2xl mb-4 uppercase leading-tight italic decoration-primary/30 decoration-4">{currentFact.title}</h4>
+                             <p className="text-gray-400 text-sm leading-relaxed max-w-sm">{currentFact.content}</p>
+                        </div>
                     </div>
                 </div>
-             </div>
-
-             <div onClick={() => navigate('/crisis')} className="bg-red-600 rounded-3xl p-6 flex items-center justify-between group cursor-pointer hover:bg-red-500 transition-all shadow-lg shadow-red-600/20">
-                <div className="flex items-center gap-4">
-                    <div className="bg-white/20 p-3 rounded-2xl text-white group-hover:scale-110 transition-transform"><PhoneCall size={24} /></div>
-                    <div>
-                        <div className="text-white font-black text-sm tracking-widest uppercase leading-none">{t.hotline}</div>
-                        <div className="text-white/80 text-[10px] mt-1 font-mono uppercase tracking-tighter italic">24/7 EMERGENCY RESPONSE</div>
-                    </div>
+                <div className="absolute -bottom-10 -right-10 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <Lightbulb size={180} />
                 </div>
-                <div className="text-white/40 group-hover:text-white transition-colors"><AlertTriangle size={24} /></div>
              </div>
         </div>
       </div>

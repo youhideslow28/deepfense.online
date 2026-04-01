@@ -114,18 +114,6 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                  </h3>
                  
                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                   {/* A05 Hotline */}
-                   <div className="bg-red-500/10 border border-red-500/20 p-5 rounded-2xl hover:bg-red-500/20 transition-all">
-                      <div className="flex items-center gap-3 mb-3">
-                         <div className="bg-red-500/20 p-2 rounded-lg text-red-500">
-                            <Phone size={20} />
-                         </div>
-                         <h4 className="font-bold text-red-400 text-sm uppercase">{t.btn_a05_hotline}</h4>
-                      </div>
-                      <p className="text-xs text-gray-400 mb-4">{lang === 'vi' ? 'Đường dây nóng Cục An ninh mạng & Phòng chống tội phạm công nghệ cao.' : 'Hotline of the Cyber Security and High-Tech Crime Prevention Department.'}</p>
-                      <a href="tel:0692194053" className="text-white font-black text-lg tracking-widest hover:text-red-500 transition-colors">069.219.4053</a>
-                   </div>
-
                    {/* NCSC Report */}
                    <a href="https://canhbao.ncsc.gov.vn" target="_blank" rel="noopener noreferrer" className="bg-blue-500/10 border border-blue-500/20 p-5 rounded-2xl hover:bg-blue-500/20 transition-all group">
                       <div className="flex items-center justify-between mb-3">
@@ -154,54 +142,72 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                       <p className="text-xs text-gray-400">{lang === 'vi' ? 'Dự án cộng đồng bảo vệ người dùng khỏi website độc hại và lừa đảo.' : 'Community project protecting users from malicious and scam websites.'}</p>
                    </a>
 
-                   {/* VNeID */}
-                   <div className="bg-yellow-500/10 border border-yellow-500/20 p-5 rounded-2xl">
+                   {/* A05 Hotline */}
+                   <div className="bg-red-500/10 border border-red-500/30 p-5 rounded-2xl hover:bg-red-500/20 transition-all">
                       <div className="flex items-center gap-3 mb-3">
-                         <div className="bg-yellow-500/20 p-2 rounded-lg text-yellow-500">
-                            <FileText size={20} />
+                         <div className="bg-red-500/20 p-2 rounded-lg text-red-600">
+                            <Phone size={20} />
                          </div>
-                         <h4 className="font-bold text-yellow-400 text-sm uppercase">VNeID APP</h4>
+                         <h4 className="font-bold text-red-500 text-sm uppercase">{t.btn_a05_hotline}</h4>
                       </div>
-                      <p className="text-xs text-gray-400">{t.vneid_desc}</p>
-                   </div>
-
-                   {/* Zalo OA */}
-                   <div className="bg-cyan-500/10 border border-cyan-500/20 p-5 rounded-2xl">
-                      <div className="flex items-center gap-3 mb-3">
-                         <div className="bg-cyan-500/20 p-2 rounded-lg text-cyan-500">
-                            <Search size={20} />
-                         </div>
-                         <h4 className="font-bold text-cyan-400 text-sm uppercase">ZALO OA POLICE</h4>
-                      </div>
-                      <p className="text-xs text-gray-400">{t.zalo_oa_desc}</p>
+                      <p className="text-xs text-gray-400 mb-4">{lang === 'vi' ? 'Đường dây nóng Cục An ninh mạng & Phòng chống tội phạm công nghệ cao.' : 'Hotline of the Cyber Security and High-Tech Crime Prevention Department.'}</p>
+                      <a href="tel:0692194053" className="text-white font-black text-lg tracking-widest hover:text-red-500 transition-colors">069.219.4053</a>
                    </div>
 
                    {/* Safe Browsing */}
-                   <a href="https://safebrowsing.google.com/safebrowsing/report_phish/" target="_blank" rel="noopener noreferrer" className="bg-white/5 border border-white/10 p-5 rounded-2xl hover:bg-white/10 transition-all group">
+                   <a href="https://safebrowsing.google.com/safebrowsing/report_phish/" target="_blank" rel="noopener noreferrer" className="bg-white/5 border border-white/20 p-5 rounded-2xl hover:bg-white/10 transition-all group">
                       <div className="flex items-center justify-between mb-3">
                          <div className="flex items-center gap-3">
                             <div className="bg-white/20 p-2 rounded-lg text-white">
                                <Globe size={20} />
                             </div>
-                            <h4 className="font-bold text-gray-300 text-sm uppercase">{t.btn_safebrowsing_report}</h4>
+                            <h4 className="font-bold text-gray-200 text-sm uppercase">{t.btn_safebrowsing_report}</h4>
                          </div>
-                         <ExternalLink size={14} className="text-gray-600 group-hover:text-white" />
+                         <ExternalLink size={14} className="text-gray-400 group-hover:text-white" />
                       </div>
                       <p className="text-xs text-gray-400">{lang === 'vi' ? 'Báo cáo website lừa đảo trực tiếp cho Google để bảo vệ người dùng toàn cầu.' : 'Report phishing sites directly to Google to protect global users.'}</p>
                    </a>
 
                    {/* FBI IC3 */}
-                   <a href="https://www.ic3.gov/" target="_blank" rel="noopener noreferrer" className="bg-black border border-white/10 p-5 rounded-2xl hover:border-white/30 transition-all group sm:col-span-2">
+                   <a href="https://www.ic3.gov/" target="_blank" rel="noopener noreferrer" className="bg-gray-800/40 border border-white/30 p-5 rounded-2xl hover:border-primary transition-all group sm:col-span-2">
                       <div className="flex items-center justify-between mb-3">
                          <div className="flex items-center gap-3">
-                            <div className="bg-gray-800 p-2 rounded-lg text-gray-400">
+                            <div className="bg-gray-700 p-2 rounded-lg text-white">
                                <Search size={20} />
                             </div>
-                            <h4 className="font-bold text-gray-400 text-sm uppercase">{t.btn_ic3_report}</h4>
+                            <h4 className="font-bold text-white text-sm uppercase">{t.btn_ic3_report}</h4>
                          </div>
-                         <ExternalLink size={14} className="text-gray-600 group-hover:text-white" />
+                         <ExternalLink size={14} className="text-white group-hover:text-primary" />
                       </div>
-                      <p className="text-xs text-gray-500">{lang === 'vi' ? 'Trung tâm Khiếu nại Tội phạm Internet của FBI. Chuyên tiếp nhận các vụ lừa đảo xuyên biên giới quy mô lớn.' : 'FBI Internet Crime Complaint Center. Specialized in large-scale cross-border fraud.'}</p>
+                      <p className="text-xs text-gray-300 font-medium">{lang === 'vi' ? 'Trung tâm Khiếu nại Tội phạm Internet của FBI. Chuyên tiếp nhận các vụ lừa đảo xuyên biên giới quy mô lớn.' : 'FBI Internet Crime Complaint Center. Specialized in large-scale cross-border fraud.'}</p>
+                   </a>
+
+                   {/* VNeID (Now with Link) */}
+                   <a href="https://vneid.gov.vn/" target="_blank" rel="noopener noreferrer" className="bg-yellow-500/10 border border-yellow-500/20 p-5 rounded-2xl hover:bg-yellow-500/20 transition-all group">
+                      <div className="flex items-center justify-between mb-3">
+                         <div className="flex items-center gap-3">
+                            <div className="bg-yellow-500/20 p-2 rounded-lg text-yellow-500">
+                               <FileText size={20} />
+                            </div>
+                            <h4 className="font-bold text-yellow-400 text-sm uppercase">VNeID PORTAL</h4>
+                         </div>
+                         <ExternalLink size={14} className="text-gray-600 group-hover:text-yellow-500" />
+                      </div>
+                      <p className="text-xs text-gray-500 italic">{t.vneid_desc}</p>
+                   </a>
+
+                   {/* Zalo OA (Now with Link) */}
+                   <a href="https://zalo.me/ncscvn" target="_blank" rel="noopener noreferrer" className="bg-cyan-500/10 border border-cyan-500/20 p-5 rounded-2xl hover:bg-cyan-500/20 transition-all group">
+                      <div className="flex items-center justify-between mb-3">
+                         <div className="flex items-center gap-3">
+                            <div className="bg-cyan-500/20 p-2 rounded-lg text-cyan-500">
+                               <Search size={20} />
+                            </div>
+                            <h4 className="font-bold text-cyan-400 text-sm uppercase">ZALO OA NCSC</h4>
+                         </div>
+                         <ExternalLink size={14} className="text-gray-600 group-hover:text-cyan-500" />
+                      </div>
+                      <p className="text-xs text-gray-500 italic">{t.zalo_oa_desc}</p>
                    </a>
                  </div>
                </div>
