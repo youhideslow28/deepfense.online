@@ -1,7 +1,31 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-// HÀM KIỂM TRA TỪ KHÓA ĐÁNG NGỜ TRONG URL ĐƯỢC GỬI LÊN
+// === RATE LIMITER (In-memory, per-IP, sliding window) ===
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW_MS = 60_000; // 1 phút
+const RATE_LIMIT_MAX_REQUESTS = 20;   // Tối đa 20 request/phút/IP
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  if (!rateLimitMap.has(ip)) {
+    rateLimitMap.set(ip, [now]);
+    return false;
+  }
+  const timestamps = rateLimitMap.get(ip).filter(t => now - t < RATE_LIMIT_WINDOW_MS);
+  timestamps.push(now);
+  rateLimitMap.set(ip, timestamps);
+  
+  // Auto-cleanup (garbage collect cũ) mỗi 100 requests
+  if (rateLimitMap.size > 1000) {
+    for (const [key, times] of rateLimitMap.entries()) {
+      if (now - times[times.length - 1] > RATE_LIMIT_WINDOW_MS * 5) rateLimitMap.delete(key);
+    }
+  }
+  
+  return timestamps.length > RATE_LIMIT_MAX_REQUESTS;
+}
+
 async function checkUrlWithSecurityAPIs(url) {
   const virustotalKey = process.env.VIRUSTOTAL_API_KEY;
   
@@ -57,6 +81,18 @@ export default async function handler(req, res) {
   // Chỉ chấp nhận method POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+
+  // --- BẢO MẬT: RATE LIMITING ---
+  const clientIp = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+  if (isRateLimited(clientIp)) {
+    return res.status(429).json({ error: 'Too Many Requests. Vui lòng đợi 1 phút trước khi gửi tiếp.' });
+  }
+
+  // --- BẢO MẬT: REQUEST SIZE LIMIT (max 8KB) ---
+  const bodySize = JSON.stringify(req.body).length;
+  if (bodySize > 8192) {
+    return res.status(413).json({ error: 'Payload Too Large. Maximum 8KB.' });
   }
 
   // --- BẢO MẬT: CHỐNG SPAM API TỪ TRANG WEB KHÁC (CORS / ORIGIN CHECK) ---
@@ -159,8 +195,7 @@ export default async function handler(req, res) {
 
     const finalInstruction = mode === 'simulator' ? simulatorInstruction : systemInstruction;
 
-    // Gọi Gemini API
-    const response = await ai.models.generateContent({
+    const contentConfig = {
       model: 'gemini-2.5-flash', 
       contents: messages.map(m => ({
         role: m.role,
@@ -168,11 +203,41 @@ export default async function handler(req, res) {
       })),
       config: { 
         systemInstruction: finalInstruction,
-        tools: mode === 'simulator' ? [] : [{ googleSearch: {} }] // Tắt công cụ tìm kiếm khi ở chế độ cắm giả mạo
+        tools: mode === 'simulator' ? [] : [{ googleSearch: {} }]
       }
-    });
+    };
 
-    // Trả kết quả về cho frontend
+    // --- STREAMING MODE (SSE) ---
+    if (req.body.stream === true) {
+      res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'X-Accel-Buffering': 'no',
+      });
+
+      try {
+        const streamResponse = await ai.models.generateContentStream(contentConfig);
+        
+        for await (const chunk of streamResponse) {
+          const text = chunk.text || '';
+          if (text) {
+            res.write(`data: ${JSON.stringify({ text })}\n\n`);
+          }
+        }
+        
+        res.write(`data: [DONE]\n\n`);
+        return res.end();
+      } catch (streamError) {
+        console.error("Stream Error:", streamError);
+        res.write(`data: ${JSON.stringify({ error: 'Stream interrupted' })}\n\n`);
+        return res.end();
+      }
+    }
+
+    // --- NORMAL MODE (JSON) ---
+    const response = await ai.models.generateContent(contentConfig);
+
     const text = response.text || (lang === 'vi' 
         ? "Xin lỗi, tôi chưa hiểu rõ câu hỏi. Bạn vui lòng nhập lại nội dung cụ thể hơn nhé." 
         : "I apologize, I didn't catch that. Please rephrase your question specifically.");
@@ -187,3 +252,4 @@ export default async function handler(req, res) {
     });
   }
 }
+

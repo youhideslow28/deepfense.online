@@ -1,0 +1,31 @@
+/**
+ * DEEPFENSE.ONLINE — Global CSS Entry
+ * Tailwind directives + base styles
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    background: rgba(29, 111, 232, 0.3);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #03080F; }
+  ::-webkit-scrollbar-thumb { background: #1E3A5F; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #1D6FE8; }
+}

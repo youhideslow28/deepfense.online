@@ -1,21 +1,42 @@
-# DEEPFENSE.ONLINE - DEEPFAKE DETECTION TRAINING PROJECT
-Dự án huấn luyện cộng đồng nhận diện Deepfake và các hình thức lừa đảo AI tinh vi.
+# DEEPFENSE.ONLINE 3.0
 
-## 🚀 Tính năng chính
-- **Risk Scan**: Kiểm tra các nội dung đáng ngờ.
-- **Deepfake Challenge**: Thử thách 10 cấp độ nhận diện video AI theo độ khó.
-- **AI Agent**: Trợ lý bảo mật hỗ trợ giải đáp thắc mắc thời gian thực.
+DEEPFENSE is a gamified deepfake awareness and user-training platform. The core is not only detection, but helping real users build habits: observe suspicious cues, verify through safe actions, and respond quickly when a scam happens.
 
-## 🛠️ Công nghệ sử dụng
-- **Frontend**: React (Vite), Tailwind CSS, Lucide Icons.
-- **Backend**: Vercel Serverless Functions, Hostinger.
-- **AI Agent Engine**: Google Gemini 2.5 Flash API.
-- **Database**: Firebase (Firestore & Auth).
+## Core Features
 
-## 👤 Tác giả
-- **Hồ Xuân Nguyễn** (MSV: 25NS039)
-- **Nguyễn Nhất Huy** (MSV: 25NS020)
-- Lớp 25NS - Trường Đại học Công nghệ Thông tin và Truyền thông Việt - Hàn (VKU).
+- **Deepfake Detective Challenge**: 10-level training flow with score, feedback, post-game analysis, survey, and sharing.
+- **Risk Scan**: behavioral and media-based risk review for suspicious content or scam scenarios.
+- **Knowledge & Crisis Hub**: practical guidance for prevention, reporting, and emergency response.
+- **AI Assistant**: security coach for deepfake, online scam, and personal protection questions.
+- **Mini Game**: fast arcade-style awareness game used as a supporting engagement layer.
 
----
-*Bản quyền © 2025 Hồ Xuân Nguyễn, Nguyễn Nhất Huy. Mọi quyền được bảo lưu.*
+## Tech Stack
+
+- React 19, Vite, TypeScript
+- Tailwind CSS, Lucide Icons
+- Three.js, React Three Fiber, GSAP, Lenis
+- Firebase Firestore
+- Vercel Serverless Functions
+- Google Gemini API
+
+## Local Development
+
+```bash
+npm install
+npm run dev
+npm run build
+```
+
+## Project Notes
+
+- Product direction: [docs/DEVELOPMENT_DIRECTION.md](docs/DEVELOPMENT_DIRECTION.md)
+- Existing project summary: [docs/PROJECT_SUMMARY.md](docs/PROJECT_SUMMARY.md)
+- Security notes: [SECURITY.md](SECURITY.md)
+
+## Authors
+
+- Ho Xuan Nguyen (25NS039)
+- Nguyen Nhat Huy (25NS020)
+- Class 25NS, Vietnam-Korea University of Information and Communication Technology (VKU)
+
+Copyright (c) 2025 Ho Xuan Nguyen, Nguyen Nhat Huy. All rights reserved.

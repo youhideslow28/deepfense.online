@@ -7,18 +7,75 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+.pnp
+.pnp.js
+
+# Build output
 dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# ===== BẢO MẬT: ENVIRONMENT VARIABLES =====
+# TUYỆT ĐỐI KHÔNG commit các file này lên Git!
+.env
+.env.local
+.env.development
+.env.development.local
+.env.production
+.env.production.local
+.env.staging
+.env.test
+.env*.local
+
+# ===== FIREBASE =====
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+firebase-export-*
+
+# ===== VERCEL =====
+.vercel/
+
+# ===== EDITOR & IDE =====
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*.code-workspace
+
+# ===== OS FILES =====
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+ehthumbs_vista.db
+*.lnk
+
+# ===== SECURITY: PRIVATE KEYS & CERTIFICATES =====
+*.key
+*.pem
+*.cert
+*.crt
+*.p12
+*.pfx
+*.jks
+
+# ===== BACKUP & TEMP =====
+*.bak
+*.tmp
+*.temp
+*.swp
+*~
+
+# ===== SENSITIVE DATA =====
+secrets/
+credentials/
+*.secret

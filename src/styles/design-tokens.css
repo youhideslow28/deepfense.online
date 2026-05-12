@@ -1,0 +1,400 @@
+/**
+ * DEEPFENSE.ONLINE — Design Tokens & Global Animations v3.0
+ * World-class cybersecurity design system.
+ * Inspired by: Vercel.com, Linear.app, Framer.com, CrowdStrike.com
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ */
+
+/* === LENIS SMOOTH SCROLL BASE === */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/* =============================================
+   KEYFRAMES — Core Animations
+   ============================================= */
+
+@keyframes ripple {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(29, 111, 232, 0.2), 0 0 40px rgba(29, 111, 232, 0.05); }
+  50%       { box-shadow: 0 0 40px rgba(29, 111, 232, 0.5), 0 0 80px rgba(29, 111, 232, 0.1); }
+}
+
+@keyframes glow-pulse-red {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 42, 109, 0.3); }
+  50%       { box-shadow: 0 0 50px rgba(255, 42, 109, 0.6), 0 0 100px rgba(255, 42, 109, 0.2); }
+}
+
+/* Hero title reveal — clipPath từ dưới lên (Apple-style) */
+@keyframes clipReveal {
+  from {
+    clip-path: inset(100% 0 0 0);
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0% 0 0 0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Scene 3 CTA scale-up spring */
+@keyframes scaleUp {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* Fade + slide up entrance */
+@keyframes fadeSlideUp {
+  from { transform: translateY(32px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Fade in simple */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Border scan beam — chạy từ trái sang phải */
+@keyframes scanBeam {
+  0%   { transform: translateX(-100%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(100vw); opacity: 0; }
+}
+
+/* Grid dot pulse */
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.03; }
+  50%       { opacity: 0.07; }
+}
+
+/* Typing cursor blink */
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Badge ping ring */
+@keyframes sonarPing {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  80%  { transform: scale(2.5); opacity: 0;   }
+  100% { transform: scale(2.5); opacity: 0;   }
+}
+
+/* Number ticker */
+@keyframes countUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Announcement ticker */
+@keyframes ticker {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Card hover border glow sweep */
+@keyframes borderGlowSweep {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Feature card shimmer on hover */
+@keyframes featureShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Radar sweep */
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* =============================================
+   UTILITY CLASSES
+   ============================================= */
+
+/* === TEXT SHIMMER === */
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    #fff 0%,
+    #1D6FE8 20%,
+    #60A5FA 40%,
+    #A855F7 65%,
+    #fff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+.text-shimmer-red {
+  background: linear-gradient(
+    90deg,
+    #fff 0%,
+    #FF2A6D 30%,
+    #FF8A00 50%,
+    #FF2A6D 70%,
+    #fff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* === GLASSMORPHISM === */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-primary {
+  background: rgba(0, 240, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+}
+
+/* === GRADIENT BORDERS === */
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #00F0FF, #A855F7, #FF2A6D);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* === GLOW EFFECTS === */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(29, 111, 232, 0.3), 0 0 60px rgba(29, 111, 232, 0.1);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(29, 111, 232, 0.3), 0 0 60px rgba(29, 111, 232, 0.1);
+}
+
+.glow-red {
+  box-shadow: 0 0 20px rgba(255, 42, 109, 0.3), 0 0 60px rgba(255, 42, 109, 0.1);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3), 0 0 60px rgba(168, 85, 247, 0.1);
+}
+
+/* === NAVBAR SCROLL STATE === */
+.navbar-scrolled {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background: rgba(0, 0, 0, 0.92) !important;
+  backdrop-filter: blur(24px);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+/* === SECTION DIVIDER === */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2), rgba(168, 85, 247, 0.2), transparent);
+  margin: 3rem 0;
+}
+
+/* === FEATURE CARD === */
+.feature-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,240,255,0.06), transparent, rgba(168,85,247,0.06));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 240, 255, 0.08);
+}
+
+/* === STAT BADGE === */
+.stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(29, 111, 232, 0.08);
+  border: 1px solid rgba(29, 111, 232, 0.2);
+  border-radius: 9999px;
+  padding: 0.375rem 0.875rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #60A5FA;
+  letter-spacing: 0.08em;
+}
+
+/* === LIVE INDICATOR === */
+.live-dot {
+  width: 6px;
+  height: 6px;
+  background: #FF2A6D;
+  border-radius: 50%;
+  animation: sonarPing 1.5s ease-out infinite;
+}
+
+/* === ACHIEVEMENT BADGE === */
+.achievement-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 9999px;
+  padding: 0.375rem 0.875rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #FCD34D;
+  letter-spacing: 0.08em;
+}
+
+/* === NEWS CARD HOVER === */
+.news-card {
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.news-card:hover {
+  background: rgba(255, 255, 255, 0.025);
+  transform: translateX(2px);
+}
+
+/* === ANNOUNCEMENT BAR === */
+.announcement-ticker {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: ticker 26s linear infinite;
+}
+
+/* === HUD CORNER BRACKETS === */
+.hud-corners {
+  position: relative;
+}
+.hud-corners::before,
+.hud-corners::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(0,240,255,0.3);
+  border-style: solid;
+}
+.hud-corners::before {
+  top: 0; left: 0;
+  border-width: 1px 0 0 1px;
+}
+.hud-corners::after {
+  bottom: 0; right: 0;
+  border-width: 0 1px 1px 0;
+}
+
+/* === SCAN LINE EFFECT === */
+.scan-line {
+  position: relative;
+  overflow: hidden;
+}
+.scan-line::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0,240,255,0.6), transparent);
+  animation: scanBeam 4s linear infinite;
+  pointer-events: none;
+}
+
+/* === GRID BACKGROUND === */
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: gridPulse 6s ease-in-out infinite;
+}
+
+/* === FLOAT ANIMATION === */
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.float-delayed {
+  animation: float 4s ease-in-out 1.5s infinite;
+}
+
+/* === HERO GRADIENT BG === */
+.hero-gradient {
+  background:
+    radial-gradient(ellipse 60% 50% at 50% -10%, rgba(29,111,232,0.08), transparent),
+    radial-gradient(ellipse 40% 40% at 80% 60%, rgba(168,85,247,0.05), transparent),
+    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(255,42,109,0.04), transparent);
+}
