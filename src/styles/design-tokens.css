@@ -286,7 +286,7 @@ html.lenis body {
   border: 1px solid rgba(29, 111, 232, 0.2);
   border-radius: 9999px;
   padding: 0.375rem 0.875rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'JetBrains Mono', Consolas, 'Liberation Mono', monospace;
   font-size: 0.7rem;
   font-weight: 700;
   color: #60A5FA;
@@ -311,7 +311,7 @@ html.lenis body {
   border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: 9999px;
   padding: 0.375rem 0.875rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'JetBrains Mono', Consolas, 'Liberation Mono', monospace;
   font-size: 0.7rem;
   font-weight: 700;
   color: #FCD34D;

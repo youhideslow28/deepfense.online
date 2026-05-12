@@ -18,7 +18,7 @@ export interface TranslationData {
   retest: string; replay: string; report_scam: string; chat_placeholder: string;
   transfer_btn: string; reject_btn: string; chat_inactive: string; session_ended: string;
   crisis_title: string; crisis_desc: string; btn_report_pdf: string; btn_first_aid: string;
-  btn_hotspot: string; report_locked: string; latest_live: string; tbd: string;
+  report_locked: string; latest_live: string; tbd: string;
   tools_scan_title: string; tools_protect_title: string; tools_knowledge_title: string;
   tools_scan_desc: string; tools_protect_desc: string; tools_knowledge_desc: string;
   tools_protect_btn: string; crisis_hub: string;
@@ -77,7 +77,6 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     crisis_desc: "Cổng hỗ trợ khẩn cấp nạn nhân của tội phạm công nghệ cao và lừa đảo Deepfake.",
     btn_report_pdf: "Đơn Tố Giác (PDF)",
     btn_first_aid: "Sơ Cứu Tâm Lý",
-    btn_hotspot: "Bản Đồ Điểm Nóng",
     report_locked: "Tính năng này hiện chỉ hỗ trợ các văn bản pháp lý tiếng Việt.",
     latest_live: "TIN MỚI (LIVE)",
     tbd: "Chưa xác định",
@@ -147,7 +146,6 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     crisis_desc: "Emergency support portal for victims of high-tech crimes and Deepfake fraud.",
     btn_report_pdf: "Report Form (PDF)",
     btn_first_aid: "Psychological First Aid",
-    btn_hotspot: "Hotspot Map",
     report_locked: "This feature currently only supports Vietnamese legal documents.",
     latest_live: "LATEST NEWS (LIVE)",
     tbd: "TBD",

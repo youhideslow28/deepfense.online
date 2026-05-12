@@ -101,7 +101,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
               <div className="flex flex-col leading-none">
                 <span
                   className="font-black text-xl md:text-2xl tracking-tight text-white"
-                  style={{ fontFamily: "'Outfit', sans-serif" }}
+                  style={{ fontFamily: "'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}
                 >
                   DEEPFENSE
                 </span>

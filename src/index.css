@@ -1,5 +1,5 @@
 /**
- * DEEPFENSE.ONLINE — Global CSS Entry
+ * DEEPFENSE.ONLINE - Global CSS Entry
  * Tailwind directives + base styles
  * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
@@ -10,9 +10,11 @@
 
 @layer base {
   html {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', Arial, 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-synthesis-weight: none;
   }
 
   * {

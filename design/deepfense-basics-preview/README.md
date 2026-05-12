@@ -1,53 +1,36 @@
-# DEEPFENSE BASICS preview
+# DEEPFENSE BASICS course shell
 
-Prototype tinh cho flow hoc tap `DEEPFENSE BASICS`.
+Standalone learning experience for `DEEPFENSE BASICS`.
 
-## Chay local
+## Current flow
 
-Neu server 8765 dang chay tu thu muc goc workspace:
+1. Course overview.
+2. Pre-assessment with page-style navigation.
+3. Full 9-module learning path:
+   - Part I: Foundation.
+   - Part II: Recognition.
+   - Part III: Prevention and response.
+4. Section tabs and lesson tabs inside each module.
+5. Reader navigation with previous/next page controls.
+6. Checkpoints and module quizzes in a focused modal.
+7. Midterm and final exam structure.
 
-```txt
-http://127.0.0.1:8765/deepfense-basics-preview/index.html
-```
+## Files
 
-Neu can chay lai:
+- `index.html`: course layout and routes.
+- `styles.css`: professional academy UI.
+- `script.js`: course content, module navigation, quiz flow, and local progress.
 
-```powershell
-python -m http.server 8765 --bind 127.0.0.1
-```
+## Production notes
 
-## Sua o dau?
+The static shell is designed to be migrated to Firebase later:
 
-- `index.html`: cau truc man hinh va cac section chinh.
-- `styles.css`: giao dien, mau sac, layout.
-- `script.js`: noi dung pretest, noi dung Module 1, quick questions, quiz cuoi module, random quiz va anti-cheat preview.
+- `courses`
+- `modules`
+- `sections`
+- `lessons`
+- `questions`
+- `attempts`
+- `certificates`
 
-## Flow hien tai
-
-1. Intro/course overview.
-2. Pre-assessment 10 cau.
-3. Man cam on da dang ky.
-4. Module 1: `Deepfake la gi?`
-5. 5 sub-sections:
-   - `1.1.1` Gioi thieu va dinh nghia
-   - `1.1.2` Khai niem AI co ban
-   - `1.1.3` Ba dang deepfake pho bien
-   - `1.1.4` Lich su va case studies
-   - `1.1.5` Tom tat va key takeaways
-6. Quiz cuoi Module 1: 10 cau, random thu tu cau hoi va dap an.
-
-## Ghi chu de dua vao React/Firebase sau nay
-
-- Chuyen arrays trong `script.js` thanh Firestore collections/documents:
-  - `courses`
-  - `modules`
-  - `subsections`
-  - `questions`
-  - `attempts`
-- Anti-cheat hien tai moi la preview frontend. Ban production can ghi log vao database:
-  - `copy_blocked`
-  - `visibility_changed`
-  - `quiz_started`
-  - `quiz_submitted`
-  - `question_order_seed`
-
+Certificate rendering is intentionally not exposed here. It should unlock only after the learner completes the final requirements.

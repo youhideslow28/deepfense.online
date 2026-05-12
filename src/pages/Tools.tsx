@@ -385,12 +385,12 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
         </button>
       </div>
 
-      {/* MODE: SCAN CENTER (Dual Columns Layout) */}
+      {/* MODE: SCAN CENTER */}
       {activeTab === 'SCAN' && (
         <>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in slide-in-from-bottom-6 duration-500">
-          {/* COLUMN 1: BEHAVIORAL SCANNER */}
-          <div className="bg-surface border border-primary/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col">
+        <div className="space-y-8 animate-in slide-in-from-bottom-6 duration-500">
+          {/* PRIMARY: BEHAVIORAL SCANNER */}
+          <div className="bg-surface border border-primary/20 rounded-3xl p-6 md:p-10 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col lg:min-h-[520px]">
             <h3 className="text-primary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-center gap-3 border-b border-primary/10 pb-4">
                <BrainCircuit size={20} /> {lang === 'vi' ? '1. QUÉT NGỮ CẢNH HÀNH VI' : '1. BEHAVIORAL CONTEXT SCAN'}
             </h3>
@@ -459,8 +459,9 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
             </div>
           </div>
 
-          {/* COLUMN 2: FORENSICS SCANNER */}
-          <div className="bg-surface border border-secondary/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(255,42,109,0.05)] relative overflow-hidden flex flex-col">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          {/* DEMO 1: FORENSICS SCANNER */}
+          <div className="bg-surface border border-secondary/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(255,42,109,0.05)] relative overflow-hidden flex flex-col h-full">
             <h3 className="text-secondary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-start sm:items-center gap-3 border-b border-secondary/10 pb-4">
                <FileSearch size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
                <div className="flex items-center gap-2 flex-wrap w-full">
@@ -614,10 +615,9 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
            )}
             </div>
           </div>
-        </div>
         
-        {/* RPPG LIVENESS SCANNER (FULL WIDTH) */}
-        <div className="mt-8 bg-surface border border-[#00f0ff]/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col items-center">
+        {/* DEMO 2: RPPG LIVENESS SCANNER */}
+        <div className="bg-surface border border-[#00f0ff]/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col items-center h-full">
           <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00f0ff] to-transparent opacity-50"></div>
           <h3 className="text-[#00f0ff] font-black text-sm md:text-base uppercase tracking-widest mb-4 flex items-center justify-start gap-3 w-full border-b border-[#00f0ff]/10 pb-4">
             <ScanLine size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
@@ -692,6 +692,8 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
               </div>
             </div>
           )}
+        </div>
+        </div>
         </div>
         </>
       )}

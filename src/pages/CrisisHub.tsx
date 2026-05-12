@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ShieldAlert, FileText, HeartHandshake, MapPin, Download, AlertTriangle, Send, CheckCircle2, Lock, ShieldCheck, Globe, Phone, ExternalLink, Search } from 'lucide-react';
+import { ShieldAlert, FileText, HeartHandshake, Download, AlertTriangle, Send, CheckCircle2, Lock, ShieldCheck, Globe, Phone, ExternalLink, Search } from 'lucide-react';
 import { Language } from '@/types';
 import { TRANSLATIONS } from '@/data';
 
@@ -8,14 +8,16 @@ interface CrisisHubProps {
   lang: Language;
 }
 
+type CrisisTab = 'report' | 'first-aid';
+
 const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
   const t = TRANSLATIONS[lang];
   const location = useLocation();
   // Thay đổi tab mặc định thành 'first-aid' (Sơ cứu tâm lý) theo yêu cầu người dùng
-  const [activeTab, setActiveTab] = useState<'report' | 'first-aid' | 'hotspot'>('first-aid');
+  const [activeTab, setActiveTab] = useState<CrisisTab>('first-aid');
 
   useEffect(() => {
-    if (location.state?.subTab) {
+    if (location.state?.subTab === 'report' || location.state?.subTab === 'first-aid') {
       setActiveTab(location.state.subTab);
     }
   }, [location.state]);
@@ -51,7 +53,7 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
         </p>
       </div>
 
-      {/* Tabs (chỉnh không in) - Thay đổi thứ tự tab theo yêu cầu: Sơ cứu -> Điểm nóng -> Tố giác */}
+      {/* Tabs */}
       <div className="print:hidden flex flex-wrap gap-4 border-b border-white/10 pb-4">
         <button
           onClick={() => setActiveTab('first-aid')}
@@ -66,13 +68,6 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
         >
           <FileText size={18} />
           {t.btn_report_pdf}
-        </button>
-        <button
-          onClick={() => setActiveTab('hotspot')}
-          className={`px-6 py-3 rounded-xl font-bold uppercase tracking-widest text-sm transition-all focus:outline-none flex items-center gap-2 ${activeTab === 'hotspot' ? 'bg-orange-500/20 text-orange-500 border border-orange-500/50' : 'bg-black/40 text-gray-400 border border-white/10 hover:border-white/30'}`}
-        >
-          <MapPin size={18} />
-          {t.btn_hotspot}
         </button>
       </div>
 
@@ -222,58 +217,7 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
            </div>
         )}
 
-        {/* TAB 2: HOTSPOT MAP / BẢN ĐỒ ĐIỂM NÓNG */}
-        {activeTab === 'hotspot' && (
-          <div className="print:hidden space-y-6">
-            <div className="bg-orange-900/20 border border-orange-500/30 p-8 rounded-2xl backdrop-blur-md text-center">
-              <div className="inline-flex bg-orange-500/20 text-orange-500 p-4 rounded-full mb-4 animate-pulse">
-                <MapPin size={40} />
-              </div>
-              <h2 className="text-3xl font-bold text-white mb-4">{t.btn_hotspot}</h2>
-              <p className="text-gray-300 max-w-3xl mx-auto mb-8">
-                {lang === 'vi' 
-                  ? 'Dữ liệu mô phỏng từ cộng đồng tình báo mối đe dọa của DEEPFENSE. Các khu vực màu đỏ thẫm là nơi đang bùng phát chiến dịch Lừa đảo Voice/Video Call Deepfake.'
-                  : 'Simulated data from the DEEPFENSE threat intelligence community. Deep red areas indicate where Deepfake Voice/Video call scam campaigns are erupting.'}
-              </p>
-              
-              <div className="aspect-[21/9] w-full bg-[#0a0f12] rounded-xl border border-white/10 relative overflow-hidden flex items-center justify-center">
-                  <div className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/2/23/Vietnam_location_map.svg')] bg-contain bg-center bg-no-repeat opacity-60 filter invert"></div>
-                  
-                  {/* Fake Hotspots - Căn chỉnh lại theo bản đồ mới */}
-                  <div className="absolute top-[22%] left-[48%] w-8 h-8 bg-red-500 rounded-full blur-[20px] animate-pulse"></div>
-                  <div className="absolute top-[22%] left-[48%] bg-black/80 text-[10px] px-2 py-1 rounded border border-red-500 text-red-400 translate-x-4 -translate-y-4">Hà Nội (High)</div>
-
-                  <div className="absolute top-[80%] left-[47%] w-12 h-12 bg-red-600 rounded-full blur-[25px] flex items-center justify-center animate-pulse animation-delay-500"></div>
-                  <div className="absolute top-[80%] left-[47%] bg-black/80 text-[10px] px-2 py-1 rounded border border-red-500 text-red-500 translate-x-4 -translate-y-4">TP.HCM (Critical)</div>
-
-                  <div className="absolute top-[48%] left-[54%] w-6 h-6 bg-orange-500 rounded-full blur-[15px] animate-pulse animation-delay-1000"></div>
-                  <div className="absolute top-[48%] left-[54%] bg-black/80 text-[10px] px-2 py-1 rounded border border-orange-500 text-orange-400 translate-x-4 -translate-y-4">Đà Nẵng (Medium)</div>
-
-                  <div className="absolute bottom-4 right-6 text-[8px] font-mono text-gray-500 flex flex-col items-end opacity-50">
-                    <div>TERRITORY_INTEGRITY_VERIFIED</div>
-                    <div>DATA_SOURCE: DEEPFENSE_INTEL_NETWORK</div>
-                  </div>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-               <div className="bg-black/40 border-t-2 border-red-500 p-6 rounded-xl">
-                 <div className="text-4xl font-black text-white mb-2">1,245</div>
-                 <div className="text-gray-400 text-sm uppercase tracking-wider">{lang === 'vi' ? 'Vụ lừa đảo báo cáo tuần này' : 'Scams reported this week'}</div>
-               </div>
-               <div className="bg-black/40 border-t-2 border-orange-500 p-6 rounded-xl">
-                 <div className="text-4xl font-black text-white mb-2">Video/Voice</div>
-                 <div className="text-gray-400 text-sm uppercase tracking-wider">{lang === 'vi' ? 'Hình thức phổ biến nhất' : 'Most common format'}</div>
-               </div>
-               <div className="bg-black/40 border-t-2 border-green-500 p-6 rounded-xl">
-                 <div className="text-4xl font-black text-white mb-2">~150 {lang === 'vi' ? 'Tỉ' : 'Billion'}</div>
-                 <div className="text-gray-400 text-sm uppercase tracking-wider">{lang === 'vi' ? 'Ước tính thiệt hại' : 'Estimated loss'}</div>
-               </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 3: REPORT PDF / ĐƠN TỐ GIÁC (Đẩy xuống cuối) */}
+        {/* TAB 2: REPORT PDF / ĐƠN TỐ GIÁC */}
         {activeTab === 'report' && (
           <div className="relative">
             {/* Overlay Blur for English */}

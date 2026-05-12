@@ -1,4 +1,4 @@
-/**
+﻿/**
  * DEEPFENSE.ONLINE - Academy Overview
  * Catalog-style academy page. Actual learning happens in course routes.
  */
@@ -43,50 +43,50 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
 
   const courses = [
     {
-      level: 'Level 1',
-      status: isVi ? 'Đang mở chương 1' : 'Chapter 1 available',
-      title: 'DEEPFENSE BASICS',
+      level: 'BASIC',
+      status: isVi ? 'Đã mở full course' : 'Full course available',
+      title: 'DEEPFENSE BASIC',
       credential: 'DEEPFENSE AWARE',
       reward: '500 DPF',
       hours: '8-10h',
       available: true,
       desc: isVi
-        ? 'Khóa nền tảng cho người mới: hiểu deepfake là gì, vì sao nguy hiểm, cách kiểm chứng nội dung đáng ngờ và phản ứng an toàn.'
-        : 'A beginner foundation: what deepfakes are, why they matter, how to verify suspicious media, and how to respond safely.',
+        ? 'Khóa nền tảng đầy đủ gồm 9 module: hiểu deepfake, phân tích tác động, nhận diện hình ảnh/video/giọng nói, kiểm chứng nguồn tin và ứng phó an toàn.'
+        : 'A complete 9-module foundation covering deepfake concepts, impact, visual/audio recognition, source verification, and safe response.',
       bullets: isVi
-        ? ['Pre-assessment đầu vào', 'Module 1: Deepfake là gì?', 'Quiz, tiến độ, certificate khi hoàn thành']
-        : ['Entry pre-assessment', 'Module 1: What is a deepfake?', 'Quizzes, progress, certificate after completion'],
+        ? ['Pre-assessment đầu vào', '9 module theo 3 phần học', 'Checkpoint, midterm, final exam và certificate khi đạt']
+        : ['Entry pre-assessment', '9 modules across 3 learning parts', 'Checkpoints, midterms, final exam, and certificate after completion'],
       path: '/academy/basics',
     },
     {
-      level: 'Level 2',
-      status: isVi ? 'Sắp cập nhật' : 'Coming soon',
+      level: 'DEEPFENSE ADVANCE',
+      status: isVi ? 'Sáº¯p cáº­p nháº­t' : 'Coming soon',
       title: 'FORENSIC ANALYST',
       credential: 'DEEPFENSE FORENSIC ANALYST',
-      reward: isVi ? 'Reward nâng cao' : 'Advanced reward',
+      reward: isVi ? 'Reward nÃ¢ng cao' : 'Advanced reward',
       hours: '10-12h',
       available: false,
       desc: isVi
-        ? 'Đi sâu hơn vào phân tích bằng chứng, metadata, chuỗi lưu giữ, attribution và phản ứng sự cố.'
+        ? 'Äi sÃ¢u hÆ¡n vÃ o phÃ¢n tÃ­ch báº±ng chá»©ng, metadata, chuá»—i lÆ°u giá»¯, attribution vÃ  pháº£n á»©ng sá»± cá»‘.'
         : 'A deeper track for evidence analysis, metadata, chain of custody, attribution, and incident response.',
       bullets: isVi
-        ? ['Yêu cầu hoàn thành Basics', 'Case study forensic', 'Bài thi thực hành']
+        ? ['YÃªu cáº§u hoÃ n thÃ nh Basics', 'Case study forensic', 'BÃ i thi thá»±c hÃ nh']
         : ['Requires Basics completion', 'Forensic case studies', 'Practical assessment'],
       path: '#',
     },
     {
-      level: 'Level 3',
-      status: isVi ? 'Sắp cập nhật' : 'Coming soon',
+      level: 'DEEPFENSE EXPERT',
+      status: isVi ? 'Sáº¯p cáº­p nháº­t' : 'Coming soon',
       title: 'SECURITY EXPERT',
       credential: 'DEEPFENSE SECURITY EXPERT',
       reward: isVi ? 'Expert reward' : 'Expert reward',
       hours: '12-15h',
       available: false,
       desc: isVi
-        ? 'Dành cho hướng chuyên sâu: công nghệ phát hiện, phòng thủ tổ chức, pháp lý/đạo đức và xu hướng nghiên cứu.'
+        ? 'DÃ nh cho hÆ°á»›ng chuyÃªn sÃ¢u: cÃ´ng nghá»‡ phÃ¡t hiá»‡n, phÃ²ng thá»§ tá»• chá»©c, phÃ¡p lÃ½/Ä‘áº¡o Ä‘á»©c vÃ  xu hÆ°á»›ng nghiÃªn cá»©u.'
         : 'A specialist track for detection technology, organizational defense, legal/ethics, and research trends.',
       bullets: isVi
-        ? ['Yêu cầu Level 2', 'Advanced challenges', 'Credential thời hạn dài hơn']
+        ? ['YÃªu cáº§u Level 2', 'Advanced challenges', 'Credential thá»i háº¡n dÃ i hÆ¡n']
         : ['Requires Level 2', 'Advanced challenges', 'Longer-validity credential'],
       path: '#',
     },
@@ -102,13 +102,13 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-[10px] font-mono tracking-widest text-blue-300 mb-5">
               <GraduationCap size={12} /> DEEPFENSE ACADEMY
             </div>
-            <h1 className="text-4xl md:text-6xl font-black uppercase leading-tight text-white" style={{ fontFamily:"'Outfit',sans-serif" }}>
-              {isVi ? 'Học để không bị dẫn dắt bởi nội dung giả' : 'Train before synthetic media trains you'}
+            <h1 className="text-4xl md:text-6xl font-black uppercase leading-tight text-white" style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
+              {isVi ? 'Há»c Ä‘á»ƒ khÃ´ng bá»‹ dáº«n dáº¯t bá»Ÿi ná»™i dung giáº£' : 'Train before synthetic media trains you'}
             </h1>
             <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-gray-400">
               {isVi
-                ? 'Academy là hệ thống khóa học và chứng nhận của DEEPFENSE. Mỗi khóa có lộ trình, quiz, tiến độ học, điều kiện cấp certificate và reward DPF để biến việc học an toàn số thành một hành trình có thể đo lường.'
-                : 'Academy is DEEPFENSE’s course and certification system. Each course includes a path, quizzes, learning progress, certificate conditions, and DPF rewards to make digital safety measurable.'}
+                ? 'Academy lÃ  há»‡ thá»‘ng khÃ³a há»c vÃ  chá»©ng nháº­n cá»§a DEEPFENSE. Má»—i khÃ³a cÃ³ lá»™ trÃ¬nh, quiz, tiáº¿n Ä‘á»™ há»c, Ä‘iá»u kiá»‡n cáº¥p certificate vÃ  reward DPF Ä‘á»ƒ biáº¿n viá»‡c há»c an toÃ n sá»‘ thÃ nh má»™t hÃ nh trÃ¬nh cÃ³ thá»ƒ Ä‘o lÆ°á»ng.'
+                : 'Academy is DEEPFENSEâ€™s course and certification system. Each course includes a path, quizzes, learning progress, certificate conditions, and DPF rewards to make digital safety measurable.'}
             </p>
           </div>
 
@@ -119,9 +119,9 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
               </div>
               <div>
                 <div className="text-[10px] font-mono uppercase tracking-[0.22em] text-gray-500">
-                  {isVi ? 'Hệ thống học tập' : 'Learning system'}
+                  {isVi ? 'Há»‡ thá»‘ng há»c táº­p' : 'Learning system'}
                 </div>
-                <div className="text-white font-black uppercase">{isVi ? 'Học - kiểm tra - nhận thưởng' : 'Learn - prove - earn'}</div>
+                <div className="text-white font-black uppercase">{isVi ? 'Há»c - kiá»ƒm tra - nháº­n thÆ°á»Ÿng' : 'Learn - prove - earn'}</div>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-2">
@@ -146,9 +146,9 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
 
       <section data-reveal className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {[
-          [<Target size={20} />, isVi ? 'Lộ trình rõ' : 'Clear path', isVi ? 'Biết mình học gì, đang ở đâu, cần hoàn thành gì tiếp theo.' : 'Know what to learn, where you are, and what comes next.'],
-          [<ShieldCheck size={20} />, isVi ? 'Phản xạ thực tế' : 'Practical reflex', isVi ? 'Học bằng tình huống, không chỉ đọc lý thuyết khô.' : 'Scenario-led learning, beyond dry theory.'],
-          [<Award size={20} />, isVi ? 'Chứng nhận có điều kiện' : 'Conditional credential', isVi ? 'Certificate chỉ mở khi hoàn thành yêu cầu khóa học.' : 'Certificates unlock only after course requirements are met.'],
+          [<Target size={20} />, isVi ? 'Lá»™ trÃ¬nh rÃµ' : 'Clear path', isVi ? 'Biáº¿t mÃ¬nh há»c gÃ¬, Ä‘ang á»Ÿ Ä‘Ã¢u, cáº§n hoÃ n thÃ nh gÃ¬ tiáº¿p theo.' : 'Know what to learn, where you are, and what comes next.'],
+          [<ShieldCheck size={20} />, isVi ? 'Pháº£n xáº¡ thá»±c táº¿' : 'Practical reflex', isVi ? 'Há»c báº±ng tÃ¬nh huá»‘ng, khÃ´ng chá»‰ Ä‘á»c lÃ½ thuyáº¿t khÃ´.' : 'Scenario-led learning, beyond dry theory.'],
+          [<Award size={20} />, isVi ? 'Chá»©ng nháº­n cÃ³ Ä‘iá»u kiá»‡n' : 'Conditional credential', isVi ? 'Certificate chá»‰ má»Ÿ khi hoÃ n thÃ nh yÃªu cáº§u khÃ³a há»c.' : 'Certificates unlock only after course requirements are met.'],
         ].map(([icon, title, text]) => (
           <article key={String(title)} className="rounded-2xl border border-white/10 bg-white/[0.025] p-5">
             <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300 flex items-center justify-center mb-4">{icon}</div>
@@ -162,10 +162,10 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
         <div className="flex items-end justify-between gap-4 mb-5">
           <div>
             <div className="text-[10px] font-mono uppercase tracking-[0.22em] text-blue-300 mb-2">
-              {isVi ? 'Danh sách khóa học' : 'Course catalog'}
+              {isVi ? 'Danh sÃ¡ch khÃ³a há»c' : 'Course catalog'}
             </div>
-            <h2 className="text-2xl md:text-3xl font-black text-white uppercase" style={{ fontFamily:"'Outfit',sans-serif" }}>
-              {isVi ? 'Bạn sẽ học gì trong Academy?' : 'What will you learn?'}
+            <h2 className="text-2xl md:text-3xl font-black text-white uppercase" style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
+              {isVi ? 'Báº¡n sáº½ há»c gÃ¬ trong Academy?' : 'What will you learn?'}
             </h2>
           </div>
         </div>
@@ -183,7 +183,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                   {course.status}
                 </div>
               </div>
-              <h3 className="text-white text-xl font-black uppercase mb-3" style={{ fontFamily:"'Outfit',sans-serif" }}>{course.title}</h3>
+              <h3 className="text-white text-xl font-black uppercase mb-3" style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>{course.title}</h3>
               <p className="text-gray-400 text-sm leading-relaxed mb-5">{course.desc}</p>
               <div className="space-y-2 mb-5">
                 {course.bullets.map((item) => (
@@ -199,13 +199,13 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                   <div className="text-white text-xs font-black uppercase leading-snug">{course.credential}</div>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-black/20 p-3">
-                  <div className="text-[10px] text-gray-500 uppercase font-mono mb-1">{isVi ? 'Thời lượng' : 'Hours'}</div>
+                  <div className="text-[10px] text-gray-500 uppercase font-mono mb-1">{isVi ? 'Thá»i lÆ°á»£ng' : 'Hours'}</div>
                   <div className="text-white text-xs font-black uppercase flex items-center gap-1"><Clock3 size={12} /> {course.hours}</div>
                 </div>
               </div>
               {canOpen ? (
                 <GlowButton color="primary" size="md" icon={<GraduationCap size={16} />} onClick={() => course.available ? navigate(course.path) : window.alert(isVi ? 'Advanced Starter Pack demo da duoc mo khoa. Noi dung giao an se duoc cap nhat sau.' : 'Advanced Starter Pack demo is unlocked. Course content will be added later.')}>
-                  {isVi ? 'VÀO KHÓA HỌC' : 'OPEN COURSE'}
+                  {isVi ? 'VÃ€O KHÃ“A Há»ŒC' : 'OPEN COURSE'}
                 </GlowButton>
               ) : isAdvancedDemo ? (
                 <div>
@@ -220,7 +220,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                 </div>
               ) : (
                 <button disabled className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-[10px] font-black font-mono uppercase tracking-widest text-gray-600 cursor-not-allowed">
-                  {isVi ? 'Sắp mở' : 'Coming soon'}
+                  {isVi ? 'Sáº¯p má»Ÿ' : 'Coming soon'}
                 </button>
               )}
             </article>

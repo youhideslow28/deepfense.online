@@ -4,18 +4,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary:   '#1D6FE8',   // Ocean blue — màu chủ đạo
-        secondary: '#FF2A6D',   // Red — cảnh báo / danger
-        accent:    '#F59E0B',   // Amber — gamification / achievements
-        success:   '#10B981',   // Green — correct / safe
+        primary:   '#1D6FE8',   // Ocean blue - màu chủ đạo
+        secondary: '#FF2A6D',   // Red - cảnh báo / danger
+        accent:    '#F59E0B',   // Amber - gamification / achievements
+        success:   '#10B981',   // Green - correct / safe
         bgDark:    '#03080F',   // Near-black blue-tinted bg
         surface:   '#0D1929',   // Dark navy surface
         border:    '#1E3A5F',   // Blue-tinted border
       },
       fontFamily: {
-        sans:  ['Inter', 'sans-serif'],
-        mono:  ['JetBrains Mono', 'monospace'],
-        serif: ['Outfit', 'sans-serif'],
+        sans:  ['Inter', 'Arial', 'Helvetica Neue', 'sans-serif'],
+        mono:  ['JetBrains Mono', 'Consolas', 'Liberation Mono', 'monospace'],
+        serif: ['Outfit', 'Inter', 'Arial', 'Helvetica Neue', 'sans-serif'],
       },
       animation: {
         'float':       'float 4s ease-in-out infinite',

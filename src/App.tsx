@@ -1,6 +1,6 @@
 
 import React, { useState, Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import type { User } from 'firebase/auth';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
@@ -48,16 +48,69 @@ const ScrollToTop = () => {
   return null;
 };
 
+const ProtectedAcademyRoute: React.FC<{
+  user: User | null;
+  authBusy: boolean;
+  children: React.ReactElement;
+}> = ({ user, authBusy, children }) => {
+  if (authBusy) return <LoadingFallback />;
+  if (!user) return <Navigate to="/" replace />;
+  return children;
+};
+
 const AppContent: React.FC = () => {
   const [lang, setLang] = useState<Language>('vi');
   const [season, setSeason] = useState<Season>('SUMMER');
   const [user, setUser] = useState<User | null>(null);
-  const [authBusy, setAuthBusy] = useState(false);
+  const [authBusy, setAuthBusy] = useState(true);
   const [authError, setAuthError] = useState('');
   const t = TRANSLATIONS[lang];
   const location = useLocation();
 
-  useEffect(() => onAuthStateChanged(auth, setUser), []);
+  useEffect(() => onAuthStateChanged(auth, (nextUser) => {
+    setUser(nextUser);
+    setAuthBusy(false);
+  }), []);
+
+  useEffect(() => {
+    if (!user) {
+      window.localStorage.removeItem('deepfenseAcademyAuth');
+      return;
+    }
+
+    const email = (user.email || '').toLowerCase();
+    window.localStorage.setItem('deepfenseAcademyAuth', JSON.stringify({
+      uid: user.uid,
+      email,
+      displayName: user.displayName || '',
+      photoURL: user.photoURL || '',
+      signedInAt: Date.now(),
+      isAdmin: email === 'deepfense@gmail.com',
+    }));
+
+    if (email === 'deepfense@gmail.com') {
+      const adminProgress: Record<string, true> = {};
+      for (let index = 1; index <= 9; index += 1) {
+        adminProgress[`module-${index}`] = true;
+      }
+      window.localStorage.setItem('deepfense-basics-progress', JSON.stringify(adminProgress));
+      window.localStorage.setItem('deepfense-basics-last-location', JSON.stringify({
+        route: 'exam',
+        moduleIndex: 8,
+        sectionIndex: 2,
+        lessonIndex: 2,
+        updatedAt: Date.now(),
+      }));
+      window.localStorage.setItem('deepfense-basics-course-evaluation', JSON.stringify({
+        rating: '5',
+        pace: 'right',
+        confidence: 'high',
+        feedback: 'Admin test completion.',
+        submittedAt: new Date().toISOString(),
+        adminSeeded: true,
+      }));
+    }
+  }, [user]);
 
   useEffect(() => {
     if (!authError) return;
@@ -77,6 +130,7 @@ const AppContent: React.FC = () => {
 
   const registerAcademyLearner = async (currentUser: User) => {
     try {
+      const isAdmin = (currentUser.email || '').toLowerCase() === 'deepfense@gmail.com';
       await ensureDpfWallet(currentUser);
       await setDoc(doc(db, 'academy_learners', currentUser.uid), {
         uid: currentUser.uid,
@@ -87,7 +141,13 @@ const AppContent: React.FC = () => {
         course: 'DEEPFENSE BASICS',
         credentialTarget: 'DEEPFENSE AWARE',
         rewardTarget: { amount: 500, symbol: 'DPF' },
-        status: 'signed_in',
+        status: isAdmin ? 'completed' : 'signed_in',
+        progressPercent: isAdmin ? 100 : 0,
+        completedModules: isAdmin ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : [],
+        courseEvaluationSubmitted: isAdmin,
+        certificateUnlocked: isAdmin,
+        certificateId: isAdmin ? 'DEEPFENSE-AWARE-ADMIN-TEST' : '',
+        completedAt: isAdmin ? serverTimestamp() : null,
         updatedAt: serverTimestamp(),
       }, { merge: true });
     } catch (error) {
@@ -195,8 +255,8 @@ const AppContent: React.FC = () => {
             <Suspense fallback={<LoadingFallback />}>
                 <Routes>
                   <Route path="/" element={<Home lang={lang} season={season} />} />
-                  <Route path="/academy" element={<Academy lang={lang} />} />
-                  <Route path="/academy/basics" element={<AcademyBasics lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} />} />
+                  <Route path="/academy" element={<ProtectedAcademyRoute user={user} authBusy={authBusy}><Academy lang={lang} /></ProtectedAcademyRoute>} />
+                  <Route path="/academy/basics" element={<ProtectedAcademyRoute user={user} authBusy={authBusy}><AcademyBasics lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} /></ProtectedAcademyRoute>} />
                   <Route path="/tools/:tab?" element={<Tools lang={lang} />} />
                   <Route path="/challenge" element={<Challenge lang={lang} />} />
                   <Route path="/ai-project" element={<AiComingSoon lang={lang} />} />

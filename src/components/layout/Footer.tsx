@@ -59,7 +59,7 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
                 <Shield className="text-[#60A5FA] transition-transform duration-300 group-hover:scale-110" size={23} />
               </div>
               <div>
-                <div className="font-black text-2xl tracking-tight text-white" style={{ fontFamily: "'Outfit',sans-serif" }}>
+                <div className="font-black text-2xl tracking-tight text-white" style={{ fontFamily: "'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
                   DEEPFENSE
                 </div>
                 <div className="font-mono text-[9px] font-bold uppercase tracking-[0.28em] text-[#60A5FA]/45">

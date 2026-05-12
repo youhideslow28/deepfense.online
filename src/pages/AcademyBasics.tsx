@@ -1,13 +1,15 @@
 /**
- * DEEPFENSE.ONLINE - DEEPFENSE BASICS Course Page
+ * DEEPFENSE.ONLINE - DEEPFENSE BASICS Connector
+ * The main site only handles identity and routing. Learning runs in the
+ * standalone course index under /public/academy.
  */
 
 import React from 'react';
 import type { User } from 'firebase/auth';
 import { Language } from '@/types';
 import {
-  Award, BookOpen, CheckCircle2, Clock3, ExternalLink, GraduationCap,
-  LockKeyhole, LogIn, PlayCircle, ShieldCheck, Target,
+  Award, CheckCircle2, Clock3, GraduationCap, LockKeyhole, LogIn,
+  PlayCircle, ShieldCheck, Target,
 } from 'lucide-react';
 import GlowButton from '@/components/ui/GlowButton';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
@@ -19,7 +21,7 @@ interface AcademyBasicsProps {
   onGoogleAuth: () => void;
 }
 
-const academyPreviewUrl = '/academy/deepfense-basics-preview/index.html';
+const academyIndexUrl = '/academy/deepfense-basics-preview/index.html';
 
 const roadmap = [
   {
@@ -53,30 +55,28 @@ const AcademyBasics: React.FC<AcademyBasicsProps> = ({ lang, user, authBusy, onG
   const isSignedIn = !!user;
   const pageRef = useScrollReveal({ selector: '[data-reveal]', preset: 'fade-up', stagger: 0.08 });
 
+  const openCourseIndex = () => {
+    window.location.href = academyIndexUrl;
+  };
+
   return (
     <div ref={pageRef as React.RefObject<HTMLDivElement>} className="animate-in fade-in duration-500">
       <section data-reveal className="relative overflow-hidden rounded-2xl border border-blue-500/20 bg-[#07111f]/90 p-6 md:p-10 mb-8 shadow-[0_24px_90px_rgba(0,0,0,0.35)]">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="absolute right-0 top-0 h-full w-2/3 bg-[radial-gradient(circle_at_top_right,rgba(29,111,232,0.16),transparent_45%)] pointer-events-none" />
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-[10px] font-mono tracking-widest text-blue-300 mb-5">
               <GraduationCap size={12} /> DEEPFENSE BASICS
             </div>
-            <h1 className="text-4xl md:text-6xl font-black uppercase leading-tight text-white" style={{ fontFamily:"'Outfit',sans-serif" }}>
-              {isVi ? 'Khóa nền tảng nhận diện deepfake' : 'Deepfake awareness foundation'}
+            <h1 className="text-4xl md:text-6xl font-black uppercase leading-tight text-white" style={{ fontFamily: "'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
+              {isVi ? 'Cổng kết nối khóa học' : 'Course access gateway'}
             </h1>
             <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-gray-400">
               {isVi
-                ? 'Chương 1 đang mở để học thử có kiểm soát. Đăng nhập Google giúp hệ thống lưu tiến độ, ghi điểm quiz, cho admin kiểm soát học viên và chuẩn bị trả thưởng DPF khi hoàn thành.'
-                : 'Chapter 1 is available in a controlled learning preview. Google sign-in lets the system save progress, record quiz scores, support admin tracking, and prepare DPF rewards after completion.'}
+                ? 'Trang này không phải nơi học trực tiếp. DEEPFENSE dùng trang này để xác thực Google, ghi nhận học viên cho admin và sau đó chuyển bạn sang hệ thống học riêng của khóa DEEPFENSE BASICS.'
+                : 'This page is not where lessons run. DEEPFENSE uses it to verify Google identity, register the learner for admin tracking, then send you to the standalone DEEPFENSE BASICS learning system.'}
             </p>
-            <div className="mt-7">
-              <GlowButton color="primary" size="lg" icon={isSignedIn ? <PlayCircle size={16} /> : <LogIn size={16} />} onClick={isSignedIn ? () => window.open(academyPreviewUrl, '_blank', 'noopener,noreferrer') : onGoogleAuth}>
-                {isSignedIn
-                  ? (isVi ? 'MỞ KHÔNG GIAN HỌC' : 'OPEN LEARNING SPACE')
-                  : (authBusy ? (isVi ? 'ĐANG MỞ GOOGLE...' : 'OPENING GOOGLE...') : (isVi ? 'ĐĂNG NHẬP GOOGLE ĐỂ HỌC' : 'SIGN IN WITH GOOGLE TO LEARN'))}
-              </GlowButton>
-            </div>
           </div>
 
           <div className="lg:col-span-4 rounded-2xl border border-amber-400/20 bg-amber-400/[0.06] p-5">
@@ -84,7 +84,7 @@ const AcademyBasics: React.FC<AcademyBasicsProps> = ({ lang, user, authBusy, onG
               <Award size={28} className="text-amber-300" />
               <div>
                 <div className="text-[10px] font-mono uppercase tracking-[0.22em] text-amber-300">
-                  {isVi ? 'Phần thưởng khóa' : 'Course reward'}
+                  {isVi ? 'Sau khi hoàn thành' : 'After completion'}
                 </div>
                 <div className="text-white font-black uppercase">DEEPFENSE AWARE</div>
               </div>
@@ -92,7 +92,7 @@ const AcademyBasics: React.FC<AcademyBasicsProps> = ({ lang, user, authBusy, onG
             <div className="rounded-xl border border-white/10 bg-black/20 p-4">
               <div className="flex items-center gap-2 text-gray-400 text-sm">
                 <LockKeyhole size={16} className="text-amber-300" />
-                {isVi ? 'Certificate chỉ mở khi hoàn thành khóa học.' : 'Certificate unlocks only after course completion.'}
+                {isVi ? 'Certificate chỉ mở trong hệ thống học khi đủ điều kiện.' : 'Certificate unlocks inside the learning system after requirements are met.'}
               </div>
               <div className="mt-3 text-[11px] font-mono uppercase tracking-widest text-amber-300">
                 500 DPF {isVi ? 'reward dự kiến' : 'planned reward'}
@@ -103,60 +103,49 @@ const AcademyBasics: React.FC<AcademyBasicsProps> = ({ lang, user, authBusy, onG
       </section>
 
       <section className="grid grid-cols-1 xl:grid-cols-12 gap-6 mb-8">
-        {!isSignedIn ? (
-          <div data-reveal className="xl:col-span-7 rounded-2xl border border-amber-400/20 bg-[#07111f]/90 p-6 md:p-8 overflow-hidden relative">
-            <div className="absolute right-0 top-0 h-full w-2/3 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.14),transparent_45%)] pointer-events-none" />
-            <div className="relative z-10 max-w-2xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/10 px-4 py-1.5 text-[10px] font-mono tracking-widest text-amber-300 mb-5">
-                <LockKeyhole size={12} /> {isVi ? 'YÊU CẦU ĐĂNG NHẬP' : 'SIGN-IN REQUIRED'}
-              </div>
-              <h2 className="text-2xl md:text-4xl font-black text-white uppercase leading-tight" style={{ fontFamily:"'Outfit',sans-serif" }}>
-                {isVi ? 'Học thật, có điểm thật, có thưởng thật.' : 'Real learning, real scores, real rewards.'}
-              </h2>
-              <p className="text-gray-400 text-sm md:text-base leading-relaxed mt-4">
-                {isVi
-                  ? 'Bạn cần đăng nhập bằng tài khoản Google trước khi vào học. Đây là cách DEEPFENSE biết ai đang học, lưu tiến độ, chấm quiz và tránh cấp nhầm certificate hoặc token DPF.'
-                  : 'Google sign-in is required before learning. This lets DEEPFENSE know who is learning, save progress, grade quizzes, and avoid issuing certificates or DPF to the wrong account.'}
-              </p>
-              <div className="mt-7">
+        <div data-reveal className="xl:col-span-7 rounded-2xl border border-white/10 bg-[#07111f]/90 p-6 md:p-8 overflow-hidden relative">
+          <div className="absolute right-0 top-0 h-full w-2/3 bg-[radial-gradient(circle_at_top_right,rgba(29,111,232,0.14),transparent_45%)] pointer-events-none" />
+          <div className="relative z-10 max-w-2xl">
+            <div className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[10px] font-mono tracking-widest mb-5 ${isSignedIn ? 'border-emerald-400/25 bg-emerald-400/10 text-emerald-300' : 'border-amber-400/25 bg-amber-400/10 text-amber-300'}`}>
+              {isSignedIn ? <CheckCircle2 size={12} /> : <LockKeyhole size={12} />}
+              {isSignedIn ? (isVi ? 'ĐÃ KẾT NỐI GOOGLE' : 'GOOGLE CONNECTED') : (isVi ? 'CẦN ĐĂNG NHẬP GOOGLE' : 'GOOGLE SIGN-IN REQUIRED')}
+            </div>
+            <h2 className="text-2xl md:text-4xl font-black text-white uppercase leading-tight" style={{ fontFamily: "'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
+              {isVi ? 'Xác thực xong là chuyển sang hệ thống học.' : 'Verify once, then enter the learning system.'}
+            </h2>
+            <p className="text-gray-400 text-sm md:text-base leading-relaxed mt-4">
+              {isVi
+                ? 'Google login giúp hệ thống biết đúng học viên, lưu hồ sơ cho admin, đối soát điểm quiz và chuẩn bị trả thưởng DPF. Sau bước này, toàn bộ bài học sẽ chạy ở trang index riêng của khóa học.'
+                : 'Google login ties the learner profile to the right account for admin review, quiz matching, and DPF reward preparation. After that, all lessons run in the course index.'}
+            </p>
+
+            <div className="mt-7 flex flex-col sm:flex-row gap-3">
+              {!isSignedIn ? (
                 <GlowButton color="primary" size="lg" icon={<LogIn size={16} />} onClick={onGoogleAuth}>
-                  {authBusy ? (isVi ? 'ĐANG MỞ GOOGLE...' : 'OPENING GOOGLE...') : (isVi ? 'ĐĂNG NHẬP GOOGLE VÀ BẮT ĐẦU' : 'SIGN IN WITH GOOGLE AND START')}
+                  {authBusy ? (isVi ? 'ĐANG MỞ GOOGLE...' : 'OPENING GOOGLE...') : (isVi ? 'ĐĂNG NHẬP GOOGLE ĐỂ VÀO HỌC' : 'SIGN IN WITH GOOGLE TO LEARN')}
                 </GlowButton>
+              ) : (
+                <GlowButton color="primary" size="lg" icon={<PlayCircle size={16} />} onClick={openCourseIndex}>
+                  {isVi ? 'CHUYỂN SANG HỆ THỐNG HỌC' : 'GO TO LEARNING SYSTEM'}
+                </GlowButton>
+              )}
+            </div>
+
+            {isSignedIn && (
+              <div className="mt-4 rounded-xl border border-white/10 bg-black/25 p-4 text-sm text-gray-400">
+                {isVi ? 'Đang kết nối bằng: ' : 'Connected as: '}
+                <span className="font-semibold text-white">{user.displayName || user.email || 'Google learner'}</span>
               </div>
-            </div>
+            )}
           </div>
-        ) : (
-          <div data-reveal className="xl:col-span-7 rounded-2xl border border-white/10 bg-[#07111f]/90 overflow-hidden">
-            <div className="p-5 md:p-6 border-b border-white/10 bg-black/30 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-blue-300 mb-2">
-                  <BookOpen size={13} /> {isVi ? 'Không gian học của bạn' : 'Your learning workspace'}
-                </div>
-                <h2 className="text-white text-xl md:text-2xl font-black uppercase" style={{ fontFamily:"'Outfit',sans-serif" }}>
-                  DEEPFENSE BASICS Preview
-                </h2>
-                <p className="text-gray-500 text-xs md:text-sm mt-2 max-w-2xl">
-                  {isVi
-                    ? `Đã đăng nhập: ${user.displayName || user.email || 'Google learner'}. Chương 1 hiện có pre-assessment, bài học và quiz cuối module.`
-                    : `Signed in: ${user.displayName || user.email || 'Google learner'}. Chapter 1 currently includes pre-assessment, lessons, and the module quiz.`}
-                </p>
-              </div>
-              <a href={academyPreviewUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-[10px] font-black font-mono uppercase tracking-widest text-white hover:bg-blue-500 transition-colors">
-                {isVi ? 'Mở tab riêng' : 'Open separate tab'} <ExternalLink size={13} />
-              </a>
-            </div>
-            <div className="h-[430px] md:h-[560px] bg-black">
-              <iframe title="DEEPFENSE BASICS course preview" src={academyPreviewUrl} className="h-full w-full border-0" loading="lazy" />
-            </div>
-          </div>
-        )}
+        </div>
 
         <aside data-reveal className="xl:col-span-5 flex flex-col gap-5">
           <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-6">
             <div className="flex items-center gap-2 mb-5">
               <Target size={15} className="text-primary" />
               <h2 className="text-white font-black uppercase tracking-widest text-sm">
-                {isVi ? 'Lộ trình khóa học' : 'Course roadmap'}
+                {isVi ? 'Nội dung khóa học' : 'Course outline'}
               </h2>
             </div>
             <div className="space-y-3">
@@ -181,12 +170,12 @@ const AcademyBasics: React.FC<AcademyBasicsProps> = ({ lang, user, authBusy, onG
           <div className="rounded-2xl border border-blue-400/20 bg-blue-500/[0.06] p-6">
             <div className="flex items-center gap-2 text-white font-black uppercase tracking-widest text-sm mb-4">
               <ShieldCheck size={16} className="text-blue-300" />
-              {isVi ? 'Bạn sẽ làm được gì?' : 'What you will be able to do'}
+              {isVi ? 'Vai trò của trang này' : 'What this page does'}
             </div>
             <ul className="space-y-3 text-sm text-gray-400">
               {(isVi
-                ? ['Giải thích deepfake theo cách dễ hiểu nhưng đúng bản chất.', 'Không chia sẻ vội nội dung gây sốc khi chưa xác minh.', 'Biết bắt đầu kiểm tra nguồn, bối cảnh và rủi ro danh tính.']
-                : ['Explain deepfakes clearly and accurately.', 'Avoid rushing to share shocking content before verification.', 'Start checking sources, context, and identity risk.']
+                ? ['Xác thực người học bằng Google trước khi vào khóa.', 'Ghi nhận hồ sơ để admin kiểm soát học viên.', 'Điều hướng sang index riêng, nơi bài học và quiz thật sự diễn ra.']
+                : ['Verifies the learner with Google before course access.', 'Registers the learner profile for admin control.', 'Routes to the course index where lessons and quizzes actually happen.']
               ).map((item) => (
                 <li key={item} className="flex gap-2">
                   <CheckCircle2 size={15} className="mt-0.5 text-blue-300 shrink-0" />
