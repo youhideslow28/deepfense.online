@@ -346,9 +346,9 @@ function isCourseComplete() {
 function updateCertificateState() {
   const complete = isCourseComplete() && hasCompletedCourseEvaluation() && hasPassedFinalExam();
   const link = document.querySelector("#certificateLink");
-  const credentialStatus = document.querySelector(".credential-card span");
+  const credentialStatus = document.querySelector("#certificateStatus");
   if (credentialStatus) {
-    credentialStatus.textContent = complete ? "Certificate đã mở khóa" : "Certificate mở khi hoàn thành";
+    credentialStatus.textContent = complete ? "Certificate unlocked" : "Certificate locked";
   }
   if (link) link.hidden = !complete;
 }
@@ -512,14 +512,8 @@ function buildFinalExamQuestions() {
 }
 
 function buildExamId() {
-  const session = getAuthSession();
-  const raw = `${session?.email || "learner"}-${Date.now()}`;
-  let hash = 0;
-  for (let index = 0; index < raw.length; index += 1) {
-    hash = ((hash << 5) - hash) + raw.charCodeAt(index);
-    hash |= 0;
-  }
-  return `DPF-BASIC-${new Date().getFullYear()}-${Math.abs(hash).toString(36).toUpperCase()}`;
+  const randomId = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  return `DPF-BASIC-${new Date().getFullYear()}-${randomId.replace(/-/g, "").slice(0, 16).toUpperCase()}`;
 }
 
 function routeTo(route) {
@@ -538,12 +532,11 @@ function routeTo(route) {
   }
   state.route = route;
   document.querySelectorAll(".route").forEach((node) => node.classList.toggle("active", node.id === `route-${route}`));
-  document.querySelectorAll(".side-link").forEach((node) => node.classList.toggle("active", node.dataset.route === route));
   const labels = {
-    overview: ["Foundations Course", "DEEPFENSE BASICS"],
+    overview: ["Learning path", "DEEPFENSE BASIC"],
     pretest: ["Pre-assessment", "Đánh giá đầu vào"],
-    learn: ["Learning Path", currentModule().title],
-    exam: ["Assessments", "Midterm và Final Exam"],
+    learn: [`Module ${currentModule().id}`, currentModule().title],
+    exam: ["Final steps", "Hoàn tất khóa học"],
   };
   document.querySelector("#topEyebrow").textContent = labels[route][0];
   document.querySelector("#topTitle").textContent = labels[route][1];
@@ -566,26 +559,14 @@ function currentLesson() {
 
 function renderOverview() {
   const grid = document.querySelector("#overviewGrid");
-  grid.innerHTML = course.parts.map((part) => `
-    <article class="part-card">
-      <p class="eyebrow">${part.title}</p>
-      <h3>${part.description}</h3>
-      <div class="part-modules">
-        ${part.modules.map((id) => {
-          const module = modules.find((item) => item.id === id);
-          const moduleIndex = modules.findIndex((item) => item.id === id);
-          const locked = !isModuleUnlocked(moduleIndex);
-          return `<button data-open-module="${id}" ${locked ? "disabled" : ""} class="${locked ? "locked" : ""}"><span>Module ${id}</span>${module.title}</button>`;
-        }).join("")}
-      </div>
-    </article>
-  `).join("");
+  if (!grid) return;
 }
 
 function renderModuleStrip() {
+  const saved = readProgress();
   document.querySelector("#moduleStrip").innerHTML = modules.map((module, index) => `
     <button class="module-tab ${index === state.moduleIndex ? "active" : ""} ${!isModuleUnlocked(index) ? "locked" : ""}" data-module-index="${index}" ${!isModuleUnlocked(index) ? "disabled" : ""}>
-      <span>Module ${module.id}</span>
+      <span>${saved[`module-${module.id}`] ? "Done" : !isModuleUnlocked(index) ? "Locked" : `Module ${module.id}`}</span>
       <strong>${module.title}</strong>
     </button>
   `).join("");
@@ -594,13 +575,9 @@ function renderModuleStrip() {
 function renderLearning() {
   const module = currentModule();
   renderModuleStrip();
-  document.querySelector("#moduleHero").innerHTML = `
-    <div>
-      <p class="eyebrow">Module ${module.id} · ${module.level} · ${module.duration}</p>
-      <h2>${module.title}</h2>
-      <p>${module.scenario}</p>
-    </div>
-  `;
+  document.querySelector("#moduleMeta").textContent = `Module ${module.id} | ${module.level} | ${module.duration}`;
+  document.querySelector("#moduleTitle").textContent = module.title;
+  document.querySelector("#moduleScenario").textContent = module.scenario;
 
   document.querySelector("#sectionTabs").innerHTML = module.sections.map((section, index) => `
     <button class="section-tab ${index === state.sectionIndex ? "active" : ""}" data-section-index="${index}">
@@ -616,7 +593,7 @@ function renderLearning() {
 
   const lessonItem = currentLesson();
   document.querySelector("#lessonCard").innerHTML = `
-    <p class="eyebrow">${lessonItem.id}</p>
+    <p class="eyebrow">${lessonItem.id} | ${currentSection().title}</p>
     <h2>${lessonItem.title}</h2>
     ${lessonItem.paragraphs.map((text) => `<p>${text}</p>`).join("")}
     <div class="takeaway-box">
@@ -633,20 +610,18 @@ function renderLearning() {
   `;
 
   document.querySelector("#moduleOutcomes").innerHTML = module.outcomes.map((item) => `<li>${item}</li>`).join("");
-  document.querySelector("#quizTitle").textContent = `Quiz Module ${module.id}`;
-  document.querySelector("#quizDescription").textContent = `10 câu kiểm tra trọng tâm của "${module.title}".`;
   updateReaderButtons();
   saveLastLocation();
 }
 
 function updateReaderButtons() {
   document.querySelector("#prevLesson").disabled = state.moduleIndex === 0 && state.sectionIndex === 0 && state.lessonIndex === 0;
-  document.querySelector("#nextLesson").textContent =
-    state.moduleIndex === modules.length - 1 &&
-    state.sectionIndex === currentModule().sections.length - 1 &&
-    state.lessonIndex === currentSection().lessons.length - 1
-      ? "Hoàn tất nội dung →"
-      : "Trang sau →";
+  const atLastLesson = state.sectionIndex === currentModule().sections.length - 1 && state.lessonIndex === currentSection().lessons.length - 1;
+  const atLastModule = state.moduleIndex === modules.length - 1;
+  const moduleDone = readProgress()[`module-${currentModule().id}`];
+  if (atLastLesson && !moduleDone) document.querySelector("#nextLesson").textContent = "Làm quiz module";
+  else if (atLastLesson && atLastModule) document.querySelector("#nextLesson").textContent = "Final steps";
+  else document.querySelector("#nextLesson").textContent = "Tiếp theo";
 }
 
 function moveLesson(direction) {
@@ -692,7 +667,7 @@ function renderAssessments() {
     finalButton.textContent = "Hoan thanh danh gia de mo";
     finalCard?.classList.add("locked");
   } else if (result?.passed) {
-    finalButton.textContent = `Da dat ${result.percent}% - Xem lai cau truc`;
+    finalButton.textContent = "Final Exam da dat";
     finalCard?.classList.add("passed");
   } else if (result && !result.passed) {
     finalButton.textContent = `Thi lai Final Exam (${result.percent}%)`;
@@ -1036,7 +1011,7 @@ function init() {
     </div>
   `;
   document.querySelector("#startPretest").addEventListener("click", () => startQuiz("Đánh giá đầu vào", "Pre-assessment", pretestQuestions));
-  routeTo(state.route || "overview");
+  routeTo(state.route && state.route !== "overview" ? state.route : "learn");
 }
 
 init();

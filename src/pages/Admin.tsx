@@ -3,6 +3,7 @@ import { db, auth, storage } from '@/config/firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import {
   collection,
+  addDoc,
   query,
   orderBy,
   onSnapshot,
@@ -11,6 +12,7 @@ import {
   deleteDoc,
   limit,
   Timestamp,
+  serverTimestamp,
 } from 'firebase/firestore';
 import { ref, deleteObject } from 'firebase/storage';
 import {
@@ -40,6 +42,9 @@ import {
   Trash2,
   UserCog,
   Users,
+  Plus,
+  Save,
+  Send,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -84,6 +89,10 @@ interface UserRecord {
 interface ChallengeRecord {
   id: string;
   title?: string;
+  description?: string;
+  videoUrl?: string;
+  correctAnswer?: string;
+  explanation?: string;
   type?: string;
   difficulty?: 'easy' | 'medium' | 'hard';
   status?: 'draft' | 'published' | 'archived';
@@ -281,6 +290,25 @@ const Admin: React.FC = () => {
   const [challenges, setChallenges] = useState<ChallengeRecord[]>([]);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [securityEvents, setSecurityEvents] = useState<SecurityEvent[]>([]);
+  const [caseDrafts, setCaseDrafts] = useState<Record<string, { status: CaseStatus; severity: Severity; responseNote: string }>>({});
+  const [challengeForm, setChallengeForm] = useState({
+    title: '',
+    description: '',
+    type: 'single_video_detect',
+    videoUrl: '',
+    correctAnswer: '',
+    explanation: '',
+    skillTags: 'verification, context',
+    difficulty: 'medium',
+    status: 'draft',
+  });
+  const [eventForm, setEventForm] = useState({
+    eventType: 'permission_denied',
+    actorId: '',
+    severity: 'warning',
+    details: '',
+  });
+  const [actionMessage, setActionMessage] = useState('');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -373,10 +401,52 @@ const Admin: React.FC = () => {
     }
   };
 
+  const showActionMessage = (message: string) => {
+    setActionMessage(message);
+    window.setTimeout(() => setActionMessage(''), 3200);
+  };
+
+  const writeActivityLog = async (payload: Omit<ActivityLog, 'id' | 'createdAt'>) => {
+    await addDoc(collection(db, 'activity_logs'), {
+      actorId: auth.currentUser?.uid || 'admin',
+      actorRole: 'admin',
+      ...payload,
+      createdAt: serverTimestamp(),
+    });
+  };
+
   const updateCaseStatus = async (item: HelpCenterCase, status: CaseStatus) => {
     const collectionName = item.caseType === 'legacy_incident' ? 'incident_reports' : 'help_center_cases';
     const nextStatus = item.caseType === 'legacy_incident' && status === 'closed' ? 'processed' : status;
     await updateDoc(doc(db, collectionName, item.id), { status: nextStatus });
+    await writeActivityLog({
+      action: 'admin.case_status_changed',
+      targetType: collectionName,
+      targetId: item.id,
+      severity: status === 'closed' ? 'notice' : 'info',
+      metadata: { status: nextStatus },
+    });
+    showActionMessage('Da cap nhat trang thai case.');
+  };
+
+  const saveCaseDraft = async (item: HelpCenterCase) => {
+    const draft = caseDrafts[item.id];
+    if (!draft) return;
+    const collectionName = item.caseType === 'legacy_incident' ? 'incident_reports' : 'help_center_cases';
+    await updateDoc(doc(db, collectionName, item.id), {
+      status: item.caseType === 'legacy_incident' && draft.status === 'closed' ? 'processed' : draft.status,
+      severity: draft.severity,
+      responseNote: draft.responseNote,
+      updatedAt: serverTimestamp(),
+    });
+    await writeActivityLog({
+      action: 'admin.case_replied',
+      targetType: collectionName,
+      targetId: item.id,
+      severity: draft.severity === 'high' || draft.severity === 'critical' ? 'warning' : 'notice',
+      metadata: { status: draft.status, severity: draft.severity },
+    });
+    showActionMessage('Da luu phan loai va response note cho case.');
   };
 
   const deleteCase = async (item: HelpCenterCase) => {
@@ -391,6 +461,14 @@ const Admin: React.FC = () => {
       }
       const collectionName = item.caseType === 'legacy_incident' ? 'incident_reports' : 'help_center_cases';
       await deleteDoc(doc(db, collectionName, item.id));
+      await writeActivityLog({
+        action: 'admin.data_deleted',
+        targetType: collectionName,
+        targetId: item.id,
+        severity: 'critical',
+        metadata: { attachmentDeleted: !!item.attachmentUrl },
+      });
+      showActionMessage('Da xoa case va tep dinh kem neu co.');
     } catch (error) {
       console.error('Error deleting case:', error);
     }
@@ -398,10 +476,121 @@ const Admin: React.FC = () => {
 
   const changeUserRole = async (user: UserRecord, role: Role) => {
     await updateDoc(doc(db, 'users', user.uid || user.id), { role });
+    await writeActivityLog({
+      action: 'admin.role_changed',
+      targetType: 'users',
+      targetId: user.uid || user.id,
+      severity: 'notice',
+      metadata: { role },
+    });
+    await addDoc(collection(db, 'security_events'), {
+      eventType: 'role_changed',
+      actorId: auth.currentUser?.uid || 'admin',
+      actorRole: 'admin',
+      severity: 'notice',
+      sourceIp: 'client',
+      details: { targetUser: user.uid || user.id, role },
+      createdAt: serverTimestamp(),
+    });
+    showActionMessage('Da cap nhat role va ghi security event.');
   };
 
   const changeUserStatus = async (user: UserRecord, status: UserRecord['status']) => {
     await updateDoc(doc(db, 'users', user.uid || user.id), { status });
+    await writeActivityLog({
+      action: status === 'banned' ? 'admin.user_banned' : 'admin.user_unbanned',
+      targetType: 'users',
+      targetId: user.uid || user.id,
+      severity: status === 'banned' ? 'warning' : 'notice',
+      metadata: { status },
+    });
+    showActionMessage('Da cap nhat trang thai user.');
+  };
+
+  const createChallenge = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!challengeForm.title.trim()) {
+      showActionMessage('Can nhap title challenge.');
+      return;
+    }
+
+    const skillTags = challengeForm.skillTags
+      .split(',')
+      .map((tag) => tag.trim())
+      .filter(Boolean);
+
+    const docRef = await addDoc(collection(db, 'challenges'), {
+      ...challengeForm,
+      skillTags,
+      totalPlays: 0,
+      correctRate: 0,
+      createdBy: auth.currentUser?.uid || 'admin',
+      updatedBy: auth.currentUser?.uid || 'admin',
+      publishedAt: challengeForm.status === 'published' ? serverTimestamp() : null,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+
+    await writeActivityLog({
+      action: 'editor.challenge_created',
+      targetType: 'challenges',
+      targetId: docRef.id,
+      severity: challengeForm.status === 'published' ? 'notice' : 'info',
+      metadata: { title: challengeForm.title, status: challengeForm.status },
+    });
+
+    setChallengeForm({
+      title: '',
+      description: '',
+      type: 'single_video_detect',
+      videoUrl: '',
+      correctAnswer: '',
+      explanation: '',
+      skillTags: 'verification, context',
+      difficulty: 'medium',
+      status: 'draft',
+    });
+    showActionMessage('Da tao challenge moi trong Content Studio.');
+  };
+
+  const updateChallengeStatus = async (challenge: ChallengeRecord, status: ChallengeRecord['status']) => {
+    await updateDoc(doc(db, 'challenges', challenge.id), {
+      status,
+      publishedAt: status === 'published' ? serverTimestamp() : challenge.updatedAt || null,
+      updatedBy: auth.currentUser?.uid || 'admin',
+      updatedAt: serverTimestamp(),
+    });
+    await writeActivityLog({
+      action: 'editor.challenge_updated',
+      targetType: 'challenges',
+      targetId: challenge.id,
+      severity: status === 'published' ? 'notice' : 'info',
+      metadata: { status },
+    });
+    showActionMessage('Da cap nhat trang thai challenge.');
+  };
+
+  const createSecurityEvent = async (event: React.FormEvent) => {
+    event.preventDefault();
+    await addDoc(collection(db, 'security_events'), {
+      eventType: eventForm.eventType,
+      actorId: eventForm.actorId || auth.currentUser?.uid || 'admin',
+      actorRole: 'admin',
+      severity: eventForm.severity,
+      sourceIp: 'client',
+      userAgent: navigator.userAgent,
+      details: eventForm.details || 'Manual admin event',
+      createdAt: serverTimestamp(),
+    });
+    await writeActivityLog({
+      action: 'admin.security_event_created',
+      targetType: 'security_events',
+      targetId: eventForm.eventType,
+      severity: eventForm.severity as Severity,
+      metadata: { manual: true },
+    });
+    setEventForm({ eventType: 'permission_denied', actorId: '', severity: 'warning', details: '' });
+    showActionMessage('Da tao security event thu cong.');
   };
 
   if (isAuthChecking) {
@@ -540,78 +729,159 @@ const Admin: React.FC = () => {
 
   const renderCases = () => (
     <div className="grid gap-4">
-      {filteredCases.map((item) => (
-        <section key={`${item.caseType}-${item.id}`} className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
-          <div className="flex flex-col justify-between gap-4 lg:flex-row">
-            <div className="min-w-0 flex-1">
-              <div className="mb-3 flex flex-wrap items-center gap-2">
-                <Pill className={statusClass(item.status)}>{item.status || 'new'}</Pill>
-                <Pill className={severityClass(item.severity)}>{item.severity || 'medium'}</Pill>
-                <Pill className="border-white/10 bg-white/5 text-gray-300">{item.caseType || 'other'}</Pill>
-                <span className="text-xs text-gray-500">{formatDate(item.submittedAt)}</span>
+      {filteredCases.map((item) => {
+        const draft = caseDrafts[item.id] || {
+          status: (item.status || 'new') as CaseStatus,
+          severity: (item.severity || 'medium') as Severity,
+          responseNote: item.responseNote || '',
+        };
+
+        return (
+          <section key={`${item.caseType}-${item.id}`} className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
+            <div className="flex flex-col justify-between gap-4 lg:flex-row">
+              <div className="min-w-0 flex-1">
+                <div className="mb-3 flex flex-wrap items-center gap-2">
+                  <Pill className={statusClass(item.status)}>{item.status || 'new'}</Pill>
+                  <Pill className={severityClass(item.severity)}>{item.severity || 'medium'}</Pill>
+                  <Pill className="border-white/10 bg-white/5 text-gray-300">{item.caseType || 'other'}</Pill>
+                  <span className="text-xs text-gray-500">{formatDate(item.submittedAt)}</span>
+                </div>
+                <h3 className="text-lg font-black text-white">{item.title || item.name || 'Help center case'}</h3>
+                <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-gray-400">
+                  <span>{item.name || 'Anonymous'}</span>
+                  {item.email && <a href={`mailto:${item.email}`} className="inline-flex items-center gap-1 text-primary hover:underline"><Mail size={14} />{item.email}</a>}
+                </div>
+                <p className="mt-4 rounded-lg border border-white/5 bg-black/30 p-4 text-sm leading-relaxed text-gray-300">
+                  {item.description || item.desc || 'Chua co mo ta chi tiet.'}
+                </p>
+                <div className="mt-4 grid gap-3 md:grid-cols-2">
+                  <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
+                    Case status
+                    <select value={draft.status} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, status: event.target.value as CaseStatus } }))} className="mt-2 w-full rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-sm text-white">
+                      <option value="new">new</option>
+                      <option value="reviewing">reviewing</option>
+                      <option value="replied">replied</option>
+                      <option value="closed">closed</option>
+                      <option value="archived">archived</option>
+                    </select>
+                  </label>
+                  <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
+                    Severity
+                    <select value={draft.severity} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, severity: event.target.value as Severity } }))} className="mt-2 w-full rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-sm text-white">
+                      <option value="low">low</option>
+                      <option value="medium">medium</option>
+                      <option value="high">high</option>
+                    </select>
+                  </label>
+                </div>
+                <label className="mt-3 block text-xs font-bold uppercase tracking-wide text-gray-500">
+                  Response note
+                  <textarea value={draft.responseNote} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, responseNote: event.target.value } }))} rows={3} placeholder="Noi dung co dau hieu can xac minh them..." className="mt-2 w-full rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
+                </label>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {item.url && <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded border border-white/10 px-3 py-2 text-xs font-bold text-gray-300 hover:text-primary">Open URL <ExternalLink size={13} /></a>}
+                  {item.attachmentUrl && <a href={item.attachmentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded border border-white/10 px-3 py-2 text-xs font-bold text-gray-300 hover:text-primary"><Paperclip size={13} />Attachment</a>}
+                </div>
               </div>
-              <h3 className="text-lg font-black text-white">{item.title || item.name || 'Help center case'}</h3>
-              <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-gray-400">
-                <span>{item.name || 'Anonymous'}</span>
-                {item.email && <a href={`mailto:${item.email}`} className="inline-flex items-center gap-1 text-primary hover:underline"><Mail size={14} />{item.email}</a>}
-              </div>
-              <p className="mt-4 rounded-lg border border-white/5 bg-black/30 p-4 text-sm leading-relaxed text-gray-300">
-                {item.description || item.desc || 'Chua co mo ta chi tiet.'}
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {item.url && <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded border border-white/10 px-3 py-2 text-xs font-bold text-gray-300 hover:text-primary">Open URL <ExternalLink size={13} /></a>}
-                {item.attachmentUrl && <a href={item.attachmentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded border border-white/10 px-3 py-2 text-xs font-bold text-gray-300 hover:text-primary"><Paperclip size={13} />Attachment</a>}
+              <div className="flex min-w-[220px] flex-col gap-2 border-t border-white/10 pt-4 lg:border-l lg:border-t-0 lg:pl-4 lg:pt-0">
+                <button onClick={() => saveCaseDraft(item)} className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-3 py-3 text-xs font-bold text-white hover:bg-blue-500">
+                  <Save size={16} /> Save Case
+                </button>
+                <a
+                  href={`https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${encodeURIComponent(item.email || '')}&su=${encodeURIComponent('Deepfense Help Center response')}&body=${encodeURIComponent(`Chao ${item.name || 'ban'},\n\n${draft.responseNote || 'Noi dung ban gui co mot so dau hieu can xac minh them. Deepfense khuyen nghi khong chuyen tien, khong chia se OTP/thong tin ca nhan va lien he nguoi lien quan qua kenh khac truoc khi hanh dong.'}\n\nDeepfense chi ho tro giao duc va nhan dien rui ro, khong thay the ket luan phap ly.\n\nTran trong,\nDeepfense Help Center`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600/20 px-3 py-3 text-xs font-bold text-blue-200 hover:bg-blue-600/30"
+                >
+                  <Send size={16} /> Reply Email
+                </a>
+                <button onClick={() => updateCaseStatus(item, item.status === 'reviewing' ? 'closed' : 'reviewing')} className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600/20 px-3 py-3 text-xs font-bold text-emerald-200 hover:bg-emerald-600/30">
+                  <CheckCircle size={16} /> {item.status === 'reviewing' ? 'Close Case' : 'Mark Reviewing'}
+                </button>
+                <button onClick={() => deleteCase(item)} className="inline-flex items-center justify-center gap-2 rounded-lg bg-red-600/15 px-3 py-3 text-xs font-bold text-red-300 hover:bg-red-600/25">
+                  <Trash2 size={16} /> Delete
+                </button>
               </div>
             </div>
-            <div className="flex min-w-[220px] flex-col gap-2 border-t border-white/10 pt-4 lg:border-l lg:border-t-0 lg:pl-4 lg:pt-0">
-              <a
-                href={`https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${encodeURIComponent(item.email || '')}&su=${encodeURIComponent('Deepfense Help Center response')}&body=${encodeURIComponent(`Chao ${item.name || 'ban'},\n\nNoi dung ban gui co mot so dau hieu can xac minh them. Deepfense khuyen nghi khong chuyen tien, khong chia se OTP/thong tin ca nhan va lien he nguoi lien quan qua kenh khac truoc khi hanh dong.\n\nDeepfense chi ho tro giao duc va nhan dien rui ro, khong thay the ket luan phap ly.\n\nTran trong,\nDeepfense Help Center`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600/20 px-3 py-3 text-xs font-bold text-blue-200 hover:bg-blue-600/30"
-              >
-                <Mail size={16} /> Reply Template
-              </a>
-              <button onClick={() => updateCaseStatus(item, item.status === 'reviewing' ? 'closed' : 'reviewing')} className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600/20 px-3 py-3 text-xs font-bold text-emerald-200 hover:bg-emerald-600/30">
-                <CheckCircle size={16} /> {item.status === 'reviewing' ? 'Close Case' : 'Mark Reviewing'}
-              </button>
-              <button onClick={() => deleteCase(item)} className="inline-flex items-center justify-center gap-2 rounded-lg bg-red-600/15 px-3 py-3 text-xs font-bold text-red-300 hover:bg-red-600/25">
-                <Trash2 size={16} /> Delete
-              </button>
-            </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        );
+      })}
     </div>
   );
 
   const renderStudio = () => (
-    <div className="grid gap-4 lg:grid-cols-3">
-      {dashboardChallenges.map((challenge) => (
-        <section key={challenge.id} className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
-          <div className="mb-4 flex items-center justify-between gap-3">
-            <Pill className={statusClass(challenge.status)}>{challenge.status || 'draft'}</Pill>
-            <Pill className={severityClass(challenge.difficulty === 'hard' ? 'high' : challenge.difficulty === 'medium' ? 'medium' : 'low')}>{challenge.difficulty || 'medium'}</Pill>
+    <div className="space-y-5">
+      <form onSubmit={createChallenge} className="rounded-lg border border-primary/20 bg-[#07111f]/90 p-5">
+        <div className="mb-5 flex items-center justify-between gap-3">
+          <div>
+            <h3 className="font-black text-white">Create Challenge</h3>
+            <p className="mt-1 text-xs text-gray-500">Tao noi dung moi cho academy/challenge pipeline.</p>
           </div>
-          <h3 className="text-lg font-black text-white">{challenge.title || 'Untitled challenge'}</h3>
-          <p className="mt-2 font-mono text-xs text-primary">{challenge.type || 'single_video_detect'}</p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {(challenge.skillTags || ['verification']).map((tag) => (
-              <span key={tag} className="rounded bg-white/10 px-2 py-1 text-[11px] font-bold text-gray-300">{tag}</span>
-            ))}
-          </div>
-          <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-            <div className="rounded border border-white/5 bg-black/25 p-3">
-              <p className="text-xs text-gray-500">Total plays</p>
-              <p className="mt-1 font-black text-white">{challenge.totalPlays || 0}</p>
+          <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-blue-500">
+            <Plus size={15} /> Create
+          </button>
+        </div>
+        <div className="grid gap-3 md:grid-cols-2">
+          <input value={challengeForm.title} onChange={(event) => setChallengeForm((current) => ({ ...current, title: event.target.value }))} placeholder="Title" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
+          <input value={challengeForm.videoUrl} onChange={(event) => setChallengeForm((current) => ({ ...current, videoUrl: event.target.value }))} placeholder="Video or YouTube URL" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
+          <select value={challengeForm.type} onChange={(event) => setChallengeForm((current) => ({ ...current, type: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-primary">
+            <option value="compare_ab">compare_ab</option>
+            <option value="single_video_detect">single_video_detect</option>
+            <option value="scam_scenario">scam_scenario</option>
+            <option value="quiz">quiz</option>
+          </select>
+          <input value={challengeForm.correctAnswer} onChange={(event) => setChallengeForm((current) => ({ ...current, correctAnswer: event.target.value }))} placeholder="Correct answer" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
+          <select value={challengeForm.difficulty} onChange={(event) => setChallengeForm((current) => ({ ...current, difficulty: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-primary">
+            <option value="easy">easy</option>
+            <option value="medium">medium</option>
+            <option value="hard">hard</option>
+          </select>
+          <select value={challengeForm.status} onChange={(event) => setChallengeForm((current) => ({ ...current, status: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-primary">
+            <option value="draft">draft</option>
+            <option value="published">published</option>
+            <option value="archived">archived</option>
+          </select>
+          <input value={challengeForm.skillTags} onChange={(event) => setChallengeForm((current) => ({ ...current, skillTags: event.target.value }))} placeholder="Skill tags: voice, verification" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary md:col-span-2" />
+          <textarea value={challengeForm.description} onChange={(event) => setChallengeForm((current) => ({ ...current, description: event.target.value }))} rows={3} placeholder="Description" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
+          <textarea value={challengeForm.explanation} onChange={(event) => setChallengeForm((current) => ({ ...current, explanation: event.target.value }))} rows={3} placeholder="Explanation after answer" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
+        </div>
+      </form>
+
+      <div className="grid gap-4 lg:grid-cols-3">
+        {dashboardChallenges.map((challenge) => (
+          <section key={challenge.id} className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <Pill className={statusClass(challenge.status)}>{challenge.status || 'draft'}</Pill>
+              <Pill className={severityClass(challenge.difficulty === 'hard' ? 'high' : challenge.difficulty === 'medium' ? 'medium' : 'low')}>{challenge.difficulty || 'medium'}</Pill>
             </div>
-            <div className="rounded border border-white/5 bg-black/25 p-3">
-              <p className="text-xs text-gray-500">Correct rate</p>
-              <p className="mt-1 font-black text-white">{challenge.correctRate || 0}%</p>
+            <h3 className="text-lg font-black text-white">{challenge.title || 'Untitled challenge'}</h3>
+            <p className="mt-2 font-mono text-xs text-primary">{challenge.type || 'single_video_detect'}</p>
+            <p className="mt-3 line-clamp-3 text-sm text-gray-400">{challenge.description || 'Chua co description.'}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {(challenge.skillTags || ['verification']).map((tag) => (
+                <span key={tag} className="rounded bg-white/10 px-2 py-1 text-[11px] font-bold text-gray-300">{tag}</span>
+              ))}
             </div>
-          </div>
-        </section>
-      ))}
+            <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+              <div className="rounded border border-white/5 bg-black/25 p-3">
+                <p className="text-xs text-gray-500">Total plays</p>
+                <p className="mt-1 font-black text-white">{challenge.totalPlays || 0}</p>
+              </div>
+              <div className="rounded border border-white/5 bg-black/25 p-3">
+                <p className="text-xs text-gray-500">Correct rate</p>
+                <p className="mt-1 font-black text-white">{challenge.correctRate || 0}%</p>
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {(['draft', 'published', 'archived'] as ChallengeRecord['status'][]).map((status) => (
+                <button key={status} onClick={() => updateChallengeStatus(challenge, status)} className="rounded border border-white/10 px-2 py-2 text-[11px] font-bold text-gray-300 hover:border-primary hover:text-white">
+                  {status}
+                </button>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
     </div>
   );
 
@@ -632,19 +902,52 @@ const Admin: React.FC = () => {
   );
 
   const renderSecurity = () => (
-    <section className="rounded-lg border border-white/10 bg-[#07111f]/90">
-      {dashboardSecurity.map((item) => (
-        <div key={item.id} className="grid gap-3 border-b border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.6fr_0.8fr]">
+    <div className="space-y-5">
+      <form onSubmit={createSecurityEvent} className="rounded-lg border border-amber-500/20 bg-[#07111f]/90 p-5">
+        <div className="mb-4 flex items-center justify-between gap-3">
           <div>
-            <p className="font-mono font-bold text-white">{item.eventType || 'security.event'}</p>
-            <p className="text-xs text-gray-500">Actor: {item.actorId || 'unknown'} / IP: {item.sourceIp || 'masked'}</p>
+            <h3 className="font-black text-white">Create Security Event</h3>
+            <p className="mt-1 text-xs text-gray-500">Ghi nhan permission denied, suspicious link, role change hoac submission bat thuong.</p>
           </div>
-          <Pill className={severityClass(item.severity)}>{item.severity || 'notice'}</Pill>
-          <span className="text-gray-400">{item.actorRole || 'user'}</span>
-          <span className="text-xs text-gray-500">{formatDate(item.createdAt)}</span>
+          <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-xs font-bold uppercase tracking-wide text-black hover:bg-amber-300">
+            <Plus size={15} /> Log Event
+          </button>
         </div>
-      ))}
-    </section>
+        <div className="grid gap-3 md:grid-cols-4">
+          <select value={eventForm.eventType} onChange={(event) => setEventForm((current) => ({ ...current, eventType: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-amber-400">
+            <option value="login_failed">login_failed</option>
+            <option value="repeated_login_failed">repeated_login_failed</option>
+            <option value="permission_denied">permission_denied</option>
+            <option value="role_changed">role_changed</option>
+            <option value="suspicious_help_case">suspicious_help_case</option>
+            <option value="suspicious_upload_or_link">suspicious_upload_or_link</option>
+            <option value="high_frequency_submission">high_frequency_submission</option>
+          </select>
+          <input value={eventForm.actorId} onChange={(event) => setEventForm((current) => ({ ...current, actorId: event.target.value }))} placeholder="Actor/User ID" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-amber-400" />
+          <select value={eventForm.severity} onChange={(event) => setEventForm((current) => ({ ...current, severity: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-amber-400">
+            <option value="notice">notice</option>
+            <option value="warning">warning</option>
+            <option value="high">high</option>
+            <option value="critical">critical</option>
+          </select>
+          <input value={eventForm.details} onChange={(event) => setEventForm((current) => ({ ...current, details: event.target.value }))} placeholder="Details" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-amber-400" />
+        </div>
+      </form>
+
+      <section className="rounded-lg border border-white/10 bg-[#07111f]/90">
+        {dashboardSecurity.map((item) => (
+          <div key={item.id} className="grid gap-3 border-b border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.6fr_0.8fr]">
+            <div>
+              <p className="font-mono font-bold text-white">{item.eventType || 'security.event'}</p>
+              <p className="text-xs text-gray-500">Actor: {item.actorId || 'unknown'} / IP: {item.sourceIp || 'masked'}</p>
+            </div>
+            <Pill className={severityClass(item.severity)}>{item.severity || 'notice'}</Pill>
+            <span className="text-gray-400">{item.actorRole || 'user'}</span>
+            <span className="text-xs text-gray-500">{formatDate(item.createdAt)}</span>
+          </div>
+        ))}
+      </section>
+    </div>
   );
 
   const renderPolicy = () => (
@@ -724,6 +1027,11 @@ const Admin: React.FC = () => {
             <LogOut size={16} /> Dang xuat
           </button>
         </div>
+        {actionMessage && (
+          <div className="border-b border-emerald-500/20 bg-emerald-500/10 px-5 py-3 text-sm font-bold text-emerald-200">
+            {actionMessage}
+          </div>
+        )}
 
         <div className="grid gap-0 lg:grid-cols-[250px_1fr]">
           <aside className="border-b border-white/10 p-3 lg:border-b-0 lg:border-r">

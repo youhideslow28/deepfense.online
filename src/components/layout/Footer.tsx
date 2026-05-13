@@ -20,6 +20,8 @@ import {
   ShieldCheck,
   Swords,
   Trophy,
+  Lock,
+  FileText,
 } from 'lucide-react';
 import { PROJECT_METADATA } from '@/data';
 import { Language } from '@/types';
@@ -45,6 +47,13 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
     { path: 'https://deepfense.online', label: 'deepfense.online', icon: <ExternalLink size={13} />, external: true },
   ];
 
+  const legalLinks = [
+    { path: '/privacy', label: isVi ? 'Chinh sach bao mat' : 'Privacy Policy', icon: <Lock size={13} /> },
+    { path: '/terms', label: isVi ? 'Dieu khoan su dung' : 'Terms of Use', icon: <Scale size={13} /> },
+    { path: '/policy#help-center', label: isVi ? 'Chinh sach Help Center' : 'Help Center Policy', icon: <ShieldCheck size={13} /> },
+    { path: '/policy#retention', label: isVi ? 'Luu tru du lieu' : 'Data Retention', icon: <FileText size={13} /> },
+  ];
+
   return (
     <footer className="relative z-10 mt-20 overflow-hidden border-t border-[#1E3A5F]/40 bg-[#020710]/95 backdrop-blur-xl">
       <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-[#1D6FE8]/50 to-transparent" />
@@ -53,7 +62,7 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
 
       <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-14">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-4">
             <Link to="/" className="mb-5 inline-flex items-center gap-3 group">
               <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-[#1D6FE8]/25 bg-[#1D6FE8]/10">
                 <Shield className="text-[#60A5FA] transition-transform duration-300 group-hover:scale-110" size={23} />
@@ -144,7 +153,24 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
             </div>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
+            <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
+              {isVi ? 'Phap ly & tin cay' : 'Legal & Trust'}
+            </h3>
+            <div className="flex flex-col gap-3">
+              {legalLinks.map((item) => (
+                <Link key={item.path} to={item.path} className="group flex items-center justify-between py-1.5 text-xs text-gray-500 transition-colors hover:text-[#60A5FA]">
+                  <span className="flex items-center gap-2">
+                    <span className="text-gray-700 transition-colors group-hover:text-[#60A5FA]">{item.icon}</span>
+                    {item.label}
+                  </span>
+                  <ChevronRight size={12} className="opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-2">
             <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
               {isVi ? 'Dự án' : 'Project'}
             </h3>

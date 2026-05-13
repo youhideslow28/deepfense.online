@@ -94,7 +94,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
 
   return (
     <div ref={pageRef as React.RefObject<HTMLDivElement>} className="animate-in fade-in duration-500">
-      <section data-reveal className="relative overflow-hidden rounded-2xl border border-blue-500/20 bg-[#07111f]/90 p-6 md:p-10 mb-8 shadow-[0_24px_90px_rgba(0,0,0,0.35)]">
+      <section data-reveal className="relative overflow-hidden rounded-2xl border border-blue-500/25 bg-[#07111f]/95 p-6 md:p-10 mb-8 shadow-[0_24px_90px_rgba(0,0,0,0.42)] backdrop-blur-xl">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
         <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_top_right,rgba(29,111,232,0.16),transparent_45%)] pointer-events-none" />
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -112,7 +112,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
             </p>
           </div>
 
-          <div className="lg:col-span-4 rounded-2xl border border-white/10 bg-black/30 p-5">
+          <div className="lg:col-span-4 rounded-2xl border border-white/12 bg-[#07111f]/80 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.26)] backdrop-blur-xl">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-11 h-11 rounded-xl bg-amber-400/10 border border-amber-400/25 text-amber-300 flex items-center justify-center">
                 <Trophy size={22} />
@@ -130,7 +130,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                 [<Award size={18} />, 'Credential'],
                 [<Sparkles size={18} />, 'DPF'],
               ].map(([icon, label]) => (
-                <div key={String(label)} className="rounded-xl border border-white/10 bg-white/[0.03] p-3 text-center">
+                <div key={String(label)} className="rounded-xl border border-white/12 bg-white/[0.075] p-3 text-center">
                   <div className="text-blue-300 flex justify-center mb-2">{icon}</div>
                   <div className="text-[10px] leading-snug text-gray-500 uppercase font-mono">{label}</div>
                 </div>
@@ -150,7 +150,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
           [<ShieldCheck size={20} />, isVi ? 'Phản xạ thực tế' : 'Practical reflex', isVi ? 'Học bằng tình huống, không chỉ đọc lý thuyết khô.' : 'Scenario-led learning, beyond dry theory.'],
           [<Award size={20} />, isVi ? 'Chứng nhận có điều kiện' : 'Conditional credential', isVi ? 'Certificate chỉ mở khi hoàn thành yêu cầu khóa học.' : 'Certificates unlock only after course requirements are met.'],
         ].map(([icon, title, text]) => (
-          <article key={String(title)} className="rounded-2xl border border-white/10 bg-white/[0.025] p-5">
+          <article key={String(title)} className="rounded-2xl border border-white/12 bg-[#07111f]/78 p-5 shadow-[0_14px_42px_rgba(0,0,0,0.22)] backdrop-blur-xl">
             <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300 flex items-center justify-center mb-4">{icon}</div>
             <h2 className="text-white font-black uppercase text-sm tracking-widest mb-3">{title}</h2>
             <p className="text-gray-500 text-sm leading-relaxed">{text}</p>
@@ -176,7 +176,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
             const canOpen = course.available || (isAdvancedDemo && advancedDemoUnlocked);
 
             return (
-            <article key={course.title} className={`relative rounded-2xl border p-5 md:p-6 overflow-hidden ${course.available ? 'border-blue-400/30 bg-blue-500/[0.08]' : 'border-white/10 bg-white/[0.025]'}`}>
+            <article key={course.title} className={`relative rounded-2xl border p-5 md:p-6 overflow-hidden shadow-[0_18px_55px_rgba(0,0,0,0.24)] backdrop-blur-xl ${course.available ? 'border-blue-400/35 bg-[#08213a]/88' : 'border-white/12 bg-[#07111f]/78'}`}>
               <div className="flex items-center justify-between gap-3 mb-5">
                 <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-gray-500">{course.level}</div>
                 <div className={`rounded-full px-3 py-1 text-[9px] font-mono font-black uppercase tracking-widest ${course.available ? 'bg-success/10 text-success' : 'bg-white/5 text-gray-500'}`}>
@@ -194,11 +194,11 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                 ))}
               </div>
               <div className="grid grid-cols-2 gap-2 mb-5">
-                <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+                <div className="rounded-xl border border-white/12 bg-black/38 p-3">
                   <div className="text-[10px] text-gray-500 uppercase font-mono mb-1">Credential</div>
                   <div className="text-white text-xs font-black uppercase leading-snug">{course.credential}</div>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+                <div className="rounded-xl border border-white/12 bg-black/38 p-3">
                   <div className="text-[10px] text-gray-500 uppercase font-mono mb-1">{isVi ? 'Thời lượng' : 'Hours'}</div>
                   <div className="text-white text-xs font-black uppercase flex items-center gap-1"><Clock3 size={12} /> {course.hours}</div>
                 </div>
@@ -219,7 +219,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                   <DpfRewardNotice result={unlockResult} successPrefix={isVi ? 'Da mo khoa' : 'Unlocked'} />
                 </div>
               ) : (
-                <button disabled className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-[10px] font-black font-mono uppercase tracking-widest text-gray-600 cursor-not-allowed">
+                <button disabled className="w-full rounded-lg border border-white/12 bg-white/[0.07] px-4 py-3 text-[10px] font-black font-mono uppercase tracking-widest text-gray-500 cursor-not-allowed">
                   {isVi ? 'Sắp mở' : 'Coming soon'}
                 </button>
               )}

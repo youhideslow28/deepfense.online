@@ -56,7 +56,7 @@ const AcademyBasics: React.FC<AcademyBasicsProps> = ({ lang, user, authBusy, onG
   const pageRef = useScrollReveal({ selector: '[data-reveal]', preset: 'fade-up', stagger: 0.08 });
 
   const openCourseIndex = () => {
-    window.location.href = academyIndexUrl;
+    window.open(academyIndexUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (

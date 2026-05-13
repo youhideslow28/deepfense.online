@@ -8,7 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import { Language, Season } from '@/types';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Shield, Menu, X, Home, Cpu, Swords, Bot, Info, Sun, Power, LogIn, LogOut, UserCircle, GraduationCap } from 'lucide-react';
+import { Menu, X, Home, Cpu, Swords, Bot, Info, Sun, Power, LogIn, LogOut, UserCircle, GraduationCap } from 'lucide-react';
 import type { User } from 'firebase/auth';
 
 interface NavbarProps {
@@ -89,13 +89,12 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
 
             {/* ── LOGO ── */}
             <Link to="/" className="flex items-center gap-3 group cursor-pointer shrink-0">
-              {/* Animated shield */}
-              <div className="relative">
-                <div className="absolute inset-0 rounded-full bg-primary/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <Shield
-                  className="relative text-primary group-hover:scale-110 transition-all duration-500"
-                  size={26}
-                  strokeWidth={2.5}
+              <div className="relative h-9 w-9 md:h-10 md:w-10">
+                <div className="absolute inset-0 rounded-2xl bg-primary/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <img
+                  src="/logo/android-chrome-192x192.png"
+                  alt="DEEPFENSE"
+                  className="relative h-full w-full rounded-2xl object-contain drop-shadow-[0_0_14px_rgba(0,240,255,0.28)] transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               <div className="flex flex-col leading-none">

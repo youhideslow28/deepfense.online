@@ -3,149 +3,98 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DEEPFENSE BASICS | Academy Course</title>
+    <title>DEEPFENSE BASIC | Academy Course</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="course-app">
-      <aside class="course-sidebar" aria-label="Course overview">
+    <div class="course-shell">
+      <aside class="course-sidebar" aria-label="Course navigation">
         <a class="brand" href="/academy" aria-label="Back to DEEPFENSE Academy">
-          <span class="brand-mark">D</span>
+          <span class="brand-mark">DF</span>
           <span>
             <strong>DEEPFENSE</strong>
-            <small>Academy</small>
+            <small>BASIC</small>
           </span>
         </a>
 
-        <div class="course-title">
-          <p>DEEPFENSE BASICS</p>
-          <h1>Nền tảng nhận diện và phòng vệ trước deepfake</h1>
-        </div>
-
-        <nav class="side-nav" aria-label="Course sections">
-          <button class="side-link active" data-route="overview">Tổng quan</button>
-          <button class="side-link" data-route="pretest">Đánh giá đầu vào</button>
-          <button class="side-link" data-route="learn">Nội dung học</button>
-          <button class="side-link" data-route="exam">Midterm & Final</button>
-        </nav>
-
-        <div class="progress-card">
+        <div class="progress-card" aria-label="Course progress">
           <div class="progress-row">
-            <span>Course progress</span>
+            <span>Progress</span>
             <strong id="courseProgressText">0%</strong>
           </div>
           <div class="progress-track" aria-hidden="true">
             <div id="courseProgressBar"></div>
           </div>
-          <p>Hoàn thành các module, quiz và final exam để mở chứng chỉ DEEPFENSE AWARE.</p>
         </div>
 
-        <div class="credential-card">
-          <span>Credential locked</span>
-          <strong>DEEPFENSE AWARE</strong>
-          <p>Reward dự kiến: 500 DPF sau khi đạt điều kiện cuối khóa.</p>
-          <a id="certificateLink" class="certificate-link" href="/academy/certificate-template/certificate-template.html" hidden>Tai certificate</a>
+        <nav class="module-list" id="moduleStrip" aria-label="Modules"></nav>
+
+        <div class="certificate-card">
+          <span id="certificateStatus">Certificate locked</span>
+          <a id="certificateLink" href="/academy/certificate-template/certificate-template.html" hidden>Download certificate</a>
         </div>
       </aside>
 
-      <main class="course-main">
-        <header class="topbar">
+      <main class="reader">
+        <header class="reader-header">
           <div>
-            <p class="eyebrow" id="topEyebrow">Foundations Course</p>
-            <h2 id="topTitle">DEEPFENSE BASICS</h2>
+            <p class="eyebrow" id="topEyebrow">Learning path</p>
+            <h1 id="topTitle">DEEPFENSE BASIC</h1>
           </div>
-          <div class="top-actions">
-            <button class="ghost-btn" id="backToAcademy">Academy</button>
-            <button class="primary-btn" id="continueLearning">Tiếp tục học</button>
-          </div>
+          <button class="ghost-btn" id="backToAcademy">Academy</button>
         </header>
 
         <section class="route active" id="route-overview">
-          <div class="hero">
-            <div class="hero-copy">
-              <p class="eyebrow">Professional learning path</p>
-              <h2>Hiểu deepfake trước khi deepfake làm sai lệch quyết định của bạn.</h2>
-              <p>
-                Khóa học này được thiết kế theo tinh thần các nền tảng học tập chuyên nghiệp:
-                lộ trình rõ, module ngắn gọn, lesson có mục tiêu, checkpoint đúng lúc và quiz
-                theo từng trang để học viên tập trung vào từng câu hỏi.
-              </p>
-              <div class="hero-actions">
-                <button class="primary-btn" data-route-jump="pretest">Làm đánh giá đầu vào</button>
-                <button class="ghost-btn" data-route-jump="learn">Vào khóa học</button>
-              </div>
+          <article class="start-card">
+            <p class="eyebrow">Start here</p>
+            <h2>Tiếp tục từ vị trí gần nhất.</h2>
+            <p>Đọc bài theo từng trang, hoàn thành quiz module để mở phần tiếp theo, đánh giá khóa học rồi thi cuối khóa.</p>
+            <div class="action-row">
+              <button class="primary-btn" id="continueLearning">Vào bài học</button>
+              <button class="ghost-btn" data-route-jump="pretest">Đánh giá đầu vào</button>
             </div>
-            <div class="course-stats" aria-label="Course statistics">
-              <article>
-                <strong>9</strong>
-                <span>Modules</span>
-              </article>
-              <article>
-                <strong>3</strong>
-                <span>Learning parts</span>
-              </article>
-              <article>
-                <strong>50</strong>
-                <span>Final questions</span>
-              </article>
-            </div>
-          </div>
-
-          <div class="overview-grid" id="overviewGrid"></div>
+          </article>
         </section>
 
         <section class="route" id="route-pretest">
-          <div class="panel intro-panel">
-            <p class="eyebrow">Pre-assessment</p>
-            <h2>Đánh giá đầu vào</h2>
-            <p>
-              Bài này không dùng để đánh rớt. Kết quả giúp bạn biết mình đang ở mức
-              Beginner, Aware hay Ready trước khi bắt đầu DEEPFENSE BASICS.
-            </p>
-          </div>
-          <div id="pretestStage" class="quiz-stage"></div>
+          <article class="start-card" id="pretestStage"></article>
         </section>
 
         <section class="route" id="route-learn">
-          <div class="module-strip" id="moduleStrip" aria-label="Module tabs"></div>
-          <div class="learning-shell">
-            <section class="lesson-panel">
-              <div class="module-hero" id="moduleHero"></div>
-              <div class="section-tabs" id="sectionTabs" aria-label="Section tabs"></div>
-              <div class="lesson-tabs" id="lessonTabs" aria-label="Lesson tabs"></div>
+          <div class="lesson-layout">
+            <section class="lesson-main" aria-label="Lesson reader">
+              <div class="section-tabs" id="sectionTabs" aria-label="Module sections"></div>
+              <div class="lesson-tabs" id="lessonTabs" aria-label="Lessons"></div>
               <article class="lesson-card" id="lessonCard"></article>
               <div class="reader-nav">
-                <button class="ghost-btn" id="prevLesson">← Trang trước</button>
-                <button class="primary-btn" id="nextLesson">Trang sau →</button>
+                <button class="ghost-btn" id="prevLesson">Trước</button>
+                <button class="primary-btn" id="nextLesson">Tiếp theo</button>
               </div>
             </section>
 
-            <aside class="study-panel">
-              <div class="panel compact">
-                <p class="eyebrow">Learning outcomes</p>
+            <aside class="lesson-aside" aria-label="Module summary">
+              <div class="module-summary">
+                <p class="eyebrow" id="moduleMeta">Module</p>
+                <h2 id="moduleTitle">Lesson</h2>
+                <p id="moduleScenario"></p>
+              </div>
+              <div class="outcome-card">
+                <p class="eyebrow">Outcomes</p>
                 <ul id="moduleOutcomes"></ul>
               </div>
-              <div class="panel compact">
-                <p class="eyebrow">Module quiz</p>
-                <h3 id="quizTitle">Quiz cuối module</h3>
-                <p id="quizDescription">Hoàn thành bài học rồi làm quiz để kiểm tra mức nắm kiến thức.</p>
-                <button class="primary-btn wide" id="startModuleQuiz">Làm quiz module</button>
-              </div>
+              <button class="ghost-btn wide" id="startModuleQuiz">Quiz module</button>
             </aside>
           </div>
         </section>
 
         <section class="route" id="route-exam">
-          <div class="panel intro-panel">
-            <p class="eyebrow">Assessments</p>
-            <h2>Midterm và Final Exam</h2>
-            <p>
-              Sau mỗi 3 module, học viên làm một bài midterm để củng cố kiến thức.
-              Final exam gồm 50 câu, là điều kiện chính để mở certificate.
-            </p>
-          </div>
+          <article class="start-card compact-start">
+            <p class="eyebrow">Final steps</p>
+            <h2>Hoàn tất khóa học</h2>
+            <p>Đánh giá khóa học là bước bắt buộc trước Final Exam. Sau khi đạt bài thi, certificate sẽ mở.</p>
+          </article>
           <section class="evaluation-panel" id="courseEvaluationPanel" aria-label="Course evaluation"></section>
-          <div class="assessment-grid" id="assessmentGrid"></div>
+          <div class="assessment-list" id="assessmentGrid"></div>
         </section>
       </main>
     </div>
@@ -171,8 +120,8 @@
         <div class="quiz-progress"><div id="quizProgress"></div></div>
         <article class="quiz-card" id="quizCard"></article>
         <div class="quiz-nav">
-          <button class="ghost-btn" id="prevQuestion">← Câu trước</button>
-          <button class="primary-btn" id="nextQuestion">Câu sau →</button>
+          <button class="ghost-btn" id="prevQuestion">Trước</button>
+          <button class="primary-btn" id="nextQuestion">Tiếp theo</button>
         </div>
         <div class="quiz-result" id="quizResult"></div>
       </div>

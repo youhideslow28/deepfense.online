@@ -19,14 +19,11 @@ Nhung field nen luu trong database hoac tao tu backend:
 - `verificationUrl`
 - `rewardAmount`
 - `rewardSymbol`
-- `score`
 - `preferredName`
 - `completionHours`
 - `issuerName`
 - `issuerRole`
 - `signatureName`
-- `sealText`
-- `sealColor`
 
 ## Cach noi voi database
 
@@ -42,12 +39,9 @@ type CertificateData = {
   verificationUrl: string;
   rewardAmount: number;
   rewardSymbol: "DPF";
-  score: number;
   issuerName: string;
   issuerRole: string;
   signatureName: string;
-  sealText: string;
-  sealColor: "blue" | "red";
 };
 ```
 
@@ -68,7 +62,7 @@ Neu muon nghiem tuc hon khi public/doi tac, nen co mot ca nhan dai dien ky:
 - program director,
 - security training lead.
 
-Cach tot nhat la dung ca hai: chu ky ca nhan + con dau/verified seal cua `Deepfense.online`.
+Cach tot nhat la dung ca hai: chu ky ca nhan + dau verified cua `Deepfense.online`.
 
 ## PDF
 

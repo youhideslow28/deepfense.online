@@ -12,7 +12,7 @@ import { NEWS_DATA, FUN_FACTS, TRANSLATIONS } from '@/data';
 import {
   BookOpen, Trophy, Swords, AlertTriangle, Lightbulb,
   PhoneCall, Zap, ShieldCheck, ExternalLink,
-  Terminal, GraduationCap, Award,
+  GraduationCap, Award,
 } from 'lucide-react';
 import AnalyticsChart from '@/features/dashboard/AnalyticsChart';
 import { db } from '@/config/firebase';
@@ -144,7 +144,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
             {/* Badge */}
             <div data-reveal className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full text-[10px] font-mono tracking-widest mb-5">
-              <Terminal size={10} />
+              <img src="/logo/favicon-32x32.png" alt="" className="h-4 w-4 rounded-md object-contain" />
               <TypewriterText
                 text={lang === 'vi' ? 'CHƯƠNG TRÌNH HUẤN LUYỆN DEEPFAKE // KHỞI ĐỘNG...' : 'DEEPFAKE TRAINING PROGRAM // INITIALIZING...'}
                 speed={40} delay={400} showCursor
@@ -243,32 +243,32 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
           <div className="absolute right-0 top-0 h-full w-2/3 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.13),transparent_48%)] pointer-events-none" />
           <div className="relative z-10 p-6 md:p-9 lg:p-11">
-            <div className="max-w-5xl">
+            <div className="max-w-4xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/25 text-amber-300 px-4 py-1.5 rounded-full text-[10px] font-mono tracking-widest mb-4">
                 <Trophy size={12} /> 500 DPF + DEEPFENSE AWARE
               </div>
               <h2 className="text-3xl md:text-5xl font-black text-white uppercase leading-tight" style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
                 {lang === 'vi' ? 'Đừng chờ tới khi bị lừa mới học cách nhận ra deepfake.' : 'Do not wait for a scam to teach you deepfakes.'}
               </h2>
-              <p className="text-gray-400 text-sm md:text-base leading-relaxed mt-4 max-w-3xl">
+              <p className="text-gray-400 text-sm md:text-base leading-relaxed mt-4 max-w-3xl mx-auto">
                 {lang === 'vi'
                   ? 'Một cuộc gọi giả giọng người thân, một video sếp yêu cầu chuyển tiền, hay một ảnh ghép lan trên mạng đều có thể xảy ra trước khi bạn kịp nghi ngờ. DEEPFENSE ACADEMY biến 20 phút tò mò hôm nay thành phản xạ tự vệ số ngày mai.'
                   : "A cloned family voice, a fake boss video asking for payment, or a manipulated photo can hit before suspicion kicks in. DEEPFENSE ACADEMY turns today's curiosity into tomorrow's digital defense reflex."}
               </p>
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl">
+              <div className="mt-7 grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl mx-auto">
                 {[
                   ['01', lang === 'vi' ? 'Học theo module' : 'Module learning', lang === 'vi' ? '9 module theo lộ trình nền tảng, nhận diện, phòng vệ.' : '9 modules across foundation, recognition, and response.'],
                   ['02', lang === 'vi' ? 'Kiểm tra từng bước' : 'Guided assessments', lang === 'vi' ? 'Checkpoint, quiz module, midterm và final exam.' : 'Checkpoints, module quizzes, midterms, and final exam.'],
                   ['03', lang === 'vi' ? 'Chứng nhận khi đạt' : 'Earn when qualified', lang === 'vi' ? 'DEEPFENSE AWARE + 500 DPF khi hoàn thành điều kiện.' : 'DEEPFENSE AWARE + 500 DPF after completion.'],
                 ].map(([num, title, text]) => (
-                  <div key={title} className="rounded-xl border border-white/10 bg-black/25 p-4">
+                  <div key={title} className="rounded-xl border border-white/10 bg-black/35 p-4">
                     <div className="text-amber-300 text-[10px] font-mono font-black mb-2">{num}</div>
                     <div className="text-white text-xs font-black uppercase mb-1">{title}</div>
                     <div className="text-gray-500 text-[11px] leading-snug">{text}</div>
                   </div>
                 ))}
               </div>
-              <div className="mt-6 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+              <div className="mt-7 flex flex-col sm:flex-row gap-3 items-center justify-center">
                 <GlowButton color="primary" size="md" icon={<GraduationCap size={16} />} onClick={() => navigate('/academy/basics')}>
                   {lang === 'vi' ? 'ĐĂNG NHẬP ĐỂ BẮT ĐẦU HỌC' : 'SIGN IN TO START LEARNING'}
                 </GlowButton>
@@ -276,7 +276,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                   {lang === 'vi' ? 'XEM LỘ TRÌNH' : 'VIEW CATALOG'}
                 </GlowButton>
               </div>
-              <p className="mt-3 text-[11px] text-gray-500 leading-relaxed max-w-2xl">
+              <p className="mt-4 text-[11px] text-gray-500 leading-relaxed max-w-2xl mx-auto">
                 {lang === 'vi'
                   ? 'Muốn học cần đăng nhập Google để lưu tiến độ, chấm quiz, admin kiểm soát và trả thưởng DPF đúng người.'
                   : 'Learning requires Google sign-in so progress, quiz scores, admin tracking, and DPF rewards stay tied to the right learner.'}

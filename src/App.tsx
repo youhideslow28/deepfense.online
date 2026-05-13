@@ -33,11 +33,13 @@ import { ensureDpfWallet } from '@/features/dpf/dpf';
 const Home = lazy(() => import('@/pages/Home'));
 const Academy = lazy(() => import('@/pages/Academy'));
 const AcademyBasics = lazy(() => import('@/pages/AcademyBasics'));
+const CertificateVerify = lazy(() => import('@/pages/CertificateVerify'));
 const Challenge = lazy(() => import('@/pages/Challenge'));
 const Tools = lazy(() => import('@/pages/Tools'));
 const AboutContact = lazy(() => import('@/pages/AboutContact'));
 const AiComingSoon = lazy(() => import('@/pages/AiComingSoon'));
 const Admin = lazy(() => import('@/pages/Admin'));
+const Policy = lazy(() => import('@/pages/Policy'));
 
 // Component tự động cuộn lên đầu trang khi chuyển Route
 const ScrollToTop = () => {
@@ -109,15 +111,18 @@ const AppContent: React.FC = () => {
         submittedAt: new Date().toISOString(),
         adminSeeded: true,
       }));
-      window.localStorage.setItem('deepfense-basics-final-exam', JSON.stringify({
-        score: 50,
-        total: 50,
-        percent: 100,
-        passed: true,
-        passedAt: new Date().toISOString(),
-        examId: 'DEEPFENSE-BASIC-ADMIN-TEST',
-        adminSeeded: true,
-      }));
+      if (!window.localStorage.getItem('deepfense-basics-final-exam')) {
+        const randomId = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+        window.localStorage.setItem('deepfense-basics-final-exam', JSON.stringify({
+          score: 50,
+          total: 50,
+          percent: 100,
+          passed: true,
+          passedAt: new Date().toISOString(),
+          examId: `DPF-BASIC-${new Date().getFullYear()}-${randomId.replace(/-/g, '').slice(0, 16).toUpperCase()}`,
+          adminSeeded: true,
+        }));
+      }
     }
   }, [user]);
 
@@ -230,9 +235,13 @@ const AppContent: React.FC = () => {
       case '/tools': return lang === 'vi' ? 'Hệ thống Quét Rủi Ro' : 'Risk Scanner';
       case '/academy': return lang === 'vi' ? 'DEEPFENSE Academy' : 'DEEPFENSE Academy';
       case '/academy/basics': return lang === 'vi' ? 'DEEPFENSE Basics' : 'DEEPFENSE Basics';
+      case '/academy/verify': return lang === 'vi' ? 'Xac minh chung chi' : 'Verify Certificate';
       case '/challenge': return lang === 'vi' ? 'Thử thách Thám tử' : 'Detective Challenge';
       case '/ai-project': return lang === 'vi' ? 'Dự án AI Deepfense' : 'AI Project';
       case '/contact': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
+      case '/privacy':
+      case '/terms':
+      case '/policy': return lang === 'vi' ? 'Chinh sach Deepfense' : 'Deepfense Policies';
       default: 
         if (location.pathname.startsWith('/tools')) {
           if (location.pathname.includes('crisis')) return lang === 'vi' ? 'Trung tâm Ứng cứu' : 'Crisis Hub';
@@ -270,12 +279,16 @@ const AppContent: React.FC = () => {
             <Suspense fallback={<LoadingFallback />}>
                 <Routes>
                   <Route path="/" element={<Home lang={lang} season={season} />} />
+                  <Route path="/academy/verify" element={<CertificateVerify lang={lang} />} />
                   <Route path="/academy" element={<ProtectedAcademyRoute user={user} authBusy={authBusy}><Academy lang={lang} /></ProtectedAcademyRoute>} />
                   <Route path="/academy/basics" element={<ProtectedAcademyRoute user={user} authBusy={authBusy}><AcademyBasics lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} /></ProtectedAcademyRoute>} />
                   <Route path="/tools/:tab?" element={<Tools lang={lang} />} />
                   <Route path="/challenge" element={<Challenge lang={lang} />} />
                   <Route path="/ai-project" element={<AiComingSoon lang={lang} />} />
                   <Route path="/contact" element={<AboutContact lang={lang} />} />
+                  <Route path="/privacy" element={<Policy lang={lang} />} />
+                  <Route path="/terms" element={<Policy lang={lang} />} />
+                  <Route path="/policy" element={<Policy lang={lang} />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="*" element={<Home lang={lang} season={season} />} />
                 </Routes>

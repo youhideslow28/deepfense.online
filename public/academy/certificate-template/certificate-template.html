@@ -15,7 +15,7 @@
         --blue: #1768ac;
         --cyan: #17b7e8;
         --green: #19a886;
-        --gold: #c99732;
+        --verified: #16a34a;
       }
 
       * {
@@ -146,7 +146,7 @@
         border-radius: 10px;
         color: white;
         background: linear-gradient(135deg, var(--navy), var(--blue) 58%, var(--cyan));
-        font-size: 20px;
+        font-size: 17px;
         font-weight: 950;
       }
 
@@ -233,6 +233,7 @@
       }
 
       .signature-block {
+        position: relative;
         min-width: 260px;
       }
 
@@ -257,27 +258,30 @@
         font-size: 12px;
       }
 
-      .seal {
-        width: 112px;
-        height: 112px;
-        border: 3px solid var(--gold);
-        border-radius: 999px;
+      .verified-stamp {
+        position: absolute;
+        left: 142px;
+        top: 8px;
+        width: 92px;
+        height: 92px;
         display: grid;
         place-items: center;
-        color: var(--gold);
-        background: rgba(255, 255, 255, 0.72);
+        border: 3px solid var(--verified);
+        border-radius: 999px;
+        color: var(--verified);
+        background: rgba(255, 255, 255, 0.7);
         font-size: 11px;
         font-weight: 950;
         text-align: center;
-        transform: rotate(-8deg);
+        transform: rotate(-11deg);
       }
 
-      .seal::before {
+      .verified-stamp::before {
         content: "";
         position: absolute;
-        inset: 8px;
+        inset: 7px;
         border: 1px dashed currentColor;
-        border-radius: inherit;
+        border-radius: 999px;
       }
 
       .verify {
@@ -291,12 +295,10 @@
       .qr {
         width: 78px;
         height: 78px;
-        padding: 7px;
-        background:
-          linear-gradient(90deg, #111 8px, transparent 8px) 0 0 / 16px 16px,
-          linear-gradient(#111 8px, transparent 8px) 0 0 / 16px 16px,
-          white;
+        padding: 4px;
+        background: white;
         border: 1px solid #98a2b3;
+        object-fit: contain;
       }
 
       .verify-url {
@@ -397,7 +399,7 @@
       <div class="content">
         <header class="topline">
           <div class="brand">
-            <div class="mark">D</div>
+            <div class="mark">DF</div>
             <span data-field="academyName">DEEPFENSE ACADEMY</span>
           </div>
           <div class="credential-badge" data-field="credentialName">DEEPFENSE AWARE</div>
@@ -414,7 +416,6 @@
             <div class="meta-row">
               <div class="meta-pill">Issued: <span data-field="issuedDate">13 May 2026</span></div>
               <div class="meta-pill">ID: <span data-field="certificateId">DPF-BASIC-2026-0001</span></div>
-              <div class="meta-pill">Final Score: <span data-field="score">70</span>%</div>
               <div class="meta-pill">Reward: <span data-field="rewardAmount">500</span> <span data-field="rewardSymbol">DPF</span></div>
             </div>
           </div>
@@ -423,16 +424,15 @@
         <footer class="footer">
           <div class="signature-block">
             <div class="signature" data-field="signatureName">Deepfense.online</div>
+            <div class="verified-stamp">VERIFIED</div>
             <div class="sig-line" data-field="issuerName">Deepfense.online Academic Board</div>
             <div class="sig-role" data-field="issuerRole">Authorized Issuer</div>
           </div>
 
-          <div class="seal" data-field="sealText">DEEPFENSE VERIFIED</div>
-
           <div class="verify">
-            <div class="qr" aria-hidden="true"></div>
+            <img class="qr" id="qrImage" alt="Certificate verify QR" />
             <strong>VERIFY</strong>
-            <div class="verify-url" data-field="verificationUrl">https://deepfense.online/verify/DPF-BASIC-2026-0001</div>
+            <div class="verify-url" data-field="verificationUrl">https://deepfense.online/academy/verify?id=DPF-BASIC-2026-0001</div>
           </div>
         </footer>
       </div>
@@ -460,14 +460,12 @@
         credentialName: "DEEPFENSE AWARE",
         issuedDate: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
         certificateId: "DPF-BASIC-2026-0001",
-        verificationUrl: "https://deepfense.online/verify/DPF-BASIC-2026-0001",
+        verificationUrl: "https://deepfense.online/academy/verify?id=DPF-BASIC-2026-0001",
         rewardAmount: 500,
         rewardSymbol: "DPF",
-        score: 70,
         issuerName: "Deepfense.online Academic Board",
         issuerRole: "Authorized Issuer",
-        signatureName: "Deepfense.online",
-        sealText: "DEEPFENSE VERIFIED"
+        signatureName: "Deepfense.online"
       };
 
       function readJson(key, fallback = null) {
@@ -491,9 +489,8 @@
           ...defaultCertificateData,
           recipientName: preferredName,
           certificateId,
-          score: exam.percent || defaultCertificateData.score,
           issuedDate: new Date(exam.passedAt || Date.now()).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
-          verificationUrl: `https://deepfense.online/verify/${certificateId}`,
+          verificationUrl: `${window.location.origin}/academy/verify?id=${encodeURIComponent(certificateId)}`,
         };
       }
 
@@ -503,6 +500,7 @@
           node.textContent = data[key] ?? "";
         });
         document.querySelector("#recipientInput").value = data.recipientName;
+        document.querySelector("#qrImage").src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(data.verificationUrl)}`;
       }
 
       document.querySelector("#nameForm").addEventListener("submit", (event) => {
