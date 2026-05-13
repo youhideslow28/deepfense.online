@@ -129,25 +129,36 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
             </div>
           </div>
 
-          <div className="lg:col-span-2">
-            <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
-              {isVi ? 'Luyện tập' : 'Train'}
-            </h3>
-            <div className="flex flex-col gap-3">{trainingLinks.map(renderLink)}</div>
-          </div>
+          <div className="grid gap-8 md:grid-cols-2 lg:col-span-4">
+            <div>
+              <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
+                {isVi ? 'Luyện tập' : 'Train'}
+              </h3>
+              <div className="flex flex-col gap-3">{trainingLinks.map(renderLink)}</div>
+            </div>
 
-          <div className="lg:col-span-2">
-            <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
-              {isVi ? 'Hỗ trợ' : 'Support'}
-            </h3>
-            <div className="flex flex-col gap-3">{supportLinks.map(renderLink)}</div>
+            <div>
+              <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
+                {isVi ? 'Hỗ trợ' : 'Support'}
+              </h3>
+              <div className="flex flex-col gap-3">{supportLinks.map(renderLink)}</div>
+            </div>
+
+            <div className="md:col-span-2">
+              <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
+                {isVi ? 'Pháp lý & tin cậy' : 'Legal & Trust'}
+              </h3>
+              <div className="grid grid-cols-1 gap-x-8 gap-y-3 md:grid-cols-2">
+                {legalLinks.map(renderLink)}
+              </div>
+            </div>
           </div>
 
           <div className="lg:col-span-3">
             <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
               {isVi ? 'Dự án' : 'Project'}
             </h3>
-            <div className="space-y-3 rounded-3xl border border-white/10 bg-black/25 p-5">
+            <div className="space-y-3">
               <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
                 <GraduationCap className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
                 <span>25NS - VKU, Da Nang, Viet Nam</span>
@@ -163,14 +174,6 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
               <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
                 <Scale className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
                 <span>{isVi ? 'Phục vụ học tập, nghiên cứu và nâng cao nhận thức cộng đồng.' : 'Built for learning, research, and public awareness.'}</span>
-              </div>
-              <div className="border-t border-white/10 pt-3">
-                <h4 className="mb-3 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
-                  {isVi ? 'Pháp lý & tin cậy' : 'Legal & Trust'}
-                </h4>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1">
-                  {legalLinks.map(renderLink)}
-                </div>
               </div>
             </div>
           </div>

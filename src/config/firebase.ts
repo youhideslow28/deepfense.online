@@ -20,6 +20,18 @@ const firebaseConfig = {
   measurementId:     import.meta.env.VITE_FIREBASE_MEASUREMENT_ID     || 'G-DEMO',
 };
 
+const requiredFirebaseEnvKeys = [
+  'VITE_FIREBASE_API_KEY',
+  'VITE_FIREBASE_AUTH_DOMAIN',
+  'VITE_FIREBASE_PROJECT_ID',
+  'VITE_FIREBASE_STORAGE_BUCKET',
+  'VITE_FIREBASE_MESSAGING_SENDER_ID',
+  'VITE_FIREBASE_APP_ID',
+] as const;
+
+const missingFirebaseEnvKeys = requiredFirebaseEnvKeys.filter((key) => !import.meta.env[key]);
+const isFirebaseConfigured = missingFirebaseEnvKeys.length === 0 && firebaseConfig.apiKey !== 'demo-api-key';
+
 // Avoid duplicate app initialization (HMR safe)
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
@@ -35,4 +47,4 @@ const db      = getFirestore(app);
 const storage = getStorage(app);
 const auth    = getAuth(app);
 
-export { app, analytics, db, storage, auth };
+export { app, analytics, db, storage, auth, isFirebaseConfigured, missingFirebaseEnvKeys };

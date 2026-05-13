@@ -26,7 +26,7 @@ import AiChat from '@/features/chat/AiChat';
 // Data & Types
 import { Language, Season } from '@/types';
 import { TRANSLATIONS, PROJECT_METADATA } from '@/data';
-import { auth, db } from '@/config/firebase';
+import { auth, db, isFirebaseConfigured, missingFirebaseEnvKeys } from '@/config/firebase';
 import { ensureDpfWallet } from '@/features/dpf/dpf';
 
 // Lazy loading các trang để giảm tải ban đầu
@@ -181,6 +181,14 @@ const AppContent: React.FC = () => {
     setAuthError('');
 
     try {
+      if (!isFirebaseConfigured) {
+        const missing = missingFirebaseEnvKeys.join(', ');
+        setAuthError(lang === 'vi'
+          ? `Firebase chưa được cấu hình cho bản deploy này${missing ? `: ${missing}` : '.'}`
+          : `Firebase is not configured for this deployment${missing ? `: ${missing}` : '.'}`);
+        return;
+      }
+
       if (user) {
         await signOut(auth);
         return;
@@ -199,7 +207,11 @@ const AppContent: React.FC = () => {
       await registerAcademyLearner(result.user);
     } catch (error) {
       console.error('Google auth error:', error);
-      setAuthError(lang === 'vi' ? 'Không thể đăng nhập Google lúc này.' : 'Google sign-in is unavailable.');
+      const code = typeof error === 'object' && error && 'code' in error ? String((error as { code?: unknown }).code) : '';
+      const message = code
+        ? (lang === 'vi' ? `Không thể đăng nhập Google: ${code}` : `Google sign-in failed: ${code}`)
+        : (lang === 'vi' ? 'Không thể đăng nhập Google lúc này.' : 'Google sign-in is unavailable.');
+      setAuthError(message);
     } finally {
       setAuthBusy(false);
     }

@@ -92,6 +92,27 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
     },
   ];
 
+  const hallOfFame = [
+    {
+      rank: '01',
+      name: 'Ho Xuan Nguyen',
+      credential: 'DEEPFENSE AWARE',
+      note: isVi ? 'Hoàn thành chương trình nền tảng' : 'Completed the foundation program',
+    },
+    {
+      rank: '02',
+      name: 'Nguyen Nhat Huy',
+      credential: 'DEEPFENSE AWARE',
+      note: isVi ? 'Hoàn thành chương trình nền tảng' : 'Completed the foundation program',
+    },
+    {
+      rank: '03',
+      name: isVi ? 'Học viên tiếp theo' : 'Next learner',
+      credential: isVi ? 'Đang cập nhật' : 'Updating',
+      note: isVi ? 'Sẽ hiển thị khi hoàn thành đủ điều kiện' : 'Shown after completion requirements are met',
+    },
+  ];
+
   return (
     <div ref={pageRef as React.RefObject<HTMLDivElement>} className="animate-in fade-in duration-500">
       <section data-reveal className="relative overflow-hidden rounded-2xl border border-blue-500/25 bg-[#07111f]/95 p-6 md:p-10 mb-8 shadow-[0_24px_90px_rgba(0,0,0,0.42)] backdrop-blur-xl">
@@ -144,6 +165,36 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
         <DpfWalletPanel lang={lang} />
       </section>
 
+      <section data-reveal className="mb-8 rounded-2xl border border-amber-400/20 bg-[#07111f]/82 p-5 md:p-6 shadow-[0_18px_55px_rgba(0,0,0,0.24)] backdrop-blur-xl">
+        <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <div>
+            <div className="text-[10px] font-mono font-black uppercase tracking-[0.22em] text-amber-300">
+              {isVi ? 'Bảng vinh danh' : 'Hall of Fame'}
+            </div>
+            <h2 className="mt-2 text-2xl md:text-3xl font-black uppercase text-white" style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
+              {isVi ? 'Học viên đã hoàn thành chương trình' : 'Learners who completed the program'}
+            </h2>
+          </div>
+          <div className="text-xs leading-relaxed text-gray-500 md:max-w-sm md:text-right">
+            {isVi ? 'Khu vực này ghi nhận những học viên đạt chứng nhận DEEPFENSE AWARE và đủ điều kiện nhận reward.' : 'This area recognizes learners who earned DEEPFENSE AWARE and met reward conditions.'}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+          {hallOfFame.map((learner) => (
+            <article key={learner.rank} className="rounded-xl border border-white/10 bg-black/30 p-4">
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <div className="font-mono text-[10px] font-black text-amber-300">#{learner.rank}</div>
+                <Trophy size={15} className="text-amber-300/70" />
+              </div>
+              <div className="truncate text-sm font-black text-white">{learner.name}</div>
+              <div className="mt-1 text-[10px] font-mono uppercase tracking-widest text-amber-300/80">{learner.credential}</div>
+              <p className="mt-3 text-xs leading-relaxed text-gray-500">{learner.note}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section data-reveal className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {[
           [<Target size={20} />, isVi ? 'Lộ trình rõ' : 'Clear path', isVi ? 'Biết mình học gì, đang ở đâu, cần hoàn thành gì tiếp theo.' : 'Know what to learn, where you are, and what comes next.'],
@@ -176,15 +227,15 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
             const canOpen = course.available || (isAdvancedDemo && advancedDemoUnlocked);
 
             return (
-            <article key={course.title} className={`relative rounded-2xl border p-5 md:p-6 overflow-hidden shadow-[0_18px_55px_rgba(0,0,0,0.24)] backdrop-blur-xl ${course.available ? 'border-blue-400/35 bg-[#08213a]/88' : 'border-white/12 bg-[#07111f]/78'}`}>
+            <article key={course.title} className={`relative flex min-h-full flex-col rounded-2xl border p-5 md:p-6 overflow-hidden shadow-[0_18px_55px_rgba(0,0,0,0.24)] backdrop-blur-xl ${course.available ? 'border-blue-400/35 bg-[#08213a]/88' : 'border-white/12 bg-[#07111f]/78'}`}>
               <div className="flex items-center justify-between gap-3 mb-5">
                 <div className={`rounded-full px-3 py-1 text-[9px] font-mono font-black uppercase tracking-widest ${course.available ? 'bg-success/10 text-success' : 'bg-white/5 text-gray-500'}`}>
                   {course.status}
                 </div>
               </div>
               <h3 className="text-white text-xl font-black uppercase mb-3" style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>{course.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed mb-5">{course.desc}</p>
-              <div className="space-y-2 mb-5">
+              <p className="text-gray-400 text-sm leading-relaxed mb-5 lg:min-h-[120px]">{course.desc}</p>
+              <div className="space-y-2 mb-5 lg:min-h-[84px]">
                 {course.bullets.map((item) => (
                   <div key={item} className="flex items-start gap-2 text-sm text-gray-500">
                     {course.available ? <CheckCircle2 size={15} className="text-blue-300 mt-0.5 shrink-0" /> : <LockKeyhole size={14} className="text-gray-600 mt-0.5 shrink-0" />}
@@ -192,7 +243,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-2 gap-2 mb-5">
+              <div className="mt-auto grid grid-cols-2 gap-2 mb-5">
                 <div className="rounded-xl border border-white/12 bg-black/38 p-3">
                   <div className="text-[10px] text-gray-500 uppercase font-mono mb-1">Credential</div>
                   <div className="text-white text-xs font-black uppercase leading-snug">{course.credential}</div>

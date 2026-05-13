@@ -6,6 +6,7 @@ const RATE_LIMIT_MAX_REQUESTS = 30;
 const DPF_SEASON = 'genesis-2026';
 const MAX_REWARD_AMOUNT = 250;
 const MAX_UNLOCK_COST = 2_000;
+const MAX_ADMIN_GRANT_AMOUNT = 1_000_000;
 
 function getFirebaseAdmin() {
   if (admin.apps.length) return admin.app();
@@ -59,6 +60,133 @@ async function requireUser(req) {
 
   getFirebaseAdmin();
   return admin.auth().verifyIdToken(token);
+}
+
+async function requireAdmin(user) {
+  const adminEmails = new Set(
+    String(process.env.DPF_ADMIN_EMAILS || 'deepfense@gmail.com')
+      .split(',')
+      .map((email) => email.trim().toLowerCase())
+      .filter(Boolean),
+  );
+
+  if (user.admin === true || adminEmails.has(String(user.email || '').toLowerCase())) {
+    return;
+  }
+
+  const profile = await admin.firestore().collection('users').doc(user.uid).get();
+  const role = profile.exists ? profile.data()?.role : '';
+  if (role === 'admin') return;
+
+  const error = new Error('Admin permission required.');
+  error.statusCode = 403;
+  throw error;
+}
+
+async function resolveTargetUser(target) {
+  const value = String(target || '').trim();
+  if (!value) {
+    const error = new Error('Missing target user.');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  if (value.includes('@')) {
+    return admin.auth().getUserByEmail(value.toLowerCase());
+  }
+
+  return admin.auth().getUser(value);
+}
+
+async function adminGrant(uid, adminUser, payload) {
+  await requireAdmin(adminUser);
+
+  const amount = Number(payload.amount);
+  if (!Number.isFinite(amount) || amount <= 0 || amount > MAX_ADMIN_GRANT_AMOUNT) {
+    return { ok: false, code: 'invalid_amount', message: 'Invalid admin DPF coin grant amount.' };
+  }
+
+  const targetUser = await resolveTargetUser(payload.target);
+  const reason = String(payload.reason || 'Admin bonus DPF coin').trim() || 'Admin bonus DPF coin';
+  const grantId = String(payload.grantId || `${targetUser.uid}:admin_bonus:${amount}:${Date.now()}`);
+  const ledgerId = toSafeId(grantId);
+  const db = admin.firestore();
+  const now = admin.firestore.FieldValue.serverTimestamp();
+  const userRef = db.collection('users').doc(targetUser.uid);
+  const ledgerRef = db.collection('dpf_ledger').doc(ledgerId);
+  const activityRef = db.collection('activity_logs').doc();
+
+  return db.runTransaction(async (transaction) => {
+    const [userSnap, ledgerSnap] = await Promise.all([
+      transaction.get(userRef),
+      transaction.get(ledgerRef),
+    ]);
+
+    if (ledgerSnap.exists) {
+      const data = ledgerSnap.data() || {};
+      return {
+        ok: true,
+        amount: numberOrZero(data.amount),
+        balanceAfter: numberOrZero(data.balanceAfter),
+        ledgerId,
+        alreadyGranted: true,
+      };
+    }
+
+    const userData = userSnap.exists ? userSnap.data() : {};
+    const balanceBefore = numberOrZero(userData.webBalance);
+    const balanceAfter = balanceBefore + amount;
+
+    transaction.set(userRef, {
+      uid: targetUser.uid,
+      email: targetUser.email || String(payload.target || '').toLowerCase(),
+      displayName: targetUser.displayName || userData.displayName || targetUser.email || targetUser.uid,
+      photoURL: targetUser.photoURL || userData.photoURL || '',
+      role: userData.role || 'user',
+      status: userData.status || 'active',
+      webBalance: balanceAfter,
+      bonusBalance: numberOrZero(userData.bonusBalance) + amount,
+      updatedAt: now,
+      createdAt: userSnap.exists ? userData.createdAt : now,
+    }, { merge: true });
+
+    transaction.set(ledgerRef, {
+      uid: targetUser.uid,
+      direction: 'credit',
+      source: 'admin_bonus',
+      amount,
+      balanceBefore,
+      balanceAfter,
+      status: 'confirmed',
+      reason,
+      metadata: {
+        targetEmail: targetUser.email || '',
+        grantedBy: adminUser.email || adminUser.uid,
+      },
+      idempotencyKey: grantId,
+      createdAt: now,
+      confirmedAt: now,
+    });
+
+    transaction.set(activityRef, {
+      actorId: adminUser.uid,
+      actorEmail: adminUser.email || '',
+      actorRole: 'admin',
+      action: 'admin.dpf_coin_granted',
+      targetType: 'users',
+      targetId: targetUser.uid,
+      severity: amount >= 1000 ? 'warning' : 'notice',
+      metadata: {
+        amount,
+        reason,
+        target: targetUser.email || targetUser.uid,
+        ledgerId,
+      },
+      createdAt: now,
+    });
+
+    return { ok: true, amount, balanceAfter, ledgerId, alreadyGranted: false };
+  });
 }
 
 async function claimReward(uid, userProfile, payload) {
@@ -249,6 +377,11 @@ export default async function handler(req, res) {
 
     if (action === 'claimReward') {
       const result = await claimReward(user.uid, user, req.body?.payload || {});
+      return res.status(result.ok ? 200 : 400).json(result);
+    }
+
+    if (action === 'adminGrant') {
+      const result = await adminGrant(user.uid, user, req.body?.payload || {});
       return res.status(result.ok ? 200 : 400).json(result);
     }
 

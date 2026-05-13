@@ -5,6 +5,9 @@ import {
   collection,
   addDoc,
   getDocs,
+  getCountFromServer,
+  getAggregateFromServer,
+  sum,
   query,
   where,
   orderBy,
@@ -20,15 +23,12 @@ import {
 import { ref, deleteObject } from 'firebase/storage';
 import {
   Activity,
-  AlertTriangle,
   BarChart3,
   BookOpen,
   CheckCircle,
-  Clock,
   Coins,
   Database,
   ExternalLink,
-  FileText,
   Filter,
   Flame,
   Gauge,
@@ -44,14 +44,12 @@ import {
   ShieldAlert,
   Sparkles,
   Trash2,
-  UserCog,
   Users,
   Plus,
   Save,
   Send,
   Download,
   RefreshCw,
-  Archive,
   Ban,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
@@ -62,6 +60,7 @@ type Severity = 'info' | 'notice' | 'low' | 'medium' | 'warning' | 'high' | 'cri
 
 interface HelpCenterCase {
   id: string;
+  userId?: string;
   name?: string;
   email?: string;
   title?: string;
@@ -151,7 +150,19 @@ interface DpfLedgerRecord {
   metadata?: Record<string, unknown>;
 }
 
-type AdminTab = 'overview' | 'users' | 'dpf' | 'cases' | 'studio' | 'activity' | 'security' | 'policy' | 'data';
+type AdminDpfGrantResult =
+  | { ok: true; amount: number; balanceAfter: number; ledgerId: string; alreadyGranted?: boolean }
+  | { ok: false; code?: string; message?: string };
+
+interface TrainingStats {
+  protectedUsers: number;
+  totalAttempts: number;
+  totalScore: number;
+  averageAccuracy: number;
+  isLoading: boolean;
+}
+
+type AdminTab = 'overview' | 'users' | 'dpf' | 'cases' | 'studio' | 'activity' | 'security' | 'data';
 
 const timeRangeOptions = ['Hôm nay', '7 ngày', '30 ngày', 'Tất cả'];
 
@@ -163,7 +174,6 @@ const tabs: Array<{ id: AdminTab; label: string; icon: LucideIcon }> = [
   { id: 'studio', label: 'Xưởng nội dung', icon: Layers },
   { id: 'activity', label: 'Nhật ký hoạt động', icon: Activity },
   { id: 'security', label: 'Sự kiện bảo mật', icon: ShieldAlert },
-  { id: 'policy', label: 'Chính sách', icon: FileText },
   { id: 'data', label: 'Mô hình dữ liệu', icon: Database },
 ];
 
@@ -217,53 +227,6 @@ const challengeTypeLabels: Record<string, string> = {
   scam_scenario: 'Tình huống lừa đảo',
   quiz: 'Câu hỏi kiến thức',
 };
-
-const fallbackUsers: UserRecord[] = [
-  { id: 'u-001', email: 'learner@deepfense.local', displayName: 'Academy Learner', role: 'user', status: 'active', score: 820, totalChallenges: 24, correctAnswers: 19, accuracy: 79, flags: 0 },
-  { id: 'u-002', email: 'editor@deepfense.local', displayName: 'Content Editor', role: 'editor', status: 'active', score: 0, totalChallenges: 0, correctAnswers: 0, accuracy: 0, flags: 1 },
-  { id: 'u-003', email: 'admin@deepfense.local', displayName: 'SOC Admin', role: 'admin', status: 'active', score: 0, totalChallenges: 0, correctAnswers: 0, accuracy: 0, flags: 0 },
-];
-
-const fallbackCases: HelpCenterCase[] = [
-  {
-    id: 'case-preview-1',
-    name: 'Người dùng mẫu',
-    email: 'user@example.com',
-    title: 'Nghi ngờ video deepfake',
-    description: 'Cần xác minh thêm trước khi chia sẻ video trong nhóm lớp.',
-    caseType: 'deepfake_video',
-    severity: 'medium',
-    status: 'new',
-  },
-  {
-    id: 'case-preview-2',
-    name: 'Thành viên cộng đồng',
-    email: 'community@example.com',
-    title: 'Cuộc gọi AI voice scam',
-    description: 'Người gọi tạo áp lực chuyển tiền và yêu cầu giữ bí mật.',
-    caseType: 'ai_voice_scam',
-    severity: 'high',
-    status: 'reviewing',
-  },
-];
-
-const fallbackChallenges: ChallengeRecord[] = [
-  { id: 'challenge-1', title: 'Face artifact triage', type: 'single_video_detect', difficulty: 'easy', status: 'published', skillTags: ['face_artifacts', 'lighting'], totalPlays: 138, correctRate: 76 },
-  { id: 'challenge-2', title: 'Voice clone pressure call', type: 'scam_scenario', difficulty: 'hard', status: 'draft', skillTags: ['voice', 'behavior', 'verification'], totalPlays: 42, correctRate: 58 },
-  { id: 'challenge-3', title: 'A/B synthetic motion', type: 'compare_ab', difficulty: 'medium', status: 'published', skillTags: ['motion', 'context'], totalPlays: 91, correctRate: 69 },
-];
-
-const fallbackActivity: ActivityLog[] = [
-  { id: 'log-1', actorId: 'system', actorRole: 'admin', action: 'admin.role_changed', targetType: 'users', targetId: 'u-002', severity: 'notice' },
-  { id: 'log-2', actorId: 'learner', actorRole: 'user', action: 'user.help_case_submitted', targetType: 'help_center_cases', targetId: 'case-preview-1', severity: 'warning' },
-  { id: 'log-3', actorId: 'editor', actorRole: 'editor', action: 'editor.challenge_updated', targetType: 'challenges', targetId: 'challenge-2', severity: 'info' },
-];
-
-const fallbackSecurity: SecurityEvent[] = [
-  { id: 'sec-1', eventType: 'permission_denied', actorId: 'unknown', actorRole: 'user', severity: 'warning', sourceIp: 'masked' },
-  { id: 'sec-2', eventType: 'high_frequency_submission', actorId: 'u-001', actorRole: 'user', severity: 'high', sourceIp: 'masked' },
-  { id: 'sec-3', eventType: 'admin_session_expired', actorId: 'admin', actorRole: 'admin', severity: 'notice', sourceIp: 'masked' },
-];
 
 const formatDate = (value?: Timestamp) => {
   if (!value?.seconds) return 'Chưa ghi nhận';
@@ -369,6 +332,14 @@ const Admin: React.FC = () => {
   const [challenges, setChallenges] = useState<ChallengeRecord[]>([]);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [securityEvents, setSecurityEvents] = useState<SecurityEvent[]>([]);
+  const [selectedUserId, setSelectedUserId] = useState('');
+  const [trainingStats, setTrainingStats] = useState<TrainingStats>({
+    protectedUsers: 0,
+    totalAttempts: 0,
+    totalScore: 0,
+    averageAccuracy: 0,
+    isLoading: true,
+  });
   const [caseDrafts, setCaseDrafts] = useState<Record<string, { status: CaseStatus; severity: Severity; responseNote: string }>>({});
   const [challengeForm, setChallengeForm] = useState({
     title: '',
@@ -441,6 +412,45 @@ const Admin: React.FC = () => {
     return () => unsubscribers.forEach((unsubscribe) => unsubscribe());
   }, [isAuthenticated]);
 
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    let isMounted = true;
+
+    const loadTrainingStats = async () => {
+      try {
+        const gameRef = collection(db, 'game_results');
+        const passedQuery = query(gameRef, where('score', '>=', 9));
+        const [passedSnapshot, attemptsSnapshot, scoreSnapshot] = await Promise.all([
+          getCountFromServer(passedQuery),
+          getCountFromServer(gameRef),
+          getAggregateFromServer(gameRef, { totalScore: sum('score') }),
+        ]);
+
+        if (!isMounted) return;
+        const totalAttempts = attemptsSnapshot.data().count;
+        const totalScore = Number(scoreSnapshot.data().totalScore || 0);
+
+        setTrainingStats({
+          protectedUsers: passedSnapshot.data().count,
+          totalAttempts,
+          totalScore,
+          averageAccuracy: totalAttempts > 0 ? Math.round((totalScore / (totalAttempts * 10)) * 100) : 0,
+          isLoading: false,
+        });
+      } catch (error) {
+        console.error('Could not load admin training stats:', error);
+        if (isMounted) {
+          setTrainingStats((current) => ({ ...current, isLoading: false }));
+        }
+      }
+    };
+
+    loadTrainingStats();
+    return () => {
+      isMounted = false;
+    };
+  }, [isAuthenticated]);
+
   const mergedCases = useMemo(() => {
     const normalizedLegacy = legacyReports.map((report) => ({
       ...report,
@@ -452,22 +462,18 @@ const Admin: React.FC = () => {
     return [...cases, ...normalizedLegacy];
   }, [cases, legacyReports]);
 
-  const dashboardUsers = users.length ? users : fallbackUsers;
-  const dashboardCases = mergedCases.length ? mergedCases : fallbackCases;
-  const dashboardChallenges = challenges.length ? challenges : fallbackChallenges;
-  const dashboardActivity = activityLogs.length ? activityLogs : fallbackActivity;
-  const dashboardSecurity = securityEvents.length ? securityEvents : fallbackSecurity;
+  const dashboardUsers = users;
+  const dashboardCases = mergedCases;
+  const dashboardChallenges = challenges;
+  const dashboardActivity = activityLogs;
+  const dashboardSecurity = securityEvents;
 
   const stats = useMemo(() => {
     const activeLearners = dashboardUsers.filter((user) => user.status !== 'banned').length;
-    const totalChallengeRuns = dashboardUsers.reduce((sum, user) => sum + (user.totalChallenges || 0), 0);
-    const averageAccuracy = dashboardUsers.length
-      ? Math.round(dashboardUsers.reduce((sum, user) => sum + (user.accuracy || 0), 0) / dashboardUsers.length)
-      : 0;
     const openCases = dashboardCases.filter((item) => ['new', 'reviewing'].includes(item.status || 'new')).length;
     const highRisk = dashboardCases.filter((item) => ['high', 'critical'].includes(item.severity || '')).length;
     const reviewQueue = dashboardChallenges.filter((item) => item.status === 'draft').length;
-    return { activeLearners, totalChallengeRuns, averageAccuracy, openCases, highRisk, reviewQueue };
+    return { activeLearners, openCases, highRisk, reviewQueue };
   }, [dashboardCases, dashboardChallenges, dashboardUsers]);
 
   const filteredUsers = dashboardUsers.filter((user) => {
@@ -484,6 +490,23 @@ const Admin: React.FC = () => {
     const matchesStatus = statusFilter === 'all' || item.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  const selectedUser = useMemo(() => {
+    if (!selectedUserId) return filteredUsers[0] || dashboardUsers[0];
+    return dashboardUsers.find((user) => user.id === selectedUserId || user.uid === selectedUserId) || filteredUsers[0] || dashboardUsers[0];
+  }, [dashboardUsers, filteredUsers, selectedUserId]);
+
+  const selectedUserKey = selectedUser?.uid || selectedUser?.id || '';
+  const selectedUserEmail = (selectedUser?.email || '').toLowerCase();
+  const selectedUserCases = dashboardCases.filter((item) =>
+    item.email?.toLowerCase() === selectedUserEmail || item.userId === selectedUserKey,
+  );
+  const selectedUserActivity = dashboardActivity.filter((item) =>
+    item.actorId === selectedUserKey || item.targetId === selectedUserKey,
+  );
+  const selectedUserLedger = dpfLedger.filter((entry) =>
+    entry.uid === selectedUserKey || (typeof entry.metadata?.targetEmail === 'string' && entry.metadata.targetEmail.toLowerCase() === selectedUserEmail),
+  );
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -560,6 +583,35 @@ const Admin: React.FC = () => {
 
   const safeLedgerId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 180);
 
+  const grantDpfCoinOnServer = async (payload: { target: string; amount: number; reason: string }) => {
+    const user = auth.currentUser;
+    if (!user) return null;
+
+    const token = await user.getIdToken();
+    const response = await fetch('/api/dpf', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        action: 'adminGrant',
+        payload: {
+          ...payload,
+          grantId: `${payload.target.toLowerCase()}:admin_bonus:${payload.amount}:${Date.now()}`,
+        },
+      }),
+    });
+
+    const data = await response.json().catch(() => null) as AdminDpfGrantResult | null;
+    if (!response.ok || !data || data.ok !== true) {
+      const message = data && 'message' in data ? data.message : '';
+      throw new Error(message || `DPF admin grant API failed with ${response.status}.`);
+    }
+
+    return data;
+  };
+
   const grantDpfCoin = async (event: React.FormEvent) => {
     event.preventDefault();
     if (dpfBusy) return;
@@ -580,6 +632,21 @@ const Admin: React.FC = () => {
 
     setDpfBusy(true);
     try {
+      try {
+        const serverResult = await grantDpfCoinOnServer({
+          target,
+          amount,
+          reason: dpfForm.reason.trim() || 'Admin bonus DPF coin',
+        });
+
+        if (serverResult?.ok) {
+          showActionMessage(`Da cong ${amount.toLocaleString('en-US')} DPF coin cho ${target}. So du moi: ${serverResult.balanceAfter.toLocaleString('en-US')}.`);
+          return;
+        }
+      } catch (serverError) {
+        console.warn('DPF admin server grant failed, falling back to client transaction:', serverError);
+      }
+
       let targetUser = dashboardUsers.find((item) =>
         (item.email || '').toLowerCase() === normalizedEmail || item.uid === target || item.id === target,
       );
@@ -936,9 +1003,10 @@ const Admin: React.FC = () => {
   const renderOverview = () => (
     <div className="space-y-6">
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        <StatCard label="Người học hoạt động" value={stats.activeLearners} sub="Tài khoản đang học hoặc có trạng thái hoạt động" icon={Users} tone="blue" />
-        <StatCard label="Sự kiện huấn luyện" value={stats.totalChallengeRuns || dashboardChallenges.reduce((sum, item) => sum + (item.totalPlays || 0), 0)} sub="Lượt làm challenge và mô phỏng" icon={BarChart3} tone="green" />
-        <StatCard label="Độ chính xác" value={`${stats.averageAccuracy || 72}%`} sub="Tỷ lệ đúng trung bình trên dữ liệu hiện có" icon={Gauge} tone="green" />
+        <StatCard label="Người học hoạt động" value={stats.activeLearners} sub="Tài khoản thật trong users, không còn hồ sơ mẫu" icon={Users} tone="blue" />
+        <StatCard label="Lượt luyện tập" value={trainingStats.isLoading ? '...' : trainingStats.totalAttempts} sub="Đồng bộ trực tiếp từ collection game_results như trang chủ" icon={BarChart3} tone="green" />
+        <StatCard label="Độ chính xác" value={trainingStats.isLoading ? '...' : `${trainingStats.averageAccuracy}%`} sub="Tính bằng tổng score / tổng lượt luyện tập từ database" icon={Gauge} tone="green" />
+        <StatCard label="Lượt vượt chuẩn" value={trainingStats.isLoading ? '...' : trainingStats.protectedUsers} sub="Số lượt có score từ 9 trở lên, cùng logic với trang chủ" icon={CheckCircle} tone="green" />
         <StatCard label="Hồ sơ trợ giúp" value={stats.openCases} sub="Hồ sơ mới hoặc đang xem xét" icon={HelpCircle} tone="amber" />
         <StatCard label="Tín hiệu rủi ro cao" value={stats.highRisk} sub="Tình huống cần ưu tiên kiểm tra" icon={Flame} tone="red" />
         <StatCard label="Hàng đợi nội dung" value={stats.reviewQueue} sub="Challenge hoặc lesson đang ở bản nháp" icon={BookOpen} tone="blue" />
@@ -1022,12 +1090,122 @@ const Admin: React.FC = () => {
         </div>
       </form>
 
+      <section className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
+        <div className="mb-5 flex flex-col justify-between gap-3 lg:flex-row lg:items-center">
+          <div>
+            <h3 className="font-black text-white">Profile người dùng</h3>
+            <p className="mt-1 text-xs text-gray-500">Chọn một dòng trong bảng để xem hồ sơ, DPF coin, case liên quan và nhật ký thao tác.</p>
+          </div>
+          {selectedUser && (
+            <div className="flex flex-wrap gap-2">
+              <button onClick={() => changeUserStatus(selectedUser, selectedUser.status === 'flagged' ? 'active' : 'flagged')} className="inline-flex items-center gap-2 rounded-lg border border-amber-500/30 px-3 py-2 text-xs font-bold text-amber-200 hover:bg-amber-500/10">
+                <ShieldAlert size={14} /> {selectedUser.status === 'flagged' ? 'Bỏ theo dõi' : 'Theo dõi'}
+              </button>
+              <button onClick={() => changeUserStatus(selectedUser, selectedUser.status === 'banned' ? 'active' : 'banned')} className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 px-3 py-2 text-xs font-bold text-red-300 hover:bg-red-500/10">
+                <Ban size={14} /> {selectedUser.status === 'banned' ? 'Mở khóa' : 'Khóa tài khoản'}
+              </button>
+              <button
+                onClick={() => {
+                  setDpfForm((current) => ({ ...current, target: selectedUser.email || selectedUser.uid || selectedUser.id, amount: current.amount || '1000' }));
+                  setActiveTab('dpf');
+                }}
+                className="inline-flex items-center gap-2 rounded-lg border border-amber-400/30 px-3 py-2 text-xs font-bold text-amber-200 hover:bg-amber-400/10"
+              >
+                <Coins size={14} /> Cấp DPF
+              </button>
+            </div>
+          )}
+        </div>
+
+        {!selectedUser ? (
+          <div className="rounded-lg border border-white/10 bg-black/25 p-5 text-sm text-gray-500">
+            Chưa có user thật trong Firestore. Hãy tạo hồ sơ hoặc để người dùng đăng nhập để dashboard đồng bộ.
+          </div>
+        ) : (
+          <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
+            <div className="rounded-lg border border-white/10 bg-black/25 p-4">
+              <div className="mb-4 flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="truncate text-xl font-black text-white">{selectedUser.displayName || 'Chưa đặt tên'}</p>
+                  <p className="truncate text-sm text-gray-400">{selectedUser.email || selectedUser.uid || selectedUser.id}</p>
+                </div>
+                <Pill className={statusClass(selectedUser.status)}>{userStatusLabels[selectedUser.status || 'active']}</Pill>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="rounded border border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-gray-500">Vai trò</p>
+                  <p className="mt-1 font-bold text-white">{roleLabels[selectedUser.role || 'user']}</p>
+                </div>
+                <div className="rounded border border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-gray-500">DPF webBalance</p>
+                  <p className="mt-1 font-bold text-amber-200">{(selectedUser.webBalance || 0).toLocaleString('vi-VN')}</p>
+                </div>
+                <div className="rounded border border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-gray-500">Challenge</p>
+                  <p className="mt-1 font-bold text-white">{selectedUser.totalChallenges || 0}</p>
+                </div>
+                <div className="rounded border border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-gray-500">Độ đúng</p>
+                  <p className="mt-1 font-bold text-white">{selectedUser.accuracy || 0}%</p>
+                </div>
+                <div className="rounded border border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-gray-500">Tạo hồ sơ</p>
+                  <p className="mt-1 text-xs text-gray-300">{formatDate(selectedUser.createdAt)}</p>
+                </div>
+                <div className="rounded border border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-gray-500">Hoạt động cuối</p>
+                  <p className="mt-1 text-xs text-gray-300">{formatDate(selectedUser.lastActiveAt)}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-3 md:grid-cols-3">
+              <div className="rounded-lg border border-white/10 bg-black/25 p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-gray-500">Case liên quan</p>
+                <p className="mt-2 text-2xl font-black text-white">{selectedUserCases.length}</p>
+                <div className="mt-3 space-y-2">
+                  {selectedUserCases.slice(0, 3).map((item) => (
+                    <button key={item.id} onClick={() => setActiveTab('cases')} className="block w-full truncate rounded border border-white/5 px-2 py-2 text-left text-xs text-gray-300 hover:border-primary">
+                      {item.title || item.description || item.id}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-lg border border-white/10 bg-black/25 p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-gray-500">Nhật ký</p>
+                <p className="mt-2 text-2xl font-black text-white">{selectedUserActivity.length}</p>
+                <div className="mt-3 space-y-2">
+                  {selectedUserActivity.slice(0, 3).map((item) => (
+                    <button key={item.id} onClick={() => setActiveTab('activity')} className="block w-full truncate rounded border border-white/5 px-2 py-2 text-left font-mono text-xs text-gray-300 hover:border-primary">
+                      {item.action || item.id}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-lg border border-white/10 bg-black/25 p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-gray-500">DPF ledger</p>
+                <p className="mt-2 text-2xl font-black text-white">{selectedUserLedger.length}</p>
+                <div className="mt-3 space-y-2">
+                  {selectedUserLedger.slice(0, 3).map((entry) => (
+                    <button key={entry.id} onClick={() => setActiveTab('dpf')} className="block w-full truncate rounded border border-white/5 px-2 py-2 text-left text-xs text-amber-200 hover:border-amber-400">
+                      +{(entry.amount || 0).toLocaleString('vi-VN')} DPF
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+
       <section className="overflow-x-auto rounded-lg border border-white/10 bg-[#07111f]/90">
         <div className="grid min-w-[1050px] grid-cols-[1.4fr_0.7fr_0.8fr_0.6fr_0.6fr_0.6fr_0.8fr_1.1fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-500">
           <span>Người dùng</span><span>Vai trò</span><span>Trạng thái</span><span>Challenge</span><span>Độ đúng</span><span>Điểm</span><span>Lần cuối</span><span>Điều khiển</span>
         </div>
         <div className="divide-y divide-white/5">
-          {filteredUsers.map((user) => (
+          {filteredUsers.length === 0 ? (
+            <div className="px-4 py-6 text-sm text-gray-500">Không có user thật phù hợp bộ lọc hiện tại.</div>
+          ) : filteredUsers.map((user) => (
             <div key={user.id} className="grid min-w-[1050px] grid-cols-[1.4fr_0.7fr_0.8fr_0.6fr_0.6fr_0.6fr_0.8fr_1.1fr] gap-3 px-4 py-4 text-sm">
               <div className="min-w-0">
                 <p className="truncate font-bold text-white">{user.displayName || 'Chưa đặt tên'}</p>
@@ -1040,6 +1218,9 @@ const Admin: React.FC = () => {
               <span className="text-gray-300">{user.score || 0}</span>
               <span className="text-xs text-gray-500">{formatDate(user.lastActiveAt)}</span>
               <div className="flex flex-wrap gap-2">
+                <button onClick={() => setSelectedUserId(user.uid || user.id)} className="rounded border border-primary/30 px-2 py-1 text-xs font-bold text-blue-200 hover:bg-primary/10">
+                  Profile
+                </button>
                 <select value={user.role || 'user'} onChange={(event) => changeUserRole(user, event.target.value as Role)} className="rounded border border-white/10 bg-black px-2 py-1 text-xs text-white">
                   <option value="user">Người học</option>
                   <option value="editor">Biên tập</option>
@@ -1142,6 +1323,45 @@ const Admin: React.FC = () => {
         </form>
 
         <section className="overflow-x-auto rounded-lg border border-white/10 bg-[#07111f]/90">
+          <div className="grid min-w-[1020px] grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr_1fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-500">
+            <span>Người dùng</span>
+            <span>Web balance</span>
+            <span>Đã kiếm</span>
+            <span>Admin bonus</span>
+            <span>Đã dùng</span>
+            <span>Điều khiển</span>
+          </div>
+          <div className="divide-y divide-white/5">
+            {dashboardUsers.length === 0 ? (
+              <div className="px-4 py-6 text-sm text-gray-500">
+                Chưa có user thật trong collection users. Khi người dùng đăng nhập hoặc bạn tạo hồ sơ ở tab User, số dư DPF sẽ hiện tại đây.
+              </div>
+            ) : (
+              dashboardUsers.map((user) => (
+                <div key={user.id} className="grid min-w-[1020px] grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr_1fr] gap-3 px-4 py-4 text-sm">
+                  <div className="min-w-0">
+                    <p className="truncate font-bold text-white">{user.displayName || user.email || user.uid || user.id}</p>
+                    <p className="truncate text-xs text-gray-500">{user.email || user.uid || user.id}</p>
+                  </div>
+                  <span className="font-black text-amber-200">{(user.webBalance || 0).toLocaleString('vi-VN')}</span>
+                  <span className="text-gray-300">{(user.earnedBalance || 0).toLocaleString('vi-VN')}</span>
+                  <span className="text-gray-300">{(user.bonusBalance || 0).toLocaleString('vi-VN')}</span>
+                  <span className="text-gray-300">{(user.spentBalance || 0).toLocaleString('vi-VN')}</span>
+                  <div className="flex flex-wrap gap-2">
+                    <button onClick={() => { setSelectedUserId(user.uid || user.id); setActiveTab('users'); }} className="rounded border border-primary/30 px-2 py-1 text-xs font-bold text-blue-200 hover:bg-primary/10">
+                      Mở profile
+                    </button>
+                    <button onClick={() => setDpfForm((current) => ({ ...current, target: user.email || user.uid || user.id }))} className="rounded border border-amber-400/30 px-2 py-1 text-xs font-bold text-amber-200 hover:bg-amber-400/10">
+                      Chọn cấp coin
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </section>
+
+        <section className="overflow-x-auto rounded-lg border border-white/10 bg-[#07111f]/90">
           <div className="grid min-w-[980px] grid-cols-[0.9fr_0.7fr_0.8fr_0.9fr_1.2fr_0.9fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-500">
             <span>Thời gian</span>
             <span>Loại</span>
@@ -1178,7 +1398,11 @@ const Admin: React.FC = () => {
 
   const renderCases = () => (
     <div className="grid gap-4">
-      {filteredCases.map((item) => {
+      {filteredCases.length === 0 ? (
+        <section className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5 text-sm text-gray-500">
+          Không có hồ sơ trợ giúp thật phù hợp bộ lọc hiện tại.
+        </section>
+      ) : filteredCases.map((item) => {
         const draft = caseDrafts[item.id] || {
           status: (item.status || 'new') as CaseStatus,
           severity: (item.severity || 'medium') as Severity,
@@ -1402,24 +1626,6 @@ const Admin: React.FC = () => {
     </div>
   );
 
-  const renderPolicy = () => (
-    <div className="grid gap-4 lg:grid-cols-2">
-      {[
-        ['Bảo mật và xử lý dữ liệu', 'Thu thập đúng mục đích, ưu tiên dữ liệu tổng hợp/ẩn danh và không bán dữ liệu cá nhân.'],
-        ['Phân quyền RBAC', 'User, editor và admin được tách quyền theo nguyên tắc least privilege để giảm rủi ro lạm quyền.'],
-        ['Xử lý hồ sơ trợ giúp', 'Deepfense hỗ trợ giáo dục và nhận diện rủi ro, không thay thế kết luận pháp lý.'],
-        ['Nhật ký hoạt động', 'Ghi lại đăng nhập, đổi role, khóa/mở user, tạo/sửa challenge, xử lý case và xóa dữ liệu.'],
-        ['Sự kiện bảo mật', 'Tách login_failed, permission_denied, suspicious submission và role_changed vào security_events.'],
-        ['Lưu trữ dữ liệu', 'Activity log 90-180 ngày; security events 180 ngày; help center 180-365 ngày tùy mức độ.'],
-      ].map(([title, body]) => (
-        <section key={title} className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
-          <h3 className="font-black text-white">{title}</h3>
-          <p className="mt-3 text-sm leading-relaxed text-gray-400">{body}</p>
-        </section>
-      ))}
-    </div>
-  );
-
   const renderDataModel = () => (
     <div className="grid gap-4 lg:grid-cols-2">
       {[
@@ -1456,8 +1662,6 @@ const Admin: React.FC = () => {
         return renderActivity();
       case 'security':
         return renderSecurity();
-      case 'policy':
-        return renderPolicy();
       case 'data':
         return renderDataModel();
       default:
@@ -1480,9 +1684,6 @@ const Admin: React.FC = () => {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <a href="/policy" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-3 text-xs font-bold uppercase tracking-wide text-gray-300 hover:border-primary hover:text-white">
-              <ExternalLink size={16} /> Xem chính sách
-            </a>
             <button onClick={exportDashboardJson} className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-3 text-xs font-bold uppercase tracking-wide text-gray-300 hover:border-primary hover:text-white">
               <Download size={16} /> Xuất JSON
             </button>
@@ -1538,7 +1739,7 @@ const Admin: React.FC = () => {
                 </button>
               </div>
 
-              {activeTab !== 'overview' && activeTab !== 'policy' && activeTab !== 'data' && (
+              {activeTab !== 'overview' && activeTab !== 'data' && (
                 <div className="flex flex-col gap-2 sm:flex-row">
                   <label className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/30 px-3 py-2">
                     <Search size={16} className="text-gray-500" />
