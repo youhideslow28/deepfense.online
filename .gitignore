@@ -79,3 +79,5 @@ ehthumbs_vista.db
 secrets/
 credentials/
 *.secret
+
+.vercel
