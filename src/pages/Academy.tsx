@@ -178,7 +178,6 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
             return (
             <article key={course.title} className={`relative rounded-2xl border p-5 md:p-6 overflow-hidden shadow-[0_18px_55px_rgba(0,0,0,0.24)] backdrop-blur-xl ${course.available ? 'border-blue-400/35 bg-[#08213a]/88' : 'border-white/12 bg-[#07111f]/78'}`}>
               <div className="flex items-center justify-between gap-3 mb-5">
-                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-gray-500">{course.level}</div>
                 <div className={`rounded-full px-3 py-1 text-[9px] font-mono font-black uppercase tracking-widest ${course.available ? 'bg-success/10 text-success' : 'bg-white/5 text-gray-500'}`}>
                   {course.status}
                 </div>

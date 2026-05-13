@@ -11,13 +11,12 @@ import { useNavigate } from 'react-router-dom';
 import { NEWS_DATA, FUN_FACTS, TRANSLATIONS } from '@/data';
 import {
   BookOpen, Trophy, Swords, AlertTriangle, Lightbulb,
-  PhoneCall, Zap, ShieldCheck, ExternalLink,
+  PhoneCall, ShieldCheck, ExternalLink,
   GraduationCap, Award,
 } from 'lucide-react';
 import AnalyticsChart from '@/features/dashboard/AnalyticsChart';
 import { db } from '@/config/firebase';
 import { collection, getCountFromServer, query, where } from 'firebase/firestore';
-import DeepfakeRunner from '@/features/deepfake/DeepfakeRunner';
 import AnimatedCounter from '@/components/ui/AnimatedCounter';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import MagneticWrapper from '@/components/ui/MagneticWrapper';
@@ -36,7 +35,6 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
   const [protectedUsers, setProtectedUsers] = useState(0);
   const [totalAttempts, setTotalAttempts]   = useState(0);
   const [factIndex, setFactIndex]           = useState(0);
-  const [showMiniGame, setShowMiniGame]     = useState(false);
   const [displayedNews, setDisplayedNews]   = useState<NewsItem[]>([]);
   const [flippingIndex, setFlippingIndex]   = useState<number | null>(null);
   const [liveNews, setLiveNews]             = useState<NewsItem[]>(NEWS_DATA[lang]);
@@ -95,10 +93,6 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     return () => { ok=false; clearInterval(news); clearInterval(fact); };
   }, [liveNews, facts.length]);
 
-  useEffect(() => {
-    if (season !== 'SUMMER') setShowMiniGame(false);
-  }, [season]);
-
   const heroRef    = useScrollReveal({ selector: '[data-reveal]', preset: 'fade-up',   stagger: 0.12 });
   const featRef    = useScrollReveal({ selector: '[data-reveal]', preset: 'scale-in',  stagger: 0.1 });
   const newsRef    = useScrollReveal({ selector: '[data-reveal]', preset: 'fade-up',   stagger: 0.08 });
@@ -115,8 +109,8 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     };
     const tick = () => {
       cX += (mX-cX)*0.06; cY += (mY-cY)*0.06;
-      if (titleRef.current) titleRef.current.style.transform = `translate(${cX*-16}px,${cY*-10}px)`;
-      if (chartRef.current) chartRef.current.style.transform = `translate(${cX*12}px,${cY*8}px)`;
+      if (titleRef.current) titleRef.current.style.transform = `translate(${cX*-8}px,${cY*-5}px)`;
+      if (chartRef.current) chartRef.current.style.transform = `translate(${cX*8}px,${cY*5}px)`;
       raf = requestAnimationFrame(tick);
     };
     window.addEventListener('mousemove', onMove, { passive: true });
@@ -130,7 +124,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     <div className="animate-in fade-in duration-500">
 
       {/* ═══ HERO ═══ */}
-      <div ref={heroRef as React.RefObject<HTMLDivElement>} className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 items-center min-h-[520px]">
+      <div ref={heroRef as React.RefObject<HTMLDivElement>} className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-16 items-center min-h-[440px] lg:min-h-[470px]">
 
         {/* Ambient glow */}
         <div className="absolute inset-x-0 top-0 h-[360px] pointer-events-none overflow-hidden opacity-70">
@@ -152,13 +146,13 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             </div>
 
             {/* H1 */}
-            <div data-reveal className="overflow-hidden mb-2">
+            <div data-reveal className="overflow-visible mb-3 py-3">
               <h1
-                className="text-4xl md:text-6xl font-black text-white leading-tight uppercase"
-                style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif", animation:'clipReveal 0.9s cubic-bezier(0.16,1,0.3,1) both', animationDelay:'0.2s' }}
+                className="mx-auto max-w-[760px] text-[2.35rem] sm:text-[2.85rem] md:text-[3.35rem] lg:mx-0 lg:text-[3.65rem] xl:text-[3.9rem] font-black text-white leading-[1.22] uppercase [text-wrap:balance]"
+                style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif", animation:'fadeSlideUp 0.75s cubic-bezier(0.16,1,0.3,1) both', animationDelay:'0.2s' }}
               >
                 {lang === 'vi' ? 'HUẤN LUYỆN' : 'TRAIN YOUR'}<br />
-                <span className="text-shimmer">{lang === 'vi' ? 'NHẬN DIỆN DEEPFAKE' : 'DEEPFAKE EYE'}</span>
+                <span className="inline-block pb-1 text-shimmer">{lang === 'vi' ? 'NHẬN DIỆN DEEPFAKE' : 'DEEPFAKE EYE'}</span>
               </h1>
             </div>
 
@@ -205,88 +199,54 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
         {/* Right: chart with HUD */}
         <div ref={chartRef} style={{ willChange:'transform' }} className="lg:col-span-5">
-          <div data-reveal className="relative h-[300px] md:h-[380px] rounded-2xl overflow-hidden border border-blue-500/10 bg-black/30 shadow-[0_18px_70px_rgba(0,0,0,0.32)]">
+          <div data-reveal className="relative h-[280px] md:h-[340px] rounded-2xl overflow-hidden border border-blue-500/10 bg-black/30 shadow-[0_18px_70px_rgba(0,0,0,0.32)]">
             <AnalyticsChart lang={lang} />
             <ThreatPulse />
           </div>
         </div>
       </div>
 
-      {/* MiniGame */}
-      {season === 'SUMMER' && !showMiniGame && (
-        <section className="mb-16 rounded-3xl border border-amber-500/20 bg-gradient-to-r from-amber-500/10 via-black/30 to-primary/10 p-5 md:p-7 flex flex-col md:flex-row items-center justify-between gap-5">
-          <div className="flex items-center gap-4 text-center md:text-left">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/25 text-amber-300 flex items-center justify-center shrink-0">
-              <Trophy size={24} />
-            </div>
-            <div>
-              <h3 className="text-white font-black uppercase tracking-widest text-sm">
-                {lang === 'vi' ? 'Chế độ arcade mùa hè đã sẵn sàng' : 'Summer arcade mode is ready'}
-              </h3>
-              <p className="text-gray-500 text-xs mt-1 max-w-xl">
-                {lang === 'vi'
-                  ? 'Khởi động Neural Defender khi cần một phần chơi nhanh để tăng tương tác, không che mất lộ trình huấn luyện chính.'
-                  : 'Launch Neural Defender when you want a fast engagement boost without interrupting the main learning path.'}
-              </p>
-            </div>
-          </div>
-          <GlowButton color="primary" size="md" icon={<Zap size={16} />} onClick={() => setShowMiniGame(true)}>
-            {lang === 'vi' ? 'MỞ MINI GAME' : 'OPEN MINI GAME'}
-          </GlowButton>
-        </section>
-      )}
-      {season === 'SUMMER' && showMiniGame && <DeepfakeRunner lang={lang} onClose={() => setShowMiniGame(false)} />}
-
-      {/* ═══ DEEPFENSE ACADEMY INTRO ═══ */}
+      {/* DEEPFENSE ACADEMY INTRO */}
       <div ref={featRef as React.RefObject<HTMLDivElement>} className="mb-20">
-        <section data-reveal className="relative overflow-hidden rounded-2xl border border-amber-400/25 bg-[#07111f]/95 shadow-[0_24px_80px_rgba(0,0,0,0.34)]">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
-          <div className="absolute right-0 top-0 h-full w-2/3 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.13),transparent_48%)] pointer-events-none" />
-          <div className="relative z-10 p-6 md:p-9 lg:p-11">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/25 text-amber-300 px-4 py-1.5 rounded-full text-[10px] font-mono tracking-widest mb-4">
-                <Trophy size={12} /> 500 DPF coin + DEEPFENSE AWARE
+        <section data-reveal className="relative overflow-hidden rounded-2xl border border-blue-400/20 bg-[#07111f]/95 shadow-[0_24px_80px_rgba(0,0,0,0.34)]">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
+          <div className="relative z-10 p-6 md:p-10">
+            <div className="mx-auto max-w-4xl text-center">
+              <div className="mx-auto mb-5 flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-4 py-1.5 text-[10px] font-mono tracking-widest text-blue-300">
+                <GraduationCap size={12} /> DEEPFENSE ACADEMY
               </div>
-              <h2 className="text-3xl md:text-5xl font-black text-white uppercase leading-tight" style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
-                {lang === 'vi' ? 'Đừng chờ tới khi bị lừa mới học cách nhận ra deepfake.' : 'Do not wait for a scam to teach you deepfakes.'}
+              <h2 className="text-3xl md:text-5xl font-black text-white leading-tight" style={{ fontFamily:"'Outfit', 'Inter', Arial, sans-serif" }}>
+                {lang === 'vi' ? 'Học cách bình tĩnh trước một nội dung quá giống thật.' : 'Learn to stay calm when fake looks real.'}
               </h2>
-              <p className="text-gray-400 text-sm md:text-base leading-relaxed mt-4 max-w-3xl mx-auto">
+              <p className="mx-auto mt-5 max-w-2xl text-sm md:text-base leading-relaxed text-gray-400">
                 {lang === 'vi'
-                  ? 'Một cuộc gọi giả giọng người thân, một video sếp yêu cầu chuyển tiền, hay một ảnh ghép lan trên mạng đều có thể xảy ra trước khi bạn kịp nghi ngờ. DEEPFENSE ACADEMY biến 20 phút tò mò hôm nay thành phản xạ tự vệ số ngày mai.'
-                  : "A cloned family voice, a fake boss video asking for payment, or a manipulated photo can hit before suspicion kicks in. DEEPFENSE ACADEMY turns today's curiosity into tomorrow's digital defense reflex."}
+                  ? 'Một giọng nói quen thuộc, một video gấp gáp, một tin nhắn đòi chuyển tiền. Chỉ vài phút học đúng cách có thể giúp bạn dừng lại, kiểm chứng và không trở thành người tiếp tay cho nội dung giả.'
+                  : 'A familiar voice, an urgent video, a payment request. A few focused lessons can help you pause, verify, and avoid amplifying synthetic media.'}
               </p>
-              <div className="mt-7 grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl mx-auto">
+              <div className="mt-7 grid grid-cols-1 gap-3 md:grid-cols-3">
                 {[
-                  ['01', lang === 'vi' ? 'Học theo module' : 'Module learning', lang === 'vi' ? '9 module theo lộ trình nền tảng, nhận diện, phòng vệ.' : '9 modules across foundation, recognition, and response.'],
-                  ['02', lang === 'vi' ? 'Kiểm tra từng bước' : 'Guided assessments', lang === 'vi' ? 'Checkpoint, quiz module, midterm và final exam.' : 'Checkpoints, module quizzes, midterms, and final exam.'],
-                  ['03', lang === 'vi' ? 'Chứng nhận khi đạt' : 'Earn when qualified', lang === 'vi' ? 'DEEPFENSE AWARE + 500 DPF coin khi hoàn thành điều kiện.' : 'DEEPFENSE AWARE + 500 DPF coin after completion.'],
-                ].map(([num, title, text]) => (
-                  <div key={title} className="rounded-xl border border-white/10 bg-black/35 p-4">
-                    <div className="text-amber-300 text-[10px] font-mono font-black mb-2">{num}</div>
-                    <div className="text-white text-xs font-black uppercase mb-1">{title}</div>
-                    <div className="text-gray-500 text-[11px] leading-snug">{text}</div>
+                  [lang === 'vi' ? 'Dễ bắt đầu' : 'Easy start', lang === 'vi' ? 'Bài ngắn, đọc tới đâu kiểm tra tới đó.' : 'Short lessons with checks as you go.'],
+                  [lang === 'vi' ? 'Thực tế' : 'Practical', lang === 'vi' ? 'Tình huống đời thường: gia đình, công việc, mạng xã hội.' : 'Real situations: family, work, and social feeds.'],
+                  [lang === 'vi' ? 'Có chứng nhận' : 'Certified', lang === 'vi' ? 'Hoàn thành khóa học để mở certificate và reward DPF.' : 'Finish the course to unlock certificate and DPF reward.'],
+                ].map(([title, text]) => (
+                  <div key={title} className="rounded-xl border border-white/10 bg-black/35 p-4 text-left">
+                    <div className="text-white text-sm font-black mb-1">{title}</div>
+                    <div className="text-gray-500 text-xs leading-relaxed">{text}</div>
                   </div>
                 ))}
               </div>
-              <div className="mt-7 flex flex-col sm:flex-row gap-3 items-center justify-center">
+              <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <GlowButton color="primary" size="md" icon={<GraduationCap size={16} />} onClick={() => navigate('/academy/basics')}>
-                  {lang === 'vi' ? 'ĐĂNG NHẬP ĐỂ BẮT ĐẦU HỌC' : 'SIGN IN TO START LEARNING'}
+                  {lang === 'vi' ? 'BẮT ĐẦU KHÓA HỌC' : 'START THE COURSE'}
                 </GlowButton>
-                <GlowButton color="ghost" size="md" icon={<BookOpen size={16} />} onClick={() => navigate('/academy')}>
-                  {lang === 'vi' ? 'XEM LỘ TRÌNH' : 'VIEW CATALOG'}
+                <GlowButton color="ghost" size="md" icon={<Award size={16} />} onClick={() => navigate('/academy')}>
+                  {lang === 'vi' ? 'XEM ACADEMY' : 'VIEW ACADEMY'}
                 </GlowButton>
               </div>
-              <p className="mt-4 text-[11px] text-gray-500 leading-relaxed max-w-2xl mx-auto">
-                {lang === 'vi'
-                  ? 'Muốn học cần đăng nhập Google để lưu tiến độ, chấm quiz, admin kiểm soát và trả thưởng DPF coin đúng người.'
-                  : 'Learning requires Google sign-in so progress, quiz scores, admin tracking, and DPF coin rewards stay tied to the right learner.'}
-              </p>
             </div>
-
           </div>
         </section>
       </div>
-
       {/* ═══ NEWS + FACTS ═══ */}
       <div ref={newsRef as React.RefObject<HTMLDivElement>} className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
 
@@ -301,9 +261,6 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                   <RadarPing size={6} color="secondary" speed="slow" /> LIVE_THREAT_AWARENESS
                 </p>
               </div>
-            </div>
-            <div className="text-[9px] font-mono text-gray-600 hidden md:block">
-              {lang === 'vi' ? '⚠️ Tại sao bạn cần học' : '⚠️ Why you need to train'}
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2">

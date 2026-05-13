@@ -107,7 +107,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
                 <div className="hidden md:flex items-center gap-1.5 mt-1">
                   <div className="w-1 h-1 rounded-full bg-primary animate-pulse" />
                   <span className="font-mono text-[0.55rem] text-primary/40 tracking-[0.35em] uppercase font-bold">
-                    DEEPFAKE SHIELD
+                  Learn - Do - Protect
                   </span>
                 </div>
               </div>

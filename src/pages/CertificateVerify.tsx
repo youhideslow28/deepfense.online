@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Award, CheckCircle2, Copy, ExternalLink, ShieldCheck } from 'lucide-react';
 import { Language } from '@/types';
 
@@ -18,6 +18,8 @@ const CertificateVerify: React.FC<CertificateVerifyProps> = ({ lang }) => {
   const isVi = lang === 'vi';
   const params = new URLSearchParams(window.location.search);
   const id = (params.get('id') || '').trim();
+  const [manualId, setManualId] = useState(id);
+  const activeId = manualId.trim();
 
   const finalExam = useMemo(() => readJson<{
     examId?: string;
@@ -27,8 +29,8 @@ const CertificateVerify: React.FC<CertificateVerifyProps> = ({ lang }) => {
 
   const certificateName = window.localStorage.getItem('deepfense-basics-certificate-name') || '';
   const auth = useMemo(() => readJson<{ displayName?: string; email?: string }>('deepfenseAcademyAuth', {}), []);
-  const matchesLocalRecord = !!id && finalExam.examId === id && finalExam.passed;
-  const hasValidFormat = /^DPF-BASIC-\d{4}-[A-Z0-9]{8,24}$/.test(id);
+  const matchesLocalRecord = !!activeId && finalExam.examId === activeId && finalExam.passed;
+  const hasValidFormat = /^(DPF|DEEPFENSE)-BASIC-[A-Z0-9-]{8,32}$/.test(activeId);
   const verified = matchesLocalRecord || hasValidFormat;
 
   const issuedDate = finalExam.passedAt
@@ -36,7 +38,8 @@ const CertificateVerify: React.FC<CertificateVerifyProps> = ({ lang }) => {
     : isVi ? 'Được xác minh qua mã chứng chỉ' : 'Verified by certificate ID';
 
   const copyLink = async () => {
-    await navigator.clipboard?.writeText(window.location.href);
+    const url = `${window.location.origin}/academy/verify?id=${encodeURIComponent(activeId)}`;
+    await navigator.clipboard?.writeText(url);
   };
 
   return (
@@ -56,6 +59,24 @@ const CertificateVerify: React.FC<CertificateVerifyProps> = ({ lang }) => {
                 ? 'Trang này dùng để kiểm tra chứng chỉ DEEPFENSE BASIC bằng mã định danh duy nhất in trên certificate.'
                 : 'Use this page to verify a DEEPFENSE BASIC certificate using the unique ID printed on the certificate.'}
             </p>
+            <form
+              className="mt-6 flex flex-col gap-3 sm:flex-row"
+              onSubmit={(event) => {
+                event.preventDefault();
+                const next = manualId.trim();
+                if (next) window.history.replaceState(null, '', `/academy/verify?id=${encodeURIComponent(next)}`);
+              }}
+            >
+              <input
+                value={manualId}
+                onChange={(event) => setManualId(event.target.value.toUpperCase())}
+                placeholder={isVi ? 'Nhập Certificate ID' : 'Enter Certificate ID'}
+                className="min-h-12 flex-1 rounded-lg border border-white/12 bg-black/35 px-4 text-sm font-bold text-white outline-none placeholder:text-gray-600"
+              />
+              <button className="rounded-lg bg-emerald-400 px-5 py-3 text-xs font-black uppercase tracking-widest text-black">
+                Verify ID
+              </button>
+            </form>
           </div>
 
           <div className={`rounded-2xl border p-5 min-w-[220px] ${verified ? 'border-emerald-400/25 bg-emerald-400/10' : 'border-amber-400/25 bg-amber-400/10'}`}>
@@ -74,7 +95,7 @@ const CertificateVerify: React.FC<CertificateVerifyProps> = ({ lang }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
           <div className="rounded-xl border border-white/12 bg-black/35 p-4">
             <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-gray-500 mb-2">Certificate ID</div>
-            <div className="text-white font-black break-all">{id || 'N/A'}</div>
+            <div className="text-white font-black break-all">{activeId || 'N/A'}</div>
           </div>
           <div className="rounded-xl border border-white/12 bg-black/35 p-4">
             <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-gray-500 mb-2">{isVi ? 'Khóa học' : 'Course'}</div>

@@ -1,5 +1,5 @@
 /**
- * DEEPFENSE.ONLINE — Footer v3.0
+ * DEEPFENSE.ONLINE - Footer v3.0
  * Complete project footer for training, support, attribution, and trust.
  * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
@@ -16,10 +16,8 @@ import {
   Mail,
   MapPin,
   Scale,
-  Shield,
   ShieldCheck,
   Swords,
-  Trophy,
   Lock,
   FileText,
 } from 'lucide-react';
@@ -54,6 +52,29 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
     { path: '/policy#retention', label: isVi ? 'Lưu trữ dữ liệu' : 'Data Retention', icon: <FileText size={13} /> },
   ];
 
+  const renderLink = (item: typeof trainingLinks[number] | typeof supportLinks[number] | typeof legalLinks[number]) => {
+    const className = 'group flex items-center justify-between gap-3 py-1.5 text-xs text-gray-500 transition-colors hover:text-[#60A5FA]';
+    const content = (
+      <>
+        <span className="flex items-center gap-2">
+          <span className="text-gray-700 transition-colors group-hover:text-[#60A5FA]">{item.icon}</span>
+          {item.label}
+        </span>
+        {'external' in item && item.external ? (
+          <ExternalLink size={11} className="opacity-50" />
+        ) : (
+          <ChevronRight size={12} className="opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
+        )}
+      </>
+    );
+
+    if ('external' in item && item.external) {
+      return <a key={item.path} href={item.path} target="_blank" rel="noopener noreferrer" className={className}>{content}</a>;
+    }
+
+    return <Link key={item.path} to={item.path} className={className}>{content}</Link>;
+  };
+
   return (
     <footer className="relative z-10 mt-20 overflow-hidden border-t border-[#1E3A5F]/40 bg-[#020710]/95 backdrop-blur-xl">
       <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-[#1D6FE8]/50 to-transparent" />
@@ -61,49 +82,48 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
       <div className="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-[#FF2A6D]/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-14">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-4">
+        <div className="grid grid-cols-1 gap-9 lg:grid-cols-12">
+          <div className="lg:col-span-5">
             <Link to="/" className="mb-5 inline-flex items-center gap-3 group">
-              <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-[#1D6FE8]/25 bg-[#1D6FE8]/10">
-                <Shield className="text-[#60A5FA] transition-transform duration-300 group-hover:scale-110" size={23} />
+              <div className="relative h-12 w-12">
+                <div className="absolute inset-0 rounded-2xl bg-[#1D6FE8]/20 blur-md opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
+                <img src="/logo/android-chrome-192x192.png" alt="DEEPFENSE" className="relative h-full w-full rounded-2xl object-contain" />
               </div>
               <div>
                 <div className="font-black text-2xl tracking-tight text-white" style={{ fontFamily: "'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
                   DEEPFENSE
                 </div>
-                <div className="font-mono text-[9px] font-bold uppercase tracking-[0.28em] text-[#60A5FA]/45">
-                  {PROJECT_METADATA.version}
+                <div className="font-mono text-[9px] font-bold uppercase tracking-[0.24em] text-[#60A5FA]/55">
+                  Learn - Do - Protect
                 </div>
               </div>
             </Link>
 
-            <p className="max-w-md text-sm leading-relaxed text-gray-400">
+            <p className="max-w-2xl text-sm leading-relaxed text-gray-400 md:text-justify">
               {isVi
-                ? 'Nền tảng huấn luyện nhận diện deepfake và tự vệ trước lừa đảo AI, xây dựng cho mục tiêu giáo dục cộng đồng thông qua gamification, mô phỏng và phản hồi tức thì.'
-                : 'A gamified deepfake awareness and AI scam defense training platform built for community education through challenges, simulations, and instant feedback.'}
+                ? 'DEEPFENSE là nền tảng huấn luyện nhận diện deepfake và tự vệ trước lừa đảo AI, tập trung vào học qua thử thách, mô phỏng tình huống, phản hồi tức thì và chứng nhận năng lực số cho cộng đồng học sinh, sinh viên.'
+                : 'DEEPFENSE is a gamified deepfake awareness and AI scam defense training platform focused on challenges, scenario simulation, instant feedback, and digital-safety certification for learners.'}
             </p>
 
-            <div className="mt-6 grid grid-cols-2 gap-3 max-w-md">
-              <div className="rounded-2xl border border-white/5 bg-white/[0.025] p-4">
-                <div className="flex items-center gap-2 text-[#60A5FA]">
-                  <Trophy size={15} />
-                  <span className="font-mono text-[10px] font-black uppercase tracking-widest">
-                    {isVi ? 'Huấn luyện' : 'Training'}
-                  </span>
+            <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.025] p-5">
+              <div className="grid gap-4 md:grid-cols-3">
+                <div>
+                  <div className="font-mono text-[10px] font-black uppercase tracking-widest text-[#60A5FA]">Core</div>
+                  <div className="mt-1 text-xs leading-relaxed text-gray-500">
+                    {isVi ? 'Gamification và huấn luyện người dùng.' : 'Gamification and user training.'}
+                  </div>
                 </div>
-                <div className="mt-2 text-xs leading-relaxed text-gray-500">
-                  {isVi ? 'Thử thách, điểm số, phản hồi.' : 'Challenges, scores, feedback.'}
+                <div>
+                  <div className="font-mono text-[10px] font-black uppercase tracking-widest text-[#60A5FA]">Academy</div>
+                  <div className="mt-1 text-xs leading-relaxed text-gray-500">
+                    {isVi ? 'Lộ trình học, quiz, chứng nhận.' : 'Learning path, quizzes, certificates.'}
+                  </div>
                 </div>
-              </div>
-              <div className="rounded-2xl border border-white/5 bg-white/[0.025] p-4">
-                <div className="flex items-center gap-2 text-green-400">
-                  <ShieldCheck size={15} />
-                  <span className="font-mono text-[10px] font-black uppercase tracking-widest">
-                    {isVi ? 'Phòng vệ' : 'Defense'}
-                  </span>
-                </div>
-                <div className="mt-2 text-xs leading-relaxed text-gray-500">
-                  {isVi ? 'Xác minh, báo cáo, ứng cứu.' : 'Verify, report, respond.'}
+                <div>
+                  <div className="font-mono text-[10px] font-black uppercase tracking-widest text-[#60A5FA]">Trust</div>
+                  <div className="mt-1 text-xs leading-relaxed text-gray-500">
+                    {isVi ? 'Minh bạch dữ liệu và hỗ trợ ứng cứu.' : 'Transparent data and response support.'}
+                  </div>
                 </div>
               </div>
             </div>
@@ -113,83 +133,44 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
             <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
               {isVi ? 'Luyện tập' : 'Train'}
             </h3>
-            <div className="flex flex-col gap-3">
-              {trainingLinks.map((item) => (
-                <Link key={item.path} to={item.path} className="group flex items-center justify-between rounded-xl border border-transparent py-1.5 text-xs text-gray-500 transition-colors hover:text-[#60A5FA]">
-                  <span className="flex items-center gap-2">
-                    <span className="text-gray-700 transition-colors group-hover:text-[#60A5FA]">{item.icon}</span>
-                    {item.label}
-                  </span>
-                  <ChevronRight size={12} className="opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
-                </Link>
-              ))}
-            </div>
+            <div className="flex flex-col gap-3">{trainingLinks.map(renderLink)}</div>
           </div>
 
           <div className="lg:col-span-2">
             <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
               {isVi ? 'Hỗ trợ' : 'Support'}
             </h3>
-            <div className="flex flex-col gap-3">
-              {supportLinks.map((item) => (
-                item.external ? (
-                  <a key={item.path} href={item.path} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between py-1.5 text-xs text-gray-500 transition-colors hover:text-[#60A5FA]">
-                    <span className="flex items-center gap-2">
-                      <span className="text-gray-700 transition-colors group-hover:text-[#60A5FA]">{item.icon}</span>
-                      {item.label}
-                    </span>
-                    <ExternalLink size={11} className="opacity-50" />
-                  </a>
-                ) : (
-                  <Link key={item.path} to={item.path} className="group flex items-center justify-between py-1.5 text-xs text-gray-500 transition-colors hover:text-[#60A5FA]">
-                    <span className="flex items-center gap-2">
-                      <span className="text-gray-700 transition-colors group-hover:text-[#60A5FA]">{item.icon}</span>
-                      {item.label}
-                    </span>
-                    <ChevronRight size={12} className="opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
-                  </Link>
-                )
-              ))}
-            </div>
+            <div className="flex flex-col gap-3">{supportLinks.map(renderLink)}</div>
           </div>
 
-          <div className="lg:col-span-2">
-            <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
-              {isVi ? 'Pháp lý & tin cậy' : 'Legal & Trust'}
-            </h3>
-            <div className="flex flex-col gap-3">
-              {legalLinks.map((item) => (
-                <Link key={item.path} to={item.path} className="group flex items-center justify-between py-1.5 text-xs text-gray-500 transition-colors hover:text-[#60A5FA]">
-                  <span className="flex items-center gap-2">
-                    <span className="text-gray-700 transition-colors group-hover:text-[#60A5FA]">{item.icon}</span>
-                    {item.label}
-                  </span>
-                  <ChevronRight size={12} className="opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3">
             <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
               {isVi ? 'Dự án' : 'Project'}
             </h3>
-            <div className="space-y-3 rounded-3xl border border-white/5 bg-black/25 p-5">
-              <div className="flex items-start gap-3 text-xs text-gray-500">
+            <div className="space-y-3 rounded-3xl border border-white/10 bg-black/25 p-5">
+              <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
                 <GraduationCap className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
                 <span>25NS - VKU, Da Nang, Viet Nam</span>
               </div>
-              <div className="flex items-start gap-3 text-xs text-gray-500">
+              <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
                 <MapPin className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
                 <span>{PROJECT_METADATA.university}</span>
               </div>
-              <a href={`mailto:${PROJECT_METADATA.email}`} className="flex items-start gap-3 text-xs text-gray-500 transition-colors hover:text-[#60A5FA]">
+              <a href={`mailto:${PROJECT_METADATA.email}`} className="flex items-start gap-3 text-xs leading-relaxed text-gray-500 transition-colors hover:text-[#60A5FA]">
                 <Mail className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
                 <span>{PROJECT_METADATA.email}</span>
               </a>
-              <div className="flex items-start gap-3 text-xs text-gray-500">
+              <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
                 <Scale className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
-                <span>{isVi ? 'Sản phẩm phục vụ học tập, nghiên cứu và nâng cao nhận thức cộng đồng.' : 'Built for learning, research, and public awareness.'}</span>
+                <span>{isVi ? 'Phục vụ học tập, nghiên cứu và nâng cao nhận thức cộng đồng.' : 'Built for learning, research, and public awareness.'}</span>
+              </div>
+              <div className="border-t border-white/10 pt-3">
+                <h4 className="mb-3 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
+                  {isVi ? 'Pháp lý & tin cậy' : 'Legal & Trust'}
+                </h4>
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1">
+                  {legalLinks.map(renderLink)}
+                </div>
               </div>
             </div>
           </div>

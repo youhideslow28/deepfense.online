@@ -197,6 +197,7 @@ const LOCATION_KEY = "deepfense-basics-last-location";
 const EVENT_KEY = "deepfense-basics-learning-events";
 const EVALUATION_KEY = "deepfense-basics-course-evaluation";
 const FINAL_EXAM_KEY = "deepfense-basics-final-exam";
+const ADMIN_RESET_KEY = "deepfense-basics-admin-reset-v2";
 
 function getAuthSession() {
   try {
@@ -296,37 +297,16 @@ function isAdminSession() {
 }
 
 function seedAdminCompletion() {
-  if (!isAdminSession()) return;
-  const progress = readProgress();
-  for (let index = 1; index <= modules.length; index += 1) {
-    progress[`module-${index}`] = true;
-  }
-  writeProgress(progress);
-  if (!hasCompletedCourseEvaluation()) {
-    localStorage.setItem(EVALUATION_KEY, JSON.stringify({
-      rating: "5",
-      pace: "right",
-      confidence: "high",
-      feedback: "Admin test completion.",
-      submittedAt: new Date().toISOString(),
-      adminSeeded: true,
-    }));
-  }
-  if (!hasPassedFinalExam()) {
-    localStorage.setItem(FINAL_EXAM_KEY, JSON.stringify({
-      score: 50,
-      total: 50,
-      percent: 100,
-      passed: true,
-      passedAt: new Date().toISOString(),
-      examId: "DEEPFENSE-BASIC-ADMIN-TEST",
-      adminSeeded: true,
-    }));
-  }
+  if (!isAdminSession() || localStorage.getItem(ADMIN_RESET_KEY)) return;
+  localStorage.removeItem(PROGRESS_KEY);
+  localStorage.removeItem(LOCATION_KEY);
+  localStorage.removeItem(EVALUATION_KEY);
+  localStorage.removeItem(FINAL_EXAM_KEY);
+  localStorage.removeItem("deepfense-basics-certificate-name");
+  localStorage.setItem(ADMIN_RESET_KEY, new Date().toISOString());
 }
 
 function highestUnlockedModuleIndex() {
-  if (isAdminSession()) return modules.length - 1;
   const progress = readProgress();
   let unlocked = 0;
   for (let index = 1; index <= modules.length; index += 1) {
@@ -637,18 +617,18 @@ function renderLearning() {
     <p class="eyebrow">${lessonItem.id} | ${currentSection().title}</p>
     <h2>${lessonItem.title}</h2>
     <div class="context-block">
-      <h3>B?i c?nh h?c t?p</h3>
+      <h3>Bối cảnh học tập</h3>
       <p>${module.scenario}</p>
-      <p>? c?p BASIC, m?c ti?u kh?ng ph?i l? k?t lu?n th?t/gi? b?ng c?m t?nh. Ng??i h?c c?n x?y d?ng th?i quen ??c ngu?n, hi?u b?i c?nh, quan s?t t?n hi?u k? thu?t v? ch?n ph?n ?ng ?t g?y h?i nh?t tr??c khi chia s? ho?c h?nh ??ng.</p>
+      <p>Ở cấp BASIC, mục tiêu không phải là kết luận thật/giả bằng cảm tính. Người học cần xây dựng thói quen đọc nguồn, hiểu bối cảnh, quan sát tín hiệu kỹ thuật và chọn phản ứng ít gây hại nhất trước khi chia sẻ hoặc hành động.</p>
     </div>
     ${lessonItem.paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join("")}
     <div class="context-block">
-      <h3>Ph?n t?ch s?u h?n</h3>
-      <p>H?y lu?n t?ch ba l?p: n?i dung ?ang n?i g?, ai ?ang ph?t t?n n?, v? ng??i xem b? th?c ??y ph?i l?m g?. Deepfake nguy hi?m nh?t khi n? k?t h?p h?nh ?nh/gi?ng n?i c? v? quen thu?c v?i ?p l?c th?i gian, c?m x?c m?nh ho?c y?u c?u nh?y c?m nh? ti?n, OTP, d? li?u c? nh?n v? quy?n truy c?p.</p>
-      <p>Khi luy?n t?p, ??ng ch? t?m m?t l?i nh? tr?n khu?n m?t hay ?m thanh. M?t d?u hi?u ??n l? c? th? ??n t? n?n video, ?nh s?ng k?m ho?c thi?t b? ghi. C?ch h?c ??ng l? gom nhi?u t?n hi?u, ki?m tra ngu?n ??c l?p, l?u b?ng ch?ng n?u c? r?i ro v? ph?n h?i theo quy tr?nh.</p>
+      <h3>Phân tích sâu hơn</h3>
+      <p>Hãy luôn tách ba lớp: nội dung đang nói gì, ai đang phát tán nó, và người xem bị thúc đẩy phải làm gì. Deepfake nguy hiểm nhất khi nó kết hợp hình ảnh/giọng nói có vẻ quen thuộc với áp lực thời gian, cảm xúc mạnh hoặc yêu cầu nhạy cảm như tiền, OTP, dữ liệu cá nhân và quyền truy cập.</p>
+      <p>Khi luyện tập, đừng chỉ tìm một lỗi nhỏ trên khuôn mặt hay âm thanh. Một dấu hiệu đơn lẻ có thể đến từ nén video, ánh sáng kém hoặc thiết bị ghi. Cách học đúng là gom nhiều tín hiệu, kiểm tra nguồn độc lập, lưu bằng chứng nếu có rủi ro và phản hồi theo quy trình.</p>
     </div>
     <div class="takeaway-box">
-      <h3>?i?m c?n nh?</h3>
+      <h3>Điểm cần nhớ</h3>
       <ul>${lessonItem.takeaways.map((item) => `<li>${item}</li>`).join("")}</ul>
     </div>
     ${renderInlineCheckpoint()}

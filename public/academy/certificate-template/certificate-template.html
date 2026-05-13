@@ -128,18 +128,6 @@
         letter-spacing: 0.16em;
       }
 
-      .credential-badge {
-        border: 1px solid rgba(17, 116, 200, 0.36);
-        border-radius: 999px;
-        padding: 10px 14px;
-        background: #edf7ff;
-        color: var(--blue);
-        font-size: 11px;
-        font-weight: 950;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-      }
-
       .main {
         display: grid;
         place-items: center;
@@ -209,22 +197,18 @@
         background: rgba(255, 255, 255, 0.72);
       }
 
-      .footer {
+      .signature-row {
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: end;
-        gap: 28px;
-      }
-
-      .signature-row {
-        display: flex;
-        align-items: end;
         gap: 34px;
+        width: 100%;
       }
 
       .signature-block {
         position: relative;
         min-width: 310px;
+        padding-top: 8px;
       }
 
       .signature {
@@ -250,10 +234,10 @@
 
       .verified-stamp {
         position: absolute;
-        left: 132px;
-        top: 0;
-        width: 102px;
-        height: 102px;
+        left: 112px;
+        top: 6px;
+        width: 116px;
+        height: 116px;
         display: grid;
         place-items: center;
         border: 3px solid var(--cyan);
@@ -278,6 +262,7 @@
         display: grid;
         justify-items: center;
         gap: 8px;
+        align-self: end;
       }
 
       .qr-wrap {
@@ -309,7 +294,7 @@
       }
 
       .verify-url {
-        max-width: 260px;
+        max-width: 180px;
         color: var(--muted);
         font-size: 10px;
         text-align: center;
@@ -385,15 +370,14 @@
       <div class="content">
         <header class="topline">
           <div class="academy-name" data-field="academyName">DEEPFENSE ACADEMY</div>
-          <div class="credential-badge" data-field="credentialName">DEEPFENSE AWARE</div>
         </header>
 
         <main class="main">
           <div>
             <p class="eyebrow">This certifies that</p>
-            <h1 data-field="certificateTitle">Certificate of Completion</h1>
             <div class="recipient" data-field="recipientName">Learner Name</div>
-            <p class="eyebrow">has successfully completed</p>
+            <p class="eyebrow">has received a</p>
+            <h1 data-field="certificateTitle">Certificate of Completion</h1>
             <div class="course" data-field="courseName">DEEPFENSE BASIC</div>
             <p class="subtitle" data-field="courseSubtitle">Foundations of Deepfake Awareness, Recognition and Prevention</p>
             <div class="meta-row">
@@ -418,7 +402,7 @@
                 <img class="qr" id="qrImage" alt="Certificate verify QR" />
                 <div class="qr-label">VERIFY</div>
               </div>
-              <div class="verify-url" data-field="verificationUrl">https://deepfense.online/academy/verify?id=DPF-BASIC-2026-0001</div>
+              <div class="verify-url">Scan to verify or enter the ID on the verify page.</div>
             </div>
           </div>
         </footer>
