@@ -194,6 +194,7 @@ const PROGRESS_KEY = "deepfense-basics-progress";
 const LOCATION_KEY = "deepfense-basics-last-location";
 const EVENT_KEY = "deepfense-basics-learning-events";
 const EVALUATION_KEY = "deepfense-basics-course-evaluation";
+const FINAL_EXAM_KEY = "deepfense-basics-final-exam";
 
 function getAuthSession() {
   try {
@@ -243,6 +244,18 @@ function readEvaluation() {
 
 function hasCompletedCourseEvaluation() {
   return !!readEvaluation()?.submittedAt;
+}
+
+function readFinalExamResult() {
+  try {
+    return JSON.parse(localStorage.getItem(FINAL_EXAM_KEY) || "null");
+  } catch {
+    return null;
+  }
+}
+
+function hasPassedFinalExam() {
+  return !!readFinalExamResult()?.passed;
 }
 
 function saveLastLocation() {
@@ -297,6 +310,17 @@ function seedAdminCompletion() {
       adminSeeded: true,
     }));
   }
+  if (!hasPassedFinalExam()) {
+    localStorage.setItem(FINAL_EXAM_KEY, JSON.stringify({
+      score: 50,
+      total: 50,
+      percent: 100,
+      passed: true,
+      passedAt: new Date().toISOString(),
+      examId: "DEEPFENSE-BASIC-ADMIN-TEST",
+      adminSeeded: true,
+    }));
+  }
 }
 
 function highestUnlockedModuleIndex() {
@@ -320,7 +344,7 @@ function isCourseComplete() {
 }
 
 function updateCertificateState() {
-  const complete = isCourseComplete() && hasCompletedCourseEvaluation();
+  const complete = isCourseComplete() && hasCompletedCourseEvaluation() && hasPassedFinalExam();
   const link = document.querySelector("#certificateLink");
   const credentialStatus = document.querySelector(".credential-card span");
   if (credentialStatus) {
@@ -401,6 +425,101 @@ function buildModule(id, part, title, summary, scenario, sectionRows, outcomes) 
       q("Sau module này, học viên nên có khả năng gì?", ["Nhận diện rủi ro và chọn phản ứng an toàn hơn", "Tạo nội dung giả", "Vượt quiz bằng mẹo", "Bỏ qua nguồn tin"], 0),
     ],
   };
+}
+
+function normalizeQuestion(question, source) {
+  return {
+    ...question,
+    source,
+  };
+}
+
+function buildFinalQuestionBank() {
+  const harvested = [];
+  modules.forEach((module) => {
+    module.quiz.forEach((question) => harvested.push(normalizeQuestion(question, `Module ${module.id}`)));
+    module.sections.forEach((section) => {
+      section.checkpoint.questions.forEach((question) => harvested.push(normalizeQuestion(question, `Module ${module.id} checkpoint`)));
+    });
+  });
+  pretestQuestions.forEach((question) => harvested.push(normalizeQuestion(question, "Pre-assessment")));
+
+  const unique = [];
+  const seen = new Set();
+  harvested.forEach((question) => {
+    const key = question.text.trim().toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    unique.push(question);
+  });
+
+  modules.forEach((module) => {
+    module.outcomes.forEach((outcome, index) => {
+      const question = normalizeQuestion(q(
+        `Theo Module ${module.id}, ket qua hoc tap nao la trong tam cua muc ${index + 1}?`,
+        [outcome, "Chia se noi dung dang nghi truoc khi kiem chung", "Ket luan deepfake chi tu mot dau hieu don le", "Bo qua nguon tin va boi canh"],
+        0
+      ), `Module ${module.id} outcome`);
+      const key = question.text.trim().toLowerCase();
+      if (!seen.has(key)) {
+        seen.add(key);
+        unique.push(question);
+      }
+    });
+
+    module.sections.forEach((section) => {
+      section.lessons.forEach((lessonItem) => {
+        const question = normalizeQuestion(q(
+          `Trong bai ${lessonItem.id} - ${lessonItem.title}, hanh dong nao phu hop nhat voi tu duy phong ve?`,
+          [lessonItem.takeaways[0] || "Dung lai va kiem chung truoc khi ket luan", "Chia se ngay neu noi dung gay soc", "Tin vao cam xuc dau tien", "Xoa dau vet ma khong luu bang chung"],
+          0
+        ), `Lesson ${lessonItem.id}`);
+        const key = question.text.trim().toLowerCase();
+        if (!seen.has(key)) {
+          seen.add(key);
+          unique.push(question);
+        }
+      });
+    });
+  });
+
+  let fillerIndex = 1;
+  while (unique.length < 150) {
+    const module = modules[(fillerIndex - 1) % modules.length];
+    const question = normalizeQuestion(q(
+      `Tinh huong tong hop ${fillerIndex}: khi gap noi dung nghi deepfake lien quan ${module.title}, lua chon nao an toan nhat?`,
+      ["Dung lai, kiem chung nguon va boi canh, luu bang chung neu co rui ro", "Chia se rong rai de hoi y kien", "Ket luan ngay dua tren cam giac", "Lam theo yeu cau gap ma khong xac minh"],
+      0
+    ), `Final bank scenario ${fillerIndex}`);
+    const key = question.text.trim().toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push(question);
+    }
+    fillerIndex += 1;
+  }
+
+  return unique.slice(0, 150);
+}
+
+function shuffleItems(items) {
+  return [...items].sort(() => Math.random() - 0.5);
+}
+
+function buildFinalExamQuestions() {
+  const bank = buildFinalQuestionBank();
+  return shuffleItems(bank).slice(0, 50);
+}
+
+function buildExamId() {
+  const session = getAuthSession();
+  const raw = `${session?.email || "learner"}-${Date.now()}`;
+  let hash = 0;
+  for (let index = 0; index < raw.length; index += 1) {
+    hash = ((hash << 5) - hash) + raw.charCodeAt(index);
+    hash |= 0;
+  }
+  return `DPF-BASIC-${new Date().getFullYear()}-${Math.abs(hash).toString(36).toUpperCase()}`;
 }
 
 function routeTo(route) {
@@ -565,10 +684,20 @@ function renderAssessments() {
     </article>
   `).join("");
   const finalButton = document.querySelector('[data-assessment="Final Exam"]');
-  if (finalButton && !hasCompletedCourseEvaluation()) {
+  if (!finalButton) return;
+  const finalCard = finalButton.closest(".assessment-card");
+  const result = readFinalExamResult();
+  if (!hasCompletedCourseEvaluation()) {
     finalButton.disabled = true;
     finalButton.textContent = "Hoan thanh danh gia de mo";
-    finalButton.closest(".assessment-card")?.classList.add("locked");
+    finalCard?.classList.add("locked");
+  } else if (result?.passed) {
+    finalButton.textContent = `Da dat ${result.percent}% - Xem lai cau truc`;
+    finalCard?.classList.add("passed");
+  } else if (result && !result.passed) {
+    finalButton.textContent = `Thi lai Final Exam (${result.percent}%)`;
+  } else {
+    finalButton.textContent = "Bat dau Final Exam";
   }
 }
 
@@ -588,11 +717,12 @@ function renderCourseEvaluation() {
   }
 
   if (hasCompletedCourseEvaluation()) {
+    const finalResult = readFinalExamResult();
     panel.innerHTML = `
       <div class="evaluation-card done">
         <p class="eyebrow">Course evaluation</p>
         <h3>Da ghi nhan danh gia khoa hoc.</h3>
-        <p>Cam on phan hoi cua ban. Final Exam da duoc mo khoa.</p>
+        <p>${finalResult?.passed ? `Final Exam da dat ${finalResult.percent}%. Certificate da san sang.` : "Cam on phan hoi cua ban. Final Exam da duoc mo khoa."}</p>
       </div>
     `;
     return;
@@ -666,6 +796,10 @@ function startQuiz(title, type, questions) {
   renderQuizQuestion();
 }
 
+function startFinalExam() {
+  startQuiz("Final Exam", "Final Exam", buildFinalExamQuestions());
+}
+
 function renderQuizQuestion() {
   const quiz = state.quiz;
   const question = quiz.questions[quiz.index];
@@ -704,7 +838,25 @@ function submitQuiz() {
     <p>${percent >= 70 ? "Bạn đã nắm được trọng tâm. Hãy tiếp tục sang phần học tiếp theo." : "Hãy đọc lại các điểm cần nhớ rồi thử lại để củng cố kiến thức."}</p>
   `;
   trackLearningEvent("quiz_submitted", { title: quiz.title, type: quiz.type, score, total: quiz.questions.length, percent });
-  if (percent >= 70 && quiz.type === "Module Quiz") {
+  if (quiz.type === "Final Exam") {
+    const result = {
+      score,
+      total: quiz.questions.length,
+      percent,
+      passed: percent >= 70,
+      examId: buildExamId(),
+      questionSources: quiz.questions.map((question) => question.source || ""),
+      submittedAt: new Date().toISOString(),
+      passedAt: percent >= 70 ? new Date().toISOString() : "",
+    };
+    localStorage.setItem(FINAL_EXAM_KEY, JSON.stringify(result));
+    document.querySelector("#quizResult").innerHTML = `
+      <strong>${result.passed ? "Dat Final Exam" : "Chua dat Final Exam"}: ${score}/${quiz.questions.length} (${percent}%)</strong>
+      <p>${result.passed ? "Ban da dat dieu kien thi tot nghiep. Certificate va reward DPF se duoc mo theo trang thai xet duyet." : "Diem dat la 70%. Hay on lai cac module con yeu va thi lai khi san sang."}</p>
+    `;
+    renderAssessments();
+    updateProgress();
+  } else if (percent >= 70 && quiz.type === "Module Quiz") {
     completeCurrentModule();
   } else {
     updateProgress();
@@ -718,8 +870,11 @@ function markProgress() {
 function updateProgress() {
   const saved = readProgress();
   const done = Object.keys(saved).filter((key) => saved[key]).length;
-  const base = state.route === "overview" ? 0 : state.route === "pretest" ? 5 : 10;
-  const percent = Math.min(100, Math.round(base + (done / modules.length) * 85));
+  const percent = Math.min(100, Math.round(
+    (done / modules.length) * 85 +
+    (hasCompletedCourseEvaluation() ? 5 : 0) +
+    (hasPassedFinalExam() ? 10 : 0)
+  ));
   document.querySelector("#courseProgressText").textContent = `${percent}%`;
   document.querySelector("#courseProgressBar").style.width = `${percent}%`;
   updateCertificateState();
@@ -782,6 +937,10 @@ function bindEvents() {
       if (assessmentButton.dataset.assessment === "Final Exam" && !hasCompletedCourseEvaluation()) {
         trackLearningEvent("locked_final_attempt", { reason: "course_evaluation_required" });
         renderAssessments();
+        return;
+      }
+      if (assessmentButton.dataset.assessment === "Final Exam") {
+        startFinalExam();
         return;
       }
       startQuiz(assessmentButton.dataset.assessment, "Assessment Preview", currentModule().quiz);

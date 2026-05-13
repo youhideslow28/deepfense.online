@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DEEPFENSE Certificate Template</title>
+    <title>DEEPFENSE Certificate</title>
     <style>
       :root {
         --bg: #07111f;
-        --paper: #f8fbff;
+        --paper: #fbfdff;
         --ink: #101828;
         --muted: #667085;
-        --line: #d0d5dd;
+        --line: #c9d4df;
         --navy: #0b1f3a;
-        --cyan: #1cc8ff;
-        --emerald: #12b886;
-        --seal-blue: #0877d9;
-        --seal-red: #d92d20;
+        --blue: #1768ac;
+        --cyan: #17b7e8;
+        --green: #19a886;
+        --gold: #c99732;
       }
 
       * {
@@ -27,59 +27,87 @@
         min-height: 100vh;
         display: grid;
         place-items: center;
-        background: var(--bg);
+        padding: 92px 20px 32px;
+        background:
+          radial-gradient(circle at top left, rgba(23, 183, 232, 0.18), transparent 32%),
+          radial-gradient(circle at bottom right, rgba(25, 168, 134, 0.16), transparent 34%),
+          var(--bg);
         color: var(--ink);
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
       .toolbar {
         position: fixed;
-        top: 16px;
-        right: 16px;
-        display: flex;
-        gap: 8px;
+        inset: 16px 16px auto 16px;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) auto auto;
+        gap: 10px;
+        align-items: center;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      .toolbar input {
+        min-height: 42px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 8px;
+        padding: 0 12px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font: inherit;
+        outline: none;
+      }
+
+      .toolbar input::placeholder {
+        color: rgba(255, 255, 255, 0.68);
       }
 
       .toolbar button {
+        min-height: 42px;
         border: 1px solid rgba(255, 255, 255, 0.24);
         border-radius: 8px;
-        padding: 10px 14px;
+        padding: 0 14px;
         background: rgba(255, 255, 255, 0.1);
         color: white;
+        font-weight: 800;
         cursor: pointer;
       }
 
+      .toolbar button.primary {
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--cyan), var(--green));
+        color: #06121f;
+      }
+
       .certificate {
-        width: min(1120px, calc(100vw - 32px));
+        width: min(1120px, calc(100vw - 40px));
         aspect-ratio: 1.414 / 1;
         position: relative;
         overflow: hidden;
-        background:
-          linear-gradient(135deg, rgba(28, 200, 255, 0.1), transparent 32%),
-          linear-gradient(315deg, rgba(18, 184, 134, 0.1), transparent 34%),
-          var(--paper);
-        padding: 56px 64px;
-        border: 1px solid rgba(28, 200, 255, 0.35);
-        box-shadow: 0 28px 80px rgba(0, 0, 0, 0.36);
+        padding: 48px;
+        background: var(--paper);
+        border: 1px solid rgba(23, 183, 232, 0.42);
+        box-shadow: 0 30px 88px rgba(0, 0, 0, 0.42);
       }
 
       .certificate::before {
         content: "";
         position: absolute;
-        inset: 24px;
-        border: 2px solid rgba(11, 31, 58, 0.88);
+        inset: 22px;
+        border: 2px solid var(--navy);
         pointer-events: none;
       }
 
       .certificate::after {
         content: "";
         position: absolute;
-        inset: 36px;
-        border: 1px solid rgba(28, 200, 255, 0.42);
-        background-image:
-          linear-gradient(rgba(11, 31, 58, 0.035) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(11, 31, 58, 0.035) 1px, transparent 1px);
-        background-size: 22px 22px;
+        inset: 34px;
+        border: 1px solid rgba(23, 183, 232, 0.55);
+        background:
+          linear-gradient(90deg, rgba(11, 31, 58, 0.035) 1px, transparent 1px),
+          linear-gradient(rgba(11, 31, 58, 0.035) 1px, transparent 1px);
+        background-size: 24px 24px;
         pointer-events: none;
       }
 
@@ -89,6 +117,7 @@
         height: 100%;
         display: grid;
         grid-template-rows: auto 1fr auto;
+        gap: 20px;
       }
 
       .topline,
@@ -104,77 +133,81 @@
         align-items: center;
         gap: 12px;
         color: var(--navy);
-        font-weight: 800;
+        font-weight: 900;
         letter-spacing: 0.08em;
-        font-size: 18px;
+        text-transform: uppercase;
       }
 
       .mark {
-        width: 42px;
-        height: 42px;
+        width: 44px;
+        height: 44px;
         display: grid;
         place-items: center;
-        border-radius: 12px;
+        border-radius: 10px;
         color: white;
-        background: linear-gradient(135deg, var(--navy), #123f6e 56%, var(--cyan));
-        font-weight: 900;
+        background: linear-gradient(135deg, var(--navy), var(--blue) 58%, var(--cyan));
+        font-size: 20px;
+        font-weight: 950;
       }
 
       .credential-badge {
-        border: 1px solid rgba(28, 200, 255, 0.65);
+        border: 1px solid rgba(23, 104, 172, 0.42);
         color: var(--navy);
         padding: 10px 14px;
         border-radius: 999px;
+        background: #edf7ff;
         font-size: 12px;
-        font-weight: 800;
+        font-weight: 900;
         letter-spacing: 0.12em;
         text-transform: uppercase;
-        background: rgba(28, 200, 255, 0.08);
       }
 
       .main {
         display: grid;
         place-items: center;
         text-align: center;
-        padding: 26px 64px 18px;
+        padding: 8px 70px 0;
       }
 
       .eyebrow {
         margin: 0 0 10px;
         color: var(--muted);
-        font-size: 16px;
+        font-size: 15px;
+        font-weight: 650;
       }
 
       h1 {
-        margin: 0 0 24px;
+        margin: 0 0 20px;
         color: var(--navy);
-        font-size: 42px;
-        line-height: 1.05;
-        font-weight: 850;
+        font-size: clamp(34px, 4vw, 48px);
+        line-height: 1;
         letter-spacing: 0;
+        font-weight: 900;
       }
 
       .recipient {
-        width: 100%;
-        margin: 8px 0 18px;
-        padding-bottom: 10px;
+        width: min(760px, 100%);
+        margin: 8px auto 18px;
+        padding: 0 12px 12px;
         border-bottom: 2px solid var(--line);
         color: #06162a;
         font-family: Georgia, "Times New Roman", serif;
-        font-size: 46px;
-        line-height: 1.1;
+        font-size: clamp(36px, 5vw, 58px);
+        line-height: 1.08;
         font-weight: 700;
+        overflow-wrap: anywhere;
       }
 
       .course {
-        margin: 6px 0 8px;
+        margin: 4px 0 8px;
         color: var(--navy);
-        font-size: 30px;
-        font-weight: 850;
+        font-size: clamp(24px, 3vw, 34px);
+        font-weight: 900;
+        letter-spacing: 0.02em;
       }
 
       .subtitle {
-        max-width: 720px;
+        max-width: 760px;
         margin: 0 auto;
         color: var(--muted);
         font-size: 16px;
@@ -184,37 +217,38 @@
       .meta-row {
         display: flex;
         justify-content: center;
-        gap: 18px;
+        gap: 10px;
         flex-wrap: wrap;
         margin-top: 22px;
         color: #344054;
-        font-size: 13px;
+        font-size: 12px;
+        font-weight: 720;
       }
 
       .meta-pill {
         border: 1px solid var(--line);
         border-radius: 999px;
-        padding: 8px 12px;
-        background: rgba(255, 255, 255, 0.62);
+        padding: 8px 11px;
+        background: rgba(255, 255, 255, 0.72);
       }
 
       .signature-block {
-        min-width: 240px;
+        min-width: 260px;
       }
 
       .signature {
-        height: 44px;
+        height: 46px;
         color: var(--navy);
         font-family: "Brush Script MT", "Segoe Script", cursive;
-        font-size: 30px;
-        line-height: 44px;
+        font-size: 31px;
+        line-height: 46px;
       }
 
       .sig-line {
         border-top: 1px solid #98a2b3;
         padding-top: 8px;
         color: var(--navy);
-        font-weight: 750;
+        font-weight: 850;
       }
 
       .sig-role {
@@ -224,26 +258,18 @@
       }
 
       .seal {
-        position: absolute;
-        right: 184px;
-        bottom: 60px;
-        width: 108px;
-        height: 108px;
-        border: 3px solid var(--seal-blue);
+        width: 112px;
+        height: 112px;
+        border: 3px solid var(--gold);
         border-radius: 999px;
         display: grid;
         place-items: center;
-        color: var(--seal-blue);
+        color: var(--gold);
+        background: rgba(255, 255, 255, 0.72);
         font-size: 11px;
-        font-weight: 900;
+        font-weight: 950;
         text-align: center;
-        transform: rotate(-9deg);
-        background: rgba(255, 255, 255, 0.55);
-      }
-
-      .seal.red {
-        border-color: var(--seal-red);
-        color: var(--seal-red);
+        transform: rotate(-8deg);
       }
 
       .seal::before {
@@ -278,6 +304,41 @@
         overflow-wrap: anywhere;
       }
 
+      .locked {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        display: none;
+        place-items: center;
+        padding: 24px;
+        background: rgba(7, 17, 31, 0.92);
+        color: white;
+        text-align: center;
+      }
+
+      .locked.visible {
+        display: grid;
+      }
+
+      .locked div {
+        max-width: 460px;
+        padding: 28px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .locked a {
+        color: #06121f;
+        background: linear-gradient(135deg, var(--cyan), var(--green));
+        border-radius: 8px;
+        padding: 11px 14px;
+        display: inline-flex;
+        margin-top: 12px;
+        font-weight: 850;
+        text-decoration: none;
+      }
+
       @page {
         size: A4 landscape;
         margin: 0;
@@ -285,11 +346,13 @@
 
       @media print {
         body {
+          padding: 0;
           background: white;
         }
 
-        .toolbar {
-          display: none;
+        .toolbar,
+        .locked {
+          display: none !important;
         }
 
         .certificate {
@@ -299,12 +362,36 @@
           border: 0;
         }
       }
+
+      @media (max-width: 720px) {
+        body {
+          padding-top: 160px;
+        }
+
+        .toolbar {
+          grid-template-columns: 1fr;
+        }
+
+        .certificate {
+          padding: 36px;
+        }
+
+        .main {
+          padding-inline: 8px;
+        }
+
+        .footer {
+          align-items: flex-end;
+        }
+      }
     </style>
   </head>
   <body>
-    <div class="toolbar">
-      <button type="button" onclick="window.print()">Export PDF</button>
-    </div>
+    <form class="toolbar" id="nameForm">
+      <input id="recipientInput" maxlength="72" placeholder="Enter the name to print on certificate" autocomplete="name" />
+      <button type="submit" class="primary">Update name</button>
+      <button type="button" onclick="window.print()">Download PDF</button>
+    </form>
 
     <article class="certificate" aria-label="Course certificate">
       <div class="content">
@@ -320,14 +407,14 @@
           <div>
             <p class="eyebrow">This certifies that</p>
             <h1 data-field="certificateTitle">Certificate of Completion</h1>
-            <div class="recipient" data-field="recipientName">NGUYEN VAN A</div>
+            <div class="recipient" data-field="recipientName">Learner Name</div>
             <p class="eyebrow">has successfully completed</p>
-            <div class="course" data-field="courseName">DEEPFENSE BASICS</div>
-            <p class="subtitle" data-field="courseSubtitle">Foundations of Deepfake Awareness, Recognition &amp; Prevention</p>
+            <div class="course" data-field="courseName">DEEPFENSE BASIC</div>
+            <p class="subtitle" data-field="courseSubtitle">Foundations of Deepfake Awareness, Recognition and Prevention</p>
             <div class="meta-row">
-              <div class="meta-pill">Issued: <span data-field="issuedDate">12 May 2026</span></div>
-              <div class="meta-pill">ID: <span data-field="certificateId">DPF-BASICS-2026-0001</span></div>
-              <div class="meta-pill">Score: <span data-field="score">92</span>%</div>
+              <div class="meta-pill">Issued: <span data-field="issuedDate">13 May 2026</span></div>
+              <div class="meta-pill">ID: <span data-field="certificateId">DPF-BASIC-2026-0001</span></div>
+              <div class="meta-pill">Final Score: <span data-field="score">70</span>%</div>
               <div class="meta-pill">Reward: <span data-field="rewardAmount">500</span> <span data-field="rewardSymbol">DPF</span></div>
             </div>
           </div>
@@ -340,50 +427,97 @@
             <div class="sig-role" data-field="issuerRole">Authorized Issuer</div>
           </div>
 
+          <div class="seal" data-field="sealText">DEEPFENSE VERIFIED</div>
+
           <div class="verify">
             <div class="qr" aria-hidden="true"></div>
             <strong>VERIFY</strong>
-            <div class="verify-url" data-field="verificationUrl">https://deepfense.online/verify/DPF-BASICS-2026-0001</div>
+            <div class="verify-url" data-field="verificationUrl">https://deepfense.online/verify/DPF-BASIC-2026-0001</div>
           </div>
         </footer>
       </div>
-      <div class="seal" data-seal data-field="sealText">DEEPFENSE VERIFIED</div>
     </article>
 
+    <div class="locked" id="lockedState">
+      <div>
+        <h2>Certificate is locked</h2>
+        <p>You need to complete DEEPFENSE BASIC, submit course evaluation, and pass the Final Exam before downloading the certificate.</p>
+        <a href="/academy/deepfense-basics-preview/index.html">Back to course</a>
+      </div>
+    </div>
+
     <script>
+      const AUTH_KEY = "deepfenseAcademyAuth";
+      const FINAL_EXAM_KEY = "deepfense-basics-final-exam";
+      const CERT_NAME_KEY = "deepfense-basics-certificate-name";
+
       const defaultCertificateData = {
         academyName: "DEEPFENSE ACADEMY",
         certificateTitle: "Certificate of Completion",
-        recipientName: "NGUYEN VAN A",
-        courseName: "DEEPFENSE BASICS",
-        courseSubtitle: "Foundations of Deepfake Awareness, Recognition & Prevention",
+        recipientName: "Learner Name",
+        courseName: "DEEPFENSE BASIC",
+        courseSubtitle: "Foundations of Deepfake Awareness, Recognition and Prevention",
         credentialName: "DEEPFENSE AWARE",
-        issuedDate: "12 May 2026",
-        certificateId: "DPF-BASICS-2026-0001",
-        verificationUrl: "https://deepfense.online/verify/DPF-BASICS-2026-0001",
+        issuedDate: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
+        certificateId: "DPF-BASIC-2026-0001",
+        verificationUrl: "https://deepfense.online/verify/DPF-BASIC-2026-0001",
         rewardAmount: 500,
         rewardSymbol: "DPF",
-        score: 92,
+        score: 70,
         issuerName: "Deepfense.online Academic Board",
         issuerRole: "Authorized Issuer",
         signatureName: "Deepfense.online",
-        sealText: "DEEPFENSE VERIFIED",
-        sealColor: "blue"
+        sealText: "DEEPFENSE VERIFIED"
       };
 
-      function renderCertificate(data) {
-        const certificate = { ...defaultCertificateData, ...data };
-        document.querySelectorAll("[data-field]").forEach((node) => {
-          const key = node.getAttribute("data-field");
-          node.textContent = certificate[key] ?? "";
-        });
-
-        const seal = document.querySelector("[data-seal]");
-        seal.classList.toggle("red", certificate.sealColor === "red");
+      function readJson(key, fallback = null) {
+        try {
+          return JSON.parse(localStorage.getItem(key) || "null") || fallback;
+        } catch {
+          return fallback;
+        }
       }
 
-      // In React/Firebase, replace this with user/course data from Firestore.
-      renderCertificate(window.CERTIFICATE_DATA || defaultCertificateData);
+      function isUnlocked() {
+        return !!readJson(FINAL_EXAM_KEY)?.passed;
+      }
+
+      function buildCertificateData() {
+        const auth = readJson(AUTH_KEY, {});
+        const exam = readJson(FINAL_EXAM_KEY, {});
+        const preferredName = localStorage.getItem(CERT_NAME_KEY) || auth.displayName || "Learner Name";
+        const certificateId = exam.examId || `DPF-BASIC-${new Date().getFullYear()}-0001`;
+        return {
+          ...defaultCertificateData,
+          recipientName: preferredName,
+          certificateId,
+          score: exam.percent || defaultCertificateData.score,
+          issuedDate: new Date(exam.passedAt || Date.now()).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
+          verificationUrl: `https://deepfense.online/verify/${certificateId}`,
+        };
+      }
+
+      function renderCertificate(data) {
+        document.querySelectorAll("[data-field]").forEach((node) => {
+          const key = node.getAttribute("data-field");
+          node.textContent = data[key] ?? "";
+        });
+        document.querySelector("#recipientInput").value = data.recipientName;
+      }
+
+      document.querySelector("#nameForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const value = document.querySelector("#recipientInput").value.trim();
+        if (!value) return;
+        localStorage.setItem(CERT_NAME_KEY, value);
+        renderCertificate(buildCertificateData());
+      });
+
+      if (!isUnlocked()) {
+        document.querySelector("#lockedState").classList.add("visible");
+      }
+
+      renderCertificate(window.CERTIFICATE_DATA || buildCertificateData());
     </script>
   </body>
 </html>

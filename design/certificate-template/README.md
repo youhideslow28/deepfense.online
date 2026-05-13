@@ -4,7 +4,7 @@ Bo file nay la mau certificate mac dinh de sau nay render tu database nguoi dung
 
 ## Files
 
-- `certificate-template.html`: template HTML/CSS/JS, co nut `Export PDF` bang print dialog.
+- `certificate-template.html`: template HTML/CSS/JS, co truong nhap ten hien thi tren certificate va nut `Download PDF` bang print dialog.
 - `certificate-data.example.json`: du lieu mau, dung lam schema mac dinh cho Firestore/API.
 
 ## Data fields
@@ -20,6 +20,7 @@ Nhung field nen luu trong database hoac tao tu backend:
 - `rewardAmount`
 - `rewardSymbol`
 - `score`
+- `preferredName`
 - `completionHours`
 - `issuerName`
 - `issuerRole`
@@ -73,4 +74,3 @@ Cach tot nhat la dung ca hai: chu ky ca nhan + con dau/verified seal cua `Deepfe
 
 Mo `certificate-template.html` tren trinh duyet, bam `Export PDF`, chon `Save as PDF`.
 Trong app thuc te co the dung browser print, `html2pdf`, hoac backend renderer nhu Playwright/Puppeteer.
-

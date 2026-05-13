@@ -1,6 +1,6 @@
-﻿/**
- * DEEPFENSE.ONLINE â€” Home Page v3.0
- * Core mission: Dáº Y Há»ŒC + GAMIFICATION â€” huáº¥n luyá»‡n nháº­n dáº¡ng deepfake
+/**
+ * DEEPFENSE.ONLINE — Home Page v3.0
+ * Core mission: DẠY HỌC + GAMIFICATION — huấn luyện nhận dạng deepfake
  * Palette: Ocean Blue primary, Red alerts, Amber achievements
  * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
@@ -66,7 +66,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     setDisplayedNews(NEWS_DATA[lang].slice(0, 6));
     (async () => {
       try {
-        const q = lang === 'vi' ? 'deepfake lá»«a Ä‘áº£o' : 'deepfake scam';
+        const q = lang === 'vi' ? 'deepfake lừa đảo' : 'deepfake scam';
         const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=${lang === 'vi' ? 'vi' : 'en-US'}&gl=${lang === 'vi' ? 'VN' : 'US'}`)}`;
         const { status, items } = await (await fetch(url)).json();
         if (ignore || status !== 'ok' || !items?.length) return;
@@ -129,7 +129,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
   return (
     <div className="animate-in fade-in duration-500">
 
-      {/* â•â•â• HERO â•â•â• */}
+      {/* ═══ HERO ═══ */}
       <div ref={heroRef as React.RefObject<HTMLDivElement>} className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 items-center min-h-[520px]">
 
         {/* Ambient glow */}
@@ -146,7 +146,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             <div data-reveal className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full text-[10px] font-mono tracking-widest mb-5">
               <Terminal size={10} />
               <TypewriterText
-                text={lang === 'vi' ? 'CHÆ¯Æ NG TRÃŒNH HUáº¤N LUYá»†N DEEPFAKE // KHá»žI Äá»˜NG...' : 'DEEPFAKE TRAINING PROGRAM // INITIALIZING...'}
+                text={lang === 'vi' ? 'CHƯƠNG TRÌNH HUẤN LUYỆN DEEPFAKE // KHỞI ĐỘNG...' : 'DEEPFAKE TRAINING PROGRAM // INITIALIZING...'}
                 speed={40} delay={400} showCursor
               />
             </div>
@@ -157,15 +157,15 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 className="text-4xl md:text-6xl font-black text-white leading-tight uppercase"
                 style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif", animation:'clipReveal 0.9s cubic-bezier(0.16,1,0.3,1) both', animationDelay:'0.2s' }}
               >
-                {lang === 'vi' ? 'HUáº¤N LUYá»†N' : 'TRAIN YOUR'}<br />
-                <span className="text-shimmer">{lang === 'vi' ? 'NHáº¬N DIá»†N DEEPFAKE' : 'DEEPFAKE EYE'}</span>
+                {lang === 'vi' ? 'HUẤN LUYỆN' : 'TRAIN YOUR'}<br />
+                <span className="text-shimmer">{lang === 'vi' ? 'NHẬN DIỆN DEEPFAKE' : 'DEEPFAKE EYE'}</span>
               </h1>
             </div>
 
             {/* Tagline */}
             <p data-reveal className="text-gray-400 text-base md:text-lg leading-relaxed mb-6 max-w-lg mx-auto lg:mx-0 lg:border-l-2 lg:border-blue-500/40 lg:pl-4" style={{ fontFamily:"'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
               {lang === 'vi'
-                ? 'Há»c cÃ¡ch nháº­n biáº¿t video, hÃ¬nh áº£nh, giá»ng nÃ³i giáº£ máº¡o AI. Trang bá»‹ ká»¹ nÄƒng báº£o vá»‡ báº£n thÃ¢n vÃ  cá»™ng Ä‘á»“ng trong ká»· nguyÃªn sá»‘.'
+                ? 'Học cách nhận biết video, hình ảnh, giọng nói giả mạo AI. Trang bị kỹ năng bảo vệ bản thân và cộng đồng trong kỷ nguyên số.'
                 : 'Learn to spot AI-generated videos, images and voices. Build the skills to protect yourself in the age of synthetic media.'}
             </p>
 
@@ -175,13 +175,13 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 {protectedUsers > 0 && (
                   <div className="stat-badge">
                     <ShieldCheck size={12} />
-                    <AnimatedCounter target={protectedUsers} duration={2.5} /> {lang === 'vi' ? 'Há»ŒC VIÃŠN VÆ¯á»¢T QUA' : 'LEARNERS PASSED'}
+                    <AnimatedCounter target={protectedUsers} duration={2.5} /> {lang === 'vi' ? 'HỌC VIÊN VƯỢT QUA' : 'LEARNERS PASSED'}
                   </div>
                 )}
                 {totalAttempts > 0 && (
                   <div className="stat-badge" style={{ borderColor:'rgba(245,158,11,0.25)', color:'#F59E0B', background:'rgba(245,158,11,0.06)' }}>
                     <Trophy size={12} />
-                    <AnimatedCounter target={totalAttempts} duration={2.5} /> {lang === 'vi' ? 'LÆ¯á»¢T LUYá»†N Táº¬P' : 'TRAINING SESSIONS'}
+                    <AnimatedCounter target={totalAttempts} duration={2.5} /> {lang === 'vi' ? 'LƯỢT LUYỆN TẬP' : 'TRAINING SESSIONS'}
                   </div>
                 )}
               </div>
@@ -191,12 +191,12 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             <div data-reveal className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
               <MagneticWrapper>
                 <GlowButton color="primary" size="lg" icon={<Swords size={16}/>} onClick={() => navigate('/challenge')}>
-                  {lang === 'vi' ? 'THá»¬ THÃCH NGAY' : 'TAKE CHALLENGE'}
+                  {lang === 'vi' ? 'THỬ THÁCH NGAY' : 'TAKE CHALLENGE'}
                 </GlowButton>
               </MagneticWrapper>
               <MagneticWrapper>
                 <GlowButton color="ghost" size="lg" icon={<BookOpen size={16}/>} onClick={() => navigate('/tools/knowledge')}>
-                  {lang === 'vi' ? 'Báº¯t Ä‘áº§u há»c' : 'Start Learning'}
+                  {lang === 'vi' ? 'Bắt đầu học' : 'Start Learning'}
                 </GlowButton>
               </MagneticWrapper>
             </div>
@@ -221,23 +221,23 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             </div>
             <div>
               <h3 className="text-white font-black uppercase tracking-widest text-sm">
-                {lang === 'vi' ? 'Cháº¿ Ä‘á»™ arcade mÃ¹a hÃ¨ Ä‘Ã£ sáºµn sÃ ng' : 'Summer arcade mode is ready'}
+                {lang === 'vi' ? 'Chế độ arcade mùa hè đã sẵn sàng' : 'Summer arcade mode is ready'}
               </h3>
               <p className="text-gray-500 text-xs mt-1 max-w-xl">
                 {lang === 'vi'
-                  ? 'Khá»Ÿi Ä‘á»™ng Neural Defender khi cáº§n má»™t pháº§n chÆ¡i nhanh Ä‘á»ƒ tÄƒng tÆ°Æ¡ng tÃ¡c, khÃ´ng che máº¥t lá»™ trÃ¬nh huáº¥n luyá»‡n chÃ­nh.'
+                  ? 'Khởi động Neural Defender khi cần một phần chơi nhanh để tăng tương tác, không che mất lộ trình huấn luyện chính.'
                   : 'Launch Neural Defender when you want a fast engagement boost without interrupting the main learning path.'}
               </p>
             </div>
           </div>
           <GlowButton color="primary" size="md" icon={<Zap size={16} />} onClick={() => setShowMiniGame(true)}>
-            {lang === 'vi' ? 'Má»ž MINI GAME' : 'OPEN MINI GAME'}
+            {lang === 'vi' ? 'MỞ MINI GAME' : 'OPEN MINI GAME'}
           </GlowButton>
         </section>
       )}
       {season === 'SUMMER' && showMiniGame && <DeepfakeRunner lang={lang} onClose={() => setShowMiniGame(false)} />}
 
-      {/* â•â•â• DEEPFENSE ACADEMY INTRO â•â•â• */}
+      {/* ═══ DEEPFENSE ACADEMY INTRO ═══ */}
       <div ref={featRef as React.RefObject<HTMLDivElement>} className="mb-20">
         <section data-reveal className="relative overflow-hidden rounded-2xl border border-amber-400/25 bg-[#07111f]/95 shadow-[0_24px_80px_rgba(0,0,0,0.34)]">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
@@ -248,12 +248,12 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 <Trophy size={12} /> 500 DPF + DEEPFENSE AWARE
               </div>
               <h2 className="text-3xl md:text-5xl font-black text-white uppercase leading-tight" style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
-                {lang === 'vi' ? 'Äá»«ng chá» tá»›i khi bá»‹ lá»«a má»›i há»c cÃ¡ch nháº­n ra deepfake.' : 'Do not wait for a scam to teach you deepfakes.'}
+                {lang === 'vi' ? 'Đừng chờ tới khi bị lừa mới học cách nhận ra deepfake.' : 'Do not wait for a scam to teach you deepfakes.'}
               </h2>
               <p className="text-gray-400 text-sm md:text-base leading-relaxed mt-4 max-w-3xl">
                 {lang === 'vi'
-                  ? 'Má»™t cuá»™c gá»i giáº£ giá»ng ngÆ°á»i thÃ¢n, má»™t video sáº¿p yÃªu cáº§u chuyá»ƒn tiá»n, hay má»™t áº£nh ghÃ©p lan trÃªn máº¡ng Ä‘á»u cÃ³ thá»ƒ xáº£y ra trÆ°á»›c khi báº¡n ká»‹p nghi ngá». DEEPFENSE ACADEMY biáº¿n 20 phÃºt tÃ² mÃ² hÃ´m nay thÃ nh pháº£n xáº¡ tá»± vá»‡ sá»‘ ngÃ y mai.'
-                  : 'A cloned family voice, a fake boss video asking for payment, or a manipulated photo can hit before suspicion kicks in. DEEPFENSE ACADEMY turns todayâ€™s curiosity into tomorrowâ€™s digital defense reflex.'}
+                  ? 'Một cuộc gọi giả giọng người thân, một video sếp yêu cầu chuyển tiền, hay một ảnh ghép lan trên mạng đều có thể xảy ra trước khi bạn kịp nghi ngờ. DEEPFENSE ACADEMY biến 20 phút tò mò hôm nay thành phản xạ tự vệ số ngày mai.'
+                  : "A cloned family voice, a fake boss video asking for payment, or a manipulated photo can hit before suspicion kicks in. DEEPFENSE ACADEMY turns today's curiosity into tomorrow's digital defense reflex."}
               </p>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl">
                 {[
@@ -270,15 +270,15 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
               </div>
               <div className="mt-6 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
                 <GlowButton color="primary" size="md" icon={<GraduationCap size={16} />} onClick={() => navigate('/academy/basics')}>
-                  {lang === 'vi' ? 'ÄÄ‚NG NHáº¬P Äá»‚ Báº®T Äáº¦U Há»ŒC' : 'SIGN IN TO START LEARNING'}
+                  {lang === 'vi' ? 'ĐĂNG NHẬP ĐỂ BẮT ĐẦU HỌC' : 'SIGN IN TO START LEARNING'}
                 </GlowButton>
                 <GlowButton color="ghost" size="md" icon={<BookOpen size={16} />} onClick={() => navigate('/academy')}>
-                  {lang === 'vi' ? 'XEM Lá»˜ TRÃŒNH' : 'VIEW CATALOG'}
+                  {lang === 'vi' ? 'XEM LỘ TRÌNH' : 'VIEW CATALOG'}
                 </GlowButton>
               </div>
               <p className="mt-3 text-[11px] text-gray-500 leading-relaxed max-w-2xl">
                 {lang === 'vi'
-                  ? 'Muá»‘n há»c cáº§n Ä‘Äƒng nháº­p Google Ä‘á»ƒ lÆ°u tiáº¿n Ä‘á»™, cháº¥m quiz, admin kiá»ƒm soÃ¡t vÃ  tráº£ thÆ°á»Ÿng DPF Ä‘Ãºng ngÆ°á»i.'
+                  ? 'Muốn học cần đăng nhập Google để lưu tiến độ, chấm quiz, admin kiểm soát và trả thưởng DPF đúng người.'
                   : 'Learning requires Google sign-in so progress, quiz scores, admin tracking, and DPF rewards stay tied to the right learner.'}
               </p>
             </div>
@@ -287,7 +287,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         </section>
       </div>
 
-      {/* â•â•â• NEWS + FACTS â•â•â• */}
+      {/* ═══ NEWS + FACTS ═══ */}
       <div ref={newsRef as React.RefObject<HTMLDivElement>} className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
 
         {/* News feed */}
@@ -303,7 +303,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
               </div>
             </div>
             <div className="text-[9px] font-mono text-gray-600 hidden md:block">
-              {lang === 'vi' ? 'âš ï¸ Táº¡i sao báº¡n cáº§n há»c' : 'âš ï¸ Why you need to train'}
+              {lang === 'vi' ? '⚠️ Tại sao bạn cần học' : '⚠️ Why you need to train'}
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2">

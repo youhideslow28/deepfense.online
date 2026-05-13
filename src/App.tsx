@@ -109,6 +109,15 @@ const AppContent: React.FC = () => {
         submittedAt: new Date().toISOString(),
         adminSeeded: true,
       }));
+      window.localStorage.setItem('deepfense-basics-final-exam', JSON.stringify({
+        score: 50,
+        total: 50,
+        percent: 100,
+        passed: true,
+        passedAt: new Date().toISOString(),
+        examId: 'DEEPFENSE-BASIC-ADMIN-TEST',
+        adminSeeded: true,
+      }));
     }
   }, [user]);
 
@@ -145,6 +154,12 @@ const AppContent: React.FC = () => {
         progressPercent: isAdmin ? 100 : 0,
         completedModules: isAdmin ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : [],
         courseEvaluationSubmitted: isAdmin,
+        finalExam: isAdmin ? {
+          score: 50,
+          total: 50,
+          percent: 100,
+          passed: true,
+        } : null,
         certificateUnlocked: isAdmin,
         certificateId: isAdmin ? 'DEEPFENSE-AWARE-ADMIN-TEST' : '',
         completedAt: isAdmin ? serverTimestamp() : null,
