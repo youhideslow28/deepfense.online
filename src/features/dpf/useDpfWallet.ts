@@ -31,13 +31,13 @@ export const useDpfWallet = () => {
       setLoading(false);
     }, (err) => {
       console.error('DPF wallet listener failed:', err);
-      setError('Unable to load DPF wallet.');
+      setError('Unable to load DPF coin wallet.');
       setLoading(false);
     });
 
     const unsubscribeLedger = listenDpfLedger(user, setLedger, (err) => {
       console.error('DPF ledger listener failed:', err);
-      setError('Unable to load DPF history.');
+      setError('Unable to load DPF coin history.');
     });
 
     return () => {

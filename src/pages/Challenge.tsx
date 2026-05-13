@@ -220,7 +220,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
             setRewardResult({
               ok: false,
               code: 'not_eligible',
-              message: lang === 'vi' ? 'Can dat toi thieu 70 diem de nhan DPF.' : 'Score at least 70 to earn DPF.',
+              message: lang === 'vi' ? 'Can dat toi thieu 70 diem de nhan DPF coin.' : 'Score at least 70 to earn DPF coin.',
             });
           }
     } else {

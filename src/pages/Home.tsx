@@ -245,7 +245,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
           <div className="relative z-10 p-6 md:p-9 lg:p-11">
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/25 text-amber-300 px-4 py-1.5 rounded-full text-[10px] font-mono tracking-widest mb-4">
-                <Trophy size={12} /> 500 DPF + DEEPFENSE AWARE
+                <Trophy size={12} /> 500 DPF coin + DEEPFENSE AWARE
               </div>
               <h2 className="text-3xl md:text-5xl font-black text-white uppercase leading-tight" style={{ fontFamily:"'Outfit', 'Inter', Arial, 'Helvetica Neue', sans-serif" }}>
                 {lang === 'vi' ? 'Đừng chờ tới khi bị lừa mới học cách nhận ra deepfake.' : 'Do not wait for a scam to teach you deepfakes.'}
@@ -259,7 +259,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 {[
                   ['01', lang === 'vi' ? 'Học theo module' : 'Module learning', lang === 'vi' ? '9 module theo lộ trình nền tảng, nhận diện, phòng vệ.' : '9 modules across foundation, recognition, and response.'],
                   ['02', lang === 'vi' ? 'Kiểm tra từng bước' : 'Guided assessments', lang === 'vi' ? 'Checkpoint, quiz module, midterm và final exam.' : 'Checkpoints, module quizzes, midterms, and final exam.'],
-                  ['03', lang === 'vi' ? 'Chứng nhận khi đạt' : 'Earn when qualified', lang === 'vi' ? 'DEEPFENSE AWARE + 500 DPF khi hoàn thành điều kiện.' : 'DEEPFENSE AWARE + 500 DPF after completion.'],
+                  ['03', lang === 'vi' ? 'Chứng nhận khi đạt' : 'Earn when qualified', lang === 'vi' ? 'DEEPFENSE AWARE + 500 DPF coin khi hoàn thành điều kiện.' : 'DEEPFENSE AWARE + 500 DPF coin after completion.'],
                 ].map(([num, title, text]) => (
                   <div key={title} className="rounded-xl border border-white/10 bg-black/35 p-4">
                     <div className="text-amber-300 text-[10px] font-mono font-black mb-2">{num}</div>
@@ -278,8 +278,8 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
               </div>
               <p className="mt-4 text-[11px] text-gray-500 leading-relaxed max-w-2xl mx-auto">
                 {lang === 'vi'
-                  ? 'Muốn học cần đăng nhập Google để lưu tiến độ, chấm quiz, admin kiểm soát và trả thưởng DPF đúng người.'
-                  : 'Learning requires Google sign-in so progress, quiz scores, admin tracking, and DPF rewards stay tied to the right learner.'}
+                  ? 'Muốn học cần đăng nhập Google để lưu tiến độ, chấm quiz, admin kiểm soát và trả thưởng DPF coin đúng người.'
+                  : 'Learning requires Google sign-in so progress, quiz scores, admin tracking, and DPF coin rewards stay tied to the right learner.'}
               </p>
             </div>
 

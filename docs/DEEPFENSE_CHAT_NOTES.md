@@ -17,8 +17,8 @@ Y tuong tong: bien DEEPFENSE thanh nen tang dao tao va chung nhan, tuong tu tinh
 ### Certification program du kien
 
 - Level 1: `DEEPFENSE AWARE` / basics, 8-10 gio, tap trung visual artifact awareness, pass 70% quiz + 70% capstone, certificate 2 nam.
-- Level 2: `DEEPFENSE FORENSIC ANALYST`, 10-12 gio, yeu cau Level 1, metadata, evidence chain, attribution, incident response, pass 75%, certificate 2 nam.
-- Level 3: `DEEPFENSE SECURITY EXPERT`, 12-15 gio, yeu cau Level 2, detection tech, organizational defense, legal/ethics, research trends, pass 80% + advanced challenges, certificate 3 nam.
+- Level 2: `DEEPFENSE ADVANCE`, 10-12 gio, yeu cau Level 1, case study nang cao, quy trinh xac minh, incident response, pass 75%, certificate 2 nam.
+- Level 3: `DEEPFENSE EXPERT`, 12-15 gio, yeu cau Level 2, detection technology, organizational defense, legal/ethics, research trends, pass 80% + advanced challenges, certificate 3 nam.
 
 ### Implementation strategy
 

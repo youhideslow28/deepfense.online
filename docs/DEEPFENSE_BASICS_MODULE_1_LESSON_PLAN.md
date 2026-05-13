@@ -277,8 +277,8 @@ Khóa này không tập trung vào:
 
 Các khóa nâng cao sau này có thể gồm:
 
-- `DEEPFENSE FORENSIC ANALYST`: metadata, evidence chain, attribution, incident response.
-- `DEEPFENSE SECURITY EXPERT`: detection technology, organizational defense, legal/ethics, research trends.
+- `DEEPFENSE ADVANCE`: case study nang cao, quy trinh xac minh, evidence handling, incident response.
+- `DEEPFENSE EXPERT`: detection technology, organizational defense, legal/ethics, research trends.
 
 #### Học liệu đề xuất
 
@@ -743,4 +743,3 @@ Các collection/document có thể cần:
 - `checkpoints/1-1`, `checkpoints/1-2`, `checkpoints/1-3`
 - `quizzes/module-1-final`
 - `attempts/{userId}_{quizId}`
-

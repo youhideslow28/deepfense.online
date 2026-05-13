@@ -43,15 +43,15 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
   const supportLinks = [
     { path: '/tools/crisis', label: isVi ? 'Trung tâm ứng cứu' : 'Crisis Hub', icon: <AlertTriangle size={13} /> },
     { path: '/contact', label: isVi ? 'Liên hệ nhóm dự án' : 'Contact Project Team', icon: <Mail size={13} /> },
-    { path: 'https://amoy.polygonscan.com/address/0xFB5605c397257267C6E90C6224D5F4826A4A742D#code', label: isVi ? 'DPF Contract verified' : 'Verified DPF Contract', icon: <ShieldCheck size={13} />, external: true },
+    { path: 'https://amoy.polygonscan.com/address/0xFB5605c397257267C6E90C6224D5F4826A4A742D#code', label: isVi ? 'DPF coin contract verified' : 'Verified DPF coin contract', icon: <ShieldCheck size={13} />, external: true },
     { path: 'https://deepfense.online', label: 'deepfense.online', icon: <ExternalLink size={13} />, external: true },
   ];
 
   const legalLinks = [
-    { path: '/privacy', label: isVi ? 'Chinh sach bao mat' : 'Privacy Policy', icon: <Lock size={13} /> },
-    { path: '/terms', label: isVi ? 'Dieu khoan su dung' : 'Terms of Use', icon: <Scale size={13} /> },
-    { path: '/policy#help-center', label: isVi ? 'Chinh sach Help Center' : 'Help Center Policy', icon: <ShieldCheck size={13} /> },
-    { path: '/policy#retention', label: isVi ? 'Luu tru du lieu' : 'Data Retention', icon: <FileText size={13} /> },
+    { path: '/privacy', label: isVi ? 'Chính sách bảo mật' : 'Privacy Policy', icon: <Lock size={13} /> },
+    { path: '/terms', label: isVi ? 'Điều khoản sử dụng' : 'Terms of Use', icon: <Scale size={13} /> },
+    { path: '/policy#help-center', label: isVi ? 'Chính sách Help Center' : 'Help Center Policy', icon: <ShieldCheck size={13} /> },
+    { path: '/policy#retention', label: isVi ? 'Lưu trữ dữ liệu' : 'Data Retention', icon: <FileText size={13} /> },
   ];
 
   return (
@@ -155,7 +155,7 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
 
           <div className="lg:col-span-2">
             <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
-              {isVi ? 'Phap ly & tin cay' : 'Legal & Trust'}
+              {isVi ? 'Pháp lý & tin cậy' : 'Legal & Trust'}
             </h3>
             <div className="flex flex-col gap-3">
               {legalLinks.map((item) => (

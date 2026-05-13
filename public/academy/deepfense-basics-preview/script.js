@@ -1,7 +1,7 @@
 const course = {
   title: "DEEPFENSE BASICS",
   credential: "DEEPFENSE AWARE",
-  reward: "500 DPF",
+  reward: "500 DPF coin",
   parts: [
     {
       id: "foundation",
@@ -63,7 +63,7 @@ const modules = [
             "Voice Deepfake giả lập hoặc tổng hợp giọng nói. Full-body hoặc Avatar Deepfake mô phỏng cử chỉ, dáng đi hoặc nhân vật ảo.",
             "AI-generated Video có thể tạo cảnh hoặc sự kiện chưa từng xảy ra từ mô tả hoặc dữ liệu đầu vào.",
           ], ["Mỗi dạng có rủi ro và cách nhận diện khác nhau.", "Gọi đúng dạng deepfake giúp phân tích chính xác hơn."]),
-          lesson("1.1.5", "Phạm vi khóa Basics", [
+          lesson("1.1.5", "Phạm vi khóa BASIC", [
             "DEEPFENSE BASICS tập trung vào nhận thức, nhận diện cơ bản, phòng ngừa và ứng phó ban đầu.",
             "Khóa học không biến học viên thành chuyên gia pháp chứng hoặc kỹ sư AI ngay lập tức.",
             "Mục tiêu là giúp học viên hiểu, kiểm chứng và phản ứng có trách nhiệm trước nội dung đáng ngờ.",
@@ -187,6 +187,8 @@ let state = {
   sectionIndex: 0,
   lessonIndex: 0,
   quiz: null,
+  inlineAnswers: {},
+  inlineSubmitted: false,
 };
 
 const AUTH_KEY = "deepfenseAcademyAuth";
@@ -346,11 +348,9 @@ function isCourseComplete() {
 function updateCertificateState() {
   const complete = isCourseComplete() && hasCompletedCourseEvaluation() && hasPassedFinalExam();
   const link = document.querySelector("#certificateLink");
-  const credentialStatus = document.querySelector("#certificateStatus");
-  if (credentialStatus) {
-    credentialStatus.textContent = complete ? "Certificate unlocked" : "Certificate locked";
-  }
+  const certificateFinal = document.querySelector("#certificateFinal");
   if (link) link.hidden = !complete;
+  if (certificateFinal) certificateFinal.hidden = !complete;
 }
 
 function restoreLastLocation() {
@@ -557,6 +557,50 @@ function currentLesson() {
   return currentSection().lessons[state.lessonIndex];
 }
 
+function resetInlineCheckpoint() {
+  state.inlineAnswers = {};
+  state.inlineSubmitted = false;
+}
+
+function isLastLessonInSection() {
+  return state.lessonIndex === currentSection().lessons.length - 1;
+}
+
+function renderInlineCheckpoint() {
+  if (!isLastLessonInSection()) return "";
+  const checkpointData = currentSection().checkpoint;
+  return `
+    <section class="inline-quiz" aria-label="Checkpoint ${checkpointData.label}">
+      <p class="eyebrow">Checkpoint ${checkpointData.label}</p>
+      <h3>Kiểm tra nhanh trước khi sang phần tiếp theo</h3>
+      <p>Chọn đáp án tốt nhất cho từng câu. Phần này giúp bạn tự khóa lại ý chính ngay tại cuối mục học, không cần mở cửa sổ riêng.</p>
+      ${checkpointData.questions.map((question, questionIndex) => `
+        <div class="inline-question">
+          <strong>${questionIndex + 1}. ${question.text}</strong>
+          <div class="inline-options">
+            ${question.options.map((option, optionIndex) => `
+              <label>
+                <input type="radio" name="checkpoint-${questionIndex}" value="${optionIndex}" data-inline-answer="${questionIndex}" ${state.inlineAnswers[questionIndex] === optionIndex ? "checked" : ""} />
+                <span>${option}</span>
+              </label>
+            `).join("")}
+          </div>
+        </div>
+      `).join("")}
+      <button class="primary-btn" type="button" data-submit-inline-checkpoint="${checkpointData.label}">Nộp checkpoint</button>
+      <div class="inline-result" id="inlineCheckpointResult">${state.inlineSubmitted ? renderInlineCheckpointResult() : ""}</div>
+    </section>
+  `;
+}
+
+function renderInlineCheckpointResult() {
+  const questions = currentSection().checkpoint.questions;
+  const score = questions.reduce((total, question, index) => total + (state.inlineAnswers[index] === question.answer ? 1 : 0), 0);
+  return score === questions.length
+    ? `Đạt ${score}/${questions.length}. Bạn đã nắm phần này.`
+    : `${score}/${questions.length}. Hãy đọc lại phần điểm cần nhớ rồi thử lại.`;
+}
+
 function renderOverview() {
   const grid = document.querySelector("#overviewGrid");
   if (!grid) return;
@@ -575,9 +619,6 @@ function renderModuleStrip() {
 function renderLearning() {
   const module = currentModule();
   renderModuleStrip();
-  document.querySelector("#moduleMeta").textContent = `Module ${module.id} | ${module.level} | ${module.duration}`;
-  document.querySelector("#moduleTitle").textContent = module.title;
-  document.querySelector("#moduleScenario").textContent = module.scenario;
 
   document.querySelector("#sectionTabs").innerHTML = module.sections.map((section, index) => `
     <button class="section-tab ${index === state.sectionIndex ? "active" : ""}" data-section-index="${index}">
@@ -595,21 +636,24 @@ function renderLearning() {
   document.querySelector("#lessonCard").innerHTML = `
     <p class="eyebrow">${lessonItem.id} | ${currentSection().title}</p>
     <h2>${lessonItem.title}</h2>
-    ${lessonItem.paragraphs.map((text) => `<p>${text}</p>`).join("")}
+    <div class="context-block">
+      <h3>B?i c?nh h?c t?p</h3>
+      <p>${module.scenario}</p>
+      <p>? c?p BASIC, m?c ti?u kh?ng ph?i l? k?t lu?n th?t/gi? b?ng c?m t?nh. Ng??i h?c c?n x?y d?ng th?i quen ??c ngu?n, hi?u b?i c?nh, quan s?t t?n hi?u k? thu?t v? ch?n ph?n ?ng ?t g?y h?i nh?t tr??c khi chia s? ho?c h?nh ??ng.</p>
+    </div>
+    ${lessonItem.paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join("")}
+    <div class="context-block">
+      <h3>Ph?n t?ch s?u h?n</h3>
+      <p>H?y lu?n t?ch ba l?p: n?i dung ?ang n?i g?, ai ?ang ph?t t?n n?, v? ng??i xem b? th?c ??y ph?i l?m g?. Deepfake nguy hi?m nh?t khi n? k?t h?p h?nh ?nh/gi?ng n?i c? v? quen thu?c v?i ?p l?c th?i gian, c?m x?c m?nh ho?c y?u c?u nh?y c?m nh? ti?n, OTP, d? li?u c? nh?n v? quy?n truy c?p.</p>
+      <p>Khi luy?n t?p, ??ng ch? t?m m?t l?i nh? tr?n khu?n m?t hay ?m thanh. M?t d?u hi?u ??n l? c? th? ??n t? n?n video, ?nh s?ng k?m ho?c thi?t b? ghi. C?ch h?c ??ng l? gom nhi?u t?n hi?u, ki?m tra ngu?n ??c l?p, l?u b?ng ch?ng n?u c? r?i ro v? ph?n h?i theo quy tr?nh.</p>
+    </div>
     <div class="takeaway-box">
-      <h3>Điểm cần nhớ</h3>
+      <h3>?i?m c?n nh?</h3>
       <ul>${lessonItem.takeaways.map((item) => `<li>${item}</li>`).join("")}</ul>
     </div>
-    <div class="checkpoint-box">
-      <div>
-        <p class="eyebrow">Checkpoint ${currentSection().checkpoint.label}</p>
-        <strong>3 câu kiểm tra nhanh sau mục này</strong>
-      </div>
-      <button class="ghost-btn" data-start-checkpoint="${state.sectionIndex}">Làm checkpoint</button>
-    </div>
+    ${renderInlineCheckpoint()}
   `;
 
-  document.querySelector("#moduleOutcomes").innerHTML = module.outcomes.map((item) => `<li>${item}</li>`).join("");
   updateReaderButtons();
   saveLastLocation();
 }
@@ -643,6 +687,7 @@ function moveLesson(direction) {
       state.lessonIndex = currentSection().lessons.length - 1;
     }
   }
+  resetInlineCheckpoint();
   renderLearning();
   routeTo("learn");
 }
@@ -827,7 +872,7 @@ function submitQuiz() {
     localStorage.setItem(FINAL_EXAM_KEY, JSON.stringify(result));
     document.querySelector("#quizResult").innerHTML = `
       <strong>${result.passed ? "Dat Final Exam" : "Chua dat Final Exam"}: ${score}/${quiz.questions.length} (${percent}%)</strong>
-      <p>${result.passed ? "Ban da dat dieu kien thi tot nghiep. Certificate va reward DPF se duoc mo theo trang thai xet duyet." : "Diem dat la 70%. Hay on lai cac module con yeu va thi lai khi san sang."}</p>
+      <p>${result.passed ? "Ban da dat dieu kien thi tot nghiep. Certificate va reward DPF coin se duoc mo theo trang thai xet duyet." : "Diem dat la 70%. Hay on lai cac module con yeu va thi lai khi san sang."}</p>
     `;
     renderAssessments();
     updateProgress();
@@ -871,6 +916,7 @@ function bindEvents() {
       state.moduleIndex = nextIndex;
       state.sectionIndex = 0;
       state.lessonIndex = 0;
+      resetInlineCheckpoint();
       renderLearning();
       routeTo("learn");
     }
@@ -885,6 +931,7 @@ function bindEvents() {
       state.moduleIndex = nextIndex;
       state.sectionIndex = 0;
       state.lessonIndex = 0;
+      resetInlineCheckpoint();
       renderLearning();
       routeTo("learn");
     }
@@ -893,18 +940,28 @@ function bindEvents() {
     if (sectionButton) {
       state.sectionIndex = Number(sectionButton.dataset.sectionIndex);
       state.lessonIndex = 0;
+      resetInlineCheckpoint();
       renderLearning();
     }
 
     const lessonButton = event.target.closest("[data-lesson-index]");
     if (lessonButton) {
       state.lessonIndex = Number(lessonButton.dataset.lessonIndex);
+      resetInlineCheckpoint();
       renderLearning();
     }
 
-    const checkpointButton = event.target.closest("[data-start-checkpoint]");
-    if (checkpointButton) {
-      startQuiz(`Checkpoint ${currentSection().checkpoint.label}`, "Checkpoint", currentSection().checkpoint.questions);
+    const inlineAnswer = event.target.closest("[data-inline-answer]");
+    if (inlineAnswer) {
+      state.inlineAnswers[Number(inlineAnswer.dataset.inlineAnswer)] = Number(inlineAnswer.value);
+      state.inlineSubmitted = false;
+    }
+
+    const inlineSubmit = event.target.closest("[data-submit-inline-checkpoint]");
+    if (inlineSubmit) {
+      state.inlineSubmitted = true;
+      const result = document.querySelector("#inlineCheckpointResult");
+      if (result) result.textContent = renderInlineCheckpointResult();
     }
 
     const assessmentButton = event.target.closest("[data-assessment]");
@@ -946,11 +1003,29 @@ function bindEvents() {
     updateProgress();
   });
 
+  document.addEventListener("change", (event) => {
+    const inlineAnswer = event.target.closest?.("[data-inline-answer]");
+    if (!inlineAnswer) return;
+    state.inlineAnswers[Number(inlineAnswer.dataset.inlineAnswer)] = Number(inlineAnswer.value);
+    state.inlineSubmitted = false;
+    const result = document.querySelector("#inlineCheckpointResult");
+    if (result) result.textContent = "";
+  });
+
   document.querySelector("#continueLearning").addEventListener("click", () => routeTo("learn"));
   document.querySelector("#backToAcademy").addEventListener("click", () => { window.location.href = "/academy"; });
+  document.querySelector("#sidebarToggle").addEventListener("click", () => {
+    document.querySelector(".course-shell").classList.add("sidebar-collapsed");
+    document.querySelector("#sidebarToggle").setAttribute("aria-expanded", "false");
+    document.querySelector("#sidebarOpen").hidden = false;
+  });
+  document.querySelector("#sidebarOpen").addEventListener("click", () => {
+    document.querySelector(".course-shell").classList.remove("sidebar-collapsed");
+    document.querySelector("#sidebarToggle").setAttribute("aria-expanded", "true");
+    document.querySelector("#sidebarOpen").hidden = true;
+  });
   document.querySelector("#prevLesson").addEventListener("click", () => moveLesson(-1));
   document.querySelector("#nextLesson").addEventListener("click", () => moveLesson(1));
-  document.querySelector("#startModuleQuiz").addEventListener("click", () => startQuiz(`Quiz Module ${currentModule().id}`, "Module Quiz", currentModule().quiz));
   document.querySelector("#closeQuiz").addEventListener("click", closeQuiz);
   document.querySelector("#quizModal").addEventListener("click", (event) => { if (event.target.id === "quizModal") closeQuiz(); });
   document.querySelector("#prevQuestion").addEventListener("click", () => {

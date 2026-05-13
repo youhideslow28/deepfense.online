@@ -3,24 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DEEPFENSE Certificate</title>
+    <title>DEEPFENSE Academy Certificate</title>
     <style>
       :root {
         --bg: #07111f;
         --paper: #fbfdff;
-        --ink: #101828;
+        --ink: #0d1b2f;
         --muted: #667085;
-        --line: #c9d4df;
-        --navy: #0b1f3a;
-        --blue: #1768ac;
-        --cyan: #17b7e8;
-        --green: #19a886;
-        --verified: #16a34a;
+        --line: #cdd7e2;
+        --navy: #071a33;
+        --blue: #1174c8;
+        --cyan: #0ea5e9;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
@@ -28,56 +24,55 @@
         display: grid;
         place-items: center;
         padding: 92px 20px 32px;
-        background:
-          radial-gradient(circle at top left, rgba(23, 183, 232, 0.18), transparent 32%),
-          radial-gradient(circle at bottom right, rgba(25, 168, 134, 0.16), transparent 34%),
-          var(--bg);
         color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(14, 165, 233, 0.2), transparent 34%),
+          radial-gradient(circle at bottom right, rgba(17, 116, 200, 0.16), transparent 32%),
+          var(--bg);
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
       .toolbar {
         position: fixed;
-        inset: 16px 16px auto 16px;
+        inset: 16px 16px auto;
         z-index: 10;
         display: grid;
         grid-template-columns: minmax(220px, 1fr) auto auto;
         gap: 10px;
-        align-items: center;
         max-width: 1120px;
         margin: 0 auto;
       }
 
-      .toolbar input {
+      .toolbar input,
+      .toolbar button {
         min-height: 42px;
-        border: 1px solid rgba(255, 255, 255, 0.22);
         border-radius: 8px;
-        padding: 0 12px;
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
         font: inherit;
+      }
+
+      .toolbar input {
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        padding: 0 12px;
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
         outline: none;
       }
 
-      .toolbar input::placeholder {
-        color: rgba(255, 255, 255, 0.68);
-      }
+      .toolbar input::placeholder { color: rgba(255, 255, 255, 0.68); }
 
       .toolbar button {
-        min-height: 42px;
         border: 1px solid rgba(255, 255, 255, 0.24);
-        border-radius: 8px;
         padding: 0 14px;
-        background: rgba(255, 255, 255, 0.1);
         color: white;
-        font-weight: 800;
+        background: rgba(255, 255, 255, 0.1);
+        font-weight: 850;
         cursor: pointer;
       }
 
       .toolbar button.primary {
         border-color: transparent;
-        background: linear-gradient(135deg, var(--cyan), var(--green));
         color: #06121f;
+        background: linear-gradient(135deg, #38bdf8, #22d3ee);
       }
 
       .certificate {
@@ -86,8 +81,11 @@
         position: relative;
         overflow: hidden;
         padding: 48px;
-        background: var(--paper);
-        border: 1px solid rgba(23, 183, 232, 0.42);
+        background:
+          linear-gradient(135deg, rgba(17, 116, 200, 0.045), transparent 34%),
+          linear-gradient(315deg, rgba(14, 165, 233, 0.07), transparent 30%),
+          var(--paper);
+        border: 1px solid rgba(14, 165, 233, 0.42);
         box-shadow: 0 30px 88px rgba(0, 0, 0, 0.42);
       }
 
@@ -103,11 +101,7 @@
         content: "";
         position: absolute;
         inset: 34px;
-        border: 1px solid rgba(23, 183, 232, 0.55);
-        background:
-          linear-gradient(90deg, rgba(11, 31, 58, 0.035) 1px, transparent 1px),
-          linear-gradient(rgba(11, 31, 58, 0.035) 1px, transparent 1px);
-        background-size: 24px 24px;
+        border: 1px solid rgba(14, 165, 233, 0.52);
         pointer-events: none;
       }
 
@@ -117,48 +111,32 @@
         height: 100%;
         display: grid;
         grid-template-rows: auto 1fr auto;
-        gap: 20px;
+        gap: 22px;
       }
 
-      .topline,
-      .footer {
+      .topline {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 24px;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
         color: var(--navy);
-        font-weight: 900;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
       }
 
-      .mark {
-        width: 44px;
-        height: 44px;
-        display: grid;
-        place-items: center;
-        border-radius: 10px;
-        color: white;
-        background: linear-gradient(135deg, var(--navy), var(--blue) 58%, var(--cyan));
-        font-size: 17px;
+      .academy-name {
+        font-size: 18px;
         font-weight: 950;
+        letter-spacing: 0.16em;
       }
 
       .credential-badge {
-        border: 1px solid rgba(23, 104, 172, 0.42);
-        color: var(--navy);
-        padding: 10px 14px;
+        border: 1px solid rgba(17, 116, 200, 0.36);
         border-radius: 999px;
+        padding: 10px 14px;
         background: #edf7ff;
-        font-size: 12px;
-        font-weight: 900;
-        letter-spacing: 0.12em;
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 950;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
       }
 
@@ -166,33 +144,32 @@
         display: grid;
         place-items: center;
         text-align: center;
-        padding: 8px 70px 0;
+        padding: 8px 74px 0;
       }
 
       .eyebrow {
         margin: 0 0 10px;
         color: var(--muted);
-        font-size: 15px;
-        font-weight: 650;
+        font-size: 14px;
+        font-weight: 700;
       }
 
       h1 {
-        margin: 0 0 20px;
+        margin: 0 0 18px;
         color: var(--navy);
-        font-size: clamp(34px, 4vw, 48px);
+        font-size: clamp(36px, 4.2vw, 52px);
         line-height: 1;
-        letter-spacing: 0;
-        font-weight: 900;
+        font-weight: 950;
       }
 
       .recipient {
         width: min(760px, 100%);
-        margin: 8px auto 18px;
+        margin: 6px auto 18px;
         padding: 0 12px 12px;
         border-bottom: 2px solid var(--line);
         color: #06162a;
         font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(36px, 5vw, 58px);
+        font-size: clamp(38px, 5vw, 60px);
         line-height: 1.08;
         font-weight: 700;
         overflow-wrap: anywhere;
@@ -202,16 +179,16 @@
         margin: 4px 0 8px;
         color: var(--navy);
         font-size: clamp(24px, 3vw, 34px);
-        font-weight: 900;
+        font-weight: 950;
         letter-spacing: 0.02em;
       }
 
       .subtitle {
-        max-width: 760px;
+        max-width: 720px;
         margin: 0 auto;
         color: var(--muted);
-        font-size: 16px;
-        line-height: 1.5;
+        font-size: 15px;
+        line-height: 1.55;
       }
 
       .meta-row {
@@ -222,7 +199,7 @@
         margin-top: 22px;
         color: #344054;
         font-size: 12px;
-        font-weight: 720;
+        font-weight: 760;
       }
 
       .meta-pill {
@@ -232,24 +209,37 @@
         background: rgba(255, 255, 255, 0.72);
       }
 
+      .footer {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 28px;
+      }
+
+      .signature-row {
+        display: flex;
+        align-items: end;
+        gap: 34px;
+      }
+
       .signature-block {
         position: relative;
-        min-width: 260px;
+        min-width: 310px;
       }
 
       .signature {
-        height: 46px;
+        height: 48px;
         color: var(--navy);
         font-family: "Brush Script MT", "Segoe Script", cursive;
-        font-size: 31px;
-        line-height: 46px;
+        font-size: 33px;
+        line-height: 48px;
       }
 
       .sig-line {
         border-top: 1px solid #98a2b3;
         padding-top: 8px;
         color: var(--navy);
-        font-weight: 850;
+        font-weight: 900;
       }
 
       .sig-role {
@@ -260,49 +250,69 @@
 
       .verified-stamp {
         position: absolute;
-        left: 142px;
-        top: 8px;
-        width: 92px;
-        height: 92px;
+        left: 132px;
+        top: 0;
+        width: 102px;
+        height: 102px;
         display: grid;
         place-items: center;
-        border: 3px solid var(--verified);
+        border: 3px solid var(--cyan);
         border-radius: 999px;
-        color: var(--verified);
-        background: rgba(255, 255, 255, 0.7);
-        font-size: 11px;
+        color: #0284c7;
+        background: rgba(255, 255, 255, 0.74);
+        font-size: 12px;
         font-weight: 950;
         text-align: center;
-        transform: rotate(-11deg);
+        transform: rotate(-10deg);
       }
 
       .verified-stamp::before {
         content: "";
         position: absolute;
-        inset: 7px;
+        inset: 8px;
         border: 1px dashed currentColor;
         border-radius: 999px;
       }
 
       .verify {
         display: grid;
+        justify-items: center;
         gap: 8px;
-        justify-items: end;
-        color: var(--muted);
-        font-size: 11px;
+      }
+
+      .qr-wrap {
+        position: relative;
+        width: 96px;
+        height: 96px;
+        padding: 5px;
+        border: 1px solid #98a2b3;
+        background: white;
       }
 
       .qr {
-        width: 78px;
-        height: 78px;
-        padding: 4px;
-        background: white;
-        border: 1px solid #98a2b3;
+        width: 100%;
+        height: 100%;
         object-fit: contain;
       }
 
+      .qr-label {
+        position: absolute;
+        inset: 50% auto auto 50%;
+        transform: translate(-50%, -50%);
+        padding: 2px 5px;
+        border-radius: 999px;
+        color: #0369a1;
+        background: rgba(255, 255, 255, 0.86);
+        font-size: 8px;
+        font-weight: 950;
+        letter-spacing: 0.08em;
+      }
+
       .verify-url {
-        max-width: 240px;
+        max-width: 260px;
+        color: var(--muted);
+        font-size: 10px;
+        text-align: center;
         overflow-wrap: anywhere;
       }
 
@@ -313,30 +323,28 @@
         display: none;
         place-items: center;
         padding: 24px;
-        background: rgba(7, 17, 31, 0.92);
         color: white;
         text-align: center;
+        background: rgba(7, 17, 31, 0.92);
       }
 
-      .locked.visible {
-        display: grid;
-      }
+      .locked.visible { display: grid; }
 
       .locked div {
         max-width: 460px;
         padding: 28px;
-        border-radius: 10px;
         border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 10px;
         background: rgba(255, 255, 255, 0.08);
       }
 
       .locked a {
-        color: #06121f;
-        background: linear-gradient(135deg, var(--cyan), var(--green));
-        border-radius: 8px;
-        padding: 11px 14px;
         display: inline-flex;
         margin-top: 12px;
+        border-radius: 8px;
+        padding: 11px 14px;
+        color: #06121f;
+        background: linear-gradient(135deg, #38bdf8, #22d3ee);
         font-weight: 850;
         text-decoration: none;
       }
@@ -347,44 +355,22 @@
       }
 
       @media print {
-        body {
-          padding: 0;
-          background: white;
-        }
-
-        .toolbar,
-        .locked {
-          display: none !important;
-        }
-
+        body { padding: 0; background: white; }
+        .toolbar, .locked { display: none !important; }
         .certificate {
           width: 297mm;
           height: 210mm;
-          box-shadow: none;
           border: 0;
+          box-shadow: none;
         }
       }
 
-      @media (max-width: 720px) {
-        body {
-          padding-top: 160px;
-        }
-
-        .toolbar {
-          grid-template-columns: 1fr;
-        }
-
-        .certificate {
-          padding: 36px;
-        }
-
-        .main {
-          padding-inline: 8px;
-        }
-
-        .footer {
-          align-items: flex-end;
-        }
+      @media (max-width: 760px) {
+        body { padding-top: 160px; }
+        .toolbar { grid-template-columns: 1fr; }
+        .certificate { padding: 34px; }
+        .main { padding-inline: 10px; }
+        .footer, .signature-row { grid-template-columns: 1fr; display: grid; }
       }
     </style>
   </head>
@@ -398,10 +384,7 @@
     <article class="certificate" aria-label="Course certificate">
       <div class="content">
         <header class="topline">
-          <div class="brand">
-            <div class="mark">DF</div>
-            <span data-field="academyName">DEEPFENSE ACADEMY</span>
-          </div>
+          <div class="academy-name" data-field="academyName">DEEPFENSE ACADEMY</div>
           <div class="credential-badge" data-field="credentialName">DEEPFENSE AWARE</div>
         </header>
 
@@ -416,23 +399,27 @@
             <div class="meta-row">
               <div class="meta-pill">Issued: <span data-field="issuedDate">13 May 2026</span></div>
               <div class="meta-pill">ID: <span data-field="certificateId">DPF-BASIC-2026-0001</span></div>
-              <div class="meta-pill">Reward: <span data-field="rewardAmount">500</span> <span data-field="rewardSymbol">DPF</span></div>
+              <div class="meta-pill">Reward: <span data-field="rewardAmount">500</span> <span data-field="rewardSymbol">DPF coin</span></div>
             </div>
           </div>
         </main>
 
         <footer class="footer">
-          <div class="signature-block">
-            <div class="signature" data-field="signatureName">Deepfense.online</div>
-            <div class="verified-stamp">VERIFIED</div>
-            <div class="sig-line" data-field="issuerName">Deepfense.online Academic Board</div>
-            <div class="sig-role" data-field="issuerRole">Authorized Issuer</div>
-          </div>
+          <div class="signature-row">
+            <div class="signature-block">
+              <div class="signature" data-field="signatureName">Deepfense.online</div>
+              <div class="verified-stamp">VERIFIED</div>
+              <div class="sig-line" data-field="issuerName">Deepfense.online Academic Board</div>
+              <div class="sig-role" data-field="issuerRole">Authorized Issuer</div>
+            </div>
 
-          <div class="verify">
-            <img class="qr" id="qrImage" alt="Certificate verify QR" />
-            <strong>VERIFY</strong>
-            <div class="verify-url" data-field="verificationUrl">https://deepfense.online/academy/verify?id=DPF-BASIC-2026-0001</div>
+            <div class="verify">
+              <div class="qr-wrap">
+                <img class="qr" id="qrImage" alt="Certificate verify QR" />
+                <div class="qr-label">VERIFY</div>
+              </div>
+              <div class="verify-url" data-field="verificationUrl">https://deepfense.online/academy/verify?id=DPF-BASIC-2026-0001</div>
+            </div>
           </div>
         </footer>
       </div>
@@ -462,7 +449,7 @@
         certificateId: "DPF-BASIC-2026-0001",
         verificationUrl: "https://deepfense.online/academy/verify?id=DPF-BASIC-2026-0001",
         rewardAmount: 500,
-        rewardSymbol: "DPF",
+        rewardSymbol: "DPF coin",
         issuerName: "Deepfense.online Academic Board",
         issuerRole: "Authorized Issuer",
         signatureName: "Deepfense.online"
@@ -500,7 +487,7 @@
           node.textContent = data[key] ?? "";
         });
         document.querySelector("#recipientInput").value = data.recipientName;
-        document.querySelector("#qrImage").src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(data.verificationUrl)}`;
+        document.querySelector("#qrImage").src = `https://api.qrserver.com/v1/create-qr-code/?size=190x190&ecc=H&data=${encodeURIComponent(data.verificationUrl)}`;
       }
 
       document.querySelector("#nameForm").addEventListener("submit", (event) => {

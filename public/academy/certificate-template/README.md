@@ -38,7 +38,7 @@ type CertificateData = {
   certificateId: string;
   verificationUrl: string;
   rewardAmount: number;
-  rewardSymbol: "DPF";
+  rewardSymbol: "DPF coin";
   issuerName: string;
   issuerRole: string;
   signatureName: string;

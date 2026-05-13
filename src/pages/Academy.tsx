@@ -47,7 +47,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
       status: isVi ? 'Đã mở full course' : 'Full course available',
       title: 'DEEPFENSE BASIC',
       credential: 'DEEPFENSE AWARE',
-      reward: '500 DPF',
+      reward: '500 DPF coin',
       hours: '8-10h',
       available: true,
       desc: isVi
@@ -61,24 +61,24 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
     {
       level: 'DEEPFENSE ADVANCE',
       status: isVi ? 'Sắp cập nhật' : 'Coming soon',
-      title: 'FORENSIC ANALYST',
-      credential: 'DEEPFENSE FORENSIC ANALYST',
+      title: 'DEEPFENSE ADVANCE',
+      credential: 'DEEPFENSE ADVANCE',
       reward: isVi ? 'Reward nâng cao' : 'Advanced reward',
       hours: '10-12h',
       available: false,
       desc: isVi
         ? 'Đi sâu hơn vào phân tích bằng chứng, metadata, chuỗi lưu giữ, attribution và phản ứng sự cố.'
-        : 'A deeper track for evidence analysis, metadata, chain of custody, attribution, and incident response.',
+        : 'The advanced track after BASIC: scenario analysis, verification workflow, organizational risk, incident response, and guided practice.',
       bullets: isVi
-        ? ['Yêu cầu hoàn thành Basics', 'Case study forensic', 'Bài thi thực hành']
-        : ['Requires Basics completion', 'Forensic case studies', 'Practical assessment'],
+        ? ['Yêu cầu hoàn thành BASIC', 'Case study nâng cao', 'Bài thi thực hành']
+        : ['Requires BASIC completion', 'Advanced case studies', 'Practical assessment'],
       path: '#',
     },
     {
       level: 'DEEPFENSE EXPERT',
       status: isVi ? 'Sắp cập nhật' : 'Coming soon',
-      title: 'SECURITY EXPERT',
-      credential: 'DEEPFENSE SECURITY EXPERT',
+      title: 'DEEPFENSE EXPERT',
+      credential: 'DEEPFENSE EXPERT',
       reward: isVi ? 'Expert reward' : 'Expert reward',
       hours: '12-15h',
       available: false,
@@ -107,8 +107,8 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
             </h1>
             <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-gray-400">
               {isVi
-                ? 'Academy là hệ thống khóa học và chứng nhận của DEEPFENSE. Mỗi khóa có lộ trình, quiz, tiến độ học, điều kiện cấp certificate và reward DPF để biến việc học an toàn số thành một hành trình có thể đo lường.'
-                : "Academy is DEEPFENSE's course and certification system. Each course includes a path, quizzes, learning progress, certificate conditions, and DPF rewards to make digital safety measurable."}
+                ? 'Academy là hệ thống khóa học và chứng nhận của DEEPFENSE. Mỗi khóa có lộ trình, quiz, tiến độ học, điều kiện cấp certificate và reward DPF coin để biến việc học an toàn số thành một hành trình có thể đo lường.'
+                : "Academy is DEEPFENSE's course and certification system. Each course includes a path, quizzes, learning progress, certificate conditions, and DPF coin rewards to make digital safety measurable."}
             </p>
           </div>
 
@@ -128,7 +128,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
               {[
                 [<BookOpen size={18} />, isVi ? 'Module' : 'Modules'],
                 [<Award size={18} />, 'Credential'],
-                [<Sparkles size={18} />, 'DPF'],
+                [<Sparkles size={18} />, 'DPF coin'],
               ].map(([icon, label]) => (
                 <div key={String(label)} className="rounded-xl border border-white/12 bg-white/[0.075] p-3 text-center">
                   <div className="text-blue-300 flex justify-center mb-2">{icon}</div>
@@ -172,7 +172,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {courses.map((course) => {
-            const isAdvancedDemo = course.title === 'FORENSIC ANALYST';
+            const isAdvancedDemo = course.title === 'DEEPFENSE ADVANCE';
             const canOpen = course.available || (isAdvancedDemo && advancedDemoUnlocked);
 
             return (
@@ -214,7 +214,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                     disabled={unlocking}
                     className="w-full rounded-lg border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-[10px] font-black font-mono uppercase tracking-widest text-amber-300 hover:bg-amber-400/15 disabled:opacity-60 disabled:cursor-wait transition-colors"
                   >
-                    {unlocking ? (isVi ? 'DANG MO KHOA...' : 'UNLOCKING...') : (isVi ? 'MO KHOA DEMO - 250 DPF' : 'UNLOCK DEMO - 250 DPF')}
+                    {unlocking ? (isVi ? 'DANG MO KHOA...' : 'UNLOCKING...') : (isVi ? 'MO KHOA DEMO - 250 DPF coin' : 'UNLOCK DEMO - 250 DPF coin')}
                   </button>
                   <DpfRewardNotice result={unlockResult} successPrefix={isVi ? 'Da mo khoa' : 'Unlocked'} />
                 </div>

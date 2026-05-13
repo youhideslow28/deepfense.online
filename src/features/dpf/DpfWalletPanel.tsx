@@ -22,9 +22,9 @@ const DpfWalletPanel: React.FC<DpfWalletPanelProps> = ({ lang, compact = false }
             <Coins size={20} />
           </div>
           <div>
-            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-amber-300">DPF Wallet</div>
+            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-amber-300">DPF coin Wallet</div>
             <p className="text-sm text-gray-400">
-              {isVi ? 'Dang nhap Gmail de nhan va dung DPF web.' : 'Sign in with Gmail to earn and spend web DPF.'}
+              {isVi ? 'Dang nhap Gmail de nhan va dung DPF coin tren web.' : 'Sign in with Gmail to earn and spend DPF coin on the web.'}
             </p>
           </div>
         </div>
@@ -42,9 +42,9 @@ const DpfWalletPanel: React.FC<DpfWalletPanelProps> = ({ lang, compact = false }
             <Coins size={22} />
           </div>
           <div>
-            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">DPF Web Balance</div>
+            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">DPF coin Web Balance</div>
             <div className="text-2xl font-black text-white leading-tight">
-              {loading ? '...' : formatAmount(balance)} <span className="text-sm text-primary">DPF</span>
+              {loading ? '...' : formatAmount(balance)} <span className="text-sm text-primary">DPF coin</span>
             </div>
           </div>
         </div>
@@ -74,14 +74,14 @@ const DpfWalletPanel: React.FC<DpfWalletPanelProps> = ({ lang, compact = false }
                 <div key={entry.id} className="flex items-center justify-between gap-3 rounded-xl border border-white/8 bg-black/20 px-3 py-2">
                   <span className="min-w-0 truncate text-xs text-gray-400">{entry.reason}</span>
                   <span className={`shrink-0 text-xs font-black ${entry.direction === 'credit' ? 'text-success' : 'text-amber-300'}`}>
-                    {entry.direction === 'credit' ? '+' : '-'}{formatAmount(entry.amount)} DPF
+                    {entry.direction === 'credit' ? '+' : '-'}{formatAmount(entry.amount)} DPF coin
                   </span>
                 </div>
               ))}
             </div>
           ) : (
             <div className="text-xs text-gray-500">
-              {isVi ? 'Chua co giao dich DPF. Hay thu mot thu thach.' : 'No DPF activity yet. Try a challenge.'}
+              {isVi ? 'Chua co giao dich DPF coin. Hay thu mot thu thach.' : 'No DPF coin activity yet. Try a challenge.'}
             </div>
           )}
         </div>

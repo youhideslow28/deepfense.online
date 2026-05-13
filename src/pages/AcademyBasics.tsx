@@ -95,7 +95,7 @@ const AcademyBasics: React.FC<AcademyBasicsProps> = ({ lang, user, authBusy, onG
                 {isVi ? 'Certificate chỉ mở trong hệ thống học khi đủ điều kiện.' : 'Certificate unlocks inside the learning system after requirements are met.'}
               </div>
               <div className="mt-3 text-[11px] font-mono uppercase tracking-widest text-amber-300">
-                500 DPF {isVi ? 'reward dự kiến' : 'planned reward'}
+                500 DPF coin {isVi ? 'reward dự kiến' : 'planned reward'}
               </div>
             </div>
           </div>
@@ -115,8 +115,8 @@ const AcademyBasics: React.FC<AcademyBasicsProps> = ({ lang, user, authBusy, onG
             </h2>
             <p className="text-gray-400 text-sm md:text-base leading-relaxed mt-4">
               {isVi
-                ? 'Google login giúp hệ thống biết đúng học viên, lưu hồ sơ cho admin, đối soát điểm quiz và chuẩn bị trả thưởng DPF. Sau bước này, toàn bộ bài học sẽ chạy ở trang index riêng của khóa học.'
-                : 'Google login ties the learner profile to the right account for admin review, quiz matching, and DPF reward preparation. After that, all lessons run in the course index.'}
+                ? 'Google login giúp hệ thống biết đúng học viên, lưu hồ sơ cho admin, đối soát điểm quiz và chuẩn bị trả thưởng DPF coin. Sau bước này, toàn bộ bài học sẽ chạy ở trang index riêng của khóa học.'
+                : 'Google login ties the learner profile to the right account for admin review, quiz matching, and DPF coin reward preparation. After that, all lessons run in the course index.'}
             </p>
 
             <div className="mt-7 flex flex-col sm:flex-row gap-3">

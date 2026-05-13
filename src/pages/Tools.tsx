@@ -358,7 +358,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
       </div>
 
       {/* TABS CONTROLLER */}
-      <div className="liquid-glass-soft flex flex-wrap justify-center p-2 rounded-2xl border border-white/10 mb-12 w-fit mx-auto shadow-xl gap-2">
+      <div className="transparent-panel-soft flex flex-wrap justify-center p-2 rounded-2xl border border-white/10 mb-12 w-fit mx-auto shadow-xl gap-2">
         <button 
           onClick={() => handleTabChange('SCAN')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'SCAN' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
@@ -390,7 +390,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
         <>
         <div className="space-y-8 animate-in slide-in-from-bottom-6 duration-500">
           {/* PRIMARY: BEHAVIORAL SCANNER */}
-          <div className="liquid-glass border border-primary/20 rounded-3xl p-6 md:p-10 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col lg:min-h-[520px]">
+          <div className="transparent-panel border border-primary/20 rounded-3xl p-6 md:p-10 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col lg:min-h-[520px]">
             <h3 className="text-primary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-center gap-3 border-b border-primary/10 pb-4">
                <BrainCircuit size={20} /> {lang === 'vi' ? '1. QUÉT NGỮ CẢNH HÀNH VI' : '1. BEHAVIORAL CONTEXT SCAN'}
             </h3>
@@ -442,7 +442,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                  {Math.min(riskScore, 100)}%
                </h3>
                
-               <p className="liquid-glass-soft text-gray-300 mb-8 text-sm leading-relaxed p-5 rounded-2xl border border-white/10">
+               <p className="transparent-panel-soft text-gray-300 mb-8 text-sm leading-relaxed p-5 rounded-2xl border border-white/10">
                   {riskScore >= 60 
                     ? (lang === 'vi' ? 'CẢNH BÁO ĐỎ: Kịch bản trùng khớp cao với các chiến dịch lừa đảo Deepfake tinh vi. Đối tượng đang dùng các biện pháp tâm lý để bẻ gãy phòng vệ của bạn. TUYỆT ĐỐI KHÔNG CHUYỂN TIỀN. Hãy dập máy và gọi lại qua mạng viễn thông di động gốc (GSM).' : 'RED ALERT: High match with sophisticated Deepfake scam campaigns. Psychological manipulation detected. DO NOT TRANSFER MONEY. Hang up and callback via standard cellular network.')
                     : riskScore >= 30 
@@ -461,7 +461,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
 
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           {/* DEMO 1: FORENSICS SCANNER */}
-          <div className="liquid-glass border border-secondary/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(255,42,109,0.05)] relative overflow-hidden flex flex-col h-full">
+          <div className="transparent-panel border border-secondary/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(255,42,109,0.05)] relative overflow-hidden flex flex-col h-full">
             <h3 className="text-secondary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-start sm:items-center gap-3 border-b border-secondary/10 pb-4">
                <FileSearch size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
                <div className="flex items-center gap-2 flex-wrap w-full">
@@ -472,7 +472,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
             
             <div className="flex-1 flex flex-col justify-center">
            {!file ? (
-             <div className="liquid-glass-soft border-2 border-dashed border-white/10 rounded-3xl p-8 md:p-12 text-center hover:border-secondary/50 hover:bg-secondary/5 transition-all group relative cursor-pointer h-full flex flex-col justify-center items-center">
+             <div className="transparent-panel-soft border-2 border-dashed border-white/10 rounded-3xl p-8 md:p-12 text-center hover:border-secondary/50 hover:bg-secondary/5 transition-all group relative cursor-pointer h-full flex flex-col justify-center items-center">
                 <input 
                   ref={fileInputRef}
                   type="file" 
@@ -495,7 +495,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
              </div>
            ) : (
              <div className="w-full">
-               <div className="liquid-glass-soft flex items-center gap-4 p-4 rounded-2xl border border-white/10 mb-6 shadow-inner">
+               <div className="transparent-panel-soft flex items-center gap-4 p-4 rounded-2xl border border-white/10 mb-6 shadow-inner">
                  <FileSearch size={24} className="text-secondary shrink-0" />
                  <div className="flex-1 min-w-0">
                    <div className="text-white font-bold text-sm truncate mb-1">{file.name}</div>
@@ -525,7 +525,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                    </GlowButton>
                  </div>
                ) : (
-                 <div className="liquid-glass-terminal border border-white/10 rounded-2xl p-5 font-mono relative overflow-hidden shadow-2xl flex flex-col">
+                 <div className="transparent-panel-terminal border border-white/10 rounded-2xl p-5 font-mono relative overflow-hidden shadow-2xl flex flex-col">
                     <style>{`
                       @keyframes scan { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
                       @keyframes slide-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -617,7 +617,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
           </div>
         
         {/* DEMO 2: RPPG LIVENESS SCANNER */}
-        <div className="liquid-glass border border-[#00f0ff]/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col items-center h-full">
+        <div className="transparent-panel border border-[#00f0ff]/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col items-center h-full">
           <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00f0ff] to-transparent opacity-50"></div>
           <h3 className="text-[#00f0ff] font-black text-sm md:text-base uppercase tracking-widest mb-4 flex items-center justify-start gap-3 w-full border-b border-[#00f0ff]/10 pb-4">
             <ScanLine size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
@@ -644,7 +644,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
             </GlowButton>
           ) : (
             <div className="w-full flex flex-col lg:flex-row gap-6 items-stretch animate-in zoom-in duration-500">
-              <div className="liquid-glass-strong flex-1 rounded-2xl border-2 border-dashed border-[#00f0ff]/30 relative overflow-hidden min-h-[300px] flex items-center justify-center">
+              <div className="transparent-panel-strong flex-1 rounded-2xl border-2 border-dashed border-[#00f0ff]/30 relative overflow-hidden min-h-[300px] flex items-center justify-center">
                 <video ref={videoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover opacity-80" />
                 <div className="absolute inset-x-8 inset-y-8 border border-[#00f0ff]/50 rounded-lg pointer-events-none">
                     <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#00f0ff] rounded-tl-lg"></div>
@@ -655,7 +655,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                 </div>
               </div>
               
-              <div className="liquid-glass-terminal w-full lg:w-[350px] border border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-2xl">
+              <div className="transparent-panel-terminal w-full lg:w-[350px] border border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-2xl">
                 <div>
                     <div className="text-[#00f0ff] font-mono text-xs uppercase font-bold tracking-widest mb-4 flex items-center justify-between">
                       <span>{lang === 'vi' ? 'LƯU LƯỢNG MÁU (rPPG)' : 'BLOOD FLOW (rPPG)'}</span>
@@ -700,7 +700,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
 
       {/* MODE: PROACTIVE SHIELD */}
       {activeTab === 'PROTECT' && (
-        <div className="liquid-glass border border-green-500/30 rounded-3xl p-6 md:p-10 shadow-[0_0_50px_rgba(34,197,94,0.05)] relative overflow-hidden animate-in slide-in-from-bottom-6 duration-500">
+        <div className="transparent-panel border border-green-500/30 rounded-3xl p-6 md:p-10 shadow-[0_0_50px_rgba(34,197,94,0.05)] relative overflow-hidden animate-in slide-in-from-bottom-6 duration-500">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
              <div className="flex flex-col gap-6">
                 <div>
@@ -750,7 +750,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                 )}
              </div>
 
-             <div className="liquid-glass-strong border border-white/10 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center min-h-[400px]">
+             <div className="transparent-panel-strong border border-white/10 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center min-h-[400px]">
                 {!shieldImage ? (
                    <div className="text-gray-600 flex flex-col items-center max-w-[200px] text-center p-8">
                      <ShieldCheck size={48} className="text-gray-800 mb-4 opacity-50" />
@@ -792,7 +792,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                   <button 
                     key={idx}
                     onClick={() => setActiveKnowledgeCat(idx)}
-                    className={`text-left p-4 rounded-xl font-bold text-[10px] md:text-xs tracking-widest transition-all border shadow-lg flex items-center gap-3 ${activeKnowledgeCat === idx ? 'bg-primary text-black border-primary' : 'liquid-glass-soft border-white/10 text-gray-400 hover:border-white/20 hover:text-white'}`}
+                    className={`text-left p-4 rounded-xl font-bold text-[10px] md:text-xs tracking-widest transition-all border shadow-lg flex items-center gap-3 ${activeKnowledgeCat === idx ? 'bg-primary text-black border-primary' : 'transparent-panel-soft border-white/10 text-gray-400 hover:border-white/20 hover:text-white'}`}
                   >
                     <span className={activeKnowledgeCat === idx ? 'text-black' : 'text-primary'}>
                        {getKnowledgeIcon(idx)}
@@ -803,7 +803,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
            </div>
            
            {/* Content Box */}
-           <div className="liquid-glass lg:col-span-8 border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden h-fit">
+           <div className="transparent-panel lg:col-span-8 border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden h-fit">
                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
                <div key={activeKnowledgeCat} className="animate-in fade-in slide-in-from-right-8 duration-500">
                   <h3 className="text-xl md:text-2xl font-black text-white mb-6 text-primary border-b border-white/10 pb-6 flex items-center gap-4">
@@ -814,7 +814,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                   </h3>
                   <div className="space-y-6">
                      {KNOWLEDGE_BASE[lang][activeKnowledgeCat].items.map((item, idx) => (
-                        <div key={idx} className="liquid-glass-soft p-6 md:p-8 rounded-2xl border border-white/10 group hover:border-primary/30 transition-all hover:shadow-[0_0_20px_rgba(0,240,255,0.05)]">
+                        <div key={idx} className="transparent-panel-soft p-6 md:p-8 rounded-2xl border border-white/10 group hover:border-primary/30 transition-all hover:shadow-[0_0_20px_rgba(0,240,255,0.05)]">
                            <h4 className="text-base md:text-lg font-bold text-white mb-4 flex items-start gap-3">
                               <span className="leading-tight">{item.title}</span>
                            </h4>

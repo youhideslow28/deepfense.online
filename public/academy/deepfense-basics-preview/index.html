@@ -8,14 +8,17 @@
   </head>
   <body>
     <div class="course-shell">
-      <aside class="course-sidebar" aria-label="Course navigation">
-        <a class="brand" href="/academy" aria-label="Back to DEEPFENSE Academy">
-          <span class="brand-mark">DF</span>
-          <span>
-            <strong>DEEPFENSE</strong>
-            <small>BASIC</small>
-          </span>
-        </a>
+      <aside class="course-sidebar" id="courseSidebar" aria-label="Course navigation">
+        <div class="sidebar-head">
+          <a class="brand" href="/academy" aria-label="Back to DEEPFENSE Academy">
+            <span class="brand-mark">DF</span>
+            <span>
+              <strong>DEEPFENSE</strong>
+              <small>BASIC</small>
+            </span>
+          </a>
+          <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Đóng mục lục" aria-expanded="true">×</button>
+        </div>
 
         <div class="progress-card" aria-label="Course progress">
           <div class="progress-row">
@@ -28,20 +31,15 @@
         </div>
 
         <nav class="module-list" id="moduleStrip" aria-label="Modules"></nav>
-
-        <div class="certificate-card">
-          <span id="certificateStatus">Certificate locked</span>
-          <a id="certificateLink" href="/academy/certificate-template/certificate-template.html" hidden>Download certificate</a>
-        </div>
       </aside>
 
       <main class="reader">
         <header class="reader-header">
+          <button class="sidebar-open" id="sidebarOpen" type="button" hidden>Mục lục</button>
           <div>
             <p class="eyebrow" id="topEyebrow">Learning path</p>
             <h1 id="topTitle">DEEPFENSE BASIC</h1>
           </div>
-          <button class="ghost-btn" id="backToAcademy">Academy</button>
         </header>
 
         <section class="route active" id="route-overview">
@@ -71,19 +69,6 @@
                 <button class="primary-btn" id="nextLesson">Tiếp theo</button>
               </div>
             </section>
-
-            <aside class="lesson-aside" aria-label="Module summary">
-              <div class="module-summary">
-                <p class="eyebrow" id="moduleMeta">Module</p>
-                <h2 id="moduleTitle">Lesson</h2>
-                <p id="moduleScenario"></p>
-              </div>
-              <div class="outcome-card">
-                <p class="eyebrow">Outcomes</p>
-                <ul id="moduleOutcomes"></ul>
-              </div>
-              <button class="ghost-btn wide" id="startModuleQuiz">Quiz module</button>
-            </aside>
           </div>
         </section>
 
@@ -95,7 +80,17 @@
           </article>
           <section class="evaluation-panel" id="courseEvaluationPanel" aria-label="Course evaluation"></section>
           <div class="assessment-list" id="assessmentGrid"></div>
+          <section class="certificate-final" id="certificateFinal" hidden>
+            <p class="eyebrow">Certificate</p>
+            <h2>Chứng chỉ đã sẵn sàng</h2>
+            <p>Certificate chỉ xuất hiện sau khi bạn hoàn thành khóa học, gửi đánh giá và đạt Final Exam.</p>
+            <a id="certificateLink" href="/academy/certificate-template/certificate-template.html">Tải certificate</a>
+          </section>
         </section>
+
+        <footer class="reader-footer">
+          <a id="backToAcademy" href="/academy">Quay về trang academy</a>
+        </footer>
       </main>
     </div>
 

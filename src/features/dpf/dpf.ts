@@ -181,7 +181,7 @@ export const listenDpfLedger = (user: User, onChange: (entries: DpfLedgerEntry[]
 export const claimDpfReward = async (config: DpfClaimConfig): Promise<DpfClaimResult> => {
   const user = auth.currentUser;
   if (!user) {
-    return { ok: false, code: 'auth_required', message: 'Sign in with Gmail to receive DPF.' };
+    return { ok: false, code: 'auth_required', message: 'Sign in with Gmail to receive DPF coin.' };
   }
 
   try {
@@ -192,11 +192,11 @@ export const claimDpfReward = async (config: DpfClaimConfig): Promise<DpfClaimRe
   }
 
   if (!Number.isFinite(config.amount) || config.amount <= 0 || config.amount > MAX_REWARD_AMOUNT) {
-    return { ok: false, code: 'invalid_amount', message: 'Invalid DPF reward amount.' };
+    return { ok: false, code: 'invalid_amount', message: 'Invalid DPF coin reward amount.' };
   }
 
   if (typeof config.minScore === 'number' && typeof config.score === 'number' && config.score < config.minScore) {
-    return { ok: false, code: 'not_eligible', message: 'Score is not high enough for this DPF reward.' };
+    return { ok: false, code: 'not_eligible', message: 'Score is not high enough for this DPF coin reward.' };
   }
 
   const day = todayKey();
@@ -217,12 +217,12 @@ export const claimDpfReward = async (config: DpfClaimConfig): Promise<DpfClaimRe
       ]);
 
       if (ledgerSnap.exists()) {
-        return { ok: false, code: 'already_claimed', message: 'This DPF reward was already claimed.' };
+        return { ok: false, code: 'already_claimed', message: 'This DPF coin reward was already claimed.' };
       }
 
       const quotaCount = quotaSnap.exists() ? numberOrZero(quotaSnap.data().count) : 0;
       if (quotaCount >= config.dailyLimit) {
-        return { ok: false, code: 'quota_exceeded', message: 'Daily DPF reward limit reached. Practice still counts, rewards resume tomorrow.' };
+        return { ok: false, code: 'quota_exceeded', message: 'Daily DPF coin reward limit reached. Practice still counts, rewards resume tomorrow.' };
       }
 
       const userData = userSnap.exists() ? userSnap.data() : {};
@@ -274,7 +274,7 @@ export const claimDpfReward = async (config: DpfClaimConfig): Promise<DpfClaimRe
     });
   } catch (error) {
     console.error('DPF reward claim failed:', error);
-    return { ok: false, code: 'firebase_error', message: 'Unable to claim DPF right now.' };
+    return { ok: false, code: 'firebase_error', message: 'Unable to claim DPF coin right now.' };
   }
 };
 
@@ -297,7 +297,7 @@ export const unlockWithDpf = async (item: {
   }
 
   if (!Number.isFinite(item.cost) || item.cost <= 0 || item.cost > MAX_UNLOCK_COST) {
-    return { ok: false, code: 'invalid_cost', message: 'Invalid DPF unlock cost.' };
+    return { ok: false, code: 'invalid_cost', message: 'Invalid DPF coin unlock cost.' };
   }
 
   const safeItemId = toSafeId(item.itemId);
@@ -322,7 +322,7 @@ export const unlockWithDpf = async (item: {
       const userData = userSnap.exists() ? userSnap.data() : {};
       const balanceBefore = numberOrZero(userData.webBalance);
       if (balanceBefore < item.cost) {
-        return { ok: false, code: 'insufficient_balance', message: 'Not enough DPF. Complete challenges or scam simulations to earn more.' };
+        return { ok: false, code: 'insufficient_balance', message: 'Not enough DPF coin. Complete challenges or scam simulations to earn more.' };
       }
 
       const balanceAfter = balanceBefore - item.cost;

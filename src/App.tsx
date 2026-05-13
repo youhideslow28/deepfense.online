@@ -241,7 +241,7 @@ const AppContent: React.FC = () => {
       case '/contact': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
       case '/privacy':
       case '/terms':
-      case '/policy': return lang === 'vi' ? 'Chinh sach Deepfense' : 'Deepfense Policies';
+      case '/policy': return lang === 'vi' ? 'Chính sách Deepfense' : 'Deepfense Policies';
       default: 
         if (location.pathname.startsWith('/tools')) {
           if (location.pathname.includes('crisis')) return lang === 'vi' ? 'Trung tâm Ứng cứu' : 'Crisis Hub';

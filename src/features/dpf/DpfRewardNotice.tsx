@@ -7,7 +7,7 @@ interface DpfRewardNoticeProps {
   successPrefix?: string;
 }
 
-const DpfRewardNotice: React.FC<DpfRewardNoticeProps> = ({ result, successPrefix = 'DPF' }) => {
+const DpfRewardNotice: React.FC<DpfRewardNoticeProps> = ({ result, successPrefix = 'DPF coin' }) => {
   if (!result) return null;
 
   if (result.ok) {
@@ -15,7 +15,7 @@ const DpfRewardNotice: React.FC<DpfRewardNoticeProps> = ({ result, successPrefix
     return (
       <div className="mt-4 rounded-xl border border-success/25 bg-success/10 px-4 py-3 text-success flex items-center gap-2 text-xs font-bold">
         <CheckCircle2 size={15} />
-        <span>{successPrefix}: {amount} DPF</span>
+        <span>{successPrefix}: {amount} DPF coin</span>
       </div>
     );
   }
