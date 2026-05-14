@@ -210,45 +210,46 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
       <div ref={featRef as React.RefObject<HTMLDivElement>} className="mb-16">
         <section data-reveal className="relative overflow-hidden rounded-2xl border border-blue-400/18 bg-[#07111f]/88 shadow-[0_20px_68px_rgba(0,0,0,0.3)] backdrop-blur-xl">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
-          <div className="relative z-10 p-5 md:p-7">
+          <div className="relative z-10 p-5 md:p-6">
             <div className="mx-auto max-w-5xl">
-              <div className="mb-4 flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-3 py-1.5 text-[10px] font-mono tracking-widest text-blue-300">
-                <GraduationCap size={12} /> DEEPFENSE ACADEMY
-              </div>
-              <div className="max-w-3xl text-left">
-              <h2 className="text-2xl md:text-3xl font-black text-white leading-[1.16]" style={{ fontFamily:"'Outfit', 'Inter', Arial, sans-serif" }}>
-                {lang === 'vi' ? 'Học cách bình tĩnh trước một nội dung quá giống thật.' : 'Learn to stay calm when fake looks real.'}
-              </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-gray-400">
-                {lang === 'vi'
-                  ? 'Một giọng nói quen thuộc, một video gấp gáp, một tin nhắn đòi chuyển tiền. Chỉ vài phút học đúng cách có thể giúp bạn dừng lại, kiểm chứng và không trở thành người tiếp tay cho nội dung giả.'
-                  : 'A familiar voice, an urgent video, a payment request. A few focused lessons can help you pause, verify, and avoid amplifying synthetic media.'}
-              </p>
-              </div>
-              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
-                {[
-                  [lang === 'vi' ? 'Dễ bắt đầu' : 'Easy start', lang === 'vi' ? 'Bài ngắn, đọc tới đâu kiểm tra tới đó.' : 'Short lessons with checks as you go.'],
-                  [lang === 'vi' ? 'Thực tế' : 'Practical', lang === 'vi' ? 'Tình huống đời thường: gia đình, công việc, mạng xã hội.' : 'Real situations: family, work, and social feeds.'],
-                  [lang === 'vi' ? 'Có chứng nhận' : 'Certified', lang === 'vi' ? 'Hoàn thành khóa học để mở certificate và reward DPF.' : 'Finish the course to unlock certificate and DPF reward.'],
-                ].map(([title, text]) => (
-                  <div key={title} className="rounded-xl border border-white/10 bg-black/28 p-3 text-left">
-                    <div className="text-white text-sm font-black mb-1">{title}</div>
-                    <div className="text-gray-500 text-xs leading-relaxed">{text}</div>
+              <div className="flex flex-col md:flex-row gap-8 md:items-center">
+                <div className="flex-1 text-left">
+                  <div className="mb-3 flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-2.5 py-1 text-[10px] font-mono tracking-widest text-blue-300">
+                    <GraduationCap size={12} /> DEEPFENSE ACADEMY
                   </div>
-                ))}
-              </div>
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                <GlowButton color="primary" size="md" icon={<GraduationCap size={16} />} onClick={() => navigate('/academy/basics')}>
-                  {lang === 'vi' ? 'BẮT ĐẦU KHÓA HỌC' : 'START THE COURSE'}
-                </GlowButton>
-                <GlowButton
-                  color="ghost"
-                  size="md"
-                  icon={<Trophy size={16} />}
-                  onClick={() => navigate('/academy')}
-                >
-                  {lang === 'vi' ? 'BẢNG VINH DANH' : 'HALL OF FAME'}
-                </GlowButton>
+                  <h2 className="text-xl md:text-2xl font-black text-white leading-snug" style={{ fontFamily:"'Outfit', 'Inter', Arial, sans-serif" }}>
+                    {lang === 'vi' ? 'Học cách bình tĩnh trước một nội dung quá giống thật.' : 'Learn to stay calm when fake looks real.'}
+                  </h2>
+                  <p className="mt-3 text-xs md:text-sm leading-relaxed text-gray-400 max-w-lg">
+                    {lang === 'vi'
+                      ? 'Chỉ vài phút học đúng cách có thể giúp bạn dừng lại, kiểm chứng và không trở thành người tiếp tay cho nội dung giả.'
+                      : 'A few focused lessons can help you pause, verify, and avoid amplifying synthetic media.'}
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-3">
+                    <GlowButton color="primary" size="sm" icon={<GraduationCap size={14} />} onClick={() => navigate('/academy/basics')}>
+                      {lang === 'vi' ? 'BẮT ĐẦU HỌC' : 'START COURSE'}
+                    </GlowButton>
+                    <GlowButton color="ghost" size="sm" icon={<Trophy size={14} />} onClick={() => navigate('/academy')}>
+                      {lang === 'vi' ? 'BẢNG VINH DANH' : 'HALL OF FAME'}
+                    </GlowButton>
+                  </div>
+                </div>
+
+                <div className="w-full md:w-[380px] flex flex-col gap-2">
+                  {[
+                    [lang === 'vi' ? 'Dễ bắt đầu' : 'Easy start', lang === 'vi' ? 'Bài ngắn, đọc tới đâu kiểm tra tới đó.' : 'Short lessons with checks as you go.'],
+                    [lang === 'vi' ? 'Thực tế' : 'Practical', lang === 'vi' ? 'Tình huống đời thường: gia đình, công việc...' : 'Real situations: family, work...'],
+                    [lang === 'vi' ? 'Có chứng nhận' : 'Certified', lang === 'vi' ? 'Hoàn thành khóa học để nhận DPF reward.' : 'Finish course to receive DPF reward.'],
+                  ].map(([title, text]) => (
+                    <div key={title} className="rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-colors p-3 flex items-center gap-3 text-left">
+                      <div className="bg-blue-500/10 p-2 rounded-lg shrink-0"><BookOpen size={16} className="text-blue-400"/></div>
+                      <div>
+                        <div className="text-white text-[13px] font-bold mb-0.5 leading-none">{title}</div>
+                        <div className="text-gray-500 text-[11px] leading-tight">{text}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
