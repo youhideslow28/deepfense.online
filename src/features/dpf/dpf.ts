@@ -118,22 +118,32 @@ const postDpfAction = async <T>(action: string, payload: unknown): Promise<T | n
 
 export const ensureDpfWallet = async (user: User) => {
   const userRef = doc(db, 'users', user.uid);
-  await setDoc(userRef, {
+  const snapshot = await getDoc(userRef);
+  const data = snapshot.exists() ? snapshot.data() : {};
+
+  const defaults: Partial<DpfWallet> & {
+    updatedAt: ReturnType<typeof serverTimestamp>;
+    createdAt?: ReturnType<typeof serverTimestamp>;
+  } = {
     uid: user.uid,
     email: user.email || '',
     displayName: user.displayName || '',
     photoURL: user.photoURL || '',
-    webBalance: 0,
-    earnedBalance: 0,
-    bonusBalance: 0,
-    spentBalance: 0,
-    pendingWithdrawal: 0,
-    withdrawnBalance: 0,
-    onchainSyncedBalance: 0,
-    badges: [],
-    unlockedItems: [],
     updatedAt: serverTimestamp(),
-  }, { merge: true });
+  };
+
+  if (!snapshot.exists()) defaults.createdAt = serverTimestamp();
+  if (typeof data.webBalance !== 'number') defaults.webBalance = 0;
+  if (typeof data.earnedBalance !== 'number') defaults.earnedBalance = 0;
+  if (typeof data.bonusBalance !== 'number') defaults.bonusBalance = 0;
+  if (typeof data.spentBalance !== 'number') defaults.spentBalance = 0;
+  if (typeof data.pendingWithdrawal !== 'number') defaults.pendingWithdrawal = 0;
+  if (typeof data.withdrawnBalance !== 'number') defaults.withdrawnBalance = 0;
+  if (typeof data.onchainSyncedBalance !== 'number') defaults.onchainSyncedBalance = 0;
+  if (!Array.isArray(data.badges)) defaults.badges = [];
+  if (!Array.isArray(data.unlockedItems)) defaults.unlockedItems = [];
+
+  await setDoc(userRef, defaults, { merge: true });
 };
 
 export const listenDpfWallet = (user: User, onChange: (wallet: DpfWallet | null) => void, onError?: (error: Error) => void) => {
@@ -237,7 +247,7 @@ export const claimDpfReward = async (config: DpfClaimConfig): Promise<DpfClaimRe
         webBalance: balanceAfter,
         earnedBalance: numberOrZero(userData.earnedBalance) + config.amount,
         updatedAt: serverTimestamp(),
-        createdAt: userSnap.exists() ? userData.createdAt : serverTimestamp(),
+        createdAt: userSnap.exists() && userData.createdAt ? userData.createdAt : serverTimestamp(),
       }, { merge: true });
 
       transaction.set(ledgerRef, {

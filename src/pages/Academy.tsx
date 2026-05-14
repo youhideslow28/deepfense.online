@@ -8,12 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import { Language } from '@/types';
 import {
   Award, BookOpen, CheckCircle2, Clock3, GraduationCap, LockKeyhole,
-  ShieldCheck, Sparkles, Target, Trophy,
+  ShieldCheck, Sparkles, Target, Trophy, SearchCheck,
 } from 'lucide-react';
 import GlowButton from '@/components/ui/GlowButton';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import DpfRewardNotice from '@/features/dpf/DpfRewardNotice';
-import DpfWalletPanel from '@/features/dpf/DpfWalletPanel';
 import { DpfUnlockResult, unlockWithDpf } from '@/features/dpf/dpf';
 import { useDpfWallet } from '@/features/dpf/useDpfWallet';
 
@@ -131,6 +130,11 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                 ? 'Academy là hệ thống khóa học và chứng nhận của DEEPFENSE. Mỗi khóa có lộ trình, quiz, tiến độ học, điều kiện cấp certificate và reward DPF coin để biến việc học an toàn số thành một hành trình có thể đo lường.'
                 : "Academy is DEEPFENSE's course and certification system. Each course includes a path, quizzes, learning progress, certificate conditions, and DPF coin rewards to make digital safety measurable."}
             </p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <GlowButton color="ghost" size="md" icon={<SearchCheck size={16} />} onClick={() => navigate('/academy/verify')}>
+                {isVi ? 'XÁC MINH CERTIFICATE' : 'VERIFY CERTIFICATE'}
+              </GlowButton>
+            </div>
           </div>
 
           <div className="lg:col-span-4 rounded-2xl border border-white/12 bg-[#07111f]/80 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.26)] backdrop-blur-xl">
@@ -159,10 +163,6 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
             </div>
           </div>
         </div>
-      </section>
-
-      <section data-reveal className="mb-8">
-        <DpfWalletPanel lang={lang} />
       </section>
 
       <section data-reveal className="mb-8 rounded-2xl border border-amber-400/20 bg-[#07111f]/82 p-5 md:p-6 shadow-[0_18px_55px_rgba(0,0,0,0.24)] backdrop-blur-xl">

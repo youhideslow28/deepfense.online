@@ -6,55 +6,92 @@
     <title>DEEPFENSE BASIC | Academy Course</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <header class="platform-topbar">
+      <a class="topbar-brand" href="/academy" aria-label="Quay về DEEPFENSE Academy">
+        <img src="/logo/favicon-32x32.png" alt="DEEPFENSE" />
+        <span>
+          <strong>DEEPFENSE ACADEMY</strong>
+          <small>Deepfake Defense Learning Platform</small>
+        </span>
+      </a>
+      <nav class="topbar-actions" aria-label="Academy actions">
+        <button class="icon-btn" type="button" data-route-jump="overview" title="Tổng quan khóa học" aria-label="Tổng quan khóa học">⌂</button>
+        <button class="icon-btn" type="button" data-route-jump="exam" title="Final steps" aria-label="Final steps">✓</button>
+        <a class="academy-link" id="backToAcademy" href="/academy">Quay về trang academy</a>
+      </nav>
+    </header>
+
     <div class="course-shell">
-      <aside class="course-sidebar" id="courseSidebar" aria-label="Course navigation">
+      <aside class="course-sidebar" id="courseSidebar" aria-label="Mục lục khóa học">
         <div class="sidebar-head">
-          <a class="brand" href="/academy" aria-label="Back to DEEPFENSE Academy">
-            <img class="brand-logo" src="/logo/favicon-32x32.png" alt="DEEPFENSE" />
-            <span>
-              <strong>DEEPFENSE</strong>
-              <small>BASIC</small>
-            </span>
-          </a>
+          <div>
+            <p class="eyebrow muted-eyebrow">Course</p>
+            <h2>DEEPFENSE BASIC</h2>
+          </div>
           <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Đóng mục lục" aria-expanded="true">×</button>
         </div>
 
-        <div class="progress-card" aria-label="Course progress">
+        <div class="progress-card" aria-label="Tiến độ khóa học">
           <div class="progress-row">
-            <span>Progress</span>
+            <span>Tiến độ học tập</span>
             <strong id="courseProgressText">0%</strong>
           </div>
           <div class="progress-track" aria-hidden="true">
             <div id="courseProgressBar"></div>
           </div>
+          <p>Tự động lưu vị trí gần nhất sau mỗi bài.</p>
         </div>
 
-        <nav class="module-list" id="moduleStrip" aria-label="Modules"></nav>
+        <nav class="module-list" id="moduleStrip" aria-label="Danh sách module"></nav>
       </aside>
 
       <main class="reader">
         <header class="reader-header">
           <button class="sidebar-open" id="sidebarOpen" type="button" hidden>Mục lục</button>
-          <div>
+          <div class="reader-title">
             <p class="eyebrow" id="topEyebrow">Learning path</p>
             <h1 id="topTitle">DEEPFENSE BASIC</h1>
+          </div>
+          <div class="learner-chip" aria-label="Trạng thái học viên">
+            <span></span>
+            <strong>Google verified</strong>
           </div>
         </header>
 
         <section class="route active" id="route-overview">
-          <article class="start-card">
-            <p class="eyebrow">Start here</p>
-            <h2>Tiếp tục từ vị trí gần nhất.</h2>
-            <p>Đọc bài theo từng trang, hoàn thành quiz module để mở phần tiếp theo, đánh giá khóa học rồi thi cuối khóa.</p>
-            <div class="action-row">
-              <button class="primary-btn" id="continueLearning">Vào bài học</button>
-              <button class="ghost-btn" data-route-jump="pretest">Đánh giá đầu vào</button>
+          <section class="dashboard-hero">
+            <div>
+              <p class="eyebrow">Course dashboard</p>
+              <h2>Học để bình tĩnh hơn trước nội dung giả mạo.</h2>
+              <p>Khóa BASIC giúp bạn nhận diện deepfake, hiểu tâm lý bị thao túng và phản ứng an toàn trong các tình huống đời thật.</p>
+              <div class="action-row">
+                <button class="primary-btn" id="continueLearning">Tiếp tục học</button>
+                <button class="ghost-btn" data-route-jump="pretest">Đánh giá đầu vào</button>
+              </div>
             </div>
-          </article>
+            <div class="hero-progress-card">
+              <span id="overviewProgressValue">0%</span>
+              <p>Overall progress</p>
+              <div class="progress-track light"><div id="overviewProgressBar"></div></div>
+            </div>
+          </section>
+
+          <section class="stats-grid" id="overviewStats" aria-label="Thống kê khóa học"></section>
+
+          <section class="course-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">My course</p>
+                <h2>DEEPFENSE BASIC</h2>
+              </div>
+              <button class="ghost-btn" data-route-jump="learn">Mở bài hiện tại</button>
+            </div>
+            <div class="overview-grid" id="overviewGrid"></div>
+          </section>
         </section>
 
         <section class="route" id="route-pretest">
@@ -62,11 +99,14 @@
         </section>
 
         <section class="route" id="route-learn">
+          <section class="learn-hero" id="learnHero"></section>
           <div class="lesson-layout">
-            <section class="lesson-main" aria-label="Lesson reader">
-              <div class="section-tabs" id="sectionTabs" aria-label="Module sections"></div>
-              <div class="lesson-tabs" id="lessonTabs" aria-label="Lessons"></div>
-              <article class="lesson-card" id="lessonCard"></article>
+            <section class="lesson-main" aria-label="Bài học">
+              <div class="section-tabs" id="sectionTabs" aria-label="Mục trong module"></div>
+              <div class="lesson-workspace">
+                <aside class="lesson-rail" id="lessonTabs" aria-label="Danh sách bài trong mục"></aside>
+                <article class="lesson-card" id="lessonCard"></article>
+              </div>
               <div class="reader-nav">
                 <button class="ghost-btn" id="prevLesson">Trước</button>
                 <button class="primary-btn" id="nextLesson">Tiếp theo</button>
@@ -79,9 +119,9 @@
           <article class="start-card compact-start">
             <p class="eyebrow">Final steps</p>
             <h2>Hoàn tất khóa học</h2>
-            <p>Đánh giá khóa học là bước bắt buộc trước Final Exam. Sau khi đạt bài thi, certificate sẽ mở.</p>
+            <p>Đánh giá khóa học là bước bắt buộc trước Final Exam. Sau khi đạt bài thi, certificate sẽ mở ở cuối khóa.</p>
           </article>
-          <section class="evaluation-panel" id="courseEvaluationPanel" aria-label="Course evaluation"></section>
+          <section class="evaluation-panel" id="courseEvaluationPanel" aria-label="Đánh giá khóa học"></section>
           <div class="assessment-list" id="assessmentGrid"></div>
           <section class="certificate-final" id="certificateFinal" hidden>
             <p class="eyebrow">Certificate</p>
@@ -90,10 +130,6 @@
             <a id="certificateLink" href="/academy/certificate-template/certificate-template.html">Tải certificate</a>
           </section>
         </section>
-
-        <footer class="reader-footer">
-          <a id="backToAcademy" href="/academy">Quay về trang academy</a>
-        </footer>
       </main>
     </div>
 
@@ -101,7 +137,7 @@
       <div>
         <strong>Yêu cầu đăng nhập Google</strong>
         <p>Bạn cần đăng nhập từ cổng DEEPFENSE Academy trước khi vào hệ thống học.</p>
-        <a href="/academy/basics">Quay lại cổng đăng nhập</a>
+        <a href="/academy/basics?auth=required">Quay lại cổng đăng nhập</a>
       </div>
     </div>
 

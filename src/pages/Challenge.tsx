@@ -9,7 +9,6 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import Simulator from './Simulator';
 import { claimDpfReward, DpfClaimResult } from '@/features/dpf/dpf';
 import DpfRewardNotice from '@/features/dpf/DpfRewardNotice';
-import DpfWalletPanel from '@/features/dpf/DpfWalletPanel';
 
 interface ChallengeProps {
   lang: Language;
@@ -694,9 +693,6 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
   
   return (
     <div className="animate-in fade-in duration-500">
-       <div className="max-w-5xl mx-auto mt-4 mb-6">
-        <DpfWalletPanel lang={lang} compact />
-       </div>
        <div className="flex flex-wrap justify-center bg-surface p-2 rounded-2xl border border-white/5 mb-8 w-fit mx-auto shadow-xl gap-2 mt-4 px-2">
         <button 
           onClick={() => setActiveTab('DETECTIVE')}

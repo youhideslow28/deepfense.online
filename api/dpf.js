@@ -39,6 +39,22 @@ const todayKey = () => {
 
 const numberOrZero = (value) => (typeof value === 'number' && Number.isFinite(value) ? value : 0);
 
+function withoutUndefined(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => withoutUndefined(item)).filter((item) => item !== undefined);
+  }
+
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([, item]) => item !== undefined)
+        .map(([key, item]) => [key, withoutUndefined(item)]),
+    );
+  }
+
+  return value;
+}
+
 function isRateLimited(key) {
   const now = Date.now();
   const current = rateLimitMap.get(key) || [];
@@ -137,7 +153,7 @@ async function adminGrant(uid, adminUser, payload) {
     const balanceBefore = numberOrZero(userData.webBalance);
     const balanceAfter = balanceBefore + amount;
 
-    transaction.set(userRef, {
+    const userUpdate = {
       uid: targetUser.uid,
       email: targetUser.email || String(payload.target || '').toLowerCase(),
       displayName: targetUser.displayName || userData.displayName || targetUser.email || targetUser.uid,
@@ -147,8 +163,10 @@ async function adminGrant(uid, adminUser, payload) {
       webBalance: balanceAfter,
       bonusBalance: numberOrZero(userData.bonusBalance) + amount,
       updatedAt: now,
-      createdAt: userSnap.exists ? userData.createdAt : now,
-    }, { merge: true });
+      createdAt: userSnap.exists && userData.createdAt ? userData.createdAt : now,
+    };
+
+    transaction.set(userRef, userUpdate, { merge: true });
 
     transaction.set(ledgerRef, {
       uid: targetUser.uid,
@@ -159,10 +177,10 @@ async function adminGrant(uid, adminUser, payload) {
       balanceAfter,
       status: 'confirmed',
       reason,
-      metadata: {
+      metadata: withoutUndefined({
         targetEmail: targetUser.email || '',
         grantedBy: adminUser.email || adminUser.uid,
-      },
+      }),
       idempotencyKey: grantId,
       createdAt: now,
       confirmedAt: now,
@@ -176,12 +194,12 @@ async function adminGrant(uid, adminUser, payload) {
       targetType: 'users',
       targetId: targetUser.uid,
       severity: amount >= 1000 ? 'warning' : 'notice',
-      metadata: {
+      metadata: withoutUndefined({
         amount,
         reason,
         target: targetUser.email || targetUser.uid,
         ledgerId,
-      },
+      }),
       createdAt: now,
     });
 
@@ -248,7 +266,7 @@ async function claimReward(uid, userProfile, payload) {
       webBalance: balanceAfter,
       earnedBalance: numberOrZero(userData.earnedBalance) + amount,
       updatedAt: now,
-      createdAt: userSnap.exists ? userData.createdAt : now,
+      createdAt: userSnap.exists && userData.createdAt ? userData.createdAt : now,
     }, { merge: true });
 
     transaction.set(ledgerRef, {
@@ -261,7 +279,7 @@ async function claimReward(uid, userProfile, payload) {
       status: 'confirmed',
       reason,
       activityId,
-      metadata: { season: DPF_SEASON, day, score: score ?? null, ...metadata },
+      metadata: withoutUndefined({ season: DPF_SEASON, day, score: score ?? null, ...metadata }),
       idempotencyKey,
       createdAt: now,
       confirmedAt: now,
@@ -341,7 +359,7 @@ async function unlockItem(uid, userProfile, payload) {
       status: 'confirmed',
       reason: `Unlock ${title}`,
       itemId,
-      metadata: { itemType, title, season: DPF_SEASON },
+      metadata: withoutUndefined({ itemType, title, season: DPF_SEASON }),
       idempotencyKey: `${uid}:unlock:${safeItemId}`,
       createdAt: now,
       confirmedAt: now,
@@ -393,10 +411,31 @@ export default async function handler(req, res) {
     return res.status(400).json({ ok: false, code: 'invalid_action', message: 'Invalid DPF action.' });
   } catch (error) {
     console.error('DPF API error:', error);
+    const message = String(error?.message || '');
+    const isConfigError = message.includes('Missing Firebase Admin service account env');
+    const isAdminError = error.statusCode === 403;
+    const isInputError = error.statusCode === 400;
+
     return res.status(error.statusCode || 500).json({
       ok: false,
-      code: error.statusCode === 401 ? 'auth_required' : 'server_error',
-      message: error.statusCode === 401 ? 'Sign in with Gmail to use DPF.' : 'DPF server is not configured or unavailable.',
+      code: error.statusCode === 401
+        ? 'auth_required'
+        : isConfigError
+          ? 'server_not_configured'
+          : isAdminError
+            ? 'admin_required'
+            : isInputError
+              ? 'invalid_request'
+              : 'server_error',
+      message: error.statusCode === 401
+        ? 'Sign in with Gmail to use DPF.'
+        : isConfigError
+          ? 'DPF backend is missing FIREBASE_SERVICE_ACCOUNT_BASE64 or FIREBASE_SERVICE_ACCOUNT_JSON.'
+          : isAdminError
+            ? 'This account is not allowed to grant DPF coin. Check DPF_ADMIN_EMAILS.'
+            : isInputError
+              ? message
+              : 'DPF server error. Check Vercel Function logs for /api/dpf.',
     });
   }
 }

@@ -1,9 +1,9 @@
 
 import React, { useState, Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { GoogleAuthProvider, getRedirectResult, onAuthStateChanged, signOut } from 'firebase/auth';
 import type { User } from 'firebase/auth';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 
 // Design System
 import '@/styles/design-tokens.css';
@@ -34,6 +34,8 @@ const Home = lazy(() => import('@/pages/Home'));
 const Academy = lazy(() => import('@/pages/Academy'));
 const AcademyBasics = lazy(() => import('@/pages/AcademyBasics'));
 const CertificateVerify = lazy(() => import('@/pages/CertificateVerify'));
+const Login = lazy(() => import('@/pages/Login'));
+const Profile = lazy(() => import('@/pages/Profile'));
 const Challenge = lazy(() => import('@/pages/Challenge'));
 const Tools = lazy(() => import('@/pages/Tools'));
 const AboutContact = lazy(() => import('@/pages/AboutContact'));
@@ -50,29 +52,67 @@ const ScrollToTop = () => {
   return null;
 };
 
-const ProtectedAcademyRoute: React.FC<{
-  user: User | null;
-  authBusy: boolean;
-  children: React.ReactElement;
-}> = ({ user, authBusy, children }) => {
-  if (authBusy) return <LoadingFallback />;
-  if (!user) return <Navigate to="/" replace />;
-  return children;
-};
-
 const AppContent: React.FC = () => {
   const [lang, setLang] = useState<Language>('vi');
   const [season, setSeason] = useState<Season>('SUMMER');
   const [user, setUser] = useState<User | null>(null);
   const [authBusy, setAuthBusy] = useState(true);
   const [authError, setAuthError] = useState('');
+  const [userRole, setUserRole] = useState<'admin' | 'editor' | 'user' | null>(null);
+  const [roleBusy, setRoleBusy] = useState(false);
   const t = TRANSLATIONS[lang];
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => onAuthStateChanged(auth, (nextUser) => {
     setUser(nextUser);
     setAuthBusy(false);
   }), []);
+
+  useEffect(() => {
+    let ignore = false;
+
+    const loadRole = async () => {
+      if (!user) {
+        setUserRole(null);
+        setRoleBusy(false);
+        return;
+      }
+
+      setRoleBusy(true);
+      const email = (user.email || '').toLowerCase();
+      const emailRole = email === 'deepfense@gmail.com' ? 'admin' : null;
+
+      try {
+        const userRef = doc(db, 'users', user.uid);
+        const userSnap = await getDoc(userRef);
+        const storedRole = userSnap.exists() ? String(userSnap.data().role || '') : '';
+        const nextRole = emailRole || (storedRole === 'admin' || storedRole === 'editor' ? storedRole : 'user');
+
+        if (emailRole === 'admin') {
+          await setDoc(userRef, {
+            uid: user.uid,
+            email: user.email || '',
+            displayName: user.displayName || '',
+            photoURL: user.photoURL || '',
+            role: 'admin',
+            status: 'active',
+            updatedAt: serverTimestamp(),
+          }, { merge: true });
+        }
+
+        if (!ignore) setUserRole(nextRole as 'admin' | 'editor' | 'user');
+      } catch (error) {
+        console.error('Unable to load user role:', error);
+        if (!ignore) setUserRole(emailRole || 'user');
+      } finally {
+        if (!ignore) setRoleBusy(false);
+      }
+    };
+
+    void loadRole();
+    return () => { ignore = true; };
+  }, [user]);
 
   useEffect(() => {
     if (!user) {
@@ -90,39 +130,15 @@ const AppContent: React.FC = () => {
       isAdmin: email === 'deepfense@gmail.com',
     }));
 
-    if (email === 'deepfense@gmail.com') {
-      const adminProgress: Record<string, true> = {};
-      for (let index = 1; index <= 9; index += 1) {
-        adminProgress[`module-${index}`] = true;
-      }
-      window.localStorage.setItem('deepfense-basics-progress', JSON.stringify(adminProgress));
-      window.localStorage.setItem('deepfense-basics-last-location', JSON.stringify({
-        route: 'exam',
-        moduleIndex: 8,
-        sectionIndex: 2,
-        lessonIndex: 2,
-        updatedAt: Date.now(),
-      }));
-      window.localStorage.setItem('deepfense-basics-course-evaluation', JSON.stringify({
-        rating: '5',
-        pace: 'right',
-        confidence: 'high',
-        feedback: 'Admin test completion.',
-        submittedAt: new Date().toISOString(),
-        adminSeeded: true,
-      }));
-      if (!window.localStorage.getItem('deepfense-basics-final-exam')) {
-        const randomId = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-        window.localStorage.setItem('deepfense-basics-final-exam', JSON.stringify({
-          score: 50,
-          total: 50,
-          percent: 100,
-          passed: true,
-          passedAt: new Date().toISOString(),
-          examId: `DPF-BASIC-${new Date().getFullYear()}-${randomId.replace(/-/g, '').slice(0, 16).toUpperCase()}`,
-          adminSeeded: true,
-        }));
-      }
+    if (email === 'deepfense@gmail.com' && !window.localStorage.getItem('deepfense-basics-admin-reset-v3')) {
+      [
+        'deepfense-basics-progress',
+        'deepfense-basics-last-location',
+        'deepfense-basics-course-evaluation',
+        'deepfense-basics-final-exam',
+        'deepfense-basics-certificate-name',
+      ].forEach((key) => window.localStorage.removeItem(key));
+      window.localStorage.setItem('deepfense-basics-admin-reset-v3', 'true');
     }
   }, [user]);
 
@@ -142,11 +158,29 @@ const AppContent: React.FC = () => {
     return !!email && allowedAuthEmails.includes(email.toLowerCase());
   };
 
+  const createGoogleProvider = () => {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    return provider;
+  };
+
   const registerAcademyLearner = async (currentUser: User) => {
     try {
-      const isAdmin = (currentUser.email || '').toLowerCase() === 'deepfense@gmail.com';
       await ensureDpfWallet(currentUser);
-      await setDoc(doc(db, 'academy_learners', currentUser.uid), {
+      const learnerRef = doc(db, 'academy_learners', currentUser.uid);
+      const learnerSnap = await getDoc(learnerRef);
+      const initialLearningState = learnerSnap.exists() ? {} : {
+        status: 'signed_in',
+        progressPercent: 0,
+        completedModules: [],
+        courseEvaluationSubmitted: false,
+        finalExam: null,
+        certificateUnlocked: false,
+        certificateId: '',
+        completedAt: null,
+      };
+
+      await setDoc(learnerRef, {
         uid: currentUser.uid,
         email: currentUser.email || '',
         displayName: currentUser.displayName || '',
@@ -155,19 +189,7 @@ const AppContent: React.FC = () => {
         course: 'DEEPFENSE BASICS',
         credentialTarget: 'DEEPFENSE AWARE',
         rewardTarget: { amount: 500, symbol: 'DPF' },
-        status: isAdmin ? 'completed' : 'signed_in',
-        progressPercent: isAdmin ? 100 : 0,
-        completedModules: isAdmin ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : [],
-        courseEvaluationSubmitted: isAdmin,
-        finalExam: isAdmin ? {
-          score: 50,
-          total: 50,
-          percent: 100,
-          passed: true,
-        } : null,
-        certificateUnlocked: isAdmin,
-        certificateId: isAdmin ? 'DEEPFENSE-AWARE-ADMIN-TEST' : '',
-        completedAt: isAdmin ? serverTimestamp() : null,
+        ...initialLearningState,
         updatedAt: serverTimestamp(),
       }, { merge: true });
     } catch (error) {
@@ -175,46 +197,50 @@ const AppContent: React.FC = () => {
     }
   };
 
+  const getAuthErrorMessage = (error: unknown, fallbackVi: string, fallbackEn: string) => {
+    const code = typeof error === 'object' && error && 'code' in error ? String((error as { code?: unknown }).code) : '';
+    return code
+      ? (lang === 'vi' ? `Lỗi (${code}): ${fallbackVi}` : `Error (${code}): ${fallbackEn}`)
+      : (lang === 'vi' ? fallbackVi : fallbackEn);
+  };
+
+  useEffect(() => {
+    if (!isFirebaseConfigured) return;
+
+    let ignore = false;
+    (async () => {
+      try {
+        // Remove the 7s timeout as it can cause race conditions or silent failures
+        const result = await getRedirectResult(auth);
+        if (ignore || !result?.user) return;
+
+        if (!isAllowedUser(result.user.email)) {
+          await signOut(auth);
+          setAuthError(lang === 'vi' ? 'Tài khoản này chưa được cấp quyền.' : 'This account is not allowed.');
+          return;
+        }
+
+        await registerAcademyLearner(result.user);
+      } catch (error) {
+        console.error('Google redirect auth error:', error);
+        setAuthError(getAuthErrorMessage(error, 'Không thể hoàn tất đăng nhập Google.', 'Unable to finish Google sign-in.'));
+      } finally {
+        if (!ignore) setAuthBusy(false);
+      }
+    })();
+
+    return () => { ignore = true; };
+  }, []);
+
   const handleGoogleAuth = async () => {
     if (authBusy) return;
-    setAuthBusy(true);
-    setAuthError('');
-
-    try {
-      if (!isFirebaseConfigured) {
-        const missing = missingFirebaseEnvKeys.join(', ');
-        setAuthError(lang === 'vi'
-          ? `Firebase chưa được cấu hình cho bản deploy này${missing ? `: ${missing}` : '.'}`
-          : `Firebase is not configured for this deployment${missing ? `: ${missing}` : '.'}`);
-        return;
-      }
-
-      if (user) {
-        await signOut(auth);
-        return;
-      }
-
-      const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: 'select_account' });
-      const result = await signInWithPopup(auth, provider);
-
-      if (!isAllowedUser(result.user.email)) {
-        await signOut(auth);
-        setAuthError(lang === 'vi' ? 'Tài khoản này chưa được cấp quyền.' : 'This account is not allowed.');
-        return;
-      }
-
-      await registerAcademyLearner(result.user);
-    } catch (error) {
-      console.error('Google auth error:', error);
-      const code = typeof error === 'object' && error && 'code' in error ? String((error as { code?: unknown }).code) : '';
-      const message = code
-        ? (lang === 'vi' ? `Không thể đăng nhập Google: ${code}` : `Google sign-in failed: ${code}`)
-        : (lang === 'vi' ? 'Không thể đăng nhập Google lúc này.' : 'Google sign-in is unavailable.');
-      setAuthError(message);
-    } finally {
-      setAuthBusy(false);
+    
+    if (user) {
+      navigate('/profile');
+      return;
     }
+
+    navigate('/login');
   };
 
   // --- DIGITAL SIGNATURE (CONSOLE WATERMARK) ---
@@ -244,7 +270,9 @@ const AppContent: React.FC = () => {
   const getPageTitle = () => {
     switch (location.pathname) {
       case '/': return lang === 'vi' ? 'Trang chủ' : 'Home';
+      case '/login': return lang === 'vi' ? 'Đăng nhập' : 'Sign In';
       case '/tools': return lang === 'vi' ? 'Hệ thống Quét Rủi Ro' : 'Risk Scanner';
+      case '/profile': return lang === 'vi' ? 'Hồ sơ người học' : 'Profile';
       case '/academy': return lang === 'vi' ? 'DEEPFENSE Academy' : 'DEEPFENSE Academy';
       case '/academy/basics': return lang === 'vi' ? 'DEEPFENSE Basics' : 'DEEPFENSE Basics';
       case '/academy/verify': return lang === 'vi' ? 'Xac minh chung chi' : 'Verify Certificate';
@@ -263,6 +291,13 @@ const AppContent: React.FC = () => {
         }
         return '';
     }
+  };
+
+  const renderAdminRoute = () => {
+    if (authBusy || roleBusy) return <LoadingFallback />;
+    if (!user) return <Navigate to="/login" replace />;
+    if (userRole !== 'admin') return <Navigate to="/profile" replace />;
+    return <Admin />;
   };
 
   return (
@@ -291,9 +326,11 @@ const AppContent: React.FC = () => {
             <Suspense fallback={<LoadingFallback />}>
                 <Routes>
                   <Route path="/" element={<Home lang={lang} season={season} />} />
+                  <Route path="/login" element={<Login lang={lang} user={user} />} />
+                  <Route path="/profile" element={<Profile lang={lang} user={user} authBusy={authBusy || roleBusy} />} />
                   <Route path="/academy/verify" element={<CertificateVerify lang={lang} />} />
-                  <Route path="/academy" element={<ProtectedAcademyRoute user={user} authBusy={authBusy}><Academy lang={lang} /></ProtectedAcademyRoute>} />
-                  <Route path="/academy/basics" element={<ProtectedAcademyRoute user={user} authBusy={authBusy}><AcademyBasics lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} /></ProtectedAcademyRoute>} />
+                  <Route path="/academy" element={<Academy lang={lang} />} />
+                  <Route path="/academy/basics" element={<AcademyBasics lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} />} />
                   <Route path="/tools/:tab?" element={<Tools lang={lang} />} />
                   <Route path="/challenge" element={<Challenge lang={lang} />} />
                   <Route path="/ai-project" element={<AiComingSoon lang={lang} />} />
@@ -301,7 +338,7 @@ const AppContent: React.FC = () => {
                   <Route path="/privacy" element={<Policy lang={lang} />} />
                   <Route path="/terms" element={<Policy lang={lang} />} />
                   <Route path="/policy" element={<Policy lang={lang} />} />
-                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/admin" element={renderAdminRoute()} />
                   <Route path="*" element={<Home lang={lang} season={season} />} />
                 </Routes>
             </Suspense>

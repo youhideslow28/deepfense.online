@@ -207,39 +207,47 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
       </div>
 
       {/* DEEPFENSE ACADEMY INTRO */}
-      <div ref={featRef as React.RefObject<HTMLDivElement>} className="mb-20">
-        <section data-reveal className="relative overflow-hidden rounded-2xl border border-blue-400/20 bg-[#07111f]/95 shadow-[0_24px_80px_rgba(0,0,0,0.34)]">
+      <div ref={featRef as React.RefObject<HTMLDivElement>} className="mb-16">
+        <section data-reveal className="relative overflow-hidden rounded-2xl border border-blue-400/18 bg-[#07111f]/88 shadow-[0_20px_68px_rgba(0,0,0,0.3)] backdrop-blur-xl">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
-          <div className="relative z-10 p-6 md:p-10">
-            <div className="mx-auto max-w-4xl">
-              <div className="mx-auto mb-5 flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-4 py-1.5 text-[10px] font-mono tracking-widest text-blue-300">
+          <div className="relative z-10 p-5 md:p-7">
+            <div className="mx-auto max-w-5xl">
+              <div className="mb-4 flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-3 py-1.5 text-[10px] font-mono tracking-widest text-blue-300">
                 <GraduationCap size={12} /> DEEPFENSE ACADEMY
               </div>
-              <div className="mx-auto max-w-3xl text-left">
-              <h2 className="text-3xl md:text-5xl font-black text-white leading-tight" style={{ fontFamily:"'Outfit', 'Inter', Arial, sans-serif" }}>
+              <div className="max-w-3xl text-left">
+              <h2 className="text-2xl md:text-3xl font-black text-white leading-[1.16]" style={{ fontFamily:"'Outfit', 'Inter', Arial, sans-serif" }}>
                 {lang === 'vi' ? 'Học cách bình tĩnh trước một nội dung quá giống thật.' : 'Learn to stay calm when fake looks real.'}
               </h2>
-              <p className="mt-5 text-sm md:text-base leading-relaxed text-gray-400">
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-gray-400">
                 {lang === 'vi'
                   ? 'Một giọng nói quen thuộc, một video gấp gáp, một tin nhắn đòi chuyển tiền. Chỉ vài phút học đúng cách có thể giúp bạn dừng lại, kiểm chứng và không trở thành người tiếp tay cho nội dung giả.'
                   : 'A familiar voice, an urgent video, a payment request. A few focused lessons can help you pause, verify, and avoid amplifying synthetic media.'}
               </p>
               </div>
-              <div className="mt-7 grid grid-cols-1 gap-3 md:grid-cols-3">
+              <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
                 {[
                   [lang === 'vi' ? 'Dễ bắt đầu' : 'Easy start', lang === 'vi' ? 'Bài ngắn, đọc tới đâu kiểm tra tới đó.' : 'Short lessons with checks as you go.'],
                   [lang === 'vi' ? 'Thực tế' : 'Practical', lang === 'vi' ? 'Tình huống đời thường: gia đình, công việc, mạng xã hội.' : 'Real situations: family, work, and social feeds.'],
                   [lang === 'vi' ? 'Có chứng nhận' : 'Certified', lang === 'vi' ? 'Hoàn thành khóa học để mở certificate và reward DPF.' : 'Finish the course to unlock certificate and DPF reward.'],
                 ].map(([title, text]) => (
-                  <div key={title} className="rounded-xl border border-white/10 bg-black/35 p-4 text-left">
+                  <div key={title} className="rounded-xl border border-white/10 bg-black/28 p-3 text-left">
                     <div className="text-white text-sm font-black mb-1">{title}</div>
                     <div className="text-gray-500 text-xs leading-relaxed">{text}</div>
                   </div>
                 ))}
               </div>
-              <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                 <GlowButton color="primary" size="md" icon={<GraduationCap size={16} />} onClick={() => navigate('/academy/basics')}>
                   {lang === 'vi' ? 'BẮT ĐẦU KHÓA HỌC' : 'START THE COURSE'}
+                </GlowButton>
+                <GlowButton
+                  color="ghost"
+                  size="md"
+                  icon={<Trophy size={16} />}
+                  onClick={() => navigate('/academy')}
+                >
+                  {lang === 'vi' ? 'BẢNG VINH DANH' : 'HALL OF FAME'}
                 </GlowButton>
               </div>
             </div>

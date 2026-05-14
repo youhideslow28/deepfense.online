@@ -94,7 +94,7 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
                   DEEPFENSE
                 </div>
                 <div className="font-mono text-[9px] font-bold uppercase tracking-[0.24em] text-[#60A5FA]/55">
-                  Learn - Do - Protect
+                  DEEPFAKE - DEFENSE
                 </div>
               </div>
             </Link>

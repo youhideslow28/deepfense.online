@@ -55,3 +55,34 @@ export const useDpfWallet = () => {
     signedIn: !!user,
   };
 };
+
+export const useDpfBalance = (currentUser: User | null) => {
+  const [wallet, setWallet] = useState<DpfWallet | null>(null);
+  const [loading, setLoading] = useState(!!currentUser);
+
+  useEffect(() => {
+    if (!currentUser) {
+      setWallet(null);
+      setLoading(false);
+      return undefined;
+    }
+
+    setLoading(true);
+    const unsubscribe = listenDpfWallet(currentUser, (nextWallet) => {
+      setWallet(nextWallet);
+      setLoading(false);
+    }, (err) => {
+      console.error('DPF balance listener failed:', err);
+      setWallet(null);
+      setLoading(false);
+    });
+
+    return unsubscribe;
+  }, [currentUser]);
+
+  return {
+    wallet,
+    balance: wallet?.webBalance ?? 0,
+    loading,
+  };
+};

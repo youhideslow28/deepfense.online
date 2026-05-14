@@ -8,8 +8,9 @@
 import React, { useState, useEffect } from 'react';
 import { Language, Season } from '@/types';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Home, Cpu, Swords, Bot, Info, Sun, Power, LogIn, LogOut, UserCircle, GraduationCap } from 'lucide-react';
+import { Menu, X, Home, Cpu, Swords, Bot, Info, Sun, Power, LogIn, UserCircle, GraduationCap, Coins } from 'lucide-react';
 import type { User } from 'firebase/auth';
+import { useDpfBalance } from '@/features/dpf/useDpfWallet';
 
 interface NavbarProps {
   lang: Language;
@@ -28,6 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
 
   const location = useLocation();
   const navigate = useNavigate();
+  const { balance: dpfBalance, loading: dpfLoading } = useDpfBalance(user);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -57,7 +59,8 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
 
   const authLabel = user
     ? (user.displayName?.split(' ')[0] || user.email?.split('@')[0] || 'Gmail')
-    : (lang === 'vi' ? 'Đăng nhập Gmail' : 'Sign in Gmail');
+    : (lang === 'vi' ? 'Đăng nhập' : 'Sign in');
+  const dpfBalanceLabel = dpfLoading ? '...' : dpfBalance.toLocaleString('en-US');
 
   return (
     <>
@@ -107,7 +110,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
                 <div className="hidden md:flex items-center gap-1.5 mt-1">
                   <div className="w-1 h-1 rounded-full bg-primary animate-pulse" />
                   <span className="font-mono text-[0.55rem] text-primary/40 tracking-[0.35em] uppercase font-bold">
-                  Learn - Do - Protect
+                  DEEPFAKE - DEFENSE
                   </span>
                 </div>
               </div>
@@ -192,12 +195,16 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
               <button
                 onClick={onGoogleAuth}
                 disabled={authBusy}
-                title={user?.email || (lang === 'vi' ? 'Đăng nhập bằng tài khoản Gmail' : 'Sign in with Gmail')}
-                className="hidden lg:flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 text-primary text-[10px] font-black font-mono uppercase tracking-widest hover:bg-primary/20 hover:border-primary/40 disabled:opacity-60 disabled:cursor-wait transition-all duration-300 max-w-[190px]"
+                title={user?.email || (lang === 'vi' ? 'Đăng nhập hoặc tạo tài khoản' : 'Sign in or create account')}
+                className="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-lg bg-primary/10 border border-primary/20 text-primary text-[10px] font-black font-mono uppercase tracking-widest hover:bg-primary/20 hover:border-primary/40 disabled:opacity-60 disabled:cursor-wait transition-all duration-300 max-w-[250px]"
               >
                 {user ? <UserCircle size={12} /> : <LogIn size={12} />}
                 <span className="truncate">{authBusy ? (lang === 'vi' ? 'ĐANG XỬ LÝ' : 'WORKING') : authLabel}</span>
-                {user && <LogOut size={11} className="opacity-60" />}
+                {user && (
+                  <span className="ml-1 inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[9px] text-amber-200">
+                    <Coins size={10} /> {dpfBalanceLabel}
+                  </span>
+                )}
               </button>
 
               {authError && (
@@ -248,7 +255,11 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
                 >
                   {user ? <UserCircle size={13} /> : <LogIn size={13} />}
                   <span className="truncate">{authBusy ? (lang === 'vi' ? 'ĐANG XỬ LÝ' : 'WORKING') : authLabel}</span>
-                  {user && <LogOut size={12} className="opacity-60" />}
+                  {user && (
+                    <span className="inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[9px] text-amber-200">
+                      <Coins size={10} /> {dpfBalanceLabel} DPF coin
+                    </span>
+                  )}
                 </button>
               </div>
             </div>

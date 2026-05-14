@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { db, auth, storage } from '@/config/firebase';
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { googleProvider } from '@/config/firebase';
 import {
   collection,
   addDoc,
@@ -35,6 +36,7 @@ import {
   HelpCircle,
   Layers,
   Lock,
+  LogIn,
   LogOut,
   Mail,
   Paperclip,
@@ -585,7 +587,9 @@ const Admin: React.FC = () => {
 
   const grantDpfCoinOnServer = async (payload: { target: string; amount: number; reason: string }) => {
     const user = auth.currentUser;
-    if (!user) return null;
+    if (!user) {
+      throw new Error('Ban can dang nhap admin truoc khi cap DPF coin.');
+    }
 
     const token = await user.getIdToken();
     const response = await fetch('/api/dpf', {
@@ -632,19 +636,15 @@ const Admin: React.FC = () => {
 
     setDpfBusy(true);
     try {
-      try {
-        const serverResult = await grantDpfCoinOnServer({
-          target,
-          amount,
-          reason: dpfForm.reason.trim() || 'Admin bonus DPF coin',
-        });
+      const serverResult = await grantDpfCoinOnServer({
+        target,
+        amount,
+        reason: dpfForm.reason.trim() || 'Admin bonus DPF coin',
+      });
 
-        if (serverResult?.ok) {
-          showActionMessage(`Da cong ${amount.toLocaleString('en-US')} DPF coin cho ${target}. So du moi: ${serverResult.balanceAfter.toLocaleString('en-US')}.`);
-          return;
-        }
-      } catch (serverError) {
-        console.warn('DPF admin server grant failed, falling back to client transaction:', serverError);
+      if (serverResult?.ok) {
+        showActionMessage(`Da cong ${amount.toLocaleString('en-US')} DPF coin cho ${target}. So du moi: ${serverResult.balanceAfter.toLocaleString('en-US')}.`);
+        return;
       }
 
       let targetUser = dashboardUsers.find((item) =>
@@ -730,7 +730,8 @@ const Admin: React.FC = () => {
       showActionMessage(`Đã cộng ${amount.toLocaleString('vi-VN')} DPF coin cho ${targetUser.email || uid}.`);
     } catch (error) {
       console.error('DPF coin grant failed:', error);
-      showActionMessage('Không thể cộng DPF coin. Hãy kiểm tra Firestore rules hoặc quyền admin.');
+      const message = error instanceof Error ? error.message : '';
+      showActionMessage(message || 'Khong the cong DPF coin. Hay kiem tra cau hinh Firebase Admin.');
     } finally {
       setDpfBusy(false);
     }
@@ -826,6 +827,67 @@ const Admin: React.FC = () => {
       metadata: { status },
     });
     showActionMessage('Đã cập nhật trạng thái người dùng.');
+  };
+
+  const deleteUserRecord = async (user: UserRecord) => {
+    const userId = user.uid || user.id;
+    if (!window.confirm(`Bạn chắc chắn muốn xóa hồ sơ user "${user.email || user.displayName || userId}"? Tài khoản đăng nhập Firebase Auth sẽ không bị xóa.`)) return;
+
+    await deleteDoc(doc(db, 'users', userId));
+    await writeActivityLog({
+      action: 'admin.user_deleted',
+      targetType: 'users',
+      targetId: userId,
+      severity: 'critical',
+      metadata: { email: user.email || '', displayName: user.displayName || '' },
+    });
+
+    if (selectedUserId === userId || selectedUserId === user.id) {
+      setSelectedUserId('');
+    }
+    showActionMessage('Đã xóa hồ sơ user khỏi collection users.');
+  };
+
+  const deleteDpfLedgerEntry = async (entry: DpfLedgerRecord) => {
+    if (!window.confirm(`Bạn chắc chắn muốn xóa giao dịch DPF "${entry.id}"? Thao tác này không tự tính lại số dư user.`)) return;
+
+    await deleteDoc(doc(db, 'dpf_ledger', entry.id));
+    await writeActivityLog({
+      action: 'admin.dpf_ledger_deleted',
+      targetType: 'dpf_ledger',
+      targetId: entry.id,
+      severity: 'warning',
+      metadata: { uid: entry.uid || '', amount: entry.amount || 0 },
+    });
+    showActionMessage('Đã xóa giao dịch DPF khỏi dpf_ledger.');
+  };
+
+  const deleteActivityLog = async (item: ActivityLog) => {
+    if (!window.confirm(`Bạn chắc chắn muốn xóa activity log "${item.action || item.id}"?`)) return;
+
+    await deleteDoc(doc(db, 'activity_logs', item.id));
+    await writeActivityLog({
+      action: 'admin.activity_log_deleted',
+      targetType: 'activity_logs',
+      targetId: item.id,
+      severity: 'warning',
+      metadata: { deletedAction: item.action || '' },
+    });
+    showActionMessage('Đã xóa activity log.');
+  };
+
+  const deleteSecurityEvent = async (item: SecurityEvent) => {
+    if (!window.confirm(`Bạn chắc chắn muốn xóa security event "${item.eventType || item.id}"?`)) return;
+
+    await deleteDoc(doc(db, 'security_events', item.id));
+    await writeActivityLog({
+      action: 'admin.security_event_deleted',
+      targetType: 'security_events',
+      targetId: item.id,
+      severity: 'critical',
+      metadata: { eventType: item.eventType || '', actorId: item.actorId || '' },
+    });
+    showActionMessage('Đã xóa security event.');
   };
 
   const createUserRecord = async (event: React.FormEvent) => {
@@ -968,34 +1030,55 @@ const Admin: React.FC = () => {
     );
   }
 
+  const handleGoogleLogin = async () => {
+    try {
+      setLoginError('');
+      await signInWithPopup(auth, googleProvider);
+    } catch (error) {
+      const code = typeof error === 'object' && error && 'code' in error ? String((error as { code?: unknown }).code) : '';
+      setLoginError(`Lỗi đăng nhập Google [${code}]`);
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center animate-in fade-in">
-        <form onSubmit={handleLogin} className="w-full max-w-sm rounded-lg border border-white/10 bg-[#07111f] p-8 text-center shadow-2xl shadow-black/40">
+        <div className="w-full max-w-sm rounded-lg border border-white/10 bg-[#07111f] p-8 text-center shadow-2xl shadow-black/40">
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-lg border border-primary/30 bg-primary/10">
             <Lock className="text-primary" size={32} />
           </div>
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.28em] text-primary">Trung tâm điều khiển Deepfense</p>
           <h2 className="mb-6 text-xl font-black text-white">Đăng nhập quản trị</h2>
-          <input
-            type="email"
-            placeholder="Email quản trị"
-            className="mb-4 w-full rounded-lg border border-white/20 bg-black p-3 text-center text-white outline-none focus:border-primary"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Mật khẩu"
-            className="mb-4 w-full rounded-lg border border-white/20 bg-black p-3 text-center text-white outline-none focus:border-primary"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          {loginError && <div className="mb-4 text-xs font-bold text-red-400">{loginError}</div>}
-          <button type="submit" className="w-full rounded-lg bg-primary py-3 font-bold text-white transition-colors hover:bg-blue-500">
-            Truy cập bảng điều khiển
+          
+          <button onClick={handleGoogleLogin} className="mb-6 flex w-full items-center justify-center gap-2 rounded-lg border border-blue-500/30 bg-blue-500/10 py-3 text-sm font-bold text-blue-300 transition-colors hover:bg-blue-500 hover:text-white">
+            <LogIn size={18} /> Đăng nhập bằng Google
           </button>
-        </form>
+
+          <div className="mb-6 flex items-center gap-4 text-xs text-gray-500 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
+            HOẶC DÙNG EMAIL
+          </div>
+
+          <form onSubmit={handleLogin} className="text-left">
+            <input
+              type="email"
+              placeholder="Email quản trị"
+              className="mb-4 w-full rounded-lg border border-white/20 bg-black p-3 text-center text-white outline-none focus:border-primary"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Mật khẩu"
+              className="mb-4 w-full rounded-lg border border-white/20 bg-black p-3 text-center text-white outline-none focus:border-primary"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            {loginError && <div className="mb-4 text-xs font-bold text-red-400">{loginError}</div>}
+            <button type="submit" className="w-full rounded-lg bg-primary py-3 font-bold text-white transition-colors hover:bg-blue-500">
+              Truy cập bằng mật khẩu
+            </button>
+          </form>
+        </div>
       </div>
     );
   }
@@ -1103,6 +1186,9 @@ const Admin: React.FC = () => {
               </button>
               <button onClick={() => changeUserStatus(selectedUser, selectedUser.status === 'banned' ? 'active' : 'banned')} className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 px-3 py-2 text-xs font-bold text-red-300 hover:bg-red-500/10">
                 <Ban size={14} /> {selectedUser.status === 'banned' ? 'Mở khóa' : 'Khóa tài khoản'}
+              </button>
+              <button onClick={() => deleteUserRecord(selectedUser)} className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs font-bold text-red-300 hover:bg-red-500/20">
+                <Trash2 size={14} /> Xóa hồ sơ
               </button>
               <button
                 onClick={() => {
@@ -1231,6 +1317,9 @@ const Admin: React.FC = () => {
                 </button>
                 <button onClick={() => changeUserStatus(user, user.status === 'banned' ? 'active' : 'banned')} className="inline-flex items-center gap-1 rounded border border-white/10 px-2 py-1 text-xs font-bold text-gray-300 hover:border-red-400 hover:text-red-300">
                   <Ban size={12} /> {user.status === 'banned' ? 'Mở khóa' : 'Khóa'}
+                </button>
+                <button onClick={() => deleteUserRecord(user)} className="inline-flex items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
+                  <Trash2 size={12} /> Xóa
                 </button>
               </div>
             </div>
@@ -1362,13 +1451,14 @@ const Admin: React.FC = () => {
         </section>
 
         <section className="overflow-x-auto rounded-lg border border-white/10 bg-[#07111f]/90">
-          <div className="grid min-w-[980px] grid-cols-[0.9fr_0.7fr_0.8fr_0.9fr_1.2fr_0.9fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-500">
+          <div className="grid min-w-[1080px] grid-cols-[0.9fr_0.7fr_0.8fr_0.9fr_1.2fr_0.9fr_0.6fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-500">
             <span>Thời gian</span>
             <span>Loại</span>
             <span>Số lượng</span>
             <span>Số dư sau</span>
             <span>Người nhận</span>
             <span>Nguồn</span>
+            <span>Xóa</span>
           </div>
           <div className="divide-y divide-white/5">
             {dpfLedger.length === 0 ? (
@@ -1377,7 +1467,7 @@ const Admin: React.FC = () => {
               dpfLedger.map((entry) => {
                 const targetEmail = typeof entry.metadata?.targetEmail === 'string' ? entry.metadata.targetEmail : '';
                 return (
-                  <div key={entry.id} className="grid min-w-[980px] grid-cols-[0.9fr_0.7fr_0.8fr_0.9fr_1.2fr_0.9fr] gap-3 px-4 py-4 text-sm">
+                  <div key={entry.id} className="grid min-w-[1080px] grid-cols-[0.9fr_0.7fr_0.8fr_0.9fr_1.2fr_0.9fr_0.6fr] gap-3 px-4 py-4 text-sm">
                     <span className="text-xs text-gray-500">{formatDate(entry.createdAt)}</span>
                     <Pill className={entry.direction === 'debit' ? 'border-red-500/30 bg-red-500/10 text-red-300' : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200'}>
                       {entry.direction || 'credit'}
@@ -1386,6 +1476,9 @@ const Admin: React.FC = () => {
                     <span className="text-gray-300">{(entry.balanceAfter || 0).toLocaleString('en-US')}</span>
                     <span className="truncate text-gray-300">{targetEmail || entry.uid || 'unknown'}</span>
                     <span className="truncate text-xs text-gray-500">{entry.source || entry.reason || 'admin_bonus'}</span>
+                    <button onClick={() => deleteDpfLedgerEntry(entry)} className="inline-flex w-fit items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
+                      <Trash2 size={12} /> Xóa
+                    </button>
                   </div>
                 );
               })
@@ -1563,8 +1656,10 @@ const Admin: React.FC = () => {
 
   const renderActivity = () => (
     <section className="rounded-lg border border-white/10 bg-[#07111f]/90">
-      {dashboardActivity.map((item) => (
-        <div key={item.id} className="grid gap-3 border-b border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.8fr_0.8fr]">
+      {dashboardActivity.length === 0 ? (
+        <div className="px-5 py-6 text-sm text-gray-500">Chưa có activity log nào trong Firestore.</div>
+      ) : dashboardActivity.map((item) => (
+        <div key={item.id} className="grid gap-3 border-b border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.8fr_0.8fr_0.35fr]">
           <div>
             <p className="font-mono font-bold text-white">{item.action || 'activity.event'}</p>
             <p className="text-xs text-gray-500">Tác nhân: {item.actorId || 'hệ thống'}</p>
@@ -1572,6 +1667,9 @@ const Admin: React.FC = () => {
           <Pill className={severityClass(item.severity)}>{severityLabels[item.severity || 'info']}</Pill>
           <span className="text-gray-400">{item.targetType || 'system'} / {item.targetId || '-'}</span>
           <span className="text-xs text-gray-500">{formatDate(item.createdAt)}</span>
+          <button onClick={() => deleteActivityLog(item)} className="inline-flex w-fit items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
+            <Trash2 size={12} /> Xóa
+          </button>
         </div>
       ))}
     </section>
@@ -1611,8 +1709,10 @@ const Admin: React.FC = () => {
       </form>
 
       <section className="rounded-lg border border-white/10 bg-[#07111f]/90">
-        {dashboardSecurity.map((item) => (
-          <div key={item.id} className="grid gap-3 border-b border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.6fr_0.8fr]">
+        {dashboardSecurity.length === 0 ? (
+          <div className="px-5 py-6 text-sm text-gray-500">Chưa có security event nào trong Firestore.</div>
+        ) : dashboardSecurity.map((item) => (
+          <div key={item.id} className="grid gap-3 border-b border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.6fr_0.8fr_0.35fr]">
             <div>
               <p className="font-mono font-bold text-white">{item.eventType || 'security.event'}</p>
               <p className="text-xs text-gray-500">Tác nhân: {item.actorId || 'không rõ'} / IP: {item.sourceIp || 'ẩn'}</p>
@@ -1620,6 +1720,9 @@ const Admin: React.FC = () => {
             <Pill className={severityClass(item.severity)}>{severityLabels[item.severity || 'notice']}</Pill>
             <span className="text-gray-400">{roleLabels[item.actorRole || 'user']}</span>
             <span className="text-xs text-gray-500">{formatDate(item.createdAt)}</span>
+            <button onClick={() => deleteSecurityEvent(item)} className="inline-flex w-fit items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
+              <Trash2 size={12} /> Xóa
+            </button>
           </div>
         ))}
       </section>

@@ -8,7 +8,7 @@
 import { initializeApp, getApps } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey:            import.meta.env.VITE_FIREBASE_API_KEY            || 'demo-api-key',
@@ -47,4 +47,7 @@ const db      = getFirestore(app);
 const storage = getStorage(app);
 const auth    = getAuth(app);
 
-export { app, analytics, db, storage, auth, isFirebaseConfigured, missingFirebaseEnvKeys };
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
+
+export { app, analytics, db, storage, auth, googleProvider, isFirebaseConfigured, missingFirebaseEnvKeys };
