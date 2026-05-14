@@ -321,7 +321,7 @@ const AppContent: React.FC = () => {
           onGoogleAuth={handleGoogleAuth}
         />
         
-        <main className="flex-grow container mx-auto px-4 py-8 md:py-12 max-w-7xl z-10">
+        <main className={`flex-grow z-10 ${location.pathname === '/' ? 'w-full' : 'container mx-auto px-4 py-8 md:py-12 max-w-7xl'}`}>
           <ErrorBoundary>
             <Suspense fallback={<LoadingFallback />}>
                 <Routes>
