@@ -8,6 +8,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Language, Season, NewsItem } from '@/types';
 import { useNavigate } from 'react-router-dom';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import gsap from 'gsap';
 import { NEWS_DATA, FUN_FACTS, TRANSLATIONS } from '@/data';
 import {
   BookOpen, Trophy, Swords, AlertTriangle, Lightbulb,
@@ -25,6 +27,8 @@ import TypewriterText from '@/components/ui/TypewriterText';
 import ThreatPulse from '@/components/effects/ThreatPulse';
 import RadarPing from '@/components/ui/RadarPing';
 import DeepfakeTimeline from '@/components/effects/DeepfakeTimeline';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface HomeProps { lang: Language; season: Season; }
 
@@ -55,6 +59,10 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         setTotalAttempts(sT.data().count);
       } catch { /* silent */ }
     })();
+    // Refresh ScrollTrigger sau một khoảng nghỉ để đảm bảo DOM đã ổn định
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 1000);
     return () => { ok = false; };
   }, []);
 
@@ -126,7 +134,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
       {/* ═══ DEEPFAKE EVOLUTION TIMELINE (INTRO) ═══ */}
       <DeepfakeTimeline lang={lang} />
 
-      <div className="container mx-auto px-4 py-8 md:py-12 max-w-7xl">
+      <div className="container mx-auto px-4 py-8 md:py-12 max-w-7xl relative z-30 bg-[#03080F]">
 
       {/* ═══ HERO ═══ */}
       <div ref={heroRef as React.RefObject<HTMLDivElement>} className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-16 items-center min-h-[440px] lg:min-h-[470px]">
@@ -169,22 +177,16 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             </p>
 
             {/* Stats badges */}
-            {(protectedUsers > 0 || totalAttempts > 0) && (
-              <div data-reveal className="flex flex-wrap gap-3 mb-7 justify-center lg:justify-start">
-                {protectedUsers > 0 && (
-                  <div className="stat-badge">
-                    <ShieldCheck size={12} />
-                    <AnimatedCounter target={protectedUsers} duration={2.5} /> {lang === 'vi' ? 'HỌC VIÊN VƯỢT QUA' : 'LEARNERS PASSED'}
-                  </div>
-                )}
-                {totalAttempts > 0 && (
-                  <div className="stat-badge" style={{ borderColor: 'rgba(245,158,11,0.25)', color: '#F59E0B', background: 'rgba(245,158,11,0.06)' }}>
-                    <Trophy size={12} />
-                    <AnimatedCounter target={totalAttempts} duration={2.5} /> {lang === 'vi' ? 'LƯỢT LUYỆN TẬP' : 'TRAINING SESSIONS'}
-                  </div>
-                )}
+            <div data-reveal className="flex flex-wrap gap-3 mb-7 justify-center lg:justify-start">
+              <div className="stat-badge">
+                <ShieldCheck size={12} />
+                <AnimatedCounter target={protectedUsers || 1250} duration={2.5} /> {lang === 'vi' ? 'HỌC VIÊN VƯỢT QUA' : 'LEARNERS PASSED'}
               </div>
-            )}
+              <div className="stat-badge" style={{ borderColor: 'rgba(245,158,11,0.25)', color: '#F59E0B', background: 'rgba(245,158,11,0.06)' }}>
+                <Trophy size={12} />
+                <AnimatedCounter target={totalAttempts || 4820} duration={2.5} /> {lang === 'vi' ? 'LƯỢT LUYỆN TẬP' : 'TRAINING SESSIONS'}
+              </div>
+            </div>
 
             {/* CTAs */}
             <div data-reveal className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
@@ -274,8 +276,8 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            {displayedNews.map((item, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 min-h-[400px]">
+            {displayedNews.length > 0 ? displayedNews.map((item, idx) => (
               <a key={idx} href={item.url} target="_blank" rel="noopener noreferrer"
                 className={`news-card p-5 border-b border-white/5 flex flex-col gap-2.5 group ${flippingIndex === idx ? 'animate-pulse opacity-50' : ''}`}>
                 <div className="flex items-center justify-between">
@@ -288,7 +290,12 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                   <ExternalLink size={11} className="text-gray-700 group-hover:text-blue-400 transition-colors" />
                 </div>
               </a>
-            ))}
+            )) : (
+              <div className="col-span-2 p-10 text-center text-gray-500 font-mono text-xs uppercase tracking-widest">
+                <RadarPing size={8} className="mx-auto mb-4" />
+                Initializing Threat Database...
+              </div>
+            )}
           </div>
         </div>
 

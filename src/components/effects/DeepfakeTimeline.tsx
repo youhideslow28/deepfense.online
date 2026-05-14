@@ -3,7 +3,7 @@ import { Language } from '@/types';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import { MonitorPlay, Mic, Video, Sparkles } from 'lucide-react';
+import { MonitorPlay, Mic, Video, Sparkles, ChevronDown } from 'lucide-react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
@@ -17,10 +17,10 @@ interface DeepfakeTimelineProps {
 const ERAS = [
   {
     year: '2017',
-    titleVi: 'Sự Khởi Nguồn',
-    titleEn: 'The Origin',
-    descVi: 'Khởi đầu từ các diễn đàn, công nghệ ghép mặt tĩnh (Face Swap) còn thô sơ và dễ dàng bị phát hiện.',
-    descEn: 'Originating from forums, static face swap technology was crude and easily detectable.',
+    titleVi: 'Khởi Nguồn Deepfake',
+    titleEn: 'The Origin of Deepfake',
+    descVi: 'Thuật ngữ "Deepfake" chính thức ra đời trên Reddit. Những ứng dụng hoán đổi khuôn mặt đầu tiên xuất hiện, dù còn thô sơ nhưng đã bộc lộ tiềm năng gây nhiễu loạn thông tin toàn cầu.',
+    descEn: 'The term "Deepfake" was born on Reddit. First face-swap apps appeared, crude but showing massive potential for misinformation.',
     icon: MonitorPlay,
     color: 'text-cyan-400',
     shadow: 'shadow-[0_0_30px_rgba(34,211,238,0.2)]'
@@ -28,9 +28,9 @@ const ERAS = [
   {
     year: '2020',
     titleVi: 'Sự Trỗi Dậy Của Âm Thanh',
-    titleEn: 'Voice Cloning Era',
-    descVi: 'AI vượt qua hình ảnh, tiến tới sao chép hoàn hảo giọng nói của bất kỳ ai, mở ra kỷ nguyên mạo danh.',
-    descEn: 'AI evolved beyond visuals to perfectly clone anyone\'s voice, ushering in the impersonation era.',
+    titleEn: 'The Rise of AI Voice',
+    descVi: 'Công nghệ giả mạo giọng nói (Voice Cloning) đạt bước tiến lớn. Các công cụ mã nguồn mở như DeepfaceLab giúp việc tạo video giả mạo trở nên phổ biến và tinh vi hơn.',
+    descEn: 'Voice Cloning technology took a giant leap. Open-source tools like DeepfaceLab made high-quality fakes accessible and more sophisticated.',
     icon: Mic,
     color: 'text-emerald-400',
     shadow: 'shadow-[0_0_30px_rgba(52,211,153,0.2)]'
@@ -38,9 +38,9 @@ const ERAS = [
   {
     year: '2023',
     titleVi: 'Kỷ Nguyên Thời Gian Thực',
-    titleEn: 'Real-time Threat',
-    descVi: 'Video call lừa đảo bùng nổ. Khuôn mặt và giọng nói được thao túng trực tiếp ngay trên sóng livestream.',
-    descEn: 'Video call scams exploded. Faces and voices manipulated instantly on live streams.',
+    titleEn: 'Real-time Era',
+    descVi: 'Deepfake bắt đầu xâm nhập vào các cuộc gọi video trực tiếp. AI tạo sinh bùng nổ với Stable Diffusion và Midjourney, xóa nhòa ranh giới trong ảnh chụp và livestream.',
+    descEn: 'Deepfakes entered live video calls. Generative AI exploded with Stable Diffusion and Midjourney, blurring lines in photos and live streams.',
     icon: Video,
     color: 'text-orange-400',
     shadow: 'shadow-[0_0_30px_rgba(251,146,60,0.2)]'
@@ -49,8 +49,8 @@ const ERAS = [
     year: '2025',
     titleVi: 'Sự Hoàn Hảo Đáng Sợ',
     titleEn: 'Terrifying Perfection',
-    descVi: 'Thế hệ AI tạo sinh mới (Sora/Flux). Ranh giới giữa sự thật và dối trá chính thức bị xóa nhòa hoàn toàn.',
-    descEn: 'The new generation of Generative AI. The boundary between truth and lies is completely erased.',
+    descVi: 'Với sự ra đời của Sora và các mô hình video AI thế hệ mới, Deepfake đạt độ chân thực tuyệt đối. Việc phân biệt thật - giả trở thành thử thách lớn nhất của nhân loại.',
+    descEn: 'With Sora and next-gen AI video models, Deepfakes reached absolute realism. Distinguishing truth from lies became humanity\'s greatest challenge.',
     icon: Sparkles,
     color: 'text-rose-500',
     shadow: 'shadow-[0_0_30px_rgba(244,63,94,0.2)]'
@@ -100,7 +100,7 @@ const NeuralSphere = ({ progressRef }: { progressRef: React.MutableRefObject<num
   });
 
   return (
-    <group rotation={[0, 0, Math.PI / 4]}>
+    <group rotation={[0, 0, Math.PI / 4]} position={[0, 0.45, 0]}>
       <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>
         <PointMaterial 
           transparent 
@@ -129,25 +129,40 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
       },
     });
 
-    // Fade in text elements
+    // ═══ CENTER FOCUS SCALING ═══
     const cards = gsap.utils.toArray<HTMLElement>('.era-card');
-    cards.forEach((card) => {
-      gsap.fromTo(
-        card,
-        { opacity: 0, y: 100, scale: 0.9 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 1,
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 75%',
-            end: 'bottom 25%',
-            toggleActions: 'play reverse play reverse',
-          }
+    cards.forEach((card, index) => {
+      // Bỏ qua card đầu tiên (intro) không cho thu nhỏ khi ở trên cùng
+      const isIntro = index === 0;
+      
+      gsap.set(card, { scale: isIntro ? 1 : 0.7, opacity: isIntro ? 1 : 0, filter: isIntro ? 'blur(0px)' : 'blur(12px)' });
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: card,
+          start: isIntro ? 'top top' : 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
         }
-      );
+      });
+
+      if (isIntro) {
+        // Chỉ cho intro mờ đi khi cuộn đi
+        tl.to(card, { opacity: 0, scale: 0.8, filter: 'blur(10px)', ease: 'power2.in' });
+      } else {
+        tl.to(card, { 
+          scale: 1.15, 
+          opacity: 1, 
+          filter: 'blur(0px)', 
+          ease: 'power2.inOut' 
+        })
+        .to(card, { 
+          scale: 0.7, 
+          opacity: 0, 
+          filter: 'blur(12px)', 
+          ease: 'power2.inOut' 
+        });
+      }
     });
   }, { scope: containerRef });
 
@@ -157,6 +172,7 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
       {/* Sticky 3D Background */}
       <div className="sticky top-0 left-0 w-full h-screen overflow-hidden pointer-events-none z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-[#03080F] via-transparent to-[#03080F] z-10" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#03080F] to-transparent z-20" />
         <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
           <ambientLight intensity={0.5} />
           <NeuralSphere progressRef={progressRef} />
@@ -167,14 +183,23 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
       <div className="relative z-20 -mt-[100vh] w-full pointer-events-none">
         
         {/* Intro Section */}
-        <div className="h-screen flex items-center justify-center">
-          <div className="text-center era-card">
-            <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mix-blend-difference" style={{ fontFamily:"'Outfit', sans-serif" }}>
-              {lang === 'vi' ? 'Sự Tiến Hóa' : 'The Evolution'}
+        <div className="h-screen flex items-start justify-center pt-[25vh]">
+          <div className="text-center era-card px-4">
+            <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tight mix-blend-difference" style={{ fontFamily: "var(--font-outfit)" }}>
+              {lang === 'vi' ? (
+                <>
+                  Deepfake đã phát triển<br />như thế nào?
+                </>
+              ) : (
+                'How Deepfake Has Evolved'
+              )}
             </h2>
-            <p className="text-gray-300 mt-4 tracking-widest text-sm uppercase">
+            <p className="text-blue-400 mt-6 tracking-[0.2em] text-xs md:text-sm uppercase font-bold animate-blink" style={{ fontFamily:"'Outfit', sans-serif" }}>
               {lang === 'vi' ? 'Cuộn xuống để du hành thời gian' : 'Scroll down to time travel'}
             </p>
+            <div className="flex justify-center mt-4 text-blue-400/60 animate-bounce">
+              <ChevronDown size={32} />
+            </div>
           </div>
         </div>
 
@@ -190,10 +215,10 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
               <span className={`text-7xl font-black opacity-20 absolute -top-4 -left-4 ${era.color} pointer-events-none`} style={{ fontFamily:"'Outfit', sans-serif" }}>
                 {era.year}
               </span>
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 mt-4">
+              <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 mt-4" style={{ fontFamily: "'Outfit', sans-serif" }}>
                 {lang === 'vi' ? era.titleVi : era.titleEn}
               </h3>
-              <p className="text-gray-300 md:text-lg leading-relaxed">
+              <p className="text-gray-300 md:text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
                 {lang === 'vi' ? era.descVi : era.descEn}
               </p>
             </div>

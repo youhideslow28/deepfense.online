@@ -8,9 +8,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Inter:wght@300;400;600;700&display=swap');
+
 @layer base {
+  :root {
+    --font-outfit: 'Outfit', 'Inter', -apple-system, sans-serif;
+  }
+
   html {
-    font-family: 'Inter', Arial, 'Helvetica Neue', sans-serif;
+    font-family: var(--font-outfit);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;

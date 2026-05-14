@@ -64,16 +64,18 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
 
     const fromVars = PRESET_MAP[preset];
     const ctx = gsap.context(() => {
-      gsap.from(elements, {
-        ...fromVars,
-        duration,
-        stagger,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: container,
-          start,
-          toggleActions: 'play none none none',
-        },
+      elements.forEach((el, index) => {
+        gsap.from(el, {
+          ...fromVars,
+          duration,
+          delay: index * stagger * 0.5, // Reduced stagger since they trigger individually
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 92%',
+            toggleActions: 'play reverse play reverse',
+          },
+        });
       });
     }, container);
 
