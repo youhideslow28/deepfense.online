@@ -208,48 +208,46 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
       {/* DEEPFENSE ACADEMY INTRO */}
       <div ref={featRef as React.RefObject<HTMLDivElement>} className="mb-16">
-        <section data-reveal className="relative overflow-hidden rounded-2xl border border-blue-400/18 bg-[#07111f]/88 shadow-[0_20px_68px_rgba(0,0,0,0.3)] backdrop-blur-xl">
+        <section data-reveal className="mx-auto max-w-5xl relative overflow-hidden rounded-3xl border border-blue-400/18 bg-[#07111f]/88 shadow-[0_20px_68px_rgba(0,0,0,0.3)] backdrop-blur-xl">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
-          <div className="relative z-10 p-5 md:p-6">
-            <div className="mx-auto max-w-5xl">
-              <div className="flex flex-col md:flex-row gap-8 md:items-center">
-                <div className="flex-1 text-left">
-                  <div className="mb-3 flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-2.5 py-1 text-[10px] font-mono tracking-widest text-blue-300">
-                    <GraduationCap size={12} /> DEEPFENSE ACADEMY
-                  </div>
-                  <h2 className="text-xl md:text-2xl font-black text-white leading-snug" style={{ fontFamily:"'Outfit', 'Inter', Arial, sans-serif" }}>
-                    {lang === 'vi' ? 'Học cách bình tĩnh trước một nội dung quá giống thật.' : 'Learn to stay calm when fake looks real.'}
-                  </h2>
-                  <p className="mt-3 text-xs md:text-sm leading-relaxed text-gray-400 max-w-lg">
-                    {lang === 'vi'
-                      ? 'Chỉ vài phút học đúng cách có thể giúp bạn dừng lại, kiểm chứng và không trở thành người tiếp tay cho nội dung giả.'
-                      : 'A few focused lessons can help you pause, verify, and avoid amplifying synthetic media.'}
-                  </p>
-                  <div className="mt-5 flex flex-wrap gap-3">
-                    <GlowButton color="primary" size="sm" icon={<GraduationCap size={14} />} onClick={() => navigate('/academy/basics')}>
-                      {lang === 'vi' ? 'BẮT ĐẦU HỌC' : 'START COURSE'}
-                    </GlowButton>
-                    <GlowButton color="ghost" size="sm" icon={<Trophy size={14} />} onClick={() => navigate('/academy')}>
-                      {lang === 'vi' ? 'BẢNG VINH DANH' : 'HALL OF FAME'}
-                    </GlowButton>
-                  </div>
+          <div className="relative z-10 p-6 md:p-8 md:px-10">
+            <div className="flex flex-col md:flex-row gap-8 md:items-center">
+              <div className="flex-1 text-left">
+                <div className="mb-3 flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-2.5 py-1 text-[10px] font-mono tracking-widest text-blue-300">
+                  <GraduationCap size={12} /> DEEPFENSE ACADEMY
                 </div>
+                <h2 className="text-xl md:text-2xl font-black text-white leading-snug" style={{ fontFamily:"'Outfit', 'Inter', Arial, sans-serif" }}>
+                  {lang === 'vi' ? 'Học cách bình tĩnh trước một nội dung quá giống thật.' : 'Learn to stay calm when fake looks real.'}
+                </h2>
+                <p className="mt-3 text-xs md:text-sm leading-relaxed text-gray-400 max-w-lg">
+                  {lang === 'vi'
+                    ? 'Chỉ vài phút học đúng cách có thể giúp bạn dừng lại, kiểm chứng và không trở thành người tiếp tay cho nội dung giả.'
+                    : 'A few focused lessons can help you pause, verify, and avoid amplifying synthetic media.'}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <GlowButton color="primary" size="sm" icon={<GraduationCap size={14} />} onClick={() => navigate('/academy/basics')}>
+                    {lang === 'vi' ? 'BẮT ĐẦU HỌC' : 'START COURSE'}
+                  </GlowButton>
+                  <GlowButton color="ghost" size="sm" icon={<Trophy size={14} />} onClick={() => navigate('/academy')}>
+                    {lang === 'vi' ? 'BẢNG VINH DANH' : 'HALL OF FAME'}
+                  </GlowButton>
+                </div>
+              </div>
 
-                <div className="w-full md:w-[380px] flex flex-col gap-2">
-                  {[
-                    [lang === 'vi' ? 'Dễ bắt đầu' : 'Easy start', lang === 'vi' ? 'Bài ngắn, đọc tới đâu kiểm tra tới đó.' : 'Short lessons with checks as you go.'],
-                    [lang === 'vi' ? 'Thực tế' : 'Practical', lang === 'vi' ? 'Tình huống đời thường: gia đình, công việc...' : 'Real situations: family, work...'],
-                    [lang === 'vi' ? 'Có chứng nhận' : 'Certified', lang === 'vi' ? 'Hoàn thành khóa học để nhận DPF reward.' : 'Finish course to receive DPF reward.'],
-                  ].map(([title, text]) => (
-                    <div key={title} className="rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-colors p-3 flex items-center gap-3 text-left">
-                      <div className="bg-blue-500/10 p-2 rounded-lg shrink-0"><BookOpen size={16} className="text-blue-400"/></div>
-                      <div>
-                        <div className="text-white text-[13px] font-bold mb-0.5 leading-none">{title}</div>
-                        <div className="text-gray-500 text-[11px] leading-tight">{text}</div>
-                      </div>
+              <div className="w-full md:w-[380px] flex flex-col gap-2">
+                {[
+                  [lang === 'vi' ? 'Dễ bắt đầu' : 'Easy start', lang === 'vi' ? 'Bài ngắn, đọc tới đâu kiểm tra tới đó.' : 'Short lessons with checks as you go.'],
+                  [lang === 'vi' ? 'Thực tế' : 'Practical', lang === 'vi' ? 'Tình huống đời thường: gia đình, công việc...' : 'Real situations: family, work...'],
+                  [lang === 'vi' ? 'Có chứng nhận' : 'Certified', lang === 'vi' ? 'Hoàn thành khóa học để nhận DPF reward.' : 'Finish course to receive DPF reward.'],
+                ].map(([title, text]) => (
+                  <div key={title} className="rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-colors p-3 flex items-center gap-3 text-left">
+                    <div className="bg-blue-500/10 p-2 rounded-lg shrink-0"><BookOpen size={16} className="text-blue-400"/></div>
+                    <div>
+                      <div className="text-white text-[13px] font-bold mb-0.5 leading-none">{title}</div>
+                      <div className="text-gray-500 text-[11px] leading-tight">{text}</div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
