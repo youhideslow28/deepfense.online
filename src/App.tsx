@@ -329,7 +329,7 @@ const AppContent: React.FC = () => {
                   <Route path="/login" element={<Login lang={lang} user={user} />} />
                   <Route path="/profile" element={<Profile lang={lang} user={user} authBusy={authBusy || roleBusy} />} />
                   <Route path="/academy/verify" element={<CertificateVerify lang={lang} />} />
-                  <Route path="/academy" element={<Academy lang={lang} />} />
+                  <Route path="/academy" element={<Academy lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} />} />
                   <Route path="/academy/basics" element={<AcademyBasics lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} />} />
                   <Route path="/tools/:tab?" element={<Tools lang={lang} />} />
                   <Route path="/challenge" element={<Challenge lang={lang} />} />
