@@ -308,28 +308,87 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               </GlowButton>
             </div>
           ) : (
-            user?.email !== 'deepfense@gmail.com' && (
-              <div className="glass-dark border border-red-500/20 rounded-2xl p-6">
-                <h3 className="font-black text-red-400 uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
-                  <AlertCircle size={14} />
-                  {isVi ? 'VÙNG NGUY HIỂM' : 'DANGER ZONE'}
-                </h3>
-                <p className="text-[11px] text-gray-500 mb-4">
-                  {isVi ? 'Xóa toàn bộ tiến độ học tập của bạn?' : 'Reset all your learning progress?'}
-                </p>
-                <button 
-                  onClick={() => {
-                    if (window.confirm(isVi ? 'Bạn có chắc chắn muốn xóa hết tiến độ?' : 'Are you sure you want to reset all progress?')) {
-                      setCompletedLessons([]);
-                      setCompletedModules([]);
-                    }
-                  }}
-                  className="w-full py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest hover:bg-red-500/20 transition-all"
-                >
-                  {isVi ? 'RESET TIẾN ĐỘ' : 'RESET PROGRESS'}
-                </button>
-              </div>
-            )
+            <>
+              {user?.email === 'deepfense@gmail.com' && (
+                <div className="glass-dark border border-blue-500/20 rounded-2xl p-6 mb-4">
+                  <h3 className="font-black text-blue-400 uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
+                    <Sparkles size={14} />
+                    DEV TOOLS (ADMIN ONLY)
+                  </h3>
+                  <p className="text-[11px] text-gray-500 mb-4 leading-relaxed">
+                    Hoàn thành nhanh 100% khóa học để kiểm tra chứng chỉ (Certificate).
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    <button 
+                      onClick={() => {
+                        const allModuleIds = basicsCourse.modules.map(m => m.id);
+                        const allLessonIds: string[] = [];
+                        basicsCourse.modules.forEach(m => {
+                          m.sections.forEach(s => {
+                            s.lessons.forEach(l => {
+                              allLessonIds.push(l.id);
+                            });
+                          });
+                        });
+                        setCompletedModules(allModuleIds);
+                        setCompletedLessons(allLessonIds);
+                        localStorage.setItem('deepfense-basics-course-evaluation', 'true');
+                        localStorage.setItem('deepfense-basics-final-exam', JSON.stringify({
+                          score: 50,
+                          total: 50,
+                          passed: true,
+                          date: new Date().toISOString()
+                        }));
+                        localStorage.setItem('df_completed_modules', JSON.stringify(allModuleIds));
+                        localStorage.setItem('df_completed_lessons', JSON.stringify(allLessonIds));
+                        alert('Course Auto-Completed! Reloading dashboard...');
+                        window.location.reload();
+                      }}
+                      className="w-full py-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest hover:bg-blue-500/20 transition-all"
+                    >
+                      AUTO COMPLETE 100%
+                    </button>
+                    <button 
+                      onClick={() => {
+                        [
+                          'df_completed_lessons',
+                          'df_completed_modules',
+                          'deepfense-basics-course-evaluation',
+                          'deepfense-basics-final-exam',
+                        ].forEach(key => localStorage.removeItem(key));
+                        window.location.reload();
+                      }}
+                      className="w-full py-2 rounded-xl bg-red-500/5 border border-red-500/10 text-red-500/50 text-[10px] font-black uppercase tracking-widest hover:bg-red-500/10 transition-all"
+                    >
+                      RESET ALL
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {user?.email !== 'deepfense@gmail.com' && (
+                <div className="glass-dark border border-red-500/20 rounded-2xl p-6">
+                  <h3 className="font-black text-red-400 uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
+                    <AlertCircle size={14} />
+                    {isVi ? 'VÙNG NGUY HIỂM' : 'DANGER ZONE'}
+                  </h3>
+                  <p className="text-[11px] text-gray-500 mb-4">
+                    {isVi ? 'Xóa toàn bộ tiến độ học tập của bạn?' : 'Reset all your learning progress?'}
+                  </p>
+                  <button 
+                    onClick={() => {
+                      if (window.confirm(isVi ? 'Bạn có chắc chắn muốn xóa hết tiến độ?' : 'Are you sure you want to reset all progress?')) {
+                        setCompletedLessons([]);
+                        setCompletedModules([]);
+                      }
+                    }}
+                    className="w-full py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest hover:bg-red-500/20 transition-all"
+                  >
+                    {isVi ? 'RESET TIẾN ĐỘ' : 'RESET PROGRESS'}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

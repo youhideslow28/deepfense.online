@@ -18,8 +18,8 @@ const academyIndexUrl = '/academy/deepfense-basics-preview/index.html';
 const roadmap = [
   {
     code: '01',
-    titleVi: 'Module 1 - Deepfake là gì?',
-    titleEn: 'Module 1 - What is a deepfake?',
+    titleVi: 'Deepfake là gì?',
+    titleEn: 'What is a deepfake?',
     metaVi: 'Khởi động, kiến thức nền và checkpoint ngay trong bài',
     metaEn: 'Intro, foundation concepts, and inline checkpoints',
   },

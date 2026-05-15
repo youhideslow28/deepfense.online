@@ -42,6 +42,7 @@ const AboutContact = lazy(() => import('@/pages/AboutContact'));
 const AiComingSoon = lazy(() => import('@/pages/AiComingSoon'));
 const Admin = lazy(() => import('@/pages/Admin'));
 const Policy = lazy(() => import('@/pages/Policy'));
+const CookieConsent = lazy(() => import('@/components/common/CookieConsent'));
 
 // Component tự động cuộn lên đầu trang khi chuyển Route
 const ScrollToTop = () => {
@@ -346,6 +347,7 @@ const AppContent: React.FC = () => {
         </main>
         
         <AiChat lang={lang} />
+        <CookieConsent lang={lang} />
         
         <Footer lang={lang} />
       </div>
