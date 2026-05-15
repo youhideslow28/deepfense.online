@@ -97,7 +97,6 @@ export const basicsCourse = {
               "Deepfake thường xuất hiện trong bối cảnh đời thường, không phải trong phòng thí nghiệm.",
               "Áp lực phải hành động ngay là tín hiệu cần chậm lại."
             ])
-          ],
           ]
         },
         {
@@ -119,7 +118,6 @@ export const basicsCourse = {
               "Khóa học ưu tiên phản xạ an toàn, không học vẹt thuật ngữ.",
               "Hoàn thành khóa học nghĩa là biết dùng kiến thức trong tình huống thực tế."
             ])
-          ],
           ]
         },
         {
@@ -208,7 +206,6 @@ export const basicsCourse = {
               "Áp lực thời gian là đồng minh của kẻ lừa đảo.",
               "Đừng chỉ tin vào mắt và tai mình trên không gian số."
             ])
-          ],
           ]
         },
         {
@@ -270,7 +267,6 @@ export const basicsCourse = {
               "Quy trình thật không bao giờ yêu cầu bạn bỏ qua các bước an toàn.",
               "Lời hứa 'quá tốt để là thật' thường là lừa đảo."
             ])
-          ],
           ]
         },
         {
@@ -330,7 +326,6 @@ export const basicsCourse = {
               "Quan sát sự nhất quán giữa người và cảnh.",
               "Logo và chữ viết thường là điểm yếu của các mô hình AI tạo hình."
             ])
-          ],
           ]
         },
         {
@@ -404,7 +399,6 @@ export const basicsCourse = {
               "An toàn là ưu tiên số 1.",
               "Nếu không chắc chắn, hãy chọn phương án không hành động."
             ])
-          ],
           ]
         },
         {
@@ -464,7 +458,6 @@ export const basicsCourse = {
               "Cơ quan chức năng không làm việc qua video call yêu cầu tiền/OTP.",
               "Lợi nhuận 'trên trời' thường đi kèm với bẫy lừa đảo."
             ])
-          ],
           ]
         },
         {
@@ -530,7 +523,6 @@ export const basicsCourse = {
               "Bạn không cần xóa hết cuộc sống online, nhưng hãy đăng có chọn lọc.",
               "Tài khoản mạnh bảo vệ cả danh dự của bạn."
             ])
-          ],
           ]
         },
         {

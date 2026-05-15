@@ -135,8 +135,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
       <DeepfakeTimeline lang={lang} />
 
       {/* ═══ MAIN CONTENT ═══ */}
-      <div className="relative z-30">
-        <div className="container mx-auto px-4 py-8 md:py-12 max-w-7xl">
+      <div className="container mx-auto px-4 py-8 md:py-12 max-w-7xl">
 
       {/* ═══ HERO ═══ */}
       <div ref={heroRef as React.RefObject<HTMLDivElement>} className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-16 items-center min-h-[440px] lg:min-h-[470px] -mt-[15vh]">
@@ -337,7 +336,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
           </div>
         </div>
       </div>
-        </div>
+      </div>
     </div>
   );
 };
