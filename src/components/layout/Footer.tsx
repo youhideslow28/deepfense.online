@@ -126,28 +126,6 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
                   </div>
                 </div>
               </div>
-              
-              {/* VKU Attribution */}
-              <div className="mt-5 pt-4 border-t border-white/5 flex items-center gap-3">
-                <div className="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center p-1.5 overflow-hidden">
-                   <img 
-                      src="https://daotao.vku.udn.vn/public/images/logo_2021.png" 
-                      alt="VKU" 
-                      className="h-full w-full object-contain opacity-90 transition-opacity hover:opacity-100" 
-                      onError={(e) => { 
-                        const target = e.target as HTMLImageElement;
-                        if (target.src.includes("daotao.vku.udn.vn")) {
-                          target.src = "https://vku.udn.vn/wp-content/uploads/2023/08/Logo.svg";
-                        } else {
-                          target.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Logo_VKU.png/800px-Logo_VKU.png";
-                        }
-                      }} 
-                   />
-                </div>
-                <div className="text-[11px] font-bold tracking-wider text-gray-400 uppercase">
-                  {isVi ? 'Sản phẩm sinh viên trường Đại học Công nghệ thông tin và Truyền thông Việt - Hàn (VKU)' : 'Student product at Vietnam-Korea University of Information and Communication Technology (VKU)'}
-                </div>
-              </div>
             </div>
           </div>
 

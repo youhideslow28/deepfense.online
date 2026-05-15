@@ -10,9 +10,9 @@ export const PROJECT_METADATA = {
   build_date: new Date().toLocaleDateString('vi-VN'),
   authors: [
     { name: "Hồ Xuân Nguyễn", id: "25NS039", role: "Fullstack Developer / Project Lead" },
-    { name: "Nguyễn Nhất Huy", id: "25NS020", role: "Frontend Developer / Security Analyst" },
-    { name: "Võ Phan Pháp", id: "25NS045", role: "UI/UX Designer / Content Creator" },
-    { name: "Trần Minh Nhất", id: "25NS040", role: "Frontend Developer / Research" }
+    { name: "Nguyễn Nhất Huy", id: "25NS020", role: "Content Strategist / Technical Writer" },
+    { name: "Võ Phan Pháp", id: "25NS045", role: "Tester / Quality Assurance (QA)" },
+    { name: "Trần Minh Nhất", id: "25NS040", role: "Editor / Tester" }
   ],
   university: "Vietnam-Korea University of Information and Communication Technology (VKU)",
   department: "Khoa Kỹ thuật Máy tính & Điện tử (Computer Engineering & Electronics)",
