@@ -1,8 +1,8 @@
 // @ts-nocheck
 /**
- * DEEPFENSE.ONLINE — Firebase Configuration
+ * DEEPFENSE.ONLINE â€” Firebase Configuration
  * Graceful fallback when env vars are missing (local dev without .env)
- * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
  */
 
 import { initializeApp, getApps } from "firebase/app";

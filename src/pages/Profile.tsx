@@ -72,9 +72,9 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
     try {
       await updateProfile(auth.currentUser, { displayName: displayName.trim() || auth.currentUser.displayName || '' });
       await syncUserDocuments(auth.currentUser);
-      setMessage(isVi ? 'Đã cập nhật hồ sơ.' : 'Profile updated.');
+      setMessage(isVi ? 'ÄÃ£ cáº­p nháº­t há»“ sÆ¡.' : 'Profile updated.');
     } catch (error) {
-      setMessage(authMessage(error, isVi ? 'Không thể cập nhật hồ sơ.' : 'Unable to update profile.'));
+      setMessage(authMessage(error, isVi ? 'KhÃ´ng thá»ƒ cáº­p nháº­t há»“ sÆ¡.' : 'Unable to update profile.'));
     } finally {
       setBusy(false);
     }
@@ -88,10 +88,10 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
     try {
       await sendEmailVerification(auth.currentUser);
       setMessage(isVi
-        ? 'Đã gửi email xác minh. Hãy kiểm tra hộp thư VÀ THƯ RÁC (SPAM).'
+        ? 'ÄÃ£ gá»­i email xÃ¡c minh. HÃ£y kiá»ƒm tra há»™p thÆ° VÃ€ THÆ¯ RÃC (SPAM).'
         : 'Verification email sent. Check your inbox AND SPAM folder.');
     } catch (error) {
-      setMessage(authMessage(error, isVi ? 'Không thể gửi email xác minh.' : 'Unable to send verification email.'));
+      setMessage(authMessage(error, isVi ? 'KhÃ´ng thá»ƒ gá»­i email xÃ¡c minh.' : 'Unable to send verification email.'));
     } finally {
       setBusy(false);
     }
@@ -106,10 +106,10 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
       await reload(auth.currentUser);
       await syncUserDocuments(auth.currentUser);
       setMessage(auth.currentUser.emailVerified
-        ? (isVi ? 'Email đã được xác minh.' : 'Email is verified.')
-        : (isVi ? 'Email vẫn chưa được xác minh.' : 'Email is still not verified.'));
+        ? (isVi ? 'Email Ä‘Ã£ Ä‘Æ°á»£c xÃ¡c minh.' : 'Email is verified.')
+        : (isVi ? 'Email váº«n chÆ°a Ä‘Æ°á»£c xÃ¡c minh.' : 'Email is still not verified.'));
     } catch (error) {
-      setMessage(authMessage(error, isVi ? 'Không thể kiểm tra trạng thái email.' : 'Unable to refresh email status.'));
+      setMessage(authMessage(error, isVi ? 'KhÃ´ng thá»ƒ kiá»ƒm tra tráº¡ng thÃ¡i email.' : 'Unable to refresh email status.'));
     } finally {
       setBusy(false);
     }
@@ -124,10 +124,10 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
     try {
       await sendPasswordResetEmail(auth, user.email);
       setMessage(isVi 
-        ? 'Đã gửi email đặt lại mật khẩu. Hãy kiểm tra hộp thư VÀ THƯ RÁC (SPAM).' 
+        ? 'ÄÃ£ gá»­i email Ä‘áº·t láº¡i máº­t kháº©u. HÃ£y kiá»ƒm tra há»™p thÆ° VÃ€ THÆ¯ RÃC (SPAM).' 
         : 'Password reset email sent. Check your inbox AND SPAM folder.');
     } catch (error) {
-      setMessage(authMessage(error, isVi ? 'Không thể gửi email đặt lại mật khẩu.' : 'Unable to send password reset email.'));
+      setMessage(authMessage(error, isVi ? 'KhÃ´ng thá»ƒ gá»­i email Ä‘áº·t láº¡i máº­t kháº©u.' : 'Unable to send password reset email.'));
     } finally {
       setBusy(false);
     }
@@ -141,7 +141,7 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
   if (authBusy || !user) {
     return (
       <div className="mx-auto max-w-4xl rounded-2xl border border-white/10 bg-black/30 p-8 text-sm text-gray-400">
-        {isVi ? 'Đang tải hồ sơ...' : 'Loading profile...'}
+        {isVi ? 'Äang táº£i há»“ sÆ¡...' : 'Loading profile...'}
       </div>
     );
   }
@@ -153,14 +153,14 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-4 py-1.5 text-[10px] font-mono uppercase tracking-widest text-blue-300">
-              <UserCircle size={13} /> {isVi ? 'Hồ sơ người học' : 'Learner profile'}
+              <UserCircle size={13} /> {isVi ? 'Há»“ sÆ¡ ngÆ°á»i há»c' : 'Learner profile'}
             </div>
             <h1 className="text-3xl font-black leading-tight text-white md:text-4xl" style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}>
               {user.displayName || user.email?.split('@')[0] || 'Deepfense learner'}
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-gray-400">
               {isVi
-                ? 'Quản lý tài khoản, xác minh email và theo dõi DPF coin của bạn.'
+                ? 'Quáº£n lÃ½ tÃ i khoáº£n, xÃ¡c minh email vÃ  theo dÃµi DPF coin cá»§a báº¡n.'
                 : 'Manage your account, verify email, and track your DPF coin.'}
             </p>
 
@@ -176,7 +176,7 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
                   <MailCheck size={13} /> Email
                 </div>
                 <div className="mt-3 text-xs font-black uppercase tracking-widest text-white">
-                  {user.emailVerified ? (isVi ? 'Đã xác minh' : 'Verified') : (isVi ? 'Chưa xác minh' : 'Unverified')}
+                  {user.emailVerified ? (isVi ? 'ÄÃ£ xÃ¡c minh' : 'Verified') : (isVi ? 'ChÆ°a xÃ¡c minh' : 'Unverified')}
                 </div>
               </div>
             </div>
@@ -186,7 +186,7 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
             <div className="glass-dark rounded-2xl border border-white/10 p-5 md:p-8">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <label className="block md:col-span-2">
-                  <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Tên hiển thị' : 'Display name'}</span>
+                  <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'TÃªn hiá»ƒn thá»‹' : 'Display name'}</span>
                   <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all" />
                 </label>
                 <label className="block md:col-span-2">
@@ -195,25 +195,25 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
                 </label>
 
                 <button onClick={handleSaveProfile} disabled={busy} className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-400/20 bg-blue-400/10 px-4 py-3 text-xs font-black uppercase tracking-widest text-blue-200 hover:bg-blue-400/15 disabled:opacity-60">
-                  <Save size={14} /> {isVi ? 'Lưu hồ sơ' : 'Save profile'}
+                  <Save size={14} /> {isVi ? 'LÆ°u há»“ sÆ¡' : 'Save profile'}
                 </button>
                 <button onClick={handleResetPassword} disabled={busy || !hasPassword} className="inline-flex items-center justify-center gap-2 rounded-lg border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-xs font-black uppercase tracking-widest text-amber-200 hover:bg-amber-400/15 disabled:opacity-40">
-                  <ShieldCheck size={14} /> {isVi ? 'Đổi mật khẩu' : 'Reset password'}
+                  <ShieldCheck size={14} /> {isVi ? 'Äá»•i máº­t kháº©u' : 'Reset password'}
                 </button>
                 <button onClick={handleVerifyEmail} disabled={busy || user.emailVerified} className="inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-xs font-black uppercase tracking-widest text-emerald-200 hover:bg-emerald-400/15 disabled:opacity-40">
-                  <MailCheck size={14} /> {isVi ? 'Gửi xác minh' : 'Verify email'}
+                  <MailCheck size={14} /> {isVi ? 'Gá»­i xÃ¡c minh' : 'Verify email'}
                 </button>
                 <button onClick={handleRefreshVerification} disabled={busy} className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-xs font-black uppercase tracking-widest text-gray-300 hover:bg-white/[0.08] disabled:opacity-60">
-                  <RefreshCw size={14} /> {isVi ? 'Kiểm tra lại' : 'Refresh'}
+                  <RefreshCw size={14} /> {isVi ? 'Kiá»ƒm tra láº¡i' : 'Refresh'}
                 </button>
                 <button onClick={handleSignOut} className="inline-flex items-center justify-center gap-2 rounded-lg border border-red-400/20 bg-red-500/10 px-4 py-3 text-xs font-black uppercase tracking-widest text-red-100 hover:bg-red-500/15 md:col-span-2">
-                  <LogOut size={14} /> {isVi ? 'Đăng xuất' : 'Sign out'}
+                  <LogOut size={14} /> {isVi ? 'ÄÄƒng xuáº¥t' : 'Sign out'}
                 </button>
               </div>
 
               {message && (
                 <div className="mt-5 flex gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-xs leading-relaxed text-gray-200">
-                  {message.toLowerCase().includes('không') || message.toLowerCase().includes('unable')
+                  {message.toLowerCase().includes('khÃ´ng') || message.toLowerCase().includes('unable')
                     ? <AlertTriangle size={16} className="mt-0.5 shrink-0 text-amber-300" />
                     : <BadgeCheck size={16} className="mt-0.5 shrink-0 text-emerald-300" />}
                   <span>{message}</span>

@@ -17,9 +17,9 @@ interface DeepfakeTimelineProps {
 const ERAS = [
   {
     year: '2017',
-    titleVi: 'Khởi Nguồn Deepfake',
+    titleVi: 'Khá»Ÿi Nguá»“n Deepfake',
     titleEn: 'The Origin of Deepfake',
-    descVi: 'Thuật ngữ "Deepfake" chính thức ra đời trên Reddit. Những ứng dụng hoán đổi khuôn mặt đầu tiên xuất hiện, dù còn thô sơ nhưng đã bộc lộ tiềm năng gây nhiễu loạn thông tin toàn cầu.',
+    descVi: 'Thuáº­t ngá»¯ "Deepfake" chÃ­nh thá»©c ra Ä‘á»i trÃªn Reddit. Nhá»¯ng á»©ng dá»¥ng hoÃ¡n Ä‘á»•i khuÃ´n máº·t Ä‘áº§u tiÃªn xuáº¥t hiá»‡n, dÃ¹ cÃ²n thÃ´ sÆ¡ nhÆ°ng Ä‘Ã£ bá»™c lá»™ tiá»m nÄƒng gÃ¢y nhiá»…u loáº¡n thÃ´ng tin toÃ n cáº§u.',
     descEn: 'The term "Deepfake" was born on Reddit. First face-swap apps appeared, crude but showing massive potential for misinformation.',
     icon: MonitorPlay,
     color: 'text-cyan-400',
@@ -27,9 +27,9 @@ const ERAS = [
   },
   {
     year: '2020',
-    titleVi: 'Sự Trỗi Dậy Của Âm Thanh',
+    titleVi: 'Sá»± Trá»—i Dáº­y Cá»§a Ã‚m Thanh',
     titleEn: 'The Rise of AI Voice',
-    descVi: 'Công nghệ giả mạo giọng nói (Voice Cloning) đạt bước tiến lớn. Các công cụ mã nguồn mở như DeepfaceLab giúp việc tạo video giả mạo trở nên phổ biến và tinh vi hơn.',
+    descVi: 'CÃ´ng nghá»‡ giáº£ máº¡o giá»ng nÃ³i (Voice Cloning) Ä‘áº¡t bÆ°á»›c tiáº¿n lá»›n. CÃ¡c cÃ´ng cá»¥ mÃ£ nguá»“n má»Ÿ nhÆ° DeepfaceLab giÃºp viá»‡c táº¡o video giáº£ máº¡o trá»Ÿ nÃªn phá»• biáº¿n vÃ  tinh vi hÆ¡n.',
     descEn: 'Voice Cloning technology took a giant leap. Open-source tools like DeepfaceLab made high-quality fakes accessible and more sophisticated.',
     icon: Mic,
     color: 'text-emerald-400',
@@ -37,9 +37,9 @@ const ERAS = [
   },
   {
     year: '2023',
-    titleVi: 'Kỷ Nguyên Thời Gian Thực',
+    titleVi: 'Ká»· NguyÃªn Thá»i Gian Thá»±c',
     titleEn: 'Real-time Era',
-    descVi: 'Deepfake bắt đầu xâm nhập vào các cuộc gọi video trực tiếp. AI tạo sinh bùng nổ với Stable Diffusion và Midjourney, xóa nhòa ranh giới trong ảnh chụp và livestream.',
+    descVi: 'Deepfake báº¯t Ä‘áº§u xÃ¢m nháº­p vÃ o cÃ¡c cuá»™c gá»i video trá»±c tiáº¿p. AI táº¡o sinh bÃ¹ng ná»• vá»›i Stable Diffusion vÃ  Midjourney, xÃ³a nhÃ²a ranh giá»›i trong áº£nh chá»¥p vÃ  livestream.',
     descEn: 'Deepfakes entered live video calls. Generative AI exploded with Stable Diffusion and Midjourney, blurring lines in photos and live streams.',
     icon: Video,
     color: 'text-orange-400',
@@ -47,9 +47,9 @@ const ERAS = [
   },
   {
     year: '2025',
-    titleVi: 'Sự Hoàn Hảo Đáng Sợ',
+    titleVi: 'Sá»± HoÃ n Háº£o ÄÃ¡ng Sá»£',
     titleEn: 'Terrifying Perfection',
-    descVi: 'Với sự ra đời của Sora và các mô hình video AI thế hệ mới, Deepfake đạt độ chân thực tuyệt đối. Việc phân biệt thật - giả trở thành thử thách lớn nhất của nhân loại.',
+    descVi: 'Vá»›i sá»± ra Ä‘á»i cá»§a Sora vÃ  cÃ¡c mÃ´ hÃ¬nh video AI tháº¿ há»‡ má»›i, Deepfake Ä‘áº¡t Ä‘á»™ chÃ¢n thá»±c tuyá»‡t Ä‘á»‘i. Viá»‡c phÃ¢n biá»‡t tháº­t - giáº£ trá»Ÿ thÃ nh thá»­ thÃ¡ch lá»›n nháº¥t cá»§a nhÃ¢n loáº¡i.',
     descEn: 'With Sora and next-gen AI video models, Deepfakes reached absolute realism. Distinguishing truth from lies became humanity\'s greatest challenge.',
     icon: Sparkles,
     color: 'text-rose-500',
@@ -136,10 +136,10 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
       },
     });
 
-    // ═══ CENTER FOCUS SCALING ═══
+    // â•â•â• CENTER FOCUS SCALING â•â•â•
     const cards = gsap.utils.toArray<HTMLElement>('.era-card');
     cards.forEach((card, index) => {
-      // Bỏ qua card đầu tiên (intro) không cho thu nhỏ khi ở trên cùng
+      // Bá» qua card Ä‘áº§u tiÃªn (intro) khÃ´ng cho thu nhá» khi á»Ÿ trÃªn cÃ¹ng
       const isIntro = index === 0;
       
       gsap.set(card, { scale: isIntro ? 1 : 0.7, opacity: isIntro ? 1 : 0, filter: isIntro ? 'blur(0px)' : 'blur(12px)' });
@@ -154,7 +154,7 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
       });
 
       if (isIntro) {
-        // Chỉ cho intro mờ đi khi cuộn đi
+        // Chá»‰ cho intro má» Ä‘i khi cuá»™n Ä‘i
         tl.to(card, { opacity: 0, scale: 0.8, filter: 'blur(10px)', ease: 'power2.in' });
       } else {
         tl.to(card, { 
@@ -195,19 +195,21 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
         {/* Intro Section */}
         <div className="h-screen flex items-start justify-center pt-[25vh]">
           <div className="text-center era-card px-4">
-            <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tight mix-blend-difference leading-[1.3]" style={{ fontFamily: "var(--font-outfit)" }}>
+            <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tight mix-blend-difference leading-[1.6]" style={{ fontFamily: "var(--font-outfit)" }}>
               {lang === 'vi' ? (
                 <>
-                  Deepfake đã phát triển<br />như thế nào?
+                  Deepfake Ä‘Ã£ phÃ¡t triá»ƒn<br /><span className="mt-2 block">nhÆ° tháº¿ nÃ o?</span>
                 </>
               ) : (
                 'How Deepfake Has Evolved'
               )}
             </h2>
-            <p className="text-blue-400 mt-6 tracking-[0.2em] text-xs md:text-sm uppercase font-bold animate-blink" style={{ fontFamily:"'Outfit', sans-serif" }}>
-              {lang === 'vi' ? 'Cuộn xuống để du hành thời gian' : 'Scroll down to time travel'}
-            </p>
-            <div className="flex justify-center mt-4 text-blue-400/60 animate-bounce">
+            <div className="mt-8 inline-block px-6 py-3 bg-black/40 backdrop-blur-md border border-white/10 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.1)]">
+              <p className="text-cyan-400 tracking-[0.2em] text-xs md:text-sm uppercase font-bold animate-pulse" style={{ fontFamily:"'Outfit', sans-serif" }}>
+                {lang === 'vi' ? 'Cuá»™n xuá»‘ng Ä‘á»ƒ du hÃ nh thá»i gian' : 'Scroll down to time travel'}
+              </p>
+            </div>
+            <div className="flex justify-center mt-6 text-cyan-400/60 animate-bounce">
               <ChevronDown size={32} />
             </div>
           </div>

@@ -29,7 +29,7 @@ import { TRANSLATIONS, PROJECT_METADATA } from '@/data';
 import { auth, db, isFirebaseConfigured, missingFirebaseEnvKeys } from '@/config/firebase';
 import { ensureDpfWallet } from '@/features/dpf/dpf';
 
-// Lazy loading các trang để giảm tải ban đầu
+// Lazy loading cÃ¡c trang Ä‘á»ƒ giáº£m táº£i ban Ä‘áº§u
 const Home = lazy(() => import('@/pages/Home'));
 const Academy = lazy(() => import('@/pages/Academy'));
 const CertificateVerify = lazy(() => import('@/pages/CertificateVerify'));
@@ -43,7 +43,7 @@ const Admin = lazy(() => import('@/pages/Admin'));
 const Policy = lazy(() => import('@/pages/Policy'));
 const CookieConsent = lazy(() => import('@/components/common/CookieConsent'));
 
-// Component tự động cuộn lên đầu trang khi chuyển Route
+// Component tá»± Ä‘á»™ng cuá»™n lÃªn Ä‘áº§u trang khi chuyá»ƒn Route
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -200,7 +200,7 @@ const AppContent: React.FC = () => {
   const getAuthErrorMessage = (error: unknown, fallbackVi: string, fallbackEn: string) => {
     const code = typeof error === 'object' && error && 'code' in error ? String((error as { code?: unknown }).code) : '';
     return code
-      ? (lang === 'vi' ? `Lỗi (${code}): ${fallbackVi}` : `Error (${code}): ${fallbackEn}`)
+      ? (lang === 'vi' ? `Lá»—i (${code}): ${fallbackVi}` : `Error (${code}): ${fallbackEn}`)
       : (lang === 'vi' ? fallbackVi : fallbackEn);
   };
 
@@ -216,14 +216,14 @@ const AppContent: React.FC = () => {
 
         if (!isAllowedUser(result.user.email)) {
           await signOut(auth);
-          setAuthError(lang === 'vi' ? 'Tài khoản này chưa được cấp quyền.' : 'This account is not allowed.');
+          setAuthError(lang === 'vi' ? 'TÃ i khoáº£n nÃ y chÆ°a Ä‘Æ°á»£c cáº¥p quyá»n.' : 'This account is not allowed.');
           return;
         }
 
         await registerAcademyLearner(result.user);
       } catch (error) {
         console.error('Google redirect auth error:', error);
-        setAuthError(getAuthErrorMessage(error, 'Không thể hoàn tất đăng nhập Google.', 'Unable to finish Google sign-in.'));
+        setAuthError(getAuthErrorMessage(error, 'KhÃ´ng thá»ƒ hoÃ n táº¥t Ä‘Äƒng nháº­p Google.', 'Unable to finish Google sign-in.'));
       } finally {
         if (!ignore) setAuthBusy(false);
       }
@@ -244,18 +244,18 @@ const AppContent: React.FC = () => {
   };
 
   // --- DIGITAL SIGNATURE (CONSOLE WATERMARK) ---
-  // Khi giáo viên mở Console (F12), họ sẽ thấy thông tin bản quyền này.
+  // Khi giÃ¡o viÃªn má»Ÿ Console (F12), há» sáº½ tháº¥y thÃ´ng tin báº£n quyá»n nÃ y.
   useEffect(() => {
     const styleTitle = "color: #00F0FF; font-size: 20px; font-weight: bold; background: #000; padding: 10px; border: 2px solid #00F0FF; border-radius: 5px;";
     const styleText = "color: #E0E0E0; font-size: 12px; background: #111; padding: 4px;";
     
     // --- ANTI SELF-XSS WARNING ---
-    console.log("%cDỪNG LẠI! / STOP!", "color: red; font-size: 45px; font-weight: 900; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000; font-family: sans-serif;");
-    console.log("%cĐây là tính năng dành cho nhà phát triển. Nếu ai đó bảo bạn sao chép-dán mã (code) vào đây để mở khóa tính năng ẩn, đó 100% là LỪA ĐẢO (Self-XSS) nhằm chiếm đoạt tài khoản và dữ liệu của bạn.", "color: white; font-size: 16px; background: red; padding: 12px; border-radius: 6px; font-weight: bold;");
+    console.log("%cDá»ªNG Láº I! / STOP!", "color: red; font-size: 45px; font-weight: 900; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000; font-family: sans-serif;");
+    console.log("%cÄÃ¢y lÃ  tÃ­nh nÄƒng dÃ nh cho nhÃ  phÃ¡t triá»ƒn. Náº¿u ai Ä‘Ã³ báº£o báº¡n sao chÃ©p-dÃ¡n mÃ£ (code) vÃ o Ä‘Ã¢y Ä‘á»ƒ má»Ÿ khÃ³a tÃ­nh nÄƒng áº©n, Ä‘Ã³ 100% lÃ  Lá»ªA Äáº¢O (Self-XSS) nháº±m chiáº¿m Ä‘oáº¡t tÃ i khoáº£n vÃ  dá»¯ liá»‡u cá»§a báº¡n.", "color: white; font-size: 16px; background: red; padding: 12px; border-radius: 6px; font-weight: bold;");
     console.log("%cThis is a browser feature intended for developers. If someone told you to copy-paste something here to enable a feature, it is a scam and will give them access to your account.", "color: white; font-size: 14px; background: #333; padding: 10px; border-radius: 6px; margin-top: 5px;");
     console.log("--------------------------------------------------");
 
-    console.log(`%c🛡️ DEEPFENSE.AI - SYSTEM INITIALIZED`, styleTitle);
+    console.log(`%cðŸ›¡ï¸ DEEPFENSE.AI - SYSTEM INITIALIZED`, styleTitle);
     console.log(`%cBuild Version: ${PROJECT_METADATA.version}`, styleText);
     console.log(`%cBuild Date: ${PROJECT_METADATA.build_date}`, styleText);
     console.log(`%cOrganization: ${PROJECT_METADATA.university}`, styleText);
@@ -263,30 +263,30 @@ const AppContent: React.FC = () => {
     PROJECT_METADATA.authors.forEach(author => {
         console.log(`%c - ${author.name} (${author.id}) - ${author.role}`, "color: #FF2A6D; font-style: italic; font-weight: bold;");
     });
-    console.log(`%cWARNING: This project is the intellectual property of Ho Xuan Nguyen (25NS039).`, "color: red; font-weight: bold;");
+    console.log(`%cWARNING: This project is the intellectual property of Há»“ XuÃ¢n Nguyá»…n & VKU Project Team.`, "color: red; font-weight: bold;");
   }, []);
 
-  // Tiêu đề động tùy theo trang đang mở
+  // TiÃªu Ä‘á» Ä‘á»™ng tÃ¹y theo trang Ä‘ang má»Ÿ
   const getPageTitle = () => {
     switch (location.pathname) {
-      case '/': return lang === 'vi' ? 'Trang chủ' : 'Home';
-      case '/login': return lang === 'vi' ? 'Đăng nhập' : 'Sign In';
-      case '/tools': return lang === 'vi' ? 'Hệ thống Quét Rủi Ro' : 'Risk Scanner';
-      case '/profile': return lang === 'vi' ? 'Hồ sơ người học' : 'Profile';
+      case '/': return lang === 'vi' ? 'Trang chá»§' : 'Home';
+      case '/login': return lang === 'vi' ? 'ÄÄƒng nháº­p' : 'Sign In';
+      case '/tools': return lang === 'vi' ? 'Há»‡ thá»‘ng QuÃ©t Rá»§i Ro' : 'Risk Scanner';
+      case '/profile': return lang === 'vi' ? 'Há»“ sÆ¡ ngÆ°á»i há»c' : 'Profile';
       case '/academy': return lang === 'vi' ? 'DEEPFENSE Academy' : 'DEEPFENSE Academy';
-      case '/academy/verify': return lang === 'vi' ? 'Xác minh chứng chỉ' : 'Verify Certificate';
-      case '/challenge': return lang === 'vi' ? 'Thử thách Thám tử' : 'Detective Challenge';
-      case '/ai-project': return lang === 'vi' ? 'Dự án AI Deepfense' : 'AI Project';
-      case '/contact': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
+      case '/academy/verify': return lang === 'vi' ? 'XÃ¡c minh chá»©ng chá»‰' : 'Verify Certificate';
+      case '/challenge': return lang === 'vi' ? 'Thá»­ thÃ¡ch ThÃ¡m tá»­' : 'Detective Challenge';
+      case '/ai-project': return lang === 'vi' ? 'Dá»± Ã¡n AI Deepfense' : 'AI Project';
+      case '/contact': return lang === 'vi' ? 'LiÃªn há»‡ & BÃ¡o cÃ¡o' : 'Contact & Report';
       case '/privacy':
       case '/terms':
-      case '/policy': return lang === 'vi' ? 'Chính sách Deepfense' : 'Deepfense Policies';
+      case '/policy': return lang === 'vi' ? 'ChÃ­nh sÃ¡ch Deepfense' : 'Deepfense Policies';
       default: 
         if (location.pathname.startsWith('/tools')) {
-          if (location.pathname.includes('crisis')) return lang === 'vi' ? 'Trung tâm Ứng cứu' : 'Crisis Hub';
-          if (location.pathname.includes('protect')) return lang === 'vi' ? 'Khiên bảo vệ' : 'AI Shield';
-          if (location.pathname.includes('knowledge')) return lang === 'vi' ? 'Kiến thức & Pháp luật' : 'Law & Knowledge';
-          return lang === 'vi' ? 'Hệ thống Quét Rủi ro' : 'Risk Scanner';
+          if (location.pathname.includes('crisis')) return lang === 'vi' ? 'Trung tÃ¢m á»¨ng cá»©u' : 'Crisis Hub';
+          if (location.pathname.includes('protect')) return lang === 'vi' ? 'KhiÃªn báº£o vá»‡' : 'AI Shield';
+          if (location.pathname.includes('knowledge')) return lang === 'vi' ? 'Kiáº¿n thá»©c & PhÃ¡p luáº­t' : 'Law & Knowledge';
+          return lang === 'vi' ? 'Há»‡ thá»‘ng QuÃ©t Rá»§i ro' : 'Risk Scanner';
         }
         return '';
     }
@@ -306,7 +306,7 @@ const AppContent: React.FC = () => {
 
         <ScrollToTop />
         <Suspense fallback={null}><CyberField /></Suspense>
-        {/* Chỉ hiện hiệu ứng Hè khi là mùa Hè và ở trang chủ */}
+        {/* Chá»‰ hiá»‡n hiá»‡u á»©ng HÃ¨ khi lÃ  mÃ¹a HÃ¨ vÃ  á»Ÿ trang chá»§ */}
         {location.pathname === '/' && season === 'SUMMER' && <SummerEffects />}
         
         <Navbar 

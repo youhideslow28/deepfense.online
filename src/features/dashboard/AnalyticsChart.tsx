@@ -25,7 +25,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
     let isMounted = true;
     const fetchData = async () => {
       try {
-        // 1. Lấy dữ liệu GAME RESULTS
+        // 1. Láº¥y dá»¯ liá»‡u GAME RESULTS
         const gameCacheKey = 'deepfense_game_stats_cache';
         const gameCacheTime = sessionStorage.getItem(gameCacheKey + '_time');
         let totalGames = 0;
@@ -38,7 +38,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
                 totalGames = cachedData.totalGames;
                 totalScore = cachedData.totalScore;
             } catch (error) {
-                console.warn("Lỗi đọc cache Game Stats, xóa cache.");
+                console.warn("Lá»—i Ä‘á»c cache Game Stats, xÃ³a cache.");
                 sessionStorage.removeItem(gameCacheKey);
                 fetchGameFromFirebase = true;
             }
@@ -58,20 +58,20 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
             sessionStorage.setItem(gameCacheKey + '_time', Date.now().toString());
         }
 
-        // 2. Lấy dữ liệu SURVEYS
-        // BẢO VỆ TÀI NGUYÊN: Caching dữ liệu để không đốt cháy 50.000 reads/ngày của Firebase
+        // 2. Láº¥y dá»¯ liá»‡u SURVEYS
+        // Báº¢O Vá»† TÃ€I NGUYÃŠN: Caching dá»¯ liá»‡u Ä‘á»ƒ khÃ´ng Ä‘á»‘t chÃ¡y 50.000 reads/ngÃ y cá»§a Firebase
         const cacheKey = 'deepfense_psycho_cache';
         const cacheTime = sessionStorage.getItem(cacheKey + '_time');
         let finalPsychoStats = { ...psychoStats };
         let fetchPsychoFromFirebase = false;
 
         if (sessionStorage.getItem(cacheKey) && cacheTime && (Date.now() - parseInt(cacheTime) < 5 * 60 * 1000)) {
-            // Tái sử dụng dữ liệu nếu chưa qua 5 phút
+            // TÃ¡i sá»­ dá»¥ng dá»¯ liá»‡u náº¿u chÆ°a qua 5 phÃºt
             try {
                 finalPsychoStats = JSON.parse(sessionStorage.getItem(cacheKey)!);
                 setPsychoStats(finalPsychoStats);
             } catch (error) {
-                console.warn("Lỗi đọc cache Psycho Stats, xóa cache.");
+                console.warn("Lá»—i Ä‘á»c cache Psycho Stats, xÃ³a cache.");
                 sessionStorage.removeItem(cacheKey);
                 fetchPsychoFromFirebase = true;
             }
@@ -118,12 +118,12 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
             }
         }
 
-        // 3. Tính toán
+        // 3. TÃ­nh toÃ¡n
         if (!isMounted) return;
         setStats({
             totalParticipants: totalGames,
-            blocked: totalScore, // Mỗi câu đúng coi như chặn được 1 scam
-            // Giả sử 1 game có 10 levels
+            blocked: totalScore, // Má»—i cÃ¢u Ä‘Ãºng coi nhÆ° cháº·n Ä‘Æ°á»£c 1 scam
+            // Giáº£ sá»­ 1 game cÃ³ 10 levels
             accuracy: totalGames > 0 ? Math.round((totalScore / (totalGames * 10)) * 100) : 0,
         });
 
@@ -142,7 +142,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
   }, []);
 
   const metricsLabels = lang === 'vi' 
-    ? { participation: 'NGƯỜI LÀM THỬ THÁCH', blocked: 'SỐ CÂU TRẢ LỜI ĐÚNG', title: 'THỐNG KÊ THỬ THÁCH', status: 'DỮ LIỆU THỜI GIAN THỰC' }
+    ? { participation: 'NGÆ¯á»œI LÃ€M THá»¬ THÃCH', blocked: 'Sá» CÃ‚U TRáº¢ Lá»œI ÄÃšNG', title: 'THá»NG KÃŠ THá»¬ THÃCH', status: 'Dá»® LIá»†U THá»œI GIAN THá»°C' }
     : { participation: 'CHALLENGE PARTICIPANTS', blocked: 'CORRECT ANSWERS', title: 'CHALLENGE STATS', status: 'REAL-TIME DATA' };
 
   return (
@@ -197,7 +197,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
         ) : (
           <div className="w-full flex flex-col items-center justify-center animate-in fade-in duration-500">
             <div className="text-center mb-2">
-                <div className="text-[10px] text-primary/80 font-bold uppercase tracking-widest">{lang === 'vi' ? 'CHỈ SỐ TÂM LÝ' : 'BEHAVIORAL INDEX'}</div>
+                <div className="text-[10px] text-primary/80 font-bold uppercase tracking-widest">{lang === 'vi' ? 'CHá»ˆ Sá» TÃ‚M LÃ' : 'BEHAVIORAL INDEX'}</div>
             </div>
             <div className="w-full max-w-[240px] flex items-center justify-center">
                 <RadarChart data={psychoStats} lang={lang} />
@@ -219,7 +219,7 @@ const RadarChart = ({ data, lang }: { data: Record<string, number>, lang: Langua
     const angleSlice = (Math.PI * 2) / numSides;
 
     const labels = lang === 'vi' 
-        ? ['NHẬN THỨC', 'CHỦ ĐỘNG', 'TỰ VỆ', 'HÀNH VI', 'NIỀM TIN']
+        ? ['NHáº¬N THá»¨C', 'CHá»¦ Äá»˜NG', 'Tá»° Vá»†', 'HÃ€NH VI', 'NIá»€M TIN']
         : ['AWARENESS', 'PROACTIVE', 'DEFENSE', 'INTENT', 'TRUST'];
     
     const values = [
@@ -277,7 +277,7 @@ const RadarChart = ({ data, lang }: { data: Record<string, number>, lang: Langua
                                 fill={hoveredIndex === i ? "#fff" : "#00F0FF"} 
                                 className="transition-all duration-300 shadow-[0_0_10px_#00F0FF]" 
                             />
-                            {/* Vùng vô hình to hơn để dễ dàng bắt sự kiện rê chuột */}
+                            {/* VÃ¹ng vÃ´ hÃ¬nh to hÆ¡n Ä‘á»ƒ dá»… dÃ ng báº¯t sá»± kiá»‡n rÃª chuá»™t */}
                             <circle cx={x} cy={y} r="15" fill="transparent" className="cursor-pointer outline-none" onMouseEnter={() => setHoveredIndex(i)} onMouseLeave={() => setHoveredIndex(null)} />
                         </g>
                     );
@@ -293,7 +293,7 @@ const RadarChart = ({ data, lang }: { data: Record<string, number>, lang: Langua
                     );
                 })}
 
-                {/* Tooltip hiển thị số liệu */}
+                {/* Tooltip hiá»ƒn thá»‹ sá»‘ liá»‡u */}
                 {hoveredIndex !== null && (
                     <g className="pointer-events-none animate-in zoom-in duration-200">
                         <rect 

@@ -13,7 +13,7 @@ type CrisisTab = 'report' | 'first-aid';
 const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
   const t = TRANSLATIONS[lang];
   const location = useLocation();
-  // Thay đổi tab mặc định thành 'first-aid' (Sơ cứu tâm lý) theo yêu cầu người dùng
+  // Thay Ä‘á»•i tab máº·c Ä‘á»‹nh thÃ nh 'first-aid' (SÆ¡ cá»©u tÃ¢m lÃ½) theo yÃªu cáº§u ngÆ°á»i dÃ¹ng
   const [activeTab, setActiveTab] = useState<CrisisTab>('first-aid');
 
   useEffect(() => {
@@ -73,37 +73,37 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
 
       <div className="mt-8">
         
-        {/* TAB 1: PSYCHOLOGICAL FIRST AID / SƠ CỨU TÂM LÝ (Đưa lên đầu) */}
+        {/* TAB 1: PSYCHOLOGICAL FIRST AID / SÆ  Cá»¨U TÃ‚M LÃ (ÄÆ°a lÃªn Ä‘áº§u) */}
         {activeTab === 'first-aid' && (
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 print:hidden">
               <div className="bg-blue-900/20 border border-blue-500/30 p-8 rounded-2xl backdrop-blur-md">
                 <HeartHandshake className="text-blue-400 mb-6" size={48} />
                 <h2 className="text-2xl font-bold text-white mb-4">
-                  {lang === 'vi' ? 'Bạn không đơn độc. Đây không phải lỗi của bạn.' : 'You are not alone. This is not your fault.'}
+                  {lang === 'vi' ? 'Báº¡n khÃ´ng Ä‘Æ¡n Ä‘á»™c. ÄÃ¢y khÃ´ng pháº£i lá»—i cá»§a báº¡n.' : 'You are not alone. This is not your fault.'}
                 </h2>
                 <p className="text-gray-300 mb-6 leading-relaxed">
                   {lang === 'vi' 
-                    ? 'Tội phạm công nghệ cao sử dụng các kỹ thuật thao túng tâm lý tinh vi (Deepfake, tống tiền nhân dạng) khiến bộ não con người không thể phản ứng kịp. Bị lừa đảo là một chấn thương tâm lý thực sự.'
+                    ? 'Tá»™i pháº¡m cÃ´ng nghá»‡ cao sá»­ dá»¥ng cÃ¡c ká»¹ thuáº­t thao tÃºng tÃ¢m lÃ½ tinh vi (Deepfake, tá»‘ng tiá»n nhÃ¢n dáº¡ng) khiáº¿n bá»™ nÃ£o con ngÆ°á»i khÃ´ng thá»ƒ pháº£n á»©ng ká»‹p. Bá»‹ lá»«a Ä‘áº£o lÃ  má»™t cháº¥n thÆ°Æ¡ng tÃ¢m lÃ½ thá»±c sá»±.'
                     : 'High-tech criminals use sophisticated psychological manipulation techniques (Deepfake, identity blackmail) that make it impossible for the human brain to react in time. Being scammed is a real psychological trauma.'}
                 </p>
                 
                 <div className="space-y-4">
                    <div className="bg-black/50 p-4 rounded-xl border-l-4 border-blue-500">
-                     <h3 className="font-bold text-blue-400 mb-1">{lang === 'vi' ? '1. Dừng mọi liên lạc' : '1. Stop all contact'}</h3>
+                     <h3 className="font-bold text-blue-400 mb-1">{lang === 'vi' ? '1. Dá»«ng má»i liÃªn láº¡c' : '1. Stop all contact'}</h3>
                      <p className="text-sm text-gray-400">
-                        {lang === 'vi' ? 'Không cố gắng tranh cãi hay đáp ứng yêu cầu chuyển thêm tiền. Block thủ phạm ngay lập tức.' : 'Do not try to argue or meet requests for more money. Block the perpetrator immediately.'}
+                        {lang === 'vi' ? 'KhÃ´ng cá»‘ gáº¯ng tranh cÃ£i hay Ä‘Ã¡p á»©ng yÃªu cáº§u chuyá»ƒn thÃªm tiá»n. Block thá»§ pháº¡m ngay láº­p tá»©c.' : 'Do not try to argue or meet requests for more money. Block the perpetrator immediately.'}
                      </p>
                    </div>
                    <div className="bg-black/50 p-4 rounded-xl border-l-4 border-emerald-500">
-                     <h3 className="font-bold text-emerald-400 mb-1">{lang === 'vi' ? '2. Bảo vệ tài sản còn lại' : '2. Protect remaining assets'}</h3>
+                     <h3 className="font-bold text-emerald-400 mb-1">{lang === 'vi' ? '2. Báº£o vá»‡ tÃ i sáº£n cÃ²n láº¡i' : '2. Protect remaining assets'}</h3>
                      <p className="text-sm text-gray-400">
-                        {lang === 'vi' ? 'Khoá thẻ ngân hàng, đổi mật khẩu email và tài khoản MXH quan trọng từ thiết bị khác.' : 'Lock bank cards, change passwords for email and important social accounts from another device.'}
+                        {lang === 'vi' ? 'KhoÃ¡ tháº» ngÃ¢n hÃ ng, Ä‘á»•i máº­t kháº©u email vÃ  tÃ i khoáº£n MXH quan trá»ng tá»« thiáº¿t bá»‹ khÃ¡c.' : 'Lock bank cards, change passwords for email and important social accounts from another device.'}
                      </p>
                    </div>
                    <div className="bg-black/50 p-4 rounded-xl border-l-4 border-purple-500">
-                     <h3 className="font-bold text-purple-400 mb-1">{lang === 'vi' ? '3. Tìm điểm tựa an toàn' : '3. Find a safe support'}</h3>
+                     <h3 className="font-bold text-purple-400 mb-1">{lang === 'vi' ? '3. TÃ¬m Ä‘iá»ƒm tá»±a an toÃ n' : '3. Find a safe support'}</h3>
                      <p className="text-sm text-gray-400">
-                        {lang === 'vi' ? 'Hãy nói chuyện với người mà bạn tin tưởng nhất. Chia sẻ để giảm bớt gánh nặng cảm giác tội lỗi.' : 'Talk to the person you trust the most. Share to reduce the burden of guilt.'}
+                        {lang === 'vi' ? 'HÃ£y nÃ³i chuyá»‡n vá»›i ngÆ°á»i mÃ  báº¡n tin tÆ°á»Ÿng nháº¥t. Chia sáº» Ä‘á»ƒ giáº£m bá»›t gÃ¡nh náº·ng cáº£m giÃ¡c tá»™i lá»—i.' : 'Talk to the person you trust the most. Share to reduce the burden of guilt.'}
                      </p>
                    </div>
                 </div>
@@ -128,7 +128,7 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                          </div>
                          <ExternalLink size={14} className="text-gray-600 group-hover:text-blue-500" />
                       </div>
-                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'Cổng cảnh báo an toàn thông tin Việt Nam (NCSC Việt Nam).' : 'Vietnam Information Security Warning Portal (NCSC Vietnam).'}</p>
+                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'Cá»•ng cáº£nh bÃ¡o an toÃ n thÃ´ng tin Viá»‡t Nam (NCSC Viá»‡t Nam).' : 'Vietnam Information Security Warning Portal (NCSC Vietnam).'}</p>
                    </a>
 
                    {/* ChongLuaDao */}
@@ -142,7 +142,7 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                          </div>
                          <ExternalLink size={14} className="text-gray-600 group-hover:text-green-500" />
                       </div>
-                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'Dự án cộng đồng bảo vệ người dùng khỏi website độc hại và lừa đảo.' : 'Community project protecting users from malicious and scam websites.'}</p>
+                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'Dá»± Ã¡n cá»™ng Ä‘á»“ng báº£o vá»‡ ngÆ°á»i dÃ¹ng khá»i website Ä‘á»™c háº¡i vÃ  lá»«a Ä‘áº£o.' : 'Community project protecting users from malicious and scam websites.'}</p>
                    </a>
 
                    {/* A05 Hotline */}
@@ -153,7 +153,7 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                          </div>
                          <h4 className="font-bold text-red-500 text-sm uppercase">{t.btn_a05_hotline}</h4>
                       </div>
-                      <p className="text-xs text-gray-400 mb-4">{lang === 'vi' ? 'Đường dây nóng Cục An ninh mạng & Phòng chống tội phạm công nghệ cao.' : 'Hotline of the Cyber Security and High-Tech Crime Prevention Department.'}</p>
+                      <p className="text-xs text-gray-400 mb-4">{lang === 'vi' ? 'ÄÆ°á»ng dÃ¢y nÃ³ng Cá»¥c An ninh máº¡ng & PhÃ²ng chá»‘ng tá»™i pháº¡m cÃ´ng nghá»‡ cao.' : 'Hotline of the Cyber Security and High-Tech Crime Prevention Department.'}</p>
                       <a href="tel:0692194053" className="text-white font-black text-lg tracking-widest hover:text-red-500 transition-colors">069.219.4053</a>
                    </div>
 
@@ -168,7 +168,7 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                          </div>
                          <ExternalLink size={14} className="text-gray-400 group-hover:text-white" />
                       </div>
-                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'Báo cáo website lừa đảo trực tiếp cho Google để bảo vệ người dùng toàn cầu.' : 'Report phishing sites directly to Google to protect global users.'}</p>
+                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'BÃ¡o cÃ¡o website lá»«a Ä‘áº£o trá»±c tiáº¿p cho Google Ä‘á»ƒ báº£o vá»‡ ngÆ°á»i dÃ¹ng toÃ n cáº§u.' : 'Report phishing sites directly to Google to protect global users.'}</p>
                    </a>
 
                    {/* VNeID (Now with Link) */}
@@ -210,14 +210,14 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                          </div>
                          <ExternalLink size={14} className="text-white group-hover:text-primary" />
                       </div>
-                      <p className="text-xs text-gray-300 font-medium">{lang === 'vi' ? 'Trung tâm Khiếu nại Tội phạm Internet của FBI. Chuyên tiếp nhận các vụ lừa đảo xuyên biên giới quy mô lớn.' : 'FBI Internet Crime Complaint Center. Specialized in large-scale cross-border fraud.'}</p>
+                      <p className="text-xs text-gray-300 font-medium">{lang === 'vi' ? 'Trung tÃ¢m Khiáº¿u náº¡i Tá»™i pháº¡m Internet cá»§a FBI. ChuyÃªn tiáº¿p nháº­n cÃ¡c vá»¥ lá»«a Ä‘áº£o xuyÃªn biÃªn giá»›i quy mÃ´ lá»›n.' : 'FBI Internet Crime Complaint Center. Specialized in large-scale cross-border fraud.'}</p>
                    </a>
                  </div>
                </div>
            </div>
         )}
 
-        {/* TAB 2: REPORT PDF / ĐƠN TỐ GIÁC */}
+        {/* TAB 2: REPORT PDF / ÄÆ N Tá» GIÃC */}
         {activeTab === 'report' && (
           <div className="relative">
             {/* Overlay Blur for English */}
@@ -235,35 +235,35 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
               <div className="print:hidden bg-black/40 border border-white/10 p-6 md:p-8 rounded-2xl backdrop-blur-xl">
                 <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                    <AlertTriangle className="text-yellow-500" />
-                   {lang === 'vi' ? 'Nhập thông tin tố giác' : 'Enter incident details'}
+                   {lang === 'vi' ? 'Nháº­p thÃ´ng tin tá»‘ giÃ¡c' : 'Enter incident details'}
                 </h2>
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Họ và tên người tố giác</label>
-                    <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="Nguyễn Văn A" />
+                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Há» vÃ  tÃªn ngÆ°á»i tá»‘ giÃ¡c</label>
+                    <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="Nguyá»…n VÄƒn A" />
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Tên nạn nhân (nếu làm thay)</label>
-                    <input type="text" name="victimName" value={formData.victimName} onChange={handleInputChange} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="Trần Thị B" />
+                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">TÃªn náº¡n nhÃ¢n (náº¿u lÃ m thay)</label>
+                    <input type="text" name="victimName" value={formData.victimName} onChange={handleInputChange} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="Tráº§n Thá»‹ B" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Ngày xảy ra sự việc</label>
+                      <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">NgÃ y xáº£y ra sá»± viá»‡c</label>
                       <input type="date" name="incidentDate" value={formData.incidentDate} onChange={handleInputChange} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors [color-scheme:dark]" />
                     </div>
                     <div>
-                      <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Số tiền thiệt hại</label>
-                      <input type="text" name="lossAmount" value={formData.lossAmount} onChange={handleInputChange} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="Ví dụ: 50.000.000 VNĐ" />
+                      <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Sá»‘ tiá»n thiá»‡t háº¡i</label>
+                      <input type="text" name="lossAmount" value={formData.lossAmount} onChange={handleInputChange} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="VÃ­ dá»¥: 50.000.000 VNÄ" />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Thông tin kẻ lừa đảo</label>
-                    <textarea name="scammerInfo" value={formData.scammerInfo} onChange={handleInputChange} rows={2} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors resize-none" placeholder="Tài khoản ngân hàng, UID mạng xã hội, số điện thoại..."></textarea>
+                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">ThÃ´ng tin káº» lá»«a Ä‘áº£o</label>
+                    <textarea name="scammerInfo" value={formData.scammerInfo} onChange={handleInputChange} rows={2} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors resize-none" placeholder="TÃ i khoáº£n ngÃ¢n hÃ ng, UID máº¡ng xÃ£ há»™i, sá»‘ Ä‘iá»‡n thoáº¡i..."></textarea>
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Tóm tắt sự việc</label>
-                    <textarea name="description" value={formData.description} onChange={handleInputChange} rows={4} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors resize-none" placeholder="Trình bày ngắn gọn quá trình bị lừa đảo..."></textarea>
+                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">TÃ³m táº¯t sá»± viá»‡c</label>
+                    <textarea name="description" value={formData.description} onChange={handleInputChange} rows={4} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors resize-none" placeholder="TrÃ¬nh bÃ y ngáº¯n gá»n quÃ¡ trÃ¬nh bá»‹ lá»«a Ä‘áº£o..."></textarea>
                   </div>
                 </div>
 
@@ -273,14 +273,14 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                     className="flex-1 bg-red-600 hover:bg-red-500 text-white p-4 rounded-xl font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
                   >
                     <Download size={20} />
-                    {lang === 'vi' ? 'TẢI PDF / IN BẢN CỨNG' : 'DOWNLOAD PDF / PRINT'}
+                    {lang === 'vi' ? 'Táº¢I PDF / IN Báº¢N Cá»¨NG' : 'DOWNLOAD PDF / PRINT'}
                   </button>
                 </div>
               </div>
 
-              {/* PREVIEW BẢN IN PDF */}
+              {/* PREVIEW Báº¢N IN PDF */}
               <div className="bg-white text-black p-8 md:p-12 print:p-0 min-h-[800px] shadow-2xl relative">
-                {/* STYLE CHỈ DÙNG KHI IN */}
+                {/* STYLE CHá»ˆ DÃ™NG KHI IN */}
                 <style dangerouslySetInnerHTML={{__html: `
                   @media print {
                     body * { visibility: hidden; }
@@ -292,47 +292,47 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                 
                 <div className="print-area font-serif max-w-2xl mx-auto">
                   <div className="text-center font-bold mb-8">
-                    <h2 className="text-xl uppercase">Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</h2>
-                    <h3 className="text-lg underline underline-offset-4">Độc lập - Tự do - Hạnh phúc</h3>
+                    <h2 className="text-xl uppercase">Cá»™ng HÃ²a XÃ£ Há»™i Chá»§ NghÄ©a Viá»‡t Nam</h2>
+                    <h3 className="text-lg underline underline-offset-4">Äá»™c láº­p - Tá»± do - Háº¡nh phÃºc</h3>
                   </div>
 
                   <div className="text-center font-bold mb-8">
-                    <h1 className="text-2xl uppercase">ĐƠN TRÌNH BÁO / TỐ GIÁC TỘI PHẠM</h1>
-                    <p className="italic font-normal">(V/v: Lừa đảo chiếm đoạt tài sản trên không gian mạng)</p>
+                    <h1 className="text-2xl uppercase">ÄÆ N TRÃŒNH BÃO / Tá» GIÃC Tá»˜I PHáº M</h1>
+                    <p className="italic font-normal">(V/v: Lá»«a Ä‘áº£o chiáº¿m Ä‘oáº¡t tÃ i sáº£n trÃªn khÃ´ng gian máº¡ng)</p>
                   </div>
 
                   <div className="mb-6 font-bold">
-                    <p>Kính gửi: Cơ quan Cảnh sát điều tra (PC02/PA05) - Công an ......................</p>
+                    <p>KÃ­nh gá»­i: CÆ¡ quan Cáº£nh sÃ¡t Ä‘iá»u tra (PC02/PA05) - CÃ´ng an ......................</p>
                   </div>
 
                   <div className="space-y-4 text-justify leading-relaxed">
-                    <p>Tôi tên là: <span className="font-bold">{formData.fullName || '(Họ tên người làm đơn)'}</span></p>
-                    <p>Làm đơn tố giác/trình báo sự việc xảy ra đối với nạn nhân: <span className="font-bold">{formData.victimName || formData.fullName || '(Tên nạn nhân)'}</span></p>
-                    <p>Vào ngày: <span className="font-bold">{formData.incidentDate || '(Ngày xảy ra sự việc)'}</span></p>
-                    <p>Nội dung sự việc như sau:</p>
+                    <p>TÃ´i tÃªn lÃ : <span className="font-bold">{formData.fullName || '(Há» tÃªn ngÆ°á»i lÃ m Ä‘Æ¡n)'}</span></p>
+                    <p>LÃ m Ä‘Æ¡n tá»‘ giÃ¡c/trÃ¬nh bÃ¡o sá»± viá»‡c xáº£y ra Ä‘á»‘i vá»›i náº¡n nhÃ¢n: <span className="font-bold">{formData.victimName || formData.fullName || '(TÃªn náº¡n nhÃ¢n)'}</span></p>
+                    <p>VÃ o ngÃ y: <span className="font-bold">{formData.incidentDate || '(NgÃ y xáº£y ra sá»± viá»‡c)'}</span></p>
+                    <p>Ná»™i dung sá»± viá»‡c nhÆ° sau:</p>
                     <div className="border border-gray-300 p-4 min-h-[100px] whitespace-pre-wrap">
-                      {formData.description || '(Chi tiết sự việc chưa được nhập...)'}
+                      {formData.description || '(Chi tiáº¿t sá»± viá»‡c chÆ°a Ä‘Æ°á»£c nháº­p...)'}
                     </div>
                     
-                    <p className="mt-4">Tổng số tài sản bị chiếm đoạt (ước tính): <span className="font-bold text-red-600">{formData.lossAmount || '(Số tiền)'}</span></p>
+                    <p className="mt-4">Tá»•ng sá»‘ tÃ i sáº£n bá»‹ chiáº¿m Ä‘oáº¡t (Æ°á»›c tÃ­nh): <span className="font-bold text-red-600">{formData.lossAmount || '(Sá»‘ tiá»n)'}</span></p>
                     
-                    <p className="mt-4">Thông tin đối tượng lừa đảo (Tài khoản ngân hàng, UID, Số điện thoại...):</p>
+                    <p className="mt-4">ThÃ´ng tin Ä‘á»‘i tÆ°á»£ng lá»«a Ä‘áº£o (TÃ i khoáº£n ngÃ¢n hÃ ng, UID, Sá»‘ Ä‘iá»‡n thoáº¡i...):</p>
                     <div className="border border-gray-300 p-4 min-h-[60px] whitespace-pre-wrap">
-                      {formData.scammerInfo || '(Thông tin kẻ lừa đảo chưa được nhập...)'}
+                      {formData.scammerInfo || '(ThÃ´ng tin káº» lá»«a Ä‘áº£o chÆ°a Ä‘Æ°á»£c nháº­p...)'}
                     </div>
-                    <p className="mt-8">Tôi cam đoan những sự việc trình bày trong đơn là hoàn toàn đúng sự thật và chịu trách nhiệm trước pháp luật về những lời trình bày đó.</p>
+                    <p className="mt-8">TÃ´i cam Ä‘oan nhá»¯ng sá»± viá»‡c trÃ¬nh bÃ y trong Ä‘Æ¡n lÃ  hoÃ n toÃ n Ä‘Ãºng sá»± tháº­t vÃ  chá»‹u trÃ¡ch nhiá»‡m trÆ°á»›c phÃ¡p luáº­t vá» nhá»¯ng lá»i trÃ¬nh bÃ y Ä‘Ã³.</p>
                   </div>
 
                   <div className="mt-12 flex justify-between px-8">
                     <div className="text-center">
-                      <p>Nơi nhận:</p>
-                      <p className="italic">- Như trên;</p>
-                      <p className="italic">- Lưu: CSĐT.</p>
+                      <p>NÆ¡i nháº­n:</p>
+                      <p className="italic">- NhÆ° trÃªn;</p>
+                      <p className="italic">- LÆ°u: CSÄT.</p>
                     </div>
                     <div className="text-center">
-                      <p>......, ngày ..... tháng ..... năm 20...</p>
-                      <p className="font-bold mt-2">NGƯỜI LÀM ĐƠN</p>
-                      <p className="italic">(Ký và ghi rõ họ tên)</p>
+                      <p>......, ngÃ y ..... thÃ¡ng ..... nÄƒm 20...</p>
+                      <p className="font-bold mt-2">NGÆ¯á»œI LÃ€M ÄÆ N</p>
+                      <p className="italic">(KÃ½ vÃ  ghi rÃµ há» tÃªn)</p>
                       <div className="h-24"></div>
                     </div>
                   </div>

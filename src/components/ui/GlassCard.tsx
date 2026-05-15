@@ -1,7 +1,7 @@
 /**
- * DEEPFENSE.ONLINE — GlassCard
- * Card component với glassmorphism effect + shimmer border.
- * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ * DEEPFENSE.ONLINE â€” GlassCard
+ * Card component vá»›i glassmorphism effect + shimmer border.
+ * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
  */
 
 import React from 'react';
@@ -9,7 +9,7 @@ import React from 'react';
 interface GlassCardProps {
   children: React.ReactNode;
   className?: string;
-  /** Bật/tắt shimmer border animation */
+  /** Báº­t/táº¯t shimmer border animation */
   shimmer?: boolean;
   /** Padding override */
   padding?: string;

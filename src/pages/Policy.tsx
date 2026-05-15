@@ -21,99 +21,99 @@ const policySections = [
   {
     id: 'scope',
     icon: FileText,
-    title: 'Phạm Vi Và Cam Kết Minh Bạch',
+    title: 'Pháº¡m Vi VÃ  Cam Káº¿t Minh Báº¡ch',
     body: [
-      'Deepfense là nền tảng giáo dục và huấn luyện cộng đồng về nhận diện deepfake, AI scam và các rủi ro thao túng bằng nội dung số. Website được xây dựng với mục tiêu nâng cao nhận thức, hỗ trợ người dùng tự vệ tốt hơn và cung cấp môi trường học tập có cấu trúc.',
-      'Các tính năng như challenge, mô phỏng tình huống, khảo sát, Trung tâm trợ giúp và dashboard quản trị được thiết kế theo nguyên tắc minh bạch, thu thập dữ liệu có mục đích, hạn chế dữ liệu không cần thiết và ưu tiên an toàn cho người dùng.',
-      'Deepfense không tự nhận là cơ quan điều tra, cơ quan pháp lý, đơn vị giám định tư pháp hoặc tổ chức có thẩm quyền kết luận tranh chấp. Mọi phân tích, điểm số, cảnh báo hoặc phản hồi từ hệ thống chỉ mang tính hỗ trợ giáo dục, tham khảo và khuyến nghị phòng tránh.',
+      'Deepfense lÃ  ná»n táº£ng giÃ¡o dá»¥c vÃ  huáº¥n luyá»‡n cá»™ng Ä‘á»“ng vá» nháº­n diá»‡n deepfake, AI scam vÃ  cÃ¡c rá»§i ro thao tÃºng báº±ng ná»™i dung sá»‘. Website Ä‘Æ°á»£c xÃ¢y dá»±ng vá»›i má»¥c tiÃªu nÃ¢ng cao nháº­n thá»©c, há»— trá»£ ngÆ°á»i dÃ¹ng tá»± vá»‡ tá»‘t hÆ¡n vÃ  cung cáº¥p mÃ´i trÆ°á»ng há»c táº­p cÃ³ cáº¥u trÃºc.',
+      'CÃ¡c tÃ­nh nÄƒng nhÆ° challenge, mÃ´ phá»ng tÃ¬nh huá»‘ng, kháº£o sÃ¡t, Trung tÃ¢m trá»£ giÃºp vÃ  dashboard quáº£n trá»‹ Ä‘Æ°á»£c thiáº¿t káº¿ theo nguyÃªn táº¯c minh báº¡ch, thu tháº­p dá»¯ liá»‡u cÃ³ má»¥c Ä‘Ã­ch, háº¡n cháº¿ dá»¯ liá»‡u khÃ´ng cáº§n thiáº¿t vÃ  Æ°u tiÃªn an toÃ n cho ngÆ°á»i dÃ¹ng.',
+      'Deepfense khÃ´ng tá»± nháº­n lÃ  cÆ¡ quan Ä‘iá»u tra, cÆ¡ quan phÃ¡p lÃ½, Ä‘Æ¡n vá»‹ giÃ¡m Ä‘á»‹nh tÆ° phÃ¡p hoáº·c tá»• chá»©c cÃ³ tháº©m quyá»n káº¿t luáº­n tranh cháº¥p. Má»i phÃ¢n tÃ­ch, Ä‘iá»ƒm sá»‘, cáº£nh bÃ¡o hoáº·c pháº£n há»“i tá»« há»‡ thá»‘ng chá»‰ mang tÃ­nh há»— trá»£ giÃ¡o dá»¥c, tham kháº£o vÃ  khuyáº¿n nghá»‹ phÃ²ng trÃ¡nh.',
     ],
   },
   {
     id: 'privacy',
     icon: Lock,
-    title: 'Chính Sách Bảo Mật Và Dữ Liệu Cá Nhân',
+    title: 'ChÃ­nh SÃ¡ch Báº£o Máº­t VÃ  Dá»¯ Liá»‡u CÃ¡ NhÃ¢n',
     body: [
-      'Deepfense có thể thu thập một số nhóm dữ liệu cần thiết để vận hành dịch vụ: thông tin tài khoản như email, tên hiển thị; dữ liệu học tập như điểm số, tiến độ, kết quả challenge; dữ liệu khảo sát nếu người dùng tự nguyện tham gia; dữ liệu Trung tâm trợ giúp như mô tả tình huống, đường dẫn, tệp đính kèm; và dữ liệu kỹ thuật như thời gian truy cập, trình duyệt, user agent hoặc log hệ thống.',
-      'Dữ liệu được sử dụng để vận hành academy, hiển thị kết quả học tập, cải thiện nội dung đào tạo, phản hồi yêu cầu hỗ trợ, phát hiện spam/lạm dụng, bảo vệ hệ thống và tổng hợp hiểu biết cộng đồng về rủi ro deepfake hoặc AI scam.',
-      'Deepfense không bán dữ liệu cá nhân của người dùng. Dữ liệu khảo sát và dữ liệu học tập khi dùng cho mục đích nghiên cứu, báo cáo hoặc cải thiện sản phẩm sẽ được ưu tiên xử lý ở dạng tổng hợp, ẩn danh hoặc giảm định danh khi phù hợp.',
-      'Deepfense không sử dụng câu trả lời khảo sát để phân biệt đối xử với cá nhân người dùng. Các chỉ số học tập được dùng để phản hồi tiến độ, đề xuất nội dung phù hợp và đánh giá hiệu quả đào tạo, không nhằm gắn nhãn tiêu cực cho người học.',
+      'Deepfense cÃ³ thá»ƒ thu tháº­p má»™t sá»‘ nhÃ³m dá»¯ liá»‡u cáº§n thiáº¿t Ä‘á»ƒ váº­n hÃ nh dá»‹ch vá»¥: thÃ´ng tin tÃ i khoáº£n nhÆ° email, tÃªn hiá»ƒn thá»‹; dá»¯ liá»‡u há»c táº­p nhÆ° Ä‘iá»ƒm sá»‘, tiáº¿n Ä‘á»™, káº¿t quáº£ challenge; dá»¯ liá»‡u kháº£o sÃ¡t náº¿u ngÆ°á»i dÃ¹ng tá»± nguyá»‡n tham gia; dá»¯ liá»‡u Trung tÃ¢m trá»£ giÃºp nhÆ° mÃ´ táº£ tÃ¬nh huá»‘ng, Ä‘Æ°á»ng dáº«n, tá»‡p Ä‘Ã­nh kÃ¨m; vÃ  dá»¯ liá»‡u ká»¹ thuáº­t nhÆ° thá»i gian truy cáº­p, trÃ¬nh duyá»‡t, user agent hoáº·c log há»‡ thá»‘ng.',
+      'Dá»¯ liá»‡u Ä‘Æ°á»£c sá»­ dá»¥ng Ä‘á»ƒ váº­n hÃ nh academy, hiá»ƒn thá»‹ káº¿t quáº£ há»c táº­p, cáº£i thiá»‡n ná»™i dung Ä‘Ã o táº¡o, pháº£n há»“i yÃªu cáº§u há»— trá»£, phÃ¡t hiá»‡n spam/láº¡m dá»¥ng, báº£o vá»‡ há»‡ thá»‘ng vÃ  tá»•ng há»£p hiá»ƒu biáº¿t cá»™ng Ä‘á»“ng vá» rá»§i ro deepfake hoáº·c AI scam.',
+      'Deepfense khÃ´ng bÃ¡n dá»¯ liá»‡u cÃ¡ nhÃ¢n cá»§a ngÆ°á»i dÃ¹ng. Dá»¯ liá»‡u kháº£o sÃ¡t vÃ  dá»¯ liá»‡u há»c táº­p khi dÃ¹ng cho má»¥c Ä‘Ã­ch nghiÃªn cá»©u, bÃ¡o cÃ¡o hoáº·c cáº£i thiá»‡n sáº£n pháº©m sáº½ Ä‘Æ°á»£c Æ°u tiÃªn xá»­ lÃ½ á»Ÿ dáº¡ng tá»•ng há»£p, áº©n danh hoáº·c giáº£m Ä‘á»‹nh danh khi phÃ¹ há»£p.',
+      'Deepfense khÃ´ng sá»­ dá»¥ng cÃ¢u tráº£ lá»i kháº£o sÃ¡t Ä‘á»ƒ phÃ¢n biá»‡t Ä‘á»‘i xá»­ vá»›i cÃ¡ nhÃ¢n ngÆ°á»i dÃ¹ng. CÃ¡c chá»‰ sá»‘ há»c táº­p Ä‘Æ°á»£c dÃ¹ng Ä‘á»ƒ pháº£n há»“i tiáº¿n Ä‘á»™, Ä‘á» xuáº¥t ná»™i dung phÃ¹ há»£p vÃ  Ä‘Ã¡nh giÃ¡ hiá»‡u quáº£ Ä‘Ã o táº¡o, khÃ´ng nháº±m gáº¯n nhÃ£n tiÃªu cá»±c cho ngÆ°á»i há»c.',
     ],
   },
   {
     id: 'terms',
     icon: Scale,
-    title: 'Điều Khoản Sử Dụng',
+    title: 'Äiá»u Khoáº£n Sá»­ Dá»¥ng',
     body: [
-      'Người dùng cần sử dụng Deepfense với mục đích học tập, tự bảo vệ và hỗ trợ nâng cao nhận thức an toàn số. Người dùng không được lợi dụng nền tảng để phát tán nội dung gây hại, nội dung xâm phạm quyền riêng tư, nội dung vi phạm bản quyền, dữ liệu cá nhân của người khác khi chưa có quyền phù hợp hoặc tài liệu có thể gây nguy hiểm cho cộng đồng.',
-      'Kết quả challenge, mô phỏng, phân tích hoặc phản hồi từ Deepfense không phải là kết luận pháp lý. Người dùng nên tự xác minh qua nhiều nguồn, liên hệ trực tiếp người liên quan qua kênh độc lập và tìm đến cơ quan/chuyên gia phù hợp khi sự việc có rủi ro tài chính, danh dự, an toàn cá nhân hoặc pháp lý.',
-      'Deepfense có quyền giới hạn tính năng, khóa tài khoản, ẩn nội dung, xóa nội dung hoặc ghi nhận sự kiện bảo mật khi phát hiện dấu hiệu spam, lạm dụng, truy cập trái phép, gửi liên kết/tệp đáng ngờ, hoặc hành vi có thể gây rủi ro cho hệ thống và cộng đồng.',
-      'Khi sử dụng các biểu mẫu gửi thông tin, người dùng chịu trách nhiệm đảm bảo nội dung gửi lên không vi phạm quyền riêng tư, bản quyền, bí mật cá nhân hoặc quy định pháp luật hiện hành.',
+      'NgÆ°á»i dÃ¹ng cáº§n sá»­ dá»¥ng Deepfense vá»›i má»¥c Ä‘Ã­ch há»c táº­p, tá»± báº£o vá»‡ vÃ  há»— trá»£ nÃ¢ng cao nháº­n thá»©c an toÃ n sá»‘. NgÆ°á»i dÃ¹ng khÃ´ng Ä‘Æ°á»£c lá»£i dá»¥ng ná»n táº£ng Ä‘á»ƒ phÃ¡t tÃ¡n ná»™i dung gÃ¢y háº¡i, ná»™i dung xÃ¢m pháº¡m quyá»n riÃªng tÆ°, ná»™i dung vi pháº¡m báº£n quyá»n, dá»¯ liá»‡u cÃ¡ nhÃ¢n cá»§a ngÆ°á»i khÃ¡c khi chÆ°a cÃ³ quyá»n phÃ¹ há»£p hoáº·c tÃ i liá»‡u cÃ³ thá»ƒ gÃ¢y nguy hiá»ƒm cho cá»™ng Ä‘á»“ng.',
+      'Káº¿t quáº£ challenge, mÃ´ phá»ng, phÃ¢n tÃ­ch hoáº·c pháº£n há»“i tá»« Deepfense khÃ´ng pháº£i lÃ  káº¿t luáº­n phÃ¡p lÃ½. NgÆ°á»i dÃ¹ng nÃªn tá»± xÃ¡c minh qua nhiá»u nguá»“n, liÃªn há»‡ trá»±c tiáº¿p ngÆ°á»i liÃªn quan qua kÃªnh Ä‘á»™c láº­p vÃ  tÃ¬m Ä‘áº¿n cÆ¡ quan/chuyÃªn gia phÃ¹ há»£p khi sá»± viá»‡c cÃ³ rá»§i ro tÃ i chÃ­nh, danh dá»±, an toÃ n cÃ¡ nhÃ¢n hoáº·c phÃ¡p lÃ½.',
+      'Deepfense cÃ³ quyá»n giá»›i háº¡n tÃ­nh nÄƒng, khÃ³a tÃ i khoáº£n, áº©n ná»™i dung, xÃ³a ná»™i dung hoáº·c ghi nháº­n sá»± kiá»‡n báº£o máº­t khi phÃ¡t hiá»‡n dáº¥u hiá»‡u spam, láº¡m dá»¥ng, truy cáº­p trÃ¡i phÃ©p, gá»­i liÃªn káº¿t/tá»‡p Ä‘Ã¡ng ngá», hoáº·c hÃ nh vi cÃ³ thá»ƒ gÃ¢y rá»§i ro cho há»‡ thá»‘ng vÃ  cá»™ng Ä‘á»“ng.',
+      'Khi sá»­ dá»¥ng cÃ¡c biá»ƒu máº«u gá»­i thÃ´ng tin, ngÆ°á»i dÃ¹ng chá»‹u trÃ¡ch nhiá»‡m Ä‘áº£m báº£o ná»™i dung gá»­i lÃªn khÃ´ng vi pháº¡m quyá»n riÃªng tÆ°, báº£n quyá»n, bÃ­ máº­t cÃ¡ nhÃ¢n hoáº·c quy Ä‘á»‹nh phÃ¡p luáº­t hiá»‡n hÃ nh.',
     ],
   },
   {
     id: 'help-center',
     icon: HelpCircle,
-    title: 'Chính Sách Trung Tâm Trợ Giúp',
+    title: 'ChÃ­nh SÃ¡ch Trung TÃ¢m Trá»£ GiÃºp',
     body: [
-      'Trung tâm trợ giúp của Deepfense tiếp nhận tình huống nghi ngờ deepfake, AI voice scam, giả mạo danh tính, phishing, lừa đảo, quấy rối, tin sai lệch hoặc các trường hợp liên quan đến an toàn số. Mục tiêu là hỗ trợ người dùng nhận diện dấu hiệu rủi ro và đưa ra khuyến nghị phòng tránh thận trọng.',
-      'Deepfense sử dụng ngôn ngữ trung lập khi phản hồi: “có dấu hiệu cần xác minh thêm”, “chưa đủ dữ kiện để kết luận”, “khuyến nghị liên hệ người liên quan qua kênh khác”, “không chuyển tiền hoặc chia sẻ mã OTP/thông tin cá nhân khi chưa xác minh”.',
-      'Deepfense không kết luận một cá nhân/tổ chức là “đúng”, “sai”, “có tội” hoặc “lừa đảo” nếu không có thẩm quyền và căn cứ pháp lý phù hợp. Trong các trường hợp nghiêm trọng, người dùng nên lưu bằng chứng, hạn chế lan truyền nội dung nhạy cảm và liên hệ cơ quan chức năng hoặc chuyên gia pháp lý/an ninh mạng.',
-      'Các case gửi qua Trung tâm trợ giúp có thể được phân loại theo loại sự việc, mức độ nghiêm trọng, trạng thái xử lý và ghi chú phản hồi. Việc phân loại nhằm ưu tiên xử lý và cải thiện chất lượng hỗ trợ, không nhằm phán xét người gửi hoặc người được nhắc đến trong nội dung.',
+      'Trung tÃ¢m trá»£ giÃºp cá»§a Deepfense tiáº¿p nháº­n tÃ¬nh huá»‘ng nghi ngá» deepfake, AI voice scam, giáº£ máº¡o danh tÃ­nh, phishing, lá»«a Ä‘áº£o, quáº¥y rá»‘i, tin sai lá»‡ch hoáº·c cÃ¡c trÆ°á»ng há»£p liÃªn quan Ä‘áº¿n an toÃ n sá»‘. Má»¥c tiÃªu lÃ  há»— trá»£ ngÆ°á»i dÃ¹ng nháº­n diá»‡n dáº¥u hiá»‡u rá»§i ro vÃ  Ä‘Æ°a ra khuyáº¿n nghá»‹ phÃ²ng trÃ¡nh tháº­n trá»ng.',
+      'Deepfense sá»­ dá»¥ng ngÃ´n ngá»¯ trung láº­p khi pháº£n há»“i: â€œcÃ³ dáº¥u hiá»‡u cáº§n xÃ¡c minh thÃªmâ€, â€œchÆ°a Ä‘á»§ dá»¯ kiá»‡n Ä‘á»ƒ káº¿t luáº­nâ€, â€œkhuyáº¿n nghá»‹ liÃªn há»‡ ngÆ°á»i liÃªn quan qua kÃªnh khÃ¡câ€, â€œkhÃ´ng chuyá»ƒn tiá»n hoáº·c chia sáº» mÃ£ OTP/thÃ´ng tin cÃ¡ nhÃ¢n khi chÆ°a xÃ¡c minhâ€.',
+      'Deepfense khÃ´ng káº¿t luáº­n má»™t cÃ¡ nhÃ¢n/tá»• chá»©c lÃ  â€œÄ‘Ãºngâ€, â€œsaiâ€, â€œcÃ³ tá»™iâ€ hoáº·c â€œlá»«a Ä‘áº£oâ€ náº¿u khÃ´ng cÃ³ tháº©m quyá»n vÃ  cÄƒn cá»© phÃ¡p lÃ½ phÃ¹ há»£p. Trong cÃ¡c trÆ°á»ng há»£p nghiÃªm trá»ng, ngÆ°á»i dÃ¹ng nÃªn lÆ°u báº±ng chá»©ng, háº¡n cháº¿ lan truyá»n ná»™i dung nháº¡y cáº£m vÃ  liÃªn há»‡ cÆ¡ quan chá»©c nÄƒng hoáº·c chuyÃªn gia phÃ¡p lÃ½/an ninh máº¡ng.',
+      'CÃ¡c case gá»­i qua Trung tÃ¢m trá»£ giÃºp cÃ³ thá»ƒ Ä‘Æ°á»£c phÃ¢n loáº¡i theo loáº¡i sá»± viá»‡c, má»©c Ä‘á»™ nghiÃªm trá»ng, tráº¡ng thÃ¡i xá»­ lÃ½ vÃ  ghi chÃº pháº£n há»“i. Viá»‡c phÃ¢n loáº¡i nháº±m Æ°u tiÃªn xá»­ lÃ½ vÃ  cáº£i thiá»‡n cháº¥t lÆ°á»£ng há»— trá»£, khÃ´ng nháº±m phÃ¡n xÃ©t ngÆ°á»i gá»­i hoáº·c ngÆ°á»i Ä‘Æ°á»£c nháº¯c Ä‘áº¿n trong ná»™i dung.',
     ],
   },
   {
     id: 'security',
     icon: ShieldCheck,
-    title: 'Bảo Mật Hệ Thống Và Vận Hành Tin Cậy',
+    title: 'Báº£o Máº­t Há»‡ Thá»‘ng VÃ  Váº­n HÃ nh Tin Cáº­y',
     body: [
-      'Deepfense áp dụng mô hình phân quyền user/editor/admin để tách biệt người học, người biên tập nội dung và người quản trị hệ thống. Nguyên tắc thiết kế là cấp quyền vừa đủ, hạn chế truy cập dữ liệu nhạy cảm và ghi nhận các thao tác quan trọng.',
-      'Các thao tác như đăng nhập quản trị, đổi role, khóa/mở tài khoản, tạo/sửa challenge, xử lý case, xóa dữ liệu hoặc phản hồi người dùng nên được ghi vào activity log. Các sự kiện như đăng nhập thất bại, truy cập bị từ chối, thay đổi role, gửi liên kết/tệp đáng ngờ hoặc gửi quá nhiều lần trong thời gian ngắn nên được ghi vào security events.',
-      'Khi triển khai production, Deepfense nên bật HTTPS/HSTS, cấu hình Content Security Policy, frame-ancestors hoặc X-Frame-Options, giới hạn tốc độ gửi form, kiểm tra tệp tải lên, giới hạn kích thước file và theo dõi các hành vi bất thường.',
-      'Deepfense hướng tới mô hình privacy-by-design và security-by-design ở mức phù hợp với một nền tảng giáo dục: bảo vệ người dùng, giảm rủi ro vận hành và giúp người quản trị có đủ dấu vết để xử lý sự cố một cách có trách nhiệm.',
+      'Deepfense Ã¡p dá»¥ng mÃ´ hÃ¬nh phÃ¢n quyá»n user/editor/admin Ä‘á»ƒ tÃ¡ch biá»‡t ngÆ°á»i há»c, ngÆ°á»i biÃªn táº­p ná»™i dung vÃ  ngÆ°á»i quáº£n trá»‹ há»‡ thá»‘ng. NguyÃªn táº¯c thiáº¿t káº¿ lÃ  cáº¥p quyá»n vá»«a Ä‘á»§, háº¡n cháº¿ truy cáº­p dá»¯ liá»‡u nháº¡y cáº£m vÃ  ghi nháº­n cÃ¡c thao tÃ¡c quan trá»ng.',
+      'CÃ¡c thao tÃ¡c nhÆ° Ä‘Äƒng nháº­p quáº£n trá»‹, Ä‘á»•i role, khÃ³a/má»Ÿ tÃ i khoáº£n, táº¡o/sá»­a challenge, xá»­ lÃ½ case, xÃ³a dá»¯ liá»‡u hoáº·c pháº£n há»“i ngÆ°á»i dÃ¹ng nÃªn Ä‘Æ°á»£c ghi vÃ o activity log. CÃ¡c sá»± kiá»‡n nhÆ° Ä‘Äƒng nháº­p tháº¥t báº¡i, truy cáº­p bá»‹ tá»« chá»‘i, thay Ä‘á»•i role, gá»­i liÃªn káº¿t/tá»‡p Ä‘Ã¡ng ngá» hoáº·c gá»­i quÃ¡ nhiá»u láº§n trong thá»i gian ngáº¯n nÃªn Ä‘Æ°á»£c ghi vÃ o security events.',
+      'Khi triá»ƒn khai production, Deepfense nÃªn báº­t HTTPS/HSTS, cáº¥u hÃ¬nh Content Security Policy, frame-ancestors hoáº·c X-Frame-Options, giá»›i háº¡n tá»‘c Ä‘á»™ gá»­i form, kiá»ƒm tra tá»‡p táº£i lÃªn, giá»›i háº¡n kÃ­ch thÆ°á»›c file vÃ  theo dÃµi cÃ¡c hÃ nh vi báº¥t thÆ°á»ng.',
+      'Deepfense hÆ°á»›ng tá»›i mÃ´ hÃ¬nh privacy-by-design vÃ  security-by-design á»Ÿ má»©c phÃ¹ há»£p vá»›i má»™t ná»n táº£ng giÃ¡o dá»¥c: báº£o vá»‡ ngÆ°á»i dÃ¹ng, giáº£m rá»§i ro váº­n hÃ nh vÃ  giÃºp ngÆ°á»i quáº£n trá»‹ cÃ³ Ä‘á»§ dáº¥u váº¿t Ä‘á»ƒ xá»­ lÃ½ sá»± cá»‘ má»™t cÃ¡ch cÃ³ trÃ¡ch nhiá»‡m.',
     ],
   },
   {
     id: 'retention',
     icon: Database,
-    title: 'Lưu Trữ, Xóa Và Vòng Đời Dữ Liệu',
+    title: 'LÆ°u Trá»¯, XÃ³a VÃ  VÃ²ng Äá»i Dá»¯ Liá»‡u',
     body: [
-      'Deepfense chỉ nên lưu dữ liệu trong thời gian cần thiết cho mục đích vận hành, học tập, hỗ trợ người dùng, thống kê tổng hợp và bảo vệ hệ thống. Việc lưu trữ không nên kéo dài chỉ vì “có thể cần sau này” nếu không có mục đích rõ ràng.',
-      'Khuyến nghị lưu trữ: activity logs từ 90 đến 180 ngày; security events khoảng 180 ngày; Help Center Cases từ 180 đến 365 ngày tùy mức độ; dữ liệu khảo sát ưu tiên giữ ở dạng tổng hợp hoặc ẩn danh; kết quả challenge có thể giữ theo tài khoản để phục vụ tiến độ học tập.',
-      'Khi xóa Help Center Case có tệp đính kèm, cần xóa cả document trong Firestore và file liên quan trong Storage để tránh rò rỉ dữ liệu. Khi xóa tài khoản hoặc dữ liệu cá nhân, hệ thống cần cân nhắc điều kiện kỹ thuật, yêu cầu bảo mật, nghĩa vụ pháp lý và quyền lợi chính đáng của người dùng.',
-      'Người dùng có thể yêu cầu xem, chỉnh sửa hoặc xóa dữ liệu cá nhân của mình nếu phù hợp với điều kiện kỹ thuật và pháp lý. Deepfense sẽ xử lý yêu cầu theo khả năng vận hành thực tế và theo nguyên tắc tôn trọng quyền riêng tư.',
+      'Deepfense chá»‰ nÃªn lÆ°u dá»¯ liá»‡u trong thá»i gian cáº§n thiáº¿t cho má»¥c Ä‘Ã­ch váº­n hÃ nh, há»c táº­p, há»— trá»£ ngÆ°á»i dÃ¹ng, thá»‘ng kÃª tá»•ng há»£p vÃ  báº£o vá»‡ há»‡ thá»‘ng. Viá»‡c lÆ°u trá»¯ khÃ´ng nÃªn kÃ©o dÃ i chá»‰ vÃ¬ â€œcÃ³ thá»ƒ cáº§n sau nÃ yâ€ náº¿u khÃ´ng cÃ³ má»¥c Ä‘Ã­ch rÃµ rÃ ng.',
+      'Khuyáº¿n nghá»‹ lÆ°u trá»¯: activity logs tá»« 90 Ä‘áº¿n 180 ngÃ y; security events khoáº£ng 180 ngÃ y; Help Center Cases tá»« 180 Ä‘áº¿n 365 ngÃ y tÃ¹y má»©c Ä‘á»™; dá»¯ liá»‡u kháº£o sÃ¡t Æ°u tiÃªn giá»¯ á»Ÿ dáº¡ng tá»•ng há»£p hoáº·c áº©n danh; káº¿t quáº£ challenge cÃ³ thá»ƒ giá»¯ theo tÃ i khoáº£n Ä‘á»ƒ phá»¥c vá»¥ tiáº¿n Ä‘á»™ há»c táº­p.',
+      'Khi xÃ³a Help Center Case cÃ³ tá»‡p Ä‘Ã­nh kÃ¨m, cáº§n xÃ³a cáº£ document trong Firestore vÃ  file liÃªn quan trong Storage Ä‘á»ƒ trÃ¡nh rÃ² rá»‰ dá»¯ liá»‡u. Khi xÃ³a tÃ i khoáº£n hoáº·c dá»¯ liá»‡u cÃ¡ nhÃ¢n, há»‡ thá»‘ng cáº§n cÃ¢n nháº¯c Ä‘iá»u kiá»‡n ká»¹ thuáº­t, yÃªu cáº§u báº£o máº­t, nghÄ©a vá»¥ phÃ¡p lÃ½ vÃ  quyá»n lá»£i chÃ­nh Ä‘Ã¡ng cá»§a ngÆ°á»i dÃ¹ng.',
+      'NgÆ°á»i dÃ¹ng cÃ³ thá»ƒ yÃªu cáº§u xem, chá»‰nh sá»­a hoáº·c xÃ³a dá»¯ liá»‡u cÃ¡ nhÃ¢n cá»§a mÃ¬nh náº¿u phÃ¹ há»£p vá»›i Ä‘iá»u kiá»‡n ká»¹ thuáº­t vÃ  phÃ¡p lÃ½. Deepfense sáº½ xá»­ lÃ½ yÃªu cáº§u theo kháº£ nÄƒng váº­n hÃ nh thá»±c táº¿ vÃ  theo nguyÃªn táº¯c tÃ´n trá»ng quyá»n riÃªng tÆ°.',
     ],
   },
   {
     id: 'access',
     icon: UserCheck,
-    title: 'Phân Quyền Nội Bộ Và Trách Nhiệm Quản Trị',
+    title: 'PhÃ¢n Quyá»n Ná»™i Bá»™ VÃ  TrÃ¡ch Nhiá»‡m Quáº£n Trá»‹',
     body: [
-      'User là người học/người chơi bình thường, có quyền xem tiến độ, điểm số, kết quả của chính mình, tham gia challenge, gửi khảo sát nếu đồng ý và gửi yêu cầu qua Trung tâm trợ giúp.',
-      'Editor là thành viên phụ trách nội dung, có thể tạo/sửa lesson, challenge, explanation, skill tags và difficulty. Editor không nên có quyền xóa user, đổi role, xem dữ liệu nhạy cảm không cần thiết hoặc xóa log hệ thống.',
-      'Admin chịu trách nhiệm quản trị user, role, trạng thái tài khoản, Help Center Cases, Content Studio, Activity Log và Security Events. Mọi thao tác quản trị quan trọng nên có dấu vết rõ ràng để đảm bảo tính minh bạch và trách nhiệm giải trình.',
-      'Deepfense ưu tiên mô hình least privilege: mỗi vai trò chỉ có quyền cần thiết để hoàn thành nhiệm vụ. Điều này giúp giảm rủi ro lộ dữ liệu, thao tác nhầm hoặc lạm quyền trong quá trình vận hành.',
+      'User lÃ  ngÆ°á»i há»c/ngÆ°á»i chÆ¡i bÃ¬nh thÆ°á»ng, cÃ³ quyá»n xem tiáº¿n Ä‘á»™, Ä‘iá»ƒm sá»‘, káº¿t quáº£ cá»§a chÃ­nh mÃ¬nh, tham gia challenge, gá»­i kháº£o sÃ¡t náº¿u Ä‘á»“ng Ã½ vÃ  gá»­i yÃªu cáº§u qua Trung tÃ¢m trá»£ giÃºp.',
+      'Editor lÃ  thÃ nh viÃªn phá»¥ trÃ¡ch ná»™i dung, cÃ³ thá»ƒ táº¡o/sá»­a lesson, challenge, explanation, skill tags vÃ  difficulty. Editor khÃ´ng nÃªn cÃ³ quyá»n xÃ³a user, Ä‘á»•i role, xem dá»¯ liá»‡u nháº¡y cáº£m khÃ´ng cáº§n thiáº¿t hoáº·c xÃ³a log há»‡ thá»‘ng.',
+      'Admin chá»‹u trÃ¡ch nhiá»‡m quáº£n trá»‹ user, role, tráº¡ng thÃ¡i tÃ i khoáº£n, Help Center Cases, Content Studio, Activity Log vÃ  Security Events. Má»i thao tÃ¡c quáº£n trá»‹ quan trá»ng nÃªn cÃ³ dáº¥u váº¿t rÃµ rÃ ng Ä‘á»ƒ Ä‘áº£m báº£o tÃ­nh minh báº¡ch vÃ  trÃ¡ch nhiá»‡m giáº£i trÃ¬nh.',
+      'Deepfense Æ°u tiÃªn mÃ´ hÃ¬nh least privilege: má»—i vai trÃ² chá»‰ cÃ³ quyá»n cáº§n thiáº¿t Ä‘á»ƒ hoÃ n thÃ nh nhiá»‡m vá»¥. Äiá»u nÃ y giÃºp giáº£m rá»§i ro lá»™ dá»¯ liá»‡u, thao tÃ¡c nháº§m hoáº·c láº¡m quyá»n trong quÃ¡ trÃ¬nh váº­n hÃ nh.',
     ],
   },
   {
     id: 'content',
     icon: FileText,
-    title: 'Chính Sách Nội Dung Và Challenge',
+    title: 'ChÃ­nh SÃ¡ch Ná»™i Dung VÃ  Challenge',
     body: [
-      'Nội dung đào tạo của Deepfense cần hướng tới giáo dục, phòng tránh và nâng cao năng lực xác minh thông tin. Challenge nên giải thích rõ dấu hiệu nhận diện, lý do đáp án và bước kiểm chứng an toàn sau khi người dùng trả lời.',
-      'Deepfense không nên sử dụng hình ảnh, video, giọng nói hoặc dữ liệu cá nhân của người thật nếu chưa có quyền phù hợp. Nội dung nhạy cảm, nội dung có khả năng gây hiểu nhầm hoặc ảnh hưởng danh dự cá nhân cần được xem xét kỹ trước khi công bố.',
-      'Các challenge có độ khó cao, liên quan đến tài chính, giả mạo danh tính, quấy rối, tin sai lệch hoặc nội dung dễ lan truyền nên được admin review trước khi chuyển sang trạng thái published.',
-      'Ngôn ngữ trong nội dung cần tránh phán xét pháp lý. Thay vì khẳng định tuyệt đối, Deepfense ưu tiên cách diễn đạt như “dấu hiệu rủi ro”, “cần xác minh thêm”, “khuyến nghị kiểm tra nguồn gốc” và “không chia sẻ thông tin nhạy cảm khi chưa chắc chắn”.',
+      'Ná»™i dung Ä‘Ã o táº¡o cá»§a Deepfense cáº§n hÆ°á»›ng tá»›i giÃ¡o dá»¥c, phÃ²ng trÃ¡nh vÃ  nÃ¢ng cao nÄƒng lá»±c xÃ¡c minh thÃ´ng tin. Challenge nÃªn giáº£i thÃ­ch rÃµ dáº¥u hiá»‡u nháº­n diá»‡n, lÃ½ do Ä‘Ã¡p Ã¡n vÃ  bÆ°á»›c kiá»ƒm chá»©ng an toÃ n sau khi ngÆ°á»i dÃ¹ng tráº£ lá»i.',
+      'Deepfense khÃ´ng nÃªn sá»­ dá»¥ng hÃ¬nh áº£nh, video, giá»ng nÃ³i hoáº·c dá»¯ liá»‡u cÃ¡ nhÃ¢n cá»§a ngÆ°á»i tháº­t náº¿u chÆ°a cÃ³ quyá»n phÃ¹ há»£p. Ná»™i dung nháº¡y cáº£m, ná»™i dung cÃ³ kháº£ nÄƒng gÃ¢y hiá»ƒu nháº§m hoáº·c áº£nh hÆ°á»Ÿng danh dá»± cÃ¡ nhÃ¢n cáº§n Ä‘Æ°á»£c xem xÃ©t ká»¹ trÆ°á»›c khi cÃ´ng bá»‘.',
+      'CÃ¡c challenge cÃ³ Ä‘á»™ khÃ³ cao, liÃªn quan Ä‘áº¿n tÃ i chÃ­nh, giáº£ máº¡o danh tÃ­nh, quáº¥y rá»‘i, tin sai lá»‡ch hoáº·c ná»™i dung dá»… lan truyá»n nÃªn Ä‘Æ°á»£c admin review trÆ°á»›c khi chuyá»ƒn sang tráº¡ng thÃ¡i published.',
+      'NgÃ´n ngá»¯ trong ná»™i dung cáº§n trÃ¡nh phÃ¡n xÃ©t phÃ¡p lÃ½. Thay vÃ¬ kháº³ng Ä‘á»‹nh tuyá»‡t Ä‘á»‘i, Deepfense Æ°u tiÃªn cÃ¡ch diá»…n Ä‘áº¡t nhÆ° â€œdáº¥u hiá»‡u rá»§i roâ€, â€œcáº§n xÃ¡c minh thÃªmâ€, â€œkhuyáº¿n nghá»‹ kiá»ƒm tra nguá»“n gá»‘câ€ vÃ  â€œkhÃ´ng chia sáº» thÃ´ng tin nháº¡y cáº£m khi chÆ°a cháº¯c cháº¯nâ€.',
     ],
   },
 ];
 
 const trustHighlights = [
-  'Không bán dữ liệu cá nhân',
-  'Thu thập dữ liệu có mục đích rõ ràng',
-  'Ưu tiên tổng hợp hoặc ẩn danh khi phân tích',
-  'Phân quyền user/editor/admin',
-  'Ghi log thao tác quản trị quan trọng',
-  'Phản hồi Help Center bằng ngôn ngữ trung lập',
+  'KhÃ´ng bÃ¡n dá»¯ liá»‡u cÃ¡ nhÃ¢n',
+  'Thu tháº­p dá»¯ liá»‡u cÃ³ má»¥c Ä‘Ã­ch rÃµ rÃ ng',
+  'Æ¯u tiÃªn tá»•ng há»£p hoáº·c áº©n danh khi phÃ¢n tÃ­ch',
+  'PhÃ¢n quyá»n user/editor/admin',
+  'Ghi log thao tÃ¡c quáº£n trá»‹ quan trá»ng',
+  'Pháº£n há»“i Help Center báº±ng ngÃ´n ngá»¯ trung láº­p',
 ];
 
 const Policy: React.FC<PolicyProps> = ({ lang }) => {
@@ -126,27 +126,27 @@ const Policy: React.FC<PolicyProps> = ({ lang }) => {
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-blue-200">
               <FileText size={14} />
-              Trung Tâm Chính Sách & Niềm Tin
+              Trung TÃ¢m ChÃ­nh SÃ¡ch & Niá»m Tin
             </div>
             <h1 className="text-3xl font-black text-white md:text-5xl">
-              {isVi ? 'Chính Sách Deepfense' : 'Deepfense Policies'}
+              {isVi ? 'ChÃ­nh SÃ¡ch Deepfense' : 'Deepfense Policies'}
             </h1>
             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-gray-400 md:text-base">
               {isVi
-                ? 'Deepfense công bố các chính sách này để người dùng hiểu rõ cách nền tảng thu thập dữ liệu, bảo vệ quyền riêng tư, xử lý yêu cầu hỗ trợ, quản trị nội dung và vận hành hệ thống một cách có trách nhiệm.'
+                ? 'Deepfense cÃ´ng bá»‘ cÃ¡c chÃ­nh sÃ¡ch nÃ y Ä‘á»ƒ ngÆ°á»i dÃ¹ng hiá»ƒu rÃµ cÃ¡ch ná»n táº£ng thu tháº­p dá»¯ liá»‡u, báº£o vá»‡ quyá»n riÃªng tÆ°, xá»­ lÃ½ yÃªu cáº§u há»— trá»£, quáº£n trá»‹ ná»™i dung vÃ  váº­n hÃ nh há»‡ thá»‘ng má»™t cÃ¡ch cÃ³ trÃ¡ch nhiá»‡m.'
                 : 'Deepfense publishes these policies so users can understand how the platform handles privacy, data, support cases, content governance, and responsible operations.'}
             </p>
           </div>
           <div className="rounded-lg border border-white/10 bg-black/25 p-4 text-xs leading-relaxed text-gray-500">
-            <p className="font-mono font-bold uppercase tracking-widest text-gray-300">{isVi ? 'Cập nhật' : 'Updated'}</p>
-            <p className="mt-1">Tháng 5, 2026</p>
+            <p className="font-mono font-bold uppercase tracking-widest text-gray-300">{isVi ? 'Cáº­p nháº­t' : 'Updated'}</p>
+            <p className="mt-1">ThÃ¡ng 5, 2026</p>
             <p className="mt-3">{PROJECT_METADATA.university}</p>
           </div>
         </div>
       </section>
 
       <section className="mt-5 rounded-lg border border-primary/20 bg-primary/10 p-5">
-        <h2 className="font-black text-white">Cam Kết Tin Cậy</h2>
+        <h2 className="font-black text-white">Cam Káº¿t Tin Cáº­y</h2>
         <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {trustHighlights.map((item) => (
             <div key={item} className="flex items-center gap-3 rounded-lg border border-white/10 bg-black/25 p-3 text-sm font-bold text-gray-200">
@@ -189,16 +189,16 @@ const Policy: React.FC<PolicyProps> = ({ lang }) => {
       </div>
 
       <section className="mt-6 rounded-lg border border-primary/20 bg-primary/10 p-6">
-        <h2 className="font-black text-white">Liên Hệ Về Chính Sách</h2>
+        <h2 className="font-black text-white">LiÃªn Há»‡ Vá» ChÃ­nh SÃ¡ch</h2>
         <p className="mt-2 text-sm leading-relaxed text-gray-300">
-          Mọi câu hỏi về dữ liệu cá nhân, bảo mật, quyền người dùng, Trung tâm trợ giúp hoặc yêu cầu xem/sửa/xóa dữ liệu có thể gửi qua kênh liên hệ chính thức của Deepfense. Khi gửi yêu cầu, người dùng nên cung cấp email tài khoản, nội dung yêu cầu và thông tin cần thiết để nhóm vận hành xác minh hợp lý.
+          Má»i cÃ¢u há»i vá» dá»¯ liá»‡u cÃ¡ nhÃ¢n, báº£o máº­t, quyá»n ngÆ°á»i dÃ¹ng, Trung tÃ¢m trá»£ giÃºp hoáº·c yÃªu cáº§u xem/sá»­a/xÃ³a dá»¯ liá»‡u cÃ³ thá»ƒ gá»­i qua kÃªnh liÃªn há»‡ chÃ­nh thá»©c cá»§a Deepfense. Khi gá»­i yÃªu cáº§u, ngÆ°á»i dÃ¹ng nÃªn cung cáº¥p email tÃ i khoáº£n, ná»™i dung yÃªu cáº§u vÃ  thÃ´ng tin cáº§n thiáº¿t Ä‘á»ƒ nhÃ³m váº­n hÃ nh xÃ¡c minh há»£p lÃ½.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <a href={`mailto:${PROJECT_METADATA.email}`} className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-bold text-white hover:bg-blue-500">
             <Mail size={16} /> {PROJECT_METADATA.email}
           </a>
           <Link to="/contact" className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-3 text-sm font-bold text-gray-300 hover:border-primary hover:text-white">
-            Mở trang liên hệ
+            Má»Ÿ trang liÃªn há»‡
           </Link>
         </div>
       </section>

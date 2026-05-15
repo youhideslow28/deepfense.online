@@ -56,7 +56,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
   }, []);
 
   useEffect(() => {
-    // Load Leaderboard từ Firebase Firestore realtime
+    // Load Leaderboard tá»« Firebase Firestore realtime
     const q = query(collection(db, "minigame_leaderboard"), orderBy("score", "desc"), limit(3));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const lbData: LeaderboardEntry[] = [];
@@ -71,7 +71,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
              { name: 'ROOKIE', score: 100 }
          ];
          setLeaderboard(dummyData);
-         leaderboardRef.current = dummyData; // FIX: Đồng bộ dữ liệu giả vào Ref
+         leaderboardRef.current = dummyData; // FIX: Äá»“ng bá»™ dá»¯ liá»‡u giáº£ vÃ o Ref
       } else {
          setLeaderboard(lbData);
          leaderboardRef.current = lbData;
@@ -81,7 +81,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
     return () => unsubscribe();
   }, []);
 
-  // Xử lý lưu điểm lên Bảng Xếp Hạng
+  // Xá»­ lÃ½ lÆ°u Ä‘iá»ƒm lÃªn Báº£ng Xáº¿p Háº¡ng
   const handleSubmitScore = async () => {
       if (!playerName.trim() || isSubmittingScore) return;
       
@@ -115,7 +115,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
     const updateSize = () => {
       canvas.width = canvas.parentElement?.clientWidth || window.innerWidth - 32;
       canvas.height = 350;
-      // UX BUG FIX: Không reset vị trí người chơi về giữa màn hình khi bị trigger resize trên mobile (do ẩn/hiện thanh địa chỉ)
+      // UX BUG FIX: KhÃ´ng reset vá»‹ trÃ­ ngÆ°á»i chÆ¡i vá» giá»¯a mÃ n hÃ¬nh khi bá»‹ trigger resize trÃªn mobile (do áº©n/hiá»‡n thanh Ä‘á»‹a chá»‰)
       if (gameRef.current.playerX === 0 || gameRef.current.playerX > canvas.width) {
           gameRef.current.playerX = canvas.width / 2;
       }
@@ -128,7 +128,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
     let powerups: { x: number, y: number, speed: number }[] = [];
     let particles: { x: number, y: number, vx: number, vy: number, life: number, color: string }[] = [];
 
-    const emojis = ['🎭', '🎙️', '🤖'];
+    const emojis = ['ðŸŽ­', 'ðŸŽ™ï¸', 'ðŸ¤–'];
 
     // --- CONTROLS ---
     const handleMove = (clientX: number) => {
@@ -257,7 +257,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
           b.x += b.vx;
           ctx.save();
           ctx.translate(b.x, b.y);
-          ctx.rotate(b.vx * 0.05); // Xoay hướng đạn chéo sao cho tự nhiên
+          ctx.rotate(b.vx * 0.05); // Xoay hÆ°á»›ng Ä‘áº¡n chÃ©o sao cho tá»± nhiÃªn
           ctx.fillRect(-2, 0, 4, 15);
           ctx.restore();
           if (b.y < 0 || b.x < 0 || b.x > canvas.width) bullets.splice(i, 1);
@@ -265,17 +265,17 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
       ctx.shadowBlur = 0;
 
       // 4. ENEMIES
-      // ĐIỀU CHỈNH ĐỂ GAME KÉO DÀI KHOẢNG 5 PHÚT TƯƠNG TÁC (Thuyết trình)
-      // Giả sử 60 khung hình/giây -> 3600 khung hình = 1 phút.
+      // ÄIá»€U CHá»ˆNH Äá»‚ GAME KÃ‰O DÃ€I KHOáº¢NG 5 PHÃšT TÆ¯Æ NG TÃC (Thuyáº¿t trÃ¬nh)
+      // Giáº£ sá»­ 60 khung hÃ¬nh/giÃ¢y -> 3600 khung hÃ¬nh = 1 phÃºt.
       const minutesPlaying = gameRef.current.frames / 3600;
-      // Tăng chậm rãi ở 1-2 phút đầu, bùng nổ độ khó ở phút thứ 4-5
+      // TÄƒng cháº­m rÃ£i á»Ÿ 1-2 phÃºt Ä‘áº§u, bÃ¹ng ná»• Ä‘á»™ khÃ³ á»Ÿ phÃºt thá»© 4-5
       const diffMultiplier = 1 + (minutesPlaying * 0.5) + Math.pow(minutesPlaying, 2) * 0.3; 
       
       if (gameRef.current.frames % Math.max(12, Math.floor(120 / diffMultiplier)) === 0) {
           const type = Math.random();
           let hp = 1, speed = 1.2 * diffMultiplier, emoji = emojis[0];
-          if (type > 0.8) { hp = Math.floor(3 + minutesPlaying * 2); speed = 0.8 * diffMultiplier; emoji = '🤖'; } // Tank (Máu tăng dần theo thời gian)
-          else if (type > 0.5) { speed = 2.2 * diffMultiplier; emoji = '🎙️'; } // Fast (Nhanh)
+          if (type > 0.8) { hp = Math.floor(3 + minutesPlaying * 2); speed = 0.8 * diffMultiplier; emoji = 'ðŸ¤–'; } // Tank (MÃ¡u tÄƒng dáº§n theo thá»i gian)
+          else if (type > 0.5) { speed = 2.2 * diffMultiplier; emoji = 'ðŸŽ™ï¸'; } // Fast (Nhanh)
 
           enemies.push({
               x: Math.random() * (canvas.width - 40) + 20,
@@ -324,7 +324,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
               gameRef.current.score += (e.type > 0.8 ? 50 : 10);
               if (scoreDisplayRef.current) scoreDisplayRef.current.innerText = gameRef.current.score.toString();
 
-              // 10% cơ hội rớt ra vật phẩm nâng cấp tia đạn
+              // 10% cÆ¡ há»™i rá»›t ra váº­t pháº©m nÃ¢ng cáº¥p tia Ä‘áº¡n
               if (Math.random() < 0.1) {
                   powerups.push({ x: renderX, y: e.y, speed: 2 });
               }
@@ -347,7 +347,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                   gameRef.current.isGameOver = true;
                   setGameState('GAMEOVER');
                   
-                  // Kiểm tra xem có đủ điều kiện vào Top 3 Leaderboard không
+                  // Kiá»ƒm tra xem cÃ³ Ä‘á»§ Ä‘iá»u kiá»‡n vÃ o Top 3 Leaderboard khÃ´ng
                   const currentLb = leaderboardRef.current;
                   const isTop3 = currentLb.length < 3 || gameRef.current.score > (currentLb[currentLb.length - 1]?.score || 0);
                   if (isTop3 && gameRef.current.score > 0) {
@@ -359,7 +359,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
           }
       }
 
-      // 4.5 POWERUPS VÀ XỬ LÝ ĂN ITEM
+      // 4.5 POWERUPS VÃ€ Xá»¬ LÃ Ä‚N ITEM
       ctx.font = '24px Arial';
       for (let i = powerups.length - 1; i >= 0; i--) {
           let p = powerups[i];
@@ -367,15 +367,15 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
           
           ctx.shadowColor = '#00F0FF';
           ctx.shadowBlur = 15;
-          ctx.fillText('⚡', p.x, p.y);
+          ctx.fillText('âš¡', p.x, p.y);
           ctx.shadowBlur = 0;
           
-          // Va chạm giữa Player và Vật phẩm ⚡
+          // Va cháº¡m giá»¯a Player vÃ  Váº­t pháº©m âš¡
           if (Math.abs(p.x - px) < 30 && Math.abs(p.y - py) < 30) {
               if (gameRef.current.weaponLevel < 3) {
                   gameRef.current.weaponLevel++;
               } else {
-                  gameRef.current.score += 100; // Đã max cấp thì cộng điểm
+                  gameRef.current.score += 100; // ÄÃ£ max cáº¥p thÃ¬ cá»™ng Ä‘iá»ƒm
               }
               if (scoreDisplayRef.current) scoreDisplayRef.current.innerText = gameRef.current.score.toString();
               powerups.splice(i, 1);
@@ -420,7 +420,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-1 md:p-2">
          
-         {/* --- CỘT TRÁI: KHU VỰC CHƠI GAME --- */}
+         {/* --- Cá»˜T TRÃI: KHU Vá»°C CHÆ I GAME --- */}
          <div className="lg:col-span-2 flex flex-col">
              <div className="flex justify-between items-center mb-4 font-mono text-sm relative z-10 px-2">
                 <div className="flex items-center gap-2 font-black text-primary uppercase tracking-widest"><Crosshair size={18}/> {lang === 'vi' ? 'NEURAL DEFENDER' : 'NEURAL DEFENDER'}</div>
@@ -439,15 +439,15 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                 
                 {gameState === 'START' && (
                   <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center p-4 z-50">
-                     <div className="text-5xl mb-6 drop-shadow-[0_0_15px_rgba(0,240,255,0.8)]">🚀</div>
+                     <div className="text-5xl mb-6 drop-shadow-[0_0_15px_rgba(0,240,255,0.8)]">ðŸš€</div>
                      <h3 className="text-white font-black text-2xl md:text-3xl uppercase tracking-widest mb-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">
-                       {lang === 'vi' ? 'TIÊU DIỆT VIRUS DEEPFAKE' : 'DESTROY DEEPFAKE VIRUS'}
+                       {lang === 'vi' ? 'TIÃŠU DIá»†T VIRUS DEEPFAKE' : 'DESTROY DEEPFAKE VIRUS'}
                      </h3>
                      <p className="text-gray-400 text-xs md:text-sm mb-8 text-center max-w-md">
-                       {lang === 'vi' ? 'Vuốt hoặc di chuyển chuột để điều khiển Tường Lửa. Nhịp độ sẽ chậm rãi ban đầu và tăng tốc dần!' : 'Swipe or move mouse to control Firewall. Starts slow, speeds up later!'}
+                       {lang === 'vi' ? 'Vuá»‘t hoáº·c di chuyá»ƒn chuá»™t Ä‘á»ƒ Ä‘iá»u khiá»ƒn TÆ°á»ng Lá»­a. Nhá»‹p Ä‘á»™ sáº½ cháº­m rÃ£i ban Ä‘áº§u vÃ  tÄƒng tá»‘c dáº§n!' : 'Swipe or move mouse to control Firewall. Starts slow, speeds up later!'}
                      </p>
                      <button onClick={startMatch} className="bg-primary text-black px-10 py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:scale-105 transition-transform flex items-center gap-3 shadow-[0_0_30px_rgba(0,240,255,0.4)]">
-                       <Play size={18}/> {lang === 'vi' ? 'KHỞI ĐỘNG HỆ THỐNG' : 'SYSTEM START'}
+                       <Play size={18}/> {lang === 'vi' ? 'KHá»žI Äá»˜NG Há»† THá»NG' : 'SYSTEM START'}
                      </button>
                   </div>
                 )}
@@ -456,10 +456,10 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                   <div className="absolute inset-0 bg-red-900/80 backdrop-blur-md flex flex-col items-center justify-center animate-in zoom-in duration-300 z-50">
                      <ShieldAlert size={56} className="text-white mb-2 animate-bounce drop-shadow-xl" />
                      <h3 className="text-white font-black text-3xl md:text-4xl uppercase tracking-tighter mb-2">
-                       {lang === 'vi' ? 'HỆ THỐNG BỊ XUYÊN THỦNG!' : 'SYSTEM BREACHED!'}
+                       {lang === 'vi' ? 'Há»† THá»NG Bá»Š XUYÃŠN THá»¦NG!' : 'SYSTEM BREACHED!'}
                      </h3>
                      <p className="text-red-200 text-sm mb-6 px-4 text-center">
-                       {lang === 'vi' ? `Bạn đã ghi được ${gameRef.current.score} điểm.` : `You scored ${gameRef.current.score} points.`}
+                       {lang === 'vi' ? `Báº¡n Ä‘Ã£ ghi Ä‘Æ°á»£c ${gameRef.current.score} Ä‘iá»ƒm.` : `You scored ${gameRef.current.score} points.`}
                      </p>
 
                      {isEligibleForLeaderboard ? (
@@ -483,7 +483,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                         </div>
                      ) : (
                         <button onClick={startMatch} className="bg-white text-black px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary hover:text-black transition-colors flex items-center gap-2 shadow-2xl mt-2">
-                           <RotateCcw size={16}/> {lang === 'vi' ? 'PHỤC HỒI HỆ THỐNG' : 'RESTORE SYSTEM'}
+                           <RotateCcw size={16}/> {lang === 'vi' ? 'PHá»¤C Há»’I Há»† THá»NG' : 'RESTORE SYSTEM'}
                         </button>
                      )}
                   </div>
@@ -491,13 +491,13 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
              </div>
          </div>
 
-         {/* --- CỘT PHẢI: BẢNG XẾP HẠNG (LEADERBOARD) --- */}
+         {/* --- Cá»˜T PHáº¢I: Báº¢NG Xáº¾P Háº NG (LEADERBOARD) --- */}
          <div className="lg:col-span-1 bg-black/60 border border-primary/20 rounded-2xl p-5 flex flex-col shadow-[0_0_30px_rgba(0,240,255,0.05)] relative overflow-hidden">
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 blur-[50px] rounded-full"></div>
             <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-purple-500"></div>
             
             <h3 className="text-white font-black text-center mb-6 tracking-widest uppercase flex items-center justify-center gap-2 relative z-10">
-                <Trophy size={20} className="text-yellow-400"/> {lang === 'vi' ? 'BẢNG PHONG THẦN' : 'LEADERBOARD'}
+                <Trophy size={20} className="text-yellow-400"/> {lang === 'vi' ? 'Báº¢NG PHONG THáº¦N' : 'LEADERBOARD'}
             </h3>
             
             <div className="flex-1 flex flex-col gap-4 relative z-10">
@@ -512,7 +512,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                     </div>
                 ))}
                 
-                {/* Hiển thị dòng trống nếu chưa đủ 3 người */}
+                {/* Hiá»ƒn thá»‹ dÃ²ng trá»‘ng náº¿u chÆ°a Ä‘á»§ 3 ngÆ°á»i */}
                 {[...Array(Math.max(0, 3 - leaderboard.length))].map((_, i) => (
                     <div key={`empty-${i}`} className="p-4 rounded-xl border border-white/5 bg-white/5 flex items-center justify-between opacity-50">
                         <div className="flex items-center gap-3">

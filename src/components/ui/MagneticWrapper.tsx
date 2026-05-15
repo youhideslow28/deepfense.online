@@ -1,8 +1,8 @@
 /**
- * DEEPFENSE.ONLINE — MagneticWrapper
- * Wrap bất kỳ element nào để tạo hiệu ứng "hút" theo cursor khi hover.
- * Lấy cảm hứng từ: Linear.app, Vercel buttons.
- * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ * DEEPFENSE.ONLINE â€” MagneticWrapper
+ * Wrap báº¥t ká»³ element nÃ o Ä‘á»ƒ táº¡o hiá»‡u á»©ng "hÃºt" theo cursor khi hover.
+ * Láº¥y cáº£m há»©ng tá»«: Linear.app, Vercel buttons.
+ * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
  */
 
 import React, { useRef, useCallback } from 'react';
@@ -10,7 +10,7 @@ import gsap from 'gsap';
 
 interface MagneticWrapperProps {
   children: React.ReactNode;
-  /** Cường độ hút (px). Mặc định 12 */
+  /** CÆ°á»ng Ä‘á»™ hÃºt (px). Máº·c Ä‘á»‹nh 12 */
   strength?: number;
   className?: string;
 }

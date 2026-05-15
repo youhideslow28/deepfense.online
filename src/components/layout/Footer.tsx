@@ -1,7 +1,7 @@
 /**
  * DEEPFENSE.ONLINE - Footer v3.0
  * Complete project footer for training, support, attribution, and trust.
- * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ * @copyright 2025 Hồ Xuân Nguyễn & VKU Project Team
  */
 
 import React from 'react';
@@ -126,6 +126,16 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
                   </div>
                 </div>
               </div>
+              
+              {/* VKU Attribution */}
+              <div className="mt-5 pt-4 border-t border-white/5 flex items-center gap-3">
+                <div className="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center p-1.5 overflow-hidden">
+                   <img src="https://vku.udn.vn/vku-logo.png" alt="VKU" className="h-full w-full object-contain opacity-80" onError={(e) => { (e.target as any).src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Logo_VKU.png/800px-Logo_VKU.png"; }} />
+                </div>
+                <div className="text-[11px] font-bold tracking-wider text-gray-400 uppercase">
+                  {isVi ? 'Sản phẩm sinh viên trường Đại học Công nghệ thông tin và Truyền thông Việt - Hàn (VKU)' : 'Student product at Vietnam-Korea University of Information and Communication Technology (VKU)'}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -155,25 +165,27 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
           </div>
 
           <div className="lg:col-span-3">
-            <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
-              {isVi ? 'Dự án' : 'Project'}
-            </h3>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
-                <GraduationCap className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
-                <span>25NS - VKU, Da Nang, Viet Nam</span>
-              </div>
-              <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
-                <MapPin className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
-                <span>{PROJECT_METADATA.university}</span>
-              </div>
-              <a href={`mailto:${PROJECT_METADATA.email}`} className="flex items-start gap-3 text-xs leading-relaxed text-gray-500 transition-colors hover:text-[#60A5FA]">
-                <Mail className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
-                <span>{PROJECT_METADATA.email}</span>
-              </a>
-              <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
-                <Scale className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
-                <span>{isVi ? 'Phục vụ học tập, nghiên cứu và nâng cao nhận thức cộng đồng.' : 'Built for learning, research, and public awareness.'}</span>
+            <div>
+              <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
+                {isVi ? 'Dự án' : 'Project'}
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
+                  <GraduationCap className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
+                  <span>25NS - VKU, Da Nang, Viet Nam</span>
+                </div>
+                <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
+                  <MapPin className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
+                  <span>{PROJECT_METADATA.university}</span>
+                </div>
+                <a href={`mailto:${PROJECT_METADATA.email}`} className="flex items-start gap-3 text-xs leading-relaxed text-gray-500 transition-colors hover:text-[#60A5FA]">
+                  <Mail className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
+                  <span>{PROJECT_METADATA.email}</span>
+                </a>
+                <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
+                  <Scale className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
+                  <span>{isVi ? 'Phục vụ học tập, nghiên cứu và nâng cao nhận thức cộng đồng.' : 'Built for learning, research, and public awareness.'}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -182,7 +194,7 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
         <div className="mt-10 border-t border-[#1E3A5F]/30 pt-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="text-[10px] leading-relaxed text-gray-700 font-mono">
-              © 2025 DEEPFENSE · Ho Xuan Nguyen (25NS039) & Nguyen Nhat Huy (25NS020). {isVi ? 'Bảo lưu mọi quyền.' : 'All rights reserved.'}
+              © 2025 DEEPFENSE · {isVi ? 'Nhóm dự án VKU (Nguyễn, Huy, Pháp, Nhất)' : 'VKU Project Team (Nguyen, Huy, Phap, Nhat)'}. {isVi ? 'Bảo lưu mọi quyền.' : 'All rights reserved.'}
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <span className="inline-flex items-center gap-2 rounded-full border border-green-500/15 bg-green-500/5 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-widest text-green-400/70">

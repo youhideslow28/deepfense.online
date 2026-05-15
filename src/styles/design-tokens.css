@@ -1,8 +1,8 @@
 /**
- * DEEPFENSE.ONLINE — Design Tokens & Global Animations v3.0
+ * DEEPFENSE.ONLINE â€” Design Tokens & Global Animations v3.0
  * World-class cybersecurity design system.
  * Inspired by: Vercel.com, Linear.app, Framer.com, CrowdStrike.com
- * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
  */
 
 /* === LENIS SMOOTH SCROLL BASE === */
@@ -16,7 +16,7 @@ html.lenis body {
 }
 
 /* =============================================
-   KEYFRAMES — Core Animations
+   KEYFRAMES â€” Core Animations
    ============================================= */
 
 @keyframes ripple {
@@ -50,7 +50,7 @@ html.lenis body {
   50%       { box-shadow: 0 0 50px rgba(255, 42, 109, 0.6), 0 0 100px rgba(255, 42, 109, 0.2); }
 }
 
-/* Hero title reveal — clipPath từ dưới lên (Apple-style) */
+/* Hero title reveal â€” clipPath tá»« dÆ°á»›i lÃªn (Apple-style) */
 @keyframes clipReveal {
   from {
     clip-path: inset(100% 0 0 0);
@@ -82,7 +82,7 @@ html.lenis body {
   to   { opacity: 1; }
 }
 
-/* Border scan beam — chạy từ trái sang phải */
+/* Border scan beam â€” cháº¡y tá»« trÃ¡i sang pháº£i */
 @keyframes scanBeam {
   0%   { transform: translateX(-100%); opacity: 0; }
   10%  { opacity: 1; }

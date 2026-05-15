@@ -1,7 +1,7 @@
 /**
- * DEEPFENSE.ONLINE — AnimatedCounter
- * Số đếm tăng dần từ 0 → target khi element xuất hiện trong viewport.
- * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ * DEEPFENSE.ONLINE â€” AnimatedCounter
+ * Sá»‘ Ä‘áº¿m tÄƒng dáº§n tá»« 0 â†’ target khi element xuáº¥t hiá»‡n trong viewport.
+ * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
  */
 
 import React, { useEffect, useRef, useState } from 'react';

@@ -1,7 +1,7 @@
 /**
- * DEEPFENSE.ONLINE — GlowButton
- * Nút bấm chuyên nghiệp với neon glow, hover ripple, và magnetic effect.
- * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ * DEEPFENSE.ONLINE â€” GlowButton
+ * NÃºt báº¥m chuyÃªn nghiá»‡p vá»›i neon glow, hover ripple, vÃ  magnetic effect.
+ * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
  */
 
 import React, { useRef, useCallback } from 'react';

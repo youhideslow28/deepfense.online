@@ -19,7 +19,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const STORAGE_KEY = `deepfense_chat_${lang}`;
 
-  // CHỐNG BÀO MÒN CPU: Tính toán Context 1 lần duy nhất thay vì mỗi lần bấm Gửi
+  // CHá»NG BÃ€O MÃ’N CPU: TÃ­nh toÃ¡n Context 1 láº§n duy nháº¥t thay vÃ¬ má»—i láº§n báº¥m Gá»­i
   const websiteContextString = React.useMemo(() => {
       const context = {
           introduction: "DEEPFENSE.ONLINE is a cybersecurity platform protecting users against Deepfakes.",
@@ -35,7 +35,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
       return JSON.stringify(context, null, 2);
   }, [lang]);
 
-  // Load lịch sử từ localStorage khi mở, fallback về welcome message
+  // Load lá»‹ch sá»­ tá»« localStorage khi má»Ÿ, fallback vá» welcome message
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -46,7 +46,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
     }
   }, [lang]);
 
-  // Lưu lịch sử mỗi khi messages thay đổi
+  // LÆ°u lá»‹ch sá»­ má»—i khi messages thay Ä‘á»•i
   useEffect(() => {
     if (messages.length > 1) {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(messages)); } catch {}
@@ -81,7 +81,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // TỐI ƯU HIỆU NĂNG: Đóng băng object components để React không phá hủy chat history mỗi khi gõ phím
+  // Tá»I Æ¯U HIá»†U NÄ‚NG: ÄÃ³ng bÄƒng object components Ä‘á»ƒ React khÃ´ng phÃ¡ há»§y chat history má»—i khi gÃµ phÃ­m
   const markdownComponents = React.useMemo<any>(() => ({
       p: ({node, ...props}: {node?: unknown, [key: string]: unknown}) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
       ul: ({node, ...props}: {node?: unknown, [key: string]: unknown}) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
@@ -102,7 +102,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
     setMessages(newHistory);
     setLoading(true);
 
-    // Dọn dẹp request cũ nếu người dùng spam liên tục
+    // Dá»n dáº¹p request cÅ© náº¿u ngÆ°á»i dÃ¹ng spam liÃªn tá»¥c
     if (abortControllerRef.current) abortControllerRef.current.abort();
     abortControllerRef.current = new AbortController();
 
@@ -115,20 +115,20 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
           messages: newHistory,
           lang,
           context: websiteContextString,
-          stream: true,            // ← Kích hoạt chế độ SSE
+          stream: true,            // â† KÃ­ch hoáº¡t cháº¿ Ä‘á»™ SSE
         })
       });
 
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       if (!response.body) throw new Error('No response body');
 
-      // --- STREAMING MODE: Đọc từng token SSE và append vào tin nhắn ---
+      // --- STREAMING MODE: Äá»c tá»«ng token SSE vÃ  append vÃ o tin nháº¯n ---
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
 
-      // Thêm tin nhắn AI trống vào cuối để cập nhật in-place
+      // ThÃªm tin nháº¯n AI trá»‘ng vÃ o cuá»‘i Ä‘á»ƒ cáº­p nháº­t in-place
       setMessages(prev => [...prev, { role: 'model' as const, text: '' }]);
-      setLoading(false); // Tắt spinner ngay — text sẽ xuất hiện dần
+      setLoading(false); // Táº¯t spinner ngay â€” text sáº½ xuáº¥t hiá»‡n dáº§n
 
       let buffer = '';
       while (true) {
@@ -137,7 +137,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
 
         buffer += decoder.decode(value, { stream: true });
         const lines = buffer.split('\n');
-        buffer = lines.pop() ?? ''; // Giữ lại dòng chưa kết thúc
+        buffer = lines.pop() ?? ''; // Giá»¯ láº¡i dÃ²ng chÆ°a káº¿t thÃºc
 
         for (const line of lines) {
           if (!line.startsWith('data: ')) continue;
@@ -147,7 +147,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
           try {
             const chunk = JSON.parse(raw) as { text?: string; error?: string };
             if (chunk.text) {
-              // Append token mới vào tin nhắn cuối cùng
+              // Append token má»›i vÃ o tin nháº¯n cuá»‘i cÃ¹ng
               setMessages(prev => {
                 const updated = [...prev];
                 updated[updated.length - 1] = {
@@ -158,7 +158,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
               });
             }
           } catch {
-            // JSON parse lỗi — bỏ qua chunk không hợp lệ
+            // JSON parse lá»—i â€” bá» qua chunk khÃ´ng há»£p lá»‡
           }
         }
       }
@@ -168,7 +168,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
 
       console.error("Chat Error:", clientError);
       const errorMsg = lang === 'vi'
-        ? "Hệ thống đang bảo trì, vui lòng thử lại sau."
+        ? "Há»‡ thá»‘ng Ä‘ang báº£o trÃ¬, vui lÃ²ng thá»­ láº¡i sau."
         : "System maintenance, please try again later.";
 
       setMessages(prev => [...prev, { role: 'model', text: errorMsg }]);
@@ -177,7 +177,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
     }
   };
 
-  // Dọn rác khi Component unmount (Đóng Chat)
+  // Dá»n rÃ¡c khi Component unmount (ÄÃ³ng Chat)
   useEffect(() => {
       return () => {
           isMountedRef.current = false;
@@ -187,7 +187,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.nativeEvent.isComposing) return;
-    // Enter gửi, Shift+Enter xuống dòng
+    // Enter gá»­i, Shift+Enter xuá»‘ng dÃ²ng
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -217,10 +217,10 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                   {messages.length > 1 && (
                     <button
                       onClick={clearHistory}
-                      title={lang === 'vi' ? 'Xóa lịch sử' : 'Clear history'}
+                      title={lang === 'vi' ? 'XÃ³a lá»‹ch sá»­' : 'Clear history'}
                       className="text-gray-600 hover:text-red-400 transition-colors text-[9px] font-mono tracking-wider uppercase"
                     >
-                      {lang === 'vi' ? 'Xóa' : 'Clear'}
+                      {lang === 'vi' ? 'XÃ³a' : 'Clear'}
                     </button>
                   )}
                   <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white"><X size={18} className="md:w-5 md:h-5" /></button>
@@ -240,20 +240,20 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                                       <button
                                         onClick={() => reactToMessage(idx, 'up')}
                                         className={`text-[11px] px-1 py-0.5 rounded transition-all ${reactions[idx] === 'up' ? 'bg-green-500/20 text-green-400' : 'text-gray-600 hover:text-green-400'}`}
-                                        title="Hữu ích"
-                                      >👍</button>
+                                        title="Há»¯u Ã­ch"
+                                      >ðŸ‘</button>
                                       <button
                                         onClick={() => reactToMessage(idx, 'down')}
                                         className={`text-[11px] px-1 py-0.5 rounded transition-all ${reactions[idx] === 'down' ? 'bg-red-500/20 text-red-400' : 'text-gray-600 hover:text-red-400'}`}
-                                        title="Không hữu ích"
-                                      >👎</button>
+                                        title="KhÃ´ng há»¯u Ã­ch"
+                                      >ðŸ‘Ž</button>
                                       {/* Copy */}
                                       <button
                                         onClick={() => copyMessage(msg.text, idx)}
                                         className="flex items-center gap-1 text-[9px] text-gray-500 hover:text-primary bg-black/60 px-1.5 py-0.5 rounded"
                                       >
                                         {copiedIdx === idx ? <Check size={9} className="text-green-400" /> : <Copy size={9} />}
-                                        {copiedIdx === idx ? (lang === 'vi' ? 'Đã sao chép' : 'Copied!') : (lang === 'vi' ? 'Sao chép' : 'Copy')}
+                                        {copiedIdx === idx ? (lang === 'vi' ? 'ÄÃ£ sao chÃ©p' : 'Copied!') : (lang === 'vi' ? 'Sao chÃ©p' : 'Copy')}
                                       </button>
                                     </div>
                                   )}
@@ -270,7 +270,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                             <div className="flex gap-1.5 items-center">
                                 <ScanLine size={12} className="text-primary animate-pulse" />
                                 <span className="text-[10px] text-primary/80 italic font-mono tracking-wider">
-                                    {lang === 'vi' ? 'Đang phân tích...' : 'Analyzing threat...'}
+                                    {lang === 'vi' ? 'Äang phÃ¢n tÃ­ch...' : 'Analyzing threat...'}
                                 </span>
                                 <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce"></span>
                                 <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:75ms]"></span>
@@ -305,7 +305,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
         <div className="pointer-events-auto mb-2 mr-1 md:mb-3 md:mr-2 animate-bounce cursor-pointer" onClick={() => setIsOpen(true)}>
             <div className="bg-secondary text-white font-bold text-[10px] md:text-xs px-3 py-1.5 md:px-4 md:py-2 rounded-xl shadow-[0_0_20px_rgba(255,42,109,0.6)] relative flex items-center gap-2 border border-white/20">
                <Sparkles size={12} className="animate-spin-slow md:w-[14px] md:h-[14px]" />
-               {lang === 'vi' ? 'Chat với AI Agent' : 'Chat with AI Agent'}
+               {lang === 'vi' ? 'Chat vá»›i AI Agent' : 'Chat with AI Agent'}
                <div className="absolute top-full right-4 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-secondary"></div>
             </div>
         </div>

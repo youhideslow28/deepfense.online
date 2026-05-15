@@ -27,13 +27,13 @@ const TetEffects: React.FC = () => {
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height - height;
-        // Giảm kích thước: từ (10-25) xuống (8-18)
+        // Giáº£m kÃ­ch thÆ°á»›c: tá»« (10-25) xuá»‘ng (8-18)
         this.size = Math.random() * 10 + 8;
         this.speedY = Math.random() * 1 + 0.5;
         this.speedX = Math.random() * 1 - 0.5;
         this.angle = Math.random() * 360;
         this.spin = Math.random() * 2 - 1;
-        this.type = Math.random() > 0.8 ? 'ENVELOPE' : 'FLOWER'; // 20% là lì xì
+        this.type = Math.random() > 0.8 ? 'ENVELOPE' : 'FLOWER'; // 20% lÃ  lÃ¬ xÃ¬
       }
 
       update() {
@@ -54,24 +54,24 @@ const TetEffects: React.FC = () => {
         ctx.rotate((this.angle * Math.PI) / 180);
 
         if (this.type === 'FLOWER') {
-          // Vẽ hoa mai 5 cánh
-          ctx.fillStyle = '#FFD700'; // Vàng
+          // Váº½ hoa mai 5 cÃ¡nh
+          ctx.fillStyle = '#FFD700'; // VÃ ng
           for (let i = 0; i < 5; i++) {
             ctx.beginPath();
             ctx.ellipse(0, -this.size / 2, this.size / 3, this.size / 1.5, 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.rotate((Math.PI * 2) / 5);
           }
-          // Nhụy hoa
+          // Nhá»¥y hoa
           ctx.beginPath();
           ctx.arc(0, 0, this.size / 4, 0, Math.PI * 2);
           ctx.fillStyle = '#FF4500';
           ctx.fill();
         } else {
-          // Vẽ bao lì xì
-          ctx.fillStyle = '#E60012'; // Đỏ
+          // Váº½ bao lÃ¬ xÃ¬
+          ctx.fillStyle = '#E60012'; // Äá»
           ctx.fillRect(-this.size / 2, -this.size / 1.5, this.size, this.size * 1.4);
-          // Họa tiết vàng
+          // Há»a tiáº¿t vÃ ng
           ctx.fillStyle = '#FFD700';
           ctx.fillRect(-this.size / 4, -this.size / 4, this.size / 2, this.size / 2);
         }

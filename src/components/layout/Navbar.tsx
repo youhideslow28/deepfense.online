@@ -1,8 +1,8 @@
 /**
- * DEEPFENSE.ONLINE — Navbar v3.0
+ * DEEPFENSE.ONLINE â€” Navbar v3.0
  * World-class navigation with announcement bar, animated logo, premium effects.
  * Inspired by: Linear.app, Vercel.com
- * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
  */
 
 import React, { useState, useEffect } from 'react';
@@ -38,12 +38,12 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
   }, []);
 
   const navItems: { path: string; label: string; icon: React.ReactNode }[] = [
-    { path: '/',           label: lang === 'vi' ? 'TRANG CHỦ' : 'HOME',      icon: <Home size={13} /> },
+    { path: '/',           label: lang === 'vi' ? 'TRANG CHá»¦' : 'HOME',      icon: <Home size={13} /> },
     { path: '/academy',    label: 'ACADEMY',                                  icon: <GraduationCap size={13} /> },
-    { path: '/tools',      label: lang === 'vi' ? 'CÔNG CỤ'   : 'TOOLS',     icon: <Cpu size={13} /> },
-    { path: '/challenge',  label: lang === 'vi' ? 'THỬ THÁCH' : 'CHALLENGE', icon: <Swords size={13} /> },
-    { path: '/ai-project', label: lang === 'vi' ? 'DỰ ÁN AI'  : 'AI PROJECT',icon: <Bot size={13} /> },
-    { path: '/contact',    label: lang === 'vi' ? 'VỀ CHÚNG TÔI' : 'ABOUT', icon: <Info size={13} /> },
+    { path: '/tools',      label: lang === 'vi' ? 'CÃ”NG Cá»¤'   : 'TOOLS',     icon: <Cpu size={13} /> },
+    { path: '/challenge',  label: lang === 'vi' ? 'THá»¬ THÃCH' : 'CHALLENGE', icon: <Swords size={13} /> },
+    { path: '/ai-project', label: lang === 'vi' ? 'Dá»° ÃN AI'  : 'AI PROJECT',icon: <Bot size={13} /> },
+    { path: '/contact',    label: lang === 'vi' ? 'Vá»€ CHÃšNG TÃ”I' : 'ABOUT', icon: <Info size={13} /> },
   ];
 
   const toggleSeason = () => setSeason(season === 'SUMMER' ? 'NORMAL' : 'SUMMER');
@@ -54,32 +54,32 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
   };
 
   const welcomeText = lang === 'vi'
-    ? 'Chào mừng bạn đến với DEEPFENSE 3.0 - nền tảng huấn luyện nhận diện deepfake và tự vệ trước lừa đảo AI'
+    ? 'ChÃ o má»«ng báº¡n Ä‘áº¿n vá»›i DEEPFENSE 3.0 - ná»n táº£ng huáº¥n luyá»‡n nháº­n diá»‡n deepfake vÃ  tá»± vá»‡ trÆ°á»›c lá»«a Ä‘áº£o AI'
     : 'Welcome to DEEPFENSE 3.0 - a gamified training platform for deepfake awareness and AI scam defense';
 
   const authLabel = user
     ? (user.displayName?.split(' ')[0] || user.email?.split('@')[0] || 'Gmail')
-    : (lang === 'vi' ? 'Đăng nhập' : 'Sign in');
+    : (lang === 'vi' ? 'ÄÄƒng nháº­p' : 'Sign in');
   const dpfBalanceLabel = dpfLoading ? '...' : dpfBalance.toLocaleString('en-US');
 
   return (
     <>
-      {/* ── WELCOME BAR ── */}
+      {/* â”€â”€ WELCOME BAR â”€â”€ */}
       <div className="relative z-[101] w-full bg-gradient-to-r from-black via-[#07111f] to-black border-b border-primary/10 h-8 flex items-center overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent pointer-events-none" />
         <div className="absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-black to-transparent pointer-events-none" />
         <div className="absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-black to-transparent pointer-events-none" />
         <div className="announcement-ticker">
           <span className="text-[10px] md:text-[11px] font-mono tracking-[0.18em] uppercase text-primary/70 pr-10">
-            {welcomeText} &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; {welcomeText} &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
+            {welcomeText} &nbsp;&nbsp;&nbsp;â€¢&nbsp;&nbsp;&nbsp; {welcomeText} &nbsp;&nbsp;&nbsp;â€¢&nbsp;&nbsp;&nbsp;
           </span>
           <span className="text-[10px] md:text-[11px] font-mono tracking-[0.18em] uppercase text-primary/70 pr-10">
-            {welcomeText} &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; {welcomeText} &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
+            {welcomeText} &nbsp;&nbsp;&nbsp;â€¢&nbsp;&nbsp;&nbsp; {welcomeText} &nbsp;&nbsp;&nbsp;â€¢&nbsp;&nbsp;&nbsp;
           </span>
         </div>
       </div>
 
-      {/* ── MAIN NAVBAR ── */}
+      {/* â”€â”€ MAIN NAVBAR â”€â”€ */}
       <div
         className={`sticky top-0 z-[100] w-full border-b transition-all duration-500
           ${isScrolled
@@ -90,7 +90,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className={`flex items-center justify-between transition-all duration-500 ${isScrolled ? 'h-14 md:h-16' : 'h-16 md:h-20'}`}>
 
-            {/* ── LOGO ── */}
+            {/* â”€â”€ LOGO â”€â”€ */}
             <Link to="/" className="flex items-center gap-3 group cursor-pointer shrink-0">
               <div className="relative h-9 w-9 md:h-10 md:w-10">
                 <div className="absolute inset-0 rounded-2xl bg-primary/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -116,7 +116,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
               </div>
             </Link>
 
-            {/* ── DESKTOP NAV ── */}
+            {/* â”€â”€ DESKTOP NAV â”€â”€ */}
             <nav className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => {
                 const isActive = location.pathname === item.path
@@ -149,7 +149,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
               })}
             </nav>
 
-            {/* ── CONTROLS ── */}
+            {/* â”€â”€ CONTROLS â”€â”€ */}
             <div className="relative flex items-center gap-2 md:gap-3">
 
               {/* Language Switcher */}
@@ -195,11 +195,11 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
               <button
                 onClick={onGoogleAuth}
                 disabled={authBusy}
-                title={user?.email || (lang === 'vi' ? 'Đăng nhập hoặc tạo tài khoản' : 'Sign in or create account')}
+                title={user?.email || (lang === 'vi' ? 'ÄÄƒng nháº­p hoáº·c táº¡o tÃ i khoáº£n' : 'Sign in or create account')}
                 className="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-lg bg-primary/10 border border-primary/20 text-primary text-[10px] font-black font-mono uppercase tracking-widest hover:bg-primary/20 hover:border-primary/40 disabled:opacity-60 disabled:cursor-wait transition-all duration-300 max-w-[250px]"
               >
                 {user ? <UserCircle size={12} /> : <LogIn size={12} />}
-                <span className="truncate">{authBusy ? (lang === 'vi' ? 'ĐANG XỬ LÝ' : 'WORKING') : authLabel}</span>
+                <span className="truncate">{authBusy ? (lang === 'vi' ? 'ÄANG Xá»¬ LÃ' : 'WORKING') : authLabel}</span>
                 {user && (
                   <span className="ml-1 inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[9px] text-amber-200">
                     <Coins size={10} /> {dpfBalanceLabel}
@@ -224,7 +224,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
           </div>
         </div>
 
-        {/* ── MOBILE MENU ── */}
+        {/* â”€â”€ MOBILE MENU â”€â”€ */}
         {isMenuOpen && (
           <div className="lg:hidden border-t border-white/5 bg-black/98 backdrop-blur-2xl animate-in slide-in-from-top-3 duration-200">
             <div className="flex flex-col p-3 gap-1">
@@ -254,7 +254,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
                   className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-primary/10 border border-primary/20 text-primary text-[11px] font-black font-mono uppercase tracking-widest disabled:opacity-60"
                 >
                   {user ? <UserCircle size={13} /> : <LogIn size={13} />}
-                  <span className="truncate">{authBusy ? (lang === 'vi' ? 'ĐANG XỬ LÝ' : 'WORKING') : authLabel}</span>
+                  <span className="truncate">{authBusy ? (lang === 'vi' ? 'ÄANG Xá»¬ LÃ' : 'WORKING') : authLabel}</span>
                   {user && (
                     <span className="inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[9px] text-amber-200">
                       <Coins size={10} /> {dpfBalanceLabel} DPF coin

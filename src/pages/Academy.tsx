@@ -22,23 +22,23 @@ interface AcademyProps {
 const roadmapData = [
   {
     code: '01',
-    titleVi: 'Deepfake là gì?',
+    titleVi: 'Deepfake lÃ  gÃ¬?',
     titleEn: 'What is a deepfake?',
-    metaVi: 'Khởi động, kiến thức nền và checkpoint ngay trong bài',
+    metaVi: 'Khá»Ÿi Ä‘á»™ng, kiáº¿n thá»©c ná»n vÃ  checkpoint ngay trong bÃ i',
     metaEn: 'Intro, foundation concepts, and inline checkpoints',
   },
   {
     code: '02',
-    titleVi: 'Nhận diện dấu hiệu đáng ngờ',
+    titleVi: 'Nháº­n diá»‡n dáº¥u hiá»‡u Ä‘Ã¡ng ngá»',
     titleEn: 'Recognition signals',
-    metaVi: 'Hình ảnh, video, giọng nói và nguồn tin',
+    metaVi: 'HÃ¬nh áº£nh, video, giá»ng nÃ³i vÃ  nguá»“n tin',
     metaEn: 'Image, video, voice, and source checks',
   },
   {
     code: '03',
-    titleVi: 'Phòng vệ và ứng phó',
+    titleVi: 'PhÃ²ng vá»‡ vÃ  á»©ng phÃ³',
     titleEn: 'Prevention and response',
-    metaVi: 'Thói quen an toàn, báo cáo, đánh giá và bài thi cuối khóa',
+    metaVi: 'ThÃ³i quen an toÃ n, bÃ¡o cÃ¡o, Ä‘Ã¡nh giÃ¡ vÃ  bÃ i thi cuá»‘i khÃ³a',
     metaEn: 'Safer habits, reporting, evaluation, and final exam',
   },
 ];
@@ -99,34 +99,34 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     {
       id: 'basics',
       title: 'DEEPFENSE BASIC',
-      subtitle: isVi ? 'Khóa nền tảng đầy đủ' : 'Complete foundation course',
+      subtitle: isVi ? 'KhÃ³a ná»n táº£ng Ä‘áº§y Ä‘á»§' : 'Complete foundation course',
       progress: (() => {
         const totalLessons = basicsCourse.modules.reduce((acc, m) => acc + m.sections.reduce((sAcc, s) => sAcc + s.lessons.length, 0), 0);
         return totalLessons > 0 ? Math.round((completedLessons.length / totalLessons) * 100) : 0;
       })(),
       modulesCount: basicsCourse.modules.length,
       reward: '500 DPF',
-      difficulty: isVi ? 'Cơ bản' : 'Basic',
+      difficulty: isVi ? 'CÆ¡ báº£n' : 'Basic',
       data: basicsCourse
     },
     {
       id: 'advance',
       title: 'DEEPFENSE ADVANCE',
-      subtitle: isVi ? 'Phân tích bằng chứng' : 'Evidence Analysis',
+      subtitle: isVi ? 'PhÃ¢n tÃ­ch báº±ng chá»©ng' : 'Evidence Analysis',
       progress: 0,
       modulesCount: 6,
       reward: '750 DPF',
-      difficulty: isVi ? 'Nâng cao' : 'Advanced',
+      difficulty: isVi ? 'NÃ¢ng cao' : 'Advanced',
       locked: true
     },
     {
       id: 'expert',
       title: 'DEEPFENSE EXPERT',
-      subtitle: isVi ? 'Phòng thủ tổ chức' : 'Organizational Defense',
+      subtitle: isVi ? 'PhÃ²ng thá»§ tá»• chá»©c' : 'Organizational Defense',
       progress: 0,
       modulesCount: 8,
       reward: '1000 DPF',
-      difficulty: isVi ? 'Chuyên gia' : 'Expert',
+      difficulty: isVi ? 'ChuyÃªn gia' : 'Expert',
       locked: true
     },
   ];
@@ -146,39 +146,40 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   }, [searchParams]);
 
   const hallOfFame = [
-    { rank: '01', name: 'Ho Xuan Nguyen', credential: 'DEEPFENSE AWARE' },
-    { rank: '02', name: 'Nguyen Nhat Huy', credential: 'DEEPFENSE AWARE' },
-    { rank: '03', name: isVi ? 'Học viên tiếp theo' : 'Next learner', credential: '...' },
+    { rank: '01', name: 'Há»“ XuÃ¢n Nguyá»…n', credential: 'DEEPFENSE AWARE' },
+    { rank: '02', name: 'Nguyá»…n Nháº¥t Huy', credential: 'DEEPFENSE AWARE' },
+    { rank: '03', name: 'VÃµ Phan PhÃ¡p', credential: 'DEEPFENSE AWARE' },
+    { rank: '04', name: 'Tráº§n Minh Nháº¥t', credential: 'DEEPFENSE AWARE' },
   ];
 
   const labContent: Record<string, any> = {
     'lesson-5': {
-      title: isVi ? 'Lab: Truy tìm dấu vết Deepfake' : 'Lab: Spot the Deepfake',
-      description: isVi ? 'Phân tích các mẫu dưới đây. Xác định mẫu nào do AI tạo ra và tìm các lỗi phổ biến.' : 'Analyze the images below. Identify which ones are AI-generated and find the telltale signs.',
+      title: isVi ? 'Lab: Truy tÃ¬m dáº¥u váº¿t Deepfake' : 'Lab: Spot the Deepfake',
+      description: isVi ? 'PhÃ¢n tÃ­ch cÃ¡c máº«u dÆ°á»›i Ä‘Ã¢y. XÃ¡c Ä‘á»‹nh máº«u nÃ o do AI táº¡o ra vÃ  tÃ¬m cÃ¡c lá»—i phá»• biáº¿n.' : 'Analyze the images below. Identify which ones are AI-generated and find the telltale signs.',
       samples: [
         {
           id: 'sample-1',
-          image: '👤',
-          label: isVi ? 'Chân dung 1' : 'Portrait 1',
-          errors: isVi ? ['Mắt không đối xứng', 'Rìa nền bị mờ', 'Vân da không đồng nhất'] : ['Asymmetrical eyes', 'Blurry background edges', 'Skin texture inconsistency'],
-          hint: isVi ? 'Nhìn kỹ vào đôi mắt - chúng có khớp nhau không?' : 'Look closely at the eyes - do they match?',
+          image: 'ðŸ‘¤',
+          label: isVi ? 'ChÃ¢n dung 1' : 'Portrait 1',
+          errors: isVi ? ['Máº¯t khÃ´ng Ä‘á»‘i xá»©ng', 'RÃ¬a ná»n bá»‹ má»', 'VÃ¢n da khÃ´ng Ä‘á»“ng nháº¥t'] : ['Asymmetrical eyes', 'Blurry background edges', 'Skin texture inconsistency'],
+          hint: isVi ? 'NhÃ¬n ká»¹ vÃ o Ä‘Ã´i máº¯t - chÃºng cÃ³ khá»›p nhau khÃ´ng?' : 'Look closely at the eyes - do they match?',
         },
         {
           id: 'sample-2',
-          image: '👥',
-          label: isVi ? 'Ảnh nhóm 1' : 'Group Photo 1',
-          errors: isVi ? ['Bàn tay có thừa ngón', 'Kết cấu quần áo bị gãy', 'Lỗi hòa trộn khuôn mặt'] : ['Hand has extra fingers', 'Clothing texture breaks', 'Face blend artifacts'],
-          hint: isVi ? 'Đếm số ngón tay thật cẩn thận.' : 'Count the fingers carefully.',
+          image: 'ðŸ‘¥',
+          label: isVi ? 'áº¢nh nhÃ³m 1' : 'Group Photo 1',
+          errors: isVi ? ['BÃ n tay cÃ³ thá»«a ngÃ³n', 'Káº¿t cáº¥u quáº§n Ã¡o bá»‹ gÃ£y', 'Lá»—i hÃ²a trá»™n khuÃ´n máº·t'] : ['Hand has extra fingers', 'Clothing texture breaks', 'Face blend artifacts'],
+          hint: isVi ? 'Äáº¿m sá»‘ ngÃ³n tay tháº­t cáº©n tháº­n.' : 'Count the fingers carefully.',
         },
       ],
     },
   };
 
   const stats = [
-    { label: isVi ? 'Khóa học' : 'Enrolled', value: isSignedIn ? 1 : 0, icon: BookOpen, color: 'text-blue-400' },
-    { label: isVi ? 'Thời gian' : 'Total Time', value: '45m', icon: Clock, color: 'text-cyan-400' },
-    { label: isVi ? 'Đã xong' : 'Finished', value: completedLessons.length, icon: CheckCircle2, color: 'text-emerald-400' },
-    { label: isVi ? 'Chứng chỉ' : 'Certs', value: completedModules.includes(99) ? 1 : 0, icon: Award, color: 'text-amber-400' },
+    { label: isVi ? 'KhÃ³a há»c' : 'Enrolled', value: isSignedIn ? 1 : 0, icon: BookOpen, color: 'text-blue-400' },
+    { label: isVi ? 'Thá»i gian' : 'Total Time', value: '45m', icon: Clock, color: 'text-cyan-400' },
+    { label: isVi ? 'ÄÃ£ xong' : 'Finished', value: completedLessons.length, icon: CheckCircle2, color: 'text-emerald-400' },
+    { label: isVi ? 'Chá»©ng chá»‰' : 'Certs', value: completedModules.includes(99) ? 1 : 0, icon: Award, color: 'text-amber-400' },
   ];
 
   const WelcomeView = () => (
@@ -195,7 +196,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             </h1>
             <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-gray-400">
               {isVi
-                ? 'Khóa nền tảng giúp bạn hiểu deepfake, nhận ra tín hiệu bất thường và biết cách kiểm chứng trước khi tin, chia sẻ hoặc chuyển tiền. Đăng nhập Google để lưu tiến độ, kết quả quiz và điều kiện mở certificate.'
+                ? 'KhÃ³a ná»n táº£ng giÃºp báº¡n hiá»ƒu deepfake, nháº­n ra tÃ­n hiá»‡u báº¥t thÆ°á»ng vÃ  biáº¿t cÃ¡ch kiá»ƒm chá»©ng trÆ°á»›c khi tin, chia sáº» hoáº·c chuyá»ƒn tiá»n. ÄÄƒng nháº­p Google Ä‘á»ƒ lÆ°u tiáº¿n Ä‘á»™, káº¿t quáº£ quiz vÃ  Ä‘iá»u kiá»‡n má»Ÿ certificate.'
                 : 'A foundation course that helps you understand deepfakes, notice suspicious signals, and verify before trusting, sharing, or sending money. Sign in with Google so progress, quiz results, and certificate eligibility are saved.'}
             </p>
           </div>
@@ -205,14 +206,14 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               <Award size={28} className="text-amber-300" />
               <div>
                 <div className="text-[10px] font-mono uppercase tracking-[0.22em] text-amber-300">
-                  {isVi ? 'Sau khi hoàn thành' : 'After completion'}
+                  {isVi ? 'Sau khi hoÃ n thÃ nh' : 'After completion'}
                 </div>
                 <div className="text-white font-black uppercase">Certificate + DPF</div>
               </div>
             </div>
             <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm leading-relaxed text-gray-400">
               {isVi
-                ? 'Certificate chỉ mở khi bạn học xong, gửi đánh giá khóa học và đạt bài thi cuối khóa.'
+                ? 'Certificate chá»‰ má»Ÿ khi báº¡n há»c xong, gá»­i Ä‘Ã¡nh giÃ¡ khÃ³a há»c vÃ  Ä‘áº¡t bÃ i thi cuá»‘i khÃ³a.'
                 : 'Certificate unlocks only after lessons, course evaluation, and Final Exam are completed.'}
             </div>
           </div>
@@ -224,14 +225,14 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
           <div className="relative z-10 max-w-2xl">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/10 text-amber-300 px-4 py-1.5 text-[10px] font-mono tracking-widest">
               <LockKeyhole size={12} />
-              {isVi ? 'CẦN ĐĂNG NHẬP GOOGLE' : 'GOOGLE SIGN-IN REQUIRED'}
+              {isVi ? 'Cáº¦N ÄÄ‚NG NHáº¬P GOOGLE' : 'GOOGLE SIGN-IN REQUIRED'}
             </div>
             <h2 className="text-2xl md:text-4xl font-black text-white uppercase leading-tight" style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}>
-              {isVi ? 'Sẵn sàng vào bài học đầu tiên.' : 'Ready for your first lesson.'}
+              {isVi ? 'Sáºµn sÃ ng vÃ o bÃ i há»c Ä‘áº§u tiÃªn.' : 'Ready for your first lesson.'}
             </h2>
             <p className="mt-4 text-gray-400 text-sm md:text-base leading-relaxed">
               {isVi
-                ? 'Khi đã đăng nhập, bạn sẽ được chuyển sang hệ thống học riêng. Tiến độ đọc, checkpoint và bài thi được lưu lại để bạn có thể tiếp tục đúng vị trí.'
+                ? 'Khi Ä‘Ã£ Ä‘Äƒng nháº­p, báº¡n sáº½ Ä‘Æ°á»£c chuyá»ƒn sang há»‡ thá»‘ng há»c riÃªng. Tiáº¿n Ä‘á»™ Ä‘á»c, checkpoint vÃ  bÃ i thi Ä‘Æ°á»£c lÆ°u láº¡i Ä‘á»ƒ báº¡n cÃ³ thá»ƒ tiáº¿p tá»¥c Ä‘Ãºng vá»‹ trÃ­.'
                 : 'After sign-in, you will enter the course reader. Reading progress, checkpoints, and exams are saved so you can continue from the right place.'}
             </p>
 
@@ -239,11 +240,11 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               <div className="w-full max-w-xl">
                 <div className="mb-3 rounded-xl border border-blue-400/20 bg-blue-500/10 text-blue-100 p-4 text-sm leading-relaxed">
                   {isVi
-                    ? 'Bạn cần đăng nhập bằng Google để vào hệ thống học, lưu tiến độ, làm quiz và mở certificate sau khi hoàn thành.'
+                    ? 'Báº¡n cáº§n Ä‘Äƒng nháº­p báº±ng Google Ä‘á»ƒ vÃ o há»‡ thá»‘ng há»c, lÆ°u tiáº¿n Ä‘á»™, lÃ m quiz vÃ  má»Ÿ certificate sau khi hoÃ n thÃ nh.'
                     : 'Please sign in with Google to enter the course system, save progress, take quizzes, and unlock the certificate after completion.'}
                 </div>
                 <GlowButton color="primary" size="lg" icon={<LogIn size={16} />} onClick={onGoogleAuth}>
-                  {authBusy ? (isVi ? 'ĐANG MỞ GOOGLE...' : 'OPENING GOOGLE...') : (isVi ? 'ĐĂNG NHẬP GOOGLE ĐỂ BẮT ĐẦU' : 'SIGN IN WITH GOOGLE')}
+                  {authBusy ? (isVi ? 'ÄANG Má»ž GOOGLE...' : 'OPENING GOOGLE...') : (isVi ? 'ÄÄ‚NG NHáº¬P GOOGLE Äá»‚ Báº®T Äáº¦U' : 'SIGN IN WITH GOOGLE')}
                 </GlowButton>
               </div>
             </div>
@@ -255,7 +256,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             <div className="mb-5 flex items-center gap-2">
               <ShieldCheck size={15} className="text-primary" />
               <h2 className="text-white font-black uppercase tracking-widest text-sm">
-                {isVi ? 'Những thứ bạn sẽ được học' : 'What you will learn'}
+                {isVi ? 'Nhá»¯ng thá»© báº¡n sáº½ Ä‘Æ°á»£c há»c' : 'What you will learn'}
               </h2>
             </div>
             <div className="space-y-3">
@@ -296,8 +297,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   <Award size={32} />
                 </div>
                 <div>
-                  <h3 className="text-white font-black uppercase italic tracking-wider text-lg">CHỨNG CHỈ CỦA BẠN</h3>
-                  <p className="text-[10px] text-amber-400 font-mono uppercase tracking-[0.2em]">{isVi ? 'ĐÃ HOÀN THÀNH DEEPFENSE BASIC' : 'DEEPFENSE BASIC CERTIFIED'}</p>
+                  <h3 className="text-white font-black uppercase italic tracking-wider text-lg">CHá»¨NG CHá»ˆ Cá»¦A Báº N</h3>
+                  <p className="text-[10px] text-amber-400 font-mono uppercase tracking-[0.2em]">{isVi ? 'ÄÃƒ HOÃ€N THÃ€NH DEEPFENSE BASIC' : 'DEEPFENSE BASIC CERTIFIED'}</p>
                 </div>
               </div>
               
@@ -308,13 +309,13 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-6 py-3 text-xs font-black uppercase tracking-widest text-black hover:bg-amber-300 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)]"
                 >
-                  <Award size={16} /> {isVi ? 'TẢI CHỨNG CHỈ' : 'DOWNLOAD CERTIFICATE'}
+                  <Award size={16} /> {isVi ? 'Táº¢I CHá»¨NG CHá»ˆ' : 'DOWNLOAD CERTIFICATE'}
                 </a>
                 <button 
                   onClick={() => navigate('/academy/verify')}
                   className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-xs font-black uppercase tracking-widest text-white hover:bg-white/10 transition-all"
                 >
-                  <ExternalLink size={16} /> {isVi ? 'TRANG XÁC MINH' : 'VERIFY PAGE'}
+                  <ExternalLink size={16} /> {isVi ? 'TRANG XÃC MINH' : 'VERIFY PAGE'}
                 </button>
               </div>
             </div>
@@ -339,7 +340,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-xl font-black uppercase text-white flex items-center gap-2">
               <LayoutDashboard className="text-blue-400" size={20} />
-              {isVi ? 'Lộ trình của tôi' : 'My Courses'}
+              {isVi ? 'Lá»™ trÃ¬nh cá»§a tÃ´i' : 'My Courses'}
             </h2>
           </div>
 
@@ -358,7 +359,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 <div className="flex items-start justify-between mb-4 relative z-10">
                   <div>
                     <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-[10px] font-mono text-blue-300 mb-2 uppercase tracking-widest">
-                      {isVi ? 'KHÓA HỌC' : 'COURSE'}
+                      {isVi ? 'KHÃ“A Há»ŒC' : 'COURSE'}
                     </div>
                     <h3 className="text-xl font-black text-white mb-1 group-hover:text-blue-400 transition-colors">{track.title}</h3>
                     <p className="text-sm text-gray-400">{track.subtitle}</p>
@@ -391,17 +392,17 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             </div>
             <h3 className="font-black text-white uppercase tracking-widest text-[10px] mb-4 flex items-center gap-2">
               <BookOpen className="text-blue-400" size={14} /> 
-              {isVi ? 'Thông tin đào tạo' : 'Course Overview'}
+              {isVi ? 'ThÃ´ng tin Ä‘Ã o táº¡o' : 'Course Overview'}
             </h3>
             
             <div className="space-y-5 relative z-10">
               <div>
-                <p className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-2">{isVi ? 'Bạn sẽ được học:' : "What you'll learn:"}</p>
+                <p className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-2">{isVi ? 'Báº¡n sáº½ Ä‘Æ°á»£c há»c:' : "What you'll learn:"}</p>
                 <ul className="space-y-1.5">
                   {[
-                    isVi ? 'Khái niệm & Phân loại Deepfake' : 'Deepfake Concepts & Types',
-                    isVi ? 'Tâm lý học hành vi lừa đảo' : 'Scam Behavior Psychology',
-                    isVi ? 'Quy trình kiểm chứng 4 bước' : '4-Step Verification Workflow'
+                    isVi ? 'KhÃ¡i niá»‡m & PhÃ¢n loáº¡i Deepfake' : 'Deepfake Concepts & Types',
+                    isVi ? 'TÃ¢m lÃ½ há»c hÃ nh vi lá»«a Ä‘áº£o' : 'Scam Behavior Psychology',
+                    isVi ? 'Quy trÃ¬nh kiá»ƒm chá»©ng 4 bÆ°á»›c' : '4-Step Verification Workflow'
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-[11px] text-gray-400">
                       <div className="w-1 h-1 rounded-full bg-blue-500 mt-1.5 shrink-0" />
@@ -412,12 +413,12 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               </div>
 
               <div>
-                <p className="text-[9px] font-black text-emerald-400 uppercase tracking-widest mb-2">{isVi ? 'Bạn sẽ được thực hành:' : "What you'll practice:"}</p>
+                <p className="text-[9px] font-black text-emerald-400 uppercase tracking-widest mb-2">{isVi ? 'Báº¡n sáº½ Ä‘Æ°á»£c thá»±c hÃ nh:' : "What you'll practice:"}</p>
                 <ul className="space-y-1.5">
                   {[
-                    isVi ? 'Phân tích nhiễu ảnh & âm thanh' : 'Visual & Audio Artifact Analysis',
-                    isVi ? 'Truy vết nguồn gốc metadata' : 'Metadata Origin Tracing',
-                    isVi ? 'Lab nhận diện tình huống thực' : 'Real-world Scenario Labs'
+                    isVi ? 'PhÃ¢n tÃ­ch nhiá»…u áº£nh & Ã¢m thanh' : 'Visual & Audio Artifact Analysis',
+                    isVi ? 'Truy váº¿t nguá»“n gá»‘c metadata' : 'Metadata Origin Tracing',
+                    isVi ? 'Lab nháº­n diá»‡n tÃ¬nh huá»‘ng thá»±c' : 'Real-world Scenario Labs'
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-[11px] text-gray-400">
                       <div className="w-1 h-1 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
@@ -428,12 +429,12 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               </div>
 
               <div>
-                <p className="text-[9px] font-black text-amber-400 uppercase tracking-widest mb-2">{isVi ? 'Bạn sẽ nhận được:' : "What you'll earn:"}</p>
+                <p className="text-[9px] font-black text-amber-400 uppercase tracking-widest mb-2">{isVi ? 'Báº¡n sáº½ nháº­n Ä‘Æ°á»£c:' : "What you'll earn:"}</p>
                 <ul className="space-y-1.5">
                   {[
-                    isVi ? 'Chứng chỉ DEEPFENSE AWARE' : 'DEEPFENSE AWARE Certificate',
-                    isVi ? 'Thưởng DPF Coin (lên tới 1000)' : 'Up to 1000 DPF Reward Coins',
-                    isVi ? 'Hồ sơ năng lực an toàn số' : 'Digital Safety Competency Profile'
+                    isVi ? 'Chá»©ng chá»‰ DEEPFENSE AWARE' : 'DEEPFENSE AWARE Certificate',
+                    isVi ? 'ThÆ°á»Ÿng DPF Coin (lÃªn tá»›i 1000)' : 'Up to 1000 DPF Reward Coins',
+                    isVi ? 'Há»“ sÆ¡ nÄƒng lá»±c an toÃ n sá»‘' : 'Digital Safety Competency Profile'
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-[11px] text-gray-400">
                       <div className="w-1 h-1 rounded-full bg-amber-500 mt-1.5 shrink-0" />
@@ -449,7 +450,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
           <div className="glass-dark border border-amber-400/20 rounded-2xl p-6 relative overflow-hidden">
              <h3 className="font-black text-white uppercase tracking-widest text-[10px] mb-4 flex items-center gap-2">
                <Trophy className="text-amber-400" size={14} /> 
-               {isVi ? 'Bảng vinh danh' : 'Hall of Fame'}
+               {isVi ? 'Báº£ng vinh danh' : 'Hall of Fame'}
              </h3>
              <div className="space-y-3">
                {hallOfFame.map((learner, i) => (
@@ -472,13 +473,13 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             <div className="glass-dark border border-blue-500/20 rounded-2xl p-6">
               <h3 className="font-black text-white uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
                 <LockKeyhole className="text-blue-400" size={14} />
-                {isVi ? 'Yêu cầu đăng nhập' : 'Sign-in required'}
+                {isVi ? 'YÃªu cáº§u Ä‘Äƒng nháº­p' : 'Sign-in required'}
               </h3>
               <p className="text-[11px] text-gray-500 mb-4 leading-relaxed">
-                {isVi ? 'Đăng nhập Google để lưu tiến độ và nhận DPF.' : 'Sign in with Google to save progress and earn DPF.'}
+                {isVi ? 'ÄÄƒng nháº­p Google Ä‘á»ƒ lÆ°u tiáº¿n Ä‘á»™ vÃ  nháº­n DPF.' : 'Sign in with Google to save progress and earn DPF.'}
               </p>
               <GlowButton color="secondary" size="sm" className="w-full" onClick={onGoogleAuth} icon={<LogIn size={14} />}>
-                {authBusy ? '...' : (isVi ? 'ĐĂNG NHẬP' : 'SIGN IN')}
+                {authBusy ? '...' : (isVi ? 'ÄÄ‚NG NHáº¬P' : 'SIGN IN')}
               </GlowButton>
             </div>
           ) : (
@@ -490,7 +491,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     DEV TOOLS (ADMIN ONLY)
                   </h3>
                   <p className="text-[11px] text-gray-500 mb-4 leading-relaxed">
-                    Hoàn thành nhanh 100% khóa học để kiểm tra chứng chỉ (Certificate).
+                    HoÃ n thÃ nh nhanh 100% khÃ³a há»c Ä‘á»ƒ kiá»ƒm tra chá»©ng chá»‰ (Certificate).
                   </p>
                   <div className="flex flex-col gap-2">
                     <button 
@@ -544,21 +545,21 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 <div className="glass-dark border border-red-500/20 rounded-2xl p-6">
                   <h3 className="font-black text-red-400 uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
                     <AlertCircle size={14} />
-                    {isVi ? 'VÙNG NGUY HIỂM' : 'DANGER ZONE'}
+                    {isVi ? 'VÃ™NG NGUY HIá»‚M' : 'DANGER ZONE'}
                   </h3>
                   <p className="text-[11px] text-gray-500 mb-4">
-                    {isVi ? 'Xóa toàn bộ tiến độ học tập của bạn?' : 'Reset all your learning progress?'}
+                    {isVi ? 'XÃ³a toÃ n bá»™ tiáº¿n Ä‘á»™ há»c táº­p cá»§a báº¡n?' : 'Reset all your learning progress?'}
                   </p>
                   <button 
                     onClick={() => {
-                      if (window.confirm(isVi ? 'Bạn có chắc chắn muốn xóa hết tiến độ?' : 'Are you sure you want to reset all progress?')) {
+                      if (window.confirm(isVi ? 'Báº¡n cÃ³ cháº¯c cháº¯n muá»‘n xÃ³a háº¿t tiáº¿n Ä‘á»™?' : 'Are you sure you want to reset all progress?')) {
                         setCompletedLessons([]);
                         setCompletedModules([]);
                       }
                     }}
                     className="w-full py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest hover:bg-red-500/20 transition-all"
                   >
-                    {isVi ? 'RESET TIẾN ĐỘ' : 'RESET PROGRESS'}
+                    {isVi ? 'RESET TIáº¾N Äá»˜' : 'RESET PROGRESS'}
                   </button>
                 </div>
               )}
@@ -579,7 +580,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
           onClick={() => setCurrentView('dashboard')}
           className="inline-flex items-center gap-2 text-blue-400 hover:text-white transition-colors font-black uppercase text-xs tracking-widest"
         >
-          <ChevronLeft size={16} /> {isVi ? 'Quay lại Dashboard' : 'Back to Dashboard'}
+          <ChevronLeft size={16} /> {isVi ? 'Quay láº¡i Dashboard' : 'Back to Dashboard'}
         </button>
 
         <div className="relative overflow-hidden rounded-3xl border border-blue-500/30 bg-gradient-to-br from-blue-900/40 to-black p-8 md:p-12 shadow-2xl">
@@ -589,7 +590,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             <p className="text-gray-400 text-sm max-w-2xl mb-8 leading-relaxed italic">{basicsCourse.modules[0].scenario}</p>
             <div className="flex flex-col md:flex-row md:items-center gap-8">
               <div className="shrink-0">
-                <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em] mb-1">{isVi ? 'Tiến độ tổng thể' : 'Overall Progress'}</p>
+                <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em] mb-1">{isVi ? 'Tiáº¿n Ä‘á»™ tá»•ng thá»ƒ' : 'Overall Progress'}</p>
                 <p className="text-5xl font-black text-blue-400">{track.progress}%</p>
               </div>
               <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
@@ -605,7 +606,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
         <div className="space-y-4">
           <h2 className="text-xl font-black text-white uppercase tracking-widest mb-4 flex items-center gap-2">
             <BookOpen size={20} className="text-blue-400" />
-            {isVi ? 'Các module đào tạo' : 'Training Modules'}
+            {isVi ? 'CÃ¡c module Ä‘Ã o táº¡o' : 'Training Modules'}
           </h2>
           
           <div className="grid grid-cols-1 gap-4">
@@ -664,10 +665,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     {isLocked ? (
                       <LockKeyhole size={18} className="text-gray-600" />
                     ) : isDone ? (
-                      <div className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">{isVi ? 'HOÀN THÀNH' : 'COMPLETED'}</div>
+                      <div className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">{isVi ? 'HOÃ€N THÃ€NH' : 'COMPLETED'}</div>
                     ) : (
                       <div className="flex items-center gap-2 text-[10px] font-black uppercase text-blue-400 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                        {isVi ? 'VÀO HỌC' : 'ENTER'} <Play size={12} fill="currentColor" />
+                        {isVi ? 'VÃ€O Há»ŒC' : 'ENTER'} <Play size={12} fill="currentColor" />
                       </div>
                     )}
                   </div>
@@ -688,13 +689,13 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       return (
         <div className="text-center py-20 glass-dark rounded-3xl border border-white/10">
           <CheckCircle2 size={64} className="text-emerald-500 mx-auto mb-6" />
-          <h2 className="text-2xl font-black text-white uppercase mb-2">{isVi ? 'Hoàn thành Module!' : 'Module Completed!'}</h2>
-          <p className="text-gray-400 mb-8">{isVi ? 'Module này chưa có bài trắc nghiệm.' : 'This module does not have a quiz yet.'}</p>
+          <h2 className="text-2xl font-black text-white uppercase mb-2">{isVi ? 'HoÃ n thÃ nh Module!' : 'Module Completed!'}</h2>
+          <p className="text-gray-400 mb-8">{isVi ? 'Module nÃ y chÆ°a cÃ³ bÃ i tráº¯c nghiá»‡m.' : 'This module does not have a quiz yet.'}</p>
           <GlowButton color="primary" onClick={() => {
             setCurrentView('course');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}>
-            {isVi ? 'QUAY LẠI LỘ TRÌNH' : 'BACK TO COURSE'}
+            {isVi ? 'QUAY Láº I Lá»˜ TRÃŒNH' : 'BACK TO COURSE'}
           </GlowButton>
         </div>
       );
@@ -709,10 +710,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in zoom-in-95 duration-500">
         <div className="text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[10px] font-black text-amber-400 uppercase tracking-[0.2em] mb-4">
-            <Zap size={12} /> {isVi ? 'Bài trắc nghiệm cuối module' : 'Module Final Quiz'}
+            <Zap size={12} /> {isVi ? 'BÃ i tráº¯c nghiá»‡m cuá»‘i module' : 'Module Final Quiz'}
           </div>
           <h1 className="text-3xl md:text-4xl font-black text-white mb-2 uppercase">{activeModule.title}</h1>
-          <p className="text-gray-500 text-sm">{isVi ? 'Trả lời đúng 70% để vượt qua' : 'Score 70% to pass'}</p>
+          <p className="text-gray-500 text-sm">{isVi ? 'Tráº£ lá»i Ä‘Ãºng 70% Ä‘á»ƒ vÆ°á»£t qua' : 'Score 70% to pass'}</p>
         </div>
 
         <div className="space-y-6">
@@ -753,7 +754,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               </div>
               {quizSubmitted && q.explanation && (
                 <div className="mt-4 p-4 rounded-xl bg-blue-500/5 border border-blue-500/10 text-xs text-blue-300 italic leading-relaxed">
-                  <span className="font-black mr-2 uppercase tracking-widest">{isVi ? 'Giải thích:' : 'Explanation:'}</span>
+                  <span className="font-black mr-2 uppercase tracking-widest">{isVi ? 'Giáº£i thÃ­ch:' : 'Explanation:'}</span>
                   {q.explanation}
                 </div>
               )}
@@ -764,7 +765,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
         {!quizSubmitted ? (
           <div className="sticky bottom-6 p-4 glass-dark border border-blue-500/30 rounded-2xl shadow-2xl flex items-center justify-between gap-6">
             <p className="text-xs text-gray-400">
-              {Object.keys(quizAnswers).length} / {questions.length} {isVi ? 'đã trả lời' : 'answered'}
+              {Object.keys(quizAnswers).length} / {questions.length} {isVi ? 'Ä‘Ã£ tráº£ lá»i' : 'answered'}
             </p>
             <GlowButton
               color="primary"
@@ -774,7 +775,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             >
-              {isVi ? 'NỘP BÀI KIỂM TRA' : 'SUBMIT QUIZ'}
+              {isVi ? 'Ná»˜P BÃ€I KIá»‚M TRA' : 'SUBMIT QUIZ'}
             </GlowButton>
           </div>
         ) : (
@@ -784,16 +785,16 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             </div>
             <div>
               <h2 className="text-3xl font-black text-white uppercase mb-2">
-                {pass ? (isVi ? 'CHÚC MỪNG!' : 'CONGRATULATIONS!') : (isVi ? 'CHƯA ĐẠT' : 'KEEP TRYING')}
+                {pass ? (isVi ? 'CHÃšC Má»ªNG!' : 'CONGRATULATIONS!') : (isVi ? 'CHÆ¯A Äáº T' : 'KEEP TRYING')}
               </h2>
               <p className="text-xl font-bold text-white">
-                {isVi ? 'Điểm của bạn:' : 'Your score:'} <span className={pass ? 'text-emerald-400' : 'text-red-400'}>{score}/{questions.length}</span>
+                {isVi ? 'Äiá»ƒm cá»§a báº¡n:' : 'Your score:'} <span className={pass ? 'text-emerald-400' : 'text-red-400'}>{score}/{questions.length}</span>
               </p>
             </div>
             <p className="text-gray-400 max-w-md mx-auto">
               {pass 
-                ? (isVi ? 'Bạn đã vượt qua bài kiểm tra và hoàn thành module này. Tiếp tục lộ trình để nhận chứng chỉ.' : 'You passed the quiz and completed this module. Continue your journey to earn your certificate.')
-                : (isVi ? 'Rất tiếc, bạn cần ít nhất 70% điểm để vượt qua. Hãy xem lại bài học và thử lại nhé.' : 'Sorry, you need at least 70% to pass. Review the lessons and try again.')
+                ? (isVi ? 'Báº¡n Ä‘Ã£ vÆ°á»£t qua bÃ i kiá»ƒm tra vÃ  hoÃ n thÃ nh module nÃ y. Tiáº¿p tá»¥c lá»™ trÃ¬nh Ä‘á»ƒ nháº­n chá»©ng chá»‰.' : 'You passed the quiz and completed this module. Continue your journey to earn your certificate.')
+                : (isVi ? 'Ráº¥t tiáº¿c, báº¡n cáº§n Ã­t nháº¥t 70% Ä‘iá»ƒm Ä‘á»ƒ vÆ°á»£t qua. HÃ£y xem láº¡i bÃ i há»c vÃ  thá»­ láº¡i nhÃ©.' : 'Sorry, you need at least 70% to pass. Review the lessons and try again.')
               }
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -803,7 +804,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     setCurrentView('course');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}>
-                  {activeModule.id === 99 ? (isVi ? 'NHẬN CHỨNG CHỈ' : 'GET CERTIFICATE') : (isVi ? 'TIẾP TỤC LỘ TRÌNH' : 'CONTINUE LEARNING')}
+                  {activeModule.id === 99 ? (isVi ? 'NHáº¬N CHá»¨NG CHá»ˆ' : 'GET CERTIFICATE') : (isVi ? 'TIáº¾P Tá»¤C Lá»˜ TRÃŒNH' : 'CONTINUE LEARNING')}
                 </GlowButton>
               ) : (
                 <button 
@@ -813,7 +814,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   }}
                   className="px-8 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-black uppercase tracking-widest hover:bg-white/20 transition-all"
                 >
-                  {isVi ? 'THỬ LẠI' : 'TRY AGAIN'}
+                  {isVi ? 'THá»¬ Láº I' : 'TRY AGAIN'}
                 </button>
               )}
             </div>
@@ -843,7 +844,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             <div className="absolute -right-20 -top-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
             <div className="relative z-10">
               <h4 className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                <Brain size={14} /> {isVi ? 'BỐI CẢNH MODULE' : 'MODULE SCENARIO'}
+                <Brain size={14} /> {isVi ? 'Bá»I Cáº¢NH MODULE' : 'MODULE SCENARIO'}
               </h4>
               <p className="text-gray-300 italic leading-relaxed text-sm">"{activeModule.scenario}"</p>
             </div>
@@ -858,7 +859,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             }}
             className="inline-flex items-center gap-2 text-blue-400 hover:text-white transition-colors font-black uppercase text-xs tracking-widest"
           >
-            <ChevronLeft size={16} /> {isVi ? 'Quay lại Module' : 'Back to Module'}
+            <ChevronLeft size={16} /> {isVi ? 'Quay láº¡i Module' : 'Back to Module'}
           </button>
           
           <div className="flex items-center gap-1 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
@@ -929,9 +930,9 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mx-auto mb-4 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
                     <Brain size={32} />
                   </div>
-                  <h2 className="text-2xl font-black text-white uppercase italic">{isVi ? 'ĐIỂM CẦN NHỚ' : 'KEY TAKEAWAYS'}</h2>
+                  <h2 className="text-2xl font-black text-white uppercase italic">{isVi ? 'ÄIá»‚M Cáº¦N NHá»š' : 'KEY TAKEAWAYS'}</h2>
                   <p className="text-xs text-gray-500 font-mono mt-2 uppercase tracking-widest">
-                    {isVi ? 'Tóm tắt kiến thức trước khi kiểm tra' : 'Summary before the checkpoint'}
+                    {isVi ? 'TÃ³m táº¯t kiáº¿n thá»©c trÆ°á»›c khi kiá»ƒm tra' : 'Summary before the checkpoint'}
                   </p>
                 </div>
 
@@ -953,7 +954,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 <div className="glass-dark border border-amber-500/20 rounded-2xl p-6 flex items-center gap-4 mb-4">
                   <ShieldCheck size={32} className="text-amber-400" />
                   <div>
-                    <h3 className="text-lg font-black text-white uppercase italic">{isVi ? 'KIỂM TRA NHANH' : 'QUICK CHECK'}</h3>
+                    <h3 className="text-lg font-black text-white uppercase italic">{isVi ? 'KIá»‚M TRA NHANH' : 'QUICK CHECK'}</h3>
                     <p className="text-[10px] text-gray-500 uppercase tracking-widest font-mono">{section.checkpoint?.label}</p>
                   </div>
                 </div>
@@ -995,7 +996,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     </div>
                     {checkpointSubmitted && q.explanation && (
                       <div className="mt-4 p-4 rounded-xl bg-amber-500/5 border border-amber-500/10 text-[11px] text-amber-300/80 italic leading-relaxed">
-                        <span className="font-black mr-2 uppercase tracking-widest">{isVi ? 'Gợi ý:' : 'Hint:'}</span>
+                        <span className="font-black mr-2 uppercase tracking-widest">{isVi ? 'Gá»£i Ã½:' : 'Hint:'}</span>
                         {q.explanation}
                       </div>
                     )}
@@ -1018,7 +1019,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 }}
                 className={`px-6 py-3 rounded-xl border border-white/10 text-white font-black uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all ${activeLessonIdx === 0 && activeSectionIdx === 0 && lessonStep === 'content' ? 'opacity-0 pointer-events-none' : ''}`}
               >
-                {isVi ? 'TRƯỚC' : 'BACK'}
+                {isVi ? 'TRÆ¯á»šC' : 'BACK'}
               </button>
 
               <GlowButton 
@@ -1078,12 +1079,12 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 }}
               >
                 {lessonStep === 'content' 
-                  ? (activeLessonIdx === section.lessons.length - 1 && hasCheckpoint ? (isVi ? 'ĐIỂM CẦN NHỚ' : 'REVIEW') : (isVi ? 'TIẾP THEO' : 'NEXT'))
+                  ? (activeLessonIdx === section.lessons.length - 1 && hasCheckpoint ? (isVi ? 'ÄIá»‚M Cáº¦N NHá»š' : 'REVIEW') : (isVi ? 'TIáº¾P THEO' : 'NEXT'))
                   : lessonStep === 'review'
-                    ? (isVi ? 'BẮT ĐẦU KIỂM TRA' : 'START TEST')
+                    ? (isVi ? 'Báº®T Äáº¦U KIá»‚M TRA' : 'START TEST')
                     : !checkpointSubmitted 
-                      ? (isVi ? 'XÁC NHẬN' : 'SUBMIT') 
-                      : (activeSectionIdx === activeModule.sections.length - 1 ? (isVi ? 'VÀO BÀI THI MODULE' : 'MODULE QUIZ') : (isVi ? 'TIẾP TỤC' : 'CONTINUE'))}
+                      ? (isVi ? 'XÃC NHáº¬N' : 'SUBMIT') 
+                      : (activeSectionIdx === activeModule.sections.length - 1 ? (isVi ? 'VÃ€O BÃ€I THI MODULE' : 'MODULE QUIZ') : (isVi ? 'TIáº¾P Tá»¤C' : 'CONTINUE'))}
               </GlowButton>
             </div>
           </div>
@@ -1091,7 +1092,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
           <div className="lg:col-span-4 space-y-6">
             <div className="glass-dark border border-white/10 rounded-2xl p-6">
               <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-4">
-                {isVi ? 'Danh sách bài học' : 'Lesson List'}
+                {isVi ? 'Danh sÃ¡ch bÃ i há»c' : 'Lesson List'}
               </h4>
               <div className="space-y-2">
                 {section.lessons.map((l, idx) => (
@@ -1114,14 +1115,14 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
 
             <div className="glass-dark border border-white/10 rounded-2xl p-6">
               <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-4">
-                {isVi ? 'HƯỚNG DẪN' : 'GUIDANCE'}
+                {isVi ? 'HÆ¯á»šNG DáºªN' : 'GUIDANCE'}
               </h4>
               <p className="text-xs text-gray-400 leading-relaxed font-bold">
                 {lessonStep === 'content' 
-                  ? (isVi ? 'Đọc kỹ nội dung và ghi nhớ các ý chính. Nút Tiếp theo sẽ đưa bạn đến bài học kế tiếp hoặc phần kiểm tra.' : 'Read carefully and memorize key points. The Next button will take you to the next lesson or checkpoint.')
+                  ? (isVi ? 'Äá»c ká»¹ ná»™i dung vÃ  ghi nhá»› cÃ¡c Ã½ chÃ­nh. NÃºt Tiáº¿p theo sáº½ Ä‘Æ°a báº¡n Ä‘áº¿n bÃ i há»c káº¿ tiáº¿p hoáº·c pháº§n kiá»ƒm tra.' : 'Read carefully and memorize key points. The Next button will take you to the next lesson or checkpoint.')
                   : lessonStep === 'review'
-                    ? (isVi ? 'Đây là những kiến thức cốt lõi. Hãy đảm bảo bạn đã nắm vững trước khi bước vào bài kiểm tra nhanh.' : 'These are the core concepts. Ensure you master them before entering the quick test.')
-                    : (isVi ? 'Chọn đáp án đúng nhất cho mỗi câu hỏi. Bạn cần hoàn thành checkpoint để tiếp tục lộ trình.' : 'Choose the best answer for each question. You must complete the checkpoint to proceed.')}
+                    ? (isVi ? 'ÄÃ¢y lÃ  nhá»¯ng kiáº¿n thá»©c cá»‘t lÃµi. HÃ£y Ä‘áº£m báº£o báº¡n Ä‘Ã£ náº¯m vá»¯ng trÆ°á»›c khi bÆ°á»›c vÃ o bÃ i kiá»ƒm tra nhanh.' : 'These are the core concepts. Ensure you master them before entering the quick test.')
+                    : (isVi ? 'Chá»n Ä‘Ã¡p Ã¡n Ä‘Ãºng nháº¥t cho má»—i cÃ¢u há»i. Báº¡n cáº§n hoÃ n thÃ nh checkpoint Ä‘á»ƒ tiáº¿p tá»¥c lá»™ trÃ¬nh.' : 'Choose the best answer for each question. You must complete the checkpoint to proceed.')}
               </p>
             </div>
           </div>
@@ -1139,12 +1140,12 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               <GraduationCap size={12} /> DEEPFENSE ACADEMY
             </div>
             <h1 className="text-4xl md:text-6xl font-black uppercase leading-tight text-white mb-4" style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}>
-              {isVi ? 'Hệ thống học tập' : 'Learning Platform'}
+              {isVi ? 'Há»‡ thá»‘ng há»c táº­p' : 'Learning Platform'}
             </h1>
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <p className="text-gray-400 max-w-2xl leading-relaxed">
                 {isVi 
-                  ? 'Hệ thống đào tạo nhận thức an toàn số chuyên sâu. Hoàn thành các bài học, vượt qua bài Lab để nhận DPF và chứng chỉ.' 
+                  ? 'Há»‡ thá»‘ng Ä‘Ã o táº¡o nháº­n thá»©c an toÃ n sá»‘ chuyÃªn sÃ¢u. HoÃ n thÃ nh cÃ¡c bÃ i há»c, vÆ°á»£t qua bÃ i Lab Ä‘á»ƒ nháº­n DPF vÃ  chá»©ng chá»‰.' 
                   : 'Advanced digital safety awareness training system. Complete lessons, pass Lab challenges to earn DPF and certificates.'}
               </p>
             </div>

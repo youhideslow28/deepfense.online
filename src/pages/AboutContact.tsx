@@ -25,26 +25,26 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
     e.preventDefault();
     setErrorMsg('');
     
-    // --- VALIDATION: Bắt buộc điền đúng ---
+    // --- VALIDATION: Báº¯t buá»™c Ä‘iá»n Ä‘Ãºng ---
     if (formData.name.trim().length < 2) {
-        setErrorMsg(lang === 'vi' ? 'Tên gọi quá ngắn (tối thiểu 2 ký tự).' : 'Name must be at least 2 characters.');
+        setErrorMsg(lang === 'vi' ? 'TÃªn gá»i quÃ¡ ngáº¯n (tá»‘i thiá»ƒu 2 kÃ½ tá»±).' : 'Name must be at least 2 characters.');
         return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-        setErrorMsg(lang === 'vi' ? 'Địa chỉ email không hợp lệ.' : 'Invalid email address.');
+        setErrorMsg(lang === 'vi' ? 'Äá»‹a chá»‰ email khÃ´ng há»£p lá»‡.' : 'Invalid email address.');
         return;
     }
     if (formData.desc.trim().length < 20) {
-        setErrorMsg(lang === 'vi' ? 'Mô tả sự cố quá ngắn. Vui lòng nhập chi tiết hơn (ít nhất 20 ký tự).' : 'Description too short, please provide more details (at least 20 chars).');
+        setErrorMsg(lang === 'vi' ? 'MÃ´ táº£ sá»± cá»‘ quÃ¡ ngáº¯n. Vui lÃ²ng nháº­p chi tiáº¿t hÆ¡n (Ã­t nháº¥t 20 kÃ½ tá»±).' : 'Description too short, please provide more details (at least 20 chars).');
         return;
     }
     
     // --- ANTI-XSS (Cross-Site Scripting) VALIDATION ---
-    // Quét cụ thể các thẻ có khả năng gây hại thay vì cấm mọi dấu ngoặc nhọn
+    // QuÃ©t cá»¥ thá»ƒ cÃ¡c tháº» cÃ³ kháº£ nÄƒng gÃ¢y háº¡i thay vÃ¬ cáº¥m má»i dáº¥u ngoáº·c nhá»n
     const xssRegex = /<(script|iframe|object|embed|form|svg|math|base|html|body|link|meta|style|title|applet)[^>]*>/i;
     if (xssRegex.test(formData.desc.toLowerCase()) || xssRegex.test(formData.name.toLowerCase())) {
-        setErrorMsg(lang === 'vi' ? 'LỖI BẢO MẬT: Chứa thẻ HTML không hợp lệ.' : 'SECURITY ERROR: Invalid HTML tags detected.');
+        setErrorMsg(lang === 'vi' ? 'Lá»–I Báº¢O Máº¬T: Chá»©a tháº» HTML khÃ´ng há»£p lá»‡.' : 'SECURITY ERROR: Invalid HTML tags detected.');
         return;
     }
 
@@ -52,30 +52,30 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
     try {
       let attachmentUrl = '';
       if (file) {
-          // --- FILE VALIDATION (CHỐNG SPAM STORAGE VÀ MÃ ĐỘC) ---
-          const MAX_SIZE = 5 * 1024 * 1024; // Giới hạn cứng 5MB
+          // --- FILE VALIDATION (CHá»NG SPAM STORAGE VÃ€ MÃƒ Äá»˜C) ---
+          const MAX_SIZE = 5 * 1024 * 1024; // Giá»›i háº¡n cá»©ng 5MB
           if (file.size > MAX_SIZE) {
-              setErrorMsg(lang === 'vi' ? 'LỖI: Tệp đính kèm vượt quá 5MB. Giới hạn dung lượng để bảo vệ hệ thống.' : 'ERROR: File exceeds 5MB limit.');
+              setErrorMsg(lang === 'vi' ? 'Lá»–I: Tá»‡p Ä‘Ã­nh kÃ¨m vÆ°á»£t quÃ¡ 5MB. Giá»›i háº¡n dung lÆ°á»£ng Ä‘á»ƒ báº£o vá»‡ há»‡ thá»‘ng.' : 'ERROR: File exceeds 5MB limit.');
               setIsSubmitting(false);
               return;
           }
           const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'video/mp4'];
           if (!allowedTypes.includes(file.type)) {
-              setErrorMsg(lang === 'vi' ? 'LỖI: Chỉ chấp nhận ảnh (JPG, PNG, WEBP) hoặc Video MP4.' : 'ERROR: Invalid file format. Only JPG, PNG, WEBP, MP4 allowed.');
+              setErrorMsg(lang === 'vi' ? 'Lá»–I: Chá»‰ cháº¥p nháº­n áº£nh (JPG, PNG, WEBP) hoáº·c Video MP4.' : 'ERROR: Invalid file format. Only JPG, PNG, WEBP, MP4 allowed.');
               setIsSubmitting(false);
               return;
           }
 
-          // BẢO MẬT LAYER 2: Không chỉ tin tưởng MIME Type, phải kiểm tra gắt gao Đuôi tệp (Extension)
+          // Báº¢O Máº¬T LAYER 2: KhÃ´ng chá»‰ tin tÆ°á»Ÿng MIME Type, pháº£i kiá»ƒm tra gáº¯t gao ÄuÃ´i tá»‡p (Extension)
           const fileExtension = file.name.split('.').pop()?.toLowerCase();
           const safeExtensions = ['jpg', 'jpeg', 'png', 'webp', 'mp4'];
           if (!fileExtension || !safeExtensions.includes(fileExtension)) {
-              setErrorMsg(lang === 'vi' ? 'LỖI BẢO MẬT: Định dạng tệp không được phép.' : 'SECURITY ERROR: File extension not allowed.');
+              setErrorMsg(lang === 'vi' ? 'Lá»–I Báº¢O Máº¬T: Äá»‹nh dáº¡ng tá»‡p khÃ´ng Ä‘Æ°á»£c phÃ©p.' : 'SECURITY ERROR: File extension not allowed.');
               setIsSubmitting(false);
               return;
           }
 
-          // Xử lý sanitize tên file: chỉ giữ lại chữ cái, số và dấu chấm, cắt độ dài
+          // Xá»­ lÃ½ sanitize tÃªn file: chá»‰ giá»¯ láº¡i chá»¯ cÃ¡i, sá»‘ vÃ  dáº¥u cháº¥m, cáº¯t Ä‘á»™ dÃ i
           const parts = file.name.split('.');
           const ext = parts.length > 1 ? '.' + parts.pop()?.toLowerCase() : '';
           const safeFileName = parts.join('_').replace(/[^a-zA-Z0-9.-]/g, '_').substring(0, 40) + ext;
@@ -84,25 +84,25 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
           attachmentUrl = await getDownloadURL(fileRef);
       }
 
-      // Gửi dữ liệu lên Firestore collection 'incident_reports'
+      // Gá»­i dá»¯ liá»‡u lÃªn Firestore collection 'incident_reports'
       await addDoc(collection(db, "incident_reports"), {
         name: formData.name.trim(),
         email: formData.email.trim(),
         desc: formData.desc.trim(),
         attachmentUrl: attachmentUrl,
-        submittedAt: serverTimestamp(), // Thời gian gửi
+        submittedAt: serverTimestamp(), // Thá»i gian gá»­i
         lang: lang,
-        status: 'new' // Trạng thái xử lý (để admin theo dõi sau này)
+        status: 'new' // Tráº¡ng thÃ¡i xá»­ lÃ½ (Ä‘á»ƒ admin theo dÃµi sau nÃ y)
       });
 
       setSubmitted(true);
-      setFormData({ name: '', email: '', desc: '' }); // Reset form về rỗng
+      setFormData({ name: '', email: '', desc: '' }); // Reset form vá» rá»—ng
       setFile(null);
       if (fileInputRef.current) fileInputRef.current.value = '';
       timeoutRef.current = setTimeout(() => setSubmitted(false), 3000);
     } catch (error) {
-      console.error("Lỗi khi gửi báo cáo:", error);
-      alert(lang === 'vi' ? 'Có lỗi xảy ra, vui lòng thử lại sau.' : 'An error occurred, please try again later.');
+      console.error("Lá»—i khi gá»­i bÃ¡o cÃ¡o:", error);
+      alert(lang === 'vi' ? 'CÃ³ lá»—i xáº£y ra, vui lÃ²ng thá»­ láº¡i sau.' : 'An error occurred, please try again later.');
     } finally {
       setIsSubmitting(false);
     }
@@ -123,31 +123,31 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                   <h3 className="text-primary font-black text-sm uppercase tracking-widest mb-4 flex items-center gap-2 group-hover:translate-x-1 transition-transform duration-300"><Target size={18}/> {t.mission}</h3>
                   <p className="text-gray-300 text-base leading-relaxed">
                     {lang === 'vi' 
-                      ? "Phổ cập kiến thức phòng chống Deepfake cho 100% cộng đồng người dùng số tại Việt Nam, xây dựng mạng lưới lá chắn niềm tin vững chắc trước sự bùng nổ của trí tuệ nhân tạo."
+                      ? "Phá»• cáº­p kiáº¿n thá»©c phÃ²ng chá»‘ng Deepfake cho 100% cá»™ng Ä‘á»“ng ngÆ°á»i dÃ¹ng sá»‘ táº¡i Viá»‡t Nam, xÃ¢y dá»±ng máº¡ng lÆ°á»›i lÃ¡ cháº¯n niá»m tin vá»¯ng cháº¯c trÆ°á»›c sá»± bÃ¹ng ná»• cá»§a trÃ­ tuá»‡ nhÃ¢n táº¡o."
                       : "Popularizing Deepfake prevention knowledge for 100% of digital users in Vietnam, building a strong shield of trust in the AI era."}
                   </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Box 1: Tầm nhìn */}
+                  {/* Box 1: Táº§m nhÃ¬n */}
                   <div className="bg-surface border border-white/5 rounded-3xl p-8 shadow-xl hover:border-primary/40 hover:shadow-[0_0_40px_rgba(0,240,255,0.1)] transition-all duration-500 group/box">
                       <h3 className="font-black text-xs uppercase tracking-widest mb-4 flex items-center gap-2 text-primary group-hover/box:translate-x-1 transition-transform duration-300">
-                        <Globe size={16}/> {lang === 'vi' ? 'TẦM NHÌN 2030' : 'VISION 2030'}
+                        <Globe size={16}/> {lang === 'vi' ? 'Táº¦M NHÃŒN 2030' : 'VISION 2030'}
                       </h3>
                       <p className="text-gray-400 text-sm leading-relaxed">
                         {lang === 'vi' 
-                          ? "Trở thành trung tâm dữ liệu và nhận diện Deepfake hàng đầu khu vực, hỗ trợ đắc lực cho các cơ quan chức năng trong việc xử lý tội phạm công nghệ cao."
+                          ? "Trá»Ÿ thÃ nh trung tÃ¢m dá»¯ liá»‡u vÃ  nháº­n diá»‡n Deepfake hÃ ng Ä‘áº§u khu vá»±c, há»— trá»£ Ä‘áº¯c lá»±c cho cÃ¡c cÆ¡ quan chá»©c nÄƒng trong viá»‡c xá»­ lÃ½ tá»™i pháº¡m cÃ´ng nghá»‡ cao."
                           : "Becoming the region's leading data and identification center for Deepfakes, effectively supporting authorities in high-tech crime processing."}
                       </p>
                   </div>
-                  {/* Box 2: Bảo mật */}
+                  {/* Box 2: Báº£o máº­t */}
                   <div className="bg-surface border border-white/5 rounded-3xl p-8 shadow-xl hover:border-success/40 transition-all group/box">
                       <h3 className="font-black text-xs uppercase tracking-widest mb-4 flex items-center gap-2 text-success group-hover/box:translate-x-1 transition-transform">
-                        <ShieldCheck size={16}/> {lang === 'vi' ? 'BẢO MẬT TUYỆT ĐỐI' : 'ABSOLUTE PRIVACY'}
+                        <ShieldCheck size={16}/> {lang === 'vi' ? 'Báº¢O Máº¬T TUYá»†T Äá»I' : 'ABSOLUTE PRIVACY'}
                       </h3>
                       <p className="text-gray-400 text-sm leading-relaxed">
                         {lang === 'vi' 
-                          ? "Mọi thông tin báo cáo sự cố đều được mã hóa và bảo vệ nghiêm ngặt. Chúng tôi cam kết không tiết lộ danh tính người báo cáo trong mọi trường hợp."
+                          ? "Má»i thÃ´ng tin bÃ¡o cÃ¡o sá»± cá»‘ Ä‘á»u Ä‘Æ°á»£c mÃ£ hÃ³a vÃ  báº£o vá»‡ nghiÃªm ngáº·t. ChÃºng tÃ´i cam káº¿t khÃ´ng tiáº¿t lá»™ danh tÃ­nh ngÆ°á»i bÃ¡o cÃ¡o trong má»i trÆ°á»ng há»£p."
                           : "All incident report information is encrypted and strictly protected. We commit to not disclosing reporters' identities under any circumstances."}
                       </p>
                   </div>
@@ -204,7 +204,7 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               <div className="absolute top-0 left-0 w-full h-1.5 bg-primary"></div>
               {submitted && (
                   <div className="absolute inset-0 bg-surface/95 backdrop-blur flex flex-col items-center justify-center z-10 animate-in fade-in">
-                      <div className="text-6xl mb-6 animate-bounce">✅</div>
+                      <div className="text-6xl mb-6 animate-bounce">âœ…</div>
                       <h3 className="text-success font-black text-2xl uppercase tracking-widest">{t.success_msg}</h3>
                       <p className="text-gray-500 text-xs mt-4 font-mono">ENCRYPTING_REPORT_DATA...</p>
                   </div>
@@ -215,7 +215,7 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               <form onSubmit={handleSubmit} className="space-y-6">
                   {errorMsg && (
                       <div className="bg-red-500/10 border border-red-500/50 text-red-500 text-sm p-4 rounded-xl animate-in fade-in">
-                          ⚠ {errorMsg}
+                          âš  {errorMsg}
                       </div>
                   )}
                   <div className="space-y-1">
@@ -228,7 +228,7 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                   </div>
                   <div className="space-y-1">
                       <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_desc}</label>
-                      <textarea disabled={isSubmitting} placeholder={lang === 'vi' ? 'Vui lòng mô tả chi tiết sự việc (đối tượng giả danh ai, qua nền tảng nào...)' : 'Please describe the incident in detail...'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none h-32 resize-none transition-all disabled:opacity-50 disabled:cursor-not-allowed" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
+                      <textarea disabled={isSubmitting} placeholder={lang === 'vi' ? 'Vui lÃ²ng mÃ´ táº£ chi tiáº¿t sá»± viá»‡c (Ä‘á»‘i tÆ°á»£ng giáº£ danh ai, qua ná»n táº£ng nÃ o...)' : 'Please describe the incident in detail...'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none h-32 resize-none transition-all disabled:opacity-50 disabled:cursor-not-allowed" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
                   </div>
                   <div className="space-y-1">
                       <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_attachment}</label>
@@ -244,13 +244,13 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                           />
                           <label htmlFor="file-upload" className={`w-full bg-black border border-white/10 border-dashed rounded-2xl p-4 flex flex-col items-center justify-center gap-2 transition-colors text-gray-500 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary/50 hover:text-primary'}`}>
                               <Paperclip size={20} />
-                              <span className="text-xs font-mono">{file ? file.name : (lang === 'vi' ? 'Nhấp để chọn tệp' : 'Click to select file')}</span>
+                              <span className="text-xs font-mono">{file ? file.name : (lang === 'vi' ? 'Nháº¥p Ä‘á»ƒ chá»n tá»‡p' : 'Click to select file')}</span>
                           </label>
                       </div>
                   </div>
                   <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-black font-black py-5 rounded-2xl hover:bg-white transition-all uppercase text-xs tracking-[0.3em] shadow-lg shadow-primary/20 mt-4 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
                     {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
-                    {isSubmitting ? (lang === 'vi' ? 'ĐANG XỬ LÝ...' : 'SENDING...') : t.send_report}
+                    {isSubmitting ? (lang === 'vi' ? 'ÄANG Xá»¬ LÃ...' : 'SENDING...') : t.send_report}
                   </button>
               </form>
           </div>

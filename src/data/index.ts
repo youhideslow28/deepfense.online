@@ -1,8 +1,8 @@
 /**
- * DEEPFENSE.ONLINE — Data Barrel Export
- * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ * DEEPFENSE.ONLINE â€” Data Barrel Export
+ * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
  * 
- * Import tất cả data từ một nơi duy nhất:
+ * Import táº¥t cáº£ data tá»« má»™t nÆ¡i duy nháº¥t:
  * import { TRANSLATIONS, LEVELS, NEWS_DATA, ... } from '@/data';
  */
 

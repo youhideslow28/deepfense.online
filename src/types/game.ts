@@ -1,6 +1,6 @@
 /**
- * DEEPFENSE.ONLINE — Game & Challenge Type Definitions
- * @copyright 2025 Ho Xuan Nguyen (25NS039)
+ * DEEPFENSE.ONLINE â€” Game & Challenge Type Definitions
+ * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
  */
 
 export interface LevelData {
