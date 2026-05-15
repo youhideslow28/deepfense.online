@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { 
   AlertCircle, CheckCircle2, Clock, Users, Award, Play, BookOpen, 
   Eye, EyeOff, Zap, TrendingUp, GraduationCap, ChevronLeft,
-  Trophy, ShieldCheck, Target, Sparkles, LayoutDashboard, LogIn, LockKeyhole
+  Trophy, ShieldCheck, Target, Sparkles, LayoutDashboard, LogIn, LockKeyhole, Brain
 } from 'lucide-react';
 import { Language } from '@/types';
 import type { User } from 'firebase/auth';
@@ -60,20 +60,6 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     }
   }, [currentView, activeModule]);
 
-  const activeTrack = tracks.find(t => t.id === selectedCourseId);
-  
-  const pageRef = useScrollReveal({ selector: '[data-reveal]', preset: 'fade-up', stagger: 0.08 });
-  const isSignedIn = !!user;
-
-  // Sync view from search params if needed
-  useEffect(() => {
-    const courseId = searchParams.get('course');
-    if (courseId) {
-      setSelectedCourseId(courseId);
-      setCurrentView('course');
-    }
-  }, [searchParams]);
-
   const tracks = [
     {
       id: 'basics',
@@ -109,6 +95,20 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       locked: true
     },
   ];
+
+  const activeTrack = tracks.find(t => t.id === selectedCourseId);
+  
+  const pageRef = useScrollReveal({ selector: '[data-reveal]', preset: 'fade-up', stagger: 0.08 });
+  const isSignedIn = !!user;
+
+  // Sync view from search params if needed
+  useEffect(() => {
+    const courseId = searchParams.get('course');
+    if (courseId) {
+      setSelectedCourseId(courseId);
+      setCurrentView('course');
+    }
+  }, [searchParams]);
 
   const hallOfFame = [
     { rank: '01', name: 'Ho Xuan Nguyen', credential: 'DEEPFENSE AWARE' },
@@ -303,7 +303,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               <p className="text-[11px] text-gray-500 mb-4 leading-relaxed">
                 {isVi ? 'Đăng nhập Google để lưu tiến độ và nhận DPF.' : 'Sign in with Google to save progress and earn DPF.'}
               </p>
-              <GlowButton color="primary" size="sm" className="w-full" onClick={onGoogleAuth} icon={<LogIn size={14} />}>
+              <GlowButton color="secondary" size="sm" className="w-full" onClick={onGoogleAuth} icon={<LogIn size={14} />}>
                 {authBusy ? '...' : (isVi ? 'ĐĂNG NHẬP' : 'SIGN IN')}
               </GlowButton>
             </div>
@@ -485,7 +485,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 <span className="text-blue-400 mr-2">Q{qIdx + 1}.</span> {q.text}
               </p>
               <div className="grid grid-cols-1 gap-3">
-                {q.options.map((opt, oIdx) => {
+                {q.options.map((opt: string, oIdx: number) => {
                   const isSelected = quizAnswers[qIdx] === oIdx;
                   const isCorrect = oIdx === q.answer;
                   const showResult = quizSubmitted;
@@ -726,8 +726,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                       <span className="text-amber-400 font-black italic shrink-0">#{qIdx + 1}</span>
                       <span>{q.text}</span>
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {q.options.map((opt, oIdx) => {
+                    <div className="grid grid-cols-1 gap-3">
+                      {q.options.map((opt: string, oIdx: number) => {
                         const isSelected = checkpointAnswers[qIdx] === oIdx;
                         const isCorrect = oIdx === q.answer;
                         const showResult = checkpointSubmitted;
@@ -784,7 +784,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               </button>
 
               <GlowButton 
-                color={isCheckpoint ? 'warning' : 'primary'}
+                color={isCheckpoint ? 'secondary' : 'primary'}
                 onClick={() => {
                   if (lessonStep === 'content') {
                     if (!completedLessons.includes(lesson.id)) {
