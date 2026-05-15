@@ -126,6 +126,13 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
       end: 'bottom bottom',
       onUpdate: (self) => {
         progressRef.current = self.progress;
+        // Fade out background at the very end of the timeline
+        const fadeStart = 0.85;
+        if (self.progress > fadeStart) {
+          gsap.to('.sticky-bg', { opacity: 1 - (self.progress - fadeStart) / (1 - fadeStart), duration: 0.05, overwrite: 'auto' });
+        } else {
+          gsap.to('.sticky-bg', { opacity: 1, duration: 0.05, overwrite: 'auto' });
+        }
       },
     });
 
@@ -170,10 +177,13 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
     <div ref={containerRef} className="relative w-full">
       
       {/* Sticky 3D Background */}
-      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden pointer-events-none z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#03080F] via-transparent to-[#03080F] z-10" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#03080F] to-transparent z-20" />
-        <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
+      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden pointer-events-none z-0 sticky-bg">
+        <div className="absolute inset-0 bg-black/10 z-10" />
+        <Canvas 
+          camera={{ position: [0, 0, 5], fov: 60 }}
+          gl={{ alpha: true, antialias: true }}
+          style={{ background: 'transparent' }}
+        >
           <ambientLight intensity={0.5} />
           <NeuralSphere progressRef={progressRef} />
         </Canvas>
@@ -185,7 +195,7 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
         {/* Intro Section */}
         <div className="h-screen flex items-start justify-center pt-[25vh]">
           <div className="text-center era-card px-4">
-            <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tight mix-blend-difference" style={{ fontFamily: "var(--font-outfit)" }}>
+            <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tight mix-blend-difference leading-[1.3]" style={{ fontFamily: "var(--font-outfit)" }}>
               {lang === 'vi' ? (
                 <>
                   Deepfake đã phát triển<br />như thế nào?
@@ -225,7 +235,7 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
           </div>
         ))}
 
-        <div className="h-[50vh]" /> {/* Spacer at bottom */}
+        <div className="h-[20vh]" /> {/* Spacer at bottom */}
       </div>
 
     </div>

@@ -15,12 +15,16 @@
     --font-outfit: 'Outfit', 'Inter', -apple-system, sans-serif;
   }
 
-  html {
+  html, body {
     font-family: var(--font-outfit);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-synthesis-weight: none;
+    background: #03080F;
+    color: #fff;
+    margin: 0;
+    padding: 0;
   }
 
   * {

@@ -98,11 +98,7 @@ export const basicsCourse = {
               "Áp lực phải hành động ngay là tín hiệu cần chậm lại."
             ])
           ],
-          checkpoint: checkpoint("0.1", [
-            q("Mục tiêu chính của DEEPFENSE BASIC là gì?", ["Học cách tạo deepfake", "Học cách nhận ra rủi ro, kiểm chứng và phản ứng an toàn", "Học mẹo vượt detector", "Tăng lượt xem nội dung"], 1),
-            q("Khi nội dung khiến bạn muốn hành động ngay, điều đầu tiên nên làm là gì?", ["Chia sẻ ngay", "Dừng lại và kiểm chứng", "Bình luận thật mạnh", "Xóa hết dấu vết"], 1),
-            q("Deepfake nguy hiểm nhất khi nào?", ["Khi nó xuất hiện đúng lúc người xem bị cảm xúc hoặc áp lực chi phối", "Khi file có dung lượng lớn", "Khi video có phụ đề", "Khi màn hình quá sáng"], 0)
-          ])
+          ]
         },
         {
           title: "0.2 Vì sao khóa học này cần thiết?",
@@ -124,10 +120,7 @@ export const basicsCourse = {
               "Hoàn thành khóa học nghĩa là biết dùng kiến thức trong tình huống thực tế."
             ])
           ],
-          checkpoint: checkpoint("0.2", [
-            q("Deepfake thường đi cùng yếu tố nào?", ["Tin nhắn thúc ép, tài khoản giả hoặc link giả", "Chỉ đi cùng file PDF", "Chỉ xuất hiện trong phim", "Chỉ xảy ra khi mất mạng"], 0),
-            q("Quiz trong khóa học chủ yếu để làm gì?", ["Kiểm tra khả năng áp dụng kiến thức", "Bắt lỗi người học", "Ẩn nội dung", "Tạo áp lực điểm số"], 0)
-          ])
+          ]
         },
         {
           title: "0.3 Deepfense Check",
@@ -142,7 +135,8 @@ export const basicsCourse = {
             ])
           ],
           checkpoint: checkpoint("0.3", [
-            q("Trong Deepfense Check, Verify có nghĩa là gì?", ["Xác minh qua kênh độc lập", "Tin nếu video rõ nét", "Tải video về ngay", "Chia sẻ để hỏi cộng đồng"], 0)
+            q("Mục tiêu chính của DEEPFENSE BASIC là gì?", ["Học cách tạo deepfake", "Học cách nhận diện và phòng vệ an toàn", "Học mẹo vượt detector", "Tăng lượt xem nội dung"], 1),
+            q("Trong Deepfense Check, 'Verify' có nghĩa là gì?", ["Xác minh qua kênh độc lập", "Tin nếu video rõ nét", "Tải video về ngay", "Chia sẻ để hỏi cộng đồng"], 0)
           ])
         },
         {
@@ -215,11 +209,7 @@ export const basicsCourse = {
               "Đừng chỉ tin vào mắt và tai mình trên không gian số."
             ])
           ],
-          checkpoint: checkpoint("1.1", [
-            q("Deepvoice là gì?", ["Giọng nói âm lượng lớn", "Giọng nói được giả lập/chỉnh sửa bằng AI để giống người thật", "Tin nhắn không am thanh", "Video không mặt"], 1),
-            q("Video thật từ quá khứ bị đăng lại với bối cảnh mới gọi là gì?", ["Deepfake", "Deepvoice", "Repurposed media", "Metadata"], 2),
-            q("Vì sao mắt thường có giới hạn khi xem deepfake?", ["Vì AI tạo ra các chuyển động rất mượt và video thật cũng có thể bị mờ/lag", "Vì mắt người không nhìn được AI", "Vì video luôn quá dài", "Vì mọi video đều là giả"], 0)
-          ])
+          ]
         },
         {
           title: "1.2 Thực hành: Phân loại nội dung",
@@ -235,9 +225,9 @@ export const basicsCourse = {
               "Yêu cầu về tiền và OTP luôn là rủi ro cao nhất."
             ])
           ],
-          checkpoint: checkpoint("1.2", [
-            q("Nội dung nào thuộc nhóm 'Edited Media'?", ["Video người nổi tiếng kêu gọi đầu tư", "Clip bị cắt ghép làm đổi nghĩa", "Ảnh AI ghi rõ minh họa", "Ảnh tai nạn cũ đăng lại"], 1),
-            q("Hành động an toàn nhất khi nhận yêu cầu OTP qua video call là gì?", ["Đọc ngay nếu thấy mặt giống", "Không cung cấp, xác minh qua kênh chính thức", "Gửi qua tin nhắn", "Bật chia sẻ màn hình"], 1)
+          checkpoint: checkpoint("1.1", [
+            q("Deepvoice là gì?", ["Giọng nói âm lượng lớn", "Giọng nói được giả lập/chỉnh sửa bằng AI để giống người thật", "Tin nhắn không am thanh", "Video không mặt"], 1),
+            q("Video thật từ quá khứ bị đăng lại với bối cảnh mới gọi là gì?", ["Deepfake", "Deepvoice", "Repurposed media", "Metadata"], 2)
           ])
         }
       ],
@@ -281,10 +271,7 @@ export const basicsCourse = {
               "Lời hứa 'quá tốt để là thật' thường là lừa đảo."
             ])
           ],
-          checkpoint: checkpoint("2.1", [
-            q("Kẻ xấu nói 'Đừng nói với ai, đây là bí mật' nhằm mục đích gì?", ["Bảo vệ bạn", "Cô lập bạn khỏi sự giúp đỡ và kiểm chứng", "Tạo sự bất ngờ", "Tuân thủ pháp luật"], 1),
-            q("Nút bấm nào khai thác hy vọng nhận được tiền/quà?", ["Lợi ích", "Khẩn cấp", "Quyền lực", "Thân quen"], 0)
-          ])
+          ]
         },
         {
           title: "2.2 Ngôn ngữ thao túng",
@@ -297,7 +284,8 @@ export const basicsCourse = {
               "Nhận diện ngôn ngữ là bước quan trọng của Observe."
             ])
           ],
-          checkpoint: checkpoint("2.2", [
+          checkpoint: checkpoint("2.1", [
+            q("Kẻ xấu nói 'Đừng nói với ai, đây là bí mật' nhằm mục đích gì?", ["Bảo vệ bạn", "Cô lập bạn khỏi sự giúp đỡ và kiểm chứng", "Tạo sự bất ngờ", "Tuân thủ pháp luật"], 1),
             q("Cụm từ nào là dấu hiệu của sự đe dọa?", ["Bạn có thể suy nghĩ thêm", "Nếu không chuyển tiền, tài khoản sẽ bị khóa vĩnh viễn", "Hãy gọi lại khi rảnh", "Kiểm tra kỹ thông tin nhé"], 1)
           ])
         }
@@ -343,10 +331,7 @@ export const basicsCourse = {
               "Logo và chữ viết thường là điểm yếu của các mô hình AI tạo hình."
             ])
           ],
-          checkpoint: checkpoint("3.1", [
-            q("Dấu hiệu nào thường thấy ở mắt trong video deepfake?", ["Mắt chớp quá nhiều", "Nhịp nháy mắt không tự nhiên hoặc ánh mắt không khớp hướng đầu", "Mắt luôn nhắm", "Mắt có màu lạ"], 1),
-            q("Vùng nào trên khuôn mặt AI thường xử lý kém nhất?", ["Trán", "Rìa khuôn mặt, tóc và tai", "Mũi", "Cằm"], 1)
-          ])
+          ]
         },
         {
           title: "3.2 Dấu hiệu Âm thanh và Ngữ cảnh",
@@ -368,9 +353,9 @@ export const basicsCourse = {
               "Bạn không cần chứng minh deepfake mới có quyền từ chối yêu cầu đáng nghi."
             ])
           ],
-          checkpoint: checkpoint("3.2", [
-            q("Điều gì ĐÁNG NGHI nhất trong một tin nhắn thoại?", ["Tiếng chim hót ở nền", "Giọng nói đều đều thiếu nhịp thở tự nhiên và yêu cầu tiền gấp", "Nói tiếng Việt chuẩn", "Nói nhanh"], 1),
-            q("Ngữ cảnh giúp bạn nhận ra điều gì?", ["Màu áo của người trong video", "Sự phi lý giữa nội dung video và thực tế (địa điểm, thói quen...)", "Độ dài của clip", "Tên file video"], 1)
+          checkpoint: checkpoint("3.1", [
+            q("Dấu hiệu nào thường thấy ở mắt trong video deepfake?", ["Mắt chớp quá nhiều", "Nhịp nháy mắt không tự nhiên hoặc ánh mắt không khớp hướng đầu", "Mắt luôn nhắm", "Mắt có màu lạ"], 1),
+            q("Điều gì ĐÁNG NGHI nhất trong một tin nhắn thoại?", ["Tiếng chim hót ở nền", "Giọng nói đều đều thiếu nhịp thở tự nhiên và yêu cầu tiền gấp", "Nói tiếng Việt chuẩn", "Nói nhanh"], 1)
           ])
         }
       ],
@@ -420,10 +405,7 @@ export const basicsCourse = {
               "Nếu không chắc chắn, hãy chọn phương án không hành động."
             ])
           ],
-          checkpoint: checkpoint("4.1", [
-            q("Trong Deepfense Check, Verify có nghĩa là gì?", ["Hỏi lại chính người gửi", "Xác minh qua một kênh độc lập mà bạn đã biết từ trước", "Tin vào cảm giác", "Chờ 1 ngày"], 1),
-            q("Bước nào giúp bạn tìm ra nguồn gốc đầu tiên của video?", ["Pause", "Observe", "Trace", "Decide"], 2)
-          ])
+          ]
         },
         {
           title: "4.2 Công cụ hỗ trợ",
@@ -437,7 +419,8 @@ export const basicsCourse = {
               "Luôn kết hợp kết quả công cụ với phân tích bối cảnh."
             ])
           ],
-          checkpoint: checkpoint("4.2", [
+          checkpoint: checkpoint("4.1", [
+            q("Trong Deepfense Check, 'Verify' có nghĩa là gì?", ["Hỏi lại chính người gửi", "Xác minh qua một kênh độc lập mà bạn đã biết từ trước", "Tin vào cảm giác", "Chờ 1 ngày"], 1),
             q("Điều nào ĐÚNG về AI Detector?", ["Luôn chính xác 100%", "Chỉ là một tín hiệu tham khảo, có thể sai", "Dùng để thay thế mọi bước kiểm tra khác", "Chỉ dùng được cho ảnh"], 1)
           ])
         }
@@ -482,10 +465,7 @@ export const basicsCourse = {
               "Lợi nhuận 'trên trời' thường đi kèm với bẫy lừa đảo."
             ])
           ],
-          checkpoint: checkpoint("5.1", [
-            q("Dấu hiệu đỏ mạnh nhất trong một cuộc gọi mượn tiền là gì?", ["Video bị lag", "Yêu cầu chuyển tiền vào một tài khoản không phải tên người thân và bảo giữ bí mật", "Nói chuyện lâu", "Chào hỏi thân mật"], 1),
-            q("Bạn nên làm gì khi sếp yêu cầu chuyển tiền gấp qua tin nhắn thoại lạ?", ["Chuyển ngay", "Xác minh lại qua quy trình công việc hoặc gọi số chính thức của sếp", "Gửi mã OTP", "Hỏi mật khẩu của sếp"], 1)
-          ])
+          ]
         },
         {
           title: "5.2 Danh dự và Trách nhiệm xã hội",
@@ -505,8 +485,8 @@ export const basicsCourse = {
               "Chia sẻ có trách nhiệm là góp phần xây dựng mạng lưới an toàn."
             ])
           ],
-          checkpoint: checkpoint("5.2", [
-            q("Hành động ĐÚNG khi thấy ảnh nhạy cảm của bạn học bị lan truyền?", ["Gửi cho nhóm khác để hỏi thật giả", "Không lan truyền, báo cáo và hỗ trợ người bị hại", "Bình luận trêu chọc", "Tải về máy"], 1),
+          checkpoint: checkpoint("5.1", [
+            q("Dấu hiệu đỏ mạnh nhất trong một cuộc gọi mượn tiền là gì?", ["Video bị lag", "Yêu cầu chuyển tiền vào một tài khoản không phải tên người thân và bảo giữ bí mật", "Nói chuyện lâu", "Chào hỏi thân mật"], 1),
             q("Liar's dividend gây hại gì?", ["Giúp kẻ xấu phủ nhận những sự thật hiển nhiên bằng cách gọi nó là deepfake", "Làm tăng giá trị đồng tiền", "Làm đẹp video", "Làm tăng tốc độ mạng"], 0)
           ])
         }
@@ -551,10 +531,7 @@ export const basicsCourse = {
               "Tài khoản mạnh bảo vệ cả danh dự của bạn."
             ])
           ],
-          checkpoint: checkpoint("6.1", [
-            q("Family Code nên dựa trên thông tin nào?", ["Ngày sinh", "Tên trường học", "Một cụm từ riêng tư, dễ nhớ với người nhà nhưng không có trên mạng", "Địa chỉ nhà"], 2),
-            q("No Shame Reporting giúp gì?", ["Làm kẻ xấu mạnh hơn", "Khuyến khích nạn nhân báo cáo sớm để ngăn chặn thiệt hại lan rộng", "Làm nạn nhân xấu hổ hơn", "Không có tác dụng gì"], 1)
-          ])
+          ]
         },
         {
           title: "6.2 Capstone: Hồ sơ sự việc của An",
@@ -568,9 +545,9 @@ export const basicsCourse = {
               "Không cần chứng minh deepfake 100% để bảo vệ tiền của mình."
             ])
           ],
-          checkpoint: checkpoint("6.2", [
-            q("Trong Capstone, tín hiệu nào là Red Flag mạnh nhất?", ["Video có độ phân giải thấp", "Yêu cầu nạp tiền ngay hôm nay kèm link rút gọn và né xác minh trực tiếp", "Bạn cũ nhắn tin vào buổi tối", "Có nhiều bình luận khen"], 1),
-            q("Kết luận hành động an toàn nhất cho An là gì?", ["Nạp thử một ít tiền", "Không bấm link, không nạp tiền và xác minh qua kênh độc lập chính thức", "Chia sẻ link để hỏi mọi người", "Xóa ứng dụng nhắn tin"], 1)
+          checkpoint: checkpoint("6.1", [
+            q("Family Code nên dựa trên thông tin nào?", ["Ngày sinh", "Tên trường học", "Một cụm từ riêng tư, dễ nhớ với người nhà nhưng không có trên mạng", "Địa chỉ nhà"], 2),
+            q("Trong Capstone, tín hiệu nào là Red Flag mạnh nhất?", ["Video có độ phân giải thấp", "Yêu cầu nạp tiền ngay hôm nay kèm link rút gọn và né xác minh trực tiếp", "Bạn cũ nhắn tin vào buổi tối", "Có nhiều bình luận khen"], 1)
           ])
         }
       ],

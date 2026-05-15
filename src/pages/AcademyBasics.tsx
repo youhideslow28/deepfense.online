@@ -138,7 +138,7 @@ const AcademyBasics: React.FC<AcademyBasicsProps> = ({ lang, user, authBusy, onG
             <div className="mb-5 flex items-center gap-2">
               <ShieldCheck size={15} className="text-primary" />
               <h2 className="text-white font-black uppercase tracking-widest text-sm">
-                {isVi ? 'Lộ trình khóa học' : 'Course path'}
+                {isVi ? 'Những thứ bạn sẽ được học' : 'What you will learn'}
               </h2>
             </div>
             <div className="space-y-3">

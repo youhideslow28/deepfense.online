@@ -302,7 +302,7 @@ const AppContent: React.FC = () => {
 
   return (
     <SmoothScroll>
-      <div className="min-h-screen flex flex-col font-sans selection:bg-primary/30 selection:text-white relative bg-[#03080F]">
+      <div className="min-h-screen flex flex-col font-sans selection:bg-primary/30 selection:text-white relative">
         <SEO title={getPageTitle()} lang={lang} />
 
         <ScrollToTop />

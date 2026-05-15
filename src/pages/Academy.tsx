@@ -400,6 +400,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     setActiveLessonIdx(0);
                     setLessonStep('content');
                     setCurrentView('lesson');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                 >
                   <div className="flex items-center justify-between relative z-10">
@@ -456,7 +457,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
           <CheckCircle2 size={64} className="text-emerald-500 mx-auto mb-6" />
           <h2 className="text-2xl font-black text-white uppercase mb-2">{isVi ? 'Hoàn thành Module!' : 'Module Completed!'}</h2>
           <p className="text-gray-400 mb-8">{isVi ? 'Module này chưa có bài trắc nghiệm.' : 'This module does not have a quiz yet.'}</p>
-          <GlowButton color="primary" onClick={() => setCurrentView('course')}>
+          <GlowButton color="primary" onClick={() => {
+            setCurrentView('course');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}>
             {isVi ? 'QUAY LẠI LỘ TRÌNH' : 'BACK TO COURSE'}
           </GlowButton>
         </div>
@@ -561,10 +565,11 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               {pass ? (
-                <GlowButton color="primary" size="lg" onClick={() => {
-                  setCompletedModules(prev => [...new Set([...prev, activeModule.id])]);
-                  setCurrentView('course');
-                }}>
+                  <GlowButton color="primary" size="lg" onClick={() => {
+                    setCompletedModules(prev => [...new Set([...prev, activeModule.id])]);
+                    setCurrentView('course');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}>
                   {activeModule.id === 99 ? (isVi ? 'NHẬN CHỨNG CHỈ' : 'GET CERTIFICATE') : (isVi ? 'TIẾP TỤC LỘ TRÌNH' : 'CONTINUE LEARNING')}
                 </GlowButton>
               ) : (
@@ -803,6 +808,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                         setCurrentView('quiz');
                         setQuizAnswers({});
                         setQuizSubmitted(false);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                       }
                     } else {
                       setActiveLessonIdx(prev => prev + 1);
@@ -825,6 +831,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                         setCurrentView('quiz');
                         setQuizAnswers({});
                         setQuizSubmitted(false);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                       } else {
                         setLessonStep('content');
                         setActiveSectionIdx(prev => prev + 1);

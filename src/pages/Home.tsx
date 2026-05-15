@@ -134,10 +134,12 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
       {/* ═══ DEEPFAKE EVOLUTION TIMELINE (INTRO) ═══ */}
       <DeepfakeTimeline lang={lang} />
 
-      <div className="container mx-auto px-4 py-8 md:py-12 max-w-7xl relative z-30 bg-[#03080F]">
+      {/* ═══ MAIN CONTENT ═══ */}
+      <div className="relative z-30">
+        <div className="container mx-auto px-4 py-8 md:py-12 max-w-7xl">
 
       {/* ═══ HERO ═══ */}
-      <div ref={heroRef as React.RefObject<HTMLDivElement>} className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-16 items-center min-h-[440px] lg:min-h-[470px]">
+      <div ref={heroRef as React.RefObject<HTMLDivElement>} className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-16 items-center min-h-[440px] lg:min-h-[470px] -mt-[15vh]">
 
         {/* Ambient glow */}
         <div className="absolute inset-x-0 top-0 h-[360px] pointer-events-none overflow-hidden opacity-70">
@@ -223,7 +225,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 <div className="mb-3 flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-2.5 py-1 text-[10px] font-mono tracking-widest text-blue-300">
                   <GraduationCap size={12} /> DEEPFENSE ACADEMY
                 </div>
-                <h2 className="text-2xl md:text-3xl font-black text-white leading-snug uppercase tracking-wide" style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}>
+                <h2 className="text-2xl md:text-3xl font-bold text-white leading-snug uppercase tracking-wide" style={{ fontFamily: "'Inter', sans-serif" }}>
                   {lang === 'vi' ? 'Học cách bình tĩnh trước sự dối trá' : 'Learn to stay calm when fake looks real'}
                 </h2>
                 <p className="mt-3 text-xs md:text-sm leading-relaxed text-gray-400 max-w-lg">
@@ -269,7 +271,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             <div className="flex items-center gap-3">
               <div className="bg-secondary/20 p-2 rounded-lg"><AlertTriangle className="text-secondary" size={18} /></div>
               <div>
-                <h2 className="text-white font-black text-sm tracking-widest uppercase" style={{ fontFamily: "'Outfit', sans-serif" }}>{t.warning_center}</h2>
+                <h2 className="text-white font-bold text-sm tracking-wide uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>{t.warning_center}</h2>
                 <p className="text-[9px] text-gray-400 font-mono uppercase tracking-tighter mt-1 flex items-center gap-2">
                   <RadarPing size={6} color="secondary" speed="slow" /> LIVE_THREAT_AWARENESS
                 </p>
@@ -305,7 +307,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
           <div onClick={() => navigate('/tools/crisis')} className="bg-secondary rounded-2xl p-6 flex items-center gap-4 group cursor-pointer hover:bg-red-500 transition-all shadow-lg shadow-secondary/20">
             <div className="bg-white/20 p-3.5 rounded-xl text-white group-hover:scale-110 transition-transform"><PhoneCall size={28} /></div>
             <div>
-              <div className="text-white font-black text-base tracking-widest uppercase leading-none">{t.hotline}</div>
+              <div className="text-white font-bold text-base tracking-wide uppercase leading-none" style={{ fontFamily: "'Inter', sans-serif" }}>{t.hotline}</div>
               <div className="text-white/70 text-[10px] mt-1.5 font-mono uppercase tracking-tighter">{t.hotline_subtext}</div>
             </div>
           </div>
@@ -315,7 +317,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
               <div className="bg-blue-500/20 p-2.5 rounded-xl"><Lightbulb className="text-blue-400" size={22} /></div>
               <div>
-                <h2 className="text-white font-black text-sm tracking-[0.2em] uppercase" style={{ fontFamily: "'Outfit', sans-serif" }}>{t.knowledge}</h2>
+                <h2 className="text-white font-bold text-sm tracking-wider uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>{t.knowledge}</h2>
                 <div className="h-1 w-8 bg-blue-500/40 mt-2 rounded-full" />
               </div>
             </div>
@@ -335,8 +337,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
           </div>
         </div>
       </div>
-      </div>
-      
+        </div>
     </div>
   );
 };
