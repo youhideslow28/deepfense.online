@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { 
   AlertCircle, CheckCircle2, Clock, Users, Award, Play, BookOpen, 
   Eye, EyeOff, Zap, TrendingUp, GraduationCap, ChevronLeft,
-  Trophy, ShieldCheck, Target, Sparkles, LayoutDashboard, LogIn, LockKeyhole, Brain
+  Trophy, ShieldCheck, Target, Sparkles, LayoutDashboard, LogIn, LockKeyhole, Brain, ExternalLink
 } from 'lucide-react';
 import { Language } from '@/types';
 import type { User } from 'firebase/auth';
@@ -148,6 +148,45 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
 
   const Dashboard = () => (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* Certificate Claim (Only if passed final exam) */}
+      {completedModules.includes(99) && (
+        <div className="glass-dark border border-amber-400/30 rounded-2xl p-6 bg-amber-400/5 relative overflow-hidden animate-in fade-in slide-in-from-right-4 duration-1000">
+          <div className="absolute top-0 right-0 p-4 opacity-10">
+            <Award size={100} className="text-amber-400" />
+          </div>
+          <div className="relative z-10">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="flex items-center gap-4">
+                <div className="bg-amber-400/20 p-3 rounded-xl text-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+                  <Award size={32} />
+                </div>
+                <div>
+                  <h3 className="text-white font-black uppercase italic tracking-wider text-lg">CHỨNG CHỈ CỦA BẠN</h3>
+                  <p className="text-[10px] text-amber-400 font-mono uppercase tracking-[0.2em]">{isVi ? 'ĐÃ HOÀN THÀNH DEEPFENSE BASIC' : 'DEEPFENSE BASIC CERTIFIED'}</p>
+                </div>
+              </div>
+              
+              <div className="flex flex-wrap gap-3">
+                <a 
+                  href="/academy/certificate-template/certificate-template.html" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-6 py-3 text-xs font-black uppercase tracking-widest text-black hover:bg-amber-300 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)]"
+                >
+                  <Award size={16} /> {isVi ? 'TẢI CHỨNG CHỈ' : 'DOWNLOAD CERTIFICATE'}
+                </a>
+                <button 
+                  onClick={() => navigate('/academy/verify')}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-xs font-black uppercase tracking-widest text-white hover:bg-white/10 transition-all"
+                >
+                  <ExternalLink size={16} /> {isVi ? 'TRANG XÁC MINH' : 'VERIFY PAGE'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {stats.map((stat, idx) => (
           <div key={idx} className="glass-dark rounded-xl p-4 md:p-5 border border-white/10 hover:border-blue-500/30 transition-all group">
