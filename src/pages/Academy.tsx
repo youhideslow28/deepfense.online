@@ -27,13 +27,40 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   const [activeModule, setActiveModule] = useState<Module | null>(null);
   const [activeSectionIdx, setActiveSectionIdx] = useState(0);
   const [activeLessonIdx, setActiveLessonIdx] = useState(0);
-  
-  const [completedLessons, setCompletedLessons] = useState<string[]>([]);
+  const [completedLessons, setCompletedLessons] = useState<string[]>(() => {
+    const saved = localStorage.getItem('df_completed_lessons');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [completedModules, setCompletedModules] = useState<number[]>(() => {
+    const saved = localStorage.getItem('df_completed_modules');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [lessonStep, setLessonStep] = useState<'content' | 'review' | 'checkpoint'>('content');
+
+  useEffect(() => {
+    localStorage.setItem('df_completed_lessons', JSON.stringify(completedLessons));
+  }, [completedLessons]);
+
+  useEffect(() => {
+    localStorage.setItem('df_completed_modules', JSON.stringify(completedModules));
+  }, [completedModules]);
   const [showAnswers, setShowAnswers] = useState<Record<string, boolean>>({});
   const [checkpointAnswers, setCheckpointAnswers] = useState<Record<number, number>>({});
   const [checkpointSubmitted, setCheckpointSubmitted] = useState(false);
-  const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
+  const [finalExamQuestions, setFinalExamQuestions] = useState<any[]>([]);
+
+  // Effect to select 50 random questions for final exam
+  useEffect(() => {
+    if (currentView === 'quiz' && activeModule?.id === 99) {
+      const allQuestions = [...activeModule.quiz];
+      const shuffled = allQuestions.sort(() => 0.5 - Math.random());
+      setFinalExamQuestions(shuffled.slice(0, 50));
+    }
+  }, [currentView, activeModule]);
+
+  const activeTrack = tracks.find(t => t.id === selectedCourseId);
   
   const pageRef = useScrollReveal({ selector: '[data-reveal]', preset: 'fade-up', stagger: 0.08 });
   const isSignedIn = !!user;
@@ -113,10 +140,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   };
 
   const stats = [
-    { label: isVi ? 'Khóa học đã đăng ký' : 'Enrolled', value: isSignedIn ? 1 : 0, icon: BookOpen, color: 'text-blue-400' },
-    { label: isVi ? 'Giờ học' : 'Hours', value: 0, icon: Clock, color: 'text-cyan-400' },
-    { label: isVi ? 'Bài đã xong' : 'Finished', value: 0, icon: CheckCircle2, color: 'text-emerald-400' },
-    { label: isVi ? 'Chứng chỉ' : 'Certs', value: 0, icon: Award, color: 'text-amber-400' },
+    { label: isVi ? 'Khóa học' : 'Enrolled', value: isSignedIn ? 1 : 0, icon: BookOpen, color: 'text-blue-400' },
+    { label: isVi ? 'Thời gian' : 'Total Time', value: '45m', icon: Clock, color: 'text-cyan-400' },
+    { label: isVi ? 'Đã xong' : 'Finished', value: completedLessons.length, icon: CheckCircle2, color: 'text-emerald-400' },
+    { label: isVi ? 'Chứng chỉ' : 'Certs', value: completedModules.includes(99) ? 1 : 0, icon: Award, color: 'text-amber-400' },
   ];
 
   const Dashboard = () => (
@@ -157,30 +184,26 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 <div className="flex items-start justify-between mb-4 relative z-10">
                   <div>
                     <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-[10px] font-mono text-blue-300 mb-2 uppercase tracking-widest">
-                      {track.difficulty}
+                      {isVi ? 'KHÓA HỌC' : 'COURSE'}
                     </div>
                     <h3 className="text-xl font-black text-white mb-1 group-hover:text-blue-400 transition-colors">{track.title}</h3>
                     <p className="text-sm text-gray-400">{track.subtitle}</p>
                   </div>
                   <div className="text-right">
-                    <span className="text-2xl font-black text-blue-400">{track.progress}%</span>
+                    <div className="flex items-center gap-2 justify-end">
+                      {track.progress === 100 && <CheckCircle2 size={20} className="text-emerald-400" />}
+                      <span className="text-2xl font-black text-blue-400">{track.progress}%</span>
+                    </div>
                     <p className="text-[10px] uppercase tracking-tighter text-gray-500 mt-1">Reward: {track.reward}</p>
                   </div>
                 </div>
 
                 <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden relative z-10">
                   <div
-                    className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-700 ease-out"
+                    className={`h-full transition-all duration-700 ease-out ${track.progress === 100 ? 'bg-emerald-500' : 'bg-gradient-to-r from-blue-500 to-cyan-400'}`}
                     style={{ width: `${track.progress}%` }}
                   />
                 </div>
-                {track.locked && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
-                    <span className="bg-black/60 px-4 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest text-gray-400">
-                      Locked
-                    </span>
-                  </div>
-                )}
               </div>
             ))}
           </div>
@@ -271,7 +294,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
           </div>
 
           {/* Sign In Prompt */}
-          {!isSignedIn && (
+          {!isSignedIn ? (
             <div className="glass-dark border border-blue-500/20 rounded-2xl p-6">
               <h3 className="font-black text-white uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
                 <LockKeyhole className="text-blue-400" size={14} />
@@ -284,6 +307,29 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 {authBusy ? '...' : (isVi ? 'ĐĂNG NHẬP' : 'SIGN IN')}
               </GlowButton>
             </div>
+          ) : (
+            user?.email !== 'deepfense@gmail.com' && (
+              <div className="glass-dark border border-red-500/20 rounded-2xl p-6">
+                <h3 className="font-black text-red-400 uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
+                  <AlertCircle size={14} />
+                  {isVi ? 'VÙNG NGUY HIỂM' : 'DANGER ZONE'}
+                </h3>
+                <p className="text-[11px] text-gray-500 mb-4">
+                  {isVi ? 'Xóa toàn bộ tiến độ học tập của bạn?' : 'Reset all your learning progress?'}
+                </p>
+                <button 
+                  onClick={() => {
+                    if (window.confirm(isVi ? 'Bạn có chắc chắn muốn xóa hết tiến độ?' : 'Are you sure you want to reset all progress?')) {
+                      setCompletedLessons([]);
+                      setCompletedModules([]);
+                    }
+                  }}
+                  className="w-full py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest hover:bg-red-500/20 transition-all"
+                >
+                  {isVi ? 'RESET TIẾN ĐỘ' : 'RESET PROGRESS'}
+                </button>
+              </div>
+            )
           )}
         </div>
       </div>
@@ -306,7 +352,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
         <div className="relative overflow-hidden rounded-3xl border border-blue-500/30 bg-gradient-to-br from-blue-900/40 to-black p-8 md:p-12 shadow-2xl">
           <div className="absolute -right-20 -top-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
           <div className="relative z-10">
-            <h1 className="text-3xl md:text-5xl font-black text-white mb-6 uppercase leading-tight">{track.title}</h1>
+            <h1 className="text-3xl md:text-5xl font-black text-white mb-4 uppercase leading-tight italic">{track.title}</h1>
+            <p className="text-gray-400 text-sm max-w-2xl mb-8 leading-relaxed italic">{basicsCourse.modules[0].scenario}</p>
             <div className="flex flex-col md:flex-row md:items-center gap-8">
               <div className="shrink-0">
                 <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em] mb-1">{isVi ? 'Tiến độ tổng thể' : 'Overall Progress'}</p>
@@ -314,7 +361,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               </div>
               <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-1000"
+                  className={`h-full transition-all duration-1000 ${track.progress === 100 ? 'bg-emerald-500' : 'bg-gradient-to-r from-blue-500 to-cyan-400'}`}
                   style={{ width: `${track.progress}%` }}
                 />
               </div>
@@ -330,12 +377,17 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
           
           <div className="grid grid-cols-1 gap-4">
             {track.data.modules.map((module, idx) => {
-              const isLocked = idx > 0 && module.sections.length === 0; // Simplified lock logic
+              const isDone = completedModules.includes(module.id);
+              const prevModuleDone = idx === 0 || completedModules.includes(track.data.modules[idx-1].id);
+              const isLocked = !prevModuleDone;
+
               return (
                 <div
                   key={module.id}
                   className={`p-6 rounded-2xl border transition-all cursor-pointer group relative overflow-hidden ${
-                    isLocked ? 'opacity-50 grayscale border-white/5 bg-white/5' : 'glass-dark border-white/10 hover:border-blue-500/30'
+                    isLocked ? 'opacity-50 grayscale border-white/5 bg-white/5 cursor-not-allowed' : 
+                    isDone ? 'bg-emerald-500/5 border-emerald-500/20 hover:border-emerald-500/40' :
+                    'glass-dark border-white/10 hover:border-blue-500/30'
                   }`}
                   onClick={() => {
                     if (isLocked) return;
@@ -346,31 +398,39 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     setActiveModule(module);
                     setActiveSectionIdx(0);
                     setActiveLessonIdx(0);
+                    setLessonStep('content');
                     setCurrentView('lesson');
                   }}
                 >
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-5">
-                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 font-black text-sm">
-                        {module.id}
+                      <div className={`w-10 h-10 rounded-xl border flex items-center justify-center font-black text-sm ${
+                        isDone ? 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400' : 
+                        isLocked ? 'bg-white/5 border-white/5 text-gray-600' :
+                        'bg-blue-500/10 border-blue-500/20 text-blue-400'
+                      }`}>
+                        {isDone ? <CheckCircle2 size={20} /> : module.id}
                       </div>
                       <div>
-                        <h3 className="font-bold text-white text-lg group-hover:text-blue-400 transition-colors">{module.title}</h3>
+                        <h3 className={`font-bold text-lg transition-colors ${isDone ? 'text-emerald-300' : 'text-white group-hover:text-blue-400'}`}>{module.title}</h3>
                         <div className="flex items-center gap-4 mt-1 text-[10px] font-mono text-gray-500">
                           <span className="flex items-center gap-1">
                             <Clock className="w-3 h-3" /> {module.duration}
                           </span>
-                          <span className="px-2 py-0.5 bg-blue-500/10 text-blue-300 rounded uppercase tracking-widest border border-blue-500/20">
+                          <span className={`px-2 py-0.5 rounded uppercase tracking-widest border ${
+                            module.level === 'Foundation' ? 'bg-blue-500/10 text-blue-300 border-blue-500/20' :
+                            module.level === 'Recognition' ? 'bg-amber-500/10 text-amber-300 border-amber-500/20' :
+                            'bg-red-500/10 text-red-300 border-red-500/20'
+                          }`}>
                             {module.level}
-                          </span>
-                          <span className="text-gray-600">
-                            {module.sections.length} {isVi ? 'Mục học' : 'Sections'}
                           </span>
                         </div>
                       </div>
                     </div>
                     {isLocked ? (
                       <LockKeyhole size={18} className="text-gray-600" />
+                    ) : isDone ? (
+                      <div className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">{isVi ? 'HOÀN THÀNH' : 'COMPLETED'}</div>
                     ) : (
                       <div className="flex items-center gap-2 text-[10px] font-black uppercase text-blue-400 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
                         {isVi ? 'VÀO HỌC' : 'ENTER'} <Play size={12} fill="currentColor" />
@@ -388,7 +448,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
 
   const QuizView = () => {
     if (!activeModule) return null;
-    const questions = activeModule.quiz;
+    const questions = activeModule.id === 99 ? finalExamQuestions : activeModule.quiz;
     
     if (questions.length === 0) {
       return (
@@ -454,6 +514,12 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   );
                 })}
               </div>
+              {quizSubmitted && q.explanation && (
+                <div className="mt-4 p-4 rounded-xl bg-blue-500/5 border border-blue-500/10 text-xs text-blue-300 italic leading-relaxed">
+                  <span className="font-black mr-2 uppercase tracking-widest">{isVi ? 'Giải thích:' : 'Explanation:'}</span>
+                  {q.explanation}
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -495,8 +561,11 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               {pass ? (
-                <GlowButton color="primary" size="lg" onClick={() => setCurrentView('course')}>
-                  {isVi ? 'TIẾP TỤC LỘ TRÌNH' : 'CONTINUE LEARNING'}
+                <GlowButton color="primary" size="lg" onClick={() => {
+                  setCompletedModules(prev => [...new Set([...prev, activeModule.id])]);
+                  setCurrentView('course');
+                }}>
+                  {activeModule.id === 99 ? (isVi ? 'NHẬN CHỨNG CHỈ' : 'GET CERTIFICATE') : (isVi ? 'TIẾP TỤC LỘ TRÌNH' : 'CONTINUE LEARNING')}
                 </GlowButton>
               ) : (
                 <button 
@@ -523,209 +592,258 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
 
     if (!section || !lesson) return null;
 
-    const isLastLesson = activeLessonIdx === section.lessons.length - 1;
     const hasCheckpoint = !!section.checkpoint;
+    const isReview = lessonStep === 'review';
+    const isCheckpoint = lessonStep === 'checkpoint';
+
+    const isFirstLesson = activeSectionIdx === 0 && activeLessonIdx === 0;
 
     return (
       <div className="space-y-6 animate-in fade-in duration-500 pb-20">
+        {isFirstLesson && (
+          <div className="p-8 rounded-3xl border border-blue-500/30 bg-gradient-to-br from-blue-900/40 to-black relative overflow-hidden mb-10">
+            <div className="absolute -right-20 -top-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
+            <div className="relative z-10">
+              <h4 className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                <Brain size={14} /> {isVi ? 'BỐI CẢNH MODULE' : 'MODULE SCENARIO'}
+              </h4>
+              <p className="text-gray-300 italic leading-relaxed text-sm">"{activeModule.scenario}"</p>
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <button
-            onClick={() => setCurrentView('course')}
+            onClick={() => {
+              setCurrentView('course');
+              setLessonStep('content');
+            }}
             className="inline-flex items-center gap-2 text-blue-400 hover:text-white transition-colors font-black uppercase text-xs tracking-widest"
           >
             <ChevronLeft size={16} /> {isVi ? 'Quay lại Module' : 'Back to Module'}
           </button>
           
           <div className="flex items-center gap-1 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
-            {activeModule.sections.map((s, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  setActiveSectionIdx(idx);
-                  setActiveLessonIdx(0);
-                  setCheckpointSubmitted(false);
-                }}
-                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest border whitespace-nowrap transition-all ${
-                  idx === activeSectionIdx 
-                    ? 'bg-blue-500 text-white border-blue-400' 
-                    : 'bg-white/5 text-gray-500 border-white/5 hover:border-white/20'
-                }`}
-              >
-                {s.title}
-              </button>
-            ))}
+            {activeModule.sections.map((s, idx) => {
+              const sectionId = `${activeModule.id}-${idx}`;
+              const isSectionDone = completedLessons.some(id => id.startsWith(sectionId));
+              
+              return (
+                <button
+                  key={idx}
+                  disabled={isCheckpoint || isReview}
+                  onClick={() => {
+                    setActiveSectionIdx(idx);
+                    setActiveLessonIdx(0);
+                    setCheckpointSubmitted(false);
+                    setLessonStep('content');
+                  }}
+                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest border whitespace-nowrap transition-all flex items-center gap-2 ${
+                    idx === activeSectionIdx 
+                      ? 'bg-blue-500 text-white border-blue-400' 
+                      : isSectionDone
+                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                        : 'bg-white/5 text-gray-500 border-white/5 hover:border-white/20'
+                  } ${(isCheckpoint || isReview) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                  {isSectionDone && <CheckCircle2 size={12} />}
+                  {s.title}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-8 space-y-6">
-            <div className="glass-dark border border-white/10 rounded-3xl p-8 md:p-10 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-8 opacity-5">
-                <BookOpen size={120} className="text-blue-400" />
-              </div>
-              
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-[9px] font-mono text-blue-400 uppercase tracking-widest">
-                    {lesson.id}
-                  </span>
-                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-                    {section.title}
-                  </span>
+            {lessonStep === 'content' && (
+              <div className="glass-dark border border-white/10 rounded-3xl p-8 md:p-10 relative overflow-hidden min-h-[400px]">
+                <div className="absolute top-0 right-0 p-8 opacity-5">
+                  <BookOpen size={120} className="text-blue-400" />
                 </div>
                 
-                <h1 className="text-3xl md:text-4xl font-black text-white mb-8 uppercase leading-tight">{lesson.title}</h1>
-                
-                <div className="prose prose-invert prose-blue max-w-none">
-                  {lesson.paragraphs.map((p, i) => (
-                    <p key={i} className="text-gray-300 text-base leading-relaxed mb-6 last:mb-0">
-                      {p}
-                    </p>
-                  ))}
-                </div>
-
-                <div className="mt-10 p-6 rounded-2xl bg-blue-500/5 border border-blue-500/10">
-                  <h3 className="text-xs font-black text-blue-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                    <Zap size={14} /> {isVi ? 'Điểm cần nhớ' : 'Key Takeaways'}
-                  </h3>
-                  <ul className="space-y-3">
-                    {lesson.takeaways.map((t, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm text-gray-400">
-                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {isLastLesson && hasCheckpoint && (
-              <div className="glass-dark border border-cyan-500/20 rounded-3xl p-8 animate-in slide-in-from-bottom-4 duration-700">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
-                    <ShieldCheck size={24} />
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-[9px] font-mono text-blue-400 uppercase tracking-widest">
+                      {lesson.id}
+                    </span>
+                    <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
+                      {section.title}
+                    </span>
                   </div>
-                  <div>
-                    <h3 className="font-black text-white uppercase tracking-widest text-sm">
-                      Checkpoint {section.checkpoint?.label}
-                    </h3>
-                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-tighter">
-                      {isVi ? 'Kiểm tra nhanh kiến thức' : 'Quick knowledge check'}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="space-y-8">
-                  {section.checkpoint?.questions.map((q, qIdx) => (
-                    <div key={qIdx} className="space-y-4">
-                      <p className="text-white font-bold leading-relaxed">
-                        <span className="text-cyan-400 mr-2">#{qIdx + 1}</span> {q.text}
+                  
+                  <h1 className="text-3xl md:text-4xl font-black text-white mb-8 uppercase leading-tight italic">{lesson.title}</h1>
+                  
+                  <div className="prose prose-invert prose-blue max-w-none">
+                    {lesson.paragraphs.map((p, i) => (
+                      <p key={i} className="text-gray-300 text-base leading-relaxed mb-6 last:mb-0">
+                        {p}
                       </p>
-                      <div className="grid grid-cols-1 gap-2">
-                        {q.options.map((opt, oIdx) => {
-                          const isSelected = checkpointAnswers[qIdx] === oIdx;
-                          const isCorrect = oIdx === q.answer;
-                          const showResult = checkpointSubmitted;
-                          
-                          return (
-                            <button
-                              key={oIdx}
-                              disabled={checkpointSubmitted}
-                              onClick={() => setCheckpointAnswers(prev => ({ ...prev, [qIdx]: oIdx }))}
-                              className={`p-4 rounded-xl text-left text-sm transition-all border ${
-                                showResult
-                                  ? isCorrect
-                                    ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-                                    : isSelected
-                                      ? 'bg-red-500/10 border-red-500/30 text-red-300'
-                                      : 'bg-white/5 border-white/5 opacity-50'
-                                  : isSelected
-                                    ? 'bg-blue-500/10 border-blue-500/30 text-blue-300 ring-1 ring-blue-500/20'
-                                    : 'bg-white/5 border-white/5 hover:border-white/20 text-gray-400'
-                              }`}
-                            >
-                              <div className="flex items-center justify-between">
-                                <span>{opt}</span>
-                                {showResult && isCorrect && <CheckCircle2 size={14} className="text-emerald-500" />}
-                                {showResult && isSelected && !isCorrect && <AlertCircle size={14} className="text-red-500" />}
-                              </div>
-                            </button>
-                          );
-                        })}
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {lessonStep === 'review' && (
+              <div className="glass-dark border border-amber-500/30 rounded-3xl p-8 md:p-10 animate-in zoom-in-95 duration-500">
+                <div className="text-center mb-8">
+                  <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mx-auto mb-4 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+                    <Brain size={32} />
+                  </div>
+                  <h2 className="text-2xl font-black text-white uppercase italic">{isVi ? 'ĐIỂM CẦN NHỚ' : 'KEY TAKEAWAYS'}</h2>
+                  <p className="text-xs text-gray-500 font-mono mt-2 uppercase tracking-widest">
+                    {isVi ? 'Tóm tắt kiến thức trước khi kiểm tra' : 'Summary before the checkpoint'}
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  {section.lessons.flatMap(l => l.takeaways).map((tk, idx) => (
+                    <div key={idx} className="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-amber-500/20 transition-all group">
+                      <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 shrink-0 group-hover:scale-110 transition-transform">
+                        <Zap size={14} />
                       </div>
+                      <p className="text-gray-300 text-sm font-bold leading-relaxed">{tk}</p>
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
 
-                {!checkpointSubmitted ? (
-                  <GlowButton
-                    color="primary"
-                    className="w-full mt-10"
-                    disabled={Object.keys(checkpointAnswers).length < (section.checkpoint?.questions.length || 0)}
-                    onClick={() => setCheckpointSubmitted(true)}
-                  >
-                    {isVi ? 'NỘP CHECKPOINT' : 'SUBMIT CHECKPOINT'}
-                  </GlowButton>
-                ) : (
-                  <div className="mt-8 p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
-                    <p className="text-xs text-gray-400">
-                      {isVi ? 'Đã hoàn thành phần này.' : 'Section completed.'}
-                    </p>
-                    <button 
-                      onClick={() => {
-                        setCheckpointSubmitted(false);
-                        setCheckpointAnswers({});
-                      }}
-                      className="text-[10px] font-black text-blue-400 uppercase tracking-widest hover:text-white transition-colors"
-                    >
-                      {isVi ? 'Thử lại' : 'Retry'}
-                    </button>
+            {lessonStep === 'checkpoint' && (
+              <div className="space-y-6 animate-in slide-in-from-bottom-8 duration-500">
+                <div className="glass-dark border border-amber-500/20 rounded-2xl p-6 flex items-center gap-4 mb-4">
+                  <ShieldCheck size={32} className="text-amber-400" />
+                  <div>
+                    <h3 className="text-lg font-black text-white uppercase italic">{isVi ? 'KIỂM TRA NHANH' : 'QUICK CHECK'}</h3>
+                    <p className="text-[10px] text-gray-500 uppercase tracking-widest font-mono">{section.checkpoint?.label}</p>
                   </div>
-                )}
+                </div>
+
+                {section.checkpoint?.questions.map((q, qIdx) => (
+                  <div key={qIdx} className="glass-dark border border-white/10 rounded-2xl p-6 md:p-8">
+                    <p className="text-white font-bold text-lg mb-6 leading-relaxed flex items-start gap-4">
+                      <span className="text-amber-400 font-black italic shrink-0">#{qIdx + 1}</span>
+                      <span>{q.text}</span>
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {q.options.map((opt, oIdx) => {
+                        const isSelected = checkpointAnswers[qIdx] === oIdx;
+                        const isCorrect = oIdx === q.answer;
+                        const showResult = checkpointSubmitted;
+                        
+                        return (
+                          <button
+                            key={oIdx}
+                            disabled={checkpointSubmitted}
+                            onClick={() => setCheckpointAnswers(prev => ({ ...prev, [qIdx]: oIdx }))}
+                            className={`p-4 rounded-xl text-left transition-all border flex items-center justify-between group ${
+                              showResult
+                                ? isCorrect
+                                  ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                                  : isSelected
+                                    ? 'bg-red-500/10 border-red-500/30 text-red-400'
+                                    : 'bg-white/5 border-white/5 opacity-40'
+                                : isSelected
+                                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-300 ring-1 ring-amber-500/20'
+                                  : 'bg-white/5 border-white/5 hover:border-white/20 text-gray-400'
+                            }`}
+                          >
+                            <span className="text-sm font-bold">{opt}</span>
+                            {!showResult && isSelected && <Zap size={14} className="text-amber-400 animate-pulse" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {checkpointSubmitted && q.explanation && (
+                      <div className="mt-4 p-4 rounded-xl bg-amber-500/5 border border-amber-500/10 text-[11px] text-amber-300/80 italic leading-relaxed">
+                        <span className="font-black mr-2 uppercase tracking-widest">{isVi ? 'Gợi ý:' : 'Hint:'}</span>
+                        {q.explanation}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             )}
 
             <div className="flex items-center justify-between gap-4 mt-8">
-              <button
-                disabled={activeLessonIdx === 0 && activeSectionIdx === 0}
+              <button 
                 onClick={() => {
-                  if (activeLessonIdx > 0) setActiveLessonIdx(activeLessonIdx - 1);
+                  if (lessonStep === 'checkpoint') setLessonStep('review');
+                  else if (lessonStep === 'review') setLessonStep('content');
+                  else if (activeLessonIdx > 0) setActiveLessonIdx(prev => prev - 1);
                   else if (activeSectionIdx > 0) {
+                    const prevSection = activeModule.sections[activeSectionIdx - 1];
                     setActiveSectionIdx(activeSectionIdx - 1);
-                    setActiveLessonIdx(activeModule.sections[activeSectionIdx - 1].lessons.length - 1);
+                    setActiveLessonIdx(prevSection.lessons.length - 1);
                   }
                 }}
-                className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 text-xs font-black uppercase tracking-widest hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                className={`px-6 py-3 rounded-xl border border-white/10 text-white font-black uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all ${activeLessonIdx === 0 && activeSectionIdx === 0 && lessonStep === 'content' ? 'opacity-0 pointer-events-none' : ''}`}
               >
-                {isVi ? 'Trước' : 'Prev'}
+                {isVi ? 'TRƯỚC' : 'BACK'}
               </button>
-              
-              <GlowButton
-                color="primary"
+
+              <GlowButton 
+                color={isCheckpoint ? 'warning' : 'primary'}
                 onClick={() => {
-                  if (!completedLessons.includes(lesson.id)) {
-                    setCompletedLessons([...completedLessons, lesson.id]);
-                  }
-                  
-                  if (activeLessonIdx < section.lessons.length - 1) {
-                    setActiveLessonIdx(activeLessonIdx + 1);
-                  } else if (activeSectionIdx < activeModule.sections.length - 1) {
-                    setActiveSectionIdx(activeSectionIdx + 1);
-                    setActiveLessonIdx(0);
-                    setCheckpointSubmitted(false);
-                    setCheckpointAnswers({});
-                    setQuizAnswers({});
-                    setQuizSubmitted(false);
-                    setCurrentView('quiz');
-                  } else {
-                    setCurrentView('course');
+                  if (lessonStep === 'content') {
+                    if (!completedLessons.includes(lesson.id)) {
+                      setCompletedLessons(prev => [...new Set([...prev, lesson.id])]);
+                    }
+                    const isLastLesson = activeLessonIdx === section.lessons.length - 1;
+                    if (isLastLesson && hasCheckpoint) {
+                      setLessonStep('review');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else if (isLastLesson) {
+                      if (activeSectionIdx < activeModule.sections.length - 1) {
+                        setActiveSectionIdx(prev => prev + 1);
+                        setActiveLessonIdx(0);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      } else {
+                        setCurrentView('quiz');
+                        setQuizAnswers({});
+                        setQuizSubmitted(false);
+                      }
+                    } else {
+                      setActiveLessonIdx(prev => prev + 1);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  } else if (lessonStep === 'review') {
+                    setLessonStep('checkpoint');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  } else if (lessonStep === 'checkpoint') {
+                    if (!checkpointSubmitted) {
+                      setCheckpointSubmitted(true);
+                    } else {
+                      const isLastSection = activeSectionIdx === activeModule.sections.length - 1;
+                      if (isLastSection) {
+                        setLessonStep('content');
+                        setActiveSectionIdx(0);
+                        setActiveLessonIdx(0);
+                        setCheckpointSubmitted(false);
+                        setCheckpointAnswers({});
+                        setCurrentView('quiz');
+                        setQuizAnswers({});
+                        setQuizSubmitted(false);
+                      } else {
+                        setLessonStep('content');
+                        setActiveSectionIdx(prev => prev + 1);
+                        setActiveLessonIdx(0);
+                        setCheckpointSubmitted(false);
+                        setCheckpointAnswers({});
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }
+                    }
                   }
                 }}
               >
-                {isLastLesson && activeSectionIdx === activeModule.sections.length - 1 
-                  ? (isVi ? 'VÀO BÀI KIỂM TRA' : 'TAKE QUIZ') 
-                  : (isVi ? 'TIẾP THEO' : 'NEXT')}
+                {lessonStep === 'content' 
+                  ? (activeLessonIdx === section.lessons.length - 1 && hasCheckpoint ? (isVi ? 'ĐIỂM CẦN NHỚ' : 'REVIEW') : (isVi ? 'TIẾP THEO' : 'NEXT'))
+                  : lessonStep === 'review'
+                    ? (isVi ? 'BẮT ĐẦU KIỂM TRA' : 'START TEST')
+                    : !checkpointSubmitted 
+                      ? (isVi ? 'XÁC NHẬN' : 'SUBMIT') 
+                      : (activeSectionIdx === activeModule.sections.length - 1 ? (isVi ? 'VÀO BÀI THI MODULE' : 'MODULE QUIZ') : (isVi ? 'TIẾP TỤC' : 'CONTINUE'))}
               </GlowButton>
             </div>
           </div>
@@ -739,12 +857,13 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 {section.lessons.map((l, idx) => (
                   <button
                     key={l.id}
+                    disabled={isCheckpoint || isReview}
                     onClick={() => setActiveLessonIdx(idx)}
                     className={`w-full p-3 rounded-xl text-left transition-all border flex items-center justify-between ${
                       idx === activeLessonIdx
                         ? 'bg-blue-500/10 border-blue-500/20 text-blue-400'
                         : 'bg-white/5 border-white/5 text-gray-500 hover:border-white/10'
-                    }`}
+                    } ${(isCheckpoint || isReview) ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     <span className="text-[11px] font-bold truncate pr-2">{l.title}</span>
                     {completedLessons.includes(l.id) && <CheckCircle2 size={12} className="text-emerald-500 shrink-0" />}
@@ -753,12 +872,16 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               </div>
             </div>
 
-            <div className="glass-dark border border-white/10 rounded-2xl p-6 bg-gradient-to-br from-blue-500/5 to-transparent">
-              <h4 className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                <Target size={12} /> {isVi ? 'Bối cảnh Module' : 'Module Scenario'}
+            <div className="glass-dark border border-white/10 rounded-2xl p-6">
+              <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-4">
+                {isVi ? 'HƯỚNG DẪN' : 'GUIDANCE'}
               </h4>
-              <p className="text-[11px] text-gray-400 leading-relaxed italic">
-                "{activeModule.scenario}"
+              <p className="text-xs text-gray-400 leading-relaxed font-bold">
+                {lessonStep === 'content' 
+                  ? (isVi ? 'Đọc kỹ nội dung và ghi nhớ các ý chính. Nút Tiếp theo sẽ đưa bạn đến bài học kế tiếp hoặc phần kiểm tra.' : 'Read carefully and memorize key points. The Next button will take you to the next lesson or checkpoint.')
+                  : lessonStep === 'review'
+                    ? (isVi ? 'Đây là những kiến thức cốt lõi. Hãy đảm bảo bạn đã nắm vững trước khi bước vào bài kiểm tra nhanh.' : 'These are the core concepts. Ensure you master them before entering the quick test.')
+                    : (isVi ? 'Chọn đáp án đúng nhất cho mỗi câu hỏi. Bạn cần hoàn thành checkpoint để tiếp tục lộ trình.' : 'Choose the best answer for each question. You must complete the checkpoint to proceed.')}
               </p>
             </div>
           </div>
