@@ -3,7 +3,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { 
   AlertCircle, CheckCircle2, Clock, Users, Award, Play, BookOpen, 
   Eye, EyeOff, Zap, TrendingUp, GraduationCap, ChevronLeft,
-  Trophy, ShieldCheck, Target, Sparkles, LayoutDashboard, LogIn, LockKeyhole, Brain, ExternalLink
+  Trophy, ShieldCheck, Target, Sparkles, LayoutDashboard, LogIn, LockKeyhole, Brain, ExternalLink,
+  Clock3
 } from 'lucide-react';
 import { Language } from '@/types';
 import type { User } from 'firebase/auth';
@@ -17,6 +18,30 @@ interface AcademyProps {
   authBusy: boolean;
   onGoogleAuth: () => void;
 }
+
+const roadmapData = [
+  {
+    code: '01',
+    titleVi: 'Deepfake là gì?',
+    titleEn: 'What is a deepfake?',
+    metaVi: 'Khởi động, kiến thức nền và checkpoint ngay trong bài',
+    metaEn: 'Intro, foundation concepts, and inline checkpoints',
+  },
+  {
+    code: '02',
+    titleVi: 'Nhận diện dấu hiệu đáng ngờ',
+    titleEn: 'Recognition signals',
+    metaVi: 'Hình ảnh, video, giọng nói và nguồn tin',
+    metaEn: 'Image, video, voice, and source checks',
+  },
+  {
+    code: '03',
+    titleVi: 'Phòng vệ và ứng phó',
+    titleEn: 'Prevention and response',
+    metaVi: 'Thói quen an toàn, báo cáo, đánh giá và bài thi cuối khóa',
+    metaEn: 'Safer habits, reporting, evaluation, and final exam',
+  },
+];
 
 export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyProps) {
   const isVi = lang === 'vi';
@@ -36,6 +61,16 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     return saved ? JSON.parse(saved) : [];
   });
   const [lessonStep, setLessonStep] = useState<'content' | 'review' | 'checkpoint'>('content');
+
+  // Sync auth state to currentView
+  useEffect(() => {
+    if (authBusy) return;
+    if (!user) {
+      setCurrentView('welcome');
+    } else if (currentView === 'welcome') {
+      setCurrentView('dashboard');
+    }
+  }, [user, authBusy]);
 
   useEffect(() => {
     localStorage.setItem('df_completed_lessons', JSON.stringify(completedLessons));
@@ -145,6 +180,106 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     { label: isVi ? 'Đã xong' : 'Finished', value: completedLessons.length, icon: CheckCircle2, color: 'text-emerald-400' },
     { label: isVi ? 'Chứng chỉ' : 'Certs', value: completedModules.includes(99) ? 1 : 0, icon: Award, color: 'text-amber-400' },
   ];
+
+  const WelcomeView = () => (
+    <div className="animate-in fade-in duration-500">
+      <section data-reveal className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-[#07111f]/90 p-6 md:p-10 mb-8 shadow-[0_24px_90px_rgba(0,0,0,0.35)]">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
+        <div className="relative z-10 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
+          <div className="lg:col-span-8">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-[10px] font-mono tracking-widest text-blue-300">
+              <GraduationCap size={12} /> DEEPFENSE BASIC
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black uppercase leading-tight text-white" style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}>
+              DEEPFENSE BASIC
+            </h1>
+            <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-gray-400">
+              {isVi
+                ? 'Khóa nền tảng giúp bạn hiểu deepfake, nhận ra tín hiệu bất thường và biết cách kiểm chứng trước khi tin, chia sẻ hoặc chuyển tiền. Đăng nhập Google để lưu tiến độ, kết quả quiz và điều kiện mở certificate.'
+                : 'A foundation course that helps you understand deepfakes, notice suspicious signals, and verify before trusting, sharing, or sending money. Sign in with Google so progress, quiz results, and certificate eligibility are saved.'}
+            </p>
+          </div>
+
+          <div className="lg:col-span-4 rounded-2xl border border-amber-400/20 bg-amber-400/[0.06] p-5">
+            <div className="mb-5 flex items-center gap-3">
+              <Award size={28} className="text-amber-300" />
+              <div>
+                <div className="text-[10px] font-mono uppercase tracking-[0.22em] text-amber-300">
+                  {isVi ? 'Sau khi hoàn thành' : 'After completion'}
+                </div>
+                <div className="text-white font-black uppercase">Certificate + DPF</div>
+              </div>
+            </div>
+            <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm leading-relaxed text-gray-400">
+              {isVi
+                ? 'Certificate chỉ mở khi bạn học xong, gửi đánh giá khóa học và đạt bài thi cuối khóa.'
+                : 'Certificate unlocks only after lessons, course evaluation, and Final Exam are completed.'}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid grid-cols-1 gap-6 mb-8 xl:grid-cols-12">
+        <div data-reveal className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#07111f]/90 p-6 md:p-8 xl:col-span-7">
+          <div className="relative z-10 max-w-2xl">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/10 text-amber-300 px-4 py-1.5 text-[10px] font-mono tracking-widest">
+              <LockKeyhole size={12} />
+              {isVi ? 'CẦN ĐĂNG NHẬP GOOGLE' : 'GOOGLE SIGN-IN REQUIRED'}
+            </div>
+            <h2 className="text-2xl md:text-4xl font-black text-white uppercase leading-tight" style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}>
+              {isVi ? 'Sẵn sàng vào bài học đầu tiên.' : 'Ready for your first lesson.'}
+            </h2>
+            <p className="mt-4 text-gray-400 text-sm md:text-base leading-relaxed">
+              {isVi
+                ? 'Khi đã đăng nhập, bạn sẽ được chuyển sang hệ thống học riêng. Tiến độ đọc, checkpoint và bài thi được lưu lại để bạn có thể tiếp tục đúng vị trí.'
+                : 'After sign-in, you will enter the course reader. Reading progress, checkpoints, and exams are saved so you can continue from the right place.'}
+            </p>
+
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="w-full max-w-xl">
+                <div className="mb-3 rounded-xl border border-blue-400/20 bg-blue-500/10 text-blue-100 p-4 text-sm leading-relaxed">
+                  {isVi
+                    ? 'Bạn cần đăng nhập bằng Google để vào hệ thống học, lưu tiến độ, làm quiz và mở certificate sau khi hoàn thành.'
+                    : 'Please sign in with Google to enter the course system, save progress, take quizzes, and unlock the certificate after completion.'}
+                </div>
+                <GlowButton color="primary" size="lg" icon={<LogIn size={16} />} onClick={onGoogleAuth}>
+                  {authBusy ? (isVi ? 'ĐANG MỞ GOOGLE...' : 'OPENING GOOGLE...') : (isVi ? 'ĐĂNG NHẬP GOOGLE ĐỂ BẮT ĐẦU' : 'SIGN IN WITH GOOGLE')}
+                </GlowButton>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside data-reveal className="xl:col-span-5">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-6">
+            <div className="mb-5 flex items-center gap-2">
+              <ShieldCheck size={15} className="text-primary" />
+              <h2 className="text-white font-black uppercase tracking-widest text-sm">
+                {isVi ? 'Những thứ bạn sẽ được học' : 'What you will learn'}
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {roadmapData.map((module) => (
+                <div key={module.code} className="rounded-xl border border-blue-400/20 bg-blue-500/10 p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 font-mono text-xs font-black bg-blue-500/20 text-blue-300">
+                      {module.code}
+                    </div>
+                    <div>
+                      <h3 className="text-white font-black text-sm uppercase leading-snug">{isVi ? module.titleVi : module.titleEn}</h3>
+                      <div className="mt-3 flex items-center gap-2 text-[10px] font-mono text-blue-300/70">
+                        <Clock3 size={12} /> {isVi ? module.metaVi : module.metaEn}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </section>
+    </div>
+  );
 
   const Dashboard = () => (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -1012,12 +1147,6 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   ? 'Hệ thống đào tạo nhận thức an toàn số chuyên sâu. Hoàn thành các bài học, vượt qua bài Lab để nhận DPF và chứng chỉ.' 
                   : 'Advanced digital safety awareness training system. Complete lessons, pass Lab challenges to earn DPF and certificates.'}
               </p>
-              <button 
-                onClick={() => navigate('/academy/basics')}
-                className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-blue-400 hover:text-white transition-colors"
-              >
-                {isVi ? 'Thông tin khóa học' : 'Course Info'} <ChevronLeft size={14} className="rotate-180" />
-              </button>
             </div>
           </div>
           
@@ -1048,6 +1177,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       </header>
 
       <main className="container mx-auto px-4">
+        {currentView === 'welcome' && <WelcomeView />}
         {currentView === 'dashboard' && <Dashboard />}
         {currentView === 'course' && <CourseView />}
         {currentView === 'lesson' && <LessonView />}

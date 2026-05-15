@@ -32,7 +32,6 @@ import { ensureDpfWallet } from '@/features/dpf/dpf';
 // Lazy loading các trang để giảm tải ban đầu
 const Home = lazy(() => import('@/pages/Home'));
 const Academy = lazy(() => import('@/pages/Academy'));
-const AcademyBasics = lazy(() => import('@/pages/AcademyBasics'));
 const CertificateVerify = lazy(() => import('@/pages/CertificateVerify'));
 const Login = lazy(() => import('@/pages/Login'));
 const Profile = lazy(() => import('@/pages/Profile'));
@@ -275,8 +274,7 @@ const AppContent: React.FC = () => {
       case '/tools': return lang === 'vi' ? 'Hệ thống Quét Rủi Ro' : 'Risk Scanner';
       case '/profile': return lang === 'vi' ? 'Hồ sơ người học' : 'Profile';
       case '/academy': return lang === 'vi' ? 'DEEPFENSE Academy' : 'DEEPFENSE Academy';
-      case '/academy/basics': return lang === 'vi' ? 'DEEPFENSE Basics' : 'DEEPFENSE Basics';
-      case '/academy/verify': return lang === 'vi' ? 'Xac minh chung chi' : 'Verify Certificate';
+      case '/academy/verify': return lang === 'vi' ? 'Xác minh chứng chỉ' : 'Verify Certificate';
       case '/challenge': return lang === 'vi' ? 'Thử thách Thám tử' : 'Detective Challenge';
       case '/ai-project': return lang === 'vi' ? 'Dự án AI Deepfense' : 'AI Project';
       case '/contact': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
@@ -331,7 +329,6 @@ const AppContent: React.FC = () => {
                   <Route path="/profile" element={<Profile lang={lang} user={user} authBusy={authBusy || roleBusy} />} />
                   <Route path="/academy/verify" element={<CertificateVerify lang={lang} />} />
                   <Route path="/academy" element={<Academy lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} />} />
-                  <Route path="/academy/basics" element={<AcademyBasics lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} />} />
                   <Route path="/tools/:tab?" element={<Tools lang={lang} />} />
                   <Route path="/challenge" element={<Challenge lang={lang} />} />
                   <Route path="/ai-project" element={<AiComingSoon lang={lang} />} />

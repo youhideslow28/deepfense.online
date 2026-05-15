@@ -186,25 +186,34 @@ export const basicsCourse = {
           title: "1.1 Deepfake và các 'họ hàng'",
           lessons: [
             lesson("1.1.1", "Khái niệm và phân loại", [
-              "Deepfake: Nội dung hình ảnh, video hoặc âm thanh được tạo/chỉnh sửa bằng AI để khiến người xem tin một người đã nói/làm điều họ không thực sự nói/làm.",
-              "Deepvoice: Giọng nói được giả lập hoặc chỉnh sửa bằng AI để nghe giống một người thật.",
-              "Synthetic media: Nội dung được tạo hoàn toàn hoặc một phần bằng công nghệ số/AI. Nó có thể dùng cho mục đích tốt (giáo dục, phim ảnh) hoặc xấu (lừa đảo).",
-              "Edited media: Nội dung bị cắt ghép, chỉnh sửa (như cắt một đoạn ngắn từ bài phát biểu dài) làm đổi nghĩa gốc.",
-              "Repurposed media: Nội dung thật nhưng bị đặt sai bối cảnh (như lấy video tai nạn cũ nói là vừa xảy ra hôm nay)."
+              "Deepfake là nội dung hình ảnh, video hoặc âm thanh được tạo ra hoặc chỉnh sửa bằng công nghệ số, thường có sử dụng AI, để khiến người xem tin rằng một người đã nói hoặc làm điều mà họ không thực sự nói hoặc làm. Deepfake không nhất thiết phải hoàn hảo mới nguy hiểm. Trong nhiều vụ lừa đảo, kẻ xấu chỉ cần tạo ra đủ giống trong vài giây, kết hợp với sự khẩn cấp, sợ hãi hoặc tin tưởng, để nạn nhân hành động trước khi kịp suy nghĩ.",
+              "Synthetic media là nội dung được tạo ra hoàn toàn hoặc một phần bằng công nghệ số, đặc biệt là AI. Tất cả deepfake đều có thể được xem là một dạng synthetic hoặc manipulated media, nhưng không phải mọi synthetic media đều là deepfake. Ví dụ: Một bức tranh phong cảnh do AI tạo ra không phải deepfake. Nhưng một video giả mạo một người thật đang nói điều họ chưa từng nói thì có thể là deepfake.",
+              "Deepvoice là dạng giả lập hoặc chỉnh sửa giọng nói bằng AI, khiến âm thanh nghe giống một người thật. Deepvoice đặc biệt nguy hiểm trong các tình huống có áp lực thời gian, ví dụ: 'Con đang bị tai nạn, chuyển tiền ngay', 'Anh là sếp đây, xử lý khoản này trước 3 giờ'. Một đoạn giọng nói ngắn không còn đủ để xác minh danh tính.",
+              "Face swap là kỹ thuật thay khuôn mặt của một người vào hình ảnh hoặc video của người khác. Không nên đánh giá mức độ nghiêm trọng chỉ dựa trên câu 'đó chỉ là ảnh giả'. Một hình ảnh giả vẫn có thể gây tổn thương thật. Một người bị gán mặt vào nội dung nhạy cảm vẫn có thể bị ảnh hưởng danh dự, tâm lý, học tập, công việc và các mối quan hệ.",
+              "Lip sync là kỹ thuật làm cho chuyển động môi trong video khớp với một đoạn âm thanh khác. Dấu hiệu có thể nghi ngờ: Khẩu hình không khớp hoàn toàn với âm thanh, cử động môi hơi cứng hoặc trễ, biểu cảm khuôn mặt không phù hợp với nội dung lời nói, âm thanh quá sạch hoặc quá đều so với môi trường xung quanh.",
+              "Edited media là nội dung đã bị chỉnh sửa bằng các công cụ truyền thống hoặc công cụ AI. Ví dụ: Cắt một câu nói ra khỏi phần giải thích phía sau, ghép hai đoạn video từ hai thời điểm khác nhau để tạo cảm giác liên quan, thêm phụ đề sai, làm mờ hoặc che phần quan trọng.",
+              "Repurposed media là nội dung thật nhưng bị đặt sai bối cảnh. Ví dụ: Một video lũ lụt ở nước khác từ nhiều năm trước được đăng lại như thể vừa xảy ra tại Việt Nam. Repurposed media nguy hiểm vì nó dùng 'chất liệu thật' để tạo ra kết luận sai.",
+              "AI-generated image là hình ảnh do AI tạo ra từ mô tả, dữ liệu mẫu hoặc yêu cầu của người dùng. Khi nhìn một hình ảnh, đừng chỉ hỏi: 'Ảnh này có bị AI tạo không?' Hãy hỏi thêm: 'Ảnh này đang được dùng để khiến mình tin điều gì?' Một hình ảnh AI có thể vô hại nếu nó là minh họa rõ ràng. Nhưng cũng hình ảnh đó có thể nguy hiểm nếu nó được trình bày như bằng chứng thật."
             ], [
               "Deepfake thường mạo danh danh tính thật.",
               "Không phải mọi nội dung AI đều là deepfake.",
-              "Nội dung thật bị đặt sai bối cảnh vẫn có thể gây lừa dối."
+              "Nội dung thật bị đặt sai bối cảnh vẫn có thể gây lừa dối.",
+              "Nghe giống không có nghĩa là đúng người.",
+              "Nội dung thật đặt sai bối cảnh vẫn có thể dẫn đến niềm tin sai."
             ]),
-            lesson("1.1.2", "Vì sao deepfake khó nhận ra?", [
-              "Công nghệ tốt hơn, chi phí thấp hơn: Các mô hình AI ngày càng mượt mà và dễ tiếp cận.",
-              "Dữ liệu cá nhân quá dễ tìm: Ảnh chân dung, video, livestream của bạn là nguyên liệu để AI mô phỏng bạn.",
-              "Nội dung lan nhanh hơn khả năng kiểm chứng: Tốc độ lan truyền của tin giả luôn vượt xa tin đính chính.",
-              "Mắt thường và công cụ đều có giới hạn: Công cụ phát hiện luôn đi sau công nghệ tạo giả."
+            lesson("1.1.2", "Vì sao deepfake ngày càng khó nhận ra?", [
+              "Công nghệ tốt hơn, chi phí thấp hơn: Trước đây, để tạo một video giả thuyết phục, người ta cần nhiều kỹ năng, thiết bị và thời gian. Bây giờ, nhiều công cụ AI đã làm cho việc tạo ảnh, giọng nói và video trở nên dễ tiếp cận hơn. Khi công cụ mạnh hơn và rẻ hơn, kỹ năng phòng vệ của người dùng cũng cần tốt hơn.",
+              "Dữ liệu cá nhân của chúng ta quá dễ tìm: AI cần dữ liệu để mô phỏng. Trong đời sống số, nhiều người vô tình để lại rất nhiều dữ liệu: ảnh chân dung, video nói chuyện, livestream, story hằng ngày, giọng nói trong clip, thông tin gia đình, trường học, công việc. Khi dữ liệu cá nhân quá công khai, kẻ xấu có nhiều nguyên liệu hơn để tạo tài khoản giả, giả giọng nói, dựng kịch bản lừa đảo có vẻ rất riêng tư.",
+              "Nội dung lan nhanh hơn khả năng kiểm chứng: Chỉ cần vài phút, một video có thể xuất hiện trong nhóm gia đình, nhóm lớp, nhóm công việc, trang cá nhân. Trong khi đó, kiểm chứng cần thời gian. Kẻ xấu hiểu điều đó và thường thêm vào các câu như: 'Chia sẻ ngay trước khi bị xóa', 'Cơ hội chỉ còn hôm nay', 'Ai không chia sẻ là vô cảm'.",
+              "Mắt thường có giới hạn: Một video thật cũng có thể trông lạ vì mạng yếu, camera kém, ánh sáng xấu, video bị nén, người nói mệt hoặc căng thẳng. Ngược lại, một video giả có thể trông rất mượt. Nếu bạn chỉ dựa vào cảm giác 'trông thật' hoặc 'trông giả', bạn có thể bị sai theo cả hai hướng: tin nhầm nội dung giả, hoặc phủ nhận nhầm nội dung thật.",
+              "Công cụ phát hiện cũng có giới hạn: Kết quả từ detector nên được xem là một tín hiệu, không phải kết luận cuối cùng. Nếu công cụ nói 'có thể là deepfake', bạn cần kiểm chứng thêm. Nếu công cụ nói 'không phát hiện deepfake', bạn vẫn cần kiểm chứng thêm nếu nội dung có rủi ro cao.",
+              "Vấn đề không chỉ là thật hay giả: Trong thực tế, có nhiều trạng thái hơn: có bằng chứng tốt cho thấy nội dung là thật, có bằng chứng tốt cho thấy nội dung là giả, nội dung thật nhưng bị đặt sai bối cảnh, nội dung bị cắt ghép làm đổi nghĩa, nội dung có một phần thật một phần chưa rõ, chưa đủ dữ liệu để kết luận.",
+              "Một rủi ro ngược - Liar's dividend: Deepfake không chỉ làm người ta tin vào điều giả. Nó còn có thể làm người ta nghi ngờ điều thật. Khi công chúng biết rằng video và âm thanh có thể bị giả, một người có thể phủ nhận nội dung thật bằng cách nói 'Đó là deepfake'. Mục tiêu là kiểm chứng tốt hơn, không phải nghi ngờ tất cả."
             ], [
+              "Deepfake không chỉ dùng hình ảnh của bạn. Nó có thể dùng cả thói quen, quan hệ và thông tin bạn để lộ.",
               "Dữ liệu cá nhân của bạn là nguyên liệu của deepfake.",
               "Áp lực thời gian là đồng minh của kẻ lừa đảo.",
-              "Đừng chỉ tin vào mắt và tai mình trên không gian số."
+              "Trong thời đại deepfake, người an toàn không phải người đoán nhanh nhất. Người an toàn là người biết kiểm chứng trước khi hành động."
             ])
           ]
         },
@@ -223,8 +232,16 @@ export const basicsCourse = {
             ])
           ],
           checkpoint: checkpoint("1.1", [
-            q("Deepvoice là gì?", ["Giọng nói âm lượng lớn", "Giọng nói được giả lập/chỉnh sửa bằng AI để giống người thật", "Tin nhắn không am thanh", "Video không mặt"], 1),
-            q("Video thật từ quá khứ bị đăng lại với bối cảnh mới gọi là gì?", ["Deepfake", "Deepvoice", "Repurposed media", "Metadata"], 2)
+            q("Deepfake là gì?", ["Mọi nội dung sai trên Internet", "Nội dung hình ảnh, video hoặc âm thanh được tạo/chỉnh sửa để khiến người xem tin một người đã nói hoặc làm điều họ không thực sự nói/làm", "Chỉ là ảnh chỉnh màu", "Chỉ là tin nhắn lừa đảo không có hình ảnh"], 1, "Deepfake thường liên quan đến việc mạo danh hoặc làm sai lệch hành động/lời nói của một người."),
+            q("Điều nào sau đây là ví dụ về deepvoice?", ["Một ảnh phong cảnh do AI tạo", "Một đoạn giọng nói giả giống người thân yêu cầu chuyển tiền", "Một bài viết sai chính tả", "Một video thật được đăng lại từ năm trước"], 1, "Deepvoice liên quan đến giả lập hoặc chỉnh sửa giọng nói."),
+            q("Repurposed media là gì?", ["Nội dung thật nhưng bị đặt sai bối cảnh", "Nội dung luôn do AI tạo ra", "Nội dung không có âm thanh", "Nội dung được đăng bởi tài khoản chính thức"], 0, "Nội dung có thể thật, nhưng chú thích, thời gian, địa điểm hoặc ý nghĩa đi kèm có thể sai."),
+            q("Tất cả synthetic media đều là deepfake. Đúng hay sai?", ["Đúng", "Sai"], 1, "Synthetic media có thể dùng cho mục đích sáng tạo, giáo dục hoặc minh họa. Nó trở thành vấn đề khi bị dùng để mạo danh, đánh lừa hoặc gây hại."),
+            q("Một video bị cắt ngắn làm thay đổi ý nghĩa câu nói ban đầu. Đây phù hợp nhất là:", ["Edited media", "Deepvoice", "Mã độc", "Mật khẩu yếu"], 0, "Cắt ghép hoặc biên tập gây hiểu nhầm là một dạng edited media."),
+            q("Một hình ảnh người không tồn tại do AI tạo ra, được dùng làm ảnh đại diện cho tài khoản lừa đảo. Rủi ro chính là gì?", ["Ảnh quá đẹp", "Người xem có thể tin vào một danh tính giả", "Ảnh không có âm thanh", "Ảnh tải chậm"], 1, "Hình ảnh AI có thể được dùng để dựng hồ sơ hoặc danh tính giả."),
+            q("Vì sao không nên kết luận 'video thật' chỉ vì gương mặt và giọng nói giống?", ["Vì gương mặt và giọng nói có thể bị tạo hoặc chỉnh sửa bằng AI", "Vì video nào trên mạng cũng giả", "Vì chỉ ảnh mới có thể bị giả", "Vì âm thanh luôn đáng tin hơn hình ảnh"], 0, "Deepfake và deepvoice có thể mạo phỏng cả khuôn mặt lẫn giọng nói."),
+            q("Một video thật từ quốc gia khác được đăng với chú thích 'đang xảy ra tại thành phố của bạn'. Bạn nên nghi ngờ điều gì?", ["Sai bối cảnh", "Máy tính bị virus", "Mật khẩu bị lộ", "Điện thoại bị hỏng"], 0, "Đây là dấu hiệu của repurposed media."),
+            q("Điều nào đúng nhất?", ["Deepfake chỉ nguy hiểm nếu hoàn hảo 100%", "Deepfake có thể nguy hiểm ngay cả khi chỉ đủ giống trong vài giây và đi kèm áp lực khẩn cấp", "Deepfake chỉ xuất hiện trong phim", "Người bình thường không bao giờ là mục tiêu của deepfake"], 1, "Trong lừa đảo, kẻ xấu thường kết hợp mạo danh với cảm xúc và thời gian gấp."),
+            q("Câu hỏi nào hữu ích nhất khi xem một hình ảnh nghi do AI tạo?", ["Ảnh này có nhiều màu không?", "Ảnh này đang được dùng để khiến mình tin điều gì?", "Ảnh này có kích thước bao nhiêu?", "Ảnh này có được đăng buổi sáng không?"], 1, "Mục đích sử dụng và ngữ cảnh quyết định mức độ rủi ro của nội dung.")
           ])
         }
       ],

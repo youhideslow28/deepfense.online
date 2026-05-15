@@ -14,7 +14,7 @@ import { NEWS_DATA, FUN_FACTS, TRANSLATIONS } from '@/data';
 import {
   BookOpen, Trophy, Swords, AlertTriangle, Lightbulb,
   PhoneCall, ShieldCheck, ExternalLink,
-  GraduationCap,
+  GraduationCap, ScanLine,
 } from 'lucide-react';
 import AnalyticsChart from '@/features/dashboard/AnalyticsChart';
 import { db } from '@/config/firebase';
@@ -192,13 +192,18 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             {/* CTAs */}
             <div data-reveal className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
               <MagneticWrapper>
-                <GlowButton color="primary" size="lg" icon={<Swords size={16} />} onClick={() => navigate('/challenge')}>
+                <GlowButton color="primary" size="lg" icon={<ScanLine size={16} />} onClick={() => navigate('/tools/scan')}>
+                  {lang === 'vi' ? 'QUÉT NGAY' : 'SCAN NOW'}
+                </GlowButton>
+              </MagneticWrapper>
+              <MagneticWrapper>
+                <GlowButton color="secondary" size="lg" icon={<Swords size={16} />} onClick={() => navigate('/challenge')}>
                   {lang === 'vi' ? 'THỬ THÁCH NGAY' : 'TAKE CHALLENGE'}
                 </GlowButton>
               </MagneticWrapper>
               <MagneticWrapper>
                 <GlowButton color="ghost" size="lg" icon={<BookOpen size={16} />} onClick={() => navigate('/tools/knowledge')}>
-                  {lang === 'vi' ? 'Bắt đầu học' : 'Start Learning'}
+                  {lang === 'vi' ? 'Một chút kiến thức' : 'A Little Knowledge'}
                 </GlowButton>
               </MagneticWrapper>
             </div>
@@ -233,7 +238,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                     : 'A few focused lessons can help you pause, verify, and avoid falling victim to synthetic media.'}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <GlowButton color="primary" size="sm" icon={<GraduationCap size={14} />} onClick={() => navigate('/academy/basics')}>
+                  <GlowButton color="primary" size="sm" icon={<GraduationCap size={14} />} onClick={() => navigate('/academy')}>
                     {lang === 'vi' ? 'BẮT ĐẦU HỌC' : 'START COURSE'}
                   </GlowButton>
                   <GlowButton color="ghost" size="sm" icon={<Trophy size={14} />} onClick={() => navigate('/academy')}>
