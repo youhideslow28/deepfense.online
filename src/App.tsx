@@ -41,6 +41,7 @@ const AboutContact = lazy(() => import('@/pages/AboutContact'));
 const AiComingSoon = lazy(() => import('@/pages/AiComingSoon'));
 const Admin = lazy(() => import('@/pages/Admin'));
 const Policy = lazy(() => import('@/pages/Policy'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
 const CookieConsent = lazy(() => import('@/components/common/CookieConsent'));
 
 // Component tự động cuộn lên đầu trang khi chuyển Route
@@ -277,7 +278,8 @@ const AppContent: React.FC = () => {
       case '/academy/verify': return lang === 'vi' ? 'Xác minh chứng chỉ' : 'Verify Certificate';
       case '/challenge': return lang === 'vi' ? 'Thử thách Thám tử' : 'Detective Challenge';
       case '/ai-project': return lang === 'vi' ? 'Dự án AI Deepfense' : 'AI Project';
-      case '/contact': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
+      case '/contact':
+      case '/about': return lang === 'vi' ? 'Liên hệ & Báo cáo' : 'Contact & Report';
       case '/privacy':
       case '/terms':
       case '/policy': return lang === 'vi' ? 'Chính sách Deepfense' : 'Deepfense Policies';
@@ -288,7 +290,7 @@ const AppContent: React.FC = () => {
           if (location.pathname.includes('knowledge')) return lang === 'vi' ? 'Kiến thức & Pháp luật' : 'Law & Knowledge';
           return lang === 'vi' ? 'Hệ thống Quét Rủi ro' : 'Risk Scanner';
         }
-        return '';
+        return lang === 'vi' ? 'Trang không tồn tại' : 'Page Not Found';
     }
   };
 
@@ -333,11 +335,12 @@ const AppContent: React.FC = () => {
                   <Route path="/challenge" element={<Challenge lang={lang} />} />
                   <Route path="/ai-project" element={<AiComingSoon lang={lang} />} />
                   <Route path="/contact" element={<AboutContact lang={lang} />} />
+                  <Route path="/about" element={<AboutContact lang={lang} />} />
                   <Route path="/privacy" element={<Policy lang={lang} />} />
                   <Route path="/terms" element={<Policy lang={lang} />} />
                   <Route path="/policy" element={<Policy lang={lang} />} />
                   <Route path="/admin" element={renderAdminRoute()} />
-                  <Route path="*" element={<Home lang={lang} season={season} />} />
+                  <Route path="*" element={<NotFound lang={lang} />} />
                 </Routes>
             </Suspense>
           </ErrorBoundary>
