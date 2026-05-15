@@ -36,4 +36,14 @@
   ::-webkit-scrollbar-track { background: #03080F; }
   ::-webkit-scrollbar-thumb { background: #1E3A5F; border-radius: 4px; }
   ::-webkit-scrollbar-thumb:hover { background: #1D6FE8; }
+
+  /* Chrome/Safari Autofill override */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 40px #0c1829 inset !important;
+    -webkit-text-fill-color: #fff !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
 }

@@ -817,6 +817,92 @@ const Admin: React.FC = () => {
     showActionMessage('Đã cập nhật vai trò và ghi sự kiện bảo mật.');
   };
 
+  const resetAllUserProgress = async () => {
+    const isAdminEmail = (email?: string) => email?.toLowerCase() === 'deepfense@gmail.com';
+    const adminUid = auth.currentUser?.uid;
+
+    if (!window.confirm('CẢNH BÁO NGUY HIỂM: Thao tác này sẽ đặt lại TOÀN BỘ tiến độ học tập, điểm số và DPF coin của tất cả người dùng. Tài khoản Admin (deepfense@gmail.com) sẽ được giữ nguyên. Bạn có chắc chắn muốn tiếp tục?')) return;
+    
+    setLoading(true);
+    try {
+      // 1. Reset users collection (non-admins)
+      const userSnaps = await getDocs(collection(db, 'users'));
+      const resetStats = {
+        score: 0,
+        totalChallenges: 0,
+        correctAnswers: 0,
+        accuracy: 0,
+        flags: 0,
+        webBalance: 0,
+        earnedBalance: 0,
+        bonusBalance: 0,
+        spentBalance: 0,
+        updatedAt: serverTimestamp(),
+      };
+
+      const userPromises = userSnaps.docs.map(userDoc => {
+        const data = userDoc.data();
+        if (data.role === 'admin' || isAdminEmail(data.email)) return Promise.resolve();
+        return updateDoc(doc(db, 'users', userDoc.id), resetStats);
+      });
+
+      // 2. Reset academy_learners (non-admins)
+      const learnerSnaps = await getDocs(collection(db, 'academy_learners'));
+      const learnerPromises = learnerSnaps.docs.map(learnerDoc => {
+        const data = learnerDoc.data();
+        if (isAdminEmail(data.email) || data.uid === adminUid) return Promise.resolve();
+
+        return updateDoc(doc(db, 'academy_learners', learnerDoc.id), {
+          status: 'signed_in',
+          progressPercent: 0,
+          completedModules: [],
+          courseEvaluationSubmitted: false,
+          finalExam: null,
+          certificateUnlocked: false,
+          certificateId: '',
+          completedAt: null,
+          updatedAt: serverTimestamp(),
+        });
+      });
+
+      // 3. Delete progress/ledger collections (non-admins)
+      const clearCollection = async (name: string) => {
+        const snaps = await getDocs(collection(db, name));
+        return Promise.all(snaps.docs.map(d => {
+          const data = d.data();
+          const uid = data.userId || data.uid || data.actorId;
+          if (uid === adminUid || (data.email && isAdminEmail(data.email))) return Promise.resolve();
+          return deleteDoc(doc(db, name, d.id));
+        }));
+      };
+
+      await Promise.all([
+        ...userPromises,
+        ...learnerPromises,
+        clearCollection('challenge_submissions'),
+        clearCollection('game_results'),
+        clearCollection('dpf_ledger'),
+        clearCollection('dpf_daily_quotas'),
+        clearCollection('user_profiles'),
+      ]);
+
+      await writeActivityLog({
+        action: 'admin.global_reset',
+        targetType: 'system',
+        targetId: 'all_users',
+        severity: 'critical',
+        metadata: { resetBy: auth.currentUser?.email || 'admin' },
+      });
+
+      showActionMessage('Đã đặt lại toàn bộ tiến độ người dùng thành công (Trừ Admin).');
+    } catch (error) {
+      console.error('Reset failed:', error);
+      showActionMessage('Lỗi khi đặt lại tiến độ. Hãy kiểm tra Console.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const changeUserStatus = async (user: UserRecord, status: UserRecord['status']) => {
     await updateDoc(doc(db, 'users', user.uid || user.id), { status });
     await writeActivityLog({
@@ -1172,6 +1258,20 @@ const Admin: React.FC = () => {
           </select>
         </div>
       </form>
+
+      <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-5">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+          <div>
+            <h3 className="flex items-center gap-2 font-black text-red-300">
+              <ShieldAlert size={18} /> Danger Zone: Reset toàn bộ tiến độ
+            </h3>
+            <p className="mt-1 text-xs text-gray-500">Đặt lại điểm số, coin và tiến độ học về 0 cho tất cả người dùng (Trừ Admin).</p>
+          </div>
+          <button onClick={resetAllUserProgress} disabled={loading} className="inline-flex items-center gap-2 rounded-lg bg-red-600/20 px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-red-300 border border-red-500/30 hover:bg-red-600/30 transition-colors">
+            <RefreshCw size={14} className={loading ? 'animate-spin' : ''} /> Reset All Users
+          </button>
+        </div>
+      </div>
 
       <section className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
         <div className="mb-5 flex flex-col justify-between gap-3 lg:flex-row lg:items-center">

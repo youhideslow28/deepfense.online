@@ -1,6 +1,6 @@
 import React from 'react';
 import type { User } from 'firebase/auth';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Award, CheckCircle2, Clock3, GraduationCap, LockKeyhole, LogIn, PlayCircle, ShieldCheck } from 'lucide-react';
 import GlowButton from '@/components/ui/GlowButton';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
@@ -42,12 +42,13 @@ const roadmap = [
 const AcademyBasics: React.FC<AcademyBasicsProps> = ({ lang, user, authBusy, onGoogleAuth }) => {
   const isVi = lang === 'vi';
   const isSignedIn = !!user;
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const authRequired = searchParams.get('auth') === 'required';
   const pageRef = useScrollReveal({ selector: '[data-reveal]', preset: 'fade-up', stagger: 0.08 });
 
   const openCourseIndex = () => {
-    window.open(academyIndexUrl, '_blank', 'noopener,noreferrer');
+    navigate('/academy?course=basics');
   };
 
   return (

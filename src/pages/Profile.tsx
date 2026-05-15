@@ -207,11 +207,11 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <label className="block md:col-span-2">
                   <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Tên hiển thị' : 'Display name'}</span>
-                  <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-3 text-sm text-white outline-none" />
+                  <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all" />
                 </label>
                 <label className="block md:col-span-2">
                   <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">Email</span>
-                  <input value={user.email || ''} readOnly className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-3 text-sm text-gray-300 outline-none" />
+                  <input value={user.email || ''} readOnly className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-gray-400 outline-none" />
                 </label>
 
                 <button onClick={handleSaveProfile} disabled={busy} className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-400/20 bg-blue-400/10 px-4 py-3 text-xs font-black uppercase tracking-widest text-blue-200 hover:bg-blue-400/15 disabled:opacity-60">

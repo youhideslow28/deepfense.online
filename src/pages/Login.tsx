@@ -272,13 +272,13 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
                       {mode === 'register' && (
                         <label className="block">
                           <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Tên hiển thị' : 'Display name'}</span>
-                          <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} type="text" className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-3 text-sm text-white outline-none" placeholder={isVi ? 'Nguyễn Văn A' : 'Your name'} />
+                        <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} type="text" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all" placeholder={isVi ? 'Nguyễn Văn A' : 'Your name'} />
                         </label>
                       )}
                       <label className="block">
                         <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">Email</span>
-                        <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/30 px-3">
-                          <Mail size={14} className="text-gray-600" />
+                        <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 focus-within:border-blue-500/50 focus-within:bg-white/10 transition-all">
+                          <Mail size={14} className="text-gray-500" />
                           <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" className="w-full bg-transparent py-3 text-sm text-white outline-none" placeholder="you@example.com" />
                         </div>
                       </label>
@@ -289,7 +289,7 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
                       {mode === 'register' && (
                         <label className="block">
                           <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Xác nhận mật khẩu' : 'Confirm password'}</span>
-                          <input value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-3 text-sm text-white outline-none" placeholder="••••••••" />
+                          <input value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all" placeholder="••••••••" />
                         </label>
                       )}
                       {mode === 'login' && (
