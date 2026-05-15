@@ -88,8 +88,8 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
     try {
       await sendEmailVerification(auth.currentUser);
       setMessage(isVi
-        ? 'Đã gửi email xác minh. Hãy kiểm tra hộp thư và bấm liên kết xác nhận.'
-        : 'Verification email sent. Open your inbox and confirm the link.');
+        ? 'Đã gửi email xác minh. Hãy kiểm tra hộp thư VÀ THƯ RÁC (SPAM).'
+        : 'Verification email sent. Check your inbox AND SPAM folder.');
     } catch (error) {
       setMessage(authMessage(error, isVi ? 'Không thể gửi email xác minh.' : 'Unable to send verification email.'));
     } finally {
@@ -143,7 +143,9 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
 
     try {
       await sendPasswordResetEmail(auth, user.email);
-      setMessage(isVi ? 'Đã gửi email đặt lại mật khẩu.' : 'Password reset email sent.');
+      setMessage(isVi 
+        ? 'Đã gửi email đặt lại mật khẩu. Hãy kiểm tra hộp thư VÀ THƯ RÁC (SPAM).' 
+        : 'Password reset email sent. Check your inbox AND SPAM folder.');
     } catch (error) {
       setMessage(authMessage(error, isVi ? 'Không thể gửi email đặt lại mật khẩu.' : 'Unable to send password reset email.'));
     } finally {
@@ -165,9 +167,9 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
   }
 
   return (
-    <div className="mx-auto max-w-5xl animate-in fade-in duration-500">
-      <section className="relative overflow-hidden rounded-2xl border border-blue-400/20 bg-[#07111f]/90 p-5 shadow-[0_24px_90px_rgba(0,0,0,0.36)] backdrop-blur-xl md:p-8">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
+    <div className="mx-auto max-w-5xl animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <section className="glass-dark relative overflow-hidden rounded-3xl border border-white/10 p-5 shadow-[0_32px_120px_rgba(0,0,0,0.5)] md:p-10">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-4 py-1.5 text-[10px] font-mono uppercase tracking-widest text-blue-300">
@@ -201,7 +203,7 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
           </div>
 
           <div className="lg:col-span-7">
-            <div className="rounded-2xl border border-white/10 bg-black/30 p-5 md:p-6">
+            <div className="glass-dark rounded-2xl border border-white/10 p-5 md:p-8">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <label className="block md:col-span-2">
                   <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Tên hiển thị' : 'Display name'}</span>

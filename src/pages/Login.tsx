@@ -3,10 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import type { User } from 'firebase/auth';
 import {
   createUserWithEmailAndPassword,
-  GoogleAuthProvider,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-  signInWithPopup,
   signOut,
   updateProfile,
 } from 'firebase/auth';
@@ -119,32 +117,6 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
     registerLearner(user).catch(() => undefined);
   }, [user]);
 
-  const handleGooglePopup = async () => {
-    if (busy) return;
-    setBusy(true);
-    setMessage('');
-
-    try {
-      if (!isFirebaseConfigured) {
-        setMessage(isVi
-          ? `Firebase chưa được cấu hình: ${missingFirebaseEnvKeys.join(', ')}`
-          : `Firebase is not configured: ${missingFirebaseEnvKeys.join(', ')}`);
-        return;
-      }
-
-      const { googleProvider } = await import('@/config/firebase');
-      const result = await signInWithPopup(auth, googleProvider);
-      await registerLearner(result.user);
-      navigate('/academy', { replace: true });
-    } catch (error) {
-      console.error('Google popup error:', error);
-      setMessage(authMessage(error, isVi
-        ? 'Lỗi đăng nhập Google.'
-        : 'Google sign-in error.'));
-    } finally {
-      setBusy(false);
-    }
-  };
 
   const handleCreateAccount = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -218,8 +190,8 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
 
       await sendPasswordResetEmail(auth, email.trim().toLowerCase());
       setMessage(isVi
-        ? 'Đã gửi email đặt lại mật khẩu. Hãy kiểm tra hộp thư và thư rác.'
-        : 'Password reset email sent. Check your inbox and spam folder.');
+        ? 'Đã gửi email đặt lại mật khẩu. Hãy kiểm tra hộp thư VÀ THƯ RÁC (SPAM).'
+        : 'Password reset email sent. Check your inbox AND SPAM folder.');
     } catch (error) {
       setMessage(authMessage(error, isVi ? 'Không thể gửi email đặt lại mật khẩu.' : 'Unable to send password reset email.'));
     } finally {
@@ -234,9 +206,11 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
   };
 
   return (
-    <div className="mx-auto max-w-5xl animate-in fade-in duration-500">
-      <section className="relative overflow-hidden rounded-2xl border border-blue-500/25 bg-[#07111f]/92 p-6 shadow-[0_24px_90px_rgba(0,0,0,0.42)] backdrop-blur-xl md:p-10">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
+    <div className="mx-auto max-w-5xl animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <section className="glass-dark relative overflow-hidden rounded-3xl border border-white/10 p-6 shadow-[0_32px_120px_rgba(0,0,0,0.5)] md:p-10">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+        <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-blue-600/10 blur-[100px]" />
+        <div className="absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-purple-600/10 blur-[100px]" />
         <div className="relative z-10 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-6">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-4 py-1.5 text-[10px] font-mono uppercase tracking-widest text-blue-300">
@@ -253,7 +227,7 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
           </div>
 
           <div className="lg:col-span-6">
-            <div className="rounded-2xl border border-white/10 bg-black/30 p-5 md:p-6">
+            <div className="glass-dark rounded-2xl border border-white/10 p-5 md:p-8">
               {user ? (
                 <div className="space-y-5">
                   <div className="rounded-xl border border-emerald-400/20 bg-emerald-400/10 p-4">
@@ -288,11 +262,8 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
                     </button>
                   </div>
 
-                  <GlowButton color="primary" size="lg" icon={<LogIn size={16} />} onClick={handleGooglePopup}>
-                    {busy ? (isVi ? 'ĐANG MỞ GOOGLE...' : 'OPENING GOOGLE...') : (isVi ? 'ĐĂNG NHẬP GOOGLE' : 'SIGN IN WITH GOOGLE')}
-                  </GlowButton>
 
-                  <div className="border-t border-white/10 pt-5">
+                  <div className="pt-2">
                     <div className="mb-3 flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-widest text-gray-500">
                       {mode === 'login' ? <KeyRound size={13} /> : <UserPlus size={13} />}
                       {mode === 'login' ? (isVi ? 'Đăng nhập email' : 'Email sign in') : (isVi ? 'Tạo tài khoản mới' : 'Create a new account')}
@@ -312,8 +283,8 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
                         </div>
                       </label>
                       <label className="block">
-                        <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">Password</span>
-                        <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-3 text-sm text-white outline-none" placeholder="••••••••" />
+                        <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Mật khẩu' : 'Password'}</span>
+                        <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all" placeholder="••••••••" />
                       </label>
                       {mode === 'register' && (
                         <label className="block">
@@ -322,7 +293,7 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
                         </label>
                       )}
                       {mode === 'login' && (
-                        <button type="button" onClick={handleForgotPassword} disabled={busy} className="text-[10px] font-mono font-black uppercase tracking-widest text-blue-300 hover:text-blue-100 disabled:opacity-60">
+                        <button type="button" onClick={handleForgotPassword} disabled={busy} className="text-[10px] font-mono font-black uppercase tracking-widest text-blue-400 hover:text-blue-200 disabled:opacity-60 transition-colors">
                           {isVi ? 'Quên mật khẩu?' : 'Forgot password?'}
                         </button>
                       )}
