@@ -1,7 +1,7 @@
 /**
- * DEEPFENSE.ONLINE â€” Error Boundary Component
- * Báº¯t lá»—i React fatal errors vÃ  hiá»ƒn thá»‹ UI recovery thay vÃ¬ crash tráº¯ng mÃ n hÃ¬nh.
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — Error Boundary Component
+ * Bắt lỗi React fatal errors và hiển thị UI recovery thay vì crash trắng màn hình.
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import React from 'react';
@@ -23,17 +23,17 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 
   static getDerivedStateFromError(error: Error) {
-    // PhÃ¢n biá»‡t rÃµ giá»¯a lá»—i táº£i máº¡ng (Chunk) vÃ  lá»—i sáº­p code (Crash)
+    // Phân biệt rõ giữa lỗi tải mạng (Chunk) và lỗi sập code (Crash)
     const isChunkError = error.name === 'ChunkLoadError' || error.message.includes('dynamically imported module');
     return { hasError: true, errorMsg: error.message, isChunkError };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("ðŸ”¥ REACT FATAL ERROR CAUGHT:", error, errorInfo);
+    console.error("🔥 REACT FATAL ERROR CAUGHT:", error, errorInfo);
     
-    // Tá»± Ä‘á»™ng táº£i láº¡i trang náº¿u lá»—i lÃ  do Chunk Load Failed (thÆ°á»ng do cáº­p nháº­t phiÃªn báº£n má»›i)
+    // Tự động tải lại trang nếu lỗi là do Chunk Load Failed (thường do cập nhật phiên bản mới)
     if (this.state.isChunkError) {
-      // DÃ¹ng sessionStorage Ä‘á»ƒ trÃ¡nh láº·p vÃ´ táº­n náº¿u thá»±c sá»± file bá»‹ lá»—i 404 vÄ©nh viá»…n
+      // Dùng sessionStorage để tránh lặp vô tận nếu thực sự file bị lỗi 404 vĩnh viễn
       const reloadCount = parseInt(sessionStorage.getItem('chunk_reload_count') || '0', 10);
       if (reloadCount < 1) {
         sessionStorage.setItem('chunk_reload_count', '1');
@@ -47,18 +47,18 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
       return (
         <div className="flex flex-col items-center justify-center py-20 font-mono text-center px-4 animate-in fade-in">
           <div className="text-red-500 text-xl font-bold mb-4">
-            {this.state.isChunkError ? "âš ï¸ Lá»–I Äá»’NG Bá»˜ PHIÃŠN Báº¢N" : "âš ï¸ ÄÃƒ Xáº¢Y RA Lá»–I Há»† THá»NG (CRASH)"}
+            {this.state.isChunkError ? "⚠️ LỖI ĐỒNG BỘ PHIÊN BẢN" : "⚠️ ĐÃ XẢY RA LỖI HỆ THỐNG (CRASH)"}
           </div>
           <p className="text-gray-400 text-sm mb-8 max-w-md">
             {this.state.isChunkError 
-              ? "Há»‡ thá»‘ng vá»«a nháº­n Ä‘Æ°á»£c má»™t báº£n cáº­p nháº­t má»›i hoáº·c káº¿t ná»‘i máº¡ng cá»§a báº¡n bá»‹ giÃ¡n Ä‘oáº¡n. Vui lÃ²ng táº£i láº¡i trang Ä‘á»ƒ tiáº¿p tá»¥c." 
-              : `Chi tiáº¿t lá»—i: ${this.state.errorMsg}`}
+              ? "Hệ thống vừa nhận được một bản cập nhật mới hoặc kết nối mạng của bạn bị gián đoạn. Vui lòng tải lại trang để tiếp tục." 
+              : `Chi tiết lỗi: ${this.state.errorMsg}`}
           </p>
           <button 
             onClick={() => { sessionStorage.removeItem('chunk_reload_count'); window.location.reload(); }}
             className="bg-primary text-black px-8 py-3 rounded-xl font-bold uppercase tracking-widest hover:bg-white transition-colors"
           >
-            Táº¢I Láº I TRANG
+            TẢI LẠI TRANG
           </button>
         </div>
       );

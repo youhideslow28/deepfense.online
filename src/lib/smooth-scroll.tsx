@@ -1,8 +1,8 @@
 /**
- * DEEPFENSE.ONLINE â€” Lenis Smooth Scroll Provider
- * Táº¡o tráº£i nghiá»‡m cuá»™n mÆ°á»£t mÃ  kiá»ƒu Apple.com
- * TÃ­ch há»£p vá»›i GSAP ScrollTrigger Ä‘á»ƒ Ä‘á»“ng bá»™ animations.
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — Lenis Smooth Scroll Provider
+ * Tạo trải nghiệm cuộn mượt mà kiểu Apple.com
+ * Tích hợp với GSAP ScrollTrigger để đồng bộ animations.
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import { useEffect } from 'react';
@@ -14,19 +14,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
-    // Respect accessibility: khÃ´ng smooth scroll náº¿u user muá»‘n giáº£m motion
+    // Respect accessibility: không smooth scroll nếu user muốn giảm motion
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) return;
 
     const lenis = new Lenis({
-      lerp: 0.1,          // Tá»‘c Ä‘á»™ smoothing (0.05 = ráº¥t mÆ°á»£t, 0.2 = responsive hÆ¡n)
-      duration: 1.4,       // Thá»i gian easing
+      lerp: 0.1,          // Tốc độ smoothing (0.05 = rất mượt, 0.2 = responsive hơn)
+      duration: 1.4,       // Thời gian easing
       smoothWheel: true,
-      syncTouch: false,    // Táº¯t trÃªn mobile touch Ä‘á»ƒ giá»¯ native feel
+      syncTouch: false,    // Tắt trên mobile touch để giữ native feel
       prevent: (node: Element) => node.closest('[data-lenis-prevent]') !== null,
     } as any);
 
-    // Äá»“ng bá»™ Lenis â†” GSAP ScrollTrigger
+    // Đồng bộ Lenis ↔ GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
     gsap.ticker.add((time) => {

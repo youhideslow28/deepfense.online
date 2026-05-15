@@ -2,9 +2,9 @@
 /**
  * DEEPFENSE.AI - Deepfake Prevention Platform
  * 
- * @copyright 2025 Há»“ XuÃ¢n Nguyá»…n & VKU Team
+ * @copyright 2025 Ho Xuan Nguyen
  * @license Individual Academic Use
- * @author Há»“ XuÃ¢n Nguyá»…n (25NS039) & VKU Team
+ * @author Ho Xuan Nguyen (25NS039)
  * 
  * This source code is the sole intellectual property of the author.
  * Unauthorized reproduction is strictly prohibited.

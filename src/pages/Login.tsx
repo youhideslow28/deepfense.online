@@ -36,21 +36,21 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
     
     if (code === 'auth/popup-blocked') {
       return isVi 
-        ? 'TrÃ¬nh duyá»‡t Ä‘Ã£ cháº·n cá»­a sá»• báº­t lÃªn. Vui lÃ²ng cho phÃ©p popup cho trang web nÃ y.' 
+        ? 'Trình duyệt đã chặn cửa sổ bật lên. Vui lòng cho phép popup cho trang web này.' 
         : 'Browser blocked the popup. Please allow popups for this site.';
     }
     if (code === 'auth/unauthorized-domain') {
       return isVi 
-        ? 'TÃªn miá»n (Domain) nÃ y chÆ°a Ä‘Æ°á»£c cáº¥p quyá»n trong Firebase Console (Authorized Domains). HÃ£y thÃªm 127.0.0.1 hoáº·c localhost vÃ o danh sÃ¡ch.' 
+        ? 'Tên miền (Domain) này chưa được cấp quyền trong Firebase Console (Authorized Domains). Hãy thêm 127.0.0.1 hoặc localhost vào danh sách.' 
         : 'This domain is not authorized in Firebase Console. Please add 127.0.0.1 or localhost to Authorized Domains.';
     }
     if (code === 'auth/popup-closed-by-user') {
       return isVi 
-        ? 'Cá»­a sá»• Ä‘Äƒng nháº­p Ä‘Ã£ bá»‹ Ä‘Ã³ng trÆ°á»›c khi hoÃ n táº¥t.' 
+        ? 'Cửa sổ đăng nhập đã bị đóng trước khi hoàn tất.' 
         : 'The login popup was closed before completion.';
     }
     
-    return code ? `${fallback} [MÃ£ lá»—i: ${code}]` : fallback;
+    return code ? `${fallback} [Mã lỗi: ${code}]` : fallback;
   };
 
   const registerLearner = async (currentUser: User) => {
@@ -126,28 +126,28 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
     try {
       if (!isFirebaseConfigured) {
         setMessage(isVi
-          ? `Firebase chÆ°a Ä‘Æ°á»£c cáº¥u hÃ¬nh: ${missingFirebaseEnvKeys.join(', ')}`
+          ? `Firebase chưa được cấu hình: ${missingFirebaseEnvKeys.join(', ')}`
           : `Firebase is not configured: ${missingFirebaseEnvKeys.join(', ')}`);
         return;
       }
 
       if (!displayName.trim()) {
-        setMessage(isVi ? 'Vui lÃ²ng nháº­p tÃªn hiá»ƒn thá»‹.' : 'Please enter a display name.');
+        setMessage(isVi ? 'Vui lòng nhập tên hiển thị.' : 'Please enter a display name.');
         return;
       }
 
       if (!email.trim()) {
-        setMessage(isVi ? 'Vui lÃ²ng nháº­p email.' : 'Please enter an email.');
+        setMessage(isVi ? 'Vui lòng nhập email.' : 'Please enter an email.');
         return;
       }
 
       if (password.length < 8) {
-        setMessage(isVi ? 'Máº­t kháº©u cáº§n Ã­t nháº¥t 8 kÃ½ tá»±.' : 'Password must be at least 8 characters.');
+        setMessage(isVi ? 'Mật khẩu cần ít nhất 8 ký tự.' : 'Password must be at least 8 characters.');
         return;
       }
 
       if (password !== confirmPassword) {
-        setMessage(isVi ? 'Máº­t kháº©u xÃ¡c nháº­n chÆ°a khá»›p.' : 'Password confirmation does not match.');
+        setMessage(isVi ? 'Mật khẩu xác nhận chưa khớp.' : 'Password confirmation does not match.');
         return;
       }
 
@@ -156,7 +156,7 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
       await registerLearner(result.user);
       navigate('/profile', { replace: true });
     } catch (error) {
-      setMessage(authMessage(error, isVi ? 'KhÃ´ng thá»ƒ táº¡o tÃ i khoáº£n.' : 'Unable to create account.'));
+      setMessage(authMessage(error, isVi ? 'Không thể tạo tài khoản.' : 'Unable to create account.'));
     } finally {
       setBusy(false);
     }
@@ -172,7 +172,7 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
       await registerLearner(result.user);
       navigate('/profile', { replace: true });
     } catch (error) {
-      setMessage(authMessage(error, isVi ? 'KhÃ´ng thá»ƒ Ä‘Äƒng nháº­p báº±ng email/password.' : 'Unable to sign in with email/password.'));
+      setMessage(authMessage(error, isVi ? 'Không thể đăng nhập bằng email/password.' : 'Unable to sign in with email/password.'));
     } finally {
       setBusy(false);
     }
@@ -184,16 +184,16 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
 
     try {
       if (!email.trim()) {
-        setMessage(isVi ? 'Nháº­p email trÆ°á»›c, rá»“i báº¥m quÃªn máº­t kháº©u.' : 'Enter your email first, then request a reset link.');
+        setMessage(isVi ? 'Nhập email trước, rồi bấm quên mật khẩu.' : 'Enter your email first, then request a reset link.');
         return;
       }
 
       await sendPasswordResetEmail(auth, email.trim().toLowerCase());
       setMessage(isVi
-        ? 'ÄÃ£ gá»­i email Ä‘áº·t láº¡i máº­t kháº©u. HÃ£y kiá»ƒm tra há»™p thÆ° VÃ€ THÆ¯ RÃC (SPAM).'
+        ? 'Đã gửi email đặt lại mật khẩu. Hãy kiểm tra hộp thư VÀ THƯ RÁC (SPAM).'
         : 'Password reset email sent. Check your inbox AND SPAM folder.');
     } catch (error) {
-      setMessage(authMessage(error, isVi ? 'KhÃ´ng thá»ƒ gá»­i email Ä‘áº·t láº¡i máº­t kháº©u.' : 'Unable to send password reset email.'));
+      setMessage(authMessage(error, isVi ? 'Không thể gửi email đặt lại mật khẩu.' : 'Unable to send password reset email.'));
     } finally {
       setBusy(false);
     }
@@ -217,11 +217,11 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
               <ShieldCheck size={13} /> DEEPFENSE AUTH
             </div>
             <h1 className="text-3xl font-black uppercase leading-tight text-white md:text-5xl" style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}>
-              {isVi ? 'ÄÄƒng nháº­p Ä‘á»ƒ lÆ°u tiáº¿n Ä‘á»™ há»c.' : 'Sign in to save your learning progress.'}
+              {isVi ? 'Đăng nhập để lưu tiến độ học.' : 'Sign in to save your learning progress.'}
             </h1>
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-gray-400 md:text-base">
               {isVi
-                ? 'NgÆ°á»i há»c cÃ³ thá»ƒ Ä‘Äƒng nháº­p hoáº·c tá»± táº¡o tÃ i khoáº£n báº±ng email vÃ  máº­t kháº©u Ä‘á»ƒ lÆ°u quiz, chá»©ng nháº­n vÃ  DPF coin. TÃ i khoáº£n admin Ä‘Æ°á»£c phÃ¢n quyá»n riÃªng trong há»‡ thá»‘ng.'
+                ? 'Người học có thể đăng nhập hoặc tự tạo tài khoản bằng email và mật khẩu để lưu quiz, chứng nhận và DPF coin. Tài khoản admin được phân quyền riêng trong hệ thống.'
                 : 'Learners can sign in or create an email/password account for quizzes, certificates, and DPF coin. Admin accounts are handled through a separate role.'}
             </p>
           </div>
@@ -236,10 +236,10 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
                   </div>
                   <div className="flex flex-col gap-3 sm:flex-row">
                     <GlowButton color="primary" size="md" icon={<ShieldCheck size={16} />} onClick={() => navigate('/profile')}>
-                      {isVi ? 'Má»ž Há»’ SÆ ' : 'OPEN PROFILE'}
+                      {isVi ? 'MỞ HỒ SƠ' : 'OPEN PROFILE'}
                     </GlowButton>
                     <button onClick={handleSignOut} disabled={busy} className="rounded-lg border border-white/10 px-4 py-3 text-xs font-black uppercase tracking-widest text-gray-300 hover:border-red-400/30 hover:text-red-200">
-                      {isVi ? 'ÄÄƒng xuáº¥t' : 'Sign out'}
+                      {isVi ? 'Đăng xuất' : 'Sign out'}
                     </button>
                   </div>
                 </div>
@@ -251,14 +251,14 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
                       onClick={() => { setMode('login'); setMessage(''); }}
                       className={`rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-widest transition-colors ${mode === 'login' ? 'bg-blue-500 text-black' : 'text-gray-500 hover:text-white'}`}
                     >
-                      {isVi ? 'ÄÄƒng nháº­p' : 'Sign in'}
+                      {isVi ? 'Đăng nhập' : 'Sign in'}
                     </button>
                     <button
                       type="button"
                       onClick={() => { setMode('register'); setMessage(''); }}
                       className={`rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-widest transition-colors ${mode === 'register' ? 'bg-emerald-400 text-black' : 'text-gray-500 hover:text-white'}`}
                     >
-                      {isVi ? 'Táº¡o tÃ i khoáº£n' : 'Create account'}
+                      {isVi ? 'Tạo tài khoản' : 'Create account'}
                     </button>
                   </div>
 
@@ -266,13 +266,13 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
                   <div className="pt-2">
                     <div className="mb-3 flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-widest text-gray-500">
                       {mode === 'login' ? <KeyRound size={13} /> : <UserPlus size={13} />}
-                      {mode === 'login' ? (isVi ? 'ÄÄƒng nháº­p email' : 'Email sign in') : (isVi ? 'Táº¡o tÃ i khoáº£n má»›i' : 'Create a new account')}
+                      {mode === 'login' ? (isVi ? 'Đăng nhập email' : 'Email sign in') : (isVi ? 'Tạo tài khoản mới' : 'Create a new account')}
                     </div>
                     <form onSubmit={mode === 'login' ? handleEmailPassword : handleCreateAccount} className="space-y-3">
                       {mode === 'register' && (
                         <label className="block">
-                          <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'TÃªn hiá»ƒn thá»‹' : 'Display name'}</span>
-                        <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} type="text" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all" placeholder={isVi ? 'Nguyá»…n VÄƒn A' : 'Your name'} />
+                          <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Tên hiển thị' : 'Display name'}</span>
+                        <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} type="text" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all" placeholder={isVi ? 'Nguyễn Văn A' : 'Your name'} />
                         </label>
                       )}
                       <label className="block">
@@ -283,26 +283,26 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
                         </div>
                       </label>
                       <label className="block">
-                        <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Máº­t kháº©u' : 'Password'}</span>
-                        <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" />
+                        <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Mật khẩu' : 'Password'}</span>
+                        <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all" placeholder="••••••••" />
                       </label>
                       {mode === 'register' && (
                         <label className="block">
-                          <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'XÃ¡c nháº­n máº­t kháº©u' : 'Confirm password'}</span>
-                          <input value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" />
+                          <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Xác nhận mật khẩu' : 'Confirm password'}</span>
+                          <input value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all" placeholder="••••••••" />
                         </label>
                       )}
                       {mode === 'login' && (
                         <button type="button" onClick={handleForgotPassword} disabled={busy} className="text-[10px] font-mono font-black uppercase tracking-widest text-blue-400 hover:text-blue-200 disabled:opacity-60 transition-colors">
-                          {isVi ? 'QuÃªn máº­t kháº©u?' : 'Forgot password?'}
+                          {isVi ? 'Quên mật khẩu?' : 'Forgot password?'}
                         </button>
                       )}
                       <button disabled={busy} className={`w-full rounded-lg border px-4 py-3 text-xs font-black uppercase tracking-widest disabled:opacity-60 ${mode === 'login' ? 'border-amber-400/20 bg-amber-400/10 text-amber-200 hover:bg-amber-400/15' : 'border-emerald-400/20 bg-emerald-400/10 text-emerald-200 hover:bg-emerald-400/15'}`}>
                         {busy
-                          ? (isVi ? 'Äang xá»­ lÃ½...' : 'Processing...')
+                          ? (isVi ? 'Đang xử lý...' : 'Processing...')
                           : mode === 'login'
-                            ? (isVi ? 'ÄÄƒng nháº­p' : 'Sign in')
-                            : (isVi ? 'Táº¡o tÃ i khoáº£n' : 'Create account')}
+                            ? (isVi ? 'Đăng nhập' : 'Sign in')
+                            : (isVi ? 'Tạo tài khoản' : 'Create account')}
                       </button>
                     </form>
                   </div>

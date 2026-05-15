@@ -1,15 +1,15 @@
 /**
- * DEEPFENSE.ONLINE â€” App-wide Constants
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — App-wide Constants
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
-/** TÃªn miá»n chÃ­nh thá»©c */
+/** Tên miền chính thức */
 export const APP_DOMAIN = 'deepfense.online';
 
-/** PhiÃªn báº£n app hiá»‡n táº¡i */
+/** Phiên bản app hiện tại */
 export const APP_VERSION = '1.1.0';
 
-/** CÃ¡c route paths */
+/** Các route paths */
 export const ROUTES = {
   HOME: '/',
   TOOLS: '/tools',

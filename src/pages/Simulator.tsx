@@ -51,7 +51,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
     setSessionId(`${Date.now()}-${Math.random().toString(36).slice(2, 8)}`);
     setRewardResult(null);
     setMessages([
-      { id: Date.now(), sender: 'ai', text: lang === 'vi' ? 'ChÃ o em, anh lÃ  HoÃ ng (GiÃ¡m Ä‘á»‘c). Váº«n giá»¯ quá»¹ cty Ä‘Ãºng ko? Anh Ä‘ang há»p káº¹t tiá»n thanh toÃ¡n Ä‘á»‘i tÃ¡c. Chuyá»ƒn gáº¥p 50 triá»‡u vÃ o STK: 123456789 - TRAN VAN HOANG - Vietcombank. Nhanh lÃªn nhÃ©.' : 'Hi, it\'s Hoang (CEO). Need 50M VND urgently to pay a partner invoice, I am in a meeting. Transfer to: 123456789 - TRAN VAN HOANG - Vietcombank right now.' }
+      { id: Date.now(), sender: 'ai', text: lang === 'vi' ? 'Chào em, anh là Hoàng (Giám đốc). Vẫn giữ quỹ cty đúng ko? Anh đang họp kẹt tiền thanh toán đối tác. Chuyển gấp 50 triệu vào STK: 123456789 - TRAN VAN HOANG - Vietcombank. Nhanh lên nhé.' : 'Hi, it\'s Hoang (CEO). Need 50M VND urgently to pay a partner invoice, I am in a meeting. Transfer to: 123456789 - TRAN VAN HOANG - Vietcombank right now.' }
     ]);
   };
 
@@ -84,10 +84,10 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
             const data = await response.json();
             setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'ai', text: data.text }]);
         } else {
-            setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'ai', text: lang === 'vi' ? "Lá»—i káº¿t ná»‘i. Thá»­ láº¡i sau." : "Connection error." }]);
+            setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'ai', text: lang === 'vi' ? "Lỗi kết nối. Thử lại sau." : "Connection error." }]);
         }
     } catch (e) {
-        setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'ai', text: lang === 'vi' ? "Lá»—i káº¿t ná»‘i API." : "API Connection error." }]);
+        setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'ai', text: lang === 'vi' ? "Lỗi kết nối API." : "API Connection error." }]);
     } finally {
         setIsTyping(false);
     }
@@ -132,7 +132,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* PANEL TRÃI: THá»NG KÃŠ & Káº¾T QUáº¢ */}
+        {/* PANEL TRÁI: THỐNG KÊ & KẾT QUẢ */}
         <div className="lg:col-span-1 space-y-6">
            <div className="bg-black/40 border border-white/10 rounded-2xl p-6 backdrop-blur-xl flex flex-col items-center">
              <Timer size={48} className={status === 'playing' ? 'text-yellow-500 animate-pulse' : 'text-gray-500'} />
@@ -144,8 +144,8 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
 
            {status === 'idle' && (
              <div className="bg-purple-900/20 border border-purple-500/30 rounded-2xl p-6 text-center">
-               <h3 className="font-bold text-white mb-2">{lang === 'vi' ? 'Sáºµn sÃ ng thá»­ thÃ¡ch?' : 'Ready for the challenge?'}</h3>
-               <p className="text-sm text-gray-300 mb-6">{lang === 'vi' ? 'Báº¡n sáº½ nháº­n Ä‘Æ°á»£c tin nháº¯n tá»« "Sáº¿p". HÃ£y tá»‰nh tÃ¡o quyáº¿t Ä‘á»‹nh bÆ°á»›c tiáº¿p theo.' : 'You will receive a message from the "CEO". Stay sharp and decide your next move.'}</p>
+               <h3 className="font-bold text-white mb-2">{lang === 'vi' ? 'Sẵn sàng thử thách?' : 'Ready for the challenge?'}</h3>
+               <p className="text-sm text-gray-300 mb-6">{lang === 'vi' ? 'Bạn sẽ nhận được tin nhắn từ "Sếp". Hãy tỉnh táo quyết định bước tiếp theo.' : 'You will receive a message from the "CEO". Stay sharp and decide your next move.'}</p>
                <button 
                  onClick={startSimulation}
                  className="w-full bg-purple-600 hover:bg-purple-500 text-white p-4 rounded-xl font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
@@ -161,10 +161,10 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                <XCircle size={48} className="text-red-500 mx-auto mb-4" />
                <h3 className="text-2xl font-bold text-white mb-2">{t.trap_msg}</h3>
                <p className="text-gray-300 mb-4">
-                  {lang === 'vi' ? 'Báº¡n máº¥t' : 'It took you'} <strong className="text-red-400">{timer} {lang === 'vi' ? 'giÃ¢y' : 'seconds'}</strong> {lang === 'vi' ? 'Ä‘á»ƒ quy hÃ ng trÆ°á»›c ká»‹ch báº£n tÃ¢m lÃ½.' : 'to fall for the script.'}
+                  {lang === 'vi' ? 'Bạn mất' : 'It took you'} <strong className="text-red-400">{timer} {lang === 'vi' ? 'giây' : 'seconds'}</strong> {lang === 'vi' ? 'để quy hàng trước kịch bản tâm lý.' : 'to fall for the script.'}
                </p>
                <div className="bg-black/50 p-4 rounded-xl text-left border border-white/10 text-sm text-gray-400">
-                  âš ï¸ <strong>{lang === 'vi' ? 'BÃ i há»c:' : 'Lesson:'}</strong> {t.trap_lesson}
+                  ⚠️ <strong>{lang === 'vi' ? 'Bài học:' : 'Lesson:'}</strong> {t.trap_lesson}
                </div>
                <button onClick={startSimulation} className="mt-4 text-purple-400 hover:text-white underline underline-offset-4 text-sm font-bold uppercase">{t.retest}</button>
              </div>
@@ -175,10 +175,10 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                <ShieldCheck size={48} className="text-green-500 mx-auto mb-4" />
                <h3 className="text-2xl font-bold text-white mb-2">{t.verify_msg}</h3>
                <p className="text-gray-300 mb-4">
-                  {lang === 'vi' ? 'Báº¡n chá»‰ máº¥t' : 'It only took you'} <strong className="text-green-400">{timer} {lang === 'vi' ? 'giÃ¢y' : 'seconds'}</strong> {lang === 'vi' ? 'Ä‘á»ƒ nháº­n diá»‡n ra Ä‘Ã¢y lÃ  má»™t ká»‹ch báº£n lá»«a Ä‘áº£o qua máº¡ng.' : 'to recognize this scam script.'}
+                  {lang === 'vi' ? 'Bạn chỉ mất' : 'It only took you'} <strong className="text-green-400">{timer} {lang === 'vi' ? 'giây' : 'seconds'}</strong> {lang === 'vi' ? 'để nhận diện ra đây là một kịch bản lừa đảo qua mạng.' : 'to recognize this scam script.'}
                </p>
                <div className="bg-black/50 p-4 rounded-xl text-left border border-white/10 text-sm text-gray-400">
-                  âœ… <strong>{lang === 'vi' ? 'LÃ½ do Ä‘Ãºng:' : 'Reason:'}</strong> {t.verify_reason}
+                  ✅ <strong>{lang === 'vi' ? 'Lý do đúng:' : 'Reason:'}</strong> {t.verify_reason}
                </div>
                <DpfRewardNotice
                  result={rewardResult}
@@ -189,14 +189,14 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
            )}
         </div>
 
-        {/* PANEL PHáº¢I: KHUNG CHAT MÃ” PHá»ŽNG */}
+        {/* PANEL PHẢI: KHUNG CHAT MÔ PHỎNG */}
         <div className="lg:col-span-2 flex flex-col bg-black/40 border border-white/10 rounded-2xl backdrop-blur-xl h-[600px] overflow-hidden">
           
           <div className="bg-black/80 p-4 border-b border-white/10 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center font-bold text-white">TVH</div>
               <div>
-                <h3 className="font-bold text-white">{lang === 'vi' ? 'Tráº§n VÄƒn HoÃ ng (CEO)' : 'Hoang Tran (CEO)'}</h3>
+                <h3 className="font-bold text-white">{lang === 'vi' ? 'Trần Văn Hoàng (CEO)' : 'Hoang Tran (CEO)'}</h3>
                 <p className="text-xs text-green-400">Online</p>
               </div>
             </div>
@@ -220,7 +220,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
              ))}
              {isTyping && (
                 <div className="flex justify-start">
-                   <div className="bg-gray-800 text-gray-400 text-xs p-2 rounded-2xl">{lang === 'vi' ? '...Ä‘ang gÃµ' : '...typing'}</div>
+                   <div className="bg-gray-800 text-gray-400 text-xs p-2 rounded-2xl">{lang === 'vi' ? '...đang gõ' : '...typing'}</div>
                 </div>
              )}
              <div ref={chatEndRef}></div>
@@ -239,7 +239,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                       placeholder={t.chat_placeholder} 
                       className="flex-grow bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 transition-colors"
                     />
-                    <button onClick={handleSend} disabled={isTyping} className="absolute right-4 text-purple-500 hover:text-purple-400 uppercase text-xs font-bold">{lang === 'vi' ? 'Gá»¬I' : 'SEND'}</button>
+                    <button onClick={handleSend} disabled={isTyping} className="absolute right-4 text-purple-500 hover:text-purple-400 uppercase text-xs font-bold">{lang === 'vi' ? 'GỬI' : 'SEND'}</button>
                   </div>
                   
                   <div className="flex gap-2 justify-end">

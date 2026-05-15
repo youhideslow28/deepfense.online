@@ -1,8 +1,8 @@
 /**
- * DEEPFENSE.ONLINE â€” ThreatPulse
- * Hiá»‡u á»©ng radar sweep + threat markers Ä‘á» nháº¥p nhÃ¡y cho Hero section.
- * Pure CSS â€” khÃ´ng cáº§n Three.js, zero bundle impact.
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — ThreatPulse
+ * Hiệu ứng radar sweep + threat markers đỏ nhấp nháy cho Hero section.
+ * Pure CSS — không cần Three.js, zero bundle impact.
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import React, { useEffect, useRef } from 'react';
@@ -14,7 +14,7 @@ interface ThreatMarker {
   delay: number;
 }
 
-// Threat markers á»Ÿ vá»‹ trÃ­ cá»‘ Ä‘á»‹nh â€” hiá»‡u á»©ng "má»‘i Ä‘e dá»a Ä‘Æ°á»£c phÃ¡t hiá»‡n"
+// Threat markers ở vị trí cố định — hiệu ứng "mối đe dọa được phát hiện"
 const MARKERS: ThreatMarker[] = [
   { id: 1, x: 18, y: 28, delay: 0 },
   { id: 2, x: 72, y: 15, delay: 0.8 },
@@ -26,7 +26,7 @@ const MARKERS: ThreatMarker[] = [
 const ThreatPulse: React.FC<{ className?: string }> = ({ className = '' }) => {
   return (
     <div className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}>
-      {/* Radar sweep â€” conic gradient quay liÃªn tá»¥c */}
+      {/* Radar sweep — conic gradient quay liên tục */}
       <div
         className="absolute inset-0 opacity-[0.04]"
         style={{
@@ -66,7 +66,7 @@ const ThreatPulse: React.FC<{ className?: string }> = ({ className = '' }) => {
         </div>
       ))}
 
-      {/* Corner brackets â€” cyber HUD feel */}
+      {/* Corner brackets — cyber HUD feel */}
       <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-[#1D6FE8]/20 rounded-tl-lg" />
       <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-[#1D6FE8]/20 rounded-tr-lg" />
       <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-[#1D6FE8]/20 rounded-bl-lg" />

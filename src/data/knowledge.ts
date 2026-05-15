@@ -1,6 +1,6 @@
 /**
- * DEEPFENSE.ONLINE â€” Knowledge Base Data
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — Knowledge Base Data
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import { Language } from '@/types';
@@ -13,67 +13,67 @@ export interface KnowledgeCategory {
 export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
   vi: [
     {
-      category: "AI & DEEPFAKE CÄ‚N Báº¢N",
+      category: "AI & DEEPFAKE CĂN BẢN",
       items: [
-        { title: "Deepfake lÃ  gÃ¬?", content: "Sá»± káº¿t há»£p giá»¯a 'Deep learning' vÃ  'Fake'. AI sá»­ dá»¥ng dá»¯ liá»‡u hÃ¬nh áº£nh/giá»ng nÃ³i Ä‘á»ƒ táº¡o ra cÃ¡c ná»™i dung giáº£ máº¡o nhÆ°ng cá»±c ká»³ chÃ¢n thá»±c." },
-        { title: "CÆ¡ cháº¿ GANs", content: "Sá»­ dá»¥ng hai máº¡ng AI Ä‘áº¥u vá»›i nhau: má»™t máº¡ng táº¡o giáº£ vÃ  má»™t máº¡ng kiá»ƒm Ä‘á»‹nh, giÃºp táº¡o ra sáº£n pháº©m hoÃ n háº£o nháº¥t." },
-        { title: "Diffusion Models", content: "CÃ´ng nghá»‡ táº¡o áº£nh/video tá»« vÄƒn báº£n (Text-to-Video), ná»n táº£ng cho cÃ¡c cÃ´ng cá»¥ nhÆ° Sora vÃ  Midjourney hiá»‡n nay." }
+        { title: "Deepfake là gì?", content: "Sự kết hợp giữa 'Deep learning' và 'Fake'. AI sử dụng dữ liệu hình ảnh/giọng nói để tạo ra các nội dung giả mạo nhưng cực kỳ chân thực." },
+        { title: "Cơ chế GANs", content: "Sử dụng hai mạng AI đấu với nhau: một mạng tạo giả và một mạng kiểm định, giúp tạo ra sản phẩm hoàn hảo nhất." },
+        { title: "Diffusion Models", content: "Công nghệ tạo ảnh/video từ văn bản (Text-to-Video), nền tảng cho các công cụ như Sora và Midjourney hiện nay." }
       ]
     },
     {
-      category: "Cáº¨M NANG PHÃ’NG CHá»NG",
+      category: "CẨM NANG PHÒNG CHỐNG",
       items: [
-        { title: "Thiáº¿t láº­p Máº­t mÃ£ Gia Ä‘Ã¬nh", content: "Thá»a thuáº­n má»™t tá»« khÃ³a bÃ­ máº­t chá»‰ ngÆ°á»i thÃ¢n biáº¿t Ä‘á»ƒ xÃ¡c thá»±c danh tÃ­nh khi nháº­n cuá»™c gá»i yÃªu cáº§u chuyá»ƒn tiá»n gáº¥p." },
-        { title: "Quy táº¯c 10 giÃ¢y", content: "Khi nháº­n cuá»™c gá»i video nghi váº¥n, hÃ£y yÃªu cáº§u Ä‘á»‘i phÆ°Æ¡ng váº«y tay trÆ°á»›c máº·t hoáº·c quay Ä‘áº§u sang trÃ¡i/pháº£i Ä‘á»ƒ kiá»ƒm tra lá»—i pixel." },
-        { title: "XÃ¡c thá»±c Äa kÃªnh", content: "Khi nháº­n tin nháº¯n mÆ°á»£n tiá»n, hÃ£y gá»i trá»±c tiáº¿p qua sá»‘ SIM truyá»n thá»‘ng hoáº·c liÃªn láº¡c qua má»™t kÃªnh thá»© ba Ä‘á»ƒ kiá»ƒm tra giá»ng nÃ³i tháº­t." }
+        { title: "Thiết lập Mật mã Gia đình", content: "Thỏa thuận một từ khóa bí mật chỉ người thân biết để xác thực danh tính khi nhận cuộc gọi yêu cầu chuyển tiền gấp." },
+        { title: "Quy tắc 10 giây", content: "Khi nhận cuộc gọi video nghi vấn, hãy yêu cầu đối phương vẫy tay trước mặt hoặc quay đầu sang trái/phải để kiểm tra lỗi pixel." },
+        { title: "Xác thực Đa kênh", content: "Khi nhận tin nhắn mượn tiền, hãy gọi trực tiếp qua số SIM truyền thống hoặc liên lạc qua một kênh thứ ba để kiểm tra giọng nói thật." }
       ]
     },
     {
-      category: "QUY TRÃŒNH á»¨NG Cá»¨U",
+      category: "QUY TRÌNH ỨNG CỨU",
       items: [
-        { title: "CÃ¡ch xá»­ lÃ½ tá»©c thÃ¬", content: "Ngáº¯t káº¿t ná»‘i, khÃ´ng chuyá»ƒn tiá»n, thÃ´ng bÃ¡o cho ngÆ°á»i thÃ¢n vÃ  bÃ¡o cÃ¡o ngay cho cÆ¡ quan chá»©c nÄƒng qua VNeID hoáº·c NCSC." },
-        { title: "Báº£o vá»‡ báº±ng chá»©ng", content: "Chá»¥p áº£nh mÃ n hÃ¬nh, lÆ°u ghi Ã¢m cuá»™c gá»i vÃ  giá»¯ láº¡i cÃ¡c thÃ´ng tin tÃ i khoáº£n ngÃ¢n hÃ ng cá»§a káº» lá»«a Ä‘áº£o Ä‘á»ƒ phá»¥c vá»¥ Ä‘iá»u tra." },
-        { title: "Thu tháº­p Log giao dá»‹ch", content: "LÆ°u láº¡i toÃ n bá»™ mÃ£ giao dá»‹ch ngÃ¢n hÃ ng vÃ  biÃªn lai Ä‘á»ƒ lÃ m cÆ¡ sá»Ÿ cho ngÃ¢n hÃ ng phong tá»a tÃ i khoáº£n lá»«a Ä‘áº£o ká»‹p thá»i." }
+        { title: "Cách xử lý tức thì", content: "Ngắt kết nối, không chuyển tiền, thông báo cho người thân và báo cáo ngay cho cơ quan chức năng qua VNeID hoặc NCSC." },
+        { title: "Bảo vệ bằng chứng", content: "Chụp ảnh màn hình, lưu ghi âm cuộc gọi và giữ lại các thông tin tài khoản ngân hàng của kẻ lừa đảo để phục vụ điều tra." },
+        { title: "Thu thập Log giao dịch", content: "Lưu lại toàn bộ mã giao dịch ngân hàng và biên lai để làm cơ sở cho ngân hàng phong tỏa tài khoản lừa đảo kịp thời." }
       ]
     },
     {
-      category: "CÃ”NG NGHá»† GIÃM Äá»ŠNH AI",
+      category: "CÔNG NGHỆ GIÁM ĐỊNH AI",
       items: [
-        { title: "rPPG (Nhá»‹p tim tá»« xa)", content: "Máº¯t ngÆ°á»i khÃ´ng tháº¥y Ä‘Æ°á»£c, nhÆ°ng AI cÃ³ thá»ƒ quÃ©t sá»± thay Ä‘á»•i mÃ u sáº¯c vi mÃ´ cá»§a da theo nhá»‹p tim Ä‘á»ƒ xÃ¡c Ä‘á»‹nh Ä‘Ã³ lÃ  ngÆ°á»i tháº­t." },
-        { title: "C2PA (Há»™ chiáº¿u Ná»™i dung)", content: "TiÃªu chuáº©n toÃ n cáº§u giÃºp dÃ¡n nhÃ£n 'nguá»“n gá»‘c' cho hÃ¬nh áº£nh, giÃºp biáº¿t Ä‘Æ°á»£c áº£nh chá»¥p tá»« camera hay táº¡o ra tá»« AI." },
-        { title: "PhÃ¢n tÃ­ch Phá»• Ã¢m", content: "AI lá»«a Ä‘áº£o thÆ°á»ng cÃ³ dáº£i táº§n sá»‘ Ã¢m thanh khÃ´ng Ä‘á»u, Ä‘á»ƒ láº¡i cÃ¡c váº¿t nhiá»…u Ä‘áº·c trÆ°ng khi biá»ƒu diá»…n trÃªn biá»ƒu Ä‘á»“ phá»• táº§n sá»‘ (Spectrogram)." }
+        { title: "rPPG (Nhịp tim từ xa)", content: "Mắt người không thấy được, nhưng AI có thể quét sự thay đổi màu sắc vi mô của da theo nhịp tim để xác định đó là người thật." },
+        { title: "C2PA (Hộ chiếu Nội dung)", content: "Tiêu chuẩn toàn cầu giúp dán nhãn 'nguồn gốc' cho hình ảnh, giúp biết được ảnh chụp từ camera hay tạo ra từ AI." },
+        { title: "Phân tích Phổ âm", content: "AI lừa đảo thường có dải tần số âm thanh không đều, để lại các vết nhiễu đặc trưng khi biểu diễn trên biểu đồ phổ tần số (Spectrogram)." }
       ]
     },
     {
-      category: "PHÃP LUáº¬T VIá»†T NAM",
+      category: "PHÁP LUẬT VIỆT NAM",
       items: [
-        { title: "Nghá»‹ Ä‘á»‹nh 13/2023/NÄ-CP", content: "VÄƒn báº£n cao nháº¥t vá» báº£o vá»‡ dá»¯ liá»‡u cÃ¡ nhÃ¢n. Xá»­ lÃ½ dá»¯ liá»‡u sinh tráº¯c há»c trÃ¡i phÃ©p lÃ  hÃ nh vi vi pháº¡m phÃ¡p luáº­t Ä‘áº·c biá»‡t nghiÃªm trá»ng." },
-        { title: "Äiá»u 174 Bá»™ luáº­t HÃ¬nh sá»±", content: "Tá»™i lá»«a Ä‘áº£o chiáº¿m Ä‘oáº¡t tÃ i sáº£n báº±ng cÃ´ng nghá»‡ cao cÃ³ khung hÃ¬nh pháº¡t lÃªn Ä‘áº¿n 20 nÄƒm tÃ¹ hoáº·c tÃ¹ chung thÃ¢n." },
-        { title: "ThÃ´ng tÆ° 03/2024/TT", content: "Quy Ä‘á»‹nh má»›i vá» viá»‡c gá»¡ bá» thÃ´ng tin sai sá»± tháº­t trÃªn khÃ´ng gian máº¡ng trong vÃ²ng 24 giá» sau khi cÃ³ yÃªu cáº§u tá»« cÆ¡ quan chá»©c nÄƒng." }
+        { title: "Nghị định 13/2023/NĐ-CP", content: "Văn bản cao nhất về bảo vệ dữ liệu cá nhân. Xử lý dữ liệu sinh trắc học trái phép là hành vi vi phạm pháp luật đặc biệt nghiêm trọng." },
+        { title: "Điều 174 Bộ luật Hình sự", content: "Tội lừa đảo chiếm đoạt tài sản bằng công nghệ cao có khung hình phạt lên đến 20 năm tù hoặc tù chung thân." },
+        { title: "Thông tư 03/2024/TT", content: "Quy định mới về việc gỡ bỏ thông tin sai sự thật trên không gian mạng trong vòng 24 giờ sau khi có yêu cầu từ cơ quan chức năng." }
       ]
     },
     {
-      category: "LUáº¬T PHÃP QUá»C Táº¾",
+      category: "LUẬT PHÁP QUỐC TẾ",
       items: [
-        { title: "Äáº¡o luáº­t AI cá»§a EU", content: "Luáº­t AI Ä‘áº§u tiÃªn tháº¿ giá»›i, yÃªu cáº§u má»i ná»™i dung do AI táº¡o ra (Deepfake) pháº£i Ä‘Æ°á»£c dÃ¡n nhÃ£n minh báº¡ch 'AI-generated'." },
-        { title: "TiÃªu chuáº©n Trung Quá»‘c & Má»¹", content: "Cáº£ hai quá»‘c gia Ä‘á»u báº¯t buá»™c nhÃºng watermark (thá»§y vÃ¢n) áº©n vÃ o cÃ¡c sáº£n pháº©m cá»§a cÃ¡c mÃ´ hÃ¬nh AI lá»›n nhÆ° ChatGPT hay Sora." },
-        { title: "TrÃ¡ch nhiá»‡m cá»§a Big Tech", content: "CÃ¡c ná»n táº£ng xuyÃªn biÃªn giá»›i (Facebook, TikTok) báº¯t buá»™c pháº£i cÃ³ há»‡ thá»‘ng lá»c tá»± Ä‘á»™ng Deepfake trÆ°á»›c khi chÃºng tiáº¿p cáº­n ngÆ°á»i dÃ¹ng." }
+        { title: "Đạo luật AI của EU", content: "Luật AI đầu tiên thế giới, yêu cầu mọi nội dung do AI tạo ra (Deepfake) phải được dán nhãn minh bạch 'AI-generated'." },
+        { title: "Tiêu chuẩn Trung Quốc & Mỹ", content: "Cả hai quốc gia đều bắt buộc nhúng watermark (thủy vân) ẩn vào các sản phẩm của các mô hình AI lớn như ChatGPT hay Sora." },
+        { title: "Trách nhiệm của Big Tech", content: "Các nền tảng xuyên biên giới (Facebook, TikTok) bắt buộc phải có hệ thống lọc tự động Deepfake trước khi chúng tiếp cận người dùng." }
       ]
     },
     {
-      category: "Äáº O Äá»¨C AI (UNESCO)",
+      category: "ĐẠO ĐỨC AI (UNESCO)",
       items: [
-        { title: "Khung Äáº¡o Ä‘á»©c UNESCO", content: "Kháº³ng Ä‘á»‹nh AI pháº£i phá»¥c vá»¥ con ngÆ°á»i, khÃ´ng Ä‘Æ°á»£c xÃ¢m pháº¡m quyá»n riÃªng tÆ° vÃ  pháº£i chá»‹u sá»± kiá»ƒm soÃ¡t cá»§a con ngÆ°á»i (Human Agency)." },
-        { title: "Quyá»n báº£o vá»‡ Danh tÃ­nh", content: "Coi khuÃ´n máº·t ká»¹ thuáº­t sá»‘ lÃ  má»™t pháº§n cá»§a nhÃ¢n pháº©m, má»i hÃ nh vi bÃ´i nhá» báº±ng AI lÃ  vi pháº¡m nhÃ¢n quyá»n nghiÃªm trá»ng." },
-        { title: "Minh báº¡ch Thuáº­t toÃ¡n", content: "NgÆ°á»i dÃ¹ng cÃ³ quyá»n Ä‘Æ°á»£c biáº¿t táº¡i sao má»™t ná»™i dung AI Ä‘Æ°á»£c gá»£i Ã½ cho há» vÃ  má»¥c Ä‘Ã­ch Ä‘áº±ng sau cÃ¡c thuáº­t toÃ¡n Ä‘á»‹nh hÆ°á»›ng hÃ nh vi." }
+        { title: "Khung Đạo đức UNESCO", content: "Khẳng định AI phải phục vụ con người, không được xâm phạm quyền riêng tư và phải chịu sự kiểm soát của con người (Human Agency)." },
+        { title: "Quyền bảo vệ Danh tính", content: "Coi khuôn mặt kỹ thuật số là một phần của nhân phẩm, mọi hành vi bôi nhọ bằng AI là vi phạm nhân quyền nghiêm trọng." },
+        { title: "Minh bạch Thuật toán", content: "Người dùng có quyền được biết tại sao một nội dung AI được gợi ý cho họ và mục đích đằng sau các thuật toán định hướng hành vi." }
       ]
     },
     {
-      category: "XU HÆ¯á»šNG & TÆ¯Æ NG LAI",
+      category: "XU HƯỚNG & TƯƠNG LAI",
       items: [
-        { title: "Dá»± bÃ¡o 2027", content: "Thiá»‡t háº¡i do lá»«a Ä‘áº£o AI cÃ³ thá»ƒ vÆ°á»£t 40 tá»· USD toÃ n cáº§u. Tin táº·c sáº½ sá»­ dá»¥ng AI tá»± Ä‘á»™ng Ä‘á»ƒ 'táº¥n cÃ´ng theo dÃ¢y chuyá»n'." },
-        { title: "Niá»m tin Ká»¹ thuáº­t sá»‘", content: "Xu hÆ°á»›ng chuyá»ƒn dá»‹ch sang cÃ¡c giáº£i phÃ¡p báº£o máº­t phi táº­p trung (Blockchain) Ä‘á»ƒ xÃ¡c thá»±c 'Con ngÆ°á»i tháº­t' thay vÃ¬ chá»‰ dÃ¹ng máº­t kháº©u." },
-        { title: "Sá»± trá»—i dáº­y cá»§a AGI", content: "AI tÆ°Æ¡ng lai (AGI) sáº½ cÃ³ kháº£ nÄƒng tá»± tÆ° duy vÃ  láº­p káº¿ hoáº¡ch táº¥n cÃ´ng lá»«a Ä‘áº£o phá»©c táº¡p, Ä‘Ã²i há»i sá»± phÃ²ng thá»§ chá»§ Ä‘á»™ng hÆ¡n tá»« con ngÆ°á»i." }
+        { title: "Dự báo 2027", content: "Thiệt hại do lừa đảo AI có thể vượt 40 tỷ USD toàn cầu. Tin tặc sẽ sử dụng AI tự động để 'tấn công theo dây chuyền'." },
+        { title: "Niềm tin Kỹ thuật số", content: "Xu hướng chuyển dịch sang các giải pháp bảo mật phi tập trung (Blockchain) để xác thực 'Con người thật' thay vì chỉ dùng mật khẩu." },
+        { title: "Sự trỗi dậy của AGI", content: "AI tương lai (AGI) sẽ có khả năng tự tư duy và lập kế hoạch tấn công lừa đảo phức tạp, đòi hỏi sự phòng thủ chủ động hơn từ con người." }
       ]
     }
   ],

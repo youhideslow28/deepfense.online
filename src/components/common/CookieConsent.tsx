@@ -39,10 +39,10 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ lang }) => {
             </div>
             <div>
               <h3 className="text-white font-black uppercase tracking-widest text-sm italic">
-                {isVi ? 'QUYá»€N RIÃŠNG TÆ¯' : 'PRIVACY PREFERENCE'}
+                {isVi ? 'QUYỀN RIÊNG TƯ' : 'PRIVACY PREFERENCE'}
               </h3>
               <p className="text-[10px] text-blue-400 font-mono uppercase tracking-tighter">
-                {isVi ? 'Báº¢O Vá»† Dá»® LIá»†U Cá»¦A Báº N' : 'PROTECTING YOUR DATA'}
+                {isVi ? 'BẢO VỆ DỮ LIỆU CỦA BẠN' : 'PROTECTING YOUR DATA'}
               </p>
             </div>
             <button 
@@ -55,7 +55,7 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ lang }) => {
 
           <p className="text-gray-400 text-xs leading-relaxed mb-6 italic">
             {isVi 
-              ? 'Deepfense sá»­ dá»¥ng cookie Ä‘á»ƒ tá»‘i Æ°u hÃ³a tráº£i nghiá»‡m há»c táº­p, lÆ°u tiáº¿n Ä‘á»™ vÃ  báº£o máº­t tÃ i khoáº£n. Báº¡n cÃ³ Ä‘á»“ng Ã½ cho phÃ©p chÃºng tÃ´i sá»­ dá»¥ng cookie khÃ´ng?' 
+              ? 'Deepfense sử dụng cookie để tối ưu hóa trải nghiệm học tập, lưu tiến độ và bảo mật tài khoản. Bạn có đồng ý cho phép chúng tôi sử dụng cookie không?' 
               : 'Deepfense uses cookies to optimize your learning experience, save progress, and secure your account. Do you agree to allow us to use cookies?'}
           </p>
 
@@ -67,14 +67,14 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ lang }) => {
               icon={<Check size={14} />}
               onClick={() => handleConsent(true)}
             >
-              {isVi ? 'Äá»’NG Ã Táº¤T Cáº¢' : 'ACCEPT ALL'}
+              {isVi ? 'ĐỒNG Ý TẤT CẢ' : 'ACCEPT ALL'}
             </GlowButton>
             <button 
               onClick={() => handleConsent(false)}
               className="w-full py-2.5 rounded-xl border border-white/5 text-gray-500 text-[10px] font-black uppercase tracking-widest hover:bg-white/5 hover:text-gray-300 transition-all flex items-center justify-center gap-2"
             >
               <Info size={12} />
-              {isVi ? 'TÃ™Y CHá»ˆNH / Tá»ª CHá»I' : 'CUSTOMIZE / DECLINE'}
+              {isVi ? 'TÙY CHỈNH / TỪ CHỐI' : 'CUSTOMIZE / DECLINE'}
             </button>
           </div>
         </div>

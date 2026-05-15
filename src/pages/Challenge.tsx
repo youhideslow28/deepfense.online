@@ -39,72 +39,72 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
   const surveyQuestions = [
     {
         id: 'q0_usage',
-        vi: 'TÃ´i thÆ°á»ng xuyÃªn sá»­ dá»¥ng máº¡ng xÃ£ há»™i vÃ  cÃ¡c á»©ng dá»¥ng gá»i video (Zalo, Messenger, Telegram).',
+        vi: 'Tôi thường xuyên sử dụng mạng xã hội và các ứng dụng gọi video (Zalo, Messenger, Telegram).',
         en: 'I frequently use social media and video calling apps (Zalo, Messenger, Telegram).'
     },
     {
         id: 'q1_threat_me',
-        vi: 'TÃ´i tin ráº±ng cÃ´ng nghá»‡ Deepfake hiá»‡n nay cÃ³ thá»ƒ dá»… dÃ ng lá»«a Ä‘áº£o báº£n thÃ¢n tÃ´i hoáº·c gia Ä‘Ã¬nh.',
+        vi: 'Tôi tin rằng công nghệ Deepfake hiện nay có thể dễ dàng lừa đảo bản thân tôi hoặc gia đình.',
         en: 'I believe Deepfake tech today can easily deceive me or my family.'
     },
     {
         id: 'q2_threat_impact',
-        vi: 'Háº­u quáº£ tÃ i chÃ­nh vÃ  tinh tháº§n náº¿u bá»‹ lá»«a Ä‘áº£o báº±ng AI lÃ  vÃ´ cÃ¹ng nghiÃªm trá»ng vÃ  khÃ³ kháº¯c phá»¥c.',
+        vi: 'Hậu quả tài chính và tinh thần nếu bị lừa đảo bằng AI là vô cùng nghiêm trọng và khó khắc phục.',
         en: 'The financial and mental consequences of AI scams are extremely severe.'
     },
     {
         id: 'q3_proactive_learn',
-        vi: 'TÃ´i luÃ´n chá»§ Ä‘á»™ng tÃ¬m hiá»ƒu vÃ  cáº­p nháº­t cÃ¡c thá»§ Ä‘oáº¡n lá»«a Ä‘áº£o cÃ´ng nghá»‡ cao má»›i nháº¥t.',
+        vi: 'Tôi luôn chủ động tìm hiểu và cập nhật các thủ đoạn lừa đảo công nghệ cao mới nhất.',
         en: 'I actively learn and update myself on the latest high-tech scam methods.'
     },
     {
         id: 'q4_anxiety',
-        vi: 'TÃ´i cáº£m tháº¥y vÃ´ cÃ¹ng lo láº¯ng vÃ  báº¥t an trÆ°á»›c sá»± phÃ¡t triá»ƒn máº¥t kiá»ƒm soÃ¡t cá»§a TrÃ­ tuá»‡ nhÃ¢n táº¡o.',
+        vi: 'Tôi cảm thấy vô cùng lo lắng và bất an trước sự phát triển mất kiểm soát của Trí tuệ nhân tạo.',
         en: 'I feel highly anxious about the uncontrolled development of AI.'
     },
     {
         id: 'q5_tech_regulate',
-        vi: 'TÃ´i cho ráº±ng cáº§n cÃ³ luáº­t phÃ¡p kiá»ƒm soÃ¡t cháº·t cháº½ vÃ  Ä‘Ã³ng dáº¥u báº£n quyá»n cho má»i video táº¡o báº±ng AI.',
+        vi: 'Tôi cho rằng cần có luật pháp kiểm soát chặt chẽ và đóng dấu bản quyền cho mọi video tạo bằng AI.',
         en: 'I believe AI-generated videos must be strictly regulated and watermarked.'
     },
     {
         id: 'q6_tech_blindness',
-        vi: 'TÃ´i thÆ°á»ng cÃ³ xu hÆ°á»›ng tin tÆ°á»Ÿng ngay vÃ o nhá»¯ng hÃ¬nh áº£nh/video máº¯t mÃ¬nh nhÃ¬n tháº¥y trÃªn mÃ n hÃ¬nh.',
+        vi: 'Tôi thường có xu hướng tin tưởng ngay vào những hình ảnh/video mắt mình nhìn thấy trên màn hình.',
         en: 'I tend to immediately trust the images/videos I see on my screen.'
     },
     {
         id: 'q7_efficacy_detect',
-        vi: 'Sau thá»­ thÃ¡ch nÃ y, tÃ´i tá»± tin mÃ¬nh cÃ³ kháº£ nÄƒng nháº­n diá»‡n Ä‘Æ°á»£c cÃ¡c dáº¥u hiá»‡u lá»—i cá»§a video Deepfake.',
+        vi: 'Sau thử thách này, tôi tự tin mình có khả năng nhận diện được các dấu hiệu lỗi của video Deepfake.',
         en: 'After this challenge, I am confident in my ability to detect Deepfake artifacts.'
     },
     {
         id: 'q8_efficacy_verify',
-        vi: 'TÃ´i biáº¿t chÃ­nh xÃ¡c mÃ¬nh cáº§n pháº£i lÃ m gÃ¬ (há»i cÃ¢u há»i máº¹o, yÃªu cáº§u váº«y tay) khi nháº­n cuá»™c gá»i nghi ngá».',
+        vi: 'Tôi biết chính xác mình cần phải làm gì (hỏi câu hỏi mẹo, yêu cầu vẫy tay) khi nhận cuộc gọi nghi ngờ.',
         en: 'I know exactly what to do (ask trick questions, request hand waves) if a call is suspicious.'
     },
     {
         id: 'q9_proactive_pwd',
-        vi: 'Gia Ä‘Ã¬nh tÃ´i Ä‘Ã£ (hoáº·c cam káº¿t sáº½) thiáº¿t láº­p má»™t "Máº­t mÃ£ bÃ­ máº­t" Ä‘á»ƒ xÃ¡c thá»±c nhau khi cÃ³ biáº¿n cá»‘.',
+        vi: 'Gia đình tôi đã (hoặc cam kết sẽ) thiết lập một "Mật mã bí mật" để xác thực nhau khi có biến cố.',
         en: 'My family has established (or will establish) a secret password for emergencies.'
     },
     {
         id: 'q10_intent_gsm',
-        vi: 'Náº¿u ngÆ°á»i thÃ¢n gá»i video mÆ°á»£n tiá»n, tÃ´i sáº½ láº­p tá»©c cÃºp mÃ¡y vÃ  gá»i láº¡i báº±ng máº¡ng viá»…n thÃ´ng di Ä‘á»™ng (GSM).',
+        vi: 'Nếu người thân gọi video mượn tiền, tôi sẽ lập tức cúp máy và gọi lại bằng mạng viễn thông di động (GSM).',
         en: 'If asked for money on video, I will hang up and call back via standard cellular network (GSM).'
     },
     {
         id: 'q11_footprint',
-        vi: 'TÃ´i trÆ°á»›c Ä‘Ã¢y thÆ°á»ng vÃ´ tÆ° Ä‘Äƒng táº£i hÃ¬nh áº£nh khuÃ´n máº·t rÃµ nÃ©t vÃ  video cÃ³ giá»ng nÃ³i lÃªn máº¡ng á»Ÿ cháº¿ Ä‘á»™ cÃ´ng khai.',
+        vi: 'Tôi trước đây thường vô tư đăng tải hình ảnh khuôn mặt rõ nét và video có giọng nói lên mạng ở chế độ công khai.',
         en: 'I used to post clear face photos and voice videos publicly without second thoughts.'
     },
     {
         id: 'q12_intent_hide',
-        vi: 'TÃ´i dá»± Ä‘á»‹nh sáº½ háº¡n cháº¿ chia sáº» dá»¯ liá»‡u sinh tráº¯c há»c (khuÃ´n máº·t, giá»ng nÃ³i) bá»«a bÃ£i trÃªn khÃ´ng gian máº¡ng.',
+        vi: 'Tôi dự định sẽ hạn chế chia sẻ dữ liệu sinh trắc học (khuôn mặt, giọng nói) bừa bãi trên không gian mạng.',
         en: 'I plan to restrict sharing my biometric data (face, voice) carelessly online.'
     },
     {
         id: 'q13_share',
-        vi: 'TÃ´i sáº½ chia sáº» á»©ng dá»¥ng DEEPFENSE nÃ y cho báº¡n bÃ¨ vÃ  ngÆ°á»i lá»›n tuá»•i trong gia Ä‘Ã¬nh Ä‘á»ƒ cÃ¹ng phÃ²ng trÃ¡nh.',
+        vi: 'Tôi sẽ chia sẻ ứng dụng DEEPFENSE này cho bạn bè và người lớn tuổi trong gia đình để cùng phòng tránh.',
         en: 'I will share this DEEPFENSE app with friends and elderly family members.'
     }
   ];
@@ -172,7 +172,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
   };
 
   const handleChoice = (choice: 1 | 2) => {
-    // Báº¢O Máº¬T: Cháº·n Double-Click spam Ä‘á»ƒ hack vÆ°á»£t má»‘c Ä‘iá»ƒm tuyá»‡t Ä‘á»‘i
+    // BẢO MẬT: Chặn Double-Click spam để hack vượt mốc điểm tuyệt đối
     if (!gameState || gameState.show_result) return;
     const currentLevel = gameState.levels[gameState.current];
     const isCorrect = currentLevel.fake_pos === choice;
@@ -198,15 +198,15 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
         setGameState(prev => prev ? ({ ...prev, finished: true }) : null);
         setShowSurvey(true);
 
-        // --- FIREBASE: LÆ¯U Káº¾T QUáº¢ GAME ---
+        // --- FIREBASE: LƯU KẾT QUẢ GAME ---
           const gameResult = {
             score: finalScore,
             wrong_count: gameState.wrong_count,
             played_at: serverTimestamp(),
             lang: lang,
-            device_info: navigator.userAgent, // LÆ°u thÃ´ng tin thiáº¿t bá»‹ cÆ¡ báº£n
+            device_info: navigator.userAgent, // Lưu thông tin thiết bị cơ bản
             details: {
-               wrong_levels: wrongLevels.map(l => l.id), // LÆ°u ID cÃ¡c cÃ¢u sai
+               wrong_levels: wrongLevels.map(l => l.id), // Lưu ID các câu sai
                total_levels: gameState.levels.length
             }
           };
@@ -248,15 +248,15 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
     setCaptchaError(false);
     setIsSubmitting(true);
     
-    // --- FIREBASE: LÆ¯U Káº¾T QUáº¢ KHáº¢O SÃT ---
+    // --- FIREBASE: LƯU KẾT QUẢ KHẢO SÁT ---
     try {
       const surveyData = {
         age_group: demoAge,
-        answers: surveyAnswers, // Máº£ng cÃ¡c cÃ¢u tráº£ lá»i (0-4)
-        questions_map: surveyQuestions.map(q => q.id), // Map thá»© tá»± cÃ¢u há»i
+        answers: surveyAnswers, // Mảng các câu trả lời (0-4)
+        questions_map: surveyQuestions.map(q => q.id), // Map thứ tự câu hỏi
         created_at: serverTimestamp(),
         lang: lang,
-        // CÃ³ thá»ƒ link vá»›i game result trÆ°á»›c Ä‘Ã³ náº¿u muá»‘n phá»©c táº¡p hÆ¡n
+        // Có thể link với game result trước đó nếu muốn phức tạp hơn
       };
       await addDoc(collection(db, "surveys"), surveyData);
       if (isMountedRef.current) setSurveySent(true);
@@ -278,7 +278,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
     const match = url.match(regExp);
     const videoId = (match && match[2].length === 11) ? match[2] : null;
-    // ThÃªm controls=0 vÃ  modestbranding=1 Ä‘á»ƒ giáº¥u thanh tiáº¿n trÃ¬nh vÃ  logo, trÃ¡nh lá»™ ná»™i dung video
+    // Thêm controls=0 và modestbranding=1 để giấu thanh tiến trình và logo, tránh lộ nội dung video
     return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&controls=0&modestbranding=1` : url;
   };
 
@@ -286,10 +286,10 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
     const score = gameState.score;
     const scales = SURVEY_SCALE[lang];
 
-    // PhÃ¢n tÃ­ch dá»¯ liá»‡u káº¿t quáº£ (NÄƒng lá»±c nháº­n diá»‡n chia theo nhÃ³m)
-    const morphologicalIds = ["v1", "v2", "v4"]; // Tay, khuÃ´n máº·t, Ä‘Ã´i cÃ¡nh
-    const contextIds = ["v3", "v5", "v7"];       // Chuyá»ƒn Ä‘á»™ng hÆ°Æ¡u, thiÃªn nga, mÃ¢y
-    const physicsIds = ["v6", "v8", "v9", "v10"]; // DÃ²ng nÆ°á»›c, cÃ¡t, Ã¡p lá»±c
+    // Phân tích dữ liệu kết quả (Năng lực nhận diện chia theo nhóm)
+    const morphologicalIds = ["v1", "v2", "v4"]; // Tay, khuôn mặt, đôi cánh
+    const contextIds = ["v3", "v5", "v7"];       // Chuyển động hươu, thiên nga, mây
+    const physicsIds = ["v6", "v8", "v9", "v10"]; // Dòng nước, cát, áp lực
 
     const getScoreForCategory = (ids: string[]) => {
        const total = ids.length;
@@ -308,26 +308,26 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
     let statusColor = "";
 
     if (score >= 8) {
-        statusTitle = lang === 'vi' ? "Báº¬C THáº¦Y GIÃM Äá»ŠNH" : "MASTER DETECTIVE";
-        statusDesc = lang === 'vi' ? "Ká»¹ nÄƒng cá»§a báº¡n ráº¥t tuyá»‡t vá»i. HÃ£y chia sáº» kiáº¿n thá»©c nÃ y Ä‘á»ƒ báº£o vá»‡ ngÆ°á»i thÃ¢n!" : "Excellent skills. Share this knowledge to protect your loved ones!";
+        statusTitle = lang === 'vi' ? "BẬC THẦY GIÁM ĐỊNH" : "MASTER DETECTIVE";
+        statusDesc = lang === 'vi' ? "Kỹ năng của bạn rất tuyệt vời. Hãy chia sẻ kiến thức này để bảo vệ người thân!" : "Excellent skills. Share this knowledge to protect your loved ones!";
         statusIcon = <ShieldCheck size={48} className="text-success" />;
         statusColor = "border-success bg-success/5";
     } else if (score >= 5) {
-        statusTitle = lang === 'vi' ? "Há»ŒC VIÃŠN TIá»€M NÄ‚NG" : "POTENTIAL TRAINEE";
-        statusDesc = lang === 'vi' ? "Báº¡n cÃ³ kháº£ nÄƒng nháº­n diá»‡n cÆ¡ báº£n, nhÆ°ng cáº§n luyá»‡n táº­p thÃªm cÃ¡c chi tiáº¿t nhá»." : "Good baseline awareness, but need more practice on micro-details.";
+        statusTitle = lang === 'vi' ? "HỌC VIÊN TIỀM NĂNG" : "POTENTIAL TRAINEE";
+        statusDesc = lang === 'vi' ? "Bạn có khả năng nhận diện cơ bản, nhưng cần luyện tập thêm các chi tiết nhỏ." : "Good baseline awareness, but need more practice on micro-details.";
         statusIcon = <Eye size={48} className="text-warning" />;
         statusColor = "border-warning bg-warning/5";
     } else {
-        statusTitle = lang === 'vi' ? "Má»¨C Äá»˜ Rá»¦I RO CAO" : "HIGH RISK LEVEL";
-        statusDesc = lang === 'vi' ? "AI Ä‘ang dáº§n tinh vi hÆ¡n báº¡n nghÄ©. HÃ£y xem láº¡i pháº§n kiáº¿n thá»©c vÃ  thá»­ thÃ¡ch láº¡i!" : "AI is more sophisticated than you think. Review the knowledge base and retry!";
+        statusTitle = lang === 'vi' ? "MỨC ĐỘ RỦI RO CAO" : "HIGH RISK LEVEL";
+        statusDesc = lang === 'vi' ? "AI đang dần tinh vi hơn bạn nghĩ. Hãy xem lại phần kiến thức và thử thách lại!" : "AI is more sophisticated than you think. Review the knowledge base and retry!";
         statusIcon = <ShieldAlert size={48} className="text-secondary" />;
         statusColor = "border-secondary bg-secondary/5";
     }
     
     const handleShare = async (platform: 'facebook' | 'twitter' | 'native') => {
         const text = lang === 'vi' 
-            ? `ðŸŽ® TÃ´i vá»«a Ä‘áº¡t Ä‘iá»ƒm tuyá»‡t Ä‘á»‘i ${score}/10 trong Thá»­ thÃ¡ch ThÃ¡m tá»­ Deepfake! ðŸ›¡ï¸\nCÃ´ng nghá»‡ AI tháº­t Ä‘Ã¡ng sá»£, má»i ngÆ°á»i vÃ o kiá»ƒm tra trÃ¬nh Ä‘á»™ nháº­n diá»‡n cá»§a mÃ¬nh nhÃ©!` 
-            : `ðŸŽ® I just scored ${score}/10 in the Deepfake Detective Challenge! ðŸ›¡ï¸\nAI is getting scary. Test your detection skills now!`;
+            ? `🎮 Tôi vừa đạt điểm tuyệt đối ${score}/10 trong Thử thách Thám tử Deepfake! 🛡️\nCông nghệ AI thật đáng sợ, mọi người vào kiểm tra trình độ nhận diện của mình nhé!` 
+            : `🎮 I just scored ${score}/10 in the Deepfake Detective Challenge! 🛡️\nAI is getting scary. Test your detection skills now!`;
         const url = window.location.origin;
 
         if (platform === 'facebook') {
@@ -340,8 +340,8 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                 catch (err) { console.error('Error sharing:', err); }
             } else {
                 navigator.clipboard.writeText(`${text} ${url}`)
-                    .then(() => alert(lang === 'vi' ? 'ÄÃ£ sao chÃ©p liÃªn káº¿t Ä‘á»ƒ chia sáº»!' : 'Copied to clipboard!'))
-                    .catch(() => alert(lang === 'vi' ? 'Lá»—i trÃ¬nh duyá»‡t: KhÃ´ng thá»ƒ sao chÃ©p.' : 'Browser Error: Cannot copy.'));
+                    .then(() => alert(lang === 'vi' ? 'Đã sao chép liên kết để chia sẻ!' : 'Copied to clipboard!'))
+                    .catch(() => alert(lang === 'vi' ? 'Lỗi trình duyệt: Không thể sao chép.' : 'Browser Error: Cannot copy.'));
             }
         }
     };
@@ -355,7 +355,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                 <div className="flex items-center gap-3 mb-8">
                     <ClipboardList className="text-primary" size={24} />
                     <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-widest">
-                        {lang === 'vi' ? 'ÄÃNH GIÃ CHá»ˆ Sá» AN NINH TÃ‚M LÃ' : 'PSYCHOLOGICAL SECURITY INDEX'}
+                        {lang === 'vi' ? 'ĐÁNH GIÁ CHỈ SỐ AN NINH TÂM LÝ' : 'PSYCHOLOGICAL SECURITY INDEX'}
                     </h3>
                 </div>
 
@@ -371,18 +371,18 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     <div className="animate-in fade-in py-10">
                         <CheckCircle2 size={64} className="text-success mx-auto mb-4" />
                         <div className="text-success font-black text-xl uppercase">
-                            {lang === 'vi' ? 'Dá»® LIá»†U ÄÃƒ ÄÆ¯á»¢C GHI NHáº¬N!' : 'DATA RECORDED SUCCESSFULLY!'}
+                            {lang === 'vi' ? 'DỮ LIỆU ĐÃ ĐƯỢC GHI NHẬN!' : 'DATA RECORDED SUCCESSFULLY!'}
                         </div>
                     </div>
                 ) : showIntro ? (
                     <div className="w-full max-w-xl animate-in slide-in-from-right-4 duration-300 py-4 mx-auto">
-                        <div className="text-5xl md:text-6xl mb-6">ðŸ¤</div>
+                        <div className="text-5xl md:text-6xl mb-6">🤝</div>
                         <h4 className="text-xl md:text-2xl text-white font-black mb-4 leading-relaxed uppercase tracking-widest text-primary">
-                            {lang === 'vi' ? 'CHUNG TAY VÃŒ Cá»˜NG Äá»’NG Sá»' : 'JOIN THE DIGITAL COMMUNITY'}
+                            {lang === 'vi' ? 'CHUNG TAY VÌ CỘNG ĐỒNG SỐ' : 'JOIN THE DIGITAL COMMUNITY'}
                         </h4>
                         <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-8 px-4 text-justify md:text-center">
                             {lang === 'vi' 
-                                ? 'ChÃºc má»«ng báº¡n Ä‘Ã£ xuáº¥t sáº¯c vÆ°á»£t qua thá»­ thÃ¡ch! Äá»ƒ xem báº£ng Ä‘iá»ƒm chi tiáº¿t vÃ  phÃ¢n tÃ­ch cÃ¡c lá»—i sai báº¡n vá»«a máº¯c pháº£i, xin vui lÃ²ng dÃ nh Ã­t phÃºt hoÃ n thÃ nh kháº£o sÃ¡t dÆ°á»›i Ä‘Ã¢y. Má»i Ã½ kiáº¿n Ä‘Ã³ng gÃ³p cá»§a báº¡n Ä‘á»u áº©n danh vÃ  vÃ´ cÃ¹ng quÃ½ giÃ¡ Ä‘á»ƒ xÃ¢y dá»±ng bá»™ dá»¯ liá»‡u báº£o vá»‡ cá»™ng Ä‘á»“ng.' 
+                                ? 'Chúc mừng bạn đã xuất sắc vượt qua thử thách! Để xem bảng điểm chi tiết và phân tích các lỗi sai bạn vừa mắc phải, xin vui lòng dành ít phút hoàn thành khảo sát dưới đây. Mọi ý kiến đóng góp của bạn đều ẩn danh và vô cùng quý giá để xây dựng bộ dữ liệu bảo vệ cộng đồng.' 
                                 : 'Congratulations on completing the challenge! To view your detailed score and analyze the mistakes you made, please take a few minutes to complete the survey below. Your anonymous input is highly valuable for building our community defense dataset.'}
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -390,7 +390,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                                 onClick={() => setShowIntro(false)}
                                 className="bg-primary text-black px-8 py-4 rounded-xl font-black text-xs uppercase transition-all hover:scale-105 shadow-lg shadow-primary/20 w-full sm:w-auto"
                             >
-                                {lang === 'vi' ? 'Äá»’NG Ã ÄÃ“NG GÃ“P Ã KIáº¾N' : 'AGREE TO CONTRIBUTE'}
+                                {lang === 'vi' ? 'ĐỒNG Ý ĐÓNG GÓP Ý KIẾN' : 'AGREE TO CONTRIBUTE'}
                             </button>
                         </div>
                     </div>
@@ -398,10 +398,10 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     <div className="w-full max-w-xl animate-in slide-in-from-right-4 duration-300">
                         <Users className="text-primary mx-auto mb-6" size={48} />
                         <h4 className="text-lg md:text-2xl text-white font-black mb-8 leading-relaxed">
-                            {lang === 'vi' ? 'Vui lÃ²ng chá»n nhÃ³m tuá»•i cá»§a báº¡n Ä‘á»ƒ tiáº¿p tá»¥c:' : 'Please select your age group to continue:'}
+                            {lang === 'vi' ? 'Vui lòng chọn nhóm tuổi của bạn để tiếp tục:' : 'Please select your age group to continue:'}
                         </h4>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                            {['DÆ°á»›i 18 Tuá»•i', '18 - 24 Tuá»•i', '25 - 40 Tuá»•i', 'TrÃªn 40 Tuá»•i'].map(age => (
+                            {['Dưới 18 Tuổi', '18 - 24 Tuổi', '25 - 40 Tuổi', 'Trên 40 Tuổi'].map(age => (
                                 <button 
                                     key={age}
                                     onClick={() => { setDemoAge(age); setShowDemo(false); }}
@@ -412,7 +412,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                             ))}
                         </div>
                         <p className="text-gray-500 text-xs italic px-4">
-                            {lang === 'vi' ? '*Dá»¯ liá»‡u nhÃ¢n kháº©u há»c Ä‘Æ°á»£c thu tháº­p áº©n danh, phá»¥c vá»¥ trá»±c tiáº¿p cho bÃ¡o cÃ¡o phÃ¢n tÃ­ch nháº­n thá»©c cá»™ng Ä‘á»“ng.' : '*Demographic data is collected anonymously for research purposes.'}
+                            {lang === 'vi' ? '*Dữ liệu nhân khẩu học được thu thập ẩn danh, phục vụ trực tiếp cho báo cáo phân tích nhận thức cộng đồng.' : '*Demographic data is collected anonymously for research purposes.'}
                         </p>
                     </div>
                 ) : (
@@ -440,7 +440,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                                  <div className="bg-black/50 border border-white/10 rounded-xl p-4 w-full mb-4">
                                      <div className="text-xs text-gray-400 mb-2 font-mono flex items-center justify-center gap-2">
                                          <ShieldQuestion size={14} className="text-primary"/> 
-                                         {lang === 'vi' ? 'XÃC THá»°C NGÆ¯á»œI THáº¬T' : 'HUMAN VERIFICATION'}
+                                         {lang === 'vi' ? 'XÁC THỰC NGƯỜI THẬT' : 'HUMAN VERIFICATION'}
                                      </div>
                                      <div className="flex items-center justify-center gap-3">
                                          <span className="text-xl font-bold text-white tracking-widest">{captchaObj.num1} + {captchaObj.num2} = </span>
@@ -451,21 +451,21 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                                              className={`w-16 bg-transparent border-b-2 text-center text-xl font-bold text-primary outline-none transition-colors ${captchaError ? 'border-red-500' : 'border-primary/50 focus:border-primary'}`}
                                          />
                                      </div>
-                                     {captchaError && <div className="text-red-500 text-[10px] mt-2 italic">{lang === 'vi' ? 'Káº¿t quáº£ chÆ°a Ä‘Ãºng!' : 'Incorrect answer!'}</div>}
+                                     {captchaError && <div className="text-red-500 text-[10px] mt-2 italic">{lang === 'vi' ? 'Kết quả chưa đúng!' : 'Incorrect answer!'}</div>}
                                  </div>
                                  <button 
                                     onClick={submitSurvey}
                                     disabled={isSubmitting}
                                     className={`px-12 md:px-16 py-5 rounded-xl font-black text-xs uppercase shadow-lg transition-all flex items-center gap-3 w-full justify-center ${isSubmitting ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'bg-primary text-black hover:scale-105 shadow-primary/20'}`}
                                 >
-                                    {isSubmitting ? (lang === 'vi' ? 'ÄANG Xá»¬ LÃ...' : 'PROCESSING...') : (lang === 'vi' ? 'XEM PHÃ‚N TÃCH CUá»I CÃ™NG' : 'VIEW FINAL ANALYSIS')} <ChevronRight size={16}/>
+                                    {isSubmitting ? (lang === 'vi' ? 'ĐANG XỬ LÝ...' : 'PROCESSING...') : (lang === 'vi' ? 'XEM PHÂN TÍCH CUỐI CÙNG' : 'VIEW FINAL ANALYSIS')} <ChevronRight size={16}/>
                                 </button>
                              </div>
                         )}
                         
                         {surveyStep > 0 && (
                             <button onClick={() => setSurveyStep(prev => prev - 1)} className="mt-8 text-[10px] font-black text-gray-600 uppercase tracking-widest hover:text-gray-400 transition-colors">
-                                {lang === 'vi' ? 'QUAY Láº I CÃ‚U TRÆ¯á»šC' : 'BACK TO PREVIOUS'}
+                                {lang === 'vi' ? 'QUAY LẠI CÂU TRƯỚC' : 'BACK TO PREVIOUS'}
                             </button>
                         )}
                     </div>
@@ -478,7 +478,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     
                     <div className="mb-8">
                        <h2 className="text-2xl md:text-4xl font-black text-white mb-2 uppercase tracking-tighter leading-tight">{statusTitle}</h2>
-                       <div className="text-white/40 font-mono text-sm tracking-[0.4em] uppercase">{score}/10 {lang === 'vi' ? 'ÄIá»‚M CHÃNH XÃC' : 'ACCURACY SCORE'}</div>
+                       <div className="text-white/40 font-mono text-sm tracking-[0.4em] uppercase">{score}/10 {lang === 'vi' ? 'ĐIỂM CHÍNH XÁC' : 'ACCURACY SCORE'}</div>
                     </div>
 
                     <p className="text-gray-300 max-w-xl mb-10 leading-relaxed text-base">{statusDesc}</p>
@@ -489,15 +489,15 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     
                     <div className="flex flex-col sm:flex-row justify-center gap-4 w-full">
                         <button onClick={startNewGame} className="bg-primary text-black px-12 py-4 rounded-xl font-black text-xs uppercase shadow-lg hover:scale-105 transition-all flex items-center justify-center gap-2">
-                            <RotateCcw size={14} /> {lang === 'vi' ? 'LUYá»†N Táº¬P Láº I' : 'PRACTICE AGAIN'}
+                            <RotateCcw size={14} /> {lang === 'vi' ? 'LUYỆN TẬP LẠI' : 'PRACTICE AGAIN'}
                         </button>
                         <button onClick={() => navigate('/')} className="bg-white/5 text-white border border-white/10 px-12 py-4 rounded-xl font-black text-xs uppercase hover:bg-white/10 transition-all">
-                            {lang === 'vi' ? 'Káº¾T THÃšC CHIáº¾N Dá»ŠCH' : 'END CAMPAIGN'}
+                            {lang === 'vi' ? 'KẾT THÚC CHIẾN DỊCH' : 'END CAMPAIGN'}
                         </button>
                     </div>
 
                     <div className="mt-8 pt-8 border-t border-white/10 w-full max-w-sm mx-auto">
-                        <p className="text-gray-400 text-[10px] uppercase tracking-widest font-bold mb-4">{lang === 'vi' ? 'CHIA Sáºº Káº¾T QUáº¢ Äá»‚ NÃ‚NG CAO NHáº¬N THá»¨C' : 'SHARE RESULTS TO RAISE AWARENESS'}</p>
+                        <p className="text-gray-400 text-[10px] uppercase tracking-widest font-bold mb-4">{lang === 'vi' ? 'CHIA SẺ KẾT QUẢ ĐỂ NÂNG CAO NHẬN THỨC' : 'SHARE RESULTS TO RAISE AWARENESS'}</p>
                         <div className="flex justify-center gap-4">
                             <button onClick={() => handleShare('facebook')} className="bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 p-3 rounded-full hover:bg-[#1877F2] hover:text-white hover:scale-110 transition-all shadow-lg" title="Share on Facebook">
                                 <Facebook size={18} />
@@ -505,25 +505,25 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                             <button onClick={() => handleShare('twitter')} className="bg-[#1DA1F2]/20 text-[#1DA1F2] border border-[#1DA1F2]/30 p-3 rounded-full hover:bg-[#1DA1F2] hover:text-white hover:scale-110 transition-all shadow-lg" title="Share on Twitter">
                                 <Twitter size={18} fill="currentColor" />
                             </button>
-                            <button onClick={() => handleShare('native')} className="bg-white/10 text-white border border-white/20 p-3 rounded-full hover:bg-white hover:text-black hover:scale-110 transition-all shadow-lg" title={lang === 'vi' ? 'Chia sáº» / Copy' : 'Share / Copy'}>
+                            <button onClick={() => handleShare('native')} className="bg-white/10 text-white border border-white/20 p-3 rounded-full hover:bg-white hover:text-black hover:scale-110 transition-all shadow-lg" title={lang === 'vi' ? 'Chia sẻ / Copy' : 'Share / Copy'}>
                                 <Share2 size={18} />
                             </button>
                         </div>
                     </div>
                 </div>
 
-                {/* Báº¢NG PHÃ‚N TÃCH Äá»’ THá»Š */}
+                {/* BẢNG PHÂN TÍCH ĐỒ THỊ */}
                 <div className="bg-surface border border-white/10 p-6 md:p-10 rounded-3xl mb-12 shadow-xl">
                    <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-widest mb-8 flex items-center gap-3 border-b border-white/5 pb-6">
                       <BarChart2 size={24} className="text-primary" />
-                      {lang === 'vi' ? 'PHÃ‚N TÃCH Äá»’ THá»Š NÄ‚NG Lá»°C NHáº¬N DIá»†N' : 'DETECTION COMPETENCY GRAPH ANALYSIS'}
+                      {lang === 'vi' ? 'PHÂN TÍCH ĐỒ THỊ NĂNG LỰC NHẬN DIỆN' : 'DETECTION COMPETENCY GRAPH ANALYSIS'}
                    </h3>
                    
                    <div className="space-y-8">
                       {/* Bar 1 */}
                       <div className="space-y-3">
                          <div className="flex justify-between text-xs md:text-sm font-bold uppercase tracking-widest">
-                            <span className="text-gray-400">{lang === 'vi' ? 'NHáº¬N DIá»†N HÃŒNH THá»‚ CHI TIáº¾T' : 'MORPHOLOGICAL DETAIL DETECTION'}</span>
+                            <span className="text-gray-400">{lang === 'vi' ? 'NHẬN DIỆN HÌNH THỂ CHI TIẾT' : 'MORPHOLOGICAL DETAIL DETECTION'}</span>
                             <span className="text-primary">{morphScore}%</span>
                          </div>
                          <div className="h-4 w-full bg-black rounded-full overflow-hidden border border-white/5 shadow-inner p-0.5">
@@ -534,7 +534,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                       {/* Bar 2 */}
                       <div className="space-y-3">
                          <div className="flex justify-between text-xs md:text-sm font-bold uppercase tracking-widest">
-                            <span className="text-gray-400">{lang === 'vi' ? 'NHáº¬N THá»¨C Bá»I Cáº¢NH & KHÃ”NG GIAN' : 'CONTEXT & SPATIAL AWARENESS'}</span>
+                            <span className="text-gray-400">{lang === 'vi' ? 'NHẬN THỨC BỐI CẢNH & KHÔNG GIAN' : 'CONTEXT & SPATIAL AWARENESS'}</span>
                             <span className="text-blue-400">{contextScore}%</span>
                          </div>
                          <div className="h-4 w-full bg-black rounded-full overflow-hidden border border-white/5 shadow-inner p-0.5">
@@ -545,7 +545,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                       {/* Bar 3 */}
                       <div className="space-y-3">
                          <div className="flex justify-between text-xs md:text-sm font-bold uppercase tracking-widest">
-                            <span className="text-gray-400">{lang === 'vi' ? 'PHÃ‚N TÃCH CHUYá»‚N Äá»˜NG Váº¬T LÃ' : 'PHYSICS MOTION ANALYSIS'}</span>
+                            <span className="text-gray-400">{lang === 'vi' ? 'PHÂN TÍCH CHUYỂN ĐỘNG VẬT LÝ' : 'PHYSICS MOTION ANALYSIS'}</span>
                             <span className="text-secondary">{physicsScore}%</span>
                          </div>
                          <div className="h-4 w-full bg-black rounded-full overflow-hidden border border-white/5 shadow-inner p-0.5">
@@ -558,7 +558,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                 {wrongLevels.length > 0 && (
                   <div className="space-y-6">
                     <h3 className="text-secondary font-black text-lg uppercase tracking-widest flex items-center gap-3">
-                      <AlertCircle /> {lang === 'vi' ? 'CÃC Lá»–I Cáº¦N KHáº®C PHá»¤C' : 'ERRORS TO FIX'}
+                      <AlertCircle /> {lang === 'vi' ? 'CÁC LỖI CẦN KHẮC PHỤC' : 'ERRORS TO FIX'}
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                        {wrongLevels.map((lvl, idx) => (
@@ -576,31 +576,31 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
         {!showSurvey && (
             <div className="mt-12 bg-primary/5 border border-primary/20 p-8 rounded-3xl">
                <h3 className="text-primary font-black text-lg uppercase tracking-widest mb-6 flex items-center gap-3">
-                  <ShieldCheck /> {lang === 'vi' ? 'Cáº¨M NANG PHÃ’NG Vá»† NHANH' : 'QUICK DEFENSE HANDBOOK'}
+                  <ShieldCheck /> {lang === 'vi' ? 'CẨM NANG PHÒNG VỆ NHANH' : 'QUICK DEFENSE HANDBOOK'}
                </h3>
                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
                   <div className="bg-black/40 p-5 rounded-xl border border-white/5">
                      <div className="text-primary font-bold mb-2 uppercase text-xs tracking-widest">
-                        {lang === 'vi' ? '1. Quan sÃ¡t' : '1. Observe'}
+                        {lang === 'vi' ? '1. Quan sát' : '1. Observe'}
                      </div>
                      <p className="text-gray-400 text-xs leading-relaxed">
-                        {lang === 'vi' ? 'Náº¿u khuÃ´n máº·t quÃ¡ má»‹n hoáº·c Ã¡nh sÃ¡ng bÃ³ng loÃ¡ng báº¥t thÆ°á»ng, hÃ£y nghi ngá» ngay.' : 'If the face is too smooth or the lighting is unnaturally shiny, be suspicious immediately.'}
+                        {lang === 'vi' ? 'Nếu khuôn mặt quá mịn hoặc ánh sáng bóng loáng bất thường, hãy nghi ngờ ngay.' : 'If the face is too smooth or the lighting is unnaturally shiny, be suspicious immediately.'}
                      </p>
                   </div>
                   <div className="bg-black/40 p-5 rounded-xl border border-white/5">
                      <div className="text-primary font-bold mb-2 uppercase text-xs tracking-widest">
-                        {lang === 'vi' ? '2. Thá»­ thÃ¡ch' : '2. Challenge'}
+                        {lang === 'vi' ? '2. Thử thách' : '2. Challenge'}
                      </div>
                      <p className="text-gray-400 text-xs leading-relaxed">
-                        {lang === 'vi' ? 'YÃªu cáº§u ngÆ°á»i gá»i váº«y tay trÆ°á»›c máº·t. AI sáº½ bá»‹ lá»—i hiá»ƒn thá»‹ khi cÃ³ váº­t che.' : 'Ask the caller to wave their hand in front of their face. AI glitches when obstructed.'}
+                        {lang === 'vi' ? 'Yêu cầu người gọi vẫy tay trước mặt. AI sẽ bị lỗi hiển thị khi có vật che.' : 'Ask the caller to wave their hand in front of their face. AI glitches when obstructed.'}
                      </p>
                   </div>
                   <div className="bg-black/40 p-5 rounded-xl border border-white/5">
                      <div className="text-primary font-bold mb-2 uppercase text-xs tracking-widest">
-                        {lang === 'vi' ? '3. XÃ¡c minh' : '3. Verify'}
+                        {lang === 'vi' ? '3. Xác minh' : '3. Verify'}
                      </div>
                      <p className="text-gray-400 text-xs leading-relaxed">
-                        {lang === 'vi' ? 'Gá»i láº¡i sim chÃ­nh cá»§a ngÆ°á»i thÃ¢n. Káº» lá»«a Ä‘áº£o khÃ´ng thá»ƒ nháº­n cuá»™c gá»i GSM.' : 'Call back using the primary SIM number. Scammers cannot receive GSM calls.'}
+                        {lang === 'vi' ? 'Gọi lại sim chính của người thân. Kẻ lừa đảo không thể nhận cuộc gọi GSM.' : 'Call back using the primary SIM number. Scammers cannot receive GSM calls.'}
                      </p>
                   </div>
                </div>
@@ -621,7 +621,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
           <div className="w-full">
               <div className="flex items-center gap-2 mb-2">
                  <Zap size={14} className="text-primary" />
-                 <span className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">{lang === 'vi' ? 'NHIá»†M Vá»¤' : 'MISSION'} {gameState.current + 1}</span>
+                 <span className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">{lang === 'vi' ? 'NHIỆM VỤ' : 'MISSION'} {gameState.current + 1}</span>
               </div>
               <h3 className="text-white text-2xl md:text-3xl font-black uppercase tracking-tighter leading-none">{lvl.title}</h3>
           </div>
@@ -646,8 +646,8 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
             
             {!gameState.show_result && (
                 <div className="absolute top-4 inset-x-4 flex justify-between pointer-events-none">
-                    <div className="bg-black/80 backdrop-blur px-3 py-1 rounded-lg border border-primary/20 text-primary text-[9px] font-black uppercase italic">MáºªU_A</div>
-                    <div className="bg-black/80 backdrop-blur px-3 py-1 rounded-lg border border-secondary/20 text-secondary text-[9px] font-black uppercase italic">MáºªU_B</div>
+                    <div className="bg-black/80 backdrop-blur px-3 py-1 rounded-lg border border-primary/20 text-primary text-[9px] font-black uppercase italic">MẪU_A</div>
+                    <div className="bg-black/80 backdrop-blur px-3 py-1 rounded-lg border border-secondary/20 text-secondary text-[9px] font-black uppercase italic">MẪU_B</div>
                 </div>
             )}
           </div>
@@ -655,10 +655,10 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
           {!gameState.show_result ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <button onClick={() => handleChoice(1)} className="py-6 border border-white/10 bg-surface text-white font-black rounded-2xl hover:border-primary hover:text-primary transition-all uppercase text-xs tracking-widest shadow-xl flex items-center justify-center gap-3 group active:scale-95">
-                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> {lang === 'vi' ? 'BÃŠN TRÃI LÃ€ GIáº¢' : 'LEFT IS FAKE'}
+                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> {lang === 'vi' ? 'BÊN TRÁI LÀ GIẢ' : 'LEFT IS FAKE'}
                   </button>
                   <button onClick={() => handleChoice(2)} className="py-6 border border-white/10 bg-surface text-white font-black rounded-2xl hover:border-secondary hover:text-secondary transition-all uppercase text-xs tracking-widest shadow-xl flex items-center justify-center gap-3 group active:scale-95">
-                    {lang === 'vi' ? 'BÃŠN PHáº¢I LÃ€ GIáº¢' : 'RIGHT IS FAKE'} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                    {lang === 'vi' ? 'BÊN PHẢI LÀ GIẢ' : 'RIGHT IS FAKE'} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                   </button>
               </div>
           ) : (
@@ -670,15 +670,15 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     <div className="flex-1 text-center sm:text-left">
                         <h4 className={`text-xl font-black mb-1 uppercase italic ${gameState.last_correct ? 'text-success' : 'text-secondary'}`}>
                             {gameState.last_correct 
-                              ? (lang === 'vi' ? "XÃC THá»°C CHÃNH XÃC" : "ACCURATE VALIDATION") 
-                              : (lang === 'vi' ? "PHÃT HIá»†N SAI Lá»†CH" : "MISMATCH DETECTED")}
+                              ? (lang === 'vi' ? "XÁC THỰC CHÍNH XÁC" : "ACCURATE VALIDATION") 
+                              : (lang === 'vi' ? "PHÁT HIỆN SAI LỆCH" : "MISMATCH DETECTED")}
                         </h4>
                         <p className="text-gray-400 text-sm italic">
-                            {lang === 'vi' ? "Cáº£m quan cá»§a báº¡n Ä‘ang ngÃ y cÃ ng nháº¡y bÃ©n hÆ¡n." : "Your senses are becoming sharper."}
+                            {lang === 'vi' ? "Cảm quan của bạn đang ngày càng nhạy bén hơn." : "Your senses are becoming sharper."}
                         </p>
                     </div>
                     <button onClick={nextLevel} className="shrink-0 bg-white text-black px-10 py-4 rounded-xl font-black hover:bg-primary transition-all text-xs uppercase shadow-xl flex items-center gap-2 w-full sm:w-auto justify-center">
-                      {lang === 'vi' ? 'TIáº¾P THEO' : 'NEXT'} <ArrowRight size={14} />
+                      {lang === 'vi' ? 'TIẾP THEO' : 'NEXT'} <ArrowRight size={14} />
                     </button>
                 </div>
             </div>
@@ -698,13 +698,13 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
           onClick={() => setActiveTab('DETECTIVE')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'DETECTIVE' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
-          <Eye size={16} /> {lang === 'vi' ? 'THÃM Tá»¬ DEEPFAKE' : 'DEEPFAKE DETECTIVE'}
+          <Eye size={16} /> {lang === 'vi' ? 'THÁM TỬ DEEPFAKE' : 'DEEPFAKE DETECTIVE'}
         </button>
         <button 
           onClick={() => setActiveTab('SIMULATOR')}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'SIMULATOR' ? 'bg-secondary text-white shadow-[0_0_20px_rgba(255,42,109,0.3)]' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
         >
-          <Brain size={16} /> {lang === 'vi' ? 'MÃ” PHá»ŽNG Lá»ªA Äáº¢O' : 'SCAM SIMULATOR'}
+          <Brain size={16} /> {lang === 'vi' ? 'MÔ PHỎNG LỪA ĐẢO' : 'SCAM SIMULATOR'}
         </button>
       </div>
 

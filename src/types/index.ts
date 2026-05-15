@@ -1,6 +1,6 @@
 /**
- * DEEPFENSE.ONLINE â€” Barrel Export for All Types
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — Barrel Export for All Types
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 export type { PageType, Language, Season, PersonalityQuestion } from './common';

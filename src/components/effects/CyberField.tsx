@@ -1,8 +1,8 @@
 /**
- * DEEPFENSE.ONLINE â€” CyberField 3D Background
- * Interactive particle network thay tháº¿ Matrix Rain.
- * Particles di chuyá»ƒn, káº¿t ná»‘i Ä‘Æ°á»ng line, pháº£n á»©ng mouse.
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — CyberField 3D Background
+ * Interactive particle network thay thế Matrix Rain.
+ * Particles di chuyển, kết nối đường line, phản ứng mouse.
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import React, { useRef, useMemo, useEffect, useState, useCallback, Suspense } from 'react';
@@ -22,7 +22,7 @@ const Particles: React.FC<{ mouse: React.MutableRefObject<{ x: number; y: number
   const linesRef = useRef<THREE.LineSegments>(null);
   const { viewport } = useThree();
 
-  // Khá»Ÿi táº¡o vá»‹ trÃ­ vÃ  váº­n tá»‘c
+  // Khởi tạo vị trí và vận tốc
   const { positions, velocities, dummy, linePositions, colors } = useMemo(() => {
     const positions = new Float32Array(PARTICLE_COUNT * 3);
     const velocities = new Float32Array(PARTICLE_COUNT * 3);
@@ -53,7 +53,7 @@ const Particles: React.FC<{ mouse: React.MutableRefObject<{ x: number; y: number
   useFrame(() => {
     if (!meshRef.current || !linesRef.current) return;
 
-    // Chuyá»ƒn mouse tá»« normalized (-1,1) sang world coords
+    // Chuyển mouse từ normalized (-1,1) sang world coords
     const mouseX = (mouse.current.x * viewport.width) / 2;
     const mouseY = (mouse.current.y * viewport.height) / 2;
 
@@ -64,12 +64,12 @@ const Particles: React.FC<{ mouse: React.MutableRefObject<{ x: number; y: number
       const iy = i * 3 + 1;
       const iz = i * 3 + 2;
 
-      // Di chuyá»ƒn brownian
+      // Di chuyển brownian
       positions[ix] += velocities[ix];
       positions[iy] += velocities[iy];
       positions[iz] += velocities[iz];
 
-      // Giá»›i háº¡n trong field
+      // Giới hạn trong field
       if (Math.abs(positions[ix]) > FIELD_SIZE / 2) velocities[ix] *= -1;
       if (Math.abs(positions[iy]) > FIELD_SIZE / 2) velocities[iy] *= -1;
       if (Math.abs(positions[iz]) > 2) velocities[iz] *= -1;
@@ -89,7 +89,7 @@ const Particles: React.FC<{ mouse: React.MutableRefObject<{ x: number; y: number
       dummy.updateMatrix();
       meshRef.current.setMatrixAt(i, dummy.matrix);
 
-      // TÃ­nh connections (chá»‰ vá»›i ~50 particle gáº§n nháº¥t Ä‘á»ƒ giáº£m O(nÂ²))
+      // Tính connections (chỉ với ~50 particle gần nhất để giảm O(n²))
       for (let j = i + 1; j < Math.min(i + 50, PARTICLE_COUNT); j++) {
         const jx = j * 3;
         const ddx = positions[ix] - positions[jx];
@@ -108,7 +108,7 @@ const Particles: React.FC<{ mouse: React.MutableRefObject<{ x: number; y: number
           linePositions[li + 4] = positions[jx + 1];
           linePositions[li + 5] = positions[jx + 2];
 
-          // Gradient color: Blue â†’ Purple
+          // Gradient color: Blue → Purple
           colors[li] = alpha*0.11; colors[li+1] = alpha*0.44; colors[li+2] = alpha*0.91; // blue
           colors[li+3] = alpha*0.66; colors[li+4] = alpha*0.33; colors[li+5] = alpha*0.97; // purple
 
@@ -160,14 +160,14 @@ const Particles: React.FC<{ mouse: React.MutableRefObject<{ x: number; y: number
   );
 };
 
-// === Camera Parallax â€” Smooth mouse-driven depth effect ===
-// Láº¥y cáº£m há»©ng tá»« Apple.com, Linear.app: camera trÃ´i nháº¹ theo chuá»™t
-// táº¡o hiá»‡u á»©ng "nhÃ¬n qua cá»­a sá»•" 3D premium
+// === Camera Parallax — Smooth mouse-driven depth effect ===
+// Lấy cảm hứng từ Apple.com, Linear.app: camera trôi nhẹ theo chuột
+// tạo hiệu ứng "nhìn qua cửa sổ" 3D premium
 const CameraParallax: React.FC<{ mouse: React.MutableRefObject<{ x: number; y: number }> }> = ({ mouse }) => {
   const { camera } = useThree();
 
   useFrame(() => {
-    // Lerp camera vá» phÃ­a chuá»™t â€” há»‡ sá»‘ 0.04 = mÆ°á»£t nhÆ° Apple
+    // Lerp camera về phía chuột — hệ số 0.04 = mượt như Apple
     camera.position.x += (mouse.current.x * 1.8 - camera.position.x) * 0.04;
     camera.position.y += (mouse.current.y * 1.2 - camera.position.y) * 0.04;
     camera.lookAt(0, 0, 0);
@@ -193,7 +193,7 @@ const CyberField: React.FC = () => {
   }, []);
 
   if (!isVisible) {
-    // Fallback gradient tÄ©nh cho reduced motion
+    // Fallback gradient tĩnh cho reduced motion
     return (
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1D6FE8]/5 via-transparent to-[#A855F7]/5" />

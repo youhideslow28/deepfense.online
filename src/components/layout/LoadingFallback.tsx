@@ -1,7 +1,7 @@
 /**
- * DEEPFENSE.ONLINE â€” Loading Fallback Component
- * Hiá»ƒn thá»‹ khi lazy-loaded pages Ä‘ang Ä‘Æ°á»£c táº£i.
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — Loading Fallback Component
+ * Hiển thị khi lazy-loaded pages đang được tải.
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import React from 'react';

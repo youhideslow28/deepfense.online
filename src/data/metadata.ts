@@ -1,6 +1,6 @@
 /**
- * DEEPFENSE.ONLINE â€” Project Metadata
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — Project Metadata
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 export const PROJECT_METADATA = {
@@ -8,14 +8,14 @@ export const PROJECT_METADATA = {
   version: "3.0.0-Gamified-Training-Core",
   build_date: new Date().toLocaleDateString('vi-VN'),
   authors: [
-    { name: "Há»“ XuÃ¢n Nguyá»…n", id: "25NS039", role: "Fullstack Developer / Project Lead" },
-    { name: "Nguyá»…n Nháº¥t Huy", id: "25NS020", role: "Frontend Developer / Security Analyst" },
-    { name: "VÃµ Phan PhÃ¡p", id: "25NS045", role: "UI/UX Designer / Content Creator" },
-    { name: "Tráº§n Minh Nháº¥t", id: "25NS040", role: "Frontend Developer / Research" }
+    { name: "Hồ Xuân Nguyễn", id: "25NS039", role: "Fullstack Developer / Project Lead" },
+    { name: "Nguyễn Nhất Huy", id: "25NS020", role: "Frontend Developer / Security Analyst" },
+    { name: "Võ Phan Pháp", id: "25NS045", role: "UI/UX Designer / Content Creator" },
+    { name: "Trần Minh Nhất", id: "25NS040", role: "Frontend Developer / Research" }
   ],
   university: "Vietnam-Korea University of Information and Communication Technology (VKU)",
-  department: "Khoa Ká»¹ thuáº­t MÃ¡y tÃ­nh & Äiá»‡n tá»­ (Computer Engineering & Electronics)",
-  instructor: "", // ÄÃ£ xÃ³a theo yÃªu cáº§u
-  license: "Copyright Â© 2025 Há»“ XuÃ¢n Nguyá»…n, Nguyá»…n Nháº¥t Huy, VÃµ Phan PhÃ¡p & Tráº§n Minh Nháº¥t (VKU 25NS)",
+  department: "Khoa Kỹ thuật Máy tính & Điện tử (Computer Engineering & Electronics)",
+  instructor: "", // Đã xóa theo yêu cầu
+  license: "Copyright © 2025 Hồ Xuân Nguyễn, Nguyễn Nhất Huy, Võ Phan Pháp & Trần Minh Nhất (VKU 25NS)",
   email: "deepfense@gmail.com"
 };

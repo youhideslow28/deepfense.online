@@ -9,11 +9,11 @@ interface SEOProps {
 }
 
 const SEO: React.FC<SEOProps> = ({ title, description, lang }) => {
-  const defaultTitle = 'DEEPFENSE.ONLINE - Há»‡ thá»‘ng nháº­n diá»‡n Deepfake & AI Scam';
+  const defaultTitle = 'DEEPFENSE.ONLINE - Hệ thống nhận diện Deepfake & AI Scam';
   const defaultDesc = lang === 'vi' 
-    ? 'Ná»n táº£ng huáº¥n luyá»‡n vÃ  giÃ¡m sÃ¡t an ninh máº¡ng. CÃ´ng cá»¥ quÃ©t rá»§i ro lá»«a Ä‘áº£o Deepfake, AI Voice vÃ  báº£o vá»‡ cá»™ng Ä‘á»“ng trÃªn khÃ´ng gian sá»‘.'
+    ? 'Nền tảng huấn luyện và giám sát an ninh mạng. Công cụ quét rủi ro lừa đảo Deepfake, AI Voice và bảo vệ cộng đồng trên không gian số.'
     : 'Cybersecurity monitoring and training platform. Scan for Deepfake risks, AI Voice scams, and protect yourself online.';
-  const siteUrl = 'https://deepfense.online'; // Thay báº±ng tÃªn miá»n tháº­t cá»§a báº¡n
+  const siteUrl = 'https://deepfense.online'; // Thay bằng tên miền thật của bạn
 
   const seoTitle = title ? `${title} | DEEPFENSE` : defaultTitle;
   const seoDesc = description || defaultDesc;
@@ -32,7 +32,7 @@ const SEO: React.FC<SEOProps> = ({ title, description, lang }) => {
       <meta property="og:image" content={`${siteUrl}/assets/poster.jpg`} />
 
       {/* Keywords cho Google */}
-      <meta name="keywords" content="deepfake, lá»«a Ä‘áº£o AI, báº£o máº­t, an ninh máº¡ng, quÃ©t deepfake, deepfake scanner, nháº­n diá»‡n khuÃ´n máº·t giáº£, VKU" />
+      <meta name="keywords" content="deepfake, lừa đảo AI, bảo mật, an ninh mạng, quét deepfake, deepfake scanner, nhận diện khuôn mặt giả, VKU" />
     </Helmet>
   );
 };

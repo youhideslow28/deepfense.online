@@ -1,8 +1,8 @@
 /**
- * DEEPFENSE.ONLINE â€” useScrollReveal Hook
- * Custom hook Ä‘á»ƒ Ã¡p dá»¥ng GSAP scroll-triggered reveal animations
- * vÃ o báº¥t ká»³ container nÃ o. Tá»± cleanup khi unmount.
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — useScrollReveal Hook
+ * Custom hook để áp dụng GSAP scroll-triggered reveal animations
+ * vào bất kỳ container nào. Tự cleanup khi unmount.
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import { useEffect, useRef } from 'react';
@@ -86,7 +86,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
 }
 
 /**
- * Hook Ä‘Æ¡n giáº£n hÆ¡n: Ã¡p dá»¥ng animation cho 1 element duy nháº¥t
+ * Hook đơn giản hơn: áp dụng animation cho 1 element duy nhất
  */
 export function useRevealOnce<T extends HTMLElement = HTMLDivElement>(
   fromVars: gsap.TweenVars = { y: 40, opacity: 0 },

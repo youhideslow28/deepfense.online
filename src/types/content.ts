@@ -1,6 +1,6 @@
 /**
- * DEEPFENSE.ONLINE â€” Content & Data Structure Types
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — Content & Data Structure Types
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 export interface ChecklistItem {

@@ -1,7 +1,7 @@
 /**
  * DEEPFENSE.ONLINE - Footer v3.0
  * Complete project footer for training, support, attribution, and trust.
- * @copyright 2025 Hồ Xuân Nguyễn & VKU Project Team
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import React from 'react';
@@ -130,7 +130,19 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
               {/* VKU Attribution */}
               <div className="mt-5 pt-4 border-t border-white/5 flex items-center gap-3">
                 <div className="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center p-1.5 overflow-hidden">
-                   <img src="https://vku.udn.vn/vku-logo.png" alt="VKU" className="h-full w-full object-contain opacity-80" onError={(e) => { (e.target as any).src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Logo_VKU.png/800px-Logo_VKU.png"; }} />
+                   <img 
+                      src="https://vku.udn.vn/Uploads/Logo-vku.png" 
+                      alt="VKU" 
+                      className="h-full w-full object-contain opacity-90 transition-opacity hover:opacity-100" 
+                      onError={(e) => { 
+                        const target = e.target as HTMLImageElement;
+                        if (target.src !== "https://vku.udn.vn/vku-logo.png") {
+                          target.src = "https://vku.udn.vn/vku-logo.png";
+                        } else {
+                          target.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Logo_VKU.png/800px-Logo_VKU.png";
+                        }
+                      }} 
+                   />
                 </div>
                 <div className="text-[11px] font-bold tracking-wider text-gray-400 uppercase">
                   {isVi ? 'Sản phẩm sinh viên trường Đại học Công nghệ thông tin và Truyền thông Việt - Hàn (VKU)' : 'Student product at Vietnam-Korea University of Information and Communication Technology (VKU)'}
@@ -165,27 +177,25 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
           </div>
 
           <div className="lg:col-span-3">
-            <div>
-              <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
-                {isVi ? 'Dự án' : 'Project'}
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
-                  <GraduationCap className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
-                  <span>25NS - VKU, Da Nang, Viet Nam</span>
-                </div>
-                <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
-                  <MapPin className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
-                  <span>{PROJECT_METADATA.university}</span>
-                </div>
-                <a href={`mailto:${PROJECT_METADATA.email}`} className="flex items-start gap-3 text-xs leading-relaxed text-gray-500 transition-colors hover:text-[#60A5FA]">
-                  <Mail className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
-                  <span>{PROJECT_METADATA.email}</span>
-                </a>
-                <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
-                  <Scale className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
-                  <span>{isVi ? 'Phục vụ học tập, nghiên cứu và nâng cao nhận thức cộng đồng.' : 'Built for learning, research, and public awareness.'}</span>
-                </div>
+            <h3 className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#60A5FA]/70">
+              {isVi ? 'Dự án' : 'Project'}
+            </h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
+                <GraduationCap className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
+                <span>25NS - VKU, Da Nang, Viet Nam</span>
+              </div>
+              <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
+                <MapPin className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
+                <span>{PROJECT_METADATA.university}</span>
+              </div>
+              <a href={`mailto:${PROJECT_METADATA.email}`} className="flex items-start gap-3 text-xs leading-relaxed text-gray-500 transition-colors hover:text-[#60A5FA]">
+                <Mail className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
+                <span>{PROJECT_METADATA.email}</span>
+              </a>
+              <div className="flex items-start gap-3 text-xs leading-relaxed text-gray-500">
+                <Scale className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
+                <span>{isVi ? 'Phục vụ học tập, nghiên cứu và nâng cao nhận thức cộng đồng.' : 'Built for learning, research, and public awareness.'}</span>
               </div>
             </div>
           </div>

@@ -1,8 +1,8 @@
 /**
- * DEEPFENSE.ONLINE â€” RadarPing
+ * DEEPFENSE.ONLINE — RadarPing
  * Pulse animation cho alerts / threat indicators.
- * Giá»‘ng hiá»‡u á»©ng sonar ping trÃªn mÃ n hÃ¬nh radar.
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * Giống hiệu ứng sonar ping trên màn hình radar.
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import React from 'react';

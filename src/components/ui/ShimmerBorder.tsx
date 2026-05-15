@@ -1,7 +1,7 @@
 /**
- * DEEPFENSE.ONLINE â€” ShimmerBorder
- * Animated gradient border cháº¡y vÃ²ng quanh báº¥t ká»³ element nÃ o.
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — ShimmerBorder
+ * Animated gradient border chạy vòng quanh bất kỳ element nào.
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import React from 'react';

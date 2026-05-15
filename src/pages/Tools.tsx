@@ -32,11 +32,11 @@ interface ToolsProps {
 }
 
 const behaviorQuestions = [
-  { q: "Äá»‘i phÆ°Æ¡ng cÃ³ yÃªu cáº§u báº¡n thá»±c hiá»‡n cÃ¡c hÃ nh Ä‘á»™ng kháº©n cáº¥p vá» tÃ i chÃ­nh khÃ´ng?", risk: 30 },
-  { q: "Giá»ng nÃ³i hoáº·c hÃ¬nh áº£nh cÃ³ cÃ¡c dáº¥u hiá»‡u giáº­t lag, nhiá»…u pixel hoáº·c kháº©u hÃ¬nh khÃ´ng khá»›p?", risk: 25 },
-  { q: "Äá»‘i phÆ°Æ¡ng cÃ³ tá»« chá»‘i thá»±c hiá»‡n cÃ¡c yÃªu cáº§u xÃ¡c thá»±c nhÆ° váº«y tay trÆ°á»›c máº·t hoáº·c quay Ä‘áº§u khÃ´ng?", risk: 20 },
-  { q: "LÃ½ do liÃªn láº¡c cÃ³ tÃ­nh cháº¥t Ä‘e dá»a, tá»‘ng tiá»n hoáº·c Ä‘Ã¡nh vÃ o lÃ²ng thÆ°Æ¡ng cáº£m cá»±c Ä‘á»™ khÃ´ng?", risk: 15 },
-  { q: "Báº¡n cÃ³ nháº­n tháº¥y cÃ¡c lá»—i logic trong cÃ¢u chuyá»‡n cá»§a Ä‘á»‘i phÆ°Æ¡ng khÃ´ng?", risk: 10 }
+  { q: "Đối phương có yêu cầu bạn thực hiện các hành động khẩn cấp về tài chính không?", risk: 30 },
+  { q: "Giọng nói hoặc hình ảnh có các dấu hiệu giật lag, nhiễu pixel hoặc khẩu hình không khớp?", risk: 25 },
+  { q: "Đối phương có từ chối thực hiện các yêu cầu xác thực như vẫy tay trước mặt hoặc quay đầu không?", risk: 20 },
+  { q: "Lý do liên lạc có tính chất đe dọa, tống tiền hoặc đánh vào lòng thương cảm cực độ không?", risk: 15 },
+  { q: "Bạn có nhận thấy các lỗi logic trong câu chuyện của đối phương không?", risk: 10 }
 ];
 
 const behaviorQuestionsEn = [
@@ -158,7 +158,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
     setIsShielding(true);
     setShieldProgress(0);
     
-    // Táº¡o má»™t áº£nh táº¡m Ä‘á»ƒ render lÃªn Canvas
+    // Tạo một ảnh tạm để render lên Canvas
     const img = new Image();
     img.src = shieldImage;
     img.onload = () => {
@@ -173,11 +173,11 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
         
-        // --- THUáº¬T TOÃN TIÃŠM NHIá»„U Äá»I KHÃNG (ADVERSARIAL PERTURBATION) ---
-        // ChÃºng ta thay Ä‘á»•i tá»«ng pixel má»™t cÃ¡ch tinh vi Ä‘á»ƒ "Ä‘Ã¡nh lá»«a" thuáº­t toÃ¡n nháº­n diá»‡n.
-        // Máº¯t ngÆ°á»i khÃ´ng tháº¥y nhÆ°ng AI sáº½ bá»‹ sai lá»‡ch feature mapping.
+        // --- THUẬT TOÁN TIÊM NHIỄU ĐỐI KHÁNG (ADVERSARIAL PERTURBATION) ---
+        // Chúng ta thay đổi từng pixel một cách tinh vi để "đánh lừa" thuật toán nhận diện.
+        // Mắt người không thấy nhưng AI sẽ bị sai lệch feature mapping.
         for (let i = 0; i < data.length; i += 4) {
-            // Thay Ä‘á»•i nháº¹ (biÃªn Ä‘á»™ +/- 4 Ä‘Æ¡n vá»‹ mÃ u)
+            // Thay đổi nhẹ (biên độ +/- 4 đơn vị màu)
             const noise = Math.sin(i / 10) * 4; 
             data[i] = Math.min(255, Math.max(0, data[i] + noise));     // R
             data[i+1] = Math.min(255, Math.max(0, data[i+1] + noise)); // G
@@ -186,7 +186,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
         
         ctx.putImageData(imageData, 0, 0);
         
-        // MÃ´ phá»ng quÃ¡ trÃ¬nh xá»­ lÃ½ "náº·ng" Ä‘á»ƒ tÄƒng tÃ­nh thuyáº¿t phá»¥c
+        // Mô phỏng quá trình xử lý "nặng" để tăng tính thuyết phục
         let p = 0;
         const interval = setInterval(() => {
             p += 5;
@@ -196,7 +196,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                 setProtectedDataUrl(canvas.toDataURL('image/png'));
                 setIsShielding(false);
             }
-        }, 800 / 20); // ~1s cho mÆ°á»£t
+        }, 800 / 20); // ~1s cho mượt
     };
   };
 
@@ -242,9 +242,9 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
     const isSimulationMode = file.size > 4.5 * 1024 * 1024;
 
     const baseLogsVi = [
-      "Khá»Ÿi táº¡o Engine PhÃ¢n tÃ­ch Äa phÆ°Æ¡ng thá»©c...",
-      "Äang trÃ­ch xuáº¥t siÃªu dá»¯ liá»‡u (EXIF/Metadata)...",
-      `KÃ­ch thÆ°á»›c tá»‡p: ${(file.size / 1024).toFixed(2)} KB. Äá»‹nh dáº¡ng: ${file.type || 'unknown'}`,
+      "Khởi tạo Engine Phân tích Đa phương thức...",
+      "Đang trích xuất siêu dữ liệu (EXIF/Metadata)...",
+      `Kích thước tệp: ${(file.size / 1024).toFixed(2)} KB. Định dạng: ${file.type || 'unknown'}`,
     ];
     
     const baseLogsEn = [
@@ -259,7 +259,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
     intervalRef.current = setInterval(() => {
         if (currentLog < initialLogs.length) {
             setScanLogs(prev => [...prev, initialLogs[currentLog]]);
-            setScanProgress(Math.floor(((currentLog + 1) / 10) * 100)); // Láº¥y 30% Ä‘áº§u
+            setScanProgress(Math.floor(((currentLog + 1) / 10) * 100)); // Lấy 30% đầu
             currentLog++;
         } else {
             clearInterval(intervalRef.current!);
@@ -268,7 +268,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
     }, 700);
 
     const processActualScan = async (demo: boolean) => {
-        setScanLogs(prev => [...prev, lang === 'vi' ? "Giao tiáº¿p vá»›i AI Gemini Forensics Core..." : "Connecting to AI Gemini Forensics Core..."]);
+        setScanLogs(prev => [...prev, lang === 'vi' ? "Giao tiếp với AI Gemini Forensics Core..." : "Connecting to AI Gemini Forensics Core..."]);
         setScanProgress(40);
 
         if (demo) {
@@ -295,11 +295,11 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                     
                     setScanProgress(100);
                     setIsScanning(false);
-                    setScanLogs(prev => [...prev, lang === 'vi' ? "PhÃ¢n tÃ­ch AI hoÃ n táº¥t." : "AI Analysis complete."]);
+                    setScanLogs(prev => [...prev, lang === 'vi' ? "Phân tích AI hoàn tất." : "AI Analysis complete."]);
                     setScanResult(result);
 
                 } catch (err) {
-                    console.error("Lá»—i gá»i Scan Media API:", err);
+                    console.error("Lỗi gọi Scan Media API:", err);
                     runMockScan(); 
                 }
             };
@@ -311,10 +311,10 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
 
     const runMockScan = () => {
         const mockLogs = lang === 'vi' ? [
-            "QuÃ©t lá»—i ná»™i suy khÃ´ng gian (Spatial Glitches)...",
-            "PhÃ¢n tÃ­ch vi mÃ´ nhá»‹p tim quang há»c (rPPG)...",
-            "Äang Ä‘á»‘i chiáº¿u vá»›i cÆ¡ sá»Ÿ dá»¯ liá»‡u Zero-Day Deepfake...",
-            "PhÃ¢n tÃ­ch hoÃ n táº¥t. Cháº¿ Ä‘á»™ MÃ” PHá»ŽNG."
+            "Quét lỗi nội suy không gian (Spatial Glitches)...",
+            "Phân tích vi mô nhịp tim quang học (rPPG)...",
+            "Đang đối chiếu với cơ sở dữ liệu Zero-Day Deepfake...",
+            "Phân tích hoàn tất. Chế độ MÔ PHỎNG."
         ] : [
             "Scanning for Spatial Interpolation Glitches...",
             "Analyzing optical heart rate (rPPG)...",
@@ -392,7 +392,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
           {/* PRIMARY: BEHAVIORAL SCANNER */}
           <div className="transparent-panel border border-primary/20 rounded-3xl p-6 md:p-10 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col lg:min-h-[520px]">
             <h3 className="text-primary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-center gap-3 border-b border-primary/10 pb-4">
-               <BrainCircuit size={20} /> {lang === 'vi' ? '1. QUÃ‰T NGá»® Cáº¢NH HÃ€NH VI' : '1. BEHAVIORAL CONTEXT SCAN'}
+               <BrainCircuit size={20} /> {lang === 'vi' ? '1. QUÉT NGỮ CẢNH HÀNH VI' : '1. BEHAVIORAL CONTEXT SCAN'}
             </h3>
             
             <div className="flex-1 flex flex-col justify-center">
@@ -400,7 +400,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
              <div className="w-full">
                <div className="flex justify-between items-center mb-6">
                   <span className="text-primary font-mono text-xs uppercase font-bold tracking-widest flex items-center gap-2">
-                    <Activity size={14}/> {lang === 'vi' ? 'THU THáº¬P Dá»® LIá»†U LOGIC' : 'GATHERING LOGIC DATA'}
+                    <Activity size={14}/> {lang === 'vi' ? 'THU THẬP DỮ LIỆU LOGIC' : 'GATHERING LOGIC DATA'}
                   </span>
                   <span className="text-gray-500 font-mono text-xs font-bold">{step + 1} / {questions.length}</span>
                </div>
@@ -415,10 +415,10 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
 
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <button onClick={() => handleAnswer(true)} className="bg-red-500/10 border border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active:scale-95">
-                    {lang === 'vi' ? 'CÃ“ (ÄÃNG NGá»œ)' : 'YES (SUSPICIOUS)'}
+                    {lang === 'vi' ? 'CÓ (ĐÁNG NGỜ)' : 'YES (SUSPICIOUS)'}
                   </button>
                   <button onClick={() => handleAnswer(false)} className="bg-green-500/10 border border-green-500/30 text-green-500 hover:bg-green-500 hover:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active:scale-95">
-                    {lang === 'vi' ? 'KHÃ”NG (BÃŒNH THÆ¯á»œNG)' : 'NO (NORMAL)'}
+                    {lang === 'vi' ? 'KHÔNG (BÌNH THƯỜNG)' : 'NO (NORMAL)'}
                   </button>
                </div>
              </div>
@@ -435,7 +435,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                </div>
                
                <div className="text-gray-400 font-mono text-xs mb-2 uppercase tracking-widest">
-                  {lang === 'vi' ? 'CHá»ˆ Sá» Rá»¦I RO THAO TÃšNG:' : 'MANIPULATION RISK INDEX:'}
+                  {lang === 'vi' ? 'CHỈ SỐ RỦI RO THAO TÚNG:' : 'MANIPULATION RISK INDEX:'}
                </div>
                <h3 className="text-4xl font-black text-white mb-6 tracking-tighter"
                    style={{ color: riskScore >= 60 ? '#EF4444' : riskScore >= 30 ? '#EAB308' : '#22C55E' }}>
@@ -444,15 +444,15 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                
                <p className="transparent-panel-soft text-gray-300 mb-8 text-sm leading-relaxed p-5 rounded-2xl border border-white/10">
                   {riskScore >= 60 
-                    ? (lang === 'vi' ? 'Cáº¢NH BÃO Äá»Ž: Ká»‹ch báº£n trÃ¹ng khá»›p cao vá»›i cÃ¡c chiáº¿n dá»‹ch lá»«a Ä‘áº£o Deepfake tinh vi. Äá»‘i tÆ°á»£ng Ä‘ang dÃ¹ng cÃ¡c biá»‡n phÃ¡p tÃ¢m lÃ½ Ä‘á»ƒ báº» gÃ£y phÃ²ng vá»‡ cá»§a báº¡n. TUYá»†T Äá»I KHÃ”NG CHUYá»‚N TIá»€N. HÃ£y dáº­p mÃ¡y vÃ  gá»i láº¡i qua máº¡ng viá»…n thÃ´ng di Ä‘á»™ng gá»‘c (GSM).' : 'RED ALERT: High match with sophisticated Deepfake scam campaigns. Psychological manipulation detected. DO NOT TRANSFER MONEY. Hang up and callback via standard cellular network.')
+                    ? (lang === 'vi' ? 'CẢNH BÁO ĐỎ: Kịch bản trùng khớp cao với các chiến dịch lừa đảo Deepfake tinh vi. Đối tượng đang dùng các biện pháp tâm lý để bẻ gãy phòng vệ của bạn. TUYỆT ĐỐI KHÔNG CHUYỂN TIỀN. Hãy dập máy và gọi lại qua mạng viễn thông di động gốc (GSM).' : 'RED ALERT: High match with sophisticated Deepfake scam campaigns. Psychological manipulation detected. DO NOT TRANSFER MONEY. Hang up and callback via standard cellular network.')
                     : riskScore >= 30 
-                    ? (lang === 'vi' ? 'Cáº¢NH BÃO VÃ€NG: Xuáº¥t hiá»‡n cÃ¡c Ä‘iá»ƒm báº¥t há»£p lÃ½ trong ngá»¯ cáº£nh giao tiáº¿p. Äá»«ng tin vÃ o máº¯t báº¡n lÃºc nÃ y, hÃ£y yÃªu cáº§u Ä‘á»‘i phÆ°Æ¡ng lÃ m má»™t hÃ nh Ä‘á»™ng báº¥t thÆ°á»ng (váº«y tay che máº·t) hoáº·c há»i má»™t cÃ¢u há»i máº¹o chá»‰ 2 ngÆ°á»i biáº¿t.' : 'YELLOW ALERT: Logical inconsistencies detected. Do not trust your eyes right now. Ask the person to perform an unusual action (wave hand across face) or ask a trick secret question.')
-                    : (lang === 'vi' ? 'AN TOÃ€N: Cuá»™c gá»i cÃ³ váº» há»£p lá»‡ vÃ  khÃ´ng chá»©a cÃ¡c máº«u thao tÃºng tÃ¢m lÃ½ thÆ°á»ng tháº¥y cá»§a tá»™i pháº¡m AI. DÃ¹ váº­y, hÃ£y luÃ´n duy trÃ¬ thÃ³i quen báº£o máº­t cao.' : 'SAFE: The interaction appears valid without common AI manipulation patterns. Maintain high security habits regardless.')
+                    ? (lang === 'vi' ? 'CẢNH BÁO VÀNG: Xuất hiện các điểm bất hợp lý trong ngữ cảnh giao tiếp. Đừng tin vào mắt bạn lúc này, hãy yêu cầu đối phương làm một hành động bất thường (vẫy tay che mặt) hoặc hỏi một câu hỏi mẹo chỉ 2 người biết.' : 'YELLOW ALERT: Logical inconsistencies detected. Do not trust your eyes right now. Ask the person to perform an unusual action (wave hand across face) or ask a trick secret question.')
+                    : (lang === 'vi' ? 'AN TOÀN: Cuộc gọi có vẻ hợp lệ và không chứa các mẫu thao túng tâm lý thường thấy của tội phạm AI. Dù vậy, hãy luôn duy trì thói quen bảo mật cao.' : 'SAFE: The interaction appears valid without common AI manipulation patterns. Maintain high security habits regardless.')
                   }
                </p>
 
                <button onClick={resetBehaviorScan} className="w-full bg-white/5 text-white hover:bg-white hover:text-black border border-white/10 py-4 rounded-xl font-bold text-xs uppercase tracking-widest transition-all">
-                  {lang === 'vi' ? 'TIáº¾N HÃ€NH QUÃ‰T TRÆ¯á»œNG Há»¢P Má»šI' : 'SCAN ANOTHER CASE'}
+                  {lang === 'vi' ? 'TIẾN HÀNH QUÉT TRƯỜNG HỢP MỚI' : 'SCAN ANOTHER CASE'}
                </button>
              </div>
            )}
@@ -465,7 +465,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
             <h3 className="text-secondary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-start sm:items-center gap-3 border-b border-secondary/10 pb-4">
                <FileSearch size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
                <div className="flex items-center gap-2 flex-wrap w-full">
-                 <span>{lang === 'vi' ? '2. MÃ” PHá»ŽNG PHÃP Y (DEMO)' : '2. FORENSICS SIMULATION (DEMO)'}</span>
+                 <span>{lang === 'vi' ? '2. MÔ PHỎNG PHÁP Y (DEMO)' : '2. FORENSICS SIMULATION (DEMO)'}</span>
                  <span className="bg-red-500/20 text-red-500 text-[9px] px-2 py-0.5 rounded-full animate-pulse border border-red-500/30 tracking-widest ml-auto sm:ml-0 mt-0.5">{lang === 'vi' ? 'SIMULATION ONLY' : 'SIMULATION ONLY'}</span>
                </div>
             </h3>
@@ -484,13 +484,13 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                   <UploadCloud size={32} className="text-secondary" />
                 </div>
                 <h3 className="text-white font-bold text-lg mb-2">
-                  {lang === 'vi' ? 'Táº£i tá»‡p Ä‘a phÆ°Æ¡ng tiá»‡n lÃªn Ä‘á»ƒ giÃ¡m Ä‘á»‹nh vi mÃ´' : 'Upload media file for micro-forensics'}
+                  {lang === 'vi' ? 'Tải tệp đa phương tiện lên để giám định vi mô' : 'Upload media file for micro-forensics'}
                 </h3>
                 <p className="text-gray-500 text-sm mb-8">
-                  {lang === 'vi' ? 'Há»— trá»£: JPG, PNG, MP4, MP3, WAV (Tá»‘i Ä‘a 50MB)' : 'Supports: JPG, PNG, MP4, MP3, WAV (Max 50MB)'}
+                  {lang === 'vi' ? 'Hỗ trợ: JPG, PNG, MP4, MP3, WAV (Tối đa 50MB)' : 'Supports: JPG, PNG, MP4, MP3, WAV (Max 50MB)'}
                 </p>
                 <div className="inline-flex bg-secondary text-black px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest items-center gap-2 group-hover:bg-white transition-colors shadow-lg shadow-secondary/20">
-                  <FileSearch size={16} /> {lang === 'vi' ? 'CHá»ŒN Tá»†P PHÃ‚N TÃCH' : 'SELECT FILE TO ANALYZE'}
+                  <FileSearch size={16} /> {lang === 'vi' ? 'CHỌN TỆP PHÂN TÍCH' : 'SELECT FILE TO ANALYZE'}
                 </div>
              </div>
            ) : (
@@ -499,7 +499,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                  <FileSearch size={24} className="text-secondary shrink-0" />
                  <div className="flex-1 min-w-0">
                    <div className="text-white font-bold text-sm truncate mb-1">{file.name}</div>
-                   <div className="text-gray-400 font-mono text-xs">{(file.size / (1024 * 1024)).toFixed(2)} MB â€¢ {file.type || 'Unknown Format'}</div>
+                   <div className="text-gray-400 font-mono text-xs">{(file.size / (1024 * 1024)).toFixed(2)} MB • {file.type || 'Unknown Format'}</div>
                  </div>
                  <button 
                     onClick={() => { 
@@ -508,7 +508,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                         if (intervalRef.current) clearInterval(intervalRef.current); 
                     }} 
                     className="text-gray-500 hover:text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-colors">
-                    {lang === 'vi' ? 'ÄÃ“NG' : 'CLOSE'}
+                    {lang === 'vi' ? 'ĐÓNG' : 'CLOSE'}
                  </button>
                </div>
 
@@ -521,7 +521,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                      onClick={startForensicsScan}
                      className="w-full"
                    >
-                     {lang === 'vi' ? 'KHá»žI Äá»˜NG MÃY QUÃ‰T PHÃP Y' : 'START FORENSICS SCANNER'}
+                     {lang === 'vi' ? 'KHỞI ĐỘNG MÁY QUÉT PHÁP Y' : 'START FORENSICS SCANNER'}
                    </GlowButton>
                  </div>
                ) : (
@@ -559,11 +559,11 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                       <div className="mt-6 pt-5 border-t border-white/10 text-center animate-in fade-in duration-700">
                          <div className="inline-block bg-secondary/10 border border-secondary/30 text-secondary px-4 py-2 rounded-lg text-xs font-bold mb-4 flex items-center gap-2 mx-auto">
                             <AlertTriangle size={14} /> 
-                            {lang === 'vi' ? 'PHÃT HIá»†N Dáº¤U Váº¾T Báº¤T THÆ¯á»œNG (Cáº¦N XÃC MINH)' : 'ANOMALIES DETECTED (VERIFICATION NEEDED)'}
+                            {lang === 'vi' ? 'PHÁT HIỆN DẤU VẾT BẤT THƯỜNG (CẦN XÁC MINH)' : 'ANOMALIES DETECTED (VERIFICATION NEEDED)'}
                          </div>
                          <p className="text-gray-400 text-[11px] mb-6 leading-relaxed">
                            {lang === 'vi' 
-                               ? '[ÄÃ‚Y LÃ€ TÃNH NÄ‚NG MÃ” PHá»ŽNG] - TrÃªn thá»±c táº¿, há»‡ thá»‘ng sáº½ phÃ¢n tÃ­ch quang phá»• vÃ  pixel. Tá»‡p quÃ¡ lá»›n hoáº·c API tháº¥t báº¡i nÃªn há»‡ thá»‘ng hiá»ƒn thá»‹ káº¿t quáº£ mÃ´ phá»ng.'
+                               ? '[ĐÂY LÀ TÍNH NĂNG MÔ PHỎNG] - Trên thực tế, hệ thống sẽ phân tích quang phổ và pixel. Tệp quá lớn hoặc API thất bại nên hệ thống hiển thị kết quả mô phỏng.'
                                : '[SIMULATION MODE] - File too large or API failed, falling back to simulated results.'}
                          </p>
                          <button 
@@ -573,7 +573,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                                 if (fileInputRef.current) fileInputRef.current.value = '';
                             }} 
                             className="w-full text-white border border-white/20 hover:bg-white hover:text-black py-3 rounded-xl text-xs font-bold transition-all">
-                           {lang === 'vi' ? 'QUÃ‰T Tá»†P KHÃC' : 'SCAN ANOTHER FILE'}
+                           {lang === 'vi' ? 'QUÉT TỆP KHÁC' : 'SCAN ANOTHER FILE'}
                          </button>
                       </div>
                     )}
@@ -582,7 +582,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                       <div className="mt-6 pt-5 border-t border-white/10 text-left animate-in fade-in duration-700">
                          <div className={`p-4 rounded-xl border mb-4 font-sans shadow-[0_0_20px_rgba(0,0,0,0.5)] ${scanResult.riskScore >= 70 ? 'bg-red-500/10 border-red-500/30' : scanResult.riskScore >= 40 ? 'bg-yellow-500/10 border-yellow-500/30' : 'bg-green-500/10 border-green-500/30'}`}>
                              <div className="flex justify-between items-center mb-2">
-                                 <span className="font-bold text-xs uppercase text-gray-300">{lang === 'vi' ? 'Káº¾T QUáº¢ ÄÃNH GIÃ (AI FLASH):' : 'EVALUATION SCORE (AI FLASH):'}</span>
+                                 <span className="font-bold text-xs uppercase text-gray-300">{lang === 'vi' ? 'KẾT QUẢ ĐÁNH GIÁ (AI FLASH):' : 'EVALUATION SCORE (AI FLASH):'}</span>
                                  <span className={`text-xl font-black ${scanResult.riskScore >= 70 ? 'text-red-500' : scanResult.riskScore >= 40 ? 'text-yellow-500' : 'text-green-500'}`}>
                                     {scanResult.riskScore}% RISK
                                  </span>
@@ -605,7 +605,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                                 if (fileInputRef.current) fileInputRef.current.value = '';
                             }} 
                             className="w-full text-white border border-white/20 hover:bg-secondary hover:text-white hover:border-secondary py-3 rounded-xl text-xs font-bold transition-all mt-2">
-                           {lang === 'vi' ? 'QUÃ‰T Tá»†P KHÃC' : 'SCAN ANOTHER FILE'}
+                           {lang === 'vi' ? 'QUÉT TỆP KHÁC' : 'SCAN ANOTHER FILE'}
                          </button>
                       </div>
                     )}
@@ -621,7 +621,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
           <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00f0ff] to-transparent opacity-50"></div>
           <h3 className="text-[#00f0ff] font-black text-sm md:text-base uppercase tracking-widest mb-4 flex items-center justify-start gap-3 w-full border-b border-[#00f0ff]/10 pb-4">
             <ScanLine size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
-            <span>{lang === 'vi' ? '3. MÃY QUÃ‰T Sá»¨C Sá»NG (rPPG LIVENESS DETECTOR)' : '3. rPPG LIVENESS DETECTOR'}</span>
+            <span>{lang === 'vi' ? '3. MÁY QUÉT SỨC SỐNG (rPPG LIVENESS DETECTOR)' : '3. rPPG LIVENESS DETECTOR'}</span>
             <span className="bg-[#00f0ff]/20 text-[#00f0ff] text-[9px] px-2 py-0.5 rounded-full border border-[#00f0ff]/30 tracking-widest uppercase ml-2 animate-pulse">
               LIVE DEMO
             </span>
@@ -629,7 +629,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
           
           <p className="text-gray-400 text-sm md:text-sm text-center max-w-4xl mb-8 leading-relaxed mx-auto w-full">
             {lang === 'vi' 
-              ? 'Dá»±a trÃªn nguyÃªn lÃ½ cá»§a Intel FakeCatcher. CÃ´ng nghá»‡ rPPG phÃ¢n tÃ­ch sá»± thay Ä‘á»•i quang phá»• mÃ¡u Ä‘á» Ä‘áº­p theo nhá»‹p tim dÆ°á»›i da máº·t. Deepfake khÃ´ng cÃ³ dÃ²ng mÃ¡u bÃªn trong nÃªn khÃ´ng thá»ƒ vÆ°á»£t qua hÃ ng rÃ o phÃ²ng thá»§ nÃ y.'
+              ? 'Dựa trên nguyên lý của Intel FakeCatcher. Công nghệ rPPG phân tích sự thay đổi quang phổ máu đỏ đập theo nhịp tim dưới da mặt. Deepfake không có dòng máu bên trong nên không thể vượt qua hàng rào phòng thủ này.'
               : 'Based on Intel FakeCatcher. Analyzes photoplethysmography (rPPG) sub-surface blood flow. Deepfakes lack a circulatory system and cannot spoof this biological signal.'}
           </p>
 
@@ -640,7 +640,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
               icon={<ScanLine size={18} />}
               onClick={toggleLiveness}
             >
-              {lang === 'vi' ? 'KÃCH HOáº T CAMERA SINH TRáº®C' : 'INITIALIZE BIOMETRIC CAMERA'}
+              {lang === 'vi' ? 'KÍCH HOẠT CAMERA SINH TRẮC' : 'INITIALIZE BIOMETRIC CAMERA'}
             </GlowButton>
           ) : (
             <div className="w-full flex flex-col lg:flex-row gap-6 items-stretch animate-in zoom-in duration-500">
@@ -658,7 +658,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
               <div className="transparent-panel-terminal w-full lg:w-[350px] border border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-2xl">
                 <div>
                     <div className="text-[#00f0ff] font-mono text-xs uppercase font-bold tracking-widest mb-4 flex items-center justify-between">
-                      <span>{lang === 'vi' ? 'LÆ¯U LÆ¯á»¢NG MÃU (rPPG)' : 'BLOOD FLOW (rPPG)'}</span>
+                      <span>{lang === 'vi' ? 'LƯU LƯỢNG MÁU (rPPG)' : 'BLOOD FLOW (rPPG)'}</span>
                       <span className="text-green-500 animate-pulse bg-green-500/10 px-2 py-1 rounded">72 BPM</span>
                     </div>
                     <div className="h-24 w-full border border-[#00f0ff]/20 bg-[#00f0ff]/5 rounded-lg flex items-center justify-center overflow-hidden relative mb-8">
@@ -672,22 +672,22 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
 
                 <div className="space-y-4 font-mono mb-8">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-gray-400">{lang === 'vi' ? 'Háº¥p thá»¥ sÃ¡ng sinh há»c:' : 'Bio-light absorption:'}</span>
+                      <span className="text-gray-400">{lang === 'vi' ? 'Hấp thụ sáng sinh học:' : 'Bio-light absorption:'}</span>
                       <span className="text-green-500 font-bold">PASS <span className="inline-block w-2 h-2 bg-green-500 rounded-full ml-1 animate-pulse"></span></span>
                     </div>
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-gray-400">{lang === 'vi' ? 'Nhiá»…u khÃ´ng gian tÄ©nh:' : 'Static spatial noise:'}</span>
+                      <span className="text-gray-400">{lang === 'vi' ? 'Nhiễu không gian tĩnh:' : 'Static spatial noise:'}</span>
                       <span className="text-green-500 font-bold">NONE <span className="inline-block w-2 h-2 bg-green-500 rounded-full ml-1 animate-[pulse_1.5s_infinite]"></span></span>
                     </div>
                     <div className="mt-6 pt-4 border-t border-white/10">
                       <div className="bg-green-500/10 border border-green-500/30 text-green-500 p-4 rounded-xl text-center font-black text-sm tracking-widest transform transition-transform hover:scale-105 cursor-default">
-                          {lang === 'vi' ? 'Káº¾T LUáº¬N: NGÆ¯á»œI THáº¬T' : 'RESULT: REAL HUMAN'}
+                          {lang === 'vi' ? 'KẾT LUẬN: NGƯỜI THẬT' : 'RESULT: REAL HUMAN'}
                       </div>
                     </div>
                 </div>
 
                 <button onClick={toggleLiveness} className="w-full text-gray-500 hover:text-white hover:bg-white/10 py-3 rounded-xl text-[10px] uppercase font-bold tracking-widest transition-all border border-transparent hover:border-white/10">
-                    {lang === 'vi' ? 'Táº®T MÃY QUÃ‰T' : 'SHUTDOWN SCANNER'}
+                    {lang === 'vi' ? 'TẮT MÁY QUÉT' : 'SHUTDOWN SCANNER'}
                 </button>
               </div>
             </div>
@@ -706,7 +706,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                 <div>
                   <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-3">
                      <ShieldCheck size={28} className="text-green-500" />
-                     {lang === 'vi' ? 'KHIÃŠN CHá»NG AI (FAWKES)' : 'ANTI-AI FAWKES SHIELD'}
+                     {lang === 'vi' ? 'KHIÊN CHỐNG AI (FAWKES)' : 'ANTI-AI FAWKES SHIELD'}
                   </h3>
                   <p className="text-gray-400 text-sm leading-relaxed mb-6">
                      {t.tools_protect_desc}
@@ -726,10 +726,10 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                           <UploadCloud size={28} className="text-green-500" />
                       </div>
                       <span className="text-green-500 font-bold text-sm tracking-widest uppercase mb-2">
-                          {lang === 'vi' ? 'CHá»ŒN áº¢NH Cáº¦N Báº¢O Vá»†' : 'SELECT PHOTO TO PROTECT'}
+                          {lang === 'vi' ? 'CHỌN ẢNH CẦN BẢO VỆ' : 'SELECT PHOTO TO PROTECT'}
                       </span>
                       <span className="text-gray-500 text-xs">
-                          {shieldFile ? shieldFile.name : (lang === 'vi' ? 'Há»— trá»£ JPG, PNG (Tá»‘i Ä‘a 10MB)' : 'Supports JPG, PNG (Max 10MB)')}
+                          {shieldFile ? shieldFile.name : (lang === 'vi' ? 'Hỗ trợ JPG, PNG (Tối đa 10MB)' : 'Supports JPG, PNG (Max 10MB)')}
                       </span>
                    </div>
                 </div>
@@ -744,8 +744,8 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                      className="w-full"
                    >
                      {isShielding
-                       ? (lang === 'vi' ? 'ÄANG TIÃŠM NHIá»„U Äá»I KHÃNG...' : 'INJECTING ADVERSARIAL NOISE...')
-                       : (lang === 'vi' ? 'KÃCH HOáº T KHIÃŠN TÃ€NG HÃŒNH' : 'ACTIVATE INVISIBLE SHIELD')}
+                       ? (lang === 'vi' ? 'ĐANG TIÊM NHIỄU ĐỐI KHÁNG...' : 'INJECTING ADVERSARIAL NOISE...')
+                       : (lang === 'vi' ? 'KÍCH HOẠT KHIÊN TÀNG HÌNH' : 'ACTIVATE INVISIBLE SHIELD')}
                    </GlowButton>
                 )}
              </div>
@@ -755,7 +755,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                    <div className="text-gray-600 flex flex-col items-center max-w-[200px] text-center p-8">
                      <ShieldCheck size={48} className="text-gray-800 mb-4 opacity-50" />
                      <span className="text-xs uppercase tracking-widest font-bold">
-                       {lang === 'vi' ? 'KHUNG XEM TRÆ¯á»šC AN TOÃ€N' : 'SECURE PREVIEW PANEL'}
+                       {lang === 'vi' ? 'KHUNG XEM TRƯỚC AN TOÀN' : 'SECURE PREVIEW PANEL'}
                      </span>
                    </div>
                 ) : (
@@ -772,7 +772,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                                download={"deepfense_shielded_" + shieldFile?.name}
                                className="bg-green-500 text-black px-6 py-3 rounded-full font-black text-xs uppercase tracking-widest shadow-[0_10px_30px_rgba(34,197,94,0.4)] hover:scale-105 transition-transform flex items-center gap-2 border-2 border-green-400"
                             >
-                               <Download size={16} /> {lang === 'vi' ? 'Táº¢I áº¢NH AN TOÃ€N' : 'DOWNLOAD SAFE IMAGE'}
+                               <Download size={16} /> {lang === 'vi' ? 'TẢI ẢNH AN TOÀN' : 'DOWNLOAD SAFE IMAGE'}
                             </a>
                          </div>
                       )}

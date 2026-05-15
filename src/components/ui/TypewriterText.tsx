@@ -1,7 +1,7 @@
 /**
- * DEEPFENSE.ONLINE â€” TypewriterText
- * Hiá»‡u á»©ng Ä‘Ã¡nh mÃ¡y tá»«ng kÃ½ tá»± vá»›i cursor nháº¥p nhÃ¡y.
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — TypewriterText
+ * Hiệu ứng đánh máy từng ký tự với cursor nhấp nháy.
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import React, { useState, useEffect } from 'react';

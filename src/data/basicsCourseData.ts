@@ -59,580 +59,580 @@ export const basicsCourse = {
     {
       id: 0,
       part: "foundation",
-      title: "Má»™t ngÃ y bÃ¬nh thÆ°á»ng trÃªn khÃ´ng gian sá»‘",
-      duration: "75 phÃºt",
+      title: "Một ngày bình thường trên không gian số",
+      duration: "75 phút",
       level: "Foundation",
-      scenario: "Má»™t ngÃ y cá»§a An báº¯t Ä‘áº§u ráº¥t bÃ¬nh thÆ°á»ng: má»™t video Ä‘áº§u tÆ° cÃ³ ngÆ°á»i ná»•i tiáº¿ng, má»™t tin nháº¯n mÆ°á»£n tiá»n gáº¥p, má»™t hÃ¬nh áº£nh nháº¡y cáº£m trong nhÃ³m chat, rá»“i má»™t cuá»™c gá»i video giá»‘ng ngÆ°á»i thÃ¢n. KhÃ´ng tÃ¬nh huá»‘ng nÃ o tá»± nháº­n mÃ¬nh lÃ  deepfake. Táº¥t cáº£ Ä‘á»u chá»‰ yÃªu cáº§u An pháº£n á»©ng tháº­t nhanh.",
+      scenario: "Một ngày của An bắt đầu rất bình thường: một video đầu tư có người nổi tiếng, một tin nhắn mượn tiền gấp, một hình ảnh nhạy cảm trong nhóm chat, rồi một cuộc gọi video giống người thân. Không tình huống nào tự nhận mình là deepfake. Tất cả đều chỉ yêu cầu An phản ứng thật nhanh.",
       outcomes: [
-        "Hiá»ƒu vÃ¬ sao deepfake khÃ´ng cÃ²n lÃ  chuyá»‡n xa láº¡ cá»§a ngÆ°á»i ná»•i tiáº¿ng hay phim áº£nh.",
-        "Nháº­n ra báº¥t ká»³ ngÆ°á»i dÃ¹ng Internet nÃ o cÅ©ng cÃ³ thá»ƒ gáº·p ná»™i dung giáº£ máº¡o, lá»«a Ä‘áº£o hoáº·c gÃ¢y hiá»ƒu nháº§m.",
-        "LÃ m quen vá»›i cÃ¡ch há»c cá»§a DEEPFENSE BASIC: cÃ¢u chuyá»‡n, quan sÃ¡t, quyáº¿t Ä‘á»‹nh vÃ  pháº£n há»“i.",
-        "Náº¯m quy trÃ¬nh Deepfense Check: Pause, Observe, Verify, Trace, Decide."
+        "Hiểu vì sao deepfake không còn là chuyện xa lạ của người nổi tiếng hay phim ảnh.",
+        "Nhận ra bất kỳ người dùng Internet nào cũng có thể gặp nội dung giả mạo, lừa đảo hoặc gây hiểu nhầm.",
+        "Làm quen với cách học của DEEPFENSE BASIC: câu chuyện, quan sát, quyết định và phản hồi.",
+        "Nắm quy trình Deepfense Check: Pause, Observe, Verify, Trace, Decide."
       ],
       sections: [
         {
-          title: "0.1 ChÃ o má»«ng vÃ  Ä‘áº·t váº¥n Ä‘á»",
+          title: "0.1 Chào mừng và đặt vấn đề",
           lessons: [
-            lesson("0.1.1", "ChÃ o má»«ng Ä‘áº¿n vá»›i DEEPFENSE BASIC", [
-              "ChÃ o má»«ng báº¡n Ä‘áº¿n vá»›i DEEPFENSE BASIC. ÄÃ¢y lÃ  khÃ³a há»c ná»n táº£ng vá» deepfake vÃ  phÃ²ng vá»‡ trÆ°á»›c ná»™i dung giáº£ máº¡o trÃªn khÃ´ng gian sá»‘. Báº¡n khÃ´ng cáº§n biáº¿t láº­p trÃ¬nh, khÃ´ng cáº§n hiá»ƒu sÃ¢u vá» trÃ­ tuá»‡ nhÃ¢n táº¡o, cÅ©ng khÃ´ng cáº§n lÃ  chuyÃªn gia an toÃ n thÃ´ng tin.",
-              "Báº¡n chá»‰ cáº§n lÃ  má»™t ngÆ°á»i Ä‘ang sá»‘ng trong tháº¿ giá»›i sá»‘: cÃ³ Ä‘iá»‡n thoáº¡i, dÃ¹ng máº¡ng xÃ£ há»™i, xem video ngáº¯n, nháº­n tin nháº¯n, nghe cuá»™c gá»i, tham gia nhÃ³m chat vÃ  Ä‘Ã´i khi tá»± há»i: ná»™i dung nÃ y cÃ³ tháº­t khÃ´ng?",
-              "Trong khÃ³a há»c nÃ y, chÃºng ta khÃ´ng há»c cÃ¡ch táº¡o deepfake. ChÃºng ta há»c cÃ¡ch nháº­n ra rá»§i ro, kiá»ƒm chá»©ng thÃ´ng tin, báº£o vá»‡ báº£n thÃ¢n, báº£o vá»‡ ngÆ°á»i khÃ¡c vÃ  ra quyáº¿t Ä‘á»‹nh bÃ¬nh tÄ©nh hÆ¡n trÆ°á»›c nhá»¯ng ná»™i dung cÃ³ thá»ƒ Ä‘Ã¡nh lá»«a máº¯t, tai vÃ  cáº£m xÃºc."
+            lesson("0.1.1", "Chào mừng đến với DEEPFENSE BASIC", [
+              "Chào mừng bạn đến với DEEPFENSE BASIC. Đây là khóa học nền tảng về deepfake và phòng vệ trước nội dung giả mạo trên không gian số. Bạn không cần biết lập trình, không cần hiểu sâu về trí tuệ nhân tạo, cũng không cần là chuyên gia an toàn thông tin.",
+              "Bạn chỉ cần là một người đang sống trong thế giới số: có điện thoại, dùng mạng xã hội, xem video ngắn, nhận tin nhắn, nghe cuộc gọi, tham gia nhóm chat và đôi khi tự hỏi: nội dung này có thật không?",
+              "Trong khóa học này, chúng ta không học cách tạo deepfake. Chúng ta học cách nhận ra rủi ro, kiểm chứng thông tin, bảo vệ bản thân, bảo vệ người khác và ra quyết định bình tĩnh hơn trước những nội dung có thể đánh lừa mắt, tai và cảm xúc."
             ], [
-              "Deepfake lÃ  váº¥n Ä‘á» cá»§a niá»m tin sá»‘, khÃ´ng chá»‰ lÃ  má»™t video giáº£.",
-              "Má»¥c tiÃªu cá»§a khÃ³a há»c lÃ  giÃºp báº¡n khÃ´ng hoáº£ng sá»£, khÃ´ng tin vá»™i vÃ  khÃ´ng chia sáº» vá»™i."
+              "Deepfake là vấn đề của niềm tin số, không chỉ là một video giả.",
+              "Mục tiêu của khóa học là giúp bạn không hoảng sợ, không tin vội và không chia sẻ vội."
             ]),
-            lesson("0.1.2", "Tá»« 'cÃ³ hÃ¬nh lÃ  tháº­t' Ä‘áº¿n thá»i Ä‘áº¡i cáº§n kiá»ƒm chá»©ng", [
-              "TrÆ°á»›c Ä‘Ã¢y, nhiá»u ngÆ°á»i nghÄ©: cÃ³ hÃ¬nh thÃ¬ cháº¯c lÃ  tháº­t. Sau Ä‘Ã³, chÃºng ta há»c ráº±ng áº£nh cÃ³ thá»ƒ bá»‹ chá»‰nh sá»­a. Rá»“i video trá»Ÿ thÃ nh báº±ng chá»©ng máº¡nh hÆ¡n: cÃ³ video thÃ¬ cháº¯c khÃ³ mÃ  giáº£.",
-              "BÃ¢y giá», hÃ¬nh áº£nh, video vÃ  giá»ng nÃ³i Ä‘á»u cÃ³ thá»ƒ Ä‘Æ°á»£c táº¡o ra hoáº·c biáº¿n Ä‘á»•i báº±ng AI theo cÃ¡ch ráº¥t thuyáº¿t phá»¥c. Má»™t gÆ°Æ¡ng máº·t quen, má»™t giá»ng nÃ³i Ä‘Ãºng tÃ´ng, má»™t biá»ƒu cáº£m cÃ³ váº» tá»± nhiÃªn váº«n chÆ°a Ä‘á»§ Ä‘á»ƒ káº¿t luáº­n.",
-              "Äiá»u Ä‘Ã³ khÃ´ng cÃ³ nghÄ©a lÃ  pháº£i nghi ngá» má»i thá»©. Náº¿u cÃ¡i gÃ¬ cÅ©ng bá»‹ xem lÃ  giáº£, chÃºng ta sáº½ má»‡t má»i vÃ  máº¥t phÆ°Æ¡ng hÆ°á»›ng. Äiá»u cáº§n há»c lÃ  cÃ¡ch nghi ngá» há»£p lÃ½: biáº¿t khi nÃ o nÃªn dá»«ng láº¡i, há»i thÃªm vÃ  kiá»ƒm chá»©ng."
+            lesson("0.1.2", "Từ 'có hình là thật' đến thời đại cần kiểm chứng", [
+              "Trước đây, nhiều người nghĩ: có hình thì chắc là thật. Sau đó, chúng ta học rằng ảnh có thể bị chỉnh sửa. Rồi video trở thành bằng chứng mạnh hơn: có video thì chắc khó mà giả.",
+              "Bây giờ, hình ảnh, video và giọng nói đều có thể được tạo ra hoặc biến đổi bằng AI theo cách rất thuyết phục. Một gương mặt quen, một giọng nói đúng tông, một biểu cảm có vẻ tự nhiên vẫn chưa đủ để kết luận.",
+              "Điều đó không có nghĩa là phải nghi ngờ mọi thứ. Nếu cái gì cũng bị xem là giả, chúng ta sẽ mệt mỏi và mất phương hướng. Điều cần học là cách nghi ngờ hợp lý: biết khi nào nên dừng lại, hỏi thêm và kiểm chứng."
             ], [
-              "KhÃ´ng tin vá»™i khÃ´ng cÃ³ nghÄ©a lÃ  phá»§ nháº­n táº¥t cáº£.",
-              "NgÆ°á»i an toÃ n lÃ  ngÆ°á»i biáº¿t kiá»ƒm chá»©ng trÆ°á»›c khi hÃ nh Ä‘á»™ng."
+              "Không tin vội không có nghĩa là phủ nhận tất cả.",
+              "Người an toàn là người biết kiểm chứng trước khi hành động."
             ]),
-            lesson("0.1.3", "Má»™t ngÃ y cá»§a An", [
-              "Buá»•i sÃ¡ng, An tháº¥y má»™t video ngÆ°á»i ná»•i tiáº¿ng giá»›i thiá»‡u kÃªnh Ä‘áº§u tÆ° lá»£i nhuáº­n cao. GÆ°Æ¡ng máº·t Ä‘Ãºng lÃ  ngÆ°á»i Ä‘Ã³. Giá»ng nÃ³i cÅ©ng giá»‘ng. Video cÃ³ nhiá»u lÆ°á»£t xem vÃ  bÃ¬nh luáº­n á»§ng há»™.",
-              "Äáº¿n trÆ°a, An nháº­n tin nháº¯n tá»« má»™t ngÆ°á»i báº¡n cÅ© nÃ³i cáº§n mÆ°á»£n tiá»n gáº¥p vÃ¬ tÃ i khoáº£n ngÃ¢n hÃ ng bá»‹ khÃ³a. áº¢nh Ä‘áº¡i diá»‡n Ä‘Ãºng lÃ  báº¡n cá»§a An, tÃ i khoáº£n cÅ©ng Ä‘Ãºng tÃªn, chá»‰ cÃ³ cÃ¡ch nháº¯n hÆ¡i khÃ¡c má»i ngÃ y.",
-              "Chiá»u hÃ´m Ä‘Ã³, trong nhÃ³m chat xuáº¥t hiá»‡n má»™t hÃ¬nh áº£nh nháº¡y cáº£m Ä‘Æ°á»£c cho lÃ  cá»§a má»™t há»c sinh trong trÆ°á»ng. CÃ³ ngÆ°á»i nÃ³i Ä‘Ã³ lÃ  áº£nh AI, cÃ³ ngÆ°á»i láº¡i báº£o cá»© lÆ°u láº¡i Ä‘Ã£. Buá»•i tá»‘i, An nháº­n cuá»™c gá»i video ngáº¯n tá»« ngÆ°á»i thÃ¢n nÃ³i Ä‘ang gáº·p chuyá»‡n kháº©n cáº¥p. HÃ¬nh hÆ¡i má», Ã¢m thanh khÃ´ng rÃµ, nhÆ°ng giá»ng nghe ráº¥t quen."
+            lesson("0.1.3", "Một ngày của An", [
+              "Buổi sáng, An thấy một video người nổi tiếng giới thiệu kênh đầu tư lợi nhuận cao. Gương mặt đúng là người đó. Giọng nói cũng giống. Video có nhiều lượt xem và bình luận ủng hộ.",
+              "Đến trưa, An nhận tin nhắn từ một người bạn cũ nói cần mượn tiền gấp vì tài khoản ngân hàng bị khóa. Ảnh đại diện đúng là bạn của An, tài khoản cũng đúng tên, chỉ có cách nhắn hơi khác mọi ngày.",
+              "Chiều hôm đó, trong nhóm chat xuất hiện một hình ảnh nhạy cảm được cho là của một học sinh trong trường. Có người nói đó là ảnh AI, có người lại bảo cứ lưu lại đã. Buổi tối, An nhận cuộc gọi video ngắn từ người thân nói đang gặp chuyện khẩn cấp. Hình hơi mờ, âm thanh không rõ, nhưng giọng nghe rất quen."
             ], [
-              "Deepfake thÆ°á»ng xuáº¥t hiá»‡n trong bá»‘i cáº£nh Ä‘á»i thÆ°á»ng, khÃ´ng pháº£i trong phÃ²ng thÃ­ nghiá»‡m.",
-              "Ãp lá»±c pháº£i hÃ nh Ä‘á»™ng ngay lÃ  tÃ­n hiá»‡u cáº§n cháº­m láº¡i."
+              "Deepfake thường xuất hiện trong bối cảnh đời thường, không phải trong phòng thí nghiệm.",
+              "Áp lực phải hành động ngay là tín hiệu cần chậm lại."
             ])
           ]
         },
         {
-          title: "0.2 VÃ¬ sao khÃ³a há»c nÃ y cáº§n thiáº¿t?",
+          title: "0.2 Vì sao khóa học này cần thiết?",
           lessons: [
-            lesson("0.2.1", "VÃ¬ sao khÃ³a há»c nÃ y cáº§n thiáº¿t?", [
-              "Deepfake nguy hiá»ƒm khÃ´ng chá»‰ vÃ¬ nÃ³ giáº£. NÃ³ nguy hiá»ƒm vÃ¬ nÃ³ xuáº¥t hiá»‡n Ä‘Ãºng lÃºc con ngÆ°á»i Ã­t phÃ²ng bá»‹ nháº¥t: khi lo cho ngÆ°á»i thÃ¢n, sá»£ máº¥t tiá»n, xáº¥u há»•, giáº­n dá»¯, muá»‘n giÃºp ai Ä‘Ã³ hoáº·c tin ráº±ng mÃ¬nh Ä‘ang nhÃ¬n tháº¥y báº±ng chá»©ng.",
-              "Deepfake cÅ©ng hiáº¿m khi hoáº¡t Ä‘á»™ng má»™t mÃ¬nh. NÃ³ thÆ°á»ng Ä‘i cÃ¹ng tÃ i khoáº£n bá»‹ chiáº¿m quyá»n, tin nháº¯n thÃºc Ã©p, link giáº£ máº¡o, website giáº£, danh tÃ­nh giáº£ vÃ  sá»± lan truyá»n quÃ¡ nhanh trong nhÃ³m chat.",
-              "VÃ¬ váº­y, há»c vá» deepfake khÃ´ng chá»‰ lÃ  há»c nhÃ¬n máº·t mÃ©o, máº¯t láº¡ hay giá»ng Ä‘á»u Ä‘á»u. Há»c vá» deepfake lÃ  há»c cÃ¡ch tá»± há»i: ai gá»­i ná»™i dung nÃ y, há» muá»‘n mÃ¬nh lÃ m gÃ¬, vÃ¬ sao pháº£i lÃ m ngay, náº¿u mÃ¬nh sai ai sáº½ bá»‹ háº¡i, vÃ  cÃ³ cÃ¡ch nÃ o kiá»ƒm chá»©ng Ä‘á»™c láº­p khÃ´ng?"
+            lesson("0.2.1", "Vì sao khóa học này cần thiết?", [
+              "Deepfake nguy hiểm không chỉ vì nó giả. Nó nguy hiểm vì nó xuất hiện đúng lúc con người ít phòng bị nhất: khi lo cho người thân, sợ mất tiền, xấu hổ, giận dữ, muốn giúp ai đó hoặc tin rằng mình đang nhìn thấy bằng chứng.",
+              "Deepfake cũng hiếm khi hoạt động một mình. Nó thường đi cùng tài khoản bị chiếm quyền, tin nhắn thúc ép, link giả mạo, website giả, danh tính giả và sự lan truyền quá nhanh trong nhóm chat.",
+              "Vì vậy, học về deepfake không chỉ là học nhìn mặt méo, mắt lạ hay giọng đều đều. Học về deepfake là học cách tự hỏi: ai gửi nội dung này, họ muốn mình làm gì, vì sao phải làm ngay, nếu mình sai ai sẽ bị hại, và có cách nào kiểm chứng độc lập không?"
             ], [
-              "Deepfake lÃ  rá»§i ro truyá»n thÃ´ng, tÃ¢m lÃ½, tÃ i chÃ­nh vÃ  danh tÃ­nh.",
-              "CÃ¢u há»i Ä‘Ãºng thÆ°á»ng quan trá»ng hÆ¡n cáº£m giÃ¡c 'trÃ´ng tháº­t hay trÃ´ng giáº£'."
+              "Deepfake là rủi ro truyền thông, tâm lý, tài chính và danh tính.",
+              "Câu hỏi đúng thường quan trọng hơn cảm giác 'trông thật hay trông giả'."
             ]),
-            lesson("0.2.2", "Báº¡n sáº½ há»c nhÆ° tháº¿ nÃ o?", [
-              "Má»—i pháº§n há»c thÆ°á»ng báº¯t Ä‘áº§u báº±ng má»™t tÃ¬nh huá»‘ng giá»‘ng Ä‘á»i tháº­t. Sau Ä‘Ã³ báº¡n há»c khÃ¡i niá»‡m, quan sÃ¡t dáº¥u hiá»‡u, chá»n hÃ nh Ä‘á»™ng vÃ  nháº­n pháº£n há»“i.",
-              "Quiz trong khÃ³a há»c khÃ´ng nháº±m báº¯t lá»—i báº¡n. Quiz giÃºp báº¡n kiá»ƒm tra xem mÃ¬nh Ä‘Ã£ hiá»ƒu Ä‘á»§ Ä‘á»ƒ dÃ¹ng kiáº¿n thá»©c trong Ä‘á»i tháº­t chÆ°a.",
-              "Cuá»‘i khÃ³a, há»‡ thá»‘ng chá»n 50 cÃ¢u tá»« ngÃ¢n hÃ ng cÃ¢u há»i lá»›n hÆ¡n. Báº¡n cáº§n Ä‘áº¡t tá»« 70% trá»Ÿ lÃªn, hoÃ n thÃ nh Ä‘Ã¡nh giÃ¡ khÃ³a há»c vÃ  Ä‘á»§ tiáº¿n Ä‘á»™ Ä‘á»ƒ má»Ÿ certificate DEEPFENSE AWARE."
+            lesson("0.2.2", "Bạn sẽ học như thế nào?", [
+              "Mỗi phần học thường bắt đầu bằng một tình huống giống đời thật. Sau đó bạn học khái niệm, quan sát dấu hiệu, chọn hành động và nhận phản hồi.",
+              "Quiz trong khóa học không nhằm bắt lỗi bạn. Quiz giúp bạn kiểm tra xem mình đã hiểu đủ để dùng kiến thức trong đời thật chưa.",
+              "Cuối khóa, hệ thống chọn 50 câu từ ngân hàng câu hỏi lớn hơn. Bạn cần đạt từ 70% trở lên, hoàn thành đánh giá khóa học và đủ tiến độ để mở certificate DEEPFENSE AWARE."
             ], [
-              "KhÃ³a há»c Æ°u tiÃªn pháº£n xáº¡ an toÃ n, khÃ´ng há»c váº¹t thuáº­t ngá»¯.",
-              "HoÃ n thÃ nh khÃ³a há»c nghÄ©a lÃ  biáº¿t dÃ¹ng kiáº¿n thá»©c trong tÃ¬nh huá»‘ng thá»±c táº¿."
+              "Khóa học ưu tiên phản xạ an toàn, không học vẹt thuật ngữ.",
+              "Hoàn thành khóa học nghĩa là biết dùng kiến thức trong tình huống thực tế."
             ])
           ]
         },
         {
           title: "0.3 Deepfense Check",
           lessons: [
-            lesson("0.3.1", "NÄƒm bÆ°á»›c kiá»ƒm chá»©ng cÆ¡ báº£n", [
-              "DEEPFENSE BASIC dÃ¹ng má»™t quy trÃ¬nh ngáº¯n gá»i lÃ  Deepfense Check. Báº¡n chÆ°a cáº§n thuá»™c lÃ²ng má»i chi tiáº¿t, nhÆ°ng cáº§n nhá»› logic: Ä‘á»«ng Ä‘á»ƒ cáº£m xÃºc quyáº¿t Ä‘á»‹nh thay báº¡n.",
-              "Pause: dá»«ng láº¡i trÆ°á»›c khi pháº£n á»©ng. Observe: quan sÃ¡t dáº¥u hiá»‡u ká»¹ thuáº­t vÃ  ngá»¯ cáº£nh. Verify: xÃ¡c minh qua kÃªnh Ä‘á»™c láº­p. Trace: truy nguá»“n ná»™i dung. Decide: ra quyáº¿t Ä‘á»‹nh Ã­t gÃ¢y háº¡i nháº¥t.",
-              "Quy trÃ¬nh nÃ y khÃ´ng biáº¿n báº¡n thÃ nh chuyÃªn gia phÃ¡p chá»©ng. NÃ³ giÃºp báº¡n cÃ³ má»™t khoáº£ng dá»«ng Ä‘á»§ tá»‘t Ä‘á»ƒ trÃ¡nh chuyá»ƒn tiá»n, chia sáº», káº¿t luáº­n hoáº·c lÃ m tá»•n thÆ°Æ¡ng ngÆ°á»i khÃ¡c khi chÆ°a cÃ³ báº±ng chá»©ng."
+            lesson("0.3.1", "Năm bước kiểm chứng cơ bản", [
+              "DEEPFENSE BASIC dùng một quy trình ngắn gọi là Deepfense Check. Bạn chưa cần thuộc lòng mọi chi tiết, nhưng cần nhớ logic: đừng để cảm xúc quyết định thay bạn.",
+              "Pause: dừng lại trước khi phản ứng. Observe: quan sát dấu hiệu kỹ thuật và ngữ cảnh. Verify: xác minh qua kênh độc lập. Trace: truy nguồn nội dung. Decide: ra quyết định ít gây hại nhất.",
+              "Quy trình này không biến bạn thành chuyên gia pháp chứng. Nó giúp bạn có một khoảng dừng đủ tốt để tránh chuyển tiền, chia sẻ, kết luận hoặc làm tổn thương người khác khi chưa có bằng chứng."
             ], [
-              "Pause, Observe, Verify, Trace, Decide lÃ  xÆ°Æ¡ng sá»‘ng cá»§a khÃ³a há»c.",
-              "Má»™t khoáº£ng dá»«ng Ä‘Ãºng lÃºc cÃ³ thá»ƒ ngÄƒn má»™t thiá»‡t háº¡i lá»›n."
+              "Pause, Observe, Verify, Trace, Decide là xương sống của khóa học.",
+              "Một khoảng dừng đúng lúc có thể ngăn một thiệt hại lớn."
             ])
           ],
           checkpoint: checkpoint("0.3", [
-            q("Má»¥c tiÃªu chÃ­nh cá»§a DEEPFENSE BASIC lÃ  gÃ¬?", ["Há»c cÃ¡ch táº¡o deepfake", "Há»c cÃ¡ch nháº­n diá»‡n vÃ  phÃ²ng vá»‡ an toÃ n", "Há»c máº¹o vÆ°á»£t detector", "TÄƒng lÆ°á»£t xem ná»™i dung"], 1),
-            q("Trong Deepfense Check, 'Verify' cÃ³ nghÄ©a lÃ  gÃ¬?", ["XÃ¡c minh qua kÃªnh Ä‘á»™c láº­p", "Tin náº¿u video rÃµ nÃ©t", "Táº£i video vá» ngay", "Chia sáº» Ä‘á»ƒ há»i cá»™ng Ä‘á»“ng"], 0)
+            q("Mục tiêu chính của DEEPFENSE BASIC là gì?", ["Học cách tạo deepfake", "Học cách nhận diện và phòng vệ an toàn", "Học mẹo vượt detector", "Tăng lượt xem nội dung"], 1),
+            q("Trong Deepfense Check, 'Verify' có nghĩa là gì?", ["Xác minh qua kênh độc lập", "Tin nếu video rõ nét", "Tải video về ngay", "Chia sẻ để hỏi cộng đồng"], 0)
           ])
         },
         {
-          title: "0.4 Pre-check (ÄÃ¡nh giÃ¡ ban Ä‘áº§u)",
+          title: "0.4 Pre-check (Đánh giá ban đầu)",
           lessons: [
-            lesson("0.4.1", "Tá»± Ä‘Ã¡nh giÃ¡ kiáº¿n thá»©c ná»n táº£ng", [
-              "TrÆ°á»›c khi báº¯t Ä‘áº§u cÃ¡c module chuyÃªn sÃ¢u, hÃ£y cÃ¹ng thá»±c hiá»‡n má»™t bÃ i kiá»ƒm tra ngáº¯n. BÃ i thi nÃ y khÃ´ng tÃ­nh vÃ o káº¿t quáº£ cuá»‘i khÃ³a, nhÆ°ng sáº½ giÃºp báº¡n nháº­n ra mÃ¬nh Ä‘ang á»Ÿ Ä‘Ã¢u trÃªn báº£n Ä‘á»“ an toÃ n sá»‘.",
-              "Báº¡n sáº½ gáº·p 8 cÃ¢u há»i vá» cÃ¡c tÃ¬nh huá»‘ng giáº£ Ä‘á»‹nh. HÃ£y chá»n Ä‘Ã¡p Ã¡n mÃ  báº¡n cho lÃ  an toÃ n nháº¥t."
+            lesson("0.4.1", "Tự đánh giá kiến thức nền tảng", [
+              "Trước khi bắt đầu các module chuyên sâu, hãy cùng thực hiện một bài kiểm tra ngắn. Bài thi này không tính vào kết quả cuối khóa, nhưng sẽ giúp bạn nhận ra mình đang ở đâu trên bản đồ an toàn số.",
+              "Bạn sẽ gặp 8 câu hỏi về các tình huống giả định. Hãy chọn đáp án mà bạn cho là an toàn nhất."
             ], [
-              "Pre-check giÃºp báº¡n nháº­n diá»‡n cÃ¡c lá»— há»•ng kiáº¿n thá»©c hiá»‡n cÃ³.",
-              "Káº¿t quáº£ nÃ y lÃ  Ä‘iá»ƒm má»‘c Ä‘á»ƒ so sÃ¡nh sau khi hoÃ n thÃ nh khÃ³a há»c."
+              "Pre-check giúp bạn nhận diện các lỗ hổng kiến thức hiện có.",
+              "Kết quả này là điểm mốc để so sánh sau khi hoàn thành khóa học."
             ])
           ],
           checkpoint: checkpoint("0.4", [
-            q("Báº¡n nháº­n video gá»i trá»±c tiáº¿p tá»« ngÆ°á»i thÃ¢n nÃ³i Ä‘ang bá»‹ tai náº¡n vÃ  cáº§n tiá»n gáº¥p. HÃ¬nh áº£nh hÆ¡i má», tiáº¿ng bá»‹ giáº­t. Báº¡n lÃ m gÃ¬?", ["Chuyá»ƒn tiá»n ngay", "Há»i tÃ i khoáº£n rá»“i chuyá»ƒn", "Dá»«ng cuá»™c gá»i, gá»i láº¡i sá»‘ Ä‘iá»‡n thoáº¡i Ä‘Ã£ lÆ°u", "Báº¥m vÃ o link 'vá»‹ trÃ­' há» gá»­i"], 2),
-            q("Tháº¥y video ngÆ°á»i ná»•i tiáº¿ng quáº£ng cÃ¡o á»©ng dá»¥ng Ä‘áº§u tÆ° 'cháº¯c cháº¯n sinh lá»i 100%', báº¡n nÃªn lÃ m gÃ¬?", ["ÄÄƒng kÃ½ ngay", "Náº¡p thá»­ má»™t Ã­t", "Kiá»ƒm tra kÃªnh chÃ­nh thá»©c cá»§a ngÆ°á»i Ä‘Ã³", "Chia sáº» cho báº¡n bÃ¨"], 2),
-            q("Má»™t hÃ¬nh áº£nh nháº¡y cáº£m nghi lÃ  cá»§a má»™t ngÆ°á»i quen bá»‹ lan truyá»n trong nhÃ³m. Báº¡n lÃ m gÃ¬?", ["LÆ°u láº¡i Ä‘á»ƒ lÃ m báº±ng chá»©ng", "Gá»­i cho ngÆ°á»i khÃ¡c há»i tháº­t giáº£", "KhÃ´ng lan truyá»n vÃ  bÃ¡o cÃ¡o ná»™i dung", "BÃ¬nh luáº­n trÃªu Ä‘Ã¹a"], 2),
-            q("Báº¡n nháº­n email tá»« 'NgÃ¢n hÃ ng' yÃªu cáº§u Ä‘Äƒng nháº­p qua link Ä‘á»ƒ 'xÃ¡c minh tÃ i khoáº£n'. Báº¡n lÃ m gÃ¬?", ["Báº¥m link Ä‘Äƒng nháº­p ngay", "Tá»± má»Ÿ á»©ng dá»¥ng ngÃ¢n hÃ ng hoáº·c gÃµ Ä‘Ãºng Ä‘á»‹a chá»‰ web cá»§a ngÃ¢n hÃ ng", "Gá»­i mÃ£ OTP cho há»", "CÃ i á»©ng dá»¥ng Ä‘Ã­nh kÃ¨m"], 1),
-            q("Ai cÃ³ thá»ƒ lÃ  náº¡n nhÃ¢n cá»§a Deepfake?", ["Chá»‰ ngÆ°á»i ná»•i tiáº¿ng", "Chá»‰ ngÆ°á»i giÃ u", "Báº¥t ká»³ ai sá»­ dá»¥ng Internet", "Chá»‰ ngÆ°á»i khÃ´ng biáº¿t cÃ´ng nghá»‡"], 2),
-            q("Deepfake cÃ³ thá»ƒ giáº£ máº¡o nhá»¯ng gÃ¬?", ["HÃ¬nh áº£nh vÃ  video", "Giá»ng nÃ³i", "Cáº£ hÃ¬nh áº£nh, video vÃ  giá»ng nÃ³i", "Chá»‰ vÄƒn báº£n"], 2),
-            q("Dáº¥u hiá»‡u nÃ o ÄÃNG NGHI nháº¥t trong má»™t yÃªu cáº§u chuyá»ƒn tiá»n?", ["NgÆ°á»i Ä‘Ã³ nÃ³i Ä‘ang ráº¥t gáº¥p vÃ  báº£o Ä‘á»«ng nÃ³i vá»›i ai", "Video cÃ³ mÃ u sáº¯c Ä‘áº¹p", "Tin nháº¯n cÃ³ dáº¥u cÃ¢u Ä‘Ãºng", "Gá»­i vÃ o buá»•i sÃ¡ng"], 0),
-            q("Khi má»™t ná»™i dung lÃ m báº¡n ráº¥t giáº­n hoáº·c ráº¥t sá»£, báº¡n nÃªn lÃ m gÃ¬ Ä‘áº§u tiÃªn?", ["Chia sáº» Ä‘á»ƒ cáº£nh bÃ¡o", "BÃ¬nh luáº­n pháº£n Ä‘á»‘i", "Dá»«ng láº¡i 30 giÃ¢y Ä‘á»ƒ kiá»ƒm chá»©ng", "Táº£i video vá» mÃ¡y"], 2)
+            q("Bạn nhận video gọi trực tiếp từ người thân nói đang bị tai nạn và cần tiền gấp. Hình ảnh hơi mờ, tiếng bị giật. Bạn làm gì?", ["Chuyển tiền ngay", "Hỏi tài khoản rồi chuyển", "Dừng cuộc gọi, gọi lại số điện thoại đã lưu", "Bấm vào link 'vị trí' họ gửi"], 2),
+            q("Thấy video người nổi tiếng quảng cáo ứng dụng đầu tư 'chắc chắn sinh lời 100%', bạn nên làm gì?", ["Đăng ký ngay", "Nạp thử một ít", "Kiểm tra kênh chính thức của người đó", "Chia sẻ cho bạn bè"], 2),
+            q("Một hình ảnh nhạy cảm nghi là của một người quen bị lan truyền trong nhóm. Bạn làm gì?", ["Lưu lại để làm bằng chứng", "Gửi cho người khác hỏi thật giả", "Không lan truyền và báo cáo nội dung", "Bình luận trêu đùa"], 2),
+            q("Bạn nhận email từ 'Ngân hàng' yêu cầu đăng nhập qua link để 'xác minh tài khoản'. Bạn làm gì?", ["Bấm link đăng nhập ngay", "Tự mở ứng dụng ngân hàng hoặc gõ đúng địa chỉ web của ngân hàng", "Gửi mã OTP cho họ", "Cài ứng dụng đính kèm"], 1),
+            q("Ai có thể là nạn nhân của Deepfake?", ["Chỉ người nổi tiếng", "Chỉ người giàu", "Bất kỳ ai sử dụng Internet", "Chỉ người không biết công nghệ"], 2),
+            q("Deepfake có thể giả mạo những gì?", ["Hình ảnh và video", "Giọng nói", "Cả hình ảnh, video và giọng nói", "Chỉ văn bản"], 2),
+            q("Dấu hiệu nào ĐÁNG NGHI nhất trong một yêu cầu chuyển tiền?", ["Người đó nói đang rất gấp và bảo đừng nói với ai", "Video có màu sắc đẹp", "Tin nhắn có dấu câu đúng", "Gửi vào buổi sáng"], 0),
+            q("Khi một nội dung làm bạn rất giận hoặc rất sợ, bạn nên làm gì đầu tiên?", ["Chia sẻ để cảnh báo", "Bình luận phản đối", "Dừng lại 30 giây để kiểm chứng", "Tải video về máy"], 2)
           ])
         }
       ],
       quiz: [
-        q("Khi nháº­n cuá»™c gá»i giá»‘ng ngÆ°á»i thÃ¢n yÃªu cáº§u chuyá»ƒn tiá»n gáº¥p, bÆ°á»›c an toÃ n nháº¥t lÃ  gÃ¬?", ["Ngáº¯t cuá»™c gá»i vÃ  xÃ¡c minh qua sá»‘/kÃªnh Ä‘Ã£ biáº¿t trÆ°á»›c", "Chuyá»ƒn tiá»n ngay", "Gá»­i OTP Ä‘á»ƒ há» xá»­ lÃ½", "Há»i sá»‘ tÃ i khoáº£n rá»“i chuyá»ƒn thá»­"], 0),
-        q("Deepfense Check gá»“m cÃ¡c bÆ°á»›c nÃ o?", ["Pause, Observe, Verify, Trace, Decide", "Post, Like, Share, Comment", "Copy, Paste, Upload", "Scan, Delete, Ignore"], 0),
-        q("VÃ¬ sao ná»™i dung gÃ¢y pháº«n ná»™ cáº§n Ä‘Æ°á»£c kiá»ƒm chá»©ng ká»¹?", ["VÃ¬ cáº£m xÃºc máº¡nh thÆ°á»ng lÃ m ngÆ°á»i xem pháº£n á»©ng nhanh vÃ  chia sáº» vá»™i", "VÃ¬ video gÃ¢y pháº«n ná»™ luÃ´n giáº£", "VÃ¬ chá»‰ ná»™i dung chÃ­nh trá»‹ má»›i nguy hiá»ƒm", "VÃ¬ bÃ¬nh luáº­n nhiá»u lÃ  báº±ng chá»©ng tháº­t"], 0),
-        q("Deepfake cÃ³ thá»ƒ xuáº¥t hiá»‡n á»Ÿ dáº¡ng nÃ o?", ["HÃ¬nh áº£nh, video, giá»ng nÃ³i hoáº·c avatar", "Chá»‰ video", "Chá»‰ vÄƒn báº£n", "Chá»‰ áº£nh tÄ©nh"], 0),
-        q("Äiá»u gÃ¬ KHÃ”NG nÃªn lÃ m with hÃ¬nh áº£nh nháº¡y cáº£m nghi bá»‹ AI táº¡o hoáº·c ghÃ©p?", ["LÆ°u vÃ  chuyá»ƒn tiáº¿p Ä‘á»ƒ há»i Ã½ kiáº¿n nhÃ³m", "KhÃ´ng lan truyá»n", "BÃ¡o cÃ¡o ná»™i dung", "TÃ¬m ngÆ°á»i cÃ³ trÃ¡ch nhiá»‡m há»— trá»£"], 0)
+        q("Khi nhận cuộc gọi giống người thân yêu cầu chuyển tiền gấp, bước an toàn nhất là gì?", ["Ngắt cuộc gọi và xác minh qua số/kênh đã biết trước", "Chuyển tiền ngay", "Gửi OTP để họ xử lý", "Hỏi số tài khoản rồi chuyển thử"], 0),
+        q("Deepfense Check gồm các bước nào?", ["Pause, Observe, Verify, Trace, Decide", "Post, Like, Share, Comment", "Copy, Paste, Upload", "Scan, Delete, Ignore"], 0),
+        q("Vì sao nội dung gây phẫn nộ cần được kiểm chứng kỹ?", ["Vì cảm xúc mạnh thường làm người xem phản ứng nhanh và chia sẻ vội", "Vì video gây phẫn nộ luôn giả", "Vì chỉ nội dung chính trị mới nguy hiểm", "Vì bình luận nhiều là bằng chứng thật"], 0),
+        q("Deepfake có thể xuất hiện ở dạng nào?", ["Hình ảnh, video, giọng nói hoặc avatar", "Chỉ video", "Chỉ văn bản", "Chỉ ảnh tĩnh"], 0),
+        q("Điều gì KHÔNG nên làm with hình ảnh nhạy cảm nghi bị AI tạo hoặc ghép?", ["Lưu và chuyển tiếp để hỏi ý kiến nhóm", "Không lan truyền", "Báo cáo nội dung", "Tìm người có trách nhiệm hỗ trợ"], 0)
       ]
     },
     {
       id: 1,
       part: "foundation",
-      title: "Deepfake lÃ  gÃ¬?",
-      duration: "80-90 phÃºt",
+      title: "Deepfake là gì?",
+      duration: "80-90 phút",
       level: "Foundation",
-      scenario: "Module 1 giÃºp báº¡n hiá»ƒu deepfake vÃ  cÃ¡c loáº¡i ná»™i dung giáº£ máº¡o khÃ¡c. Báº¡n sáº½ biáº¿t vÃ¬ sao chÃºng ngÃ y cÃ ng khÃ³ nháº­n ra vÃ  giá»›i háº¡n cá»§a máº¯t thÆ°á»ng lÃ  á»Ÿ Ä‘Ã¢u.",
+      scenario: "Module 1 giúp bạn hiểu deepfake và các loại nội dung giả mạo khác. Bạn sẽ biết vì sao chúng ngày càng khó nhận ra và giới hạn của mắt thường là ở đâu.",
       outcomes: [
-        "PhÃ¢n biá»‡t Ä‘Æ°á»£c Deepfake, Deepvoice, Synthetic Media vÃ  cÃ¡c loáº¡i ná»™i dung chá»‰nh sá»­a.",
-        "Hiá»ƒu 4 lÃ½ do khiáº¿n ná»™i dung giáº£ máº¡o ngÃ y cÃ ng thuyáº¿t phá»¥c.",
-        "Nháº­n diá»‡n Ä‘Æ°á»£c giá»›i háº¡n cá»§a máº¯t thÆ°á»ng vÃ  cÃ´ng cá»¥ phÃ¡t hiá»‡n AI.",
-        "Biáº¿t cÃ¡ch phÃ¢n loáº¡i rá»§i ro dá»±a trÃªn má»¥c Ä‘Ã­ch vÃ  bá»‘i cáº£nh sá»­ dá»¥ng."
+        "Phân biệt được Deepfake, Deepvoice, Synthetic Media và các loại nội dung chỉnh sửa.",
+        "Hiểu 4 lý do khiến nội dung giả mạo ngày càng thuyết phục.",
+        "Nhận diện được giới hạn của mắt thường và công cụ phát hiện AI.",
+        "Biết cách phân loại rủi ro dựa trên mục đích và bối cảnh sử dụng."
       ],
       sections: [
         {
-          title: "1.1 Deepfake vÃ  cÃ¡c 'há» hÃ ng'",
+          title: "1.1 Deepfake và các 'họ hàng'",
           lessons: [
-            lesson("1.1.1", "KhÃ¡i niá»‡m vÃ  phÃ¢n loáº¡i", [
-              "Deepfake lÃ  ná»™i dung hÃ¬nh áº£nh, video hoáº·c Ã¢m thanh Ä‘Æ°á»£c táº¡o ra hoáº·c chá»‰nh sá»­a báº±ng cÃ´ng nghá»‡ sá»‘, thÆ°á»ng cÃ³ sá»­ dá»¥ng AI, Ä‘á»ƒ khiáº¿n ngÆ°á»i xem tin ráº±ng má»™t ngÆ°á»i Ä‘Ã£ nÃ³i hoáº·c lÃ m Ä‘iá»u mÃ  há» khÃ´ng thá»±c sá»± nÃ³i hoáº·c lÃ m. Deepfake khÃ´ng nháº¥t thiáº¿t pháº£i hoÃ n háº£o má»›i nguy hiá»ƒm. Trong nhiá»u vá»¥ lá»«a Ä‘áº£o, káº» xáº¥u chá»‰ cáº§n táº¡o ra Ä‘á»§ giá»‘ng trong vÃ i giÃ¢y, káº¿t há»£p vá»›i sá»± kháº©n cáº¥p, sá»£ hÃ£i hoáº·c tin tÆ°á»Ÿng, Ä‘á»ƒ náº¡n nhÃ¢n hÃ nh Ä‘á»™ng trÆ°á»›c khi ká»‹p suy nghÄ©.",
-              "Synthetic media lÃ  ná»™i dung Ä‘Æ°á»£c táº¡o ra hoÃ n toÃ n hoáº·c má»™t pháº§n báº±ng cÃ´ng nghá»‡ sá»‘, Ä‘áº·c biá»‡t lÃ  AI. Táº¥t cáº£ deepfake Ä‘á»u cÃ³ thá»ƒ Ä‘Æ°á»£c xem lÃ  má»™t dáº¡ng synthetic hoáº·c manipulated media, nhÆ°ng khÃ´ng pháº£i má»i synthetic media Ä‘á»u lÃ  deepfake. VÃ­ dá»¥: Má»™t bá»©c tranh phong cáº£nh do AI táº¡o ra khÃ´ng pháº£i deepfake. NhÆ°ng má»™t video giáº£ máº¡o má»™t ngÆ°á»i tháº­t Ä‘ang nÃ³i Ä‘iá»u há» chÆ°a tá»«ng nÃ³i thÃ¬ cÃ³ thá»ƒ lÃ  deepfake.",
-              "Deepvoice lÃ  dáº¡ng giáº£ láº­p hoáº·c chá»‰nh sá»­a giá»ng nÃ³i báº±ng AI, khiáº¿n Ã¢m thanh nghe giá»‘ng má»™t ngÆ°á»i tháº­t. Deepvoice Ä‘áº·c biá»‡t nguy hiá»ƒm trong cÃ¡c tÃ¬nh huá»‘ng cÃ³ Ã¡p lá»±c thá»i gian, vÃ­ dá»¥: 'Con Ä‘ang bá»‹ tai náº¡n, chuyá»ƒn tiá»n ngay', 'Anh lÃ  sáº¿p Ä‘Ã¢y, xá»­ lÃ½ khoáº£n nÃ y trÆ°á»›c 3 giá»'. Má»™t Ä‘oáº¡n giá»ng nÃ³i ngáº¯n khÃ´ng cÃ²n Ä‘á»§ Ä‘á»ƒ xÃ¡c minh danh tÃ­nh.",
-              "Face swap lÃ  ká»¹ thuáº­t thay khuÃ´n máº·t cá»§a má»™t ngÆ°á»i vÃ o hÃ¬nh áº£nh hoáº·c video cá»§a ngÆ°á»i khÃ¡c. KhÃ´ng nÃªn Ä‘Ã¡nh giÃ¡ má»©c Ä‘á»™ nghiÃªm trá»ng chá»‰ dá»±a trÃªn cÃ¢u 'Ä‘Ã³ chá»‰ lÃ  áº£nh giáº£'. Má»™t hÃ¬nh áº£nh giáº£ váº«n cÃ³ thá»ƒ gÃ¢y tá»•n thÆ°Æ¡ng tháº­t. Má»™t ngÆ°á»i bá»‹ gÃ¡n máº·t vÃ o ná»™i dung nháº¡y cáº£m váº«n cÃ³ thá»ƒ bá»‹ áº£nh hÆ°á»Ÿng danh dá»±, tÃ¢m lÃ½, há»c táº­p, cÃ´ng viá»‡c vÃ  cÃ¡c má»‘i quan há»‡.",
-              "Lip sync lÃ  ká»¹ thuáº­t lÃ m cho chuyá»ƒn Ä‘á»™ng mÃ´i trong video khá»›p vá»›i má»™t Ä‘oáº¡n Ã¢m thanh khÃ¡c. Dáº¥u hiá»‡u cÃ³ thá»ƒ nghi ngá»: Kháº©u hÃ¬nh khÃ´ng khá»›p hoÃ n toÃ n vá»›i Ã¢m thanh, cá»­ Ä‘á»™ng mÃ´i hÆ¡i cá»©ng hoáº·c trá»…, biá»ƒu cáº£m khuÃ´n máº·t khÃ´ng phÃ¹ há»£p vá»›i ná»™i dung lá»i nÃ³i, Ã¢m thanh quÃ¡ sáº¡ch hoáº·c quÃ¡ Ä‘á»u so vá»›i mÃ´i trÆ°á»ng xung quanh.",
-              "Edited media lÃ  ná»™i dung Ä‘Ã£ bá»‹ chá»‰nh sá»­a báº±ng cÃ¡c cÃ´ng cá»¥ truyá»n thá»‘ng hoáº·c cÃ´ng cá»¥ AI. VÃ­ dá»¥: Cáº¯t má»™t cÃ¢u nÃ³i ra khá»i pháº§n giáº£i thÃ­ch phÃ­a sau, ghÃ©p hai Ä‘oáº¡n video tá»« hai thá»i Ä‘iá»ƒm khÃ¡c nhau Ä‘á»ƒ táº¡o cáº£m giÃ¡c liÃªn quan, thÃªm phá»¥ Ä‘á» sai, lÃ m má» hoáº·c che pháº§n quan trá»ng.",
-              "Repurposed media lÃ  ná»™i dung tháº­t nhÆ°ng bá»‹ Ä‘áº·t sai bá»‘i cáº£nh. VÃ­ dá»¥: Má»™t video lÅ© lá»¥t á»Ÿ nÆ°á»›c khÃ¡c tá»« nhiá»u nÄƒm trÆ°á»›c Ä‘Æ°á»£c Ä‘Äƒng láº¡i nhÆ° thá»ƒ vá»«a xáº£y ra táº¡i Viá»‡t Nam. Repurposed media nguy hiá»ƒm vÃ¬ nÃ³ dÃ¹ng 'cháº¥t liá»‡u tháº­t' Ä‘á»ƒ táº¡o ra káº¿t luáº­n sai.",
-              "AI-generated image lÃ  hÃ¬nh áº£nh do AI táº¡o ra tá»« mÃ´ táº£, dá»¯ liá»‡u máº«u hoáº·c yÃªu cáº§u cá»§a ngÆ°á»i dÃ¹ng. Khi nhÃ¬n má»™t hÃ¬nh áº£nh, Ä‘á»«ng chá»‰ há»i: 'áº¢nh nÃ y cÃ³ bá»‹ AI táº¡o khÃ´ng?' HÃ£y há»i thÃªm: 'áº¢nh nÃ y Ä‘ang Ä‘Æ°á»£c dÃ¹ng Ä‘á»ƒ khiáº¿n mÃ¬nh tin Ä‘iá»u gÃ¬?' Má»™t hÃ¬nh áº£nh AI cÃ³ thá»ƒ vÃ´ háº¡i náº¿u nÃ³ lÃ  minh há»a rÃµ rÃ ng. NhÆ°ng cÅ©ng hÃ¬nh áº£nh Ä‘Ã³ cÃ³ thá»ƒ nguy hiá»ƒm náº¿u nÃ³ Ä‘Æ°á»£c trÃ¬nh bÃ y nhÆ° báº±ng chá»©ng tháº­t."
+            lesson("1.1.1", "Khái niệm và phân loại", [
+              "Deepfake là nội dung hình ảnh, video hoặc âm thanh được tạo ra hoặc chỉnh sửa bằng công nghệ số, thường có sử dụng AI, để khiến người xem tin rằng một người đã nói hoặc làm điều mà họ không thực sự nói hoặc làm. Deepfake không nhất thiết phải hoàn hảo mới nguy hiểm. Trong nhiều vụ lừa đảo, kẻ xấu chỉ cần tạo ra đủ giống trong vài giây, kết hợp với sự khẩn cấp, sợ hãi hoặc tin tưởng, để nạn nhân hành động trước khi kịp suy nghĩ.",
+              "Synthetic media là nội dung được tạo ra hoàn toàn hoặc một phần bằng công nghệ số, đặc biệt là AI. Tất cả deepfake đều có thể được xem là một dạng synthetic hoặc manipulated media, nhưng không phải mọi synthetic media đều là deepfake. Ví dụ: Một bức tranh phong cảnh do AI tạo ra không phải deepfake. Nhưng một video giả mạo một người thật đang nói điều họ chưa từng nói thì có thể là deepfake.",
+              "Deepvoice là dạng giả lập hoặc chỉnh sửa giọng nói bằng AI, khiến âm thanh nghe giống một người thật. Deepvoice đặc biệt nguy hiểm trong các tình huống có áp lực thời gian, ví dụ: 'Con đang bị tai nạn, chuyển tiền ngay', 'Anh là sếp đây, xử lý khoản này trước 3 giờ'. Một đoạn giọng nói ngắn không còn đủ để xác minh danh tính.",
+              "Face swap là kỹ thuật thay khuôn mặt của một người vào hình ảnh hoặc video của người khác. Không nên đánh giá mức độ nghiêm trọng chỉ dựa trên câu 'đó chỉ là ảnh giả'. Một hình ảnh giả vẫn có thể gây tổn thương thật. Một người bị gán mặt vào nội dung nhạy cảm vẫn có thể bị ảnh hưởng danh dự, tâm lý, học tập, công việc và các mối quan hệ.",
+              "Lip sync là kỹ thuật làm cho chuyển động môi trong video khớp với một đoạn âm thanh khác. Dấu hiệu có thể nghi ngờ: Khẩu hình không khớp hoàn toàn với âm thanh, cử động môi hơi cứng hoặc trễ, biểu cảm khuôn mặt không phù hợp với nội dung lời nói, âm thanh quá sạch hoặc quá đều so với môi trường xung quanh.",
+              "Edited media là nội dung đã bị chỉnh sửa bằng các công cụ truyền thống hoặc công cụ AI. Ví dụ: Cắt một câu nói ra khỏi phần giải thích phía sau, ghép hai đoạn video từ hai thời điểm khác nhau để tạo cảm giác liên quan, thêm phụ đề sai, làm mờ hoặc che phần quan trọng.",
+              "Repurposed media là nội dung thật nhưng bị đặt sai bối cảnh. Ví dụ: Một video lũ lụt ở nước khác từ nhiều năm trước được đăng lại như thể vừa xảy ra tại Việt Nam. Repurposed media nguy hiểm vì nó dùng 'chất liệu thật' để tạo ra kết luận sai.",
+              "AI-generated image là hình ảnh do AI tạo ra từ mô tả, dữ liệu mẫu hoặc yêu cầu của người dùng. Khi nhìn một hình ảnh, đừng chỉ hỏi: 'Ảnh này có bị AI tạo không?' Hãy hỏi thêm: 'Ảnh này đang được dùng để khiến mình tin điều gì?' Một hình ảnh AI có thể vô hại nếu nó là minh họa rõ ràng. Nhưng cũng hình ảnh đó có thể nguy hiểm nếu nó được trình bày như bằng chứng thật."
             ], [
-              "Deepfake thÆ°á»ng máº¡o danh danh tÃ­nh tháº­t.",
-              "KhÃ´ng pháº£i má»i ná»™i dung AI Ä‘á»u lÃ  deepfake.",
-              "Ná»™i dung tháº­t bá»‹ Ä‘áº·t sai bá»‘i cáº£nh váº«n cÃ³ thá»ƒ gÃ¢y lá»«a dá»‘i.",
-              "Nghe giá»‘ng khÃ´ng cÃ³ nghÄ©a lÃ  Ä‘Ãºng ngÆ°á»i.",
-              "Ná»™i dung tháº­t Ä‘áº·t sai bá»‘i cáº£nh váº«n cÃ³ thá»ƒ dáº«n Ä‘áº¿n niá»m tin sai."
+              "Deepfake thường mạo danh danh tính thật.",
+              "Không phải mọi nội dung AI đều là deepfake.",
+              "Nội dung thật bị đặt sai bối cảnh vẫn có thể gây lừa dối.",
+              "Nghe giống không có nghĩa là đúng người.",
+              "Nội dung thật đặt sai bối cảnh vẫn có thể dẫn đến niềm tin sai."
             ]),
-            lesson("1.1.2", "VÃ¬ sao deepfake ngÃ y cÃ ng khÃ³ nháº­n ra?", [
-              "CÃ´ng nghá»‡ tá»‘t hÆ¡n, chi phÃ­ tháº¥p hÆ¡n: TrÆ°á»›c Ä‘Ã¢y, Ä‘á»ƒ táº¡o má»™t video giáº£ thuyáº¿t phá»¥c, ngÆ°á»i ta cáº§n nhiá»u ká»¹ nÄƒng, thiáº¿t bá»‹ vÃ  thá»i gian. BÃ¢y giá», nhiá»u cÃ´ng cá»¥ AI Ä‘Ã£ lÃ m cho viá»‡c táº¡o áº£nh, giá»ng nÃ³i vÃ  video trá»Ÿ nÃªn dá»… tiáº¿p cáº­n hÆ¡n. Khi cÃ´ng cá»¥ máº¡nh hÆ¡n vÃ  ráº» hÆ¡n, ká»¹ nÄƒng phÃ²ng vá»‡ cá»§a ngÆ°á»i dÃ¹ng cÅ©ng cáº§n tá»‘t hÆ¡n.",
-              "Dá»¯ liá»‡u cÃ¡ nhÃ¢n cá»§a chÃºng ta quÃ¡ dá»… tÃ¬m: AI cáº§n dá»¯ liá»‡u Ä‘á»ƒ mÃ´ phá»ng. Trong Ä‘á»i sá»‘ng sá»‘, nhiá»u ngÆ°á»i vÃ´ tÃ¬nh Ä‘á»ƒ láº¡i ráº¥t nhiá»u dá»¯ liá»‡u: áº£nh chÃ¢n dung, video nÃ³i chuyá»‡n, livestream, story háº±ng ngÃ y, giá»ng nÃ³i trong clip, thÃ´ng tin gia Ä‘Ã¬nh, trÆ°á»ng há»c, cÃ´ng viá»‡c. Khi dá»¯ liá»‡u cÃ¡ nhÃ¢n quÃ¡ cÃ´ng khai, káº» xáº¥u cÃ³ nhiá»u nguyÃªn liá»‡u hÆ¡n Ä‘á»ƒ táº¡o tÃ i khoáº£n giáº£, giáº£ giá»ng nÃ³i, dá»±ng ká»‹ch báº£n lá»«a Ä‘áº£o cÃ³ váº» ráº¥t riÃªng tÆ°.",
-              "Ná»™i dung lan nhanh hÆ¡n kháº£ nÄƒng kiá»ƒm chá»©ng: Chá»‰ cáº§n vÃ i phÃºt, má»™t video cÃ³ thá»ƒ xuáº¥t hiá»‡n trong nhÃ³m gia Ä‘Ã¬nh, nhÃ³m lá»›p, nhÃ³m cÃ´ng viá»‡c, trang cÃ¡ nhÃ¢n. Trong khi Ä‘Ã³, kiá»ƒm chá»©ng cáº§n thá»i gian. Káº» xáº¥u hiá»ƒu Ä‘iá»u Ä‘Ã³ vÃ  thÆ°á»ng thÃªm vÃ o cÃ¡c cÃ¢u nhÆ°: 'Chia sáº» ngay trÆ°á»›c khi bá»‹ xÃ³a', 'CÆ¡ há»™i chá»‰ cÃ²n hÃ´m nay', 'Ai khÃ´ng chia sáº» lÃ  vÃ´ cáº£m'.",
-              "Máº¯t thÆ°á»ng cÃ³ giá»›i háº¡n: Má»™t video tháº­t cÅ©ng cÃ³ thá»ƒ trÃ´ng láº¡ vÃ¬ máº¡ng yáº¿u, camera kÃ©m, Ã¡nh sÃ¡ng xáº¥u, video bá»‹ nÃ©n, ngÆ°á»i nÃ³i má»‡t hoáº·c cÄƒng tháº³ng. NgÆ°á»£c láº¡i, má»™t video giáº£ cÃ³ thá»ƒ trÃ´ng ráº¥t mÆ°á»£t. Náº¿u báº¡n chá»‰ dá»±a vÃ o cáº£m giÃ¡c 'trÃ´ng tháº­t' hoáº·c 'trÃ´ng giáº£', báº¡n cÃ³ thá»ƒ bá»‹ sai theo cáº£ hai hÆ°á»›ng: tin nháº§m ná»™i dung giáº£, hoáº·c phá»§ nháº­n nháº§m ná»™i dung tháº­t.",
-              "CÃ´ng cá»¥ phÃ¡t hiá»‡n cÅ©ng cÃ³ giá»›i háº¡n: Káº¿t quáº£ tá»« detector nÃªn Ä‘Æ°á»£c xem lÃ  má»™t tÃ­n hiá»‡u, khÃ´ng pháº£i káº¿t luáº­n cuá»‘i cÃ¹ng. Náº¿u cÃ´ng cá»¥ nÃ³i 'cÃ³ thá»ƒ lÃ  deepfake', báº¡n cáº§n kiá»ƒm chá»©ng thÃªm. Náº¿u cÃ´ng cá»¥ nÃ³i 'khÃ´ng phÃ¡t hiá»‡n deepfake', báº¡n váº«n cáº§n kiá»ƒm chá»©ng thÃªm náº¿u ná»™i dung cÃ³ rá»§i ro cao.",
-              "Váº¥n Ä‘á» khÃ´ng chá»‰ lÃ  tháº­t hay giáº£: Trong thá»±c táº¿, cÃ³ nhiá»u tráº¡ng thÃ¡i hÆ¡n: cÃ³ báº±ng chá»©ng tá»‘t cho tháº¥y ná»™i dung lÃ  tháº­t, cÃ³ báº±ng chá»©ng tá»‘t cho tháº¥y ná»™i dung lÃ  giáº£, ná»™i dung tháº­t nhÆ°ng bá»‹ Ä‘áº·t sai bá»‘i cáº£nh, ná»™i dung bá»‹ cáº¯t ghÃ©p lÃ m Ä‘á»•i nghÄ©a, ná»™i dung cÃ³ má»™t pháº§n tháº­t má»™t pháº§n chÆ°a rÃµ, chÆ°a Ä‘á»§ dá»¯ liá»‡u Ä‘á»ƒ káº¿t luáº­n.",
-              "Má»™t rá»§i ro ngÆ°á»£c - Liar's dividend: Deepfake khÃ´ng chá»‰ lÃ m ngÆ°á»i ta tin vÃ o Ä‘iá»u giáº£. NÃ³ cÃ²n cÃ³ thá»ƒ lÃ m ngÆ°á»i ta nghi ngá» Ä‘iá»u tháº­t. Khi cÃ´ng chÃºng biáº¿t ráº±ng video vÃ  Ã¢m thanh cÃ³ thá»ƒ bá»‹ giáº£, má»™t ngÆ°á»i cÃ³ thá»ƒ phá»§ nháº­n ná»™i dung tháº­t báº±ng cÃ¡ch nÃ³i 'ÄÃ³ lÃ  deepfake'. Má»¥c tiÃªu lÃ  kiá»ƒm chá»©ng tá»‘t hÆ¡n, khÃ´ng pháº£i nghi ngá» táº¥t cáº£."
+            lesson("1.1.2", "Vì sao deepfake ngày càng khó nhận ra?", [
+              "Công nghệ tốt hơn, chi phí thấp hơn: Trước đây, để tạo một video giả thuyết phục, người ta cần nhiều kỹ năng, thiết bị và thời gian. Bây giờ, nhiều công cụ AI đã làm cho việc tạo ảnh, giọng nói và video trở nên dễ tiếp cận hơn. Khi công cụ mạnh hơn và rẻ hơn, kỹ năng phòng vệ của người dùng cũng cần tốt hơn.",
+              "Dữ liệu cá nhân của chúng ta quá dễ tìm: AI cần dữ liệu để mô phỏng. Trong đời sống số, nhiều người vô tình để lại rất nhiều dữ liệu: ảnh chân dung, video nói chuyện, livestream, story hằng ngày, giọng nói trong clip, thông tin gia đình, trường học, công việc. Khi dữ liệu cá nhân quá công khai, kẻ xấu có nhiều nguyên liệu hơn để tạo tài khoản giả, giả giọng nói, dựng kịch bản lừa đảo có vẻ rất riêng tư.",
+              "Nội dung lan nhanh hơn khả năng kiểm chứng: Chỉ cần vài phút, một video có thể xuất hiện trong nhóm gia đình, nhóm lớp, nhóm công việc, trang cá nhân. Trong khi đó, kiểm chứng cần thời gian. Kẻ xấu hiểu điều đó và thường thêm vào các câu như: 'Chia sẻ ngay trước khi bị xóa', 'Cơ hội chỉ còn hôm nay', 'Ai không chia sẻ là vô cảm'.",
+              "Mắt thường có giới hạn: Một video thật cũng có thể trông lạ vì mạng yếu, camera kém, ánh sáng xấu, video bị nén, người nói mệt hoặc căng thẳng. Ngược lại, một video giả có thể trông rất mượt. Nếu bạn chỉ dựa vào cảm giác 'trông thật' hoặc 'trông giả', bạn có thể bị sai theo cả hai hướng: tin nhầm nội dung giả, hoặc phủ nhận nhầm nội dung thật.",
+              "Công cụ phát hiện cũng có giới hạn: Kết quả từ detector nên được xem là một tín hiệu, không phải kết luận cuối cùng. Nếu công cụ nói 'có thể là deepfake', bạn cần kiểm chứng thêm. Nếu công cụ nói 'không phát hiện deepfake', bạn vẫn cần kiểm chứng thêm nếu nội dung có rủi ro cao.",
+              "Vấn đề không chỉ là thật hay giả: Trong thực tế, có nhiều trạng thái hơn: có bằng chứng tốt cho thấy nội dung là thật, có bằng chứng tốt cho thấy nội dung là giả, nội dung thật nhưng bị đặt sai bối cảnh, nội dung bị cắt ghép làm đổi nghĩa, nội dung có một phần thật một phần chưa rõ, chưa đủ dữ liệu để kết luận.",
+              "Một rủi ro ngược - Liar's dividend: Deepfake không chỉ làm người ta tin vào điều giả. Nó còn có thể làm người ta nghi ngờ điều thật. Khi công chúng biết rằng video và âm thanh có thể bị giả, một người có thể phủ nhận nội dung thật bằng cách nói 'Đó là deepfake'. Mục tiêu là kiểm chứng tốt hơn, không phải nghi ngờ tất cả."
             ], [
-              "Deepfake khÃ´ng chá»‰ dÃ¹ng hÃ¬nh áº£nh cá»§a báº¡n. NÃ³ cÃ³ thá»ƒ dÃ¹ng cáº£ thÃ³i quen, quan há»‡ vÃ  thÃ´ng tin báº¡n Ä‘á»ƒ lá»™.",
-              "Dá»¯ liá»‡u cÃ¡ nhÃ¢n cá»§a báº¡n lÃ  nguyÃªn liá»‡u cá»§a deepfake.",
-              "Ãp lá»±c thá»i gian lÃ  Ä‘á»“ng minh cá»§a káº» lá»«a Ä‘áº£o.",
-              "Trong thá»i Ä‘áº¡i deepfake, ngÆ°á»i an toÃ n khÃ´ng pháº£i ngÆ°á»i Ä‘oÃ¡n nhanh nháº¥t. NgÆ°á»i an toÃ n lÃ  ngÆ°á»i biáº¿t kiá»ƒm chá»©ng trÆ°á»›c khi hÃ nh Ä‘á»™ng."
+              "Deepfake không chỉ dùng hình ảnh của bạn. Nó có thể dùng cả thói quen, quan hệ và thông tin bạn để lộ.",
+              "Dữ liệu cá nhân của bạn là nguyên liệu của deepfake.",
+              "Áp lực thời gian là đồng minh của kẻ lừa đảo.",
+              "Trong thời đại deepfake, người an toàn không phải người đoán nhanh nhất. Người an toàn là người biết kiểm chứng trước khi hành động."
             ])
           ]
         },
         {
-          title: "1.2 Thá»±c hÃ nh: PhÃ¢n loáº¡i ná»™i dung",
+          title: "1.2 Thực hành: Phân loại nội dung",
           lessons: [
-            lesson("1.2.1", "TÃ¬nh huá»‘ng thá»±c táº¿", [
-              "Báº¡n sáº½ gáº·p 12 loáº¡i ná»™i dung thÆ°á»ng tháº¥y trÃªn máº¡ng. HÃ£y thá»­ phÃ¢n loáº¡i chÃºng:",
-              "1. Video ngÆ°á»i ná»•i tiáº¿ng kÃªu gá»i Ä‘áº§u tÆ° tÃ i chÃ­nh láº¡.\n2. áº¢nh chÃ¢n dung chuyÃªn gia khÃ´ng cÃ³ tháº­t trÃªn máº¡ng.\n3. Tin nháº¯n thoáº¡i gá»ng giá»‘ng ngÆ°á»i thÃ¢n mÆ°á»£n tiá»n.",
-              "4. Clip 10 giÃ¢y cáº¯t tá»« bÃ i phat biá»ƒu 1 tiáº¿ng lÃ m Ä‘á»•i nghÄ©a.\n5. Video tai náº¡n cÅ© Ä‘Æ°á»£c chia sáº» nhÆ° má»›i xáº£y ra.\n6. áº¢nh minh há»a AI ghi rÃµ 'Ä‘Ã¢y lÃ  áº£nh AI'.",
-              "7. Video call bá»‹ lag, ngÆ°á»i gá»i yÃªu cáº§u Ä‘á»c OTP.\n8. áº¢nh há»c sinh bá»‹ ghÃ©p máº·t vÃ o ná»™i dung nháº¡y cáº£m.\n9. Video ngÆ°á»i tháº­t nÃ³i tháº­t nhÆ°ng phá»¥ Ä‘á» bá»‹ dá»‹ch sai hoÃ n toÃ n.\n10. TÃ i khoáº£n má»›i dÃ¹ng áº£nh AI Ä‘áº¹p Ä‘á»ƒ káº¿t báº¡n lá»«a Ä‘áº£o.\n11. NhÃ¢n váº­t áº£o (Virtual Influencer) trÃ² chuyá»‡n vá»›i fan.\n12. Clip sá»± kiá»‡n nÃ³ng khÃ´ng rÃµ nguá»“n gá»‘c, gá»ng thuyáº¿t minh AI."
+            lesson("1.2.1", "Tình huống thực tế", [
+              "Bạn sẽ gặp 12 loại nội dung thường thấy trên mạng. Hãy thử phân loại chúng:",
+              "1. Video người nổi tiếng kêu gọi đầu tư tài chính lạ.\n2. Ảnh chân dung chuyên gia không có thật trên mạng.\n3. Tin nhắn thoại gọng giống người thân mượn tiền.",
+              "4. Clip 10 giây cắt từ bài phat biểu 1 tiếng làm đổi nghĩa.\n5. Video tai nạn cũ được chia sẻ như mới xảy ra.\n6. Ảnh minh họa AI ghi rõ 'đây là ảnh AI'.",
+              "7. Video call bị lag, người gọi yêu cầu đọc OTP.\n8. Ảnh học sinh bị ghép mặt vào nội dung nhạy cảm.\n9. Video người thật nói thật nhưng phụ đề bị dịch sai hoàn toàn.\n10. Tài khoản mới dùng ảnh AI đẹp để kết bạn lừa đảo.\n11. Nhân vật ảo (Virtual Influencer) trò chuyện với fan.\n12. Clip sự kiện nóng không rõ nguồn gốc, gọng thuyết minh AI."
             ], [
-              "Nháº­n diá»‡n Ä‘Ãºng loáº¡i rá»§i ro giÃºp báº¡n chá»n cÃ¡ch kiá»ƒm chá»©ng Ä‘Ãºng.",
-              "Ná»™i dung minh báº¡ch (cÃ³ ghi rÃµ AI) thÆ°á»ng cÃ³ rá»§i ro tháº¥p nháº¥t.",
-              "YÃªu cáº§u vá» tiá»n vÃ  OTP luÃ´n lÃ  rá»§i ro cao nháº¥t."
+              "Nhận diện đúng loại rủi ro giúp bạn chọn cách kiểm chứng đúng.",
+              "Nội dung minh bạch (có ghi rõ AI) thường có rủi ro thấp nhất.",
+              "Yêu cầu về tiền và OTP luôn là rủi ro cao nhất."
             ])
           ],
           checkpoint: checkpoint("1.1", [
-            q("Deepfake lÃ  gÃ¬?", ["Má»i ná»™i dung sai trÃªn Internet", "Ná»™i dung hÃ¬nh áº£nh, video hoáº·c Ã¢m thanh Ä‘Æ°á»£c táº¡o/chá»‰nh sá»­a Ä‘á»ƒ khiáº¿n ngÆ°á»i xem tin má»™t ngÆ°á»i Ä‘Ã£ nÃ³i hoáº·c lÃ m Ä‘iá»u há» khÃ´ng thá»±c sá»± nÃ³i/lÃ m", "Chá»‰ lÃ  áº£nh chá»‰nh mÃ u", "Chá»‰ lÃ  tin nháº¯n lá»«a Ä‘áº£o khÃ´ng cÃ³ hÃ¬nh áº£nh"], 1, "Deepfake thÆ°á»ng liÃªn quan Ä‘áº¿n viá»‡c máº¡o danh hoáº·c lÃ m sai lá»‡ch hÃ nh Ä‘á»™ng/lá»i nÃ³i cá»§a má»™t ngÆ°á»i."),
-            q("Äiá»u nÃ o sau Ä‘Ã¢y lÃ  vÃ­ dá»¥ vá» deepvoice?", ["Má»™t áº£nh phong cáº£nh do AI táº¡o", "Má»™t Ä‘oáº¡n giá»ng nÃ³i giáº£ giá»‘ng ngÆ°á»i thÃ¢n yÃªu cáº§u chuyá»ƒn tiá»n", "Má»™t bÃ i viáº¿t sai chÃ­nh táº£", "Má»™t video tháº­t Ä‘Æ°á»£c Ä‘Äƒng láº¡i tá»« nÄƒm trÆ°á»›c"], 1, "Deepvoice liÃªn quan Ä‘áº¿n giáº£ láº­p hoáº·c chá»‰nh sá»­a giá»ng nÃ³i."),
-            q("Repurposed media lÃ  gÃ¬?", ["Ná»™i dung tháº­t nhÆ°ng bá»‹ Ä‘áº·t sai bá»‘i cáº£nh", "Ná»™i dung luÃ´n do AI táº¡o ra", "Ná»™i dung khÃ´ng cÃ³ Ã¢m thanh", "Ná»™i dung Ä‘Æ°á»£c Ä‘Äƒng bá»Ÿi tÃ i khoáº£n chÃ­nh thá»©c"], 0, "Ná»™i dung cÃ³ thá»ƒ tháº­t, nhÆ°ng chÃº thÃ­ch, thá»i gian, Ä‘á»‹a Ä‘iá»ƒm hoáº·c Ã½ nghÄ©a Ä‘i kÃ¨m cÃ³ thá»ƒ sai."),
-            q("Táº¥t cáº£ synthetic media Ä‘á»u lÃ  deepfake. ÄÃºng hay sai?", ["ÄÃºng", "Sai"], 1, "Synthetic media cÃ³ thá»ƒ dÃ¹ng cho má»¥c Ä‘Ã­ch sÃ¡ng táº¡o, giÃ¡o dá»¥c hoáº·c minh há»a. NÃ³ trá»Ÿ thÃ nh váº¥n Ä‘á» khi bá»‹ dÃ¹ng Ä‘á»ƒ máº¡o danh, Ä‘Ã¡nh lá»«a hoáº·c gÃ¢y háº¡i."),
-            q("Má»™t video bá»‹ cáº¯t ngáº¯n lÃ m thay Ä‘á»•i Ã½ nghÄ©a cÃ¢u nÃ³i ban Ä‘áº§u. ÄÃ¢y phÃ¹ há»£p nháº¥t lÃ :", ["Edited media", "Deepvoice", "MÃ£ Ä‘á»™c", "Máº­t kháº©u yáº¿u"], 0, "Cáº¯t ghÃ©p hoáº·c biÃªn táº­p gÃ¢y hiá»ƒu nháº§m lÃ  má»™t dáº¡ng edited media."),
-            q("Má»™t hÃ¬nh áº£nh ngÆ°á»i khÃ´ng tá»“n táº¡i do AI táº¡o ra, Ä‘Æ°á»£c dÃ¹ng lÃ m áº£nh Ä‘áº¡i diá»‡n cho tÃ i khoáº£n lá»«a Ä‘áº£o. Rá»§i ro chÃ­nh lÃ  gÃ¬?", ["áº¢nh quÃ¡ Ä‘áº¹p", "NgÆ°á»i xem cÃ³ thá»ƒ tin vÃ o má»™t danh tÃ­nh giáº£", "áº¢nh khÃ´ng cÃ³ Ã¢m thanh", "áº¢nh táº£i cháº­m"], 1, "HÃ¬nh áº£nh AI cÃ³ thá»ƒ Ä‘Æ°á»£c dÃ¹ng Ä‘á»ƒ dá»±ng há»“ sÆ¡ hoáº·c danh tÃ­nh giáº£."),
-            q("VÃ¬ sao khÃ´ng nÃªn káº¿t luáº­n 'video tháº­t' chá»‰ vÃ¬ gÆ°Æ¡ng máº·t vÃ  giá»ng nÃ³i giá»‘ng?", ["VÃ¬ gÆ°Æ¡ng máº·t vÃ  giá»ng nÃ³i cÃ³ thá»ƒ bá»‹ táº¡o hoáº·c chá»‰nh sá»­a báº±ng AI", "VÃ¬ video nÃ o trÃªn máº¡ng cÅ©ng giáº£", "VÃ¬ chá»‰ áº£nh má»›i cÃ³ thá»ƒ bá»‹ giáº£", "VÃ¬ Ã¢m thanh luÃ´n Ä‘Ã¡ng tin hÆ¡n hÃ¬nh áº£nh"], 0, "Deepfake vÃ  deepvoice cÃ³ thá»ƒ máº¡o phá»ng cáº£ khuÃ´n máº·t láº«n giá»ng nÃ³i."),
-            q("Má»™t video tháº­t tá»« quá»‘c gia khÃ¡c Ä‘Æ°á»£c Ä‘Äƒng vá»›i chÃº thÃ­ch 'Ä‘ang xáº£y ra táº¡i thÃ nh phá»‘ cá»§a báº¡n'. Báº¡n nÃªn nghi ngá» Ä‘iá»u gÃ¬?", ["Sai bá»‘i cáº£nh", "MÃ¡y tÃ­nh bá»‹ virus", "Máº­t kháº©u bá»‹ lá»™", "Äiá»‡n thoáº¡i bá»‹ há»ng"], 0, "ÄÃ¢y lÃ  dáº¥u hiá»‡u cá»§a repurposed media."),
-            q("Äiá»u nÃ o Ä‘Ãºng nháº¥t?", ["Deepfake chá»‰ nguy hiá»ƒm náº¿u hoÃ n háº£o 100%", "Deepfake cÃ³ thá»ƒ nguy hiá»ƒm ngay cáº£ khi chá»‰ Ä‘á»§ giá»‘ng trong vÃ i giÃ¢y vÃ  Ä‘i kÃ¨m Ã¡p lá»±c kháº©n cáº¥p", "Deepfake chá»‰ xuáº¥t hiá»‡n trong phim", "NgÆ°á»i bÃ¬nh thÆ°á»ng khÃ´ng bao giá» lÃ  má»¥c tiÃªu cá»§a deepfake"], 1, "Trong lá»«a Ä‘áº£o, káº» xáº¥u thÆ°á»ng káº¿t há»£p máº¡o danh vá»›i cáº£m xÃºc vÃ  thá»i gian gáº¥p."),
-            q("CÃ¢u há»i nÃ o há»¯u Ã­ch nháº¥t khi xem má»™t hÃ¬nh áº£nh nghi do AI táº¡o?", ["áº¢nh nÃ y cÃ³ nhiá»u mÃ u khÃ´ng?", "áº¢nh nÃ y Ä‘ang Ä‘Æ°á»£c dÃ¹ng Ä‘á»ƒ khiáº¿n mÃ¬nh tin Ä‘iá»u gÃ¬?", "áº¢nh nÃ y cÃ³ kÃ­ch thÆ°á»›c bao nhiÃªu?", "áº¢nh nÃ y cÃ³ Ä‘Æ°á»£c Ä‘Äƒng buá»•i sÃ¡ng khÃ´ng?"], 1, "Má»¥c Ä‘Ã­ch sá»­ dá»¥ng vÃ  ngá»¯ cáº£nh quyáº¿t Ä‘á»‹nh má»©c Ä‘á»™ rá»§i ro cá»§a ná»™i dung.")
+            q("Deepfake là gì?", ["Mọi nội dung sai trên Internet", "Nội dung hình ảnh, video hoặc âm thanh được tạo/chỉnh sửa để khiến người xem tin một người đã nói hoặc làm điều họ không thực sự nói/làm", "Chỉ là ảnh chỉnh màu", "Chỉ là tin nhắn lừa đảo không có hình ảnh"], 1, "Deepfake thường liên quan đến việc mạo danh hoặc làm sai lệch hành động/lời nói của một người."),
+            q("Điều nào sau đây là ví dụ về deepvoice?", ["Một ảnh phong cảnh do AI tạo", "Một đoạn giọng nói giả giống người thân yêu cầu chuyển tiền", "Một bài viết sai chính tả", "Một video thật được đăng lại từ năm trước"], 1, "Deepvoice liên quan đến giả lập hoặc chỉnh sửa giọng nói."),
+            q("Repurposed media là gì?", ["Nội dung thật nhưng bị đặt sai bối cảnh", "Nội dung luôn do AI tạo ra", "Nội dung không có âm thanh", "Nội dung được đăng bởi tài khoản chính thức"], 0, "Nội dung có thể thật, nhưng chú thích, thời gian, địa điểm hoặc ý nghĩa đi kèm có thể sai."),
+            q("Tất cả synthetic media đều là deepfake. Đúng hay sai?", ["Đúng", "Sai"], 1, "Synthetic media có thể dùng cho mục đích sáng tạo, giáo dục hoặc minh họa. Nó trở thành vấn đề khi bị dùng để mạo danh, đánh lừa hoặc gây hại."),
+            q("Một video bị cắt ngắn làm thay đổi ý nghĩa câu nói ban đầu. Đây phù hợp nhất là:", ["Edited media", "Deepvoice", "Mã độc", "Mật khẩu yếu"], 0, "Cắt ghép hoặc biên tập gây hiểu nhầm là một dạng edited media."),
+            q("Một hình ảnh người không tồn tại do AI tạo ra, được dùng làm ảnh đại diện cho tài khoản lừa đảo. Rủi ro chính là gì?", ["Ảnh quá đẹp", "Người xem có thể tin vào một danh tính giả", "Ảnh không có âm thanh", "Ảnh tải chậm"], 1, "Hình ảnh AI có thể được dùng để dựng hồ sơ hoặc danh tính giả."),
+            q("Vì sao không nên kết luận 'video thật' chỉ vì gương mặt và giọng nói giống?", ["Vì gương mặt và giọng nói có thể bị tạo hoặc chỉnh sửa bằng AI", "Vì video nào trên mạng cũng giả", "Vì chỉ ảnh mới có thể bị giả", "Vì âm thanh luôn đáng tin hơn hình ảnh"], 0, "Deepfake và deepvoice có thể mạo phỏng cả khuôn mặt lẫn giọng nói."),
+            q("Một video thật từ quốc gia khác được đăng với chú thích 'đang xảy ra tại thành phố của bạn'. Bạn nên nghi ngờ điều gì?", ["Sai bối cảnh", "Máy tính bị virus", "Mật khẩu bị lộ", "Điện thoại bị hỏng"], 0, "Đây là dấu hiệu của repurposed media."),
+            q("Điều nào đúng nhất?", ["Deepfake chỉ nguy hiểm nếu hoàn hảo 100%", "Deepfake có thể nguy hiểm ngay cả khi chỉ đủ giống trong vài giây và đi kèm áp lực khẩn cấp", "Deepfake chỉ xuất hiện trong phim", "Người bình thường không bao giờ là mục tiêu của deepfake"], 1, "Trong lừa đảo, kẻ xấu thường kết hợp mạo danh với cảm xúc và thời gian gấp."),
+            q("Câu hỏi nào hữu ích nhất khi xem một hình ảnh nghi do AI tạo?", ["Ảnh này có nhiều màu không?", "Ảnh này đang được dùng để khiến mình tin điều gì?", "Ảnh này có kích thước bao nhiêu?", "Ảnh này có được đăng buổi sáng không?"], 1, "Mục đích sử dụng và ngữ cảnh quyết định mức độ rủi ro của nội dung.")
           ])
         }
       ],
       quiz: [
-        q("Deepfake lÃ  gÃ¬?", ["Má»i ná»™i dung sai trÃªn máº¡ng", "Ná»™i dung dÃ¹ng AI Ä‘á»ƒ khiáº¿n ngÆ°á»i ta tin má»™t ngÆ°á»i lÃ m/nÃ³i Ä‘iá»u há» khÃ´ng thá»±c sá»± lÃ m/nÃ³i", "Chá»‰ lÃ  áº£nh chá»‰nh mÃ u", "Má»™t loáº¡i mÃ£ Ä‘á»™c"], 1),
-        q("Synthetic media lÃ  gÃ¬?", ["Ná»™i dung Ä‘Æ°á»£c táº¡o hoÃ n toÃ n hoáº·c má»™t pháº§n báº±ng cÃ´ng nghá»‡ sá»‘/AI", "Ná»™i dung báº¯t buá»™c lÃ  lá»«a Ä‘áº£o", "Ná»™i dung chá»‰ cÃ³ vÄƒn báº£n", "Chá»‰ lÃ  áº£nh chá»¥p"], 0),
-        q("VÃ¬ sao deepfake ngÃ y cÃ ng thuyáº¿t phá»¥c?", ["Dá»¯ liá»‡u cÃ¡ nhÃ¢n cÃ´ng khai quÃ¡ nhiá»u lÃ m nguyÃªn liá»‡u", "Má»i video Ä‘á»u sáº¯c nÃ©t", "Internet ngÃ y cÃ ng cháº­m", "AI luÃ´n thÃ´ng minh hÆ¡n ngÆ°á»i"], 0),
-        q("Ná»™i dung tháº­t nhÆ°ng chÃº thÃ­ch sai Ä‘á»‹a Ä‘iá»ƒm/thá»i gian lÃ  gÃ¬?", ["Deepvoice", "Edited media", "Repurposed media", "Metadata"], 2),
-        q("Detector AI bÃ¡o '80% kháº£ nÄƒng lÃ  AI' cÃ³ nghÄ©a lÃ  gÃ¬?", ["Cháº¯c cháº¯n giáº£", "Cháº¯c cháº¯n tháº­t", "Má»™t tÃ­n hiá»‡u cáº§n tham kháº£o cÃ¹ng vá»›i nguá»“n vÃ  bá»‘i cáº£nh", "NÃªn chia sáº» ngay"], 2)
+        q("Deepfake là gì?", ["Mọi nội dung sai trên mạng", "Nội dung dùng AI để khiến người ta tin một người làm/nói điều họ không thực sự làm/nói", "Chỉ là ảnh chỉnh màu", "Một loại mã độc"], 1),
+        q("Synthetic media là gì?", ["Nội dung được tạo hoàn toàn hoặc một phần bằng công nghệ số/AI", "Nội dung bắt buộc là lừa đảo", "Nội dung chỉ có văn bản", "Chỉ là ảnh chụp"], 0),
+        q("Vì sao deepfake ngày càng thuyết phục?", ["Dữ liệu cá nhân công khai quá nhiều làm nguyên liệu", "Mọi video đều sắc nét", "Internet ngày càng chậm", "AI luôn thông minh hơn người"], 0),
+        q("Nội dung thật nhưng chú thích sai địa điểm/thời gian là gì?", ["Deepvoice", "Edited media", "Repurposed media", "Metadata"], 2),
+        q("Detector AI báo '80% khả năng là AI' có nghĩa là gì?", ["Chắc chắn giả", "Chắc chắn thật", "Một tín hiệu cần tham khảo cùng với nguồn và bối cảnh", "Nên chia sẻ ngay"], 2)
       ]
     },
     {
       id: 2,
       part: "foundation",
-      title: "VÃ¬ sao con ngÆ°á»i dá»… bá»‹ lá»«a?",
-      duration: "85-95 phÃºt",
+      title: "Vì sao con người dễ bị lừa?",
+      duration: "85-95 phút",
       level: "Foundation",
-      scenario: "Káº» xáº¥u khÃ´ng táº¥n cÃ´ng mÃ¡y tÃ­nh cá»§a báº¡n, chÃºng táº¥n cÃ´ng cáº£m xÃºc cá»§a báº¡n. Module nÃ y giÃºp báº¡n nháº­n diá»‡n cÃ¡c 'nÃºt báº¥m' tÃ¢m lÃ½ trong lá»«a Ä‘áº£o.",
+      scenario: "Kẻ xấu không tấn công máy tính của bạn, chúng tấn công cảm xúc của bạn. Module này giúp bạn nhận diện các 'nút bấm' tâm lý trong lừa đảo.",
       outcomes: [
-        "Nháº­n diá»‡n 4 nhÃ³m cáº£m xÃºc bá»‹ lá»£i dá»¥ng: Kháº©n cáº¥p, ThÃ¢n quen, Quyá»n lá»±c, Lá»£i Ã­ch.",
-        "Hiá»ƒu vá» hiá»‡u á»©ng 'Tháº¥y táº­n máº¯t' vÃ  giá»›i háº¡n cá»§a nÃ³.",
-        "PhÃ¡t hiá»‡n 6 dáº¥u hiá»‡u ngÃ´n ngá»¯ thao tÃºng trong tin nháº¯n/cuá»™c gá»i.",
-        "Biáº¿t cÃ¡ch lÃ m chá»§ cáº£m xÃºc khi Ä‘á»‘i diá»‡n vá»›i ná»™i dung gÃ¢y sá»‘c."
+        "Nhận diện 4 nhóm cảm xúc bị lợi dụng: Khẩn cấp, Thân quen, Quyền lực, Lợi ích.",
+        "Hiểu về hiệu ứng 'Thấy tận mắt' và giới hạn của nó.",
+        "Phát hiện 6 dấu hiệu ngôn ngữ thao túng trong tin nhắn/cuộc gọi.",
+        "Biết cách làm chủ cảm xúc khi đối diện với nội dung gây sốc."
       ],
       sections: [
         {
-          title: "2.1 Bá»‘n nÃºt báº¥m cáº£m xÃºc",
+          title: "2.1 Bốn nút bấm cảm xúc",
           lessons: [
-            lesson("2.1.1", "Kháº©n cáº¥p vÃ  ThÃ¢n quen", [
-              "Kháº©n cáº¥p: Táº¡o Ã¡p lá»±c thá»i gian (Ngay bÃ¢y giá», Chá»‰ cÃ²n 5 phÃºt, Gáº¥p láº¯m...). Khi báº¡n vá»™i, nÃ£o bá»™ sáº½ bá» qua cÃ¡c bÆ°á»›c kiá»ƒm chá»©ng logic.",
-              "ThÃ¢n quen: Lá»£i dá»¥ng niá»m tin cá»§a báº¡n vÃ o ngÆ°á»i thÃ¢n, báº¡n bÃ¨. Báº¡n thÆ°á»ng háº¡ tháº¥p cáº£nh giÃ¡c khi tháº¥y má»™t gÆ°Æ¡ng máº·t quen thuá»™c hoáº·c gá»ng nÃ³i giá»‘ng ngÆ°á»i nhÃ ."
+            lesson("2.1.1", "Khẩn cấp và Thân quen", [
+              "Khẩn cấp: Tạo áp lực thời gian (Ngay bây giờ, Chỉ còn 5 phút, Gấp lắm...). Khi bạn vội, não bộ sẽ bỏ qua các bước kiểm chứng logic.",
+              "Thân quen: Lợi dụng niềm tin của bạn vào người thân, bạn bè. Bạn thường hạ thấp cảnh giác khi thấy một gương mặt quen thuộc hoặc gọng nói giống người nhà."
             ], [
-              "CÃ ng vá»™i vÃ ng, cÃ ng dá»… máº¯c sai láº§m.",
-              "Niá»m tin cÃ¡ nhÃ¢n lÃ  'lá»— há»•ng' mÃ  deepfake khai thÃ¡c triá»‡t Ä‘á»ƒ."
+              "Càng vội vàng, càng dễ mắc sai lầm.",
+              "Niềm tin cá nhân là 'lỗ hổng' mà deepfake khai thác triệt để."
             ]),
-            lesson("2.1.2", "Quyá»n lá»±c vÃ  Lá»£i Ã­ch", [
-              "Quyá»n lá»±c: Giáº£ danh cÃ´ng an, bÃ¡c sÄ©, sáº¿p, cÃ¡n bá»™ ngÃ¢n hÃ ng... Ä‘á»ƒ Ä‘e dá»a hoáº·c yÃªu cáº§u báº¡n lÃ m Ä‘iá»u sai quy trÃ¬nh.",
-              "Lá»£i Ã­ch: Há»©a háº¹n quÃ  táº·ng, lá»£i nhuáº­n cao, há»c bá»•ng... Ä‘á»ƒ Ä‘Ã¡nh vÃ o sá»± ham muá»‘n hoáº·c hy vá»ng cá»§a báº¡n."
+            lesson("2.1.2", "Quyền lực và Lợi ích", [
+              "Quyền lực: Giả danh công an, bác sĩ, sếp, cán bộ ngân hàng... để đe dọa hoặc yêu cầu bạn làm điều sai quy trình.",
+              "Lợi ích: Hứa hẹn quà tặng, lợi nhuận cao, học bổng... để đánh vào sự ham muốn hoặc hy vọng của bạn."
             ], [
-              "Quy trÃ¬nh tháº­t khÃ´ng bao giá» yÃªu cáº§u báº¡n bá» qua cÃ¡c bÆ°á»›c an toÃ n.",
-              "Lá»i há»©a 'quÃ¡ tá»‘t Ä‘á»ƒ lÃ  tháº­t' thÆ°á»ng lÃ  lá»«a Ä‘áº£o."
+              "Quy trình thật không bao giờ yêu cầu bạn bỏ qua các bước an toàn.",
+              "Lời hứa 'quá tốt để là thật' thường là lừa đảo."
             ])
           ]
         },
         {
-          title: "2.2 NgÃ´n ngá»¯ thao tÃºng",
+          title: "2.2 Ngôn ngữ thao túng",
           lessons: [
-            lesson("2.2.1", "Dáº¥u hiá»‡u trong cÃ¢u chá»¯", [
-              "Káº» lá»«a Ä‘áº£o thÆ°á»ng dÃ¹ng cÃ¡c cá»¥m tá»« thiáº¿t káº¿ sáºµn:\n- 'LÃ m ngay': Ãp lá»±c.\n- 'Náº¿u khÃ´ng thÃ¬...': Äe dá»a.\n- 'Chá»‰ mÃ¬nh báº¡n biáº¿t': CÃ´ láº­p.",
-              "- 'Cháº¯c cháº¯n 100%': Cam káº¿t áº£o.\n- 'QuÃ¡ tá»‘t Ä‘á»ƒ bá» lá»¡': Dá»¥ dá»—.\n- 'VÃ¬ sá»± an toÃ n cá»§a báº¡n': Giáº£ nhÃ¢n nghÄ©a."
+            lesson("2.2.1", "Dấu hiệu trong câu chữ", [
+              "Kẻ lừa đảo thường dùng các cụm từ thiết kế sẵn:\n- 'Làm ngay': Áp lực.\n- 'Nếu không thì...': Đe dọa.\n- 'Chỉ mình bạn biết': Cô lập.",
+              "- 'Chắc chắn 100%': Cam kết ảo.\n- 'Quá tốt để bỏ lỡ': Dụ dỗ.\n- 'Vì sự an toàn của bạn': Giả nhân nghĩa."
             ], [
-              "NgÃ´n ngá»¯ thao tÃºng luÃ´n hÆ°á»›ng báº¡n Ä‘áº¿n hÃ nh Ä‘á»™ng vá»™i vÃ ng.",
-              "Nháº­n diá»‡n ngÃ´n ngá»¯ lÃ  bÆ°á»›c quan trá»ng cá»§a Observe."
+              "Ngôn ngữ thao túng luôn hướng bạn đến hành động vội vàng.",
+              "Nhận diện ngôn ngữ là bước quan trọng của Observe."
             ])
           ],
           checkpoint: checkpoint("2.1", [
-            q("Káº» xáº¥u nÃ³i 'Äá»«ng nÃ³i vá»›i ai, Ä‘Ã¢y lÃ  bÃ­ máº­t' nháº±m má»¥c Ä‘Ã­ch gÃ¬?", ["Báº£o vá»‡ báº¡n", "CÃ´ láº­p báº¡n khá»i sá»± giÃºp Ä‘á»¡ vÃ  kiá»ƒm chá»©ng", "Táº¡o sá»± báº¥t ngá»", "TuÃ¢n thá»§ phÃ¡p luáº­t"], 1),
-            q("Cá»¥m tá»« nÃ o lÃ  dáº¥u hiá»‡u cá»§a sá»± Ä‘e dá»a?", ["Báº¡n cÃ³ thá»ƒ suy nghÄ© thÃªm", "Náº¿u khÃ´ng chuyá»ƒn tiá»n, tÃ i khoáº£n sáº½ bá»‹ khÃ³a vÄ©nh viá»…n", "HÃ£y gá»i láº¡i khi ráº£nh", "Kiá»ƒm tra ká»¹ thÃ´ng tin nhÃ©"], 1)
+            q("Kẻ xấu nói 'Đừng nói với ai, đây là bí mật' nhằm mục đích gì?", ["Bảo vệ bạn", "Cô lập bạn khỏi sự giúp đỡ và kiểm chứng", "Tạo sự bất ngờ", "Tuân thủ pháp luật"], 1),
+            q("Cụm từ nào là dấu hiệu của sự đe dọa?", ["Bạn có thể suy nghĩ thêm", "Nếu không chuyển tiền, tài khoản sẽ bị khóa vĩnh viễn", "Hãy gọi lại khi rảnh", "Kiểm tra kỹ thông tin nhé"], 1)
           ])
         }
       ],
       quiz: [
-        q("VÃ¬ sao deepfake káº¿t há»£p vá»›i Social Engineering láº¡i nguy hiá»ƒm?", ["VÃ¬ nÃ³ Ä‘Ã¡nh vÃ o cáº£ máº¯t, tai vÃ  cáº£m xÃºc cá»§a náº¡n nhÃ¢n", "VÃ¬ nÃ³ lÃ m video nÃ©t hÆ¡n", "VÃ¬ nÃ³ lÃ m tÄƒng dung lÆ°á»£ng file", "VÃ¬ nÃ³ lÃ m video cÃ³ phá»¥ Ä‘á»"], 0),
-        q("Khi nháº­n Ä‘Æ°á»£c tin nháº¯n mÆ°á»£n tiá»n tá»« ngÆ°á»i quen, Ä‘iá»u Ä‘áº§u tiÃªn nÃªn lÃ m lÃ  gÃ¬?", ["Chuyá»ƒn ngay", "Dá»«ng láº¡i vÃ  xÃ¡c minh qua kÃªnh Ä‘á»™c láº­p (nhÆ° gá»i Ä‘iá»‡n trá»±c tiáº¿p)", "Gá»­i mÃ£ OTP cho há»", "Chia sáº» cho ngÆ°á»i khÃ¡c"], 1),
-        q("NÃºt báº¥m 'Quyá»n lá»±c' thÆ°á»ng Ä‘i kÃ¨m vá»›i cáº£m xÃºc nÃ o?", ["Sá»£ hÃ£i vÃ  phá»¥c tÃ¹ng", "Vui váº»", "HÃ o há»©ng", "Buá»“n bÃ£"], 0),
-        q("Liar's dividend lÃ  rá»§i ro gÃ¬?", ["Ná»™i dung tháº­t bá»‹ phá»§ nháº­n báº±ng cÃ¡ch gá»i nÃ³ lÃ  deepfake", "Lá»£i nhuáº­n tá»« viá»‡c nÃ³i dá»‘i", "QuÃ  táº·ng tá»« AI", "PhÃ­ Ä‘Äƒng kÃ½ khÃ³a há»c"], 0),
-        q("Má»¥c tiÃªu cá»§a Module 2 lÃ  gÃ¬?", ["Dáº¡y cÃ¡ch lá»«a ngÆ°á»i khÃ¡c", "GiÃºp nháº­n diá»‡n cÃ¡c báº«y cáº£m xÃºc Ä‘á»ƒ pháº£n á»©ng bÃ¬nh tÄ©nh hÆ¡n", "Dáº¡y láº­p trÃ¬nh AI", "Dáº¡y cÃ¡ch xÃ³a áº£nh trÃªn máº¡ng"], 1)
+        q("Vì sao deepfake kết hợp với Social Engineering lại nguy hiểm?", ["Vì nó đánh vào cả mắt, tai và cảm xúc của nạn nhân", "Vì nó làm video nét hơn", "Vì nó làm tăng dung lượng file", "Vì nó làm video có phụ đề"], 0),
+        q("Khi nhận được tin nhắn mượn tiền từ người quen, điều đầu tiên nên làm là gì?", ["Chuyển ngay", "Dừng lại và xác minh qua kênh độc lập (như gọi điện trực tiếp)", "Gửi mã OTP cho họ", "Chia sẻ cho người khác"], 1),
+        q("Nút bấm 'Quyền lực' thường đi kèm với cảm xúc nào?", ["Sợ hãi và phục tùng", "Vui vẻ", "Hào hứng", "Buồn bã"], 0),
+        q("Liar's dividend là rủi ro gì?", ["Nội dung thật bị phủ nhận bằng cách gọi nó là deepfake", "Lợi nhuận từ việc nói dối", "Quà tặng từ AI", "Phí đăng ký khóa học"], 0),
+        q("Mục tiêu của Module 2 là gì?", ["Dạy cách lừa người khác", "Giúp nhận diện các bẫy cảm xúc để phản ứng bình tĩnh hơn", "Dạy lập trình AI", "Dạy cách xóa ảnh trên mạng"], 1)
       ]
     },
     {
       id: 3,
       part: "foundation",
-      title: "NhÃ¬n, Nghe, Äá»c: Dáº¥u hiá»‡u nghi váº¥n",
-      duration: "100-110 phÃºt",
+      title: "Nhìn, Nghe, Đọc: Dấu hiệu nghi vấn",
+      duration: "100-110 phút",
       level: "Foundation",
-      scenario: "Module 3 cung cáº¥p cho báº¡n 'kÃ­nh hiá»ƒn vi' Ä‘á»ƒ soi cÃ¡c lá»—i ká»¹ thuáº­t vÃ  sá»± phi lÃ½ trong ná»™i dung. Báº¡n sáº½ há»c cÃ¡ch quan sÃ¡t tá»« chi tiáº¿t Ä‘áº¿n bá»‘i cáº£nh tá»•ng thá»ƒ.",
+      scenario: "Module 3 cung cấp cho bạn 'kính hiển vi' để soi các lỗi kỹ thuật và sự phi lý trong nội dung. Bạn sẽ học cách quan sát từ chi tiết đến bối cảnh tổng thể.",
       outcomes: [
-        "Sá»­ dá»¥ng Checklist 3 lá»›p: HÃ¬nh áº£nh - Ã‚m thanh - Ngá»¯ cáº£nh.",
-        "PhÃ¡t hiá»‡n lá»—i ká»¹ thuáº­t á»Ÿ máº¯t, miá»‡ng, Ã¡nh sÃ¡ng vÃ  vÃ¹ng biÃªn.",
-        "Nháº­n diá»‡n dáº¥u hiá»‡u cá»§a Deepvoice vÃ  Ã¢m thanh AI.",
-        "Biáº¿t cÃ¡ch Ä‘Ã¡nh giÃ¡ sá»± phÃ¹ há»£p cá»§a bá»‘i cáº£nh ná»™i dung."
+        "Sử dụng Checklist 3 lớp: Hình ảnh - Âm thanh - Ngữ cảnh.",
+        "Phát hiện lỗi kỹ thuật ở mắt, miệng, ánh sáng và vùng biên.",
+        "Nhận diện dấu hiệu của Deepvoice và âm thanh AI.",
+        "Biết cách đánh giá sự phù hợp của bối cảnh nội dung."
       ],
       sections: [
         {
-          title: "3.1 Dáº¥u hiá»‡u HÃ¬nh áº£nh vÃ  Video",
+          title: "3.1 Dấu hiệu Hình ảnh và Video",
           lessons: [
-            lesson("3.1.1", "Soi lá»—i khuÃ´n máº·t vÃ  chuyá»ƒn Ä‘á»™ng", [
-              "KhuÃ´n máº·t: Da quÃ¡ má»‹n, vÃ¹ng rÃ¬a máº·t bá»‹ nhÃ²e hoáº·c rung khi ngÆ°á»i Ä‘Ã³ quay Ä‘áº§u nhanh.",
-              "Máº¯t vÃ  Miá»‡ng: Nhá»‹p nhÃ¡y máº¯t khÃ´ng tá»± nhiÃªn, Ã¡nh máº¯t khÃ´ng khá»›p hÆ°á»›ng nhÃ¬n, rÄƒng bá»‹ má» hoáº·c mÃ©o khi nÃ³i.",
-              "Váº­t thá»ƒ che máº·t: Khi tay hoáº·c váº­t thá»ƒ Ä‘i ngang qua máº·t, khuÃ´n máº·t cÃ³ thá»ƒ bá»‹ biáº¿n dáº¡ng hoáº·c Ä‘á»ƒ lá»™ 'máº·t tháº­t' bÃªn dÆ°á»›i trong khoáº£nh kháº¯c."
+            lesson("3.1.1", "Soi lỗi khuôn mặt và chuyển động", [
+              "Khuôn mặt: Da quá mịn, vùng rìa mặt bị nhòe hoặc rung khi người đó quay đầu nhanh.",
+              "Mắt và Miệng: Nhịp nháy mắt không tự nhiên, ánh mắt không khớp hướng nhìn, răng bị mờ hoặc méo khi nói.",
+              "Vật thể che mặt: Khi tay hoặc vật thể đi ngang qua mặt, khuôn mặt có thể bị biến dạng hoặc để lộ 'mặt thật' bên dưới trong khoảnh khắc."
             ], [
-              "Táº­p trung vÃ o nhá»¯ng chi tiáº¿t AI khÃ³ xá»­ lÃ½: tÃ³c, tai, káº½ rÄƒng vÃ  vÃ¹ng biÃªn.",
-              "Lá»—i ká»¹ thuáº­t lÃ  tÃ­n hiá»‡u, khÃ´ng pháº£i káº¿t luáº­n duy nháº¥t."
+              "Tập trung vào những chi tiết AI khó xử lý: tóc, tai, kẽ răng và vùng biên.",
+              "Lỗi kỹ thuật là tín hiệu, không phải kết luận duy nhất."
             ]),
-            lesson("3.1.2", "Ãnh sÃ¡ng vÃ  Ná»n", [
-              "Ãnh sÃ¡ng: BÃ³ng trÃªn máº·t khÃ´ng khá»›p vá»›i nguá»“n sÃ¡ng trong ná»n. Da máº·t cÃ³ Ä‘á»™ sÃ¡ng khÃ¡c háº³n vá»›i cá»•.",
-              "Ná»n: CÃ¡c Ä‘Æ°á»ng tháº³ng (cáº¡nh tÆ°á»ng, báº£ng hiá»‡u) bá»‹ mÃ©o, logo bá»‹ sai chÃ­nh táº£, hoáº·c váº­t thá»ƒ á»Ÿ ná»n thay Ä‘á»•i ká»³ láº¡ khi video phÃ¡t."
+            lesson("3.1.2", "Ánh sáng và Nền", [
+              "Ánh sáng: Bóng trên mặt không khớp với nguồn sáng trong nền. Da mặt có độ sáng khác hẳn với cổ.",
+              "Nền: Các đường thẳng (cạnh tường, bảng hiệu) bị méo, logo bị sai chính tả, hoặc vật thể ở nền thay đổi kỳ lạ khi video phát."
             ], [
-              "Quan sÃ¡t sá»± nháº¥t quÃ¡n giá»¯a ngÆ°á»i vÃ  cáº£nh.",
-              "Logo vÃ  chá»¯ viáº¿t thÆ°á»ng lÃ  Ä‘iá»ƒm yáº¿u cá»§a cÃ¡c mÃ´ hÃ¬nh AI táº¡o hÃ¬nh."
+              "Quan sát sự nhất quán giữa người và cảnh.",
+              "Logo và chữ viết thường là điểm yếu của các mô hình AI tạo hình."
             ])
           ]
         },
         {
-          title: "3.2 Dáº¥u hiá»‡u Ã‚m thanh vÃ  Ngá»¯ cáº£nh",
+          title: "3.2 Dấu hiệu Âm thanh và Ngữ cảnh",
           lessons: [
             lesson("3.2.1", "Nghe ra Deepvoice", [
-              "Giá»ng nÃ³i Ä‘á»u Ä‘á»u: Thiáº¿u nhá»‹p thá»Ÿ tá»± nhiÃªn, thiáº¿u cáº£m xÃºc hoáº·c cÃ¡c Ã¢m Ä‘iá»‡u Ä‘áº·c trÆ°ng cá»§a ngÆ°á»i Ä‘Ã³.",
-              "PhÃ¡t Ã¢m láº¡: Sai tÃªn riÃªng, Ä‘á»‹a danh, hoáº·c cÃ³ cÃ¡c Ã¢m thanh nhiá»…u ká»¹ thuáº­t khÃ´ng giá»‘ng tiáº¿ng á»“n mÃ´i trÆ°á»ng.",
-              "Tiáº¿ng ná»n: Ã‚m thanh ná»n quÃ¡ sáº¡ch hoáº·c bá»‹ ngáº¯t quÃ£ng Ä‘á»™t ngá»™t."
+              "Giọng nói đều đều: Thiếu nhịp thở tự nhiên, thiếu cảm xúc hoặc các âm điệu đặc trưng của người đó.",
+              "Phát âm lạ: Sai tên riêng, địa danh, hoặc có các âm thanh nhiễu kỹ thuật không giống tiếng ồn môi trường.",
+              "Tiếng nền: Âm thanh nền quá sạch hoặc bị ngắt quãng đột ngột."
             ], [
-              "Giá»ng nÃ³i giá»‘ng khÃ´ng Ä‘á»§ Ä‘á»ƒ tin danh tÃ­nh.",
-              "Há»i nhá»¯ng cÃ¢u há»i báº¥t ngá» Ä‘á»ƒ kiá»ƒm tra pháº£n á»©ng cá»§a ngÆ°á»i gá»i."
+              "Giọng nói giống không đủ để tin danh tính.",
+              "Hỏi những câu hỏi bất ngờ để kiểm tra phản ứng của người gọi."
             ]),
-            lesson("3.2.2", "ÄÃ¡nh giÃ¡ Ngá»¯ cáº£nh", [
-              "Sá»± phÃ¹ há»£p: Ná»™i dung cÃ³ khá»›p vá»›i tÃ­nh cÃ¡ch, thÃ³i quen vÃ  Ä‘á»‹a Ä‘iá»ƒm thÆ°á»ng tháº¥y cá»§a ngÆ°á»i Ä‘Ã³ khÃ´ng?",
-              "Nguá»“n gá»­i: TÃ i khoáº£n gá»­i cÃ³ dáº¥u xÃ¡c minh khÃ´ng? CÃ³ pháº£i tÃ i khoáº£n báº¡n Ä‘Ã£ káº¿t báº¡n tá»« lÃ¢u khÃ´ng?",
-              "HÃ nh Ä‘á»™ng yÃªu cáº§u: CÃ³ yÃªu cáº§u tiá»n, OTP, máº­t kháº©u, hay giá»¯ bÃ­ máº­t khÃ´ng?"
+            lesson("3.2.2", "Đánh giá Ngữ cảnh", [
+              "Sự phù hợp: Nội dung có khớp với tính cách, thói quen và địa điểm thường thấy của người đó không?",
+              "Nguồn gửi: Tài khoản gửi có dấu xác minh không? Có phải tài khoản bạn đã kết bạn từ lâu không?",
+              "Hành động yêu cầu: Có yêu cầu tiền, OTP, mật khẩu, hay giữ bí mật không?"
             ], [
-              "Ngá»¯ cáº£nh rá»§i ro cao quan trá»ng hÆ¡n cáº£ lá»—i ká»¹ thuáº­t.",
-              "Báº¡n khÃ´ng cáº§n chá»©ng minh deepfake má»›i cÃ³ quyá»n tá»« chá»‘i yÃªu cáº§u Ä‘Ã¡ng nghi."
+              "Ngữ cảnh rủi ro cao quan trọng hơn cả lỗi kỹ thuật.",
+              "Bạn không cần chứng minh deepfake mới có quyền từ chối yêu cầu đáng nghi."
             ])
           ],
           checkpoint: checkpoint("3.1", [
-            q("Dáº¥u hiá»‡u nÃ o thÆ°á»ng tháº¥y á»Ÿ máº¯t trong video deepfake?", ["Máº¯t chá»›p quÃ¡ nhiá»u", "Nhá»‹p nhÃ¡y máº¯t khÃ´ng tá»± nhiÃªn hoáº·c Ã¡nh máº¯t khÃ´ng khá»›p hÆ°á»›ng Ä‘áº§u", "Máº¯t luÃ´n nháº¯m", "Máº¯t cÃ³ mÃ u láº¡"], 1),
-            q("Äiá»u gÃ¬ ÄÃNG NGHI nháº¥t trong má»™t tin nháº¯n thoáº¡i?", ["Tiáº¿ng chim hÃ³t á»Ÿ ná»n", "Giá»ng nÃ³i Ä‘á»u Ä‘á»u thiáº¿u nhá»‹p thá»Ÿ tá»± nhiÃªn vÃ  yÃªu cáº§u tiá»n gáº¥p", "NÃ³i tiáº¿ng Viá»‡t chuáº©n", "NÃ³i nhanh"], 1)
+            q("Dấu hiệu nào thường thấy ở mắt trong video deepfake?", ["Mắt chớp quá nhiều", "Nhịp nháy mắt không tự nhiên hoặc ánh mắt không khớp hướng đầu", "Mắt luôn nhắm", "Mắt có màu lạ"], 1),
+            q("Điều gì ĐÁNG NGHI nhất trong một tin nhắn thoại?", ["Tiếng chim hót ở nền", "Giọng nói đều đều thiếu nhịp thở tự nhiên và yêu cầu tiền gấp", "Nói tiếng Việt chuẩn", "Nói nhanh"], 1)
           ])
         }
       ],
       quiz: [
-        q("BÆ°á»›c Ä‘áº§u tiÃªn khi xem má»™t video gÃ¢y sá»‘c lÃ  gÃ¬?", ["Chia sáº» ngay", "Dá»«ng láº¡i vÃ  quan sÃ¡t cháº­m hÆ¡n", "Káº¿t luáº­n lÃ  giáº£", "Táº£i vá» mÃ¡y"], 1),
-        q("Checklist 3 lá»›p quan sÃ¡t gá»“m nhá»¯ng gÃ¬?", ["HÃ¬nh áº£nh, Ã‚m thanh, Ngá»¯ cáº£nh", "SÃ¡ng, TrÆ°a, Tá»‘i", "TÃªn, Tuá»•i, Äá»‹a chá»‰", "Like, Share, Comment"], 0),
-        q("Táº¡i sao video tháº­t cÅ©ng cÃ³ thá»ƒ trÃ´ng giá»‘ng deepfake?", ["Do máº¡ng yáº¿u, nÃ©n video hoáº·c dÃ¹ng filter lÃ m Ä‘áº¹p", "VÃ¬ AI luÃ´n sao chÃ©p video tháº­t", "VÃ¬ má»i video Ä‘á»u lÃ  AI", "VÃ¬ mÃ n hÃ¬nh bá»‹ há»ng"], 0),
-        q("Dáº¥u hiá»‡u nÃ o thuá»™c lá»›p 'Ngá»¯ cáº£nh'?", ["Máº¯t chá»›p láº¡", "YÃªu cáº§u chuyá»ƒn tiá»n vÃ o tÃ i khoáº£n láº¡ vÃ  giá»¯ bÃ­ máº­t", "Giá»ng nÃ³i Ä‘á»u Ä‘á»u", "Ná»n bá»‹ mÃ©o"], 1),
-        q("Má»¥c tiÃªu cá»§a quan sÃ¡t lÃ  Ä‘á»ƒ lÃ m gÃ¬?", ["Äá»ƒ káº¿t luáº­n ngay tháº­t giáº£", "Äá»ƒ thu tháº­p tÃ­n hiá»‡u xem cÃ³ cáº§n kiá»ƒm chá»©ng thÃªm khÃ´ng", "Äá»ƒ tÃ¬m cÃ¡ch táº¡o video tÆ°Æ¡ng tá»±", "Äá»ƒ bÃ¡o cÃ¡o má»i video"], 1)
+        q("Bước đầu tiên khi xem một video gây sốc là gì?", ["Chia sẻ ngay", "Dừng lại và quan sát chậm hơn", "Kết luận là giả", "Tải về máy"], 1),
+        q("Checklist 3 lớp quan sát gồm những gì?", ["Hình ảnh, Âm thanh, Ngữ cảnh", "Sáng, Trưa, Tối", "Tên, Tuổi, Địa chỉ", "Like, Share, Comment"], 0),
+        q("Tại sao video thật cũng có thể trông giống deepfake?", ["Do mạng yếu, nén video hoặc dùng filter làm đẹp", "Vì AI luôn sao chép video thật", "Vì mọi video đều là AI", "Vì màn hình bị hỏng"], 0),
+        q("Dấu hiệu nào thuộc lớp 'Ngữ cảnh'?", ["Mắt chớp lạ", "Yêu cầu chuyển tiền vào tài khoản lạ và giữ bí mật", "Giọng nói đều đều", "Nền bị méo"], 1),
+        q("Mục tiêu của quan sát là để làm gì?", ["Để kết luận ngay thật giả", "Để thu thập tín hiệu xem có cần kiểm chứng thêm không", "Để tìm cách tạo video tương tự", "Để báo cáo mọi video"], 1)
       ]
     },
     {
       id: 4,
       part: "recognition",
-      title: "Quy trÃ¬nh Deepfense Check",
-      duration: "115-125 phÃºt",
+      title: "Quy trình Deepfense Check",
+      duration: "115-125 phút",
       level: "Recognition",
-      scenario: "DÃ¹ video trÃ´ng tháº­t Ä‘áº¿n Ä‘Ã¢u, báº¡n váº«n cáº§n má»™t quy trÃ¬nh an toÃ n Ä‘á»ƒ ra quyáº¿t Ä‘á»‹nh. Deepfense Check lÃ  5 bÆ°á»›c báº£o vá»‡ báº¡n trÆ°á»›c má»i ná»™i dung nghi váº¥n.",
+      scenario: "Dù video trông thật đến đâu, bạn vẫn cần một quy trình an toàn để ra quyết định. Deepfense Check là 5 bước bảo vệ bạn trước mọi nội dung nghi vấn.",
       outcomes: [
-        "Thá»±c hÃ nh thÃ nh tháº¡o 5 bÆ°á»›c: Pause - Observe - Verify - Trace - Decide.",
-        "Biáº¿t cÃ¡ch sá»­ dá»¥ng KÃªnh Ä‘á»™c láº­p Ä‘á»ƒ xÃ¡c minh thÃ´ng tin.",
-        "Sá»­ dá»¥ng cÃ¡c cÃ´ng cá»¥ kiá»ƒm chá»©ng (Reverse search, Detector) Ä‘Ãºng cÃ¡ch.",
-        "XÃ¢y dá»±ng thÃ³i quen 'kiá»ƒm tra trÆ°á»›c khi tin'."
+        "Thực hành thành thạo 5 bước: Pause - Observe - Verify - Trace - Decide.",
+        "Biết cách sử dụng Kênh độc lập để xác minh thông tin.",
+        "Sử dụng các công cụ kiểm chứng (Reverse search, Detector) đúng cách.",
+        "Xây dựng thói quen 'kiểm tra trước khi tin'."
       ],
       sections: [
         {
-          title: "4.1 NÄƒm bÆ°á»›c kiá»ƒm chá»©ng",
+          title: "4.1 Năm bước kiểm chứng",
           lessons: [
-            lesson("4.1.1", "Pause vÃ  Observe", [
-              "Pause: Dá»«ng láº¡i 30 giÃ¢y. Äá»«ng Ä‘á»ƒ cáº£m xÃºc (sá»£, lo, hÆ°ng pháº¥n) Ä‘iá»u khiá»ƒn ngÃ³n tay báº¡n.",
-              "Observe: Sá»­ dá»¥ng checklist 3 lá»›p Ä‘Ã£ há»c á»Ÿ Module 3. Ghi nháº­n cÃ¡c tÃ­n hiá»‡u nghi váº¥n vá» ká»¹ thuáº­t vÃ  hÃ nh vi."
+            lesson("4.1.1", "Pause và Observe", [
+              "Pause: Dừng lại 30 giây. Đừng để cảm xúc (sợ, lo, hưng phấn) điều khiển ngón tay bạn.",
+              "Observe: Sử dụng checklist 3 lớp đã học ở Module 3. Ghi nhận các tín hiệu nghi vấn về kỹ thuật và hành vi."
             ], [
-              "Dá»«ng láº¡i lÃ  ká»¹ nÄƒng quan trá»ng nháº¥t.",
-              "Quan sÃ¡t khÃ´ng chá»‰ lÃ  tÃ¬m lá»—i, mÃ  lÃ  thu tháº­p dá»¯ kiá»‡n."
+              "Dừng lại là kỹ năng quan trọng nhất.",
+              "Quan sát không chỉ là tìm lỗi, mà là thu thập dữ kiện."
             ]),
-            lesson("4.1.2", "Verify vÃ  Trace", [
-              "Verify: XÃ¡c minh qua KÃŠNH Äá»˜C Láº¬P. Náº¿u ngÆ°á»i thÃ¢n nháº¯n tin, hÃ£y gá»i vÃ o sá»‘ Ä‘iá»‡n thoáº¡i báº¡n Ä‘Ã£ lÆ°u. Náº¿u ngÃ¢n hÃ ng gá»i, hÃ£y tá»± má»Ÿ app chÃ­nh thá»©c.",
-              "Trace: Truy tÃ¬m nguá»“n gá»‘c. Ai Ä‘Äƒng Ä‘áº§u tiÃªn? Video nÃ y cÃ³ tá»« bao giá»? CÃ³ nguá»“n tin chÃ­nh thá»‘ng nÃ o xÃ¡c nháº­n khÃ´ng?"
+            lesson("4.1.2", "Verify và Trace", [
+              "Verify: Xác minh qua KÊNH ĐỘC LẬP. Nếu người thân nhắn tin, hãy gọi vào số điện thoại bạn đã lưu. Nếu ngân hàng gọi, hãy tự mở app chính thức.",
+              "Trace: Truy tìm nguồn gốc. Ai đăng đầu tiên? Video này có từ bao giờ? Có nguồn tin chính thống nào xác nhận không?"
             ], [
-              "KÃªnh Ä‘á»™c láº­p pháº£i lÃ  kÃªnh báº¡n Ä‘Ã£ biáº¿t vÃ  tin tÆ°á»Ÿng tá»« trÆ°á»›c.",
-              "KhÃ´ng dÃ¹ng link hoáº·c sá»‘ Ä‘iá»‡n thoáº¡i má»›i Ä‘Æ°á»£c cung cáº¥p trong chÃ­nh tin nháº¯n nghi váº¥n."
+              "Kênh độc lập phải là kênh bạn đã biết và tin tưởng từ trước.",
+              "Không dùng link hoặc số điện thoại mới được cung cấp trong chính tin nhắn nghi vấn."
             ]),
             lesson("4.1.3", "Decide", [
-              "Decide: Ra quyáº¿t Ä‘á»‹nh. CÃ³ 3 hÆ°á»›ng: 1. Tin vÃ  hÃ nh Ä‘á»™ng (náº¿u Ä‘Ã£ xÃ¡c minh 100%). 2. KhÃ´ng tin vÃ  bá» qua. 3. Cáº£nh bÃ¡o vÃ  bÃ¡o cÃ¡o (náº¿u tháº¥y dáº¥u hiá»‡u lá»«a Ä‘áº£o rÃµ rÃ ng)."
+              "Decide: Ra quyết định. Có 3 hướng: 1. Tin và hành động (nếu đã xác minh 100%). 2. Không tin và bỏ qua. 3. Cảnh báo và báo cáo (nếu thấy dấu hiệu lừa đảo rõ ràng)."
             ], [
-              "An toÃ n lÃ  Æ°u tiÃªn sá»‘ 1.",
-              "Náº¿u khÃ´ng cháº¯c cháº¯n, hÃ£y chá»n phÆ°Æ¡ng Ã¡n khÃ´ng hÃ nh Ä‘á»™ng."
+              "An toàn là ưu tiên số 1.",
+              "Nếu không chắc chắn, hãy chọn phương án không hành động."
             ])
           ]
         },
         {
-          title: "4.2 CÃ´ng cá»¥ há»— trá»£",
+          title: "4.2 Công cụ hỗ trợ",
           lessons: [
-            lesson("4.2.1", "Reverse Search vÃ  Detector", [
-              "Reverse Image Search: GiÃºp tÃ¬m xem áº£nh nÃ y Ä‘Ã£ tá»«ng xuáº¥t hiá»‡n á»Ÿ Ä‘Ã¢u, cÃ³ bá»‹ láº¥y tá»« má»™t sá»± kiá»‡n cÅ© khÃ´ng.",
-              "AI Detector: CÃ´ng cá»¥ giÃºp dá»± Ä‘oÃ¡n kháº£ nÄƒng can thiá»‡p cá»§a AI. LÆ°u Ã½: Káº¿t quáº£ chá»‰ mang tÃ­nh tham kháº£o, khÃ´ng pháº£i phÃ¡n quyáº¿t cuá»‘i cÃ¹ng.",
-              "Provenance (Content Credentials): Má»™t sá»‘ ná»™i dung sá»‘ hiá»‡n nay cÃ³ Ä‘Ã­nh kÃ¨m 'giáº¥y khai sinh' ghi láº¡i lá»‹ch sá»­ táº¡o vÃ  chá»‰nh sá»­a."
+            lesson("4.2.1", "Reverse Search và Detector", [
+              "Reverse Image Search: Giúp tìm xem ảnh này đã từng xuất hiện ở đâu, có bị lấy từ một sự kiện cũ không.",
+              "AI Detector: Công cụ giúp dự đoán khả năng can thiệp của AI. Lưu ý: Kết quả chỉ mang tính tham khảo, không phải phán quyết cuối cùng.",
+              "Provenance (Content Credentials): Một số nội dung số hiện nay có đính kèm 'giấy khai sinh' ghi lại lịch sử tạo và chỉnh sửa."
             ], [
-              "CÃ´ng cá»¥ há»— trá»£ tÆ° duy, khÃ´ng thay tháº¿ tÆ° duy.",
-              "LuÃ´n káº¿t há»£p káº¿t quáº£ cÃ´ng cá»¥ vá»›i phÃ¢n tÃ­ch bá»‘i cáº£nh."
+              "Công cụ hỗ trợ tư duy, không thay thế tư duy.",
+              "Luôn kết hợp kết quả công cụ với phân tích bối cảnh."
             ])
           ],
           checkpoint: checkpoint("4.1", [
-            q("Trong Deepfense Check, 'Verify' cÃ³ nghÄ©a lÃ  gÃ¬?", ["Há»i láº¡i chÃ­nh ngÆ°á»i gá»­i", "XÃ¡c minh qua má»™t kÃªnh Ä‘á»™c láº­p mÃ  báº¡n Ä‘Ã£ biáº¿t tá»« trÆ°á»›c", "Tin vÃ o cáº£m giÃ¡c", "Chá» 1 ngÃ y"], 1),
-            q("Äiá»u nÃ o ÄÃšNG vá» AI Detector?", ["LuÃ´n chÃ­nh xÃ¡c 100%", "Chá»‰ lÃ  má»™t tÃ­n hiá»‡u tham kháº£o, cÃ³ thá»ƒ sai", "DÃ¹ng Ä‘á»ƒ thay tháº¿ má»i bÆ°á»›c kiá»ƒm tra khÃ¡c", "Chá»‰ dÃ¹ng Ä‘Æ°á»£c cho áº£nh"], 1)
+            q("Trong Deepfense Check, 'Verify' có nghĩa là gì?", ["Hỏi lại chính người gửi", "Xác minh qua một kênh độc lập mà bạn đã biết từ trước", "Tin vào cảm giác", "Chờ 1 ngày"], 1),
+            q("Điều nào ĐÚNG về AI Detector?", ["Luôn chính xác 100%", "Chỉ là một tín hiệu tham khảo, có thể sai", "Dùng để thay thế mọi bước kiểm tra khác", "Chỉ dùng được cho ảnh"], 1)
           ])
         }
       ],
       quiz: [
-        q("Thá»© tá»± Ä‘Ãºng cá»§a Deepfense Check lÃ  gÃ¬?", ["Pause, Observe, Verify, Trace, Decide", "Observe, Pause, Trace, Verify, Decide", "Verify, Trace, Observe, Pause, Decide", "Like, Share, Comment, Post"], 0),
-        q("KÃªnh nÃ o lÃ  KÃŠNH Äá»˜C Láº¬P an toÃ n?", ["Link ngÆ°á»i láº¡ gá»­i", "Sá»‘ Ä‘iá»‡n thoáº¡i báº¡n Ä‘Ã£ lÆ°u tá»« trÆ°á»›c trong danh báº¡", "Sá»‘ Ä‘iá»‡n thoáº¡i má»›i trong tin nháº¯n mÆ°á»£n tiá»n", "PhÃ²ng chat mÃ  báº¡n vá»«a Ä‘Æ°á»£c má»i vÃ o"], 1),
-        q("Táº¡i sao cáº§n Trace (Truy nguá»“n)?", ["Äá»ƒ biáº¿t video Ä‘áº¹p khÃ´ng", "Äá»ƒ tÃ¬m bá»‘i cáº£nh thá»±c sá»± vÃ  nguá»“n gá»‘c Ä‘áº§u tiÃªn cá»§a ná»™i dung", "Äá»ƒ tÄƒng lÆ°á»£t xem", "Äá»ƒ táº£i video nhanh hÆ¡n"], 1),
-        q("Khi nÃ o báº¡n cÃ³ thá»ƒ bá» qua bÆ°á»›c Verify?", ["Khi video ráº¥t nÃ©t", "Khi ngÆ°á»i gá»­i nÃ³i Ä‘ang ráº¥t gáº¥p", "Khi báº¡n Ä‘Ã£ xÃ¡c minh cháº¯c cháº¯n 100% qua kÃªnh Ä‘á»™c láº­p khÃ¡c", "KhÃ´ng bao giá»"], 2),
-        q("Quyáº¿t Ä‘á»‹nh an toÃ n nháº¥t khi chÆ°a cháº¯c cháº¯n lÃ  gÃ¬?", ["Cá»© lÃ m theo yÃªu cáº§u", "KhÃ´ng hÃ nh Ä‘á»™ng, khÃ´ng chuyá»ƒn tiá»n, khÃ´ng chia sáº»", "Há»i Ã½ kiáº¿n cá»™ng Ä‘á»“ng máº¡ng", "Chia sáº» link Ä‘á»ƒ má»i ngÆ°á»i kiá»ƒm tra giÃºp"], 1)
+        q("Thứ tự đúng của Deepfense Check là gì?", ["Pause, Observe, Verify, Trace, Decide", "Observe, Pause, Trace, Verify, Decide", "Verify, Trace, Observe, Pause, Decide", "Like, Share, Comment, Post"], 0),
+        q("Kênh nào là KÊNH ĐỘC LẬP an toàn?", ["Link người lạ gửi", "Số điện thoại bạn đã lưu từ trước trong danh bạ", "Số điện thoại mới trong tin nhắn mượn tiền", "Phòng chat mà bạn vừa được mời vào"], 1),
+        q("Tại sao cần Trace (Truy nguồn)?", ["Để biết video đẹp không", "Để tìm bối cảnh thực sự và nguồn gốc đầu tiên của nội dung", "Để tăng lượt xem", "Để tải video nhanh hơn"], 1),
+        q("Khi nào bạn có thể bỏ qua bước Verify?", ["Khi video rất nét", "Khi người gửi nói đang rất gấp", "Khi bạn đã xác minh chắc chắn 100% qua kênh độc lập khác", "Không bao giờ"], 2),
+        q("Quyết định an toàn nhất khi chưa chắc chắn là gì?", ["Cứ làm theo yêu cầu", "Không hành động, không chuyển tiền, không chia sẻ", "Hỏi ý kiến cộng đồng mạng", "Chia sẻ link để mọi người kiểm tra giúp"], 1)
       ]
     },
     {
       id: 5,
       part: "recognition",
-      title: "Deepfake len lá»i vÃ o má»i váº¥n Ä‘á» sá»‘",
-      duration: "125-135 phÃºt",
+      title: "Deepfake len lỏi vào mọi vấn đề số",
+      duration: "125-135 phút",
       level: "Recognition",
-      scenario: "Deepfake khÃ´ng Ä‘á»©ng má»™t mÃ¬nh. NÃ³ len lá»i vÃ o tÃ i chÃ­nh, danh dá»±, tin tá»©c vÃ  cÃ¡c má»‘i quan há»‡ xÃ£ há»™i. Module nÃ y giÃºp báº¡n á»©ng phÃ³ vá»›i cÃ¡c ká»‹ch báº£n thá»±c táº¿.",
+      scenario: "Deepfake không đứng một mình. Nó len lỏi vào tài chính, danh dự, tin tức và các mối quan hệ xã hội. Module này giúp bạn ứng phó với các kịch bản thực tế.",
       outcomes: [
-        "Nháº­n diá»‡n 5 ká»‹ch báº£n lá»«a Ä‘áº£o tÃ i chÃ­nh dÃ¹ng Deepfake.",
-        "Biáº¿t cÃ¡ch xá»­ lÃ½ Ä‘Ãºng khi gáº·p ná»™i dung nháº¡y cáº£m hoáº·c máº¡o danh.",
-        "Hiá»ƒu vá» rá»§i ro cá»§a tin giáº£ vÃ  sai bá»‘i cáº£nh trong xÃ£ há»™i.",
-        "XÃ¢y dá»±ng pháº£n xáº¡ báº£o vá»‡ náº¡n nhÃ¢n vÃ  cá»™ng Ä‘á»“ng sá»‘."
+        "Nhận diện 5 kịch bản lừa đảo tài chính dùng Deepfake.",
+        "Biết cách xử lý đúng khi gặp nội dung nhạy cảm hoặc mạo danh.",
+        "Hiểu về rủi ro của tin giả và sai bối cảnh trong xã hội.",
+        "Xây dựng phản xạ bảo vệ nạn nhân và cộng đồng số."
       ],
       sections: [
         {
-          title: "5.1 TÃ i chÃ­nh vÃ  Máº¡o danh",
+          title: "5.1 Tài chính và Mạo danh",
           lessons: [
-            lesson("5.1.1", "Ká»‹ch báº£n mÆ°á»£n tiá»n vÃ  giáº£ danh sáº¿p", [
-              "NgÆ°á»i thÃ¢n cáº§n tiá»n gáº¥p: Video call má», tiáº¿ng giáº­t, cÃ¢u chuyá»‡n cáº£m Ä‘á»™ng/kháº©n cáº¥p. YÃªu cáº§u chuyá»ƒn tiá»n vÃ o tÃ i khoáº£n láº¡.",
-              "Giáº£ danh sáº¿p/lÃ£nh Ä‘áº¡o: YÃªu cáº§u chuyá»ƒn khoáº£n gáº¥p ngoÃ i quy trÃ¬nh, yÃªu cáº§u giá»¯ bÃ­ máº­t, dÃ¹ng gá»ng nÃ³i/video giá»‘ng sáº¿p Ä‘á»ƒ táº¡o Ã¡p lá»±c."
+            lesson("5.1.1", "Kịch bản mượn tiền và giả danh sếp", [
+              "Người thân cần tiền gấp: Video call mờ, tiếng giật, câu chuyện cảm động/khẩn cấp. Yêu cầu chuyển tiền vào tài khoản lạ.",
+              "Giả danh sếp/lãnh đạo: Yêu cầu chuyển khoản gấp ngoài quy trình, yêu cầu giữ bí mật, dùng gọng nói/video giống sếp để tạo áp lực."
             ], [
-              "Tiá»n Ä‘i lÃ  khÃ³ quay láº¡i. HÃ£y cháº­m láº¡i Ä‘á»ƒ xÃ¡c minh.",
-              "Quy trÃ¬nh chuyá»ƒn tiá»n cá»§a cÃ´ng ty pháº£i luÃ´n Ä‘Æ°á»£c tÃ´n trá»ng."
+              "Tiền đi là khó quay lại. Hãy chậm lại để xác minh.",
+              "Quy trình chuyển tiền của công ty phải luôn được tôn trọng."
             ]),
-            lesson("5.1.2", "Giáº£ danh cÆ¡ quan chá»©c nÄƒng vÃ  Ä‘áº§u tÆ°", [
-              "CÃ´ng an/TÃ²a Ã¡n giáº£: Gá»i video call Ä‘e dá»a, yÃªu cáº§u Ä‘á»c OTP hoáº·c chuyá»ƒn tiá»n 'Ä‘á»ƒ Ä‘iá»u tra'.",
-              "NgÆ°á»i ná»•i tiáº¿ng quáº£ng cÃ¡o Ä‘áº§u tÆ°: DÃ¹ng deepfake Ä‘á»ƒ giáº£ máº¡o ngÆ°á»i ná»•i tiáº¿ng há»©a háº¹n lá»£i nhuáº­n cao. Má»¥c tiÃªu lÃ  dá»¥ báº¡n náº¡p tiá»n hoáº·c báº¥m vÃ o link lá»«a Ä‘áº£o."
+            lesson("5.1.2", "Giả danh cơ quan chức năng và đầu tư", [
+              "Công an/Tòa án giả: Gọi video call đe dọa, yêu cầu đọc OTP hoặc chuyển tiền 'để điều tra'.",
+              "Người nổi tiếng quảng cáo đầu tư: Dùng deepfake để giả mạo người nổi tiếng hứa hẹn lợi nhuận cao. Mục tiêu là dụ bạn nạp tiền hoặc bấm vào link lừa đảo."
             ], [
-              "CÆ¡ quan chá»©c nÄƒng khÃ´ng lÃ m viá»‡c qua video call yÃªu cáº§u tiá»n/OTP.",
-              "Lá»£i nhuáº­n 'trÃªn trá»i' thÆ°á»ng Ä‘i kÃ¨m vá»›i báº«y lá»«a Ä‘áº£o."
+              "Cơ quan chức năng không làm việc qua video call yêu cầu tiền/OTP.",
+              "Lợi nhuận 'trên trời' thường đi kèm với bẫy lừa đảo."
             ])
           ]
         },
         {
-          title: "5.2 Danh dá»± vÃ  TrÃ¡ch nhiá»‡m xÃ£ há»™i",
+          title: "5.2 Danh dự và Trách nhiệm xã hội",
           lessons: [
-            lesson("5.2.1", "Xá»­ lÃ½ ná»™i dung nháº¡y cáº£m vÃ  máº¡o danh", [
-              "Náº¿u tháº¥y áº£nh/video nháº¡y cáº£m nghi bá»‹ ghÃ©p: KhÃ´ng xem thÃªm, khÃ´ng lan truyá»n, bÃ¡o cÃ¡o ná»n táº£ng vÃ  há»— trá»£ náº¡n nhÃ¢n.",
-              "Náº¿u bá»‹ máº¡o danh: ThÃ´ng bÃ¡o cho báº¡n bÃ¨ qua kÃªnh chÃ­nh thá»©c, lÆ°u báº±ng chá»©ng vÃ  bÃ¡o cÃ¡o tÃ i khoáº£n giáº£."
+            lesson("5.2.1", "Xử lý nội dung nhạy cảm và mạo danh", [
+              "Nếu thấy ảnh/video nhạy cảm nghi bị ghép: Không xem thêm, không lan truyền, báo cáo nền tảng và hỗ trợ nạn nhân.",
+              "Nếu bị mạo danh: Thông báo cho bạn bè qua kênh chính thức, lưu bằng chứng và báo cáo tài khoản giả."
             ], [
-              "Sá»± im láº·ng cá»§a cá»™ng Ä‘á»“ng trÆ°á»›c cÃ¡i xáº¥u giÃºp náº¡n nhÃ¢n bá»›t Ä‘au thÆ°Æ¡ng.",
-              "Báº£o vá»‡ ngÆ°á»i khÃ¡c cÅ©ng lÃ  báº£o vá»‡ chÃ­nh mÃ¬nh."
+              "Sự im lặng của cộng đồng trước cái xấu giúp nạn nhân bớt đau thương.",
+              "Bảo vệ người khác cũng là bảo vệ chính mình."
             ]),
-            lesson("5.2.2", "Tin giáº£ vÃ  TrÃ¡ch nhiá»‡m chia sáº»", [
-              "Video gÃ¢y pháº«n ná»™: ThÆ°á»ng bá»‹ cáº¯t gá»t bá»‘i cáº£nh Ä‘á»ƒ Ä‘á»‹nh hÆ°á»›ng dÆ° luáº­n. HÃ£y tÃ¬m báº£n Ä‘áº§y Ä‘á»§.",
-              "TrÃ¡ch nhiá»‡m sá»‘: TrÆ°á»›c khi nháº¥n 'Share', hÃ£y tá»± há»i: Náº¿u thÃ´ng tin nÃ y sai, ai sáº½ bá»‹ háº¡i?"
+            lesson("5.2.2", "Tin giả và Trách nhiệm chia sẻ", [
+              "Video gây phẫn nộ: Thường bị cắt gọt bối cảnh để định hướng dư luận. Hãy tìm bản đầy đủ.",
+              "Trách nhiệm số: Trước khi nhấn 'Share', hãy tự hỏi: Nếu thông tin này sai, ai sẽ bị hại?"
             ], [
-              "Cáº£m xÃºc máº¡nh lÃ  káº» thÃ¹ cá»§a sá»± tháº­t.",
-              "Chia sáº» cÃ³ trÃ¡ch nhiá»‡m lÃ  gÃ³p pháº§n xÃ¢y dá»±ng máº¡ng lÆ°á»›i an toÃ n."
+              "Cảm xúc mạnh là kẻ thù của sự thật.",
+              "Chia sẻ có trách nhiệm là góp phần xây dựng mạng lưới an toàn."
             ])
           ],
           checkpoint: checkpoint("5.1", [
-            q("Dáº¥u hiá»‡u Ä‘á» máº¡nh nháº¥t trong má»™t cuá»™c gá»i mÆ°á»£n tiá»n lÃ  gÃ¬?", ["Video bá»‹ lag", "YÃªu cáº§u chuyá»ƒn tiá»n vÃ o má»™t tÃ i khoáº£n khÃ´ng pháº£i tÃªn ngÆ°á»i thÃ¢n vÃ  báº£o giá»¯ bÃ­ máº­t", "NÃ³i chuyá»‡n lÃ¢u", "ChÃ o há»i thÃ¢n máº­t"], 1),
-            q("Liar's dividend gÃ¢y háº¡i gÃ¬?", ["GiÃºp káº» xáº¥u phá»§ nháº­n nhá»¯ng sá»± tháº­t hiá»ƒn nhiÃªn báº±ng cÃ¡ch gá»i nÃ³ lÃ  deepfake", "LÃ m tÄƒng giÃ¡ trá»‹ Ä‘á»“ng tiá»n", "LÃ m Ä‘áº¹p video", "LÃ m tÄƒng tá»‘c Ä‘á»™ máº¡ng"], 0)
+            q("Dấu hiệu đỏ mạnh nhất trong một cuộc gọi mượn tiền là gì?", ["Video bị lag", "Yêu cầu chuyển tiền vào một tài khoản không phải tên người thân và bảo giữ bí mật", "Nói chuyện lâu", "Chào hỏi thân mật"], 1),
+            q("Liar's dividend gây hại gì?", ["Giúp kẻ xấu phủ nhận những sự thật hiển nhiên bằng cách gọi nó là deepfake", "Làm tăng giá trị đồng tiền", "Làm đẹp video", "Làm tăng tốc độ mạng"], 0)
           ])
         }
       ],
       quiz: [
-        q("NgÃ¢n hÃ ng yÃªu cáº§u Ä‘á»c OTP qua video call Ä‘á»ƒ 'xÃ¡c minh', báº¡n lÃ m gÃ¬?", ["Äá»c ngay", "Tá»« chá»‘i vÃ  tá»± gá»i tá»•ng Ä‘Ã i chÃ­nh thá»©c cá»§a ngÃ¢n hÃ ng", "Gá»­i qua tin nháº¯n", "Cung cáº¥p máº­t kháº©u thay tháº¿"], 1),
-        q("Quy táº¯c vÃ ng vá» tiá»n trong thá»i Ä‘áº¡i deepfake lÃ  gÃ¬?", ["Chuyá»ƒn trÆ°á»›c há»i sau", "KhÃ´ng chuyá»ƒn tiá»n/Ä‘á»c OTP khi Ä‘ang bá»‹ Ã©p thá»i gian; luÃ´n xÃ¡c minh qua kÃªnh Ä‘á»™c láº­p", "Chá»‰ chuyá»ƒn vÃ o buá»•i sÃ¡ng", "Tin vÃ o máº·t gá»ng giá»‘ng"], 1),
-        q("Náº¿u lá»¡ chuyá»ƒn tiá»n cho káº» lá»«a Ä‘áº£o, báº¡n nÃªn lÃ m gÃ¬ sá»›m nháº¥t?", ["XÃ³a háº¿t dáº¥u váº¿t", "LiÃªn há»‡ ngÃ¢n hÃ ng, lÆ°u báº±ng chá»©ng vÃ  bÃ¡o cÃ¡o cÆ¡ quan chá»©c nÄƒng", "Im láº·ng chá» may máº¯n", "Náº¡p thÃªm Ä‘á»ƒ láº¥y láº¡i"], 1),
-        q("Má»¥c tiÃªu cá»§a káº» xáº¥u khi giáº£ danh sáº¿p lÃ  gÃ¬?", ["Ã‰p báº¡n bá» qua quy trÃ¬nh an toÃ n cá»§a tá»• chá»©c", "Äá»ƒ lÃ m quen vá»›i báº¡n", "Äá»ƒ dáº¡y báº¡n cÃ¡ch dÃ¹ng AI", "Äá»ƒ kiá»ƒm tra tá»‘c Ä‘á»™ lÃ m viá»‡c"], 0),
-        q("Táº¡i sao khÃ´ng nÃªn chia sáº» video gÃ¢y sá»‘c khi chÆ°a rÃµ nguá»“n?", ["VÃ¬ nÃ³ lÃ m tá»‘n bÄƒng thÃ´ng", "VÃ¬ báº¡n cÃ³ thá»ƒ Ä‘ang lan truyá»n tin giáº£ hoáº·c gÃ¢y háº¡i cho náº¡n nhÃ¢n", "VÃ¬ nÃ³ lÃ m náº·ng mÃ¡y", "VÃ¬ nÃ³ khÃ´ng cÃ³ nháº¡c"], 1)
+        q("Ngân hàng yêu cầu đọc OTP qua video call để 'xác minh', bạn làm gì?", ["Đọc ngay", "Từ chối và tự gọi tổng đài chính thức của ngân hàng", "Gửi qua tin nhắn", "Cung cấp mật khẩu thay thế"], 1),
+        q("Quy tắc vàng về tiền trong thời đại deepfake là gì?", ["Chuyển trước hỏi sau", "Không chuyển tiền/đọc OTP khi đang bị ép thời gian; luôn xác minh qua kênh độc lập", "Chỉ chuyển vào buổi sáng", "Tin vào mặt gọng giống"], 1),
+        q("Nếu lỡ chuyển tiền cho kẻ lừa đảo, bạn nên làm gì sớm nhất?", ["Xóa hết dấu vết", "Liên hệ ngân hàng, lưu bằng chứng và báo cáo cơ quan chức năng", "Im lặng chờ may mắn", "Nạp thêm để lấy lại"], 1),
+        q("Mục tiêu của kẻ xấu khi giả danh sếp là gì?", ["Ép bạn bỏ qua quy trình an toàn của tổ chức", "Để làm quen với bạn", "Để dạy bạn cách dùng AI", "Để kiểm tra tốc độ làm việc"], 0),
+        q("Tại sao không nên chia sẻ video gây sốc khi chưa rõ nguồn?", ["Vì nó làm tốn băng thông", "Vì bạn có thể đang lan truyền tin giả hoặc gây hại cho nạn nhân", "Vì nó làm nặng máy", "Vì nó không có nhạc"], 1)
       ]
     },
     {
       id: 6,
       part: "response",
-      title: "PhÃ²ng vá»‡ cÃ¡ nhÃ¢n vÃ  cá»™ng Ä‘á»“ng",
-      duration: "95-110 phÃºt",
+      title: "Phòng vệ cá nhân và cộng đồng",
+      duration: "95-110 phút",
       level: "Response",
-      scenario: "Sau 5 module, An nháº­n ra phÃ²ng vá»‡ khÃ´ng chá»‰ lÃ  ká»¹ nÄƒng cÃ¡ nhÃ¢n, mÃ  lÃ  thÃ³i quen cá»™ng Ä‘á»“ng. HÃ£y thiáº¿t láº­p 'lÃ¡ cháº¯n' cho báº¡n vÃ  nhá»¯ng ngÆ°á»i thÃ¢n yÃªu.",
+      scenario: "Sau 5 module, An nhận ra phòng vệ không chỉ là kỹ năng cá nhân, mà là thói quen cộng đồng. Hãy thiết lập 'lá chắn' cho bạn và những người thân yêu.",
       outcomes: [
-        "Thiáº¿t láº­p Ä‘Æ°á»£c bá»™ quy táº¯c Deepfense Shield cho báº£n thÃ¢n vÃ  gia Ä‘Ã¬nh.",
-        "Biáº¿t cÃ¡ch vá»‡ sinh dá»¯ liá»‡u cÃ¡ nhÃ¢n Ä‘á»ƒ giáº£m rá»§i ro bá»‹ máº¡o danh.",
-        "Biáº¿t cÃ¡ch lÆ°u báº±ng chá»©ng vÃ  bÃ¡o cÃ¡o sá»± cá»‘ Ä‘Ãºng quy trÃ¬nh.",
-        "HoÃ n thÃ nh Capstone tá»•ng há»£p Ä‘á»ƒ Ä‘áº¡t chá»©ng chá»‰."
+        "Thiết lập được bộ quy tắc Deepfense Shield cho bản thân và gia đình.",
+        "Biết cách vệ sinh dữ liệu cá nhân để giảm rủi ro bị mạo danh.",
+        "Biết cách lưu bằng chứng và báo cáo sự cố đúng quy trình.",
+        "Hoàn thành Capstone tổng hợp để đạt chứng chỉ."
       ],
       sections: [
         {
-          title: "6.1 Bá»™ quy táº¯c Deepfense Shield",
+          title: "6.1 Bộ quy tắc Deepfense Shield",
           lessons: [
-            lesson("6.1.1", "NÄƒm lá»›p báº£o vá»‡ (Deepfense Shield)", [
-              "1. Family Code: CÃ³ cÃ¢u xÃ¡c minh riÃªng cho gia Ä‘Ã¬nh.\n2. Money Delay: TrÃ¬ hoÃ£n báº¯t buá»™c trÆ°á»›c má»i yÃªu cáº§u tiá»n báº¥t thÆ°á»ng.\n3. Two-Channel Rule: XÃ¡c minh qua Ã­t nháº¥t hai kÃªnh Ä‘á»™c láº­p.",
-              "4. No Shame Reporting: BÃ¡o cÃ¡o sá»›m mÃ  khÃ´ng lÃ m náº¡n nhÃ¢n xáº¥u há»•.\n5. Evidence First: Æ¯u tiÃªn lÆ°u báº±ng chá»©ng an toÃ n trÆ°á»›c khi xÃ³a/cháº·n."
+            lesson("6.1.1", "Năm lớp bảo vệ (Deepfense Shield)", [
+              "1. Family Code: Có câu xác minh riêng cho gia đình.\n2. Money Delay: Trì hoãn bắt buộc trước mọi yêu cầu tiền bất thường.\n3. Two-Channel Rule: Xác minh qua ít nhất hai kênh độc lập.",
+              "4. No Shame Reporting: Báo cáo sớm mà không làm nạn nhân xấu hổ.\n5. Evidence First: Ưu tiên lưu bằng chứng an toàn trước khi xóa/chặn."
             ], [
-              "PhÃ²ng vá»‡ tá»‘t nháº¥t lÃ  cÃ³ quy táº¯c Ä‘Ã£ thá»‘ng nháº¥t trÆ°á»›c.",
-              "Gia Ä‘Ã¬nh lÃ  phÃ¡o Ä‘Ã i Ä‘áº§u tiÃªn chá»‘ng láº¡i lá»«a Ä‘áº£o."
+              "Phòng vệ tốt nhất là có quy tắc đã thống nhất trước.",
+              "Gia đình là pháo đài đầu tiên chống lại lừa đảo."
             ]),
-            lesson("6.1.2", "Vá»‡ sinh dá»¯ liá»‡u cÃ¡ nhÃ¢n", [
-              "Háº¡n cháº¿ cÃ´ng khai: Sá»‘ Ä‘iá»‡n thoáº¡i, Ä‘á»‹a chá»‰, áº£nh giáº¥y tá», lá»‹ch trÃ¬nh chi tiáº¿t, video riÃªng tÆ° ghi rÃµ giá»ng nÃ³i.",
-              "CÃ i Ä‘áº·t riÃªng tÆ°: Giá»›i háº¡n ngÆ°á»i xem bÃ i viáº¿t, kiá»ƒm tra quyá»n á»©ng dá»¥ng, báº­t xÃ¡c thá»±c 2 lá»›p (2FA) cho má»i tÃ i khoáº£n."
+            lesson("6.1.2", "Vệ sinh dữ liệu cá nhân", [
+              "Hạn chế công khai: Số điện thoại, địa chỉ, ảnh giấy tờ, lịch trình chi tiết, video riêng tư ghi rõ giọng nói.",
+              "Cài đặt riêng tư: Giới hạn người xem bài viết, kiểm tra quyền ứng dụng, bật xác thực 2 lớp (2FA) cho mọi tài khoản."
             ], [
-              "Báº¡n khÃ´ng cáº§n xÃ³a háº¿t cuá»™c sá»‘ng online, nhÆ°ng hÃ£y Ä‘Äƒng cÃ³ chá»n lá»c.",
-              "TÃ i khoáº£n máº¡nh báº£o vá»‡ cáº£ danh dá»± cá»§a báº¡n."
+              "Bạn không cần xóa hết cuộc sống online, nhưng hãy đăng có chọn lọc.",
+              "Tài khoản mạnh bảo vệ cả danh dự của bạn."
             ])
           ]
         },
         {
-          title: "6.2 Capstone: Há»“ sÆ¡ sá»± viá»‡c cá»§a An",
+          title: "6.2 Capstone: Hồ sơ sự việc của An",
           lessons: [
-            lesson("6.2.1", "Capstone: PhÃ¢n tÃ­ch tÃ¬nh huá»‘ng tá»•ng há»£p", [
-              "TÃ¬nh huá»‘ng: An nháº­n video ngÆ°á»i ná»•i tiáº¿ng Ä‘áº§u tÆ° (link láº¡), tin nháº¯n báº¡n cÅ© dá»¥ dá»— (nÃ© gá»i Ä‘iá»‡n), áº£nh chá»¥p bÃ¬nh luáº­n khen ngá»£i, tin nháº¯n thoáº¡i giá»ng giá»‘ng.",
-              "Nhiá»‡m vá»¥: PhÃ¢n loáº¡i rá»§i ro, chá»‰ ra cÃ¡c Red Flags, Ã¡p dá»¥ng Deepfense Check vÃ  Ä‘Æ°a ra káº¿t luáº­n hÃ nh Ä‘á»™ng.",
-              "Gá»£i Ã½: Rá»§i ro CAO. HÃ nh Ä‘á»™ng: KhÃ´ng báº¥m link, khÃ´ng náº¡p tiá»n, xÃ¡c minh qua kÃªnh chÃ­nh thá»©c, bÃ¡o cÃ¡o tÃ i khoáº£n giáº£."
+            lesson("6.2.1", "Capstone: Phân tích tình huống tổng hợp", [
+              "Tình huống: An nhận video người nổi tiếng đầu tư (link lạ), tin nhắn bạn cũ dụ dỗ (né gọi điện), ảnh chụp bình luận khen ngợi, tin nhắn thoại giọng giống.",
+              "Nhiệm vụ: Phân loại rủi ro, chỉ ra các Red Flags, áp dụng Deepfense Check và đưa ra kết luận hành động.",
+              "Gợi ý: Rủi ro CAO. Hành động: Không bấm link, không nạp tiền, xác minh qua kênh chính thức, báo cáo tài khoản giả."
             ], [
-              "Khi nhiá»u tÃ­n hiá»‡u nhá» cÃ¹ng chá»‰ vá» rá»§i ro, hÃ£y tin vÃ o quy trÃ¬nh an toÃ n.",
-              "KhÃ´ng cáº§n chá»©ng minh deepfake 100% Ä‘á»ƒ báº£o vá»‡ tiá»n cá»§a mÃ¬nh."
+              "Khi nhiều tín hiệu nhỏ cùng chỉ về rủi ro, hãy tin vào quy trình an toàn.",
+              "Không cần chứng minh deepfake 100% để bảo vệ tiền của mình."
             ])
           ],
           checkpoint: checkpoint("6.1", [
-            q("Family Code nÃªn dá»±a trÃªn thÃ´ng tin nÃ o?", ["NgÃ y sinh", "TÃªn trÆ°á»ng há»c", "Má»™t cá»¥m tá»« riÃªng tÆ°, dá»… nhá»› vá»›i ngÆ°á»i nhÃ  nhÆ°ng khÃ´ng cÃ³ trÃªn máº¡ng", "Äá»‹a chá»‰ nhÃ "], 2),
-            q("Trong Capstone, tÃ­n hiá»‡u nÃ o lÃ  Red Flag máº¡nh nháº¥t?", ["Video cÃ³ Ä‘á»™ phÃ¢n giáº£i tháº¥p", "YÃªu cáº§u náº¡p tiá»n ngay hÃ´m nay kÃ¨m link rÃºt gá»n vÃ  nÃ© xÃ¡c minh trá»±c tiáº¿p", "Báº¡n cÅ© nháº¯n tin vÃ o buá»•i tá»‘i", "CÃ³ nhiá»u bÃ¬nh luáº­n khen"], 1)
+            q("Family Code nên dựa trên thông tin nào?", ["Ngày sinh", "Tên trường học", "Một cụm từ riêng tư, dễ nhớ với người nhà nhưng không có trên mạng", "Địa chỉ nhà"], 2),
+            q("Trong Capstone, tín hiệu nào là Red Flag mạnh nhất?", ["Video có độ phân giải thấp", "Yêu cầu nạp tiền ngay hôm nay kèm link rút gọn và né xác minh trực tiếp", "Bạn cũ nhắn tin vào buổi tối", "Có nhiều bình luận khen"], 1)
           ])
         }
       ],
       quiz: [
-        q("Family Code dÃ¹ng Ä‘á»ƒ lÃ m gÃ¬?", ["XÃ¡c minh danh tÃ­nh trong tÃ¬nh huá»‘ng kháº©n cáº¥p giá»¯a nhá»¯ng ngÆ°á»i tin cáº­y", "Äá»ƒ Ä‘Äƒng lÃªn Facebook", "Thay tháº¿ máº­t kháº©u ngÃ¢n hÃ ng", "TÄƒng lÆ°á»£t xem"], 0),
-        q("Money Delay nghÄ©a lÃ  gÃ¬?", ["Chuyá»ƒn tiá»n cÃ ng nhanh cÃ ng tá»‘t", "TrÃ¬ hoÃ£n báº¯t buá»™c Ä‘á»ƒ xÃ¡c minh trÆ°á»›c yÃªu cáº§u tiá»n báº¥t thÆ°á»ng", "KhÃ´ng bao giá» chuyá»ƒn tiá»n cho ai", "Chá»‰ chuyá»ƒn tiá»n vÃ o ban Ä‘Ãªm"], 1),
-        q("Khi tháº¥y báº¡n bÃ¨ bá»‹ lá»«a, cÃ¢u nÃ³i nÃ o thá»ƒ hiá»‡n tinh tháº§n No Shame Reporting?", ["'Sao báº¡n dá»… tin tháº¿?'", "'Äá»ƒ mÃ¬nh cÃ¹ng báº¡n lÆ°u báº±ng chá»©ng vÃ  bÃ¡o cÃ¡o nhÃ©, chuyá»‡n nÃ y ai cÅ©ng cÃ³ thá»ƒ gáº·p.'", "'Báº¡n tháº­t ngá»‘c.'", "'Äá»«ng nÃ³i vá»›i ai nhÃ©.'"], 1),
-        q("Evidence First Æ°u tiÃªn Ä‘iá»u gÃ¬?", ["LÆ°u báº±ng chá»©ng an toÃ n trÆ°á»›c khi xÃ³a, cháº·n hoáº·c tranh cÃ£i", "XÃ³a háº¿t tin nháº¯n ngay", "ÄÄƒng báº±ng chá»©ng lÃªn má»i nhÃ³m", "CÃ£i nhau vá»›i káº» lá»«a Ä‘áº£o"], 0),
-        q("PhÃ²ng vá»‡ tá»‘t nháº¥t báº¯t Ä‘áº§u tá»« Ä‘Ã¢u?", ["Tá»« khi sá»± cá»‘ xáº£y ra", "Tá»« quy táº¯c Ä‘Ã£ thá»‘ng nháº¥t trÆ°á»›c vÃ  thÃ³i quen kiá»ƒm chá»©ng", "Tá»« viá»‡c mua mÃ¡y tÃ­nh Ä‘áº¯t tiá»n", "Tá»« viá»‡c khÃ´ng dÃ¹ng Internet"], 1)
+        q("Family Code dùng để làm gì?", ["Xác minh danh tính trong tình huống khẩn cấp giữa những người tin cậy", "Để đăng lên Facebook", "Thay thế mật khẩu ngân hàng", "Tăng lượt xem"], 0),
+        q("Money Delay nghĩa là gì?", ["Chuyển tiền càng nhanh càng tốt", "Trì hoãn bắt buộc để xác minh trước yêu cầu tiền bất thường", "Không bao giờ chuyển tiền cho ai", "Chỉ chuyển tiền vào ban đêm"], 1),
+        q("Khi thấy bạn bè bị lừa, câu nói nào thể hiện tinh thần No Shame Reporting?", ["'Sao bạn dễ tin thế?'", "'Để mình cùng bạn lưu bằng chứng và báo cáo nhé, chuyện này ai cũng có thể gặp.'", "'Bạn thật ngốc.'", "'Đừng nói với ai nhé.'"], 1),
+        q("Evidence First ưu tiên điều gì?", ["Lưu bằng chứng an toàn trước khi xóa, chặn hoặc tranh cãi", "Xóa hết tin nhắn ngay", "Đăng bằng chứng lên mọi nhóm", "Cãi nhau với kẻ lừa đảo"], 0),
+        q("Phòng vệ tốt nhất bắt đầu từ đâu?", ["Từ khi sự cố xảy ra", "Từ quy tắc đã thống nhất trước và thói quen kiểm chứng", "Từ việc mua máy tính đắt tiền", "Từ việc không dùng Internet"], 1)
       ]
     },
     {
       id: 99,
       part: "final",
-      title: "BÃ€I THI CUá»I KHÃ“A (FINAL EXAM)",
-      duration: "45-60 phÃºt",
+      title: "BÀI THI CUỐI KHÓA (FINAL EXAM)",
+      duration: "45-60 phút",
       level: "Assessment",
-      scenario: "BÃ i kiá»ƒm tra tá»•ng há»£p kiáº¿n thá»©c tá»« Module 0 Ä‘áº¿n Module 6. Báº¡n cáº§n Ä‘áº¡t Ã­t nháº¥t 70% (35/50 cÃ¢u Ä‘Ãºng) Ä‘á»ƒ nháº­n chá»©ng chá»‰ DEEPFENSE AWARE.",
+      scenario: "Bài kiểm tra tổng hợp kiến thức từ Module 0 đến Module 6. Bạn cần đạt ít nhất 70% (35/50 câu đúng) để nhận chứng chỉ DEEPFENSE AWARE.",
       outcomes: [
-        "Chá»©ng minh kháº£ nÄƒng nháº­n diá»‡n rá»§i ro Deepfake.",
-        "Ãp dá»¥ng thÃ nh tháº¡o quy trÃ¬nh Deepfense Check.",
-        "Má»Ÿ khÃ³a chá»©ng chá»‰ vÃ  pháº§n thÆ°á»Ÿng DPF.",
-        "Trá»Ÿ thÃ nh má»™t pháº§n cá»§a cá»™ng Ä‘á»“ng phÃ²ng vá»‡ sá»‘."
+        "Chứng minh khả năng nhận diện rủi ro Deepfake.",
+        "Áp dụng thành thạo quy trình Deepfense Check.",
+        "Mở khóa chứng chỉ và phần thưởng DPF.",
+        "Trở thành một phần của cộng đồng phòng vệ số."
       ],
       sections: [],
       quiz: [
-        q("Deepfake lÃ  gÃ¬?", ["Má»i ná»™i dung sai trÃªn máº¡ng", "Ná»™i dung dÃ¹ng AI Ä‘á»ƒ khiáº¿n ngÆ°á»i ta tin má»™t ngÆ°á»i lÃ m/nÃ³i Ä‘iá»u há» khÃ´ng thá»±c sá»± lÃ m/nÃ³i", "Chá»‰ lÃ  áº£nh chá»‰nh mÃ u", "Má»™t loáº¡i mÃ£ Ä‘á»™c"], 1, "Deepfake lÃ  ná»™i dung giáº£ máº¡o danh tÃ­nh báº±ng AI."),
-        q("Deepvoice lÃ  gÃ¬?", ["Giá»ng nÃ³i Ã¢m lÆ°á»£ng lá»›n", "Giá»ng nÃ³i Ä‘Æ°á»£c giáº£ láº­p/chá»‰nh sá»­a báº±ng AI Ä‘á»ƒ giá»‘ng ngÆ°á»i tháº­t", "Tin nháº¯n khÃ´ng Ã¢m thanh", "Video khÃ´ng máº·t"], 1, "Deepvoice lÃ  giáº£ máº¡o giá»ng nÃ³i báº±ng AI."),
-        q("Synthetic media lÃ  gÃ¬?", ["Ná»™i dung Ä‘Æ°á»£c táº¡o hoÃ n toÃ n hoáº·c má»™t pháº§n báº±ng cÃ´ng nghá»‡ sá»‘/AI", "Ná»™i dung báº¯t buá»™c lÃ  lá»«a Ä‘áº£o", "Ná»™i dung chá»‰ cÃ³ vÄƒn báº£n", "Chá»‰ lÃ  áº£nh chá»¥p"], 0, "Ná»™i dung do AI táº¡o ra nÃ³i chung."),
-        q("Táº¥t cáº£ synthetic media Ä‘á»u lÃ  deepfake. ÄÃºng hay Sai?", ["ÄÃºng", "Sai", "Chá»‰ Ä‘Ãºng vá»›i video", "Chá»‰ Ä‘Ãºng vá»›i áº£nh"], 1, "Nhiá»u ná»™i dung AI mang tÃ­nh minh báº¡ch, khÃ´ng máº¡o danh."),
-        q("Video tháº­t tá»« 5 nÄƒm trÆ°á»›c bá»‹ Ä‘Äƒng láº¡i vá»›i chÃº thÃ­ch 'vá»«a xáº£y ra' lÃ  gÃ¬?", ["Deepfake", "Repurposed media", "Edited media", "Deepvoice"], 1, "Ná»™i dung tháº­t nhÆ°ng bá»‹ Ä‘áº·t sai bá»‘i cáº£nh."),
-        q("Cáº¯t má»™t Ä‘oáº¡n ngáº¯n tá»« bÃ i phÃ¡t biá»ƒu dÃ i lÃ m Ä‘á»•i nghÄ©a lÃ  gÃ¬?", ["Edited media", "Deepfake", "Metadata", "Family Code"], 0, "Chá»‰nh sá»­a ná»™i dung gá»‘c gÃ¢y hiá»ƒu láº§m."),
-        q("Thay máº·t ngÆ°á»i nÃ y vÃ o áº£nh ngÆ°á»i kia báº±ng AI gá»i lÃ  gÃ¬?", ["Face swap / Deepfake image", "Metadata", "Edited media", "Reverse search"], 0, "ÄÃ¢y lÃ  má»™t dáº¡ng phá»• biáº¿n cá»§a deepfake hÃ¬nh áº£nh."),
-        q("VÃ¬ sao deepfake nguy hiá»ƒm ká»ƒ cáº£ khi khÃ´ng hoÃ n háº£o?", ["VÃ¬ nÃ³ Ä‘Ã¡nh vÃ o cáº£m xÃºc vÃ  Ã¡p lá»±c thá»i gian cá»§a náº¡n nhÃ¢n", "VÃ¬ nÃ³ luÃ´n nÃ©t", "VÃ¬ nÃ³ miá»…n phÃ­", "VÃ¬ nÃ³ cÃ³ nháº¡c"], 0, "Yáº¿u tá»‘ tÃ¢m lÃ½ vÃ  ngá»¯ cáº£nh lÃ m tÄƒng Ä‘á»™ tin cáº­y."),
-        q("Dá»¯ liá»‡u cÃ¡ nhÃ¢n cÃ´ng khai lÃ m tÄƒng rá»§i ro deepfake nhÆ° tháº¿ nÃ o?", ["LÃ m mÃ¡y tÃ­nh cháº¡y cháº­m", "Cung cáº¥p nguyÃªn liá»‡u Ä‘á»ƒ AI mÃ´ phá»ng báº¡n chÃ­nh xÃ¡c hÆ¡n", "LÃ m video má» Ä‘i", "KhÃ´ng cÃ³ rá»§i ro"], 1, "CÃ ng nhiá»u áº£nh/video cá»§a báº¡n, AI cÃ ng dá»… báº¯t chÆ°á»›c."),
-        q("Liar's dividend lÃ  rá»§i ro gÃ¬?", ["GiÃºp káº» xáº¥u phá»§ nháº­n sá»± tháº­t báº±ng cÃ¡ch gá»i nÃ³ lÃ  deepfake", "Lá»£i nhuáº­n tá»« viá»‡c nÃ³i dá»‘i", "QuÃ  táº·ng AI", "PhÃ­ Ä‘Äƒng kÃ½ máº¡ng"], 0, "Lá»£i dá»¥ng sá»± tá»“n táº¡i cá»§a deepfake Ä‘á»ƒ gieo ráº¯c sá»± nghi ngá» sá»± tháº­t."),
-        q("Khi nháº­n Ä‘Æ°á»£c yÃªu cáº§u tiá»n 'gáº¥p' tá»« ngÆ°á»i thÃ¢n, bÆ°á»›c Ä‘áº§u tiÃªn lÃ  gÃ¬?", ["Chuyá»ƒn ngay", "Dá»«ng láº¡i vÃ  xÃ¡c minh qua kÃªnh Ä‘á»™c láº­p (gá»i Ä‘iá»‡n sá»‘ cÅ©)", "Gá»­i mÃ£ OTP", "Há»i tÃ i khoáº£n"], 1, "Pause vÃ  Verify lÃ  quy trÃ¬nh an toÃ n."),
-        q("'Money Delay' nghÄ©a lÃ  gÃ¬?", ["Chuyá»ƒn tiá»n tháº­t nhanh", "TrÃ¬ hoÃ£n báº¯t buá»™c Ä‘á»ƒ kiá»ƒm chá»©ng cÃ¡c yÃªu cáº§u tiá»n báº¥t thÆ°á»ng", "KhÃ´ng bao giá» dÃ¹ng tiá»n", "Chá»‰ dÃ¹ng tiá»n máº·t"], 1, "Khoáº£ng dá»«ng giÃºp báº¡n trÃ¡nh hÃ nh Ä‘á»™ng theo cáº£m xÃºc."),
-        q("NÃºt báº¥m cáº£m xÃºc 'Kháº©n cáº¥p' khai thÃ¡c Ä‘iá»u gÃ¬?", ["Kháº£ nÄƒng ghi nhá»›", "Pháº£n xáº¡ báº£n nÄƒng bá» qua logic khi bá»‹ Ã©p thá»i gian", "Thá»‹ lá»±c", "LÃ²ng tá»‘t"], 1, "Ãp lá»±c thá»i gian lÃ m giáº£m kháº£ nÄƒng kiá»ƒm chá»©ng."),
-        q("VÃ¬ sao káº» xáº¥u dáº·n báº¡n 'Ä‘á»«ng nÃ³i vá»›i ai'?", ["Äá»ƒ báº£o vá»‡ báº¡n", "Äá»ƒ cÃ´ láº­p báº¡n khá»i sá»± giÃºp Ä‘á»¡ vÃ  kiá»ƒm chá»©ng", "Äá»ƒ táº¡o báº¥t ngá»", "Vi quy Ä‘á»‹nh ngÃ¢n hÃ ng"], 1, "CÃ´ láº­p náº¡n nhÃ¢n lÃ  ká»¹ thuáº­t thao tÃºng tÃ¢m lÃ½."),
-        q("'Tháº¥y táº­n máº¯t' trÃªn máº¡ng hiá»‡n nay cÃ²n Ä‘á»§ tin cáº­y khÃ´ng?", ["LuÃ´n Ä‘á»§", "KhÃ´ng Ä‘á»§, vÃ¬ hÃ¬nh áº£nh vÃ  video cÃ³ thá»ƒ bá»‹ AI táº¡o hoáº·c chá»‰nh sá»­a", "Chá»‰ Ä‘á»§ vá»›i video dÃ i", "Chá»‰ Ä‘á»§ vá»›i ngÆ°á»i ná»•i tiáº¿ng"], 1, "CÃ´ng nghá»‡ AI Ä‘Ã£ lÃ m thay Ä‘á»•i niá»m tin vÃ o hÃ¬nh áº£nh."),
-        q("Dáº¥u hiá»‡u ká»¹ thuáº­t nÃ o nghi lÃ  deepfake?", ["RÃ¬a khuÃ´n máº·t bá»‹ nhÃ²e khi quay Ä‘áº§u, nhÃ¡y máº¯t láº¡, rÄƒng bá»‹ má»", "MÃ u Ã¡o xanh", "Video cÃ³ phá»¥ Ä‘á»", "Ã‚m thanh quÃ¡ lá»›n"], 0, "CÃ¡c lá»—i pixel vÃ  chuyá»ƒn Ä‘á»™ng lÃ  tÃ­n hiá»‡u nghi váº¥n."),
-        q("Quan sÃ¡t Ã¡nh sÃ¡ng giÃºp phÃ¡t hiá»‡n Ä‘iá»u gÃ¬?", ["MÃ u sáº¯c Ä‘áº¹p khÃ´ng", "Sá»± khÃ´ng nháº¥t quÃ¡n giá»¯a máº·t ngÆ°á»i vÃ  bá»‘i cáº£nh xung quanh", "Äá»™ phÃ¢n giáº£i video", "Thá»i tiáº¿t"], 1, "Sá»± khÃ´ng Ä‘á»“ng nháº¥t vá» Ã¡nh sÃ¡ng thÆ°á»ng lá»™ dáº¥u hiá»‡u chá»‰nh sá»­a."),
-        q("Checklist 3 lá»›p quan sÃ¡t lÃ  gÃ¬?", ["HÃ¬nh áº£nh, Ã‚m thanh, Ngá»¯ cáº£nh", "SÃ¡ng, TrÆ°a, Tá»‘i", "TÃªn, Tuá»•i, Äá»‹a chá»‰", "Like, Share, Follow"], 0, "PhÃ¢n tÃ­ch Ä‘a chiá»u giÃºp Ä‘Ã¡nh giÃ¡ rá»§i ro tá»‘t hÆ¡n."),
-        q("KÃªnh Ä‘á»™c láº­p an toÃ n lÃ  kÃªnh nÃ o?", ["Sá»‘ Ä‘iá»‡n thoáº¡i ngÆ°á»i láº¡ má»›i gá»i", "Link trong email kháº©n cáº¥p", "Sá»‘ Ä‘iá»‡n thoáº¡i Ä‘Ã£ lÆ°u tá»« lÃ¢u trong danh báº¡ cá»§a báº¡n", "NhÃ³m chat láº¡"], 2, "KÃªnh Ä‘á»™c láº­p pháº£i lÃ  kÃªnh tin cáº­y cÃ³ tá»« trÆ°á»›c."),
-        q("Trace (Truy nguá»“n) giÃºp báº¡n biáº¿t Ä‘iá»u gÃ¬?", ["Máº­t kháº©u ngÆ°á»i gá»­i", "Nguá»“n gá»‘c Ä‘áº§u tiÃªn vÃ  bá»‘i cáº£nh thá»±c sá»± cá»§a ná»™i dung", "Video cÃ³ bao nhiÃªu like", "Äá»‹a chá»‰ nhÃ  náº¡n nhÃ¢n"], 1, "Truy nguá»“n giÃºp phÃ¡t hiá»‡n tin giáº£ vÃ  ná»™i dung sai bá»‘i cáº£nh."),
-        q("Detector AI nÃªn Ä‘Æ°á»£c dÃ¹ng nhÆ° tháº¿ nÃ o?", ["TÃ­n hiá»‡u tham kháº£o, khÃ´ng pháº£i phÃ¡n quyáº¿t cuá»‘i cÃ¹ng", "PhÃ¡n quyáº¿t tuyá»‡t Ä‘á»‘i", "Äá»ƒ bÃ´i nhá» ngÆ°á»i khÃ¡c", "Thay tháº¿ má»i bÆ°á»›c kiá»ƒm chá»©ng"], 0, "Detector cÃ³ thá»ƒ sai vÃ  cáº§n káº¿t há»£p vá»›i tÆ° duy con ngÆ°á»i."),
-        q("Family Code lÃ  gÃ¬?", ["MÃ£ vÃ¹ng Ä‘iá»‡n thoáº¡i", "CÃ¢u xÃ¡c minh bÃ­ máº­t chá»‰ gia Ä‘Ã¬nh biáº¿t Ä‘á»ƒ dÃ¹ng khi kháº©n cáº¥p", "MÃ£ giáº£m giÃ¡ mua sáº¯m", "Sá»‘ thá»© tá»± thÃ nh viÃªn"], 1, "Máº­t kháº©u gia Ä‘Ã¬nh giÃºp xÃ¡c minh nhanh trong video call/ghi Ã¢m."),
-        q("Khi tháº¥y video ngÆ°á»i ná»•i tiáº¿ng quáº£ng cÃ¡o Ä‘áº§u tÆ° 'lá»£i nhuáº­n 100%', báº¡n nÃªn lÃ m gÃ¬?", ["ÄÄƒng kÃ½ ngay", "Kiá»ƒm tra kÃªnh chÃ­nh thá»©c cá»§a há», khÃ´ng báº¥m link láº¡", "Náº¡p thá»­ Ã­t tiá»n", "Chia sáº» cho báº¡n bÃ¨"], 1, "Cáº©n trá»ng vá»›i cÃ¡c lá»i há»©a lá»£i Ã­ch báº¥t thÆ°á»ng."),
-        q("TrÃ¡ch nhiá»‡m cá»§a ngÆ°á»i chá»©ng kiáº¿n khi tháº¥y áº£nh nháº¡y cáº£m phÃ¡t tÃ¡n?", ["LÆ°u láº¡i xem", "KhÃ´ng lan truyá»n, bÃ¡o cÃ¡o vÃ  há»— trá»£ náº¡n nhÃ¢n", "Gá»­i cho nhÃ³m khÃ¡c há»i tháº­t giáº£", "BÃ¬nh luáº­n trÃªu Ä‘Ã¹a"], 1, "Giáº£m háº¡i lÃ  Æ°u tiÃªn hÃ ng Ä‘áº§u."),
-        q("Táº¡i sao khÃ´ng nÃªn chia sáº» clip gÃ¢y pháº«n ná»™ khi chÆ°a rÃµ nguá»“n?", ["LÃ m tá»‘n pin", "CÃ³ thá»ƒ Ä‘ang tiáº¿p tay cho tin giáº£ hoáº·c ká»‹ch báº£n thao tÃºng", "LÃ m video bá»‹ má»", "KhÃ´ng cÃ³ nháº¡c"], 1, "Cáº£m xÃºc pháº«n ná»™ thÆ°á»ng bá»‹ lá»£i dá»¥ng Ä‘á»ƒ lan truyá»n ná»™i dung sai."),
-        q("Má»¥c tiÃªu cuá»‘i cÃ¹ng cá»§a Deepfense Shield lÃ  gÃ¬?", ["LÃ m báº¡n sá»£ Internet", "Biáº¿n kiáº¿n thá»©c thÃ nh thÃ³i quen phÃ²ng vá»‡ an toÃ n cho báº¡n vÃ  cá»™ng Ä‘á»“ng", "Dáº¡y táº¡o AI", "TÄƒng tá»‘c Ä‘á»™ máº¡ng"], 1, "XÃ¢y dá»±ng cá»™ng Ä‘á»“ng sá»‘ an toÃ n."),
-        q("Ná»™i dung AI cÃ³ ghi rÃµ 'Ä‘Ã¢y lÃ  áº£nh minh há»a' Ä‘Æ°á»£c Ä‘Ã¡nh giÃ¡ rá»§i ro tháº¿ nÃ o?", ["Rá»§i ro cao", "Rá»§i ro tháº¥p vÃ¬ tÃ­nh minh báº¡ch cao", "LuÃ´n lÃ  lá»«a Ä‘áº£o", "Cháº¯c cháº¯n lÃ  tháº­t"], 1, "Sá»± minh báº¡ch lÃ m giáº£m kháº£ nÄƒng lá»«a dá»‘i."),
-        q("Báº¡n nháº­n email tá»« ngÃ¢n hÃ ng yÃªu cáº§u Ä‘á»c OTP Ä‘á»ƒ khÃ³a tháº». Báº¡n lÃ m gÃ¬?", ["Äá»c ngay", "Tá»« chá»‘i vÃ  tá»± gá»i hotline ngÃ¢n hÃ ng hoáº·c dÃ¹ng app chÃ­nh thá»©c", "Gá»­i qua SMS", "Gá»­i máº­t kháº©u thay tháº¿"], 1, "XÃ¡c minh qua kÃªnh chÃ­nh thá»©c Ä‘á»™c láº­p."),
-        q("Náº¿u tÃ i khoáº£n máº¡ng xÃ£ há»™i cá»§a báº¡n bá»‹ máº¡o danh, báº¡n nÃªn lÃ m gÃ¬?", ["Tranh cÃ£i vá»›i nÃ³", "Cáº£nh bÃ¡o báº¡n bÃ¨ qua kÃªnh chÃ­nh thá»©c, lÆ°u báº±ng chá»©ng vÃ  bÃ¡o cÃ¡o", "Im láº·ng", "XÃ³a tÃ i khoáº£n tháº­t"], 1, "ThÃ´ng bÃ¡o rá»™ng rÃ£i Ä‘á»ƒ ngÄƒn cháº·n lá»«a Ä‘áº£o báº¡n bÃ¨."),
-        q("Chá»©ng chá»‰ DEEPFENSE AWARE chá»©ng nháº­n Ä‘iá»u gÃ¬?", ["Báº¡n lÃ  láº­p trÃ¬nh viÃªn AI", "Báº¡n Ä‘Ã£ náº¯m vá»¯ng kiáº¿n thá»©c ná»n táº£ng vÃ  cÃ³ pháº£n xáº¡ phÃ²ng vá»‡ deepfake", "Báº¡n cÃ³ thá»ƒ hack tÃ i khoáº£n", "Báº¡n Ä‘Ã£ Ä‘Ã³ng tiá»n há»c"], 1, "XÃ¡c nháº­n nÄƒng lá»±c phÃ²ng vá»‡ sá»‘ cÆ¡ báº£n."),
-        q("Lip sync (khá»›p lá»‡nh miá»‡ng) AI thÆ°á»ng gáº·p khÃ³ khÄƒn nháº¥t á»Ÿ chi tiáº¿t nÃ o?", ["MÃ u mÃ´i", "RÄƒng bá»‹ má» hoáº·c mÃ©o khi nÃ³i nhanh", "Äá»™ dÃ i cá»§a tÃ³c", "MÃ u Ã¡o"], 1, "Chi tiáº¿t nhá» bÃªn trong miá»‡ng thÆ°á»ng bá»‹ lá»—i ká»¹ thuáº­t."),
-        q("Reverse image search Ä‘áº·c biá»‡t hiá»‡u Ã­ch Ä‘á»ƒ phÃ¡t hiá»‡n loáº¡i ná»™i dung nÃ o?", ["Deepvoice", "Repurposed media (ná»™i dung tháº­t Ä‘Äƒng sai bá»‘i cáº£nh)", "Tin nháº¯n vÄƒn báº£n", "Máº­t kháº©u"], 1, "TÃ¬m ra nguá»“n gá»‘c vÃ  thá»i Ä‘iá»ƒm xuáº¥t hiá»‡n Ä‘áº§u tiÃªn cá»§a áº£nh."),
-        q("CÃ¢u nÃ³i nÃ o lÃ  'nÃºt báº¥m' ThÃ¢n quen?", ["'Máº¹ Æ¡i, con Ä‘ang gáº·p náº¡n, Ä‘á»«ng bÃ¡o bá»‘ nhÃ©.'", "'Chuyá»ƒn tiá»n trong 2 phÃºt.'", "'Äá»c mÃ£ OTP cho tÃ´i.'", "'Báº¡n trÃºng thÆ°á»Ÿng 1 tá»·.'"], 0, "Lá»£i dá»¥ng tÃ¬nh cáº£m gia Ä‘Ã¬nh Ä‘á»ƒ gÃ¢y Ã¡p lá»±c."),
-        q("Cá»¥m tá»« 'Chá»‰ mÃ¬nh báº¡n Ä‘Æ°á»£c nháº­n cÆ¡ há»™i nÃ y' thuá»™c nhÃ³m nÃ o?", ["Kháº©n cáº¥p", "Lá»£i Ã­ch vÃ  Ä‘Ã¡nh vÃ o cáº£m giÃ¡c Ä‘áº·c biá»‡t", "Quyá»n lá»±c", "ThÃ¢n quen"], 1, "DÃ¹ng lá»£i Ã­ch riÃªng biá»‡t Ä‘á»ƒ dá»¥ dá»— náº¡n nhÃ¢n."),
-        q("Táº¡i sao khÃ´ng nÃªn há»i 'CÃ³ pháº£i AI khÃ´ng?' trong cÃ¹ng cuá»™c gá»i Ä‘Ã¡ng nghi?", ["Káº» xáº¥u cÃ³ thá»ƒ dÃ¹ng AI tráº£ lá»i ráº¥t thuyáº¿t phá»¥c Ä‘á»ƒ tráº¥n an báº¡n", "VÃ¬ nÃ³ tá»‘n tiá»n Ä‘iá»‡n thoáº¡i", "VÃ¬ nÃ³ lÃ m video nÃ©t hÆ¡n", "VÃ¬ quy Ä‘á»‹nh phÃ¡p luáº­t"], 0, "Pháº£i xÃ¡c minh qua kÃªnh hoÃ n toÃ n khÃ¡c biá»‡t."),
-        q("Dáº¥u hiá»‡u nÃ o nghi váº¥n vá» Ã¢m thanh?", ["Tiáº¿ng á»“n mÃ´i trÆ°á»ng tá»± nhiÃªn", "Giá»ng nÃ³i Ä‘á»u Ä‘á»u thiáº¿u nhá»‹p thá»Ÿ vÃ  Ã¢m Ä‘iá»‡u cÃ¡ nhÃ¢n", "NÃ³i tiáº¿ng Viá»‡t chuáº©n", "NÃ³i to rÃµ"], 1, "Ã‚m thanh AI thÆ°á»ng thiáº¿u sá»± sá»‘ng Ä‘á»™ng tá»± nhiÃªn."),
-        q("Má»™t video video call cÃ³ hÃ¬nh áº£nh ngÆ°á»i thÃ¢n nhÆ°ng chá»‰ hiá»‡n 5 giÃ¢y rá»“i táº¯t lÃ  dáº¥u hiá»‡u gÃ¬?", ["Máº¡ng yáº¿u bÃ¬nh thÆ°á»ng", "CÃ³ thá»ƒ lÃ  deepfake ngáº¯n dÃ¹ng Ä‘á»ƒ lá»«a báº¡n tin rá»“i chuyá»ƒn sang nháº¯n tin", "MÃ¡y háº¿t pin tháº­t", "NgÆ°á»i Ä‘Ã³ báº­n"], 1, "Ká»¹ thuáº­t 'má»“i nhá»­' Ä‘á»ƒ táº¡o niá»m tin."),
-        q("Provenance giÃºp gÃ¬ cho viá»‡c kiá»ƒm chá»©ng?", ["LÆ°u váº¿t lá»‹ch sá»­ táº¡o vÃ  chá»‰nh sá»­a cá»§a file", "XÃ³a deepfake tá»± Ä‘á»™ng", "TÄƒng Ä‘á»™ sÃ¡ng áº£nh", "Chá»n filter Ä‘áº¹p"], 0, "GiÃºp truy tÃ¬m nguá»“n gá»‘c ká»¹ thuáº­t cá»§a ná»™i dung."),
-        q("HÃ nh Ä‘á»™ng 'No Shame Reporting' cÃ³ Ã½ nghÄ©a gÃ¬?", ["Náº¡n nhÃ¢n bÃ¡o cÃ¡o sá»›m mÃ  khÃ´ng sá»£ bá»‹ máº¯ng hay cÆ°á»i chÃª", "KhÃ´ng bÃ¡o cÃ¡o vÃ¬ sá»£", "BÃ¡o cÃ¡o náº·c danh", "BÃ¡o cÃ¡o sau 1 thÃ¡ng"], 0, "Táº¡o mÃ´i trÆ°á»ng há»— trá»£ Ä‘á»ƒ xá»­ lÃ½ sá»± cá»‘ nhanh nháº¥t."),
-        q("Evidence First yÃªu cáº§u báº¡n lÆ°u nhá»¯ng gÃ¬?", ["Link, áº£nh chá»¥p mÃ n hÃ¬nh, sá»‘ tÃ i khoáº£n, thá»i gian, tÃªn tÃ i khoáº£n Ä‘Äƒng", "Chá»‰ lÆ°u link", "Chá»‰ nhá»› trong Ä‘áº§u", "Chá»‰ lÆ°u áº£nh Ä‘áº¡i diá»‡n"], 0, "Cung cáº¥p Ä‘áº§y Ä‘á»§ báº±ng chá»©ng cho cÆ¡ quan chá»©c nÄƒng/ná»n táº£ng."),
-        q("Trong Deepfense Check, Decide dá»±a trÃªn nguyÃªn táº¯c nÃ o?", ["Tin má»i video mÆ°á»£t", "Chá»n hÃ nh Ä‘á»™ng Ã­t gÃ¢y háº¡i nháº¥t cho báº£n thÃ¢n vÃ  cá»™ng Ä‘á»“ng", "Chia sáº» trÆ°á»›c rá»“i tÃ­nh sau", "LÃ m theo Ä‘Ã¡m Ä‘Ã´ng"], 1, "ÄÃ¡nh giÃ¡ tÃ¡c Ä‘á»™ng trÆ°á»›c khi quyáº¿t Ä‘á»‹nh."),
-        q("CÆ¡ quan cÃ´ng an cÃ³ yÃªu cáº§u chuyá»ƒn tiá»n 'táº¡m giá»¯' qua Ä‘iá»‡n thoáº¡i khÃ´ng?", ["CÃ³, Ä‘á»ƒ báº£o máº­t", "KhÃ´ng bao giá»", "Chá»‰ vá»›i sá»‘ tiá»n lá»›n", "Chá»‰ vá»›i ngÆ°á»i á»Ÿ xa"], 1, "Má»i yÃªu cáº§u tÃ i chÃ­nh tá»« 'cÃ´ng an' qua máº¡ng Ä‘á»u lÃ  lá»«a Ä‘áº£o."),
-        q("Táº¡i sao cáº§n vá»‡ sinh dá»¯ liá»‡u cÃ¡ nhÃ¢n (Data Hygiene)?", ["Äá»ƒ mÃ¡y tÃ­nh sáº¡ch hÆ¡n", "Äá»ƒ giáº£m bá»›t 'nguyÃªn liá»‡u' mÃ  AI cÃ³ thá»ƒ dÃ¹ng Ä‘á»ƒ máº¡o danh báº¡n", "Äá»ƒ tÄƒng lÆ°á»£t theo dÃµi", "Äá»ƒ tiáº¿t kiá»‡m dung lÆ°á»£ng"], 1, "Báº£o vá»‡ danh tÃ­nh sá»‘ ngay tá»« Ä‘áº§u."),
-        q("2FA (XÃ¡c thá»±c 2 lá»›p) giÃºp Ã­ch gÃ¬?", ["LÃ m video Ä‘áº¹p hÆ¡n", "NgÄƒn káº» xáº¥u chiáº¿m quyá»n tÃ i khoáº£n ká»ƒ cáº£ khi há» cÃ³ máº­t kháº©u", "TÄƒng tá»‘c Ä‘á»™ táº£i trang", "KhÃ´ng cÃ³ tÃ¡c dá»¥ng"], 1, "ThÃªm má»™t lá»›p báº£o vá»‡ vá»¯ng cháº¯c cho tÃ i khoáº£n."),
-        q("Náº¿u video mÆ°á»£t nhÆ°ng gá»ng nÃ³i vÃ  ngá»¯ cáº£nh Ä‘Ã¡ng nghi, báº¡n tin vÃ o Ä‘Ã¢u?", ["Tin hÃ¬nh áº£nh", "Tin vÃ o sá»± nghi ngá» tá»« ngá»¯ cáº£nh vÃ  gá»ng nÃ³i (Verify ngay)", "Tin vÃ o sá»‘ lÆ°á»£t like", "Tin vÃ o bÃ¬nh luáº­n"], 1, "Sá»± mÆ°á»£t mÃ  cá»§a hÃ¬nh áº£nh khÃ´ng Ä‘áº£m báº£o tÃ­nh xÃ¡c thá»±c."),
-        q("Má»¥c tiÃªu cá»§a Capstone An lÃ  gÃ¬?", ["Dáº¡y An cÃ¡ch kiáº¿m tiá»n", "Tá»•ng há»£p toÃ n bá»™ ká»¹ nÄƒng Ä‘á»ƒ xá»­ lÃ½ má»™t tÃ¬nh huá»‘ng Ä‘a diá»‡n nhÆ° Ä‘á»i tháº­t", "Dáº¡y An cÃ¡ch dÃ¹ng TikTok", "Dáº¡y An cÃ¡ch mua sáº¯m"], 1, "Thá»±c hÃ nh pháº£n xáº¡ phÃ²ng vá»‡ tá»•ng há»£p."),
-        q("Ná»™i dung deepfake nÃ o gÃ¢y tá»•n háº¡i danh dá»± nháº¥t hiá»‡n nay?", ["Deepfake máº¡o danh kÃªu gá»i tá»« thiá»‡n", "Deepfake khiÃªu dÃ¢m/nháº¡y cáº£m máº¡o danh (NCII)", "Deepfake Ä‘á»c truyá»‡n", "Deepfake chÆ¡i game"], 1, "GÃ¢y áº£nh hÆ°á»Ÿng nghiÃªm trá»ng Ä‘áº¿n tÃ¢m lÃ½ vÃ  Ä‘á»i sá»‘ng náº¡n nhÃ¢n."),
-        q("Khi tháº¥y lá»—i á»Ÿ rÄƒng hoáº·c tÃ³c trong video, báº¡n káº¿t luáº­n gÃ¬?", ["Giáº£ 100%", "LÃ  má»™t tÃ­n hiá»‡u nghi váº¥n máº¡nh, cáº§n kiá»ƒm chá»©ng bá»‘i cáº£nh vÃ  nguá»“n", "Tháº­t 100%", "Video bá»‹ lá»—i máº¡ng"], 1, "Dáº¥u hiá»‡u ká»¹ thuáº­t cáº§n Ä‘i kÃ¨m vá»›i phÃ¢n tÃ­ch ngá»¯ cáº£nh."),
-        q("Táº¡i sao 'Pause' 30 giÃ¢y láº¡i quan trá»ng?", ["Äá»ƒ chá» mÃ¡y nguá»™i", "Äá»ƒ nhÆ°á»ng chá»— cho lÃ½ trÃ­ thay vÃ¬ hÃ nh Ä‘á»™ng theo cáº£m xÃºc vá»™i vÃ ng", "Äá»ƒ tÄƒng lÆ°á»£t xem", "Äá»ƒ ngÆ°á»i gá»­i chá» lÃ¢u"], 1, "Khoáº£ng dá»«ng giÃºp kÃ­ch hoáº¡t tÆ° duy pháº£n biá»‡n."),
-        q("KhÃ³a há»c DEEPFENSE BASIC dÃ nh cho ai?", ["Chá»‰ láº­p trÃ¬nh viÃªn", "Báº¥t ká»³ ngÆ°á»i dÃ¹ng Internet nÃ o muá»‘n báº£o vá»‡ mÃ¬nh trÃªn khÃ´ng gian sá»‘", "Chá»‰ ngÆ°á»i giÃ ", "Chá»‰ tráº» em"], 1, "Ká»¹ nÄƒng an toÃ n sá»‘ lÃ  cáº§n thiáº¿t cho táº¥t cáº£ má»i ngÆ°á»i.")
+        q("Deepfake là gì?", ["Mọi nội dung sai trên mạng", "Nội dung dùng AI để khiến người ta tin một người làm/nói điều họ không thực sự làm/nói", "Chỉ là ảnh chỉnh màu", "Một loại mã độc"], 1, "Deepfake là nội dung giả mạo danh tính bằng AI."),
+        q("Deepvoice là gì?", ["Giọng nói âm lượng lớn", "Giọng nói được giả lập/chỉnh sửa bằng AI để giống người thật", "Tin nhắn không âm thanh", "Video không mặt"], 1, "Deepvoice là giả mạo giọng nói bằng AI."),
+        q("Synthetic media là gì?", ["Nội dung được tạo hoàn toàn hoặc một phần bằng công nghệ số/AI", "Nội dung bắt buộc là lừa đảo", "Nội dung chỉ có văn bản", "Chỉ là ảnh chụp"], 0, "Nội dung do AI tạo ra nói chung."),
+        q("Tất cả synthetic media đều là deepfake. Đúng hay Sai?", ["Đúng", "Sai", "Chỉ đúng với video", "Chỉ đúng với ảnh"], 1, "Nhiều nội dung AI mang tính minh bạch, không mạo danh."),
+        q("Video thật từ 5 năm trước bị đăng lại với chú thích 'vừa xảy ra' là gì?", ["Deepfake", "Repurposed media", "Edited media", "Deepvoice"], 1, "Nội dung thật nhưng bị đặt sai bối cảnh."),
+        q("Cắt một đoạn ngắn từ bài phát biểu dài làm đổi nghĩa là gì?", ["Edited media", "Deepfake", "Metadata", "Family Code"], 0, "Chỉnh sửa nội dung gốc gây hiểu lầm."),
+        q("Thay mặt người này vào ảnh người kia bằng AI gọi là gì?", ["Face swap / Deepfake image", "Metadata", "Edited media", "Reverse search"], 0, "Đây là một dạng phổ biến của deepfake hình ảnh."),
+        q("Vì sao deepfake nguy hiểm kể cả khi không hoàn hảo?", ["Vì nó đánh vào cảm xúc và áp lực thời gian của nạn nhân", "Vì nó luôn nét", "Vì nó miễn phí", "Vì nó có nhạc"], 0, "Yếu tố tâm lý và ngữ cảnh làm tăng độ tin cậy."),
+        q("Dữ liệu cá nhân công khai làm tăng rủi ro deepfake như thế nào?", ["Làm máy tính chạy chậm", "Cung cấp nguyên liệu để AI mô phỏng bạn chính xác hơn", "Làm video mờ đi", "Không có rủi ro"], 1, "Càng nhiều ảnh/video của bạn, AI càng dễ bắt chước."),
+        q("Liar's dividend là rủi ro gì?", ["Giúp kẻ xấu phủ nhận sự thật bằng cách gọi nó là deepfake", "Lợi nhuận từ việc nói dối", "Quà tặng AI", "Phí đăng ký mạng"], 0, "Lợi dụng sự tồn tại của deepfake để gieo rắc sự nghi ngờ sự thật."),
+        q("Khi nhận được yêu cầu tiền 'gấp' từ người thân, bước đầu tiên là gì?", ["Chuyển ngay", "Dừng lại và xác minh qua kênh độc lập (gọi điện số cũ)", "Gửi mã OTP", "Hỏi tài khoản"], 1, "Pause và Verify là quy trình an toàn."),
+        q("'Money Delay' nghĩa là gì?", ["Chuyển tiền thật nhanh", "Trì hoãn bắt buộc để kiểm chứng các yêu cầu tiền bất thường", "Không bao giờ dùng tiền", "Chỉ dùng tiền mặt"], 1, "Khoảng dừng giúp bạn tránh hành động theo cảm xúc."),
+        q("Nút bấm cảm xúc 'Khẩn cấp' khai thác điều gì?", ["Khả năng ghi nhớ", "Phản xạ bản năng bỏ qua logic khi bị ép thời gian", "Thị lực", "Lòng tốt"], 1, "Áp lực thời gian làm giảm khả năng kiểm chứng."),
+        q("Vì sao kẻ xấu dặn bạn 'đừng nói với ai'?", ["Để bảo vệ bạn", "Để cô lập bạn khỏi sự giúp đỡ và kiểm chứng", "Để tạo bất ngờ", "Vi quy định ngân hàng"], 1, "Cô lập nạn nhân là kỹ thuật thao túng tâm lý."),
+        q("'Thấy tận mắt' trên mạng hiện nay còn đủ tin cậy không?", ["Luôn đủ", "Không đủ, vì hình ảnh và video có thể bị AI tạo hoặc chỉnh sửa", "Chỉ đủ với video dài", "Chỉ đủ với người nổi tiếng"], 1, "Công nghệ AI đã làm thay đổi niềm tin vào hình ảnh."),
+        q("Dấu hiệu kỹ thuật nào nghi là deepfake?", ["Rìa khuôn mặt bị nhòe khi quay đầu, nháy mắt lạ, răng bị mờ", "Màu áo xanh", "Video có phụ đề", "Âm thanh quá lớn"], 0, "Các lỗi pixel và chuyển động là tín hiệu nghi vấn."),
+        q("Quan sát ánh sáng giúp phát hiện điều gì?", ["Màu sắc đẹp không", "Sự không nhất quán giữa mặt người và bối cảnh xung quanh", "Độ phân giải video", "Thời tiết"], 1, "Sự không đồng nhất về ánh sáng thường lộ dấu hiệu chỉnh sửa."),
+        q("Checklist 3 lớp quan sát là gì?", ["Hình ảnh, Âm thanh, Ngữ cảnh", "Sáng, Trưa, Tối", "Tên, Tuổi, Địa chỉ", "Like, Share, Follow"], 0, "Phân tích đa chiều giúp đánh giá rủi ro tốt hơn."),
+        q("Kênh độc lập an toàn là kênh nào?", ["Số điện thoại người lạ mới gọi", "Link trong email khẩn cấp", "Số điện thoại đã lưu từ lâu trong danh bạ của bạn", "Nhóm chat lạ"], 2, "Kênh độc lập phải là kênh tin cậy có từ trước."),
+        q("Trace (Truy nguồn) giúp bạn biết điều gì?", ["Mật khẩu người gửi", "Nguồn gốc đầu tiên và bối cảnh thực sự của nội dung", "Video có bao nhiêu like", "Địa chỉ nhà nạn nhân"], 1, "Truy nguồn giúp phát hiện tin giả và nội dung sai bối cảnh."),
+        q("Detector AI nên được dùng như thế nào?", ["Tín hiệu tham khảo, không phải phán quyết cuối cùng", "Phán quyết tuyệt đối", "Để bôi nhọ người khác", "Thay thế mọi bước kiểm chứng"], 0, "Detector có thể sai và cần kết hợp với tư duy con người."),
+        q("Family Code là gì?", ["Mã vùng điện thoại", "Câu xác minh bí mật chỉ gia đình biết để dùng khi khẩn cấp", "Mã giảm giá mua sắm", "Số thứ tự thành viên"], 1, "Mật khẩu gia đình giúp xác minh nhanh trong video call/ghi âm."),
+        q("Khi thấy video người nổi tiếng quảng cáo đầu tư 'lợi nhuận 100%', bạn nên làm gì?", ["Đăng ký ngay", "Kiểm tra kênh chính thức của họ, không bấm link lạ", "Nạp thử ít tiền", "Chia sẻ cho bạn bè"], 1, "Cẩn trọng với các lời hứa lợi ích bất thường."),
+        q("Trách nhiệm của người chứng kiến khi thấy ảnh nhạy cảm phát tán?", ["Lưu lại xem", "Không lan truyền, báo cáo và hỗ trợ nạn nhân", "Gửi cho nhóm khác hỏi thật giả", "Bình luận trêu đùa"], 1, "Giảm hại là ưu tiên hàng đầu."),
+        q("Tại sao không nên chia sẻ clip gây phẫn nộ khi chưa rõ nguồn?", ["Làm tốn pin", "Có thể đang tiếp tay cho tin giả hoặc kịch bản thao túng", "Làm video bị mờ", "Không có nhạc"], 1, "Cảm xúc phẫn nộ thường bị lợi dụng để lan truyền nội dung sai."),
+        q("Mục tiêu cuối cùng của Deepfense Shield là gì?", ["Làm bạn sợ Internet", "Biến kiến thức thành thói quen phòng vệ an toàn cho bạn và cộng đồng", "Dạy tạo AI", "Tăng tốc độ mạng"], 1, "Xây dựng cộng đồng số an toàn."),
+        q("Nội dung AI có ghi rõ 'đây là ảnh minh họa' được đánh giá rủi ro thế nào?", ["Rủi ro cao", "Rủi ro thấp vì tính minh bạch cao", "Luôn là lừa đảo", "Chắc chắn là thật"], 1, "Sự minh bạch làm giảm khả năng lừa dối."),
+        q("Bạn nhận email từ ngân hàng yêu cầu đọc OTP để khóa thẻ. Bạn làm gì?", ["Đọc ngay", "Từ chối và tự gọi hotline ngân hàng hoặc dùng app chính thức", "Gửi qua SMS", "Gửi mật khẩu thay thế"], 1, "Xác minh qua kênh chính thức độc lập."),
+        q("Nếu tài khoản mạng xã hội của bạn bị mạo danh, bạn nên làm gì?", ["Tranh cãi với nó", "Cảnh báo bạn bè qua kênh chính thức, lưu bằng chứng và báo cáo", "Im lặng", "Xóa tài khoản thật"], 1, "Thông báo rộng rãi để ngăn chặn lừa đảo bạn bè."),
+        q("Chứng chỉ DEEPFENSE AWARE chứng nhận điều gì?", ["Bạn là lập trình viên AI", "Bạn đã nắm vững kiến thức nền tảng và có phản xạ phòng vệ deepfake", "Bạn có thể hack tài khoản", "Bạn đã đóng tiền học"], 1, "Xác nhận năng lực phòng vệ số cơ bản."),
+        q("Lip sync (khớp lệnh miệng) AI thường gặp khó khăn nhất ở chi tiết nào?", ["Màu môi", "Răng bị mờ hoặc méo khi nói nhanh", "Độ dài của tóc", "Màu áo"], 1, "Chi tiết nhỏ bên trong miệng thường bị lỗi kỹ thuật."),
+        q("Reverse image search đặc biệt hiệu ích để phát hiện loại nội dung nào?", ["Deepvoice", "Repurposed media (nội dung thật đăng sai bối cảnh)", "Tin nhắn văn bản", "Mật khẩu"], 1, "Tìm ra nguồn gốc và thời điểm xuất hiện đầu tiên của ảnh."),
+        q("Câu nói nào là 'nút bấm' Thân quen?", ["'Mẹ ơi, con đang gặp nạn, đừng báo bố nhé.'", "'Chuyển tiền trong 2 phút.'", "'Đọc mã OTP cho tôi.'", "'Bạn trúng thưởng 1 tỷ.'"], 0, "Lợi dụng tình cảm gia đình để gây áp lực."),
+        q("Cụm từ 'Chỉ mình bạn được nhận cơ hội này' thuộc nhóm nào?", ["Khẩn cấp", "Lợi ích và đánh vào cảm giác đặc biệt", "Quyền lực", "Thân quen"], 1, "Dùng lợi ích riêng biệt để dụ dỗ nạn nhân."),
+        q("Tại sao không nên hỏi 'Có phải AI không?' trong cùng cuộc gọi đáng nghi?", ["Kẻ xấu có thể dùng AI trả lời rất thuyết phục để trấn an bạn", "Vì nó tốn tiền điện thoại", "Vì nó làm video nét hơn", "Vì quy định pháp luật"], 0, "Phải xác minh qua kênh hoàn toàn khác biệt."),
+        q("Dấu hiệu nào nghi vấn về âm thanh?", ["Tiếng ồn môi trường tự nhiên", "Giọng nói đều đều thiếu nhịp thở và âm điệu cá nhân", "Nói tiếng Việt chuẩn", "Nói to rõ"], 1, "Âm thanh AI thường thiếu sự sống động tự nhiên."),
+        q("Một video video call có hình ảnh người thân nhưng chỉ hiện 5 giây rồi tắt là dấu hiệu gì?", ["Mạng yếu bình thường", "Có thể là deepfake ngắn dùng để lừa bạn tin rồi chuyển sang nhắn tin", "Máy hết pin thật", "Người đó bận"], 1, "Kỹ thuật 'mồi nhử' để tạo niềm tin."),
+        q("Provenance giúp gì cho việc kiểm chứng?", ["Lưu vết lịch sử tạo và chỉnh sửa của file", "Xóa deepfake tự động", "Tăng độ sáng ảnh", "Chọn filter đẹp"], 0, "Giúp truy tìm nguồn gốc kỹ thuật của nội dung."),
+        q("Hành động 'No Shame Reporting' có ý nghĩa gì?", ["Nạn nhân báo cáo sớm mà không sợ bị mắng hay cười chê", "Không báo cáo vì sợ", "Báo cáo nặc danh", "Báo cáo sau 1 tháng"], 0, "Tạo môi trường hỗ trợ để xử lý sự cố nhanh nhất."),
+        q("Evidence First yêu cầu bạn lưu những gì?", ["Link, ảnh chụp màn hình, số tài khoản, thời gian, tên tài khoản đăng", "Chỉ lưu link", "Chỉ nhớ trong đầu", "Chỉ lưu ảnh đại diện"], 0, "Cung cấp đầy đủ bằng chứng cho cơ quan chức năng/nền tảng."),
+        q("Trong Deepfense Check, Decide dựa trên nguyên tắc nào?", ["Tin mọi video mượt", "Chọn hành động ít gây hại nhất cho bản thân và cộng đồng", "Chia sẻ trước rồi tính sau", "Làm theo đám đông"], 1, "Đánh giá tác động trước khi quyết định."),
+        q("Cơ quan công an có yêu cầu chuyển tiền 'tạm giữ' qua điện thoại không?", ["Có, để bảo mật", "Không bao giờ", "Chỉ với số tiền lớn", "Chỉ với người ở xa"], 1, "Mọi yêu cầu tài chính từ 'công an' qua mạng đều là lừa đảo."),
+        q("Tại sao cần vệ sinh dữ liệu cá nhân (Data Hygiene)?", ["Để máy tính sạch hơn", "Để giảm bớt 'nguyên liệu' mà AI có thể dùng để mạo danh bạn", "Để tăng lượt theo dõi", "Để tiết kiệm dung lượng"], 1, "Bảo vệ danh tính số ngay từ đầu."),
+        q("2FA (Xác thực 2 lớp) giúp ích gì?", ["Làm video đẹp hơn", "Ngăn kẻ xấu chiếm quyền tài khoản kể cả khi họ có mật khẩu", "Tăng tốc độ tải trang", "Không có tác dụng"], 1, "Thêm một lớp bảo vệ vững chắc cho tài khoản."),
+        q("Nếu video mượt nhưng gọng nói và ngữ cảnh đáng nghi, bạn tin vào đâu?", ["Tin hình ảnh", "Tin vào sự nghi ngờ từ ngữ cảnh và gọng nói (Verify ngay)", "Tin vào số lượt like", "Tin vào bình luận"], 1, "Sự mượt mà của hình ảnh không đảm bảo tính xác thực."),
+        q("Mục tiêu của Capstone An là gì?", ["Dạy An cách kiếm tiền", "Tổng hợp toàn bộ kỹ năng để xử lý một tình huống đa diện như đời thật", "Dạy An cách dùng TikTok", "Dạy An cách mua sắm"], 1, "Thực hành phản xạ phòng vệ tổng hợp."),
+        q("Nội dung deepfake nào gây tổn hại danh dự nhất hiện nay?", ["Deepfake mạo danh kêu gọi từ thiện", "Deepfake khiêu dâm/nhạy cảm mạo danh (NCII)", "Deepfake đọc truyện", "Deepfake chơi game"], 1, "Gây ảnh hưởng nghiêm trọng đến tâm lý và đời sống nạn nhân."),
+        q("Khi thấy lỗi ở răng hoặc tóc trong video, bạn kết luận gì?", ["Giả 100%", "Là một tín hiệu nghi vấn mạnh, cần kiểm chứng bối cảnh và nguồn", "Thật 100%", "Video bị lỗi mạng"], 1, "Dấu hiệu kỹ thuật cần đi kèm với phân tích ngữ cảnh."),
+        q("Tại sao 'Pause' 30 giây lại quan trọng?", ["Để chờ máy nguội", "Để nhường chỗ cho lý trí thay vì hành động theo cảm xúc vội vàng", "Để tăng lượt xem", "Để người gửi chờ lâu"], 1, "Khoảng dừng giúp kích hoạt tư duy phản biện."),
+        q("Khóa học DEEPFENSE BASIC dành cho ai?", ["Chỉ lập trình viên", "Bất kỳ người dùng Internet nào muốn bảo vệ mình trên không gian số", "Chỉ người già", "Chỉ trẻ em"], 1, "Kỹ năng an toàn số là cần thiết cho tất cả mọi người.")
       ]
     }
   ]

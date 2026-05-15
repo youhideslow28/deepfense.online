@@ -1,6 +1,6 @@
 /**
- * DEEPFENSE.ONLINE â€” Common Type Definitions
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — Common Type Definitions
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 export type PageType = "HOME" | "TOOLS" | "CHALLENGE" | "AI_PROJECT" | "ABOUT_CONTACT" | "ADMIN";

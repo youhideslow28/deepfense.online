@@ -1,21 +1,21 @@
 /**
- * DEEPFENSE.ONLINE â€” Survey & Personality Questions Data
- * @copyright 2025 H? Xuân Nguy?n & VKU Project Team
+ * DEEPFENSE.ONLINE — Survey & Personality Questions Data
+ * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
 import { Language, PersonalityQuestion } from '@/types';
 
 export const SURVEY_SCALE: Record<Language, string[]> = {
-  vi: ["1 HOÃ€N TOÃ€N KHÃ”NG", "2 KHÃ”NG TÃN THÃ€NH", "3 TRUNG Láº¬P", "4 TÃN THÃ€NH", "5 HOÃ€N TOÃ€N Äá»’NG Ã"],
+  vi: ["1 HOÀN TOÀN KHÔNG", "2 KHÔNG TÁN THÀNH", "3 TRUNG LẬP", "4 TÁN THÀNH", "5 HOÀN TOÀN ĐỒNG Ý"],
   en: ["1 STRONGLY DISAGREE", "2 DISAGREE", "3 NEUTRAL", "4 AGREE", "5 STRONGLY AGREE"]
 };
 
 export const PERSONALITY_QUESTIONS: Record<Language, PersonalityQuestion[]> = {
   vi: [
-    { id: "q1", text: "TÃ´i thÆ°á»ng tin vÃ o nhá»¯ng video cÃ³ hÃ¬nh áº£nh ngÆ°á»i thÃ¢n mÃ  khÃ´ng cáº§n kiá»ƒm chá»©ng thÃªm.", trait: "AWARENESS" },
-    { id: "q2", text: "TÃ´i cáº£m tháº¥y lo láº¯ng khi nháº­n Ä‘Æ°á»£c cuá»™c gá»i tá»« sá»‘ láº¡ yÃªu cáº§u chuyá»ƒn tiá»n gáº¥p.", trait: "ANXIETY" },
-    { id: "q3", text: "TÃ´i tá»± tin ráº±ng mÃ¬nh cÃ³ thá»ƒ phÃ¢n biá»‡t Ä‘Æ°á»£c video tháº­t vÃ  giáº£ báº±ng máº¯t thÆ°á»ng.", trait: "CONFIDENCE" },
-    { id: "q4", text: "TÃ´i luÃ´n nghi ngá» tÃ­nh xÃ¡c thá»±c cá»§a cÃ¡c thÃ´ng tin gÃ¢y sá»‘c trÃªn máº¡ng xÃ£ há»™i.", trait: "SKEPTICISM" }
+    { id: "q1", text: "Tôi thường tin vào những video có hình ảnh người thân mà không cần kiểm chứng thêm.", trait: "AWARENESS" },
+    { id: "q2", text: "Tôi cảm thấy lo lắng khi nhận được cuộc gọi từ số lạ yêu cầu chuyển tiền gấp.", trait: "ANXIETY" },
+    { id: "q3", text: "Tôi tự tin rằng mình có thể phân biệt được video thật và giả bằng mắt thường.", trait: "CONFIDENCE" },
+    { id: "q4", text: "Tôi luôn nghi ngờ tính xác thực của các thông tin gây sốc trên mạng xã hội.", trait: "SKEPTICISM" }
   ],
   en: [
     { id: "q1", text: "I often trust videos showing relatives without further verification.", trait: "AWARENESS" },
