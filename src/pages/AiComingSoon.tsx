@@ -138,8 +138,8 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                         </div>
                     </div>
                     
-                    <div className="text-4xl font-black text-white mb-1">99.9%</div>
-                    <div className="text-xs font-bold text-red-400 tracking-wider mb-4">{lang === 'vi' ? 'PHÁT HIỆN GIẢ MẠO' : 'FAKE DETECTION'}</div>
+                    <div className="text-4xl font-black text-white mb-1">AI</div>
+                    <div className="text-xs font-bold text-red-400 tracking-wider mb-4">{lang === 'vi' ? 'PHÂN TÍCH HỖ TRỢ' : 'ASSISTED ANALYSIS'}</div>
                     
                     <div className="flex flex-col gap-2 text-[10px] text-left bg-black/60 p-3 rounded border border-gray-800">
                         <div className="flex items-center gap-2 text-red-300"><ArrowRight size={10}/> {lang === 'vi' ? 'Cảnh báo người dùng ngay lập tức' : 'Alert user immediately'}</div>
