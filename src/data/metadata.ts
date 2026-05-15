@@ -5,6 +5,7 @@
 
 export const PROJECT_METADATA = {
   name: "DEEPFENSE.ONLINE",
+  team: "2HAND",
   version: "3.0.0-Gamified-Training-Core",
   build_date: new Date().toLocaleDateString('vi-VN'),
   authors: [
@@ -16,6 +17,6 @@ export const PROJECT_METADATA = {
   university: "Vietnam-Korea University of Information and Communication Technology (VKU)",
   department: "Khoa Kỹ thuật Máy tính & Điện tử (Computer Engineering & Electronics)",
   instructor: "", // Đã xóa theo yêu cầu
-  license: "Copyright © 2025 Hồ Xuân Nguyễn, Nguyễn Nhất Huy, Võ Phan Pháp & Trần Minh Nhất (VKU 25NS)",
+  license: "Copyright © 2025 Team 2HAND (VKU 25NS)",
   email: "deepfense@gmail.com"
 };

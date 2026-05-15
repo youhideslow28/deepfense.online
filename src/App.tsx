@@ -263,7 +263,7 @@ const AppContent: React.FC = () => {
     PROJECT_METADATA.authors.forEach(author => {
         console.log(`%c - ${author.name} (${author.id}) - ${author.role}`, "color: #FF2A6D; font-style: italic; font-weight: bold;");
     });
-    console.log(`%cWARNING: This project is the intellectual property of Hồ Xuân Nguyễn & VKU Project Team.`, "color: red; font-weight: bold;");
+    console.log(`%cWARNING: This project is the intellectual property of Team 2HAND (VKU).`, "color: red; font-weight: bold;");
   }, []);
 
   // Tiêu đề động tùy theo trang đang mở

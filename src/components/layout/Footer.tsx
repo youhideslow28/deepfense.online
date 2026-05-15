@@ -40,7 +40,7 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
 
   const supportLinks = [
     { path: '/tools/crisis', label: isVi ? 'Trung tâm ứng cứu' : 'Crisis Hub', icon: <AlertTriangle size={13} /> },
-    { path: '/contact', label: isVi ? 'Liên hệ nhóm dự án' : 'Contact Project Team', icon: <Mail size={13} /> },
+    { path: '/contact', label: isVi ? 'Liên hệ nhóm 2HAND' : 'Contact Team 2HAND', icon: <Mail size={13} /> },
     { path: 'https://amoy.polygonscan.com/address/0xFB5605c397257267C6E90C6224D5F4826A4A742D#code', label: isVi ? 'DPF coin contract verified' : 'Verified DPF coin contract', icon: <ShieldCheck size={13} />, external: true },
     { path: 'https://deepfense.online', label: 'deepfense.online', icon: <ExternalLink size={13} />, external: true },
   ];
@@ -131,13 +131,13 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
               <div className="mt-5 pt-4 border-t border-white/5 flex items-center gap-3">
                 <div className="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center p-1.5 overflow-hidden">
                    <img 
-                      src="https://vku.udn.vn/Uploads/Logo-vku.png" 
+                      src="https://daotao.vku.udn.vn/public/images/logo_2021.png" 
                       alt="VKU" 
                       className="h-full w-full object-contain opacity-90 transition-opacity hover:opacity-100" 
                       onError={(e) => { 
                         const target = e.target as HTMLImageElement;
-                        if (target.src !== "https://vku.udn.vn/vku-logo.png") {
-                          target.src = "https://vku.udn.vn/vku-logo.png";
+                        if (target.src.includes("daotao.vku.udn.vn")) {
+                          target.src = "https://vku.udn.vn/wp-content/uploads/2023/08/Logo.svg";
                         } else {
                           target.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Logo_VKU.png/800px-Logo_VKU.png";
                         }
@@ -204,7 +204,7 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
         <div className="mt-10 border-t border-[#1E3A5F]/30 pt-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="text-[10px] leading-relaxed text-gray-700 font-mono">
-              © 2025 DEEPFENSE · {isVi ? 'Nhóm dự án VKU (Nguyễn, Huy, Pháp, Nhất)' : 'VKU Project Team (Nguyen, Huy, Phap, Nhat)'}. {isVi ? 'Bảo lưu mọi quyền.' : 'All rights reserved.'}
+              © 2025 DEEPFENSE · {isVi ? 'Nhóm 2HAND (VKU)' : 'Team 2HAND (VKU)'}. {isVi ? 'Bảo lưu mọi quyền.' : 'All rights reserved.'}
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <span className="inline-flex items-center gap-2 rounded-full border border-green-500/15 bg-green-500/5 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-widest text-green-400/70">
