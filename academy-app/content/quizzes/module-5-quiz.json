@@ -1,0 +1,150 @@
+{
+  "moduleId": 5,
+  "title": "Nhận diện giọng nói và âm thanh giả mạo",
+  "questions": [
+    {
+      "id": "m5q01",
+      "text": "Voice deepfake (AI cloning giọng nói) cần tối thiểu bao nhiêu dữ liệu âm thanh để tạo ra bản sao chấp nhận được?",
+      "options": [
+        "Ít nhất 10 giờ ghi âm",
+        "Ngày nay chỉ cần 3-30 giây — thậm chí vài giây với các model tiên tiến nhất",
+        "Ít nhất 1 giờ ghi âm chất lượng cao",
+        "Cần toàn bộ lịch sử gọi điện của nạn nhân"
+      ],
+      "correct": 1,
+      "explanation": "Công nghệ voice cloning đã tiến bộ vượt bậc: các model như ElevenLabs, OpenVoice chỉ cần vài giây ghi âm để tạo ra giọng nói có thể đánh lừa người thân. Điều này làm mọi cuộc gọi bình thường đều tiềm ẩn nguy cơ."
+    },
+    {
+      "id": "m5q02",
+      "text": "Dấu hiệu âm thanh nào THƯỜNG gặp trong voice deepfake thế hệ cũ (trước 2022)?",
+      "options": [
+        "Giọng quá trầm",
+        "Tiếng ồn nền nhân tạo, ngắt quãng không tự nhiên, và thiếu âm thanh hít thở",
+        "Phát âm quá rõ ràng",
+        "Giọng quá to và rõ"
+      ],
+      "correct": 1,
+      "explanation": "Voice deepfake thế hệ đầu thường: (1) Thiếu tiếng thở và âm thanh tự nhiên giữa câu; (2) Có tiếng ồn nền nhân tạo hoặc âm \"robot\"; (3) Ngắt câu không đúng chỗ; (4) Mất sự biến đổi tự nhiên của cao độ (intonation)."
+    },
+    {
+      "id": "m5q03",
+      "text": "Kỹ thuật \"voice phishing\" (vishing) kết hợp AI voice cloning thường nhắm vào điều gì?",
+      "options": [
+        "Đánh cắp mật khẩu email",
+        "Giả giọng người thân hoặc lãnh đạo để yêu cầu chuyển tiền hoặc cung cấp thông tin nhạy cảm",
+        "Cài phần mềm độc hại vào điện thoại",
+        "Theo dõi vị trí GPS của nạn nhân"
+      ],
+      "correct": 1,
+      "explanation": "AI vishing là hình thức lừa đảo nguy hiểm: kẻ tấn công giả giọng con cái gọi cho cha mẹ nói bị tai nạn cần tiền, hoặc giả CEO gọi cho kế toán ra lệnh chuyển khoản khẩn cấp. Năm 2019 đã có vụ thiệt hại 220.000 EUR tại UK."
+    },
+    {
+      "id": "m5q04",
+      "text": "Khi nhận cuộc gọi từ \"người thân\" yêu cầu chuyển tiền khẩn cấp, bước xác minh đơn giản nhất là?",
+      "options": [
+        "Tin tưởng vì nhận ra giọng",
+        "Cúp máy và gọi lại cho người đó qua số điện thoại bạn đã lưu sẵn (không phải số lạ gọi đến)",
+        "Hỏi thêm về thông tin cá nhân của người đó",
+        "Chuyển một nửa tiền trước để kiểm tra"
+      ],
+      "correct": 1,
+      "explanation": "\"Cúp máy, gọi lại\" là phương pháp xác minh cực kỳ hiệu quả. Gọi lại qua số bạn tự lưu (không phải số lạ) đảm bảo bạn liên lạc đúng người thật. Đây là cách đơn giản nhất để phá vỡ mọi cuộc tấn công voice vishing."
+    },
+    {
+      "id": "m5q05",
+      "text": "\"Codeword\" hoặc \"secret phrase\" gia đình giúp chống voice deepfake như thế nào?",
+      "options": [
+        "Mã hóa cuộc gọi điện thoại",
+        "Chỉ người thật mới biết từ khóa bí mật — AI cloning giọng không thể biết thông tin này",
+        "Tăng chất lượng âm thanh cuộc gọi",
+        "Giúp tìm điện thoại khi bị mất"
+      ],
+      "correct": 1,
+      "explanation": "Thiết lập một từ/cụm từ bí mật với gia đình (ví dụ: tên thú cưng hồi nhỏ) là hàng phòng thủ hiệu quả. AI clone chỉ tái tạo được giọng nói, không thể biết thông tin riêng tư này. Hỏi từ khóa ngay khi nghi ngờ."
+    },
+    {
+      "id": "m5q06",
+      "text": "Deepfake âm thanh trong \"robocall\" lừa đảo bầu cử hoạt động như thế nào?",
+      "options": [
+        "Gọi điện quảng cáo sản phẩm giả",
+        "Giả giọng ứng cử viên hoặc quan chức để phát thông điệp gây hiểu lầm tới cử tri",
+        "Tấn công hệ thống bỏ phiếu điện tử",
+        "Gửi tin nhắn SMS giả mạo"
+      ],
+      "correct": 1,
+      "explanation": "Năm 2024, trước bầu cử sơ bộ ở New Hampshire (Mỹ), hàng nghìn cử tri nhận được robocall giả giọng Biden khuyên không đi bầu. Đây là hình thức can thiệp bầu cử mới và rất nguy hiểm."
+    },
+    {
+      "id": "m5q07",
+      "text": "Lợi thế của kẻ tấn công khi dùng voice deepfake so với phishing email truyền thống là?",
+      "options": [
+        "Voice deepfake rẻ hơn và dễ làm hơn email",
+        "Giọng nói tạo cảm giác khẩn cấp và tin tưởng tức thời mà email không có, ít thời gian để suy nghĩ",
+        "Voice deepfake không thể bị phát hiện bởi hệ thống bảo mật",
+        "Email thường bị lọc spam, còn cuộc gọi thì không"
+      ],
+      "correct": 1,
+      "explanation": "Cuộc gọi điện thoại — đặc biệt từ giọng nói quen thuộc — kích hoạt phản ứng cảm xúc và cảm giác khẩn cấp mạnh hơn email. Não người xử lý giọng nói khác với văn bản, ít phản xạ kiểm tra hơn."
+    },
+    {
+      "id": "m5q08",
+      "text": "Khi nghe một đoạn âm thanh/video và cảm thấy \"có điều gì đó kỳ lạ\" nhưng không nói được cụ thể là gì, bạn nên?",
+      "options": [
+        "Bỏ qua cảm giác đó vì không chắc chắn",
+        "Tin vào trực giác, dừng lại và kiểm chứng trước khi hành động hoặc chia sẻ",
+        "Hỏi AI chatbot để xác nhận",
+        "Chia sẻ ngay với ghi chú \"chưa xác minh\""
+      ],
+      "correct": 1,
+      "explanation": "Trực giác \"uncanny valley\" của não người là hệ thống cảnh báo tự nhiên đáng tin. Khi não cảm nhận \"điều gì đó không đúng\" với giọng nói hay âm thanh, đừng bỏ qua — đây thường là dấu hiệu của sự không tự nhiên mà não bạn nhận ra trước khi bạn có thể mô tả."
+    },
+    {
+      "id": "m5q09",
+      "text": "Âm thanh nào sau đây khó bị giả mạo bằng AI nhất trong hiện tại?",
+      "options": [
+        "Giọng đọc văn bản chuẩn bị sẵn",
+        "Phản ứng tự nhiên, tức thì trước câu hỏi bất ngờ với nội dung riêng tư mà chỉ người thật biết",
+        "Giọng hát bài hát quen thuộc",
+        "Tiếng khóc hoặc cười"
+      ],
+      "correct": 1,
+      "explanation": "AI voice cloning chỉ sao chép đặc điểm giọng nói, không thể biết thông tin riêng tư. Hỏi bất ngờ về kỷ niệm cụ thể (\"Em nhớ không, chúng ta đặt tên con mèo năm đó là gì?\") là thử thách mà AI clone không thể vượt qua."
+    },
+    {
+      "id": "m5q10",
+      "text": "Tại sao cuộc gọi video (video call) không đảm bảo tuyệt đối rằng người bạn đang nói chuyện là thật?",
+      "options": [
+        "Vì chất lượng video thường kém",
+        "Vì deepfake real-time (video + audio) ngày càng khả thi với công nghệ hiện tại",
+        "Vì người ta có thể tắt camera",
+        "Vì kết nối internet không ổn định"
+      ],
+      "correct": 1,
+      "explanation": "Công nghệ real-time deepfake (như DeepFaceLive) có thể hoạt động trong cuộc gọi video trực tiếp. Đây là lý do xác minh danh tính trong giao dịch nhạy cảm không nên chỉ dựa vào video call mà cần thêm bước xác minh độc lập."
+    },
+    {
+      "id": "m5q11",
+      "text": "\"Liveness detection\" trong hệ thống xác minh danh tính hoạt động như thế nào?",
+      "options": [
+        "Kiểm tra xem người dùng có online hay không",
+        "Yêu cầu hành động ngẫu nhiên (nháy mắt, quay đầu, đọc số) để xác nhận đây là người thật, không phải ảnh hoặc deepfake",
+        "Đo nhịp tim qua camera",
+        "Quét mống mắt để xác minh"
+      ],
+      "correct": 1,
+      "explanation": "Liveness detection là kỹ thuật chống deepfake trong KYC (Know Your Customer): yêu cầu người dùng thực hiện hành động ngẫu nhiên trong thời gian thực để chứng minh đây không phải ảnh chụp, video phát lại, hay deepfake."
+    },
+    {
+      "id": "m5q12",
+      "text": "Hành động nào là ĐÚNG khi nhận cuộc gọi khẩn cấp lạ giọng của người thân?",
+      "options": [
+        "Hỏi \"Con có ổn không?\" — vì thông tin về tình huống khẩn cấp có thể đã bị thu thập trước",
+        "Hỏi câu hỏi cụ thể chỉ người thật biết, sau đó cúp máy và gọi lại qua số đã lưu",
+        "Chuyển tiền ngay và hỏi sau",
+        "Tin tưởng hoàn toàn vì \"nhận ra giọng\""
+      ],
+      "correct": 1,
+      "explanation": "Tránh hỏi câu hỏi có thể trả lời \"có/không\" (kẻ lừa đảo có thể đã nghiên cứu về bạn). Thay vào đó hỏi: \"Tên con thú cưng đầu tiên của mình là gì?\" — thông tin riêng tư AI không thể biết. Sau đó luôn gọi lại để xác minh."
+    }
+  ]
+}

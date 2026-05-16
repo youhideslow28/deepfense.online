@@ -1,0 +1,247 @@
+{
+  "midtermId": "midterm2",
+  "title": "Midterm 2 — Phần II: Nhận diện",
+  "scope": "Module 4, 5, 6",
+  "questions": [
+    {
+      "id": "mt2q01",
+      "tag": "Module 4 — Nhận diện hình ảnh/video",
+      "text": "Khu vực nào trên khuôn mặt trong deepfake video thường lộ lỗi nhiều nhất?",
+      "options": ["Vùng trán và đỉnh đầu", "Viền khuôn mặt, đường chân tóc, và vùng tai", "Vùng cổ và vai", "Vùng ngực và tay"],
+      "correct": 1,
+      "explanation": "Viền khuôn mặt là ranh giới giữa khuôn mặt ghép và phần da/tóc thật — nơi model deepfake khó xử lý nhất. Tóc, tai, và đường viền là những khu vực hay bị mờ, nhòe, hoặc inconsistent nhất."
+    },
+    {
+      "id": "mt2q02",
+      "tag": "Module 4 — Nhận diện hình ảnh/video",
+      "text": "\"Temporal inconsistency\" trong deepfake video là hiện tượng gì?",
+      "options": ["Video bị lag hoặc giật hình", "Đặc điểm khuôn mặt thay đổi đột ngột giữa các frame — nốt ruồi biến mất, màu da thay đổi", "Âm thanh không đồng bộ với hình ảnh", "Video bị nhiễu ở vùng tối"],
+      "correct": 1,
+      "explanation": "Temporal inconsistency: model xử lý từng frame độc lập, thiếu tính liên tục theo thời gian. Quan sát ở tốc độ chậm: nốt ruồi xuất hiện/biến mất, texture da \"rung\", hoặc màu da thay đổi giữa các frame liên tiếp."
+    },
+    {
+      "id": "mt2q03",
+      "tag": "Module 4 — Nhận diện hình ảnh/video",
+      "text": "Khi kiểm tra ảnh nghi ngờ deepfake, bước đầu tiên nên là?",
+      "options": ["Chia sẻ với bạn bè để hỏi ý kiến", "Phóng to và kiểm tra viền khuôn mặt, texture da, và ánh sáng", "Tải ảnh về và dùng Photoshop kiểm tra", "Gọi điện cho người trong ảnh để xác nhận"],
+      "correct": 1,
+      "explanation": "Phóng to là bước đầu tiên dễ dàng nhất: kiểm tra viền khuôn mặt (có mờ/nhòe không?), texture da (quá mịn bất thường không?), ánh sáng (khuôn mặt có khớp với ánh sáng nền không?)."
+    },
+    {
+      "id": "mt2q04",
+      "tag": "Module 4 — Nhận diện hình ảnh/video",
+      "text": "Vùng bên trong miệng (răng, lưỡi) trong deepfake thường có vấn đề gì?",
+      "options": ["Miệng quá rộng so với bình thường", "Răng mờ, thiếu chi tiết, lưỡi hình dạng bất thường — vì dataset ít ảnh bên trong miệng", "Môi quá đỏ so với da mặt", "Không có vấn đề gì — đây là vùng dễ deepfake nhất"],
+      "correct": 1,
+      "explanation": "Dataset huấn luyện deepfake thường ít ảnh bên trong miệng (khi mở), nên model tạo ra không tốt bằng các vùng khác. Quan sát kỹ khi nhân vật nói hoặc cười rộng là cách kiểm tra hiệu quả."
+    },
+    {
+      "id": "mt2q05",
+      "tag": "Module 4 — Nhận diện hình ảnh/video",
+      "text": "Deepfake ảnh tĩnh khó phát hiện hơn deepfake video vì lý do gì?",
+      "options": ["Ảnh tĩnh có độ phân giải thấp hơn", "Không có chiều thời gian để phát hiện temporal inconsistency — chỉ có dấu hiệu không gian trong một frame", "Ảnh tĩnh ít được chia sẻ hơn", "Công nghệ ảnh tĩnh phức tạp hơn video"],
+      "correct": 1,
+      "explanation": "Với video, bạn có thêm chiều thời gian (temporal). Với ảnh, chỉ có một frame: phải dựa vào ánh sáng nhất quán, texture tự nhiên, chi tiết đối xứng, và các dấu hiệu không gian khác."
+    },
+    {
+      "id": "mt2q06",
+      "tag": "Module 4 — Nhận diện hình ảnh/video",
+      "text": "Reverse image search (tìm kiếm ngược ảnh) hữu ích cho việc phát hiện deepfake/thao túng như thế nào?",
+      "options": ["Phân tích pixel để tìm dấu vết AI", "Tìm nguồn gốc ảnh — xem ảnh đã xuất hiện trước đó chưa, với bối cảnh nào", "Đo độ phân giải và kiểm tra màu sắc", "Trích xuất metadata EXIF tự động"],
+      "correct": 1,
+      "explanation": "Reverse search (Google Images, TinEye) có thể phát hiện: ảnh cũ được dùng lại với bối cảnh giả; ảnh từ nước này được mô tả là ảnh nước khác; khuôn mặt của người A được ghép vào cơ thể người B."
+    },
+    {
+      "id": "mt2q07",
+      "tag": "Module 4 — Nhận diện hình ảnh/video",
+      "text": "\"Face drifting\" trong deepfake video là lỗi gì?",
+      "options": ["Khuôn mặt bị mờ khi chuyển động nhanh", "Khuôn mặt không bám chặt vào đầu — \"bơi\" hoặc \"trôi\" khỏi vị trí đúng", "Màu da thay đổi theo ánh sáng", "Biểu cảm không đồng bộ với giọng nói"],
+      "correct": 1,
+      "explanation": "Face drifting là lỗi tracking: model deepfake không căn chỉnh đúng khuôn mặt ghép với chuyển động của đầu trong video gốc — đặc biệt khi đầu quay nhanh hoặc ở các góc hiếm gặp trong dataset."
+    },
+    {
+      "id": "mt2q08",
+      "tag": "Module 5 — Nhận diện giọng nói",
+      "text": "Voice deepfake thế hệ cũ (trước 2022) thường thiếu đặc điểm âm thanh nào?",
+      "options": ["Tần số cao (high-frequency)", "Tiếng thở, âm thanh môi trường tự nhiên, và sự biến đổi prosody (nhịp điệu, cao độ) tự nhiên", "Âm lượng đủ to", "Phát âm rõ ràng"],
+      "correct": 1,
+      "explanation": "Giọng người thật có: tiếng thở giữa câu, âm thanh môi trường tự nhiên, và prosody (intonation, rhythm) biến đổi tự nhiên theo cảm xúc. Voice deepfake cũ thường có âm thanh \"sạch\" một cách bất thường và prosody đơn điệu."
+    },
+    {
+      "id": "mt2q09",
+      "tag": "Module 5 — Nhận diện giọng nói",
+      "text": "Kỹ thuật xác minh hiệu quả nhất khi nhận cuộc gọi khẩn cấp giả giọng người thân là?",
+      "options": ["Hỏi câu hỏi có/không về tình huống khẩn cấp", "Cúp máy và gọi lại qua số đã lưu sẵn; hỏi thông tin chỉ người thật biết", "Tin tưởng vì nhận ra giọng", "Chuyển một phần tiền để kiểm tra xem có vấn đề không"],
+      "correct": 1,
+      "explanation": "\"Cúp và gọi lại\" phá vỡ mọi cuộc tấn công voice phishing. Hỏi thông tin riêng tư (tên thú cưng, địa chỉ nhà thơ ấu) — AI clone giọng không thể biết. Tránh câu hỏi có/không vì có thể đã được nghiên cứu trước."
+    },
+    {
+      "id": "mt2q10",
+      "tag": "Module 5 — Nhận diện giọng nói",
+      "text": "Cuộc gọi video có đảm bảo chắc chắn rằng người bạn đang nói chuyện là thật không?",
+      "options": ["Có, video call không thể bị giả mạo", "Không — real-time deepfake video đã khả thi và ngày càng phổ biến", "Có, nếu chất lượng video tốt", "Chỉ khi dùng ứng dụng mã hóa đầu-cuối"],
+      "correct": 1,
+      "explanation": "Công nghệ real-time deepfake (DeepFaceLive và các tool tương tự) có thể hoạt động trong cuộc gọi video trực tiếp. Với giao dịch quan trọng, nên kết hợp: video call + xác minh thông tin riêng tư + xác nhận qua kênh độc lập."
+    },
+    {
+      "id": "mt2q11",
+      "tag": "Module 5 — Nhận diện giọng nói",
+      "text": "\"Codeword gia đình\" chống voice deepfake hiệu quả vì lý do nào?",
+      "options": ["Mã hóa cuộc gọi giúp kẻ tấn công không nghe được", "AI chỉ clone giọng nói — không thể biết thông tin riêng tư mà chỉ người thật mới biết", "Từ khóa bí mật làm nhiễu loạn hệ thống AI", "Giúp nhận ra giọng người thân tốt hơn"],
+      "correct": 1,
+      "explanation": "Voice cloning sao chép đặc điểm âm học của giọng, không sao chép ký ức và thông tin cá nhân. Codeword là thông tin ngoài băng tần (out-of-band): AI không thể biết dù giọng nói hoàn hảo đến đâu."
+    },
+    {
+      "id": "mt2q12",
+      "tag": "Module 5 — Nhận diện giọng nói",
+      "text": "Tại sao não người phản ứng với giọng nói khác với văn bản khi đánh giá độ tin cậy?",
+      "options": ["Não xử lý âm thanh chậm hơn văn bản", "Giọng nói kích hoạt phản ứng cảm xúc và xã hội nhanh hơn — ít thời gian cho phân tích lý trí", "Không có sự khác biệt về mặt khoa học thần kinh", "Văn bản luôn được đọc kỹ hơn"],
+      "correct": 1,
+      "explanation": "Khoa học thần kinh: giọng nói (đặc biệt giọng quen thuộc) kích hoạt hệ limbic (cảm xúc) nhanh hơn so với văn bản. Điều này tạo ra phản ứng tin tưởng tức thì trước khi vỏ não trước trán (lý trí) kịp đánh giá."
+    },
+    {
+      "id": "mt2q13",
+      "tag": "Module 6 — Kiểm chứng nguồn",
+      "text": "\"Lateral reading\" khác với \"đọc sâu\" (deep reading) như thế nào trong kiểm chứng thông tin?",
+      "options": ["Lateral reading là đọc nhanh hơn", "Lateral reading: tra cứu nguồn qua tab mới độc lập; deep reading: đọc kỹ toàn bộ bài viết đó — lateral thường hiệu quả hơn", "Lateral reading chỉ dùng cho tin tức chính trị", "Không có sự khác biệt về hiệu quả"],
+      "correct": 1,
+      "explanation": "Nghiên cứu của Sam Wineburg (Stanford) chứng minh lateral reading hiệu quả hơn: fact-checker chuyên nghiệp rời khỏi trang web nhanh để tìm kiếm nguồn bên ngoài đánh giá về trang đó, thay vì đọc kỹ trang đó."
+    },
+    {
+      "id": "mt2q14",
+      "tag": "Module 6 — Kiểm chứng nguồn",
+      "text": "Framework SIFT trong kiểm chứng thông tin, chữ \"F\" đại diện cho điều gì?",
+      "options": ["Filter — lọc thông tin không liên quan", "Find better coverage — tìm nguồn đưa tin tốt hơn và đáng tin hơn", "Fact-check — kiểm tra sự thật ngay lập tức", "Forward — chuyển tiếp thông tin đã xác minh"],
+      "correct": 1,
+      "explanation": "SIFT: S = Stop (dừng lại); I = Investigate the source (tra cứu nguồn); F = Find better coverage (tìm nguồn tốt hơn — đặc biệt khi nguồn gốc không rõ ràng); T = Trace claims to origin (truy về nguồn gốc tuyên bố)."
+    },
+    {
+      "id": "mt2q15",
+      "tag": "Module 6 — Kiểm chứng nguồn",
+      "text": "EXIF metadata của ảnh có thể bị xóa hoặc chỉnh sửa không? Điều này ảnh hưởng đến kiểm chứng như thế nào?",
+      "options": ["Không thể xóa — EXIF là vĩnh viễn", "Có thể bị xóa/chỉnh — thiếu EXIF hoặc EXIF không nhất quán với nội dung là dấu hiệu đáng ngờ", "Chỉ bị xóa khi tải lên Facebook", "Chỉnh sửa EXIF là bất hợp pháp nên không ai làm"],
+      "correct": 1,
+      "explanation": "EXIF có thể bị strip hoàn toàn hoặc chỉnh sửa. Thiếu EXIF có thể là: ảnh đã qua chỉnh sửa, tải lên qua nền tảng tự xóa metadata (Facebook, WhatsApp), hoặc được chụp màn hình. Tất cả đều là thông tin cho việc đánh giá."
+    },
+    {
+      "id": "mt2q16",
+      "tag": "Module 6 — Kiểm chứng nguồn",
+      "text": "Khi thấy ảnh/video kèm caption gây phẫn nộ mạnh, phản ứng đầu tiên đúng đắn nhất là?",
+      "options": ["Chia sẻ ngay vì mọi người cần biết", "Nhận ra cảm xúc phẫn nộ là tín hiệu cảnh báo — dừng lại và kiểm chứng trước", "Bình luận phản bác ngay lập tức", "Báo cáo tài khoản đã đăng trước"],
+      "correct": 1,
+      "explanation": "Cảm xúc mạnh (phẫn nộ, kinh ngạc, sợ hãi) là thiết kế cố ý của nội dung thao túng — kích hoạt chia sẻ nhanh trước khi suy nghĩ. Nhận ra \"tôi đang cảm thấy gì\" là bước đầu tiên của tư duy phê phán."
+    },
+    {
+      "id": "mt2q17",
+      "tag": "Module 6 — Kiểm chứng nguồn",
+      "text": "Công cụ InVID/WeVerify hỗ trợ kiểm chứng video như thế nào?",
+      "options": ["Tự động dịch video sang tiếng Việt", "Phân mảnh video thành keyframes để reverse search, trích xuất metadata, phân tích dấu hiệu chỉnh sửa", "Tải video từ YouTube và phân tích offline", "So sánh âm thanh với cơ sở dữ liệu giọng nói tiêu chuẩn"],
+      "correct": 1,
+      "explanation": "InVID/WeVerify là browser extension miễn phí cho fact-checker: (1) Tách video thành frames → reverse search từng frame; (2) Trích xuất metadata; (3) Phân tích các đặc điểm có thể chỉ ra chỉnh sửa. Công cụ thiết thực nhất cho kiểm chứng video."
+    },
+    {
+      "id": "mt2q18",
+      "tag": "Module 6 — Kiểm chứng nguồn",
+      "text": "Tên miền website bị đăng ký gần đây (vài ngày/tuần trước) là dấu hiệu đáng ngờ vì lý do gì?",
+      "options": ["Website mới thường có lỗi kỹ thuật nhiều hơn", "Website lừa đảo và phát tán tin giả thường dùng domain mới để tránh bị đưa vào danh sách đen", "Tên miền mới đắt tiền hơn tên miền cũ", "Không phải dấu hiệu đáng ngờ — website mới là bình thường"],
+      "correct": 1,
+      "explanation": "Tên miền mới + ẩn danh trong WHOIS = cờ đỏ. Nguồn tin đáng tin cậy thường có lịch sử lâu dài và danh tính minh bạch. Tên miền mới thường được tạo đặc biệt cho chiến dịch thông tin sai."
+    },
+    {
+      "id": "mt2q19",
+      "tag": "Module 4 — Nhận diện hình ảnh/video",
+      "text": "Bóng đổ (shadow) không nhất quán trong deepfake hình ảnh là dấu hiệu của điều gì?",
+      "options": ["Camera có độ phân giải thấp", "Khuôn mặt được ghép từ ảnh/video có nguồn sáng khác với môi trường trong hình", "Người chụp ảnh thiếu kỹ năng", "Ảnh bị nén quá mạnh"],
+      "correct": 1,
+      "explanation": "Ánh sáng nhất quán là thách thức lớn của deepfake: khuôn mặt ghép cần nhận ánh sáng đúng hướng và góc độ của môi trường. Bóng đổ sai hướng hoặc cường độ không khớp với nguồn sáng là dấu hiệu rõ ràng."
+    },
+    {
+      "id": "mt2q20",
+      "tag": "Module 5 — Nhận diện giọng nói",
+      "text": "\"Liveness detection\" trong KYC (Know Your Customer) hoạt động như thế nào?",
+      "options": ["Kiểm tra xem tài khoản người dùng có online không", "Yêu cầu hành động ngẫu nhiên (nháy mắt, quay đầu, đọc số) để chứng minh người thật đang hiện diện — không phải ảnh/video/deepfake", "Đo nhịp tim qua camera điện thoại", "Quét mống mắt và vân tay đồng thời"],
+      "correct": 1,
+      "explanation": "Liveness detection là lớp phòng thủ chống deepfake trong xác minh danh tính: yêu cầu hành động ngẫu nhiên real-time không thể dự đoán trước — ảnh chụp, video phát lại, và ngay cả deepfake thời gian thực gặp khó khăn với yêu cầu này."
+    },
+    {
+      "id": "mt2q21",
+      "tag": "Module 6 — Kiểm chứng nguồn",
+      "text": "Tại sao số lần chia sẻ hoặc người nổi tiếng chia sẻ không xác nhận tính xác thực của thông tin?",
+      "options": ["Vì người nổi tiếng không dùng mạng xã hội", "Vì popularity không phải truth — người nổi tiếng cũng có thể bị lừa và vô tình lan truyền deepfake", "Vì mạng xã hội đếm sai số lần chia sẻ", "Vì chỉ có chuyên gia mới xác minh được"],
+      "correct": 1,
+      "explanation": "\"Argument from popularity\" là ngụy biện logic: một thứ không trở thành thật chỉ vì nhiều người tin. Deepfake lan truyền nhanh nhất khi khai thác tên tuổi người nổi tiếng làm \"mồi\" tăng tín nhiệm."
+    },
+    {
+      "id": "mt2q22",
+      "tag": "Module 4 — Nhận diện hình ảnh/video",
+      "text": "Khi xem video nghi ngờ, phương pháp frame-by-frame giúp phát hiện điều gì?",
+      "options": ["Phát hiện lỗi âm thanh ẩn trong video", "Temporal inconsistency — các lỗi thoáng qua giữa các frame mà mắt bỏ qua khi video chạy bình thường", "Kiểm tra metadata video", "Phát hiện watermark ẩn"],
+      "correct": 1,
+      "explanation": "Frame-by-frame (tua chậm / dừng từng frame) tiết lộ các lỗi temporal: texture da rung, đặc điểm xuất hiện/biến mất, hoặc khuôn mặt \"nhảy\" vị trí. Các phần mềm chuyên nghiệp thậm chí phân tích pixel-level differences."
+    },
+    {
+      "id": "mt2q23",
+      "tag": "Module 5 — Nhận diện giọng nói",
+      "text": "Phân tích phổ âm thanh (spectrogram analysis) có thể phát hiện voice deepfake bằng cách nào?",
+      "options": ["Đo âm lượng tổng thể của cuộc gọi", "Phát hiện các tần số bất thường, thiếu các thành phần âm tự nhiên, hoặc dấu hiệu tổng hợp nhân tạo", "Đếm số từ được nói trong một phút", "Kiểm tra xem giọng nói có nhất quán với ảnh không"],
+      "correct": 1,
+      "explanation": "Spectrogram visualization giúp phân tích âm thanh ở chiều tần số-thời gian: giọng thật có formants (dải tần số đặc trưng của giọng người) tự nhiên; voice deepfake đôi khi thiếu hoặc có các formants bất thường."
+    },
+    {
+      "id": "mt2q24",
+      "tag": "Module 6 — Kiểm chứng nguồn",
+      "text": "\"3-source rule\" trong kiểm chứng thông tin nghĩa là gì?",
+      "options": ["Chỉ tin khi 3 người bạn xác nhận", "Tìm ít nhất 3 nguồn ĐỘC LẬP (không cùng nguồn gốc) xác nhận thông tin trước khi chia sẻ", "Đọc 3 bài báo về cùng chủ đề trên một trang web", "Kiểm tra 3 mạng xã hội khác nhau"],
+      "correct": 1,
+      "explanation": "Độc lập là từ khóa: 3 nguồn cùng trích từ một bài báo gốc không phải 3 nguồn độc lập. Cần 3 tổ chức/cơ quan khác nhau, từ góc nhìn khác nhau, xác nhận cùng sự việc — đây là tiêu chuẩn báo chí chuyên nghiệp."
+    },
+    {
+      "id": "mt2q25",
+      "tag": "Module 5 — Nhận diện giọng nói",
+      "text": "Vì sao voice deepfake của robocall trước bầu cử nguy hiểm hơn email phishing?",
+      "options": ["Vì robocall rẻ hơn email", "Vì giọng nói quen thuộc tạo tin tưởng tức thì, có thể tiếp cận người cao tuổi ít dùng internet, và khó lọc hơn email", "Vì robocall gọi được nhiều người hơn email", "Vì email bị mã hóa còn robocall thì không"],
+      "correct": 1,
+      "explanation": "Robocall với AI voice cloning kết hợp: (1) Tính quen thuộc của giọng nói quen; (2) Khả năng tiếp cận người ít dùng internet; (3) Khó lọc tự động hơn email; (4) Tạo cảm giác khẩn cấp không có thời gian kiểm tra."
+    },
+    {
+      "id": "mt2q26",
+      "tag": "Module 4 — Nhận diện hình ảnh/video",
+      "text": "Hiện tượng \"uncanny valley\" trong deepfake giúp ích cho việc phát hiện như thế nào?",
+      "options": ["Cung cấp tọa độ chính xác của deepfake trong video", "Cảm giác \"điều gì đó không đúng\" là cơ chế nhận biết tự nhiên của não — đáng được tin và điều tra kỹ hơn", "Chỉ người có chuyên môn mới cảm nhận được uncanny valley", "Uncanny valley không liên quan đến phát hiện deepfake"],
+      "correct": 1,
+      "explanation": "Não người có hệ thống nhận diện khuôn mặt cực kỳ tinh tế. Khi deepfake \"gần như đúng nhưng không hoàn toàn\", não sẽ phát tín hiệu khó chịu trước cả khi bạn có thể nói cụ thể điều gì sai. Hãy tin vào cảm giác này."
+    },
+    {
+      "id": "mt2q27",
+      "tag": "Module 6 — Kiểm chứng nguồn",
+      "text": "Khi kiểm chứng thông tin về một sự kiện, tại sao cần kiểm tra ngày đăng của nguồn?",
+      "options": ["Vì các bài cũ thường có lỗi kỹ thuật", "Vì ảnh/video thật từ sự kiện cũ thường được tái sử dụng với caption sự kiện mới — out-of-context manipulation", "Vì luật bản quyền khác nhau theo thời gian", "Vì công nghệ deepfake chỉ tồn tại từ năm 2020"],
+      "correct": 1,
+      "explanation": "Out-of-context manipulation là hình thức thao túng phổ biến nhất: ảnh/video thật từ sự kiện này được đăng với caption sự kiện khác. Kiểm tra ngày và reverse search giúp phát hiện khi ảnh \"thật\" nhưng bối cảnh bị giả mạo."
+    },
+    {
+      "id": "mt2q28",
+      "tag": "Module 5 — Nhận diện giọng nói",
+      "text": "Trong bối cảnh an ninh tổ chức, \"voice authentication\" truyền thống có lỗ hổng nào trước AI voice cloning?",
+      "options": ["Giọng nói thay đổi theo tuổi tác nên không đáng tin", "Hệ thống chỉ so sánh mẫu âm học — AI clone tạo ra mẫu âm học tương tự nên có thể vượt qua xác thực giọng nói cơ bản", "Voice authentication quá đắt để sử dụng rộng rãi", "Chỉ hoạt động trong môi trường yên tĩnh"],
+      "correct": 1,
+      "explanation": "Voice authentication truyền thống so sánh đặc điểm âm học (formants, prosody) — AI clone tạo ra mẫu âm học tương tự đủ để vượt qua. Các hệ thống hiện đại phải bổ sung: liveness detection, câu hỏi ngẫu nhiên, và multi-factor authentication."
+    },
+    {
+      "id": "mt2q29",
+      "tag": "Module 4 — Nhận diện hình ảnh/video",
+      "text": "Điều nào KHÔNG phải là dấu hiệu nhận biết deepfake hình ảnh/video?",
+      "options": ["Viền khuôn mặt bị mờ/nhòe", "Ánh sáng không nhất quán giữa khuôn mặt và nền", "Nội dung có tính chất gây sốc hoặc khó tin", "Video có nhiều lượt xem và bình luận"],
+      "correct": 3,
+      "explanation": "Lượt xem và bình luận nhiều là dấu hiệu lan truyền, không phải dấu hiệu xác thực. Thực ra, nội dung deepfake được thiết kế để viral — nên lượt xem cao không chỉ không xác nhận tính thật mà còn có thể là dấu hiệu ngược lại."
+    },
+    {
+      "id": "mt2q30",
+      "tag": "Module 6 — Kiểm chứng nguồn",
+      "text": "Thực hành tốt nhất khi tham gia các cuộc thảo luận về sự kiện đang xảy ra trên mạng xã hội là?",
+      "options": ["Chia sẻ thông tin mình biết để giúp mọi người", "Chờ thông tin được xác minh từ nhiều nguồn đáng tin trước khi chia sẻ; đính chính ngay nếu đã chia sẻ sai", "Chỉ đọc, không bao giờ chia sẻ bất cứ thứ gì", "Chỉ tin nguồn chính phủ"],
+      "correct": 1,
+      "explanation": "Chia sẻ thông tin chưa xác minh trong \"information fog\" (sương mù thông tin) của sự kiện đang diễn ra có thể gây hại thực tế. Trách nhiệm: chờ xác minh; nếu đã chia sẻ sai — đính chính ngay và rõ ràng."
+    }
+  ]
+}

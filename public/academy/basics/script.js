@@ -4,6 +4,12 @@ const course = {
   reward: "500 DPF coin",
   parts: [
     {
+      id: "intro",
+      title: "Module 0 — Mở đầu",
+      description: "Câu chuyện, bối cảnh và phản xạ ban đầu trước nội dung số.",
+      modules: [0],
+    },
+    {
       id: "foundation",
       title: "Phần I - Nền tảng",
       description: "Hiểu deepfake, tác động, rủi ro, đạo đức và niềm tin số.",
@@ -25,106 +31,480 @@ const course = {
 };
 
 const modules = [
+  // ─── MODULE 0 ───────────────────────────────────────────────
   {
-    id: 1,
-    part: "foundation",
-    title: "Deepfake là gì?",
-    duration: "55 phút",
-    level: "Foundation",
-    scenario:
-      "Bạn thấy một video người nổi tiếng phát ngôn gây sốc, được chia sẻ liên tục. Trước khi tin hoặc chia sẻ, bạn cần tự hỏi: nguồn đầu tiên là ai, có nguồn độc lập xác nhận không, và nếu đây là deepfake thì hậu quả sẽ là gì?",
+    id: 0,
+    part: "intro",
+    title: "Một ngày bình thường trên không gian số",
+    duration: "25-30 phút",
+    level: "Mở đầu",
+    scenario: "Một ngày của An bắt đầu rất bình thường — cho đến khi xuất hiện một video đầu tư, một tin nhắn mượn tiền, một hình ảnh nhạy cảm trong nhóm chat và một cuộc gọi giống người thân. Nếu bạn là An, bạn sẽ làm gì?",
     outcomes: [
-      "Giải thích deepfake bằng ngôn ngữ phổ thông nhưng đúng bản chất.",
-      "Phân biệt deepfake với chỉnh sửa ảnh/video thông thường.",
-      "Hiểu vai trò cơ bản của generative AI và machine learning.",
-      "Gọi tên các dạng deepfake phổ biến.",
+      "Hiểu vì sao deepfake không còn là chuyện xa lạ của người nổi tiếng hay phim ảnh.",
+      "Nhận ra rằng bất kỳ người dùng Internet nào cũng có thể gặp nội dung giả mạo.",
+      "Làm quen với cách học của DEEPFENSE BASIC: câu chuyện, quan sát, quyết định, phản hồi.",
+      "Tự kiểm tra phản xạ ban đầu trước các tình huống nghi vấn trên không gian số.",
     ],
     sections: [
       {
-        title: "1.1 Giới thiệu và định nghĩa",
+        title: "0.0-0.3 Giới thiệu khóa học",
         lessons: [
-          lesson("1.1.1", "Vấn đề deepfake", [
-            "Deepfake trở thành vấn đề vì AI tạo sinh ngày càng dễ tiếp cận. Nội dung giả chất lượng cao không còn chỉ thuộc về các nhóm kỹ thuật chuyên nghiệp.",
-            "Điều nguy hiểm không chỉ nằm ở việc nội dung trông thật, mà ở khả năng khiến người xem tin rằng một người đã nói hoặc làm điều họ chưa từng làm.",
-            "Một nội dung giả đặt đúng bối cảnh, đúng thời điểm và đánh trúng cảm xúc có thể lan truyền rất nhanh.",
-          ], ["Deepfake là rủi ro thông tin, danh tính và niềm tin.", "Cần hình thành thói quen nghi ngờ hợp lý, không kết luận vội."]),
-          lesson("1.1.2", "Định nghĩa deepfake", [
-            "Deepfake là nội dung hình ảnh, video hoặc âm thanh được tạo, biến đổi hoặc tổng hợp bằng AI để khiến người xem hoặc người nghe tin rằng một người đã nói hoặc làm điều nào đó.",
-            "Về học thuật, deepfake là một dạng synthetic media dùng machine learning hoặc deep learning để mô phỏng danh tính, khuôn mặt, giọng nói, biểu cảm, chuyển động hoặc hành vi.",
-            "Deepfake khác filter làm đẹp ở chỗ nó thường liên quan đến mô phỏng hoặc gia mạo danh tính.",
-          ], ["Nội dung có thể là ảnh, video, âm thanh, livestream hoặc avatar.", "Ngữ cảnh quyết định mức độ nguy hiểm của nội dung."]),
-          lesson("1.1.3", "Deepfake và AI tạo sinh", [
-            "Generative AI tạo nội dung mới dựa trên dữ liệu đã học. Với deepfake, dữ liệu có thể là ảnh khuôn mặt, video chuyển động, mẫu giọng nói hoặc biểu cảm.",
-            "AI có thể học hình dạng khuôn mặt, chuyển động môi, hướng mắt, ánh sáng, âm sắc và nhịp điệu giọng nói.",
-            "AI không hiểu con người như con người hiểu nhau, vì vậy nội dung tạo ra vẫn có thể có lỗi: ánh sáng lệch, môi không khớp, da quá mịn hoặc âm thanh thiếu cảm xúc.",
-          ], ["Khóa học chỉ giải thích để phòng vệ, không hướng dẫn tạo deepfake.", "Dấu hiệu kỹ thuật cần được kết hợp với kiểm chứng nguồn và bối cảnh."]),
-          lesson("1.1.4", "Các dạng deepfake phổ biến", [
-            "Face Swap hoán đổi khuôn mặt người này sang người khác. Face Reenactment điều khiển biểu cảm, miệng hoặc hướng mặt.",
-            "Voice Deepfake giả lập hoặc tổng hợp giọng nói. Full-body hoặc Avatar Deepfake mô phỏng cử chỉ, dáng đi hoặc nhân vật ảo.",
-            "AI-generated Video có thể tạo cảnh hoặc sự kiện chưa từng xảy ra từ mô tả hoặc dữ liệu đầu vào.",
-          ], ["Mỗi dạng có rủi ro và cách nhận diện khác nhau.", "Gọi đúng dạng deepfake giúp phân tích chính xác hơn."]),
-          lesson("1.1.5", "Phạm vi khóa BASIC", [
-            "DEEPFENSE BASICS tập trung vào nhận thức, nhận diện cơ bản, phòng ngừa và ứng phó ban đầu.",
-            "Khóa học không biến học viên thành chuyên gia pháp chứng hoặc kỹ sư AI ngay lập tức.",
-            "Mục tiêu là giúp học viên hiểu, kiểm chứng và phản ứng có trách nhiệm trước nội dung đáng ngờ.",
-          ], ["Khóa học không dạy tạo deepfake, huấn luyện mô hình AI hoặc vượt detector.", "Học viên cần học cách kiểm chứng trước khi tin hoặc chia sẻ."]),
+          lesson("0.0", "Chào mừng đến với DEEPFENSE BASIC", [
+            "Đây là khóa học cơ bản về deepfake và phòng vệ trước nội dung giả mạo trên không gian số. Khóa học không yêu cầu bạn biết lập trình, không yêu cầu hiểu sâu về AI, cũng không yêu cầu phải là chuyên gia an toàn thông tin. Bạn chỉ cần là một người đang sống trong thế giới số.",
+            "Nếu bạn từng dùng mạng xã hội, từng nhận tin nhắn từ người lạ, từng xem video ngắn, từng nghe lời kêu gọi chuyển tiền, từng thấy hình ảnh gây sốc trong nhóm chat, hay từng băn khoăn \"cái này có thật không?\" — thì khóa học này dành cho bạn.",
+            "Trong khóa học này, chúng ta sẽ không học cách tạo deepfake. Chúng ta học cách nhận ra rủi ro, kiểm chứng thông tin, bảo vệ bản thân, bảo vệ người khác và ra quyết định bình tĩnh hơn trước những nội dung có thể đánh lừa mắt, tai và cảm xúc của con người.",
+            "Deepfake không chỉ là một video giả. Nó là một phần của một vấn đề lớn hơn: niềm tin của con người trên không gian số đang bị thử thách. Trước đây nhiều người nghĩ \"có hình thì chắc là thật\", rồi \"ảnh có thể bị chỉnh sửa\", rồi \"có video thì khó giả\". Nhưng bây giờ, ngay cả hình ảnh, video và giọng nói cũng có thể được tạo ra bằng AI theo cách rất thuyết phục.",
+            "Mục tiêu của DEEPFENSE BASIC: Không hoảng sợ. Không tin vội. Không chia sẻ vội. Không chuyển tiền khi đang bị gây áp lực. Biết cách kiểm chứng trước khi hành động.",
+          ], [
+            "Khóa học dành cho mọi người dùng Internet, không cần kiến thức kỹ thuật.",
+            "Mục tiêu là biết kiểm chứng, không phải trở thành chuyên gia pháp y số.",
+          ]),
+          lesson("0.1", "Câu chuyện mở đầu: Một ngày của An", [
+            "Trong khóa học này, bạn sẽ đi cùng một nhân vật tên là An. An không phải chuyên gia công nghệ. An là người dùng Internet bình thường: có điện thoại, có mạng xã hội, có tài khoản ngân hàng, có gia đình, bạn bè, nhóm lớp, nhóm làm việc.",
+            "Buổi sáng, An thấy video người nổi tiếng giới thiệu kênh đầu tư \"lợi nhuận cao, rủi ro thấp\". Gương mặt đúng là người đó. Giọng nói cũng giống. Video có hàng nghìn lượt xem. Đến trưa, An nhận tin nhắn từ bạn cũ nói cần mượn tiền gấp vì tài khoản bị khóa. Ảnh đại diện đúng, nhưng cách nhắn hơi khác.",
+            "Chiều, trong nhóm chat xuất hiện hình ảnh nhạy cảm của một học sinh. Một số người cười cợt, một số nói là ảnh AI, một số bảo \"không biết thật giả nhưng cứ lưu lại\". Buổi tối, An nhận cuộc gọi video ngắn — người gọi trông giống người thân, nói đang gặp chuyện khẩn cấp.",
+            "Nếu là An, bạn sẽ làm gì? Bạn sẽ tin video người nổi tiếng không? Chuyển tiền cho bạn cũ không? Xử lý hình ảnh trong nhóm chat thế nào? Không có câu trả lời nào hoàn hảo nếu không có phương pháp. Khóa học này sẽ giúp bạn xây dựng phương pháp đó — gọi là Deepfense Check: Pause (Dừng lại), Observe (Quan sát), Verify (Xác minh), Trace (Truy nguồn), Decide (Ra quyết định).",
+            "Khi nội dung khiến bạn sợ, giận, xấu hổ, thương hại hoặc muốn hành động ngay — đó là lúc bạn cần chậm lại nhất.",
+          ], [
+            "Deepfake nguy hiểm nhất khi xuất hiện đúng lúc ta đang vội, đang sợ, đang giận hoặc đang thương ai đó.",
+            "Phương pháp Deepfense Check: Pause → Observe → Verify → Trace → Decide.",
+          ]),
+          lesson("0.2", "Vì sao khóa học này cần thiết?", [
+            "Deepfake nguy hiểm không phải chỉ vì nó \"giả\". Nó nguy hiểm vì có thể xuất hiện đúng lúc con người ít phòng bị nhất: khi lo cho người thân, khi sợ mất tiền, khi xấu hổ, khi giận dữ, khi muốn giúp ai đó, khi tin rằng mình đang nhìn thấy bằng chứng.",
+            "Deepfake cũng không hoạt động một mình. Nó thường đi cùng: tài khoản mạng xã hội bị chiếm quyền, tin nhắn thúc ép, link giả mạo, trang web giả, giả danh công an/ngân hàng/nhà trường/lãnh đạo, sự lan truyền quá nhanh trong nhóm chat.",
+            "Vì vậy, học về deepfake không chỉ là học nhìn mặt méo, mắt lạ hay giọng nói đều đều. Học về deepfake là học cách tự hỏi: Ai đang gửi nội dung này? Họ muốn mình làm gì? Vì sao mình phải làm ngay? Nếu mình sai, ai sẽ bị hại? Có cách nào kiểm chứng độc lập không?",
+            "Đây là khóa học về nhận thức, kỹ năng số và trách nhiệm số.",
+          ], [
+            "Deepfake nguy hiểm khi kết hợp với áp lực thời gian, cảm xúc mạnh và yêu cầu nhạy cảm.",
+            "Câu hỏi quan trọng: ai gửi, mục đích gì, tại sao phải làm ngay?",
+          ]),
+          lesson("0.3", "Bạn sẽ học như thế nào?", [
+            "DEEPFENSE BASIC được thiết kế theo kiểu học ngắn, tương tác và thực tế. Mỗi phần học thường có 5 thành phần: Câu chuyện (gặp tình huống thực tế), Kiến thức (học khái niệm/quy trình), Quan sát (xem dấu hiệu và ngữ cảnh), Quyết định (chọn hành động), Phản hồi (hệ thống giải thích vì sao đúng/sai).",
+            "Một số phần sẽ có quiz ngắn. Quiz không nhằm \"bắt lỗi\" bạn — quiz giúp bạn kiểm tra xem mình đã hiểu đủ để dùng kiến thức trong đời thật chưa.",
+            "Cuối khóa, bạn sẽ làm bài kiểm tra 50 câu, lấy ngẫu nhiên từ ngân hàng 150 câu. Đạt từ 70% trở lên thì đủ điều kiện nhận chứng chỉ DEEPFENSE BASIC.",
+          ], [
+            "Học qua câu chuyện → quan sát → quyết định → phản hồi là cách học chủ động nhất.",
+            "Quiz trong bài là công cụ học, không phải bài thi áp lực.",
+          ]),
         ],
-        checkpoint: checkpoint("1.1", [
-          q("Deepfake khác chỉnh sửa ảnh/video thông thường chủ yếu ở điểm nào?", ["Thường dùng AI để mô phỏng hoặc gia mạo danh tính", "Chỉ làm ảnh đẹp hơn", "Luôn làm file nặng hơn", "Chỉ xuất hiện trong phim"], 0),
-          q("Mục tiêu chính của DEEPFENSE BASICS là gì?", ["Dạy cách tạo deepfake", "Giúp hiểu, nhận biết và phòng ngừa deepfake ở mức cơ bản", "Dạy vượt hệ thống phát hiện", "Dạy lập trình AI nâng cao"], 1),
-          q("Dạng nào sau đây là ví dụ voice deepfake?", ["Tăng độ sáng ảnh", "Giả giọng để yêu cầu chuyển tiền", "Thêm phụ đề", "Cắt đoạn im lặng"], 1),
-        ]),
-      },
-      {
-        title: "1.2 Tác động của deepfake",
-        lessons: [
-          lesson("1.2.1", "Niềm tin số", ["Deepfake làm suy yếu niềm tin số vì khiến người dùng khó phân biệt nội dung thật và giả.", "Hai rủi ro trái ngược có thể xảy ra: tin nhầm nội dung giả là thật, hoặc phủ nhận nội dung thật bằng cách nói có thể đó là deepfake."], ["Khủng hoảng niềm tin có thể nguy hiểm hơn một nội dung giả đơn lẻ."]),
-          lesson("1.2.2", "Tác động cá nhân", ["Deepfake có thể gây tổn hại danh dự, quyền riêng tư, tâm lý và an toàn cá nhân.", "Một người có thể bị gán vào nội dung họ không tạo ra hoặc bị giả giọng để lừa người thân."], ["Tôn trọng nạn nhân là nguyên tắc nền tảng."]),
-          lesson("1.2.3", "Tác động tổ chức", ["Trong doanh nghiệp, deepfake có thể trở thành công cụ social engineering.", "Kẻ tấn công có thể giả giọng lãnh đạo, tạo video yêu cầu chuyển tiền hoặc giả mạo thông báo nội bộ."], ["SOC, GRC và quy trình xác minh danh tính đều liên quan đến phòng vệ deepfake."]),
-          lesson("1.2.4", "Tác động xã hội", ["Deepfake có thể làm nhiễu loạn thông tin, thao túng dư luận và làm suy giảm niềm tin vào truyền thông.", "Nội dung giả lan nhanh khi gây sốc, kích động cảm xúc hoặc liên quan nhân vật có ảnh hưởng."], ["Cảm xúc mạnh là tín hiệu cần chậm lại và kiểm chứng."]),
-          lesson("1.2.5", "Phân tích case an toàn", ["Một case deepfake nên được phân tích bằng các câu hỏi: nội dung gì bị giả mạo, ai là nạn nhân, mục tiêu là gì, dấu hiệu nghi ngờ là gì, hậu quả có thể xảy ra thế nào.", "Không trình bày case theo hướng hướng dẫn tạo hoặc khai thác deepfake."], ["Case study tốt giúp học viên hiểu rủi ro mà không học cách lạm dụng."]),
-        ],
-        checkpoint: checkpoint("1.2", [
-          q("Deepfake làm suy yếu niềm tin số vì sao?", ["Làm người dùng khó phân biệt thật và giả", "Luôn làm máy tính mất mạng", "Chỉ đổi màu video", "Chỉ ảnh hưởng đến game"], 0),
-          q("Trong doanh nghiệp, deepfake có thể dùng trong kiểu tấn công nào?", ["Social engineering", "Tăng tốc ổ cứng", "Nén dữ liệu", "Cài trình duyệt"], 0),
-          q("Khi phân tích case deepfake, yếu tố nào quan trọng?", ["Nạn nhân, mục tiêu, bối cảnh, dấu hiệu và hậu quả", "Chỉ số lượt thích", "Màu nền", "Tên file"], 0),
-        ]),
-      },
-      {
-        title: "1.3 Rủi ro và tư duy phòng vệ",
-        lessons: [
-          lesson("1.3.1", "Rủi ro cá nhân", ["Rủi ro cá nhân xảy ra khi deepfake tác động đến danh tính, danh dự, quan hệ, công việc hoặc tâm lý của một người.", "Ví dụ gồm mạo danh để lừa người thân, ghép mặt vào nội dung xúc phạm hoặc giả giọng để yêu cầu tiền."], ["Rủi ro cá nhân cần phản ứng bình tĩnh và có bằng chứng."]),
-          lesson("1.3.2", "Rủi ro tổ chức", ["Tổ chức có thể bị tấn công qua email, chat, cuộc gọi, họp trực tuyến hoặc mạng xã hội.", "Rủi ro tăng khi nhân viên tin vào danh tính người gửi mà không xác minh qua kênh độc lập."], ["Quy trình xác minh là tuyến phòng vệ quan trọng."]),
-          lesson("1.3.3", "Rủi ro xã hội", ["Deepfake làm xã hội khó phân biệt thật giả, đặc biệt với chính trị, thảm họa, người nổi tiếng hoặc sự kiện nhạy cảm.", "Nó có thể gây hoang mang, kích động cảm xúc và làm giảm niềm tin vào bằng chứng thật."], ["Cộng đồng cần phản ứng chậm hơn, có trách nhiệm hơn."]),
-          lesson("1.3.4", "Pháp lý và đạo đức", ["Deepfake liên quan đến quyền riêng tư, danh dự, sự đồng ý, bản quyền và trách nhiệm khi phát tán thông tin sai.", "Không tạo hoặc phát tán nội dung giả mạo người khác khi chưa có sự đồng ý."], ["Không chia sẻ nội dung nghi ngờ chỉ vì tò mò."]),
-          lesson("1.3.5", "5 bước ứng phó ban đầu", ["Dừng lại, kiểm chứng, quan sát, lưu bằng chứng và báo cáo.", "Các bước này giúp giảm lan truyền sai lệch và bảo vệ người bị ảnh hưởng trước khi có phân tích sâu hơn."], ["Không chia sẻ vội là hành động phòng vệ đầu tiên."]),
-        ],
-        checkpoint: checkpoint("1.3", [
-          q("Khi gặp video nghi ngờ là deepfake, bước đầu tiên nên làm gì?", ["Dừng lại và chưa chia sẻ vội", "Chia sẻ ngay", "Xóa trình duyệt", "Kết luận ngay là giả"], 0),
-          q("Vì sao cần lưu bằng chứng khi bị deepfake tấn công?", ["Để hỗ trợ báo cáo, xác minh và xử lý", "Để chỉnh sửa lại video", "Để tăng lượt xem", "Để khỏi kiểm chứng"], 0),
-          q("Hành động nào phù hợp với nguyên tắc đạo đức?", ["Không phát tán nội dung nghi ngờ và tôn trọng nạn nhân", "Chia sẻ vì tò mò", "Gắn thẻ nhiều người", "Tải lên nền tảng khác"], 0),
+        checkpoint: checkpoint("0", [
+          q("Mục tiêu chính của DEEPFENSE BASIC là gì?", ["Giúp nhận ra rủi ro, kiểm chứng thông tin và ra quyết định an toàn hơn", "Dạy tạo deepfake", "Dạy lập trình AI", "Chỉ dành cho chuyên gia bảo mật"], 0),
+          q("Khi nội dung gây cảm xúc mạnh (sợ, giận, muốn hành động ngay), bạn nên làm gì?", ["Chậm lại và kiểm chứng trước khi hành động", "Chia sẻ ngay để cảnh báo mọi người", "Tin ngay vì cảm xúc thật", "Bỏ qua hoàn toàn"], 0),
+          q("Phương pháp Deepfense Check gồm các bước nào?", ["Pause, Observe, Verify, Trace, Decide", "Like, Share, Comment, Report", "Download, Edit, Post, Delete", "Scan, Block, Delete, Ignore"], 0),
         ]),
       },
     ],
     quiz: [
-      q("Deepfake là gì?", ["Nội dung ảnh, video hoặc âm thanh được tạo/biến đổi bằng AI để mô phỏng hoặc gia mạo người/sự kiện", "Một loại tường lửa", "Một cách tăng độ phân giải", "Một định dạng âm thanh"], 0),
-      q("Vì sao deepfake có thể gây nguy hiểm?", ["Làm sai lệch niềm tin, danh tính, uy tín và quyết định", "Luôn làm hỏng thiết bị", "Chỉ làm video nặng hơn", "Chỉ xuất hiện trong game"], 0),
-      q("Dạng nào là Face Swap?", ["Thay khuôn mặt người này bằng người khác", "Tăng âm lượng video", "Thêm nhạc nền", "Cắt đoạn thừa"], 0),
-      q("Voice deepfake liên quan đến điều gì?", ["Giả lập hoặc tổng hợp giọng nói", "Tạo mật khẩu mạnh", "Tăng tốc mạng", "Xóa lịch sử"], 0),
-      q("Deepfake khác filter làm đẹp ở điểm nào?", ["Liên quan đến gia mạo hoặc mô phỏng danh tính bằng AI", "Filter luôn là tội phạm", "Deepfake chỉ đổi màu", "Không có điểm khác"], 0),
-      q("Khi thấy video gây sốc đang lan truyền, nên làm gì?", ["Kiểm chứng nguồn và bối cảnh trước khi tin hoặc chia sẻ", "Chia sẻ ngay", "Bình luận kết luận", "Tải lại lên trang khác"], 0),
-      q("Deepfake ảnh hưởng doanh nghiệp bằng cách nào?", ["Giả mạo lãnh đạo để lừa chuyển tiền hoặc lấy dữ liệu", "Tự động tăng doanh thu", "Làm website đẹp hơn", "Tăng tốc mạng nội bộ"], 0),
-      q("Một tác động xã hội của deepfake là gì?", ["Làm suy giảm niềm tin vào thông tin và bằng chứng số", "Làm mọi tin tức chính xác hơn", "Loại bỏ tin giả", "Chỉ ảnh hưởng phần mềm ảnh"], 0),
-      q("Khi nghi bản thân là nạn nhân, nên làm gì?", ["Lưu bằng chứng, báo cáo nền tảng và tìm hỗ trợ phù hợp", "Chia sẻ rộng hơn", "Xóa mọi dấu vết ngay", "Bỏ qua mọi trường hợp"], 0),
-      q("Mục tiêu chính của Module 1 là gì?", ["Hiểu khái niệm, tác động, rủi ro và tư duy phòng vệ ban đầu", "Dạy tạo deepfake", "Dạy vượt detector", "Dạy lập trình AI nâng cao"], 0),
+      q("Bạn nhận cuộc gọi video từ người thân nói gặp tai nạn, cần chuyển tiền trong 5 phút. Nên làm gì trước tiên?", ["Tắt cuộc gọi và gọi lại qua số đã lưu trước đó", "Chuyển tiền ngay vì người thân có thể nguy hiểm", "Hỏi số tài khoản rồi chuyển khoản nhỏ trước", "Gửi OTP để người đó tự xử lý"], 0),
+      q("Bạn thấy video người nổi tiếng kêu gọi đầu tư, cam kết lợi nhuận cao. Gương mặt và giọng giống người thật. Nên nghĩ gì?", ["Video có thể thật, giả hoặc bị cắt ghép; cần kiểm chứng nguồn chính thức", "Người nổi tiếng đã nói thì đáng tin", "Chỉ cần đọc bình luận là biết thật giả", "Nhiều người chia sẻ thì chắc là thật"], 0),
+      q("Trong nhóm lớp xuất hiện ảnh nhạy cảm được cho là của bạn học. Nên làm gì?", ["Không lan truyền, báo cáo nội dung và tìm người có trách nhiệm hỗ trợ", "Lưu lại để xem sau", "Chuyển tiếp cho bạn thân để hỏi ý kiến", "Bình luận đùa vì có thể chỉ là ảnh giả"], 0),
+      q("Tài khoản giống bạn của bạn nhắn mượn tiền, cách nhắn hơi lạ nhưng ảnh đại diện đúng. Nên làm gì?", ["Gọi xác minh qua số điện thoại cũ hoặc kênh khác đã biết", "Chuyển tiền nếu số tiền nhỏ", "Hỏi số tài khoản rồi chuyển sau", "Tin vì tài khoản đúng tên"], 0),
+      q("Bạn thấy video gây phẫn nộ kèm dòng chữ \"chia sẻ ngay trước khi bị xóa\". Nên làm gì?", ["Chờ kiểm chứng nguồn, thời gian, bối cảnh trước khi chia sẻ", "Chia sẻ ngay để cảnh báo mọi người", "Tải về và đăng lại ở nhiều nơi", "Bình luận mạnh để tăng tương tác"], 0),
+      q("Công cụ online báo video \"90% là deepfake\". Nên hiểu kết quả này thế nào?", ["Chỉ là tín hiệu tham khảo, cần thêm kiểm chứng bằng nguồn và bối cảnh", "Video chắc chắn là giả", "Công cụ luôn chính xác hơn con người", "Không cần xem nguồn nữa"], 0),
+      q("Bạn nghi mình vừa bị lừa chuyển tiền qua cuộc gọi giả mạo. Việc nào nên làm sớm?", ["Liên hệ ngân hàng, lưu bằng chứng và báo cáo với cơ quan phù hợp", "Xóa hết tin nhắn vì xấu hổ", "Im lặng để tránh bị người khác biết", "Đăng toàn bộ thông tin cá nhân của người nghi lừa lên mạng"], 0),
+      q("Bạn nghe ghi âm giống giọng lãnh đạo nói điều gây sốc. Nên kết luận thế nào?", ["Giọng nói có thể bị giả lập hoặc cắt ghép; cần kiểm chứng nguồn và bối cảnh", "Giọng giống thì chắc là thật", "File âm thanh ngắn thì chắc thật", "Nghe trên điện thoại thì không thể giả"], 0),
     ],
   },
-  buildModule(2, "foundation", "Deepfake tác động như thế nào?", "Module này mở rộng từ “deepfake là gì” sang “deepfake có thể gây hậu quả gì” với cá nhân, doanh nghiệp và xã hội.", "Một nhân viên kế toán nhận cuộc gọi video từ “giám đốc” yêu cầu chuyển tiền gấp. Hình ảnh và giọng nói có vẻ rất giống. Nếu là nhân viên đó, bạn sẽ làm gì?", [
-    ["2.1 Tác động đến cá nhân", [["2.1.1", "Danh dự và uy tín", "Deepfake có thể gán một người vào nội dung họ không tạo ra, gây tổn hại danh dự, cơ hội học tập và công việc."], ["2.1.2", "Quyền riêng tư và sự đồng ý", "Khuôn mặt, giọng nói và hình ảnh là một phần danh tính cá nhân; dùng chúng để tạo nội dung giả khi chưa được phép là xâm phạm nghiêm trọng."], ["2.1.3", "Tâm lý nạn nhân", "Nạn nhân có thể phải tự chứng minh nội dung là giả trong khi nội dung đã lan truyền rất nhanh."], ["2.1.4", "Lừa đảo người thân", "Voice deepfake có thể giả giọng để yêu cầu chuyển tiền, gửi OTP hoặc tiết lộ thông tin cá nhân."]]],
-    ["2.2 Tác động đến doanh nghiệp", [["2.2.1", "CEO fraud", "Kẻ tấn công giả mạo lãnh đạo để yêu cầu nhân viên thực hiện hành động nhạy cảm."], ["2.2.2", "Social engineering", "Deepfake làm yêu cầu giả mạo trông hoặc nghe đáng tin hơn."], ["2.2.3", "Khủng hoảng truyền thông", "Video giả phát ngôn của đại diện công ty có thể làm mất niềm tin trước khi kịp đính chính."], ["2.2.4", "Chi phí xử lý sự cố", "Doanh nghiệp có thể mất chi phí điều tra, pháp lý, truyền thông và đào tạo lại quy trình."]]],
-    ["2.3 Tác động đến xã hội", [["2.3.1", "Tin giả và cảm xúc", "Nội dung gây sợ hãi, tức giận hoặc phẫn nộ dễ được chia sẻ trước khi kiểm chứng."], ["2.3.2", "Thao túng dư luận", "Deepfake có thể tạo bằng chứng giả để làm sai lệch nhận thức cộng đồng."], ["2.3.3", "Khủng hoảng nhận thức", "Khi thật giả bị trộn lẫn, xã hội khó biết nên tin vào bằng chứng nào."], ["2.3.4", "Giáo dục cộng đồng", "Giáo dục giúp người dùng phản ứng chậm hơn, cẩn trọng hơn và có trách nhiệm hơn."]]],
-  ], ["Phân tích tác động cá nhân, tổ chức và xã hội.", "Nhận diện áp lực cảm xúc trong nội dung viral.", "Hiểu social engineering và CEO fraud ở mức nhập môn."]),
-  buildModule(3, "foundation", "Rủi ro, đạo đức và niềm tin số", "Module 3 đặt deepfake trong khung đạo đức, pháp lý nhận thức và trách nhiệm xã hội.", "Một người bạn gửi video nghi ngờ ghép mặt một bạn học vào nội dung xấu. Nhóm chat muốn đăng lên mạng để “cảnh báo”. Bạn nên làm gì?", [
+  // ─── MODULE 1 ───────────────────────────────────────────────
+  {
+    id: 1,
+    part: "foundation",
+    title: "Deepfake là gì?",
+    duration: "80-90 phút",
+    level: "Foundation",
+    scenario: "Buổi sáng, An đang ăn sáng và lướt điện thoại. Một video hiện lên — người nổi tiếng An biết đang giới thiệu kênh đầu tư. Gương mặt giống. Giọng nói giống. Khẩu hình có vẻ khớp. An hơi phân vân. Nếu bạn là An, bạn có thể hỏi: Đây có phải video thật không? Nếu video giả, nó là deepfake hay chỉ là cắt ghép?",
+    outcomes: [
+      "Giải thích được deepfake bằng ngôn ngữ đơn giản.",
+      "Phân biệt được deepfake với AI-generated media, edited media và repurposed media.",
+      "Hiểu vì sao nội dung giả mạo ngày càng dễ tạo, dễ lan truyền và khó nhận ra.",
+      "Biết không phải nội dung 'trông giả' nào cũng là deepfake, và 'trông thật' chưa chắc đáng tin.",
+      "Thực hành phân loại các tình huống nội dung số thường gặp.",
+    ],
+    sections: [
+      {
+        title: "1.1 Deepfake và các họ hàng của nó",
+        lessons: [
+          lesson("1.0.0", "Câu chuyện dẫn nhập: Video đầu tư của người nổi tiếng", [
+            "Buổi sáng, An đang ăn sáng và lướt điện thoại. Một video hiện lên trên bảng tin. Trong video, một người nổi tiếng mà An biết đang nói: 'Tôi đã dùng nền tảng này để tạo thêm thu nhập mỗi ngày. Chỉ cần bắt đầu với một số tiền nhỏ, bạn có thể nhận lợi nhuận ổn định. Hãy đăng ký ngay hôm nay.'",
+            "Video khá thuyết phục. Gương mặt giống. Giọng nói giống. Khẩu hình có vẻ khớp. Bên dưới có nhiều bình luận: 'Em đã nhận tiền rồi', 'Ban đầu em cũng nghi ngờ, nhưng thử xong thấy thật.' An hơi phân vân. Người nổi tiếng này thường không quảng cáo kiểu đó. Nhưng video thì nhìn rất thật.",
+            "Nếu bạn là An, bạn có thể hỏi: Đây có phải video thật không? Người đó có thực sự nói vậy không? Nếu video giả, nó là deepfake hay chỉ là cắt ghép? Nếu không biết chắc, mình nên làm gì? Để trả lời, chúng ta cần bắt đầu từ câu hỏi cơ bản nhất.",
+          ], [
+            "Câu hỏi quan trọng không chỉ là 'thật hay giả' mà là: ai được lợi nếu mình tin vào nội dung này?",
+            "Áp lực thời gian và cảm xúc tích cực (ham lợi) là hai công cụ phổ biến trong lừa đảo qua video giả.",
+          ]),
+          lesson("1.1.1", "Khái niệm 1: Deepfake là gì?", [
+            "Deepfake là nội dung hình ảnh, video hoặc âm thanh được tạo ra hoặc chỉnh sửa bằng công nghệ số, thường có sử dụng AI, để khiến người xem tin rằng một người đã nói hoặc làm điều mà họ không thực sự nói hoặc làm.",
+            "Deepfake có thể xuất hiện dưới nhiều dạng: một video thay khuôn mặt người A vào cơ thể người B; một đoạn âm thanh giả giọng người thân để yêu cầu chuyển tiền; một video người nổi tiếng kêu gọi đầu tư dù họ chưa từng nói vậy; một đoạn clip chỉnh khẩu hình để trông như ai đó đang phát biểu điều gây sốc; một hình ảnh nhạy cảm giả mạo nhằm bôi nhọ hoặc tống tiền.",
+            "Deepfake không nhất thiết phải hoàn hảo mới nguy hiểm. Kẻ xấu chỉ cần tạo ra đủ giống trong vài giây, kết hợp với sự khẩn cấp, sợ hãi hoặc tin tưởng, để nạn nhân hành động trước khi kịp suy nghĩ.",
+          ], [
+            "Deepfake là khi công nghệ làm cho một người 'xuất hiện', 'nói' hoặc 'hành động' theo cách chưa từng xảy ra.",
+            "Deepfake không cần hoàn hảo để nguy hiểm — chỉ cần đủ giống kết hợp với cảm xúc và áp lực.",
+          ]),
+          lesson("1.1.2", "Khái niệm 2: Synthetic media là gì?", [
+            "Synthetic media là nội dung được tạo ra hoàn toàn hoặc một phần bằng công nghệ số, đặc biệt là AI. Synthetic media có thể là ảnh một người không có thật, giọng nói được AI tạo ra, nhạc, hình minh họa, video hoặc nhân vật ảo.",
+            "Synthetic media không phải lúc nào cũng xấu — nó có thể được dùng trong giáo dục, phim ảnh, truyền thông sáng tạo hoặc dịch thuật giọng nói. Vấn đề bắt đầu khi synthetic media được dùng để đánh lừa, mạo danh, bôi nhọ hoặc thao túng nhận thức.",
+            "Tất cả deepfake đều có thể xem là một dạng synthetic media, nhưng không phải mọi synthetic media đều là deepfake. Một bức tranh phong cảnh AI tạo ra không phải deepfake. Nhưng một video giả mạo người thật đang nói điều họ chưa từng nói thì có thể là deepfake.",
+          ], [
+            "Synthetic media không phải lúc nào cũng xấu — vấn đề là mục đích và mức độ gây hiểu nhầm.",
+            "Không phải mọi nội dung AI đều là deepfake; nhưng deepfake luôn là một dạng nội dung tổng hợp hoặc biến đổi.",
+          ]),
+          lesson("1.1.3", "Khái niệm 3: Deepvoice là gì?", [
+            "Deepvoice là dạng giả lập hoặc chỉnh sửa giọng nói bằng AI, khiến âm thanh nghe giống một người thật. Deepvoice có thể dùng để đọc văn bản bằng giọng giống người cụ thể, tạo cuộc gọi giả, làm tin nhắn thoại giả hoặc ghép giọng vào video.",
+            "Deepvoice đặc biệt nguy hiểm trong tình huống có áp lực thời gian: 'Con đang bị tai nạn, chuyển tiền ngay', 'Anh là sếp, xử lý khoản này trước 3 giờ', 'Tôi là nhân viên ngân hàng, đọc mã xác thực để khóa giao dịch lạ.' Một đoạn giọng nói ngắn không còn đủ để xác minh danh tính.",
+            "Nếu yêu cầu liên quan đến tiền, mật khẩu, OTP, tài khoản hoặc thông tin nhạy cảm, bạn cần xác minh bằng kênh khác — không chỉ dựa vào giọng nói.",
+          ], [
+            "Nghe giống không có nghĩa là đúng người.",
+            "Yêu cầu nhạy cảm qua điện thoại hoặc tin nhắn thoại cần xác minh qua kênh độc lập.",
+          ]),
+          lesson("1.1.4", "Khái niệm 4: Face swap là gì?", [
+            "Face swap là kỹ thuật thay khuôn mặt của một người vào hình ảnh hoặc video của người khác. Ví dụ: thay mặt người nổi tiếng vào video quảng cáo; thay mặt học sinh vào ảnh nhạy cảm; thay mặt người quen vào cảnh quay xúc phạm.",
+            "Face swap có thể trở thành hành vi gây hại nếu dùng để bôi nhọ danh dự, bắt nạt, quấy rối, tống tiền, lừa đảo hoặc gây hiểu nhầm rằng một người đã xuất hiện ở nơi họ chưa từng đến.",
+            "Không nên đánh giá mức độ nghiêm trọng chỉ dựa trên câu 'đó chỉ là ảnh giả'. Một hình ảnh giả vẫn có thể gây tổn thương thật, ảnh hưởng danh dự, tâm lý, học tập và công việc.",
+          ], [
+            "Ảnh giả vẫn có thể gây tổn thương thật.",
+            "Face swap gây hại khi được dùng mà không có sự đồng ý hoặc nhằm mục đích làm hại.",
+          ]),
+          lesson("1.1.5", "Khái niệm 5: Lip sync là gì?", [
+            "Lip sync là kỹ thuật làm cho chuyển động môi trong video khớp với một đoạn âm thanh khác. Ví dụ: lấy video thật của một người rồi chỉnh khẩu hình để trông như họ đang nói câu khác, hoặc ghép giọng AI vào video có sẵn.",
+            "Dấu hiệu có thể nghi ngờ: khẩu hình không khớp hoàn toàn với âm thanh, cử động môi hơi cứng hoặc trễ, biểu cảm khuôn mặt không phù hợp nội dung lời nói, âm thanh quá sạch hoặc quá đều so với môi trường.",
+            "Tuy nhiên, không nên chỉ dựa vào các dấu hiệu này. Video bị nén, mạng yếu hoặc ánh sáng kém cũng có thể tạo cảm giác 'lạ'. Cần kết hợp quan sát với kiểm chứng nguồn.",
+          ], [
+            "Lip sync có thể khiến người xem nghĩ 'tôi thấy họ nói câu đó mà' — nhưng điều bạn thấy có thể là kết quả chỉnh sửa.",
+            "Quan sát dấu hiệu kỹ thuật luôn cần đi kèm kiểm chứng nguồn gốc.",
+          ]),
+          lesson("1.1.6", "Khái niệm 6: Edited media là gì?", [
+            "Edited media là nội dung đã bị chỉnh sửa bằng các công cụ truyền thống hoặc AI. Không phải edited media nào cũng xấu — hầu hết ảnh và video trên mạng đều đã được chỉnh màu, cắt ngắn hoặc biên tập. Vấn đề nằm ở mục đích và mức độ gây hiểu nhầm.",
+            "Ví dụ edited media có thể gây hại: cắt một câu nói ra khỏi phần giải thích phía sau; ghép hai đoạn video từ hai thời điểm khác nhau tạo cảm giác liên quan; thêm phụ đề sai; chỉnh ảnh để thêm hoặc xóa người.",
+            "Ví dụ: nếu ai đó cắt từ 'Nếu chỉ nhìn một phía, chúng ta có thể nghĩ người đó sai' thành 'Người đó sai', người xem có thể hiểu hoàn toàn khác. Đây có thể không phải deepfake, nhưng vẫn là nội dung gây hiểu nhầm.",
+          ], [
+            "Cắt ghép có thể làm thay đổi ý nghĩa mà không cần AI.",
+            "Luôn cố gắng tìm bản gốc đầy đủ trước khi tin vào đoạn trích ngắn.",
+          ]),
+          lesson("1.1.7", "Khái niệm 7: Repurposed media là gì?", [
+            "Repurposed media là nội dung thật nhưng bị đặt sai bối cảnh. Đây là dạng gây hiểu nhầm rất phổ biến. Ví dụ: video lũ lụt ở nước khác từ nhiều năm trước được đăng lại như vừa xảy ra tại Việt Nam; hình ảnh tai nạn cũ gán vào sự kiện mới; clip hậu trường phim được chia sẻ như 'bằng chứng' thật.",
+            "Repurposed media nguy hiểm vì dùng 'chất liệu thật' để tạo ra kết luận sai. Người xem có thể nghĩ: 'Video này là thật, vậy thông tin đi kèm chắc cũng thật.' Nhưng một video thật không đảm bảo chú thích của nó là thật.",
+          ], [
+            "Nội dung thật đặt sai bối cảnh vẫn có thể dẫn đến niềm tin sai.",
+            "Câu hỏi cần hỏi: video này xuất hiện lần đầu khi nào, ở đâu?",
+          ]),
+          lesson("1.1.8", "Khái niệm 8: AI-generated image là gì?", [
+            "AI-generated image là hình ảnh do AI tạo ra từ mô tả, dữ liệu mẫu hoặc yêu cầu của người dùng. Ví dụ: ảnh chân dung người không tồn tại, cảnh đường phố chưa từng được chụp, ảnh sản phẩm giả, ảnh hiện trường được dàn dựng.",
+            "AI-generated image có thể hữu ích khi dùng làm minh họa rõ ràng, nhưng cũng có thể gây rủi ro khi dùng để tạo hồ sơ giả, giả ảnh hiện trường, minh họa sai cho tin tức hoặc tạo bằng chứng giả.",
+            "Khi nhìn một hình ảnh, đừng chỉ hỏi: 'Ảnh này có bị AI tạo không?' Hãy hỏi thêm: 'Ảnh này đang được dùng để khiến mình tin điều gì?' Một hình ảnh AI có thể vô hại nếu là minh họa rõ ràng, nhưng cũng có thể nguy hiểm nếu được trình bày như bằng chứng thật.",
+          ], [
+            "Câu hỏi quan trọng: ảnh này đang được dùng để khiến mình tin điều gì?",
+            "AI-generated image rủi ro nhất khi được trình bày như ảnh thật hoặc bằng chứng.",
+          ]),
+        ],
+        checkpoint: checkpoint("1.1", [
+          q("Deepfake là gì?", ["Nội dung hình ảnh, video hoặc âm thanh được tạo/chỉnh sửa để khiến người xem tin một người đã nói hoặc làm điều họ không thực sự làm", "Mọi nội dung sai trên Internet", "Chỉ là ảnh chỉnh màu", "Chỉ là tin nhắn lừa đảo không có hình ảnh"], 0),
+          q("Điều nào sau đây là ví dụ về deepvoice?", ["Ảnh phong cảnh do AI tạo", "Đoạn giọng nói giả giống người thân yêu cầu chuyển tiền", "Bài viết sai chính tả", "Video thật được đăng lại từ năm trước"], 1),
+          q("Repurposed media là gì?", ["Nội dung thật nhưng bị đặt sai bối cảnh", "Nội dung luôn do AI tạo ra", "Nội dung không có âm thanh", "Nội dung được đăng bởi tài khoản chính thức"], 0),
+          q("Tất cả synthetic media đều là deepfake. Đúng hay sai?", ["Đúng", "Sai — synthetic media có thể dùng cho mục đích sáng tạo hợp lệ; chỉ thành vấn đề khi dùng để mạo danh hoặc đánh lừa", "Đúng, vì AI tạo ra là giả", "Sai, vì deepfake không liên quan đến AI"], 1),
+          q("Video bị cắt ngắn làm thay đổi ý nghĩa câu nói ban đầu. Đây là:", ["Edited media", "Deepvoice", "Mã độc", "Mật khẩu yếu"], 0),
+          q("Hình ảnh người không tồn tại do AI tạo được dùng làm ảnh đại diện lừa đảo. Rủi ro chính là gì?", ["Ảnh quá đẹp", "Người xem có thể tin vào danh tính giả", "Ảnh không có âm thanh", "Ảnh tải chậm"], 1),
+          q("Vì sao không nên kết luận 'video thật' chỉ vì gương mặt và giọng nói giống?", ["Vì gương mặt và giọng nói có thể bị tạo hoặc chỉnh sửa bằng AI", "Vì video nào trên mạng cũng giả", "Vì chỉ ảnh mới có thể bị giả", "Vì âm thanh luôn đáng tin hơn hình ảnh"], 0),
+          q("Video thật từ quốc gia khác được đăng với chú thích 'đang xảy ra tại thành phố của bạn'. Bạn nên nghi ngờ điều gì?", ["Sai bối cảnh — repurposed media", "Máy tính bị virus", "Mật khẩu bị lộ", "Điện thoại bị hỏng"], 0),
+          q("Deepfake có thể nguy hiểm ngay cả khi không hoàn hảo vì:", ["Chỉ video hoàn hảo mới lừa được người", "Kẻ xấu kết hợp mạo danh với cảm xúc và áp lực thời gian để nạn nhân hành động trước khi kịp suy nghĩ", "Deepfake chỉ xuất hiện trong phim ảnh", "Người bình thường không bao giờ là mục tiêu"], 1),
+          q("Câu hỏi hữu ích nhất khi xem hình ảnh nghi do AI tạo là:", ["Ảnh có nhiều màu không?", "Ảnh này đang được dùng để khiến mình tin điều gì?", "Kích thước file bao nhiêu?", "Ảnh được đăng vào buổi sáng không?"], 1),
+        ]),
+      },
+      {
+        title: "1.1.1 Vì sao deepfake ngày càng khó nhận ra?",
+        lessons: [
+          lesson("1.1.1.1", "Công nghệ tốt hơn, chi phí thấp hơn", [
+            "Trước đây, để tạo một video giả thuyết phục, người ta cần nhiều kỹ năng, thiết bị và thời gian. Bây giờ, nhiều công cụ AI đã làm cho việc tạo ảnh, giọng nói và video trở nên dễ tiếp cận hơn rất nhiều.",
+            "Mặt tích cực: người sáng tạo có thêm công cụ, doanh nghiệp tạo nội dung nhanh hơn, người khuyết tật có thể dùng công nghệ giọng nói tốt hơn. Mặt rủi ro: kẻ xấu có thể mạo danh nhanh hơn, nội dung lừa đảo có thể được tạo hàng loạt, giọng nói và khuôn mặt cá nhân có thể bị lợi dụng.",
+            "Khi công cụ mạnh hơn và rẻ hơn, kỹ năng phòng vệ của người dùng cũng cần tốt hơn.",
+          ], [
+            "Công nghệ tạo nội dung AI ngày càng dễ tiếp cận — đây là lý do kỹ năng phòng vệ trở nên quan trọng hơn.",
+          ]),
+          lesson("1.1.1.2", "Dữ liệu cá nhân của chúng ta quá dễ tìm", [
+            "AI cần dữ liệu để mô phỏng. Trong đời sống số, nhiều người vô tình để lại dữ liệu: ảnh chân dung, video nói chuyện, livestream, story hằng ngày, giọng nói trong clip, thông tin gia đình, trường học, sinh nhật và lịch trình.",
+            "Không phải cứ đăng ảnh hay video là nguy hiểm. Nhưng khi dữ liệu cá nhân quá công khai, kẻ xấu có thêm nguyên liệu để tạo tài khoản giả, giả giọng nói, dựng kịch bản lừa đảo có vẻ rất riêng tư, hoặc chọn đúng thời điểm để gây áp lực.",
+          ], [
+            "Deepfake không chỉ dùng hình ảnh của bạn — nó có thể dùng cả thói quen, quan hệ và thông tin bạn để lộ.",
+          ]),
+          lesson("1.1.1.3", "Nội dung lan nhanh hơn khả năng kiểm chứng", [
+            "Một nội dung gây sốc có thể lan đi rất nhanh — chỉ cần vài phút, một video có thể xuất hiện trong nhóm gia đình, nhóm lớp, nhóm công việc và nền tảng video ngắn. Trong khi đó, kiểm chứng cần thời gian: tìm nguồn đầu tiên, xem bối cảnh, so sánh nguồn khác, kiểm tra tài khoản đăng.",
+            "Đây là khoảng cách nguy hiểm: nội dung giả thường chạy nhanh hơn sự thật. Kẻ xấu thường thêm vào câu 'chia sẻ ngay trước khi bị xóa', 'cơ hội chỉ còn hôm nay', 'nếu không làm ngay sẽ mất tiền'. Những câu này tạo áp lực. Khi bạn thấy áp lực phải hành động ngay, hãy xem đó là dấu hiệu cảnh báo.",
+          ], [
+            "Tốc độ lan truyền thường nhanh hơn tốc độ kiểm chứng — đây là lợi thế của kẻ xấu.",
+            "Áp lực hành động ngay là dấu hiệu cảnh báo, không phải lý do để hành động nhanh hơn.",
+          ]),
+          lesson("1.1.1.4", "Mắt thường có giới hạn", [
+            "Nhiều hướng dẫn nói deepfake có thể bị nhận ra qua: mắt chớp kỳ lạ, răng méo, tóc không tự nhiên, bóng đổ sai, khẩu hình lệch, giọng nói đều đều. Những dấu hiệu này có thể hữu ích và sẽ được học kỹ hơn ở Module 4.",
+            "Nhưng có một vấn đề: công nghệ ngày càng tốt hơn, còn môi trường xem nội dung ngày càng phức tạp. Video thật cũng có thể trông lạ vì mạng yếu, camera kém, ánh sáng xấu, video bị nén, hoặc người nói đang mệt. Ngược lại, một video giả có thể trông rất mượt.",
+            "Nếu chỉ dựa vào cảm giác 'trông thật' hoặc 'trông giả', bạn có thể bị sai theo cả hai hướng: tin nhầm nội dung giả, hoặc phủ nhận nhầm nội dung thật. DEEPFENSE BASIC không dạy bạn trở thành 'máy dò deepfake bằng mắt' — khóa học này dạy bạn trở thành người ra quyết định tốt hơn.",
+          ], [
+            "Mắt thường có giới hạn — 'trông thật' không đồng nghĩa là thật.",
+            "Quan sát dấu hiệu kỹ thuật chỉ là một phần; kiểm chứng nguồn và bối cảnh quan trọng không kém.",
+          ]),
+          lesson("1.1.1.5", "Công cụ phát hiện cũng có giới hạn", [
+            "Các công cụ phát hiện deepfake có thể hữu ích, nhưng không nên xem là phán quyết cuối cùng. Một công cụ có thể báo: '70% có khả năng là AI', 'Có dấu hiệu chỉnh sửa', hoặc 'Không phát hiện dấu hiệu bất thường'. Nhưng những kết quả này không đồng nghĩa với 'chắc chắn giả' hay 'chắc chắn thật'.",
+            "Vì sao? Vì công cụ phát hiện phụ thuộc vào dữ liệu huấn luyện, loại deepfake đã thấy, chất lượng file đầu vào, và kỹ thuật tạo giả mới chưa được cập nhật. Kết quả từ detector nên được xem là một tín hiệu tham khảo, không phải kết luận cuối cùng.",
+            "Cách dùng hợp lý: quan sát nội dung → kiểm tra nguồn → xác minh qua kênh độc lập → dùng công cụ nếu phù hợp → tổng hợp nhiều tín hiệu trước khi quyết định.",
+          ], [
+            "Công cụ phát hiện deepfake cho tín hiệu tham khảo, không phải kết luận cuối cùng.",
+            "Nếu công cụ báo 'không phát hiện deepfake', bạn vẫn cần kiểm chứng thêm nếu nội dung liên quan đến tiền, danh dự hoặc an toàn.",
+          ]),
+          lesson("1.1.1.6", "Vấn đề không chỉ là thật hay giả", [
+            "Khi gặp nội dung nghi vấn, nhiều người muốn câu trả lời ngay: 'Thật hay giả?' Nhưng trong thực tế, có nhiều trạng thái hơn: (1) Có bằng chứng tốt nội dung là thật; (2) Có bằng chứng tốt nội dung là giả; (3) Nội dung thật nhưng sai bối cảnh; (4) Nội dung bị cắt ghép làm đổi nghĩa; (5) Một phần thật, một phần chưa rõ; (6) Chưa đủ dữ liệu để kết luận.",
+            "Trạng thái số 6 rất quan trọng. Nhiều khi câu trả lời an toàn nhất không phải là 'Tôi biết chắc đây là giả' mà là 'Tôi chưa đủ bằng chứng để tin, chia sẻ hoặc hành động.' Trong thế giới số, biết nói 'chưa đủ dữ liệu' là một kỹ năng mạnh.",
+          ], [
+            "'Chưa đủ dữ liệu để kết luận' là một lập trường an toàn và hợp lý.",
+            "Không ép bản thân phải kết luận ngay khi chưa đủ thông tin.",
+          ]),
+          lesson("1.1.1.7", "Một rủi ro ngược: Khi sự thật bị gọi là deepfake", [
+            "Deepfake không chỉ làm người ta tin vào điều giả — nó còn có thể làm người ta nghi ngờ điều thật. Khi công chúng biết rằng video và âm thanh có thể bị làm giả, một người có thể phủ nhận nội dung thật bằng cách nói: 'Đó là deepfake.' Hiện tượng này đôi khi được gọi là 'liar's dividend': kẻ nói dối có thêm lợi thế vì mọi người biết nội dung số có thể bị làm giả.",
+            "Vì vậy, mục tiêu không phải là nghi ngờ tất cả — mục tiêu là kiểm chứng tốt hơn. Một xã hội khỏe mạnh là nơi con người biết hỏi: Bằng chứng đến từ đâu? Có nguồn độc lập không? Có ai có động cơ làm sai lệch không? Có đủ cơ sở để kết luận chưa?",
+          ], [
+            "Deepfake có thể bị dùng để phủ nhận cả nội dung thật ('liar's dividend').",
+            "Mục tiêu là kiểm chứng tốt hơn, không phải nghi ngờ tất cả.",
+          ]),
+          lesson("1.1.1.8", "Bài học lớn: Tại sao deepfake ngày càng khó nhận ra", [
+            "Deepfake ngày càng khó nhận ra vì 4 lý do chính: (1) Công nghệ tạo giả tốt hơn và dễ tiếp cận hơn; (2) Dữ liệu cá nhân của chúng ta quá sẵn trên mạng; (3) Nội dung lan nhanh hơn khả năng kiểm chứng; (4) Cả mắt thường lẫn công cụ phát hiện đều có giới hạn.",
+            "Vì vậy, kỹ năng quan trọng nhất không phải là nhìn một video rồi đoán thật giả trong 3 giây. Kỹ năng quan trọng nhất là biết dừng lại, đặt câu hỏi đúng và kiểm chứng qua nhiều tín hiệu.",
+          ], [
+            "Trong thời đại deepfake, người an toàn không phải người đoán nhanh nhất — mà là người biết kiểm chứng trước khi hành động.",
+          ]),
+        ],
+        checkpoint: null,
+      },
+      {
+        title: "1.2 Thực hành: Phân loại nội dung số",
+        lessons: [
+          lesson("1.2.0", "Hướng dẫn thực hành", [
+            "Trong phần này, bạn sẽ xem các thẻ tình huống và phân loại mỗi tình huống vào nhóm phù hợp nhất: Deepfake, Deepvoice, Synthetic media/AI-generated, Edited media, Repurposed media, hoặc Chưa đủ dữ liệu để kết luận.",
+            "Một số tình huống có thể thuộc nhiều nhóm. Trong trường hợp đó, hãy chọn nhóm phù hợp nhất với rủi ro chính. Không phải nhiệm vụ của bạn là trở thành chuyên gia pháp y số — điều quan trọng là biết khi nào cần chậm lại, kiểm chứng và không để cảm xúc quyết định thay mình.",
+          ], [
+            "Nhận diện loại nội dung giúp bạn đặt câu hỏi đúng, không phải để trở thành chuyên gia.",
+          ]),
+          lesson("1.2.1", "Thẻ tình huống 1–6", [
+            "Thẻ 1: Video người nổi tiếng mời đầu tư vào ứng dụng lạ — người này chưa đăng thông tin đó trên kênh chính thức. → Deepfake hoặc chưa đủ dữ liệu: Cần kiểm tra kênh chính thức và dấu hiệu mạo danh.",
+            "Thẻ 2: Ảnh chân dung 'chuyên gia tài chính' trông rất thật, nhưng tìm kiếm không thấy người này tồn tại ngoài website quảng cáo. → AI-generated: Có thể là danh tính giả dùng ảnh AI.",
+            "Thẻ 3: Ghi âm giống giọng người thân yêu cầu chuyển tiền ngay, nhưng không qua kênh thường dùng. → Deepvoice: Xác minh bằng số đã lưu hoặc gặp trực tiếp.",
+            "Thẻ 4: Clip 7 giây cắt từ bài phát biểu dài, làm người nói có vẻ nói ngược ý ban đầu. → Edited media: Cần xem bản đầy đủ và bối cảnh.",
+            "Thẻ 5: Video tai nạn từ năm trước được đăng lại như vừa xảy ra hôm nay. → Repurposed media: Nội dung thật nhưng bối cảnh sai.",
+            "Thẻ 6: Ảnh sản phẩm do AI tạo được ghi rõ là 'ảnh minh họa'. → AI-generated, rủi ro thấp khi minh bạch: Không phải mọi nội dung AI đều xấu — vấn đề là minh bạch và mục đích sử dụng.",
+          ], [
+            "Cùng loại hình ảnh AI có thể vô hại (minh họa rõ ràng) hoặc nguy hiểm (trình bày như bằng chứng thật).",
+          ]),
+          lesson("1.2.2", "Thẻ tình huống 7–12", [
+            "Thẻ 7: Video gọi trực tiếp bị giật, hình mờ, người gọi yêu cầu đọc OTP. → Chưa đủ dữ liệu xác nhận deepfake, nhưng rủi ro cao: Dù có phải deepfake hay không, yêu cầu OTP là dấu hiệu nguy hiểm — không cần chờ xác nhận deepfake mới dừng lại.",
+            "Thẻ 8: Ảnh học sinh bị ghép vào nội dung nhạy cảm và lan truyền trong nhóm chat. → Face swap/deepfake image: Không lan truyền, báo cáo và hỗ trợ người bị hại.",
+            "Thẻ 9: Video thật của người đang cười được ghép phụ đề sai để tạo cảm giác họ chế giễu nạn nhân. → Edited media: Phụ đề cũng có thể làm sai lệch ý nghĩa.",
+            "Thẻ 10: Tài khoản mới, ảnh đẹp, ít bạn bè, nhắn tin rủ đầu tư và gửi video 'bằng chứng lợi nhuận'. → Chưa đủ dữ liệu về loại media, nhưng có dấu hiệu lừa đảo rõ ràng: Quan trọng là nhận diện rủi ro, không nhất thiết phải gọi đúng tên công nghệ.",
+            "Thẻ 11: Video nhân vật ảo dạy tiếng Anh, được ghi rõ là nhân vật AI. → AI-generated, rủi ro thấp: AI có thể hữu ích khi người xem biết rõ đó là nội dung mô phỏng.",
+            "Thẻ 12: Video chính trị gây sốc từ tài khoản không rõ nguồn, không có bản gốc, không có nguồn độc lập. → Chưa đủ dữ liệu để kết luận: Không chia sẻ khi chưa đủ bằng chứng, đặc biệt với nội dung có thể gây phẫn nộ xã hội.",
+          ], [
+            "Nhận diện dấu hiệu rủi ro quan trọng hơn gọi đúng tên công nghệ.",
+            "Hành động an toàn nhất khi chưa chắc: dừng lại, không chia sẻ.",
+          ]),
+          lesson("1.2.3", "Phản hồi tổng kết", [
+            "Nếu bạn phân loại chưa đúng hết, điều đó bình thường. Trong đời thật, ranh giới giữa các loại nội dung có thể không rõ ràng. Một video có thể vừa là deepfake, vừa có phụ đề sai, vừa được đăng sai bối cảnh.",
+            "Điều quan trọng không phải là gọi tên hoàn hảo ngay từ đầu. Điều quan trọng là bạn bắt đầu biết hỏi: Nội dung này đang khiến mình tin điều gì? Có ai đang bị mạo danh không? Có ai có thể bị hại không? Mình có đủ bằng chứng để tin hoặc chia sẻ chưa? Hành động an toàn nhất bây giờ là gì?",
+          ], [
+            "Kỹ năng đặt câu hỏi đúng quan trọng hơn kỹ năng phân loại chính xác 100%.",
+            "Module 2 sẽ đi sâu vào: vì sao con người dễ bị lừa ngay cả khi đã biết deepfake tồn tại?",
+          ]),
+        ],
+        checkpoint: null,
+      },
+    ],
+    quiz: [
+      q("Deepfake là gì?", ["Nội dung hình ảnh, video hoặc âm thanh được tạo/biến đổi để khiến người xem tin một người đã nói hoặc làm điều họ không làm", "Một loại tường lửa mạng", "Cách tăng độ phân giải video", "Một định dạng âm thanh mới"], 0),
+      q("Điều nào là ví dụ về deepvoice?", ["Ảnh phong cảnh do AI tạo", "Đoạn giọng nói giả giống người thân yêu cầu chuyển tiền", "Bài viết sai chính tả", "Video thật được đăng lại từ năm trước"], 1),
+      q("Repurposed media là gì?", ["Nội dung thật nhưng bị đặt sai bối cảnh", "Nội dung luôn do AI tạo ra toàn bộ", "Nội dung không có âm thanh", "Nội dung được đăng bởi tài khoản chính thức"], 0),
+      q("Không phải mọi synthetic media đều là deepfake vì:", ["Synthetic media chỉ là ảnh tĩnh", "Synthetic media có thể dùng cho mục đích hợp lệ như giáo dục hoặc sáng tạo", "Deepfake chỉ liên quan đến âm thanh", "Synthetic media luôn minh bạch"], 1),
+      q("Video bị cắt ngắn làm thay đổi ý nghĩa câu nói ban đầu là ví dụ về:", ["Edited media", "Deepvoice", "Repurposed media", "Synthetic media"], 0),
+      q("Hình ảnh người không tồn tại do AI tạo dùng làm ảnh đại diện lừa đảo. Rủi ro chính là:", ["Ảnh quá đẹp khiến người chú ý", "Người xem có thể tin vào danh tính giả", "Ảnh tải chậm làm mất kiên nhẫn", "Ảnh không có âm thanh"], 1),
+      q("Vì sao không nên kết luận 'thật' chỉ vì gương mặt và giọng nói giống?", ["Gương mặt và giọng nói có thể bị tạo hoặc chỉnh sửa bằng AI", "Vì video nào trên mạng cũng giả", "Vì chỉ ảnh mới có thể bị giả", "Vì âm thanh luôn đáng tin hơn hình ảnh"], 0),
+      q("Video thật từ quốc gia khác được đăng kèm chú thích 'đang xảy ra tại thành phố của bạn'. Đây là dấu hiệu của:", ["Sai bối cảnh — repurposed media", "Máy tính bị virus", "Mật khẩu bị lộ", "Video bị nén xấu"], 0),
+      q("Deepfake có thể nguy hiểm ngay cả khi không hoàn hảo vì:", ["Chỉ video hoàn hảo mới lừa được người xem", "Kẻ xấu kết hợp mạo danh với cảm xúc và áp lực thời gian để nạn nhân hành động trước khi kịp suy nghĩ", "Deepfake chỉ xuất hiện trong phim ảnh", "Người bình thường không bao giờ là mục tiêu"], 1),
+      q("Câu hỏi hữu ích nhất khi xem hình ảnh nghi do AI tạo là:", ["Ảnh có nhiều màu không?", "Ảnh này đang được dùng để khiến mình tin điều gì?", "Kích thước file bao nhiêu?", "Ảnh được đăng vào buổi sáng không?"], 1),
+    ],
+  },
+  // ─── MODULE 2 ───────────────────────────────────────────────
+  {
+    id: 2,
+    part: "foundation",
+    title: "Vì sao con người dễ bị lừa?",
+    duration: "85-95 phút",
+    level: "Foundation",
+    scenario: "An đã biết deepfake là gì sau Module 1. Nhưng buổi tối, điện thoại reo — màn hình hiện tên người thân. Ở đầu dây là giọng nói quen thuộc, hơi run: 'An ơi, giúp với. Đừng hỏi nhiều. Chuyển giúp một khoản ngay bây giờ. Gấp lắm.' Biết một điều và làm đúng trong lúc căng thẳng là hai chuyện khác nhau.",
+    outcomes: [
+      "Hiểu vì sao con người có thể bị lừa ngay cả khi đã biết deepfake tồn tại.",
+      "Nhận diện được các 'nút bấm cảm xúc' thường dùng trong lừa đảo: khẩn cấp, thân quen, quyền lực và lợi ích.",
+      "Biết vì sao hình ảnh, video và giọng nói tạo cảm giác rất thuyết phục.",
+      "Hiểu rằng phản ứng vội vàng thường nguy hiểm hơn 'không biết công nghệ'.",
+      "Thực hành xử lý một cuộc gọi khẩn cấp nghi giả mạo.",
+    ],
+    sections: [
+      {
+        title: "2.1 Bốn nút bấm cảm xúc",
+        lessons: [
+          lesson("2.0.0", "Câu chuyện dẫn nhập: An nghĩ mình đủ tỉnh táo", [
+            "Sau Module 1, An đã biết deepfake là gì. An biết video có thể bị giả, giọng nói có thể bị mô phỏng, ảnh thật vẫn có thể bị đặt sai bối cảnh. An cũng biết không nên tin mọi thứ chỉ vì nó trông thuyết phục.",
+            "Nhưng biết một điều và làm đúng trong lúc căng thẳng là hai chuyện khác nhau. Buổi tối, An đang chuẩn bị đi ngủ. Điện thoại reo. Màn hình hiện tên một người thân. An bắt máy. Ở đầu dây là một giọng nói quen thuộc, hơi run: 'An ơi, giúp với. Đừng hỏi nhiều. Chuyển giúp một khoản ngay bây giờ. Gấp lắm.' Người kia nói tiếp: 'Máy sắp hết pin. Không gọi ai khác được. Chuyển nhanh giúp nhé.'",
+            "Trong vài giây đầu tiên, An không nghĩ đến deepfake. An nghĩ đến người thân. Đó là điều rất con người. Kẻ xấu không cần bạn ngu ngốc — chúng chỉ cần bạn đang lo, đang vội, đang tin, đang sợ hoặc đang muốn giúp.",
+          ], [
+            "Biết về deepfake không đủ để bảo vệ bạn — kỹ năng phản ứng đúng trong lúc căng thẳng mới quan trọng.",
+          ]),
+          lesson("2.1.1", "Nút bấm 1: Khẩn cấp", [
+            "Khẩn cấp là một trong những công cụ mạnh nhất của lừa đảo. Khi con người cảm thấy thời gian sắp hết, não có xu hướng chuyển sang chế độ phản ứng nhanh để giảm căng thẳng. Kẻ xấu hiểu điều này.",
+            "Chúng thường nói: 'Chỉ còn 5 phút', 'Nếu không làm ngay sẽ mất tiền', 'Tài khoản của bạn sắp bị khóa', 'Người thân của bạn đang gặp nguy hiểm', 'Đừng tắt máy', 'Không được nói với ai.' Khẩn cấp làm bạn ít kiểm tra hơn, ngại hỏi lại, và thấy việc dừng lại giống một sự chậm trễ nguy hiểm.",
+            "Ví dụ: một cuộc gọi video ngắn hiện gương mặt giống người thân nói cần tiền ngay. Nếu bạn chuyển tiền trong 2 phút, bạn có thể mất tiền. Nếu bạn dừng lại 2 phút để gọi lại số đã lưu, bạn có thể phát hiện người thân vẫn an toàn.",
+          ], [
+            "Càng bị ép phải làm ngay, càng cần chậm lại.",
+            "Trong an toàn số, dừng lại thường chính là hành động nhanh nhất để tránh thiệt hại.",
+          ]),
+          lesson("2.1.2", "Nút bấm 2: Thân quen", [
+            "Con người có xu hướng tin người quen hơn người lạ — đây là điều bình thường. Nhưng trên không gian số, sự thân quen có thể bị giả mạo. Kẻ xấu có thể dùng: ảnh đại diện quen thuộc, tên tài khoản giống thật, tài khoản thật đã bị chiếm quyền, giọng nói mô phỏng, video ngắn giả mạo, thông tin cá nhân lấy từ mạng xã hội.",
+            "Một tin nhắn từ tài khoản của bạn bè không luôn đồng nghĩa với bạn bè đang nhắn. Một giọng nói giống người thân không luôn đồng nghĩa với đúng người thân. Ví dụ: 'Mình đang kẹt chút việc. Chuyển giúp mình 2 triệu vào tài khoản này. Tối mình gửi lại.' Ảnh đại diện đúng là bạn của bạn. Nhưng cách nhắn hơi khác. Người đó né gọi điện.",
+            "Câu hỏi không phải là 'Mình có quen tài khoản này không?' mà là 'Mình có chắc đúng người đang điều khiển tài khoản này không?'",
+          ], [
+            "Tài khoản quen không đảm bảo người dùng thật đang ở phía sau.",
+          ]),
+          lesson("2.1.3", "Nút bấm 3: Quyền lực", [
+            "Con người thường phản ứng nhanh hơn khi người yêu cầu có vẻ có thẩm quyền: công an, tòa án, ngân hàng, nhà trường, lãnh đạo, cơ quan nhà nước, người nổi tiếng hoặc chuyên gia. Kẻ xấu có thể giả danh những vai trò này để khiến bạn sợ hoặc phục tùng.",
+            "Chúng có thể nói: 'Bạn liên quan đến một vụ án', 'Tài khoản có giao dịch bất thường', 'Bạn phải làm theo hướng dẫn để chứng minh trong sạch', 'Không được tiết lộ với ai vì đang điều tra', 'Nếu không hợp tác sẽ chịu trách nhiệm.'",
+            "Khi deepfake hoặc deepvoice được thêm vào, cảm giác quyền lực càng mạnh hơn. Một giọng nói giống lãnh đạo có thể khiến nhân viên chuyển tiền. Một cuộc gọi giống cơ quan chức năng có thể khiến nạn nhân cung cấp thông tin cá nhân.",
+          ], [
+            "Người có thẩm quyền thật không cần bạn bỏ qua mọi quy trình an toàn.",
+          ]),
+          lesson("2.1.4", "Nút bấm 4: Lợi ích", [
+            "Không phải lừa đảo nào cũng dùng nỗi sợ — nhiều lừa đảo dùng hy vọng. Kẻ xấu có thể hứa: lợi nhuận cao, việc làm tốt, học bổng, quà tặng, mã giảm giá, cơ hội đầu tư, cách kiếm tiền dễ. Deepfake có thể làm lời hứa trông đáng tin hơn.",
+            "Ví dụ: một video người nổi tiếng nói 'Tôi cũng đang dùng nền tảng này'; một 'chuyên gia' có gương mặt đẹp, giọng tự tin nói 'Tôi sẽ hướng dẫn bạn đạt lợi nhuận ổn định'; một tài khoản giả dùng ảnh AI nói 'Mình đã nhận được học bổng này, bạn đăng ký nhanh đi.'",
+            "Lợi ích làm chúng ta muốn tin. Khi một nội dung hứa hẹn điều quá tốt, quá nhanh, quá dễ — hãy kiểm tra kỹ hơn.",
+          ], [
+            "Cơ hội thật không cần bạn tắt khả năng nghi ngờ.",
+          ]),
+          lesson("2.1.5", "Deepfake thường không đi một mình", [
+            "Deepfake hiếm khi là toàn bộ cuộc tấn công — nó thường chỉ là một mảnh trong một kịch bản lớn hơn. Một vụ lừa đảo có thể gồm: (1) Thu thập thông tin cá nhân từ mạng xã hội; (2) Tạo tài khoản giả hoặc chiếm quyền tài khoản thật; (3) Dùng ảnh, giọng nói hoặc video giả để tạo niềm tin; (4) Gây áp lực bằng thời gian, tiền bạc, xấu hổ hoặc sợ hãi; (5) Dẫn nạn nhân sang kênh riêng; (6) Yêu cầu chuyển tiền, gửi OTP, cài app hoặc cung cấp thông tin.",
+            "Vì vậy, câu hỏi đúng không chỉ là 'Video này có phải deepfake không?' mà là 'Toàn bộ tình huống này có đang đẩy mình vào một hành động nguy hiểm không?' Một cuộc gọi có thể không phải deepfake, nhưng vẫn là lừa đảo. Một hình ảnh có thể không phải AI, nhưng vẫn bị dùng sai bối cảnh. Một tài khoản có thể thật, nhưng đã bị chiếm quyền.",
+          ], [
+            "Mục tiêu của bạn không phải là gọi tên chính xác công nghệ trong 10 giây — mà là phát hiện rủi ro đủ sớm để không làm điều nguy hiểm.",
+          ]),
+          lesson("2.1.6", "Sáu dấu hiệu ngôn ngữ cần cảnh giác", [
+            "Kẻ xấu thường để lại dấu hiệu trong cách nói hoặc cách viết. Dấu hiệu 1 — 'Làm ngay': 'Chuyển ngay', 'Xác nhận ngay', 'Gửi mã ngay' → áp lực thời gian. Dấu hiệu 2 — 'Đừng nói với ai': 'Việc này đang bí mật', 'Đừng gọi ai khác', 'Đừng báo gia đình' → cô lập nạn nhân.",
+            "Dấu hiệu 3 — 'Nếu không thì...': 'Tài khoản sẽ bị khóa', 'Người thân sẽ nguy hiểm' → đe dọa. Dấu hiệu 4 — 'Chỉ bạn được chọn': 'Suất này chỉ dành cho bạn' → đánh vào cảm giác đặc biệt. Dấu hiệu 5 — 'Quá tốt để bỏ lỡ': 'Lợi nhuận chắc chắn', 'Không có rủi ro' → hứa hẹn bất thường. Dấu hiệu 6 — 'Xấu hổ nên đừng hỏi': 'Nếu không muốn ảnh này lan ra thì làm theo' → tống tiền hoặc thao túng bằng xấu hổ.",
+          ], [
+            "Kẻ xấu không chỉ giả hình ảnh và giọng nói — chúng còn thiết kế câu chữ để điều khiển phản ứng của bạn.",
+          ]),
+        ],
+        checkpoint: checkpoint("2.1", [
+          q("Một người gọi nói giống người thân yêu cầu chuyển tiền trong 5 phút. 'Nút bấm' chính đang được dùng là gì?", ["Khẩn cấp", "Giải trí", "Học thuật", "Tò mò"], 0),
+          q("Một tài khoản giống bạn thân nhắn mượn tiền, nhưng né gọi điện và bảo đang rất bận. Rủi ro lớn nhất là gì?", ["Tài khoản có thể bị chiếm quyền hoặc bị giả mạo", "Điện thoại của bạn chắc chắn bị hỏng", "Bạn thân chắc chắn đã đổi tính cách", "Tin nhắn ngắn thì luôn an toàn"], 0),
+          q("Câu nào sau đây là dấu hiệu cô lập nạn nhân?", ["Bạn có thể kiểm tra thêm", "Đừng nói với ai, việc này bí mật", "Hãy gọi tổng đài chính thức", "Bạn có thể suy nghĩ rồi trả lời sau"], 1),
+          q("Một video người nổi tiếng hứa lợi nhuận cao, không rủi ro, chỉ cần đăng ký ngay. 'Nút bấm' chính là gì?", ["Lợi ích", "Lịch sử", "Thể thao", "Âm nhạc"], 0),
+          q("Một người tự xưng là cơ quan chức năng yêu cầu bạn cài app lạ để 'chứng minh trong sạch'. Dấu hiệu nào đáng lo nhất?", ["Dùng quyền lực để ép bạn bỏ qua quy trình an toàn", "Người đó nói chuyện nghiêm túc", "Cuộc gọi diễn ra vào buổi sáng", "Bạn không thích app mới"], 0),
+          q("Điều nào đúng nhất?", ["Nếu cuộc gọi không phải deepfake thì chắc chắn an toàn", "Một cuộc gọi có thể không phải deepfake nhưng vẫn là lừa đảo", "Chỉ deepfake mới nguy hiểm", "Tin nhắn không có video thì không thể lừa đảo"], 1),
+          q("Khi thấy câu 'chia sẻ ngay trước khi bị xóa', bạn nên hiểu gì?", ["Đây là tín hiệu cần kiểm chứng trước khi chia sẻ", "Đây luôn là tin chính xác", "Đây là bằng chứng nội dung quan trọng", "Đây là lý do phải chia sẻ nhanh"], 0),
+          q("Một yêu cầu liên quan đến OTP nên được xử lý thế nào?", ["Gửi nếu người yêu cầu nghe giống người quen", "Gửi nếu đang vội", "Không cung cấp OTP qua cuộc gọi/tin nhắn; xác minh qua kênh chính thức", "Gửi một phần mã để kiểm tra"], 2),
+          q("Vì sao kẻ xấu thường yêu cầu 'đừng nói với ai'?", ["Để bạn không nhận được lời khuyên hoặc kiểm chứng từ người khác", "Vì chúng muốn bảo vệ quyền riêng tư của bạn", "Vì mọi tình huống khẩn cấp đều phải bí mật", "Vì nói với người khác sẽ làm điện thoại chậm hơn"], 0),
+          q("Khi một nội dung làm bạn sợ, giận hoặc muốn hành động ngay, phản xạ an toàn nhất là gì?", ["Dừng lại và kiểm chứng", "Chia sẻ ngay", "Chuyển tiền trước, kiểm tra sau", "Làm theo cảm xúc đầu tiên"], 0),
+        ]),
+      },
+      {
+        title: "2.1.1 Hiệu ứng 'tôi thấy tận mắt'",
+        lessons: [
+          lesson("2.1.1.1", "Vì sao chúng ta tin thứ mình nhìn thấy?", [
+            "Con người dựa vào giác quan để hiểu thế giới. Nếu thấy trời mưa, ta tin là trời đang mưa. Nếu thấy một người nói trong video, ta thường tin người đó đã nói như vậy. Trong đời sống bình thường, phản xạ này rất hữu ích.",
+            "Nhưng trên không gian số, hình ảnh và âm thanh không còn là 'dấu vết trực tiếp' đơn giản như trước. Một video có thể là: quay thật; quay thật nhưng bị cắt; đăng sai bối cảnh; ghép thêm phụ đề sai; chỉnh khẩu hình; thay mặt; thêm giọng giả; hoặc tạo hoàn toàn bằng AI.",
+            "Vì vậy, câu 'tôi thấy tận mắt' trong môi trường số chỉ có nghĩa là: 'Tôi đã thấy một nội dung được hiển thị trên màn hình.' Nó chưa đủ để kết luận: 'Sự việc đó chắc chắn đã xảy ra đúng như nội dung thể hiện.'",
+          ], [
+            "Trong môi trường số, 'thấy tận mắt' chỉ có nghĩa là thấy một nội dung trên màn hình — chưa đủ để kết luận sự việc.",
+          ]),
+          lesson("2.1.1.2", "Video có sức nặng cảm xúc", [
+            "Video kết hợp hình ảnh, chuyển động, giọng nói, biểu cảm và bối cảnh. Vì vậy, video thường tạo cảm giác 'thật' mạnh hơn văn bản. Một đoạn video 10 giây có thể khiến người xem tin, giận, sợ, thương, xấu hổ, muốn chia sẻ hoặc muốn hành động ngay.",
+            "Kẻ xấu có thể lợi dụng điều này bằng cách tạo nội dung ngắn, dễ lan truyền và đánh mạnh vào cảm xúc. Ví dụ: clip 'người nổi tiếng thú nhận bí mật', video 'học sinh làm điều sai trái', đoạn 'lãnh đạo phát ngôn gây sốc', cảnh 'tai nạn vừa xảy ra', cuộc gọi 'người thân đang nguy hiểm'.",
+            "Khi video càng ngắn và càng gây sốc, bạn càng có ít bối cảnh để đánh giá.",
+          ], [
+            "Video ngắn có thể tạo cảm xúc dài.",
+          ]),
+          lesson("2.1.1.3", "Giọng nói chạm vào niềm tin cá nhân", [
+            "Giọng nói có một vai trò đặc biệt. Ta nhận ra người thân qua giọng. Ta cảm nhận sự lo lắng qua giọng. Ta tin một người quen vì 'đúng giọng đó mà'. Deepvoice nguy hiểm vì nó chạm vào lớp niềm tin rất cá nhân này. Một câu nói ngắn như 'Con ơi, giúp mẹ với' có thể mạnh hơn một tin nhắn dài.",
+            "Nhưng giọng nói cũng có thể bị: cắt từ ngữ cảnh khác, ghép lại, giả lập bằng AI, phát qua cuộc gọi chất lượng thấp để che lỗi, hoặc kết hợp với thông tin cá nhân để tăng độ tin.",
+            "Vì vậy, với các yêu cầu rủi ro cao, hãy đổi câu hỏi. Không hỏi 'Giọng này có giống không?' mà hỏi 'Yêu cầu này có cần xác minh độc lập không?' Nếu yêu cầu liên quan đến tiền, tài khoản, OTP, giấy tờ hoặc thông tin nhạy cảm, câu trả lời gần như luôn là có.",
+          ], [
+            "Với yêu cầu nhạy cảm, đừng hỏi 'giọng này có giống không?' — hãy hỏi 'có cần xác minh độc lập không?'",
+          ]),
+          lesson("2.1.1.4", "Niềm tin nhóm có thể làm nội dung trông thật hơn", [
+            "Một nội dung thường thuyết phục hơn khi nhiều người xung quanh cũng tin: video có nhiều lượt thích, bình luận xác nhận, bạn bè chia sẻ, nhóm chat đang bàn tán sôi nổi, một người có uy tín trong nhóm nói 'chắc thật'.",
+            "Đây là áp lực xã hội. Nhưng lượt thích, bình luận và chia sẻ không phải bằng chứng chắc chắn. Chúng có thể đến từ người thật nhưng cũng bị nhầm, tài khoản giả, bình luận seeding, hoặc người chia sẻ vì cảm xúc.",
+            "Nếu một nội dung sai được nhiều người tin, nó vẫn sai. Nếu một nội dung chưa được kiểm chứng được nhiều người chia sẻ, nó vẫn chưa được kiểm chứng.",
+          ], [
+            "Đám đông có thể làm nội dung lan xa, nhưng không tự động làm nội dung đúng hơn.",
+          ]),
+          lesson("2.1.1.5", "Khi nào cần nghiêm túc kiểm chứng?", [
+            "Không phải mọi nội dung trên mạng đều cần bạn điều tra kỹ. Nếu một ảnh AI được ghi rõ là minh họa cho bài học, rủi ro có thể thấp. Nếu một video giải trí được đăng rõ là parody, bạn không cần phản ứng như với một vụ lừa đảo.",
+            "Nhưng bạn cần kiểm chứng nghiêm túc khi nội dung: yêu cầu chuyển tiền; yêu cầu OTP, mật khẩu, mã xác minh; yêu cầu cài ứng dụng; liên quan đến danh dự hoặc hình ảnh nhạy cảm của một người; kêu gọi chia sẻ gấp; gây phẫn nộ xã hội; hoặc mạo danh người thân, giáo viên, lãnh đạo, cơ quan chức năng.",
+            "Nguyên tắc đơn giản: rủi ro càng cao, bằng chứng càng phải chắc.",
+          ], [
+            "Rủi ro càng cao, bằng chứng càng phải chắc.",
+          ]),
+          lesson("2.1.1.6", "Câu trả lời trưởng thành: 'Tôi chưa đủ dữ liệu'", [
+            "Trong nhiều tình huống, người khác sẽ hỏi bạn: 'Theo bạn cái này thật hay giả?' Bạn có thể thấy áp lực phải trả lời ngay. Nhưng câu trả lời tốt nhất đôi khi là: 'Tôi chưa đủ dữ liệu để kết luận.' Đây không phải là né tránh — đây là tư duy có trách nhiệm.",
+            "Bạn có thể nói tiếp: 'Cần xem nguồn gốc video', 'Cần kiểm tra kênh chính thức', 'Cần hỏi người liên quan qua kênh khác', 'Cần xem bản đầy đủ', 'Hiện tại không nên chia sẻ thêm.' Câu 'chưa đủ dữ liệu' giúp bạn tránh hai lỗi: tin nhầm nội dung giả, và phủ nhận nhầm nội dung thật.",
+            "Trong thời đại deepfake, sự thận trọng không làm bạn yếu đi — nó làm bạn đáng tin hơn.",
+          ], [
+            "Thấy, nghe và thấy nhiều người chia sẻ vẫn chưa đủ. Với nội dung rủi ro cao, hãy kiểm chứng trước khi tin, chia sẻ hoặc hành động.",
+          ]),
+        ],
+        checkpoint: null,
+      },
+      {
+        title: "2.2 Case tương tác: Cuộc gọi lúc 22:47",
+        lessons: [
+          lesson("2.2.0", "Bối cảnh: An nhận cuộc gọi nghi vấn", [
+            "Đã 22:47. An đang chuẩn bị đi ngủ thì điện thoại reo. Màn hình hiển thị tên: Minh Anh — em họ của An, hai người thỉnh thoảng nhắn tin, không gọi video thường xuyên.",
+            "Màn hình hiện khuôn mặt Minh Anh. Hình hơi mờ, ánh sáng yếu. Âm thanh có lúc bị vỡ. Người gọi nói rất nhanh: 'Anh An, giúp em với. Em vừa va chạm xe. Em cần chuyển khoản gấp để xử lý. Điện thoại em sắp hết pin. Anh chuyển giúp em 5 triệu vào số tài khoản này được không?' Khi An hỏi 'Em đang ở đâu?', người kia đáp: 'Em không nói rõ được. Gấp lắm. Anh đừng gọi cho mẹ em, mẹ em sẽ hoảng. Anh chuyển trước đi rồi em nói sau.' Sau đó người kia gửi số tài khoản qua tin nhắn.",
+            "Các dấu hiệu đáng chú ý trong tình huống này: yêu cầu chuyển tiền gấp; yêu cầu không báo người khác; số tài khoản nhận tiền là tên người lạ; hình ảnh hơi mờ; giọng nói khá giống nhưng âm thanh bị vỡ; né câu hỏi về địa điểm; cuộc gọi diễn ra muộn.",
+          ], [
+            "Dấu hiệu mạnh nhất không nằm ở việc hình ảnh mờ — mà là yêu cầu chuyển tiền, áp lực thời gian, cô lập nạn nhân, tài khoản lạ và né xác minh.",
+          ]),
+          lesson("2.2.1", "Phân tích tình huống và các lựa chọn", [
+            "Câu hỏi 1 — Bạn làm gì trước? (A) Chuyển tiền ngay vì có thể Minh Anh đang nguy hiểm — rủi ro cao; kẻ xấu đang dùng khẩn cấp, thân quen và cô lập. (B) Hỏi lại vài câu riêng tư — không đủ chắc, thông tin cá nhân có thể bị lấy từ mạng xã hội. (C) Kết thúc cuộc gọi, gọi lại số điện thoại đã lưu của Minh Anh hoặc người thân khác để xác minh — đây là lựa chọn an toàn nhất. (D) Nhắn 'đợi chút' rồi gửi trước 1 triệu — chuyển 'một ít trước' vẫn là chuyển tiền cho tình huống chưa xác minh.",
+            "Câu hỏi 2 — Dấu hiệu nào đáng nghi nhất? → Yêu cầu chuyển tiền gấp; yêu cầu không báo người khác; số tài khoản nhận tiền là tên người lạ; né câu hỏi về địa điểm. (Hình ảnh mờ và cuộc gọi muộn là tín hiệu cần chú ý nhưng không đủ để kết luận.)",
+            "Câu hỏi 3 — Kênh độc lập nào tốt nhất? Thứ tự từ an toàn đến kém an toàn hơn: (1) Gọi số điện thoại đã lưu từ trước của Minh Anh; (2) Gọi mẹ hoặc người thân của Minh Anh bằng số đã lưu; (3) Nhắn lại trong cuộc gọi đang nghi vấn; (4) Gọi số mới người kia vừa gửi; (5) Bấm vào link 'vị trí bệnh viện' người kia gửi. Kênh độc lập là kênh bạn đã biết từ trước, không phải kênh do người đang bị nghi vấn cung cấp trong lúc khẩn cấp.",
+          ], [
+            "Xác minh qua kênh độc lập (số bạn đã lưu từ trước) là bước an toàn nhất trước khi chuyển tiền.",
+          ]),
+          lesson("2.2.2", "Nếu đã lỡ chuyển tiền và bài học rút ra", [
+            "Nếu An lỡ chuyển 5 triệu và sau đó phát hiện bị lừa, cần làm ngay: (A) Liên hệ ngân hàng càng sớm càng tốt; (B) Lưu bằng chứng: tin nhắn, số tài khoản, thời gian, ảnh chụp màn hình; (C) Báo cho người thân và bạn bè để tránh người khác bị lừa tiếp; (E) Báo cáo tài khoản nghi giả mạo trên nền tảng. Không nên xóa hết vì xấu hổ (làm việc xử lý khó hơn) hay đăng thông tin cá nhân nghi phạm tràn lan (có thể gây rủi ro pháp lý).",
+            "Điều nguy hiểm nhất trong case này không phải là video có hoàn hảo hay không — mà là kịch bản đánh vào nhiều nút bấm cùng lúc: thân quen (người gọi giống Minh Anh), khẩn cấp (cần tiền ngay), sợ hãi (tai nạn), cô lập (đừng gọi cho mẹ em), né xác minh (không nói rõ địa điểm).",
+            "Mẫu phản hồi an toàn khi gặp tình huống tương tự: 'Anh/chị sẽ gọi lại em bằng số cũ ngay bây giờ.', 'Nếu thật sự khẩn cấp, anh/chị cần xác minh để giúp đúng cách.', 'Anh/chị không chuyển tiền qua tài khoản lạ khi chưa xác nhận.', 'Anh/chị không thể đọc OTP hoặc gửi mã xác minh.'",
+          ], [
+            "Lo lắng cho người thân là phản ứng tốt. Nhưng trước khi chuyển tiền, phải xác minh.",
+            "Một cuộc gọi giống người thân vẫn cần xác minh nếu nó yêu cầu tiền, OTP, mật khẩu hoặc hành động khẩn cấp.",
+          ]),
+          lesson("2.2.3", "Checklist sau case và tổng kết Module 2", [
+            "Trước mọi cuộc gọi/tin nhắn khẩn cấp yêu cầu tiền hoặc thông tin nhạy cảm, hãy hỏi bản thân: (1) Người này có đang yêu cầu mình làm điều rủi ro không? (2) Có áp lực thời gian bất thường không? (3) Có yêu cầu giữ bí mật hoặc không nói với ai không? (4) Có kênh độc lập nào để xác minh không? (5) Thông tin tài khoản/link/số điện thoại có phải được gửi ngay trong tình huống nghi vấn không? (6) Nếu mình chậm lại 2 phút, điều gì tốt hơn có thể xảy ra?",
+            "Tổng kết Module 2: deepfake không chỉ là vấn đề công nghệ. Deepfake nguy hiểm vì thường đi cùng các kỹ thuật tác động tâm lý: khẩn cấp, thân quen, quyền lực, lợi ích, cô lập, xấu hổ, phẫn nộ. Hình ảnh, video và giọng nói có sức thuyết phục mạnh, nhưng không còn là bằng chứng tuyệt đối trong môi trường số.",
+            "Điều quan trọng nhất của Module 2: khi cảm xúc bị đẩy lên cao, khả năng kiểm chứng thường bị kéo xuống thấp. Vì vậy, kỹ năng đầu tiên của Deepfense Check là Pause — Dừng lại. Dừng lại không làm bạn chậm hơn. Dừng lại giúp bạn không bị người khác điều khiển nhịp phản ứng.",
+          ], [
+            "Khi cảm xúc bị đẩy lên cao, khả năng kiểm chứng thường bị kéo xuống thấp.",
+            "Dừng lại không làm bạn chậm hơn — nó giúp bạn không bị người khác điều khiển nhịp phản ứng.",
+          ]),
+        ],
+        checkpoint: null,
+      },
+    ],
+    quiz: [
+      q("Một người gọi nói giống người thân yêu cầu chuyển tiền trong 5 phút. 'Nút bấm' cảm xúc chính đang được dùng là gì?", ["Khẩn cấp", "Giải trí", "Học thuật", "Tò mò"], 0),
+      q("Một tài khoản giống bạn thân nhắn mượn tiền nhưng né gọi điện và bảo đang rất bận. Rủi ro lớn nhất là gì?", ["Tài khoản có thể bị chiếm quyền hoặc bị giả mạo", "Điện thoại của bạn chắc chắn bị hỏng", "Bạn thân chắc chắn đã đổi tính cách", "Tin nhắn ngắn thì luôn an toàn"], 0),
+      q("Câu nào sau đây là dấu hiệu cô lập nạn nhân?", ["Bạn có thể kiểm tra thêm", "Đừng nói với ai, việc này bí mật", "Hãy gọi tổng đài chính thức", "Bạn có thể suy nghĩ rồi trả lời sau"], 1),
+      q("Điều nào đúng nhất về deepfake và lừa đảo?", ["Nếu cuộc gọi không phải deepfake thì chắc chắn an toàn", "Một cuộc gọi có thể không phải deepfake nhưng vẫn là lừa đảo", "Chỉ deepfake mới nguy hiểm", "Tin nhắn không có video thì không thể lừa đảo"], 1),
+      q("Khi thấy câu 'chia sẻ ngay trước khi bị xóa', bạn nên hiểu gì?", ["Đây là tín hiệu cần kiểm chứng trước khi chia sẻ", "Đây luôn là tin chính xác", "Đây là bằng chứng nội dung quan trọng", "Đây là lý do phải chia sẻ nhanh"], 0),
+      q("Yêu cầu OTP qua cuộc gọi nên được xử lý thế nào?", ["Gửi nếu người yêu cầu nghe giống người quen", "Gửi nếu đang vội", "Không cung cấp OTP qua cuộc gọi/tin nhắn; xác minh qua kênh chính thức", "Gửi một phần mã để kiểm tra"], 2),
+      q("Vì sao kẻ xấu thường yêu cầu 'đừng nói với ai'?", ["Để bạn không nhận được lời khuyên hoặc kiểm chứng từ người khác", "Vì chúng muốn bảo vệ quyền riêng tư của bạn", "Vì mọi tình huống khẩn cấp đều phải bí mật", "Vì nói với người khác sẽ làm điện thoại chậm hơn"], 0),
+      q("Khi một nội dung làm bạn sợ, giận hoặc muốn hành động ngay, phản xạ an toàn nhất là gì?", ["Dừng lại và kiểm chứng", "Chia sẻ ngay", "Chuyển tiền trước, kiểm tra sau", "Làm theo cảm xúc đầu tiên"], 0),
+      q("Trong case cuộc gọi lúc 22:47, dấu hiệu đáng nghi nhất là gì?", ["Hình ảnh hơi mờ do mạng yếu", "Cuộc gọi diễn ra vào buổi tối", "Yêu cầu chuyển tiền gấp + không báo người khác + số tài khoản lạ + né địa điểm", "Người gọi nói nhanh"], 2),
+      q("Điều quan trọng nhất của Module 2 là gì?", ["Khi cảm xúc bị đẩy lên cao, khả năng kiểm chứng thường bị kéo xuống thấp", "Chỉ cần nhìn hình ảnh là biết deepfake", "Không bao giờ bắt điện thoại từ người thân", "Chỉ tin tưởng cuộc gọi video có độ phân giải cao"], 0),
+    ],
+  },
+  buildModule(3, "foundation", "Rủi ro, đạo đức và niềm tin số", "Module 3 đặt deepfake trong khung đạo đức, pháp lý nhận thức và trách nhiệm xã hội.", "Một người bạn gửi video nghi ngờ ghép mặt một bạn học vào nội dung xấu. Nhóm chat muốn đăng lên mạng để \"cảnh báo\". Bạn nên làm gì?", [
     ["3.1 Quyền riêng tư và sự đồng ý", [["3.1.1", "Danh tính số", "Danh tính số gồm hình ảnh, giọng nói, tên, tài khoản và các dấu hiệu nhận diện trực tuyến."], ["3.1.2", "Sự đồng ý", "Dùng khuôn mặt hoặc giọng nói người khác khi chưa được phép có thể gây hại nghiêm trọng."], ["3.1.3", "Bảo vệ nạn nhân", "Nạn nhân cần được hỗ trợ, không bị đổ lỗi hoặc biến thành nội dung giải trí."]]],
     ["3.2 Đạo đức chia sẻ", [["3.2.1", "Trách nhiệm người xem", "Người xem không tạo deepfake nhưng vẫn có trách nhiệm nếu chia sẻ nội dung chưa kiểm chứng."], ["3.2.2", "Dừng trước khi chia sẻ", "Hãy hỏi: nguồn là ai, có xác nhận độc lập không, nếu sai ai bị hại?"], ["3.2.3", "Không giải trí hóa nạn nhân", "Bình luận xúc phạm hoặc lan truyền vì tò mò có thể làm nạn nhân tổn thương thêm."]]],
     ["3.3 Pháp lý nhận thức", [["3.3.1", "Hiểu rủi ro pháp lý", "Không cần học luật sâu, nhưng cần hiểu tạo hoặc phát tán deepfake gây hại có thể dẫn đến hậu quả pháp lý."], ["3.3.2", "Nhóm vấn đề thường gặp", "Quyền riêng tư, danh dự, lừa đảo tài chính, bản quyền và trách nhiệm khi phát tán thông tin sai."], ["3.3.3", "Khi cần hỗ trợ", "Nếu có tống tiền, đe dọa, bôi nhọ nghiêm trọng hoặc xâm hại trẻ vị thành niên, cần tìm hỗ trợ phù hợp."]]],
@@ -181,6 +561,133 @@ const assessments = [
   { title: "Final Exam", scope: "Cuối khóa", detail: "50 câu, phân bổ trên toàn bộ 9 module. Đây là điều kiện chính để mở certificate.", questions: "50 câu" },
 ];
 
+// ============================================================
+// MINIGAMES — lồng ghép vào bài học (7 loại)
+// ============================================================
+const MINIGAMES = {
+  "4.3.3": {
+    type: "artifact_spotter",
+    title: "🔍 Thực hành: Spot the Artifact",
+    intro: "Bạn đang xem mô tả một video call đáng nghi. Bấm vào TẤT CẢ các dấu hiệu bất thường bạn nhận ra.",
+    zones: [
+      { id: "z1", label: "Viền khuôn mặt hơi mờ, không khớp với cổ", suspicious: true },
+      { id: "z2", label: "Miệng đôi khi không khớp lời nói", suspicious: true },
+      { id: "z3", label: "Ánh sáng trên mặt khác hướng với nền phòng", suspicious: true },
+      { id: "z4", label: "Mắt chớp theo nhịp bình thường", suspicious: false },
+      { id: "z5", label: "Tóc trông tự nhiên và rõ nét", suspicious: false },
+      { id: "z6", label: "Giọng có âm nền quá sạch, thiếu tiếng động phòng", suspicious: true },
+      { id: "z7", label: "Video giật ở vùng vai khi đầu xoay", suspicious: true },
+      { id: "z8", label: "Màu da trên trán và cằm hơi khác nhau", suspicious: true },
+    ],
+    minRequired: 4,
+    feedback: {
+      good: "Bạn đã phát hiện đủ dấu hiệu. Không có một tín hiệu nào là kết luận tuyệt đối — nhưng khi gom nhiều tín hiệu, bạn có cơ sở để kiểm chứng thêm.",
+      poor: "Bạn bỏ sót một số dấu hiệu. Hãy nhớ: không chỉ nhìn khuôn mặt — quan sát cả ánh sáng, viền, giọng nói và chuyển động.",
+    },
+  },
+  "5.3.3": {
+    type: "verification_call",
+    title: "📞 Thực hành: Cuộc gọi xác minh",
+    intro: "Bạn nhận video call từ 'ba/mẹ' yêu cầu chuyển tiền gấp vì tai nạn. Giọng nghe rất giống. Bạn sẽ làm gì?",
+    steps: [
+      {
+        q: "Phản ứng đầu tiên của bạn?",
+        opts: [
+          { t: "Chuyển tiền ngay — giọng quá giống", s: 0, f: "❌ Không bao giờ chuyển tiền dưới áp lực, dù giọng giống đến đâu. Voice deepfake có thể tái tạo giọng rất chính xác." },
+          { t: "Hỏi thêm thông tin rồi quyết định", s: 5, f: "⚠️ Tốt hơn, nhưng chưa đủ. Hỏi thêm trong cùng cuộc gọi chưa phải là xác minh độc lập." },
+          { t: "Xin ngắt máy để gọi lại qua số đã lưu sẵn", s: 10, f: "✅ Đúng! Gọi lại qua kênh bạn đã biết là cách xác minh hiệu quả nhất." },
+          { t: "Nhờ người khác nghe xem giọng có giống không", s: 3, f: "⚠️ Có thể hỗ trợ tâm lý, nhưng cách tốt nhất vẫn là xác minh qua kênh độc lập." },
+        ],
+      },
+      {
+        q: "Người gọi nói không có thời gian chờ, cần tiền ngay. Bạn làm gì?",
+        opts: [
+          { t: "Chuyển tiền trước, hỏi sau", s: 0, f: "❌ Áp lực thời gian là kỹ thuật social engineering. Đây là dấu hiệu lừa đảo, không phải khẩn cấp thật." },
+          { t: "Hỏi câu chỉ người thật mới biết (kỷ niệm riêng, tên thú cưng)", s: 10, f: "✅ Câu hỏi xác minh cá nhân rất hiệu quả — kẻ giả mạo không thể biết." },
+          { t: "Gọi người thân khác để xác nhận độc lập", s: 10, f: "✅ Gọi kênh khác để xác nhận là phản xạ đúng và an toàn nhất." },
+          { t: "Tin vào cảm giác vì giọng quá giống", s: 0, f: "❌ Cảm giác không phải xác minh. Voice deepfake được thiết kế để đánh lừa cảm xúc." },
+        ],
+      },
+    ],
+    maxScore: 20,
+  },
+  "6.1.3": {
+    type: "url_detective",
+    title: "🔗 Thực hành: URL Detective",
+    intro: "Phân loại từng đường link: An toàn, Đáng nghi, hay Nguy hiểm. Nhìn kỹ tên miền, ký tự và cấu trúc.",
+    urls: [
+      { id: "u1", url: "vietcombank.com.vn/dang-nhap", ans: "safe", hint: "Domain chính thức .com.vn của Vietcombank" },
+      { id: "u2", url: "vietc0mbank-login.net/verify", ans: "danger", hint: "Số 0 thay chữ o, domain .net lạ" },
+      { id: "u3", url: "facebook.com/security/checkpoint", ans: "safe", hint: "Subdomain hợp lệ của facebook.com" },
+      { id: "u4", url: "faceb00k-support.info/login", ans: "danger", hint: "00 thay oo, domain .info lạ" },
+      { id: "u5", url: "bit.ly/xacminh-tk-vcb-2025", ans: "suspicious", hint: "Link rút gọn che giấu đích thực" },
+      { id: "u6", url: "moh.gov.vn/thong-bao", ans: "safe", hint: "Domain .gov.vn của chính phủ Việt Nam" },
+      { id: "u7", url: "moh-gov-vn.com/thong-bao", ans: "danger", hint: "Dùng gạch ngang giả domain gov.vn" },
+      { id: "u8", url: "tinyurl.com/nhan-qua-zalo", ans: "suspicious", hint: "Link rút gọn + nội dung hấp dẫn nghi ngờ" },
+    ],
+  },
+  "7.2.1": {
+    type: "otp_trap",
+    title: "🔐 Thực hành: OTP Trap",
+    scenario: "Số lạ nhắn tin: \"Anh/chị ơi, em gửi nhầm mã OTP về số anh/chị rồi ạ. Anh/chị đọc giúp em số đó với, em đang cấp bách lắm 🙏\"",
+    q: "Bạn sẽ phản ứng như thế nào?",
+    opts: [
+      { t: "Đọc OTP cho họ — thấy họ cấp bách nên giúp", s: 0, f: "❌ Đây là kỹ thuật social engineering cổ điển. OTP về SIM của bạn là để bảo vệ TÀI KHOẢN CỦA BẠN — không bao giờ chia sẻ với ai." },
+      { t: "Hỏi thêm họ cần OTP cho dịch vụ gì", s: 3, f: "⚠️ Tốt hơn nhưng chưa đủ an toàn. Không có lý do hợp lệ nào để chia sẻ OTP với người lạ dù họ giải thích thế nào." },
+      { t: "Không trả lời và chặn số lạ đó", s: 8, f: "✅ Phản xạ đúng! OTP không bao giờ được chia sẻ với bất kỳ ai." },
+      { t: "Liên hệ ngân hàng/dịch vụ để báo cáo số lạ này", s: 10, f: "✅ Xuất sắc! Báo cáo giúp bảo vệ người dùng khác khỏi cùng kịch bản lừa đảo." },
+    ],
+  },
+  "7.3.3": {
+    type: "scam_chat_triage",
+    title: "💬 Thực hành: Phân tích chat lừa đảo",
+    intro: "Đọc đoạn chat bên dưới. Bấm vào từng tin nhắn có dấu hiệu lừa đảo để đánh dấu. Sau đó nộp để xem kết quả.",
+    chat: [
+      { id: "c1", sender: "Chị Lan — Kế toán trưởng", text: "Em ơi, chị đang họp với đối tác nước ngoài.", flag: false, tactic: null },
+      { id: "c2", sender: "Chị Lan — Kế toán trưởng", text: "Anh Giám đốc cần thanh toán hợp đồng GẤP trong 15 phút.", flag: true, tactic: "⏱ Tạo áp lực thời gian" },
+      { id: "c3", sender: "Chị Lan — Kế toán trưởng", text: "Chuyển ngay 80 triệu vào STK: 9988776655 - NGUYEN VAN A - BIDV.", flag: true, tactic: "💸 Yêu cầu chuyển tiền ngay" },
+      { id: "c4", sender: "Chị Lan — Kế toán trưởng", text: "Đừng hỏi ai nhé, đây là thông tin bảo mật công ty.", flag: true, tactic: "🤫 Yêu cầu giữ bí mật / cô lập" },
+      { id: "c5", sender: "Chị Lan — Kế toán trưởng", text: "Chuyển xong chị hoàn lại ngay, anh GĐ đã xác nhận rồi.", flag: true, tactic: "👤 Giả danh thẩm quyền" },
+      { id: "c6", sender: "Chị Lan — Kế toán trưởng", text: "Chờ chị một chút nhé.", flag: false, tactic: null },
+      { id: "c7", sender: "Chị Lan — Kế toán trưởng", text: "Nếu không chuyển kịp, hợp đồng bị huỷ — em chịu trách nhiệm đấy.", flag: true, tactic: "⚠️ Đe dọa và đổ lỗi" },
+      { id: "c8", sender: "Chị Lan — Kế toán trưởng", text: "Gọi cho chị thì đang họp kín, không nghe được.", flag: true, tactic: "🚫 Chặn xác minh qua kênh khác" },
+    ],
+    minCorrect: 4,
+  },
+  "8.2.1": {
+    type: "evidence_collector",
+    title: "🗂️ Thực hành: Thu thập bằng chứng",
+    intro: "Bạn vừa nghi bị lừa qua mạng. Hãy chọn TẤT CẢ những gì cần lưu lại trước khi báo cáo.",
+    items: [
+      { id: "e1", text: "Ảnh chụp màn hình toàn bộ đoạn chat", keep: true, reason: "Bằng chứng chính về nội dung giao tiếp." },
+      { id: "e2", text: "Số tài khoản ngân hàng kẻ lừa đảo cung cấp", keep: true, reason: "Dùng để truy vết và báo cáo ngân hàng." },
+      { id: "e3", text: "Tên tài khoản mạng xã hội của đối tượng", keep: true, reason: "Giúp nền tảng xác minh và gỡ tài khoản." },
+      { id: "e4", text: "Link bài đăng hoặc tin nhắn gốc", keep: true, reason: "URL giúp xác minh nguồn và báo cáo chính xác." },
+      { id: "e5", text: "Thời gian xảy ra (ngày, giờ)", keep: true, reason: "Mốc thời gian hỗ trợ điều tra." },
+      { id: "e6", text: "Số điện thoại đối tượng đã gọi", keep: true, reason: "Dùng để báo cáo nhà mạng và cơ quan chức năng." },
+      { id: "e7", text: "Mã giao dịch ngân hàng (nếu đã chuyển tiền)", keep: true, reason: "Bằng chứng tài chính quan trọng nhất." },
+      { id: "e8", text: "Xóa đoạn chat để người khác không nhìn thấy", keep: false, reason: "SAI — xóa là mất bằng chứng. Cần giữ nguyên để báo cáo." },
+      { id: "e9", text: "Đăng ngay lên mạng xã hội để cảnh báo mọi người", keep: false, reason: "Sai — chia sẻ vội có thể lộ thông tin cá nhân và gây hại thêm." },
+      { id: "e10", text: "Email hoặc file đính kèm kẻ tấn công gửi", keep: true, reason: "File/email là bằng chứng kỹ thuật quan trọng." },
+    ],
+  },
+  "9.1.2": {
+    type: "pressure_meter",
+    title: "🎯 Thực hành: Nhận diện thao túng tâm lý",
+    intro: "Đọc kịch bản dưới đây và bấm vào từng câu chứa kỹ thuật thao túng tâm lý.",
+    scene: "Cuộc gọi từ người tự xưng 'Thiếu tá Bùi Văn Minh — Công an thành phố':",
+    segs: [
+      { id: "p1", text: "Tôi là Thiếu tá Bùi Văn Minh, Công an thành phố.", isTactic: true, label: "Giả danh quyền lực" },
+      { id: "p2", text: "Tài khoản ngân hàng của anh/chị liên quan đến vụ rửa tiền đang điều tra.", isTactic: true, label: "Tạo nỗi sợ hãi" },
+      { id: "p3", text: "Chúng tôi sẽ phong tỏa tài sản trong 24 giờ nếu không hợp tác ngay.", isTactic: true, label: "Đe dọa" },
+      { id: "p4", text: "Để bảo vệ tài sản, anh/chị cần chuyển tiền vào tài khoản 'tạm giữ an toàn' ngay.", isTactic: true, label: "Tạo áp lực hành động ngay" },
+      { id: "p5", text: "Tuyệt đối không được kể với ai — kể cả gia đình — vì điều tra bí mật.", isTactic: true, label: "Cô lập nạn nhân" },
+      { id: "p6", text: "Nếu không làm theo, sẽ bắt giữ ngay trong hôm nay.", isTactic: true, label: "Đe dọa bắt giữ" },
+      { id: "p7", text: "Thời gian còn 10 phút để anh/chị quyết định.", isTactic: true, label: "Tạo áp lực thời gian" },
+    ],
+  },
+};
+
 let state = {
   route: "overview",
   moduleIndex: 0,
@@ -189,6 +696,7 @@ let state = {
   quiz: null,
   inlineAnswers: {},
   inlineSubmitted: false,
+  minigameState: {},
 };
 
 const AUTH_KEY = "deepfenseAcademyAuth";
@@ -549,6 +1057,7 @@ function isLastLessonInSection() {
 function renderInlineCheckpoint() {
   if (!isLastLessonInSection()) return "";
   const checkpointData = currentSection().checkpoint;
+  if (!checkpointData) return "";
   return `
     <section class="inline-quiz" aria-label="Checkpoint ${checkpointData.label}">
       <p class="eyebrow">Checkpoint ${checkpointData.label}</p>
@@ -584,6 +1093,337 @@ function renderInlineCheckpointResult() {
 function renderOverview() {
   const grid = document.querySelector("#overviewGrid");
   if (!grid) return;
+}
+
+// ============================================================
+// MINIGAME RENDER ENGINE
+// ============================================================
+
+function getMgState(lessonId) {
+  if (!state.minigameState[lessonId]) {
+    state.minigameState[lessonId] = { selected: [], answers: {}, step: 0, totalScore: 0, submitted: false, stepSubmitted: false };
+  }
+  return state.minigameState[lessonId];
+}
+
+function refreshMinigame(lessonId) {
+  const block = document.querySelector(`.minigame-block[data-mg-lesson="${lessonId}"]`);
+  if (!block) return;
+  const mg = MINIGAMES[lessonId];
+  const mgs = getMgState(lessonId);
+  const html = renderMinigameHtml(mg, mgs, lessonId);
+  block.outerHTML = html;
+}
+
+function renderLessonMinigame(lessonId) {
+  const mg = MINIGAMES[lessonId];
+  if (!mg) return "";
+  const mgs = getMgState(lessonId);
+  return renderMinigameHtml(mg, mgs, lessonId);
+}
+
+function renderMinigameHtml(mg, mgs, lid) {
+  switch (mg.type) {
+    case "artifact_spotter": return renderArtifactSpotter(mg, mgs, lid);
+    case "verification_call": return renderVerificationCall(mg, mgs, lid);
+    case "url_detective": return renderUrlDetective(mg, mgs, lid);
+    case "otp_trap": return renderOtpTrap(mg, mgs, lid);
+    case "scam_chat_triage": return renderScamChatTriage(mg, mgs, lid);
+    case "evidence_collector": return renderEvidenceCollector(mg, mgs, lid);
+    case "pressure_meter": return renderPressureMeter(mg, mgs, lid);
+    default: return "";
+  }
+}
+
+function mgResetBtn(lid) {
+  return `<button class="mg-reset-btn" data-mg-reset="${lid}">↩ Thử lại</button>`;
+}
+
+// --- Artifact Spotter ---
+function renderArtifactSpotter(mg, mgs, lid) {
+  const susZones = mg.zones.filter(z => z.suspicious);
+  if (mgs.submitted) {
+    const found = susZones.filter(z => mgs.selected.includes(z.id)).length;
+    const passed = found >= mg.minRequired;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · Spot the Artifact</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Đạt!" : "⚠️ Chưa đủ"}</strong>
+        <p>Bạn phát hiện <strong>${found}/${susZones.length}</strong> dấu hiệu bất thường.</p>
+        <p>${passed ? mg.feedback.good : mg.feedback.poor}</p>
+      </div>
+      <div class="artifact-grid">
+        ${mg.zones.map(z => `<div class="artifact-zone ${mgs.selected.includes(z.id) ? (z.suspicious ? "zone-correct" : "zone-wrong") : (z.suspicious ? "zone-missed" : "zone-ok")}">
+          ${z.label}
+          ${z.suspicious ? '<span class="zone-tag warn">⚠ Đáng nghi</span>' : '<span class="zone-tag ok">✓ Bình thường</span>'}
+        </div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · Spot the Artifact</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <div class="artifact-grid">
+      ${mg.zones.map(z => `<button class="artifact-zone clickable ${mgs.selected.includes(z.id) ? "zone-selected" : ""}" data-mg-zone="${z.id}" data-mg-lesson="${lid}">${z.label}</button>`).join("")}
+    </div>
+    <p class="mg-hint">Đã chọn: ${mgs.selected.length} dấu hiệu · Cần ít nhất ${mg.minRequired} đúng</p>
+    <button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>
+  </section>`;
+}
+
+// --- Verification Call ---
+function renderVerificationCall(mg, mgs, lid) {
+  if (mgs.submitted) {
+    const total = mgs.totalScore || 0;
+    const passed = total >= mg.maxScore * 0.6;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · Verification Call</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Bạn biết cách xác minh!" : "⚠️ Cần luyện thêm kỹ năng xác minh"}</strong>
+        <p>Điểm: <strong>${total}/${mg.maxScore}</strong></p>
+      </div>
+      ${mg.steps.map((step, si) => {
+        const chosen = step.opts[mgs.answers[si] ?? -1];
+        return `<div class="verification-step step-done">
+          <p><strong>${step.q}</strong></p>
+          ${chosen ? `<div class="mg-result ${chosen.s >= 8 ? "mg-pass" : chosen.s >= 3 ? "mg-partial" : "mg-fail"} mg-compact">${chosen.f}</div>` : ""}
+        </div>`;
+      }).join("")}
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  const currentStep = mgs.step || 0;
+  const stepData = mg.steps[currentStep];
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · Verification Call</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <div class="verification-step">
+      <p class="mg-step-label">Bước ${currentStep + 1} / ${mg.steps.length}</p>
+      <p><strong>${stepData.q}</strong></p>
+      <div class="option-list">
+        ${stepData.opts.map((o, i) => {
+          const sel = mgs.answers[currentStep] === i;
+          const showFb = sel && mgs.stepSubmitted;
+          return `<button class="option-card ${sel ? "opt-selected" : ""} ${showFb ? (o.s >= 8 ? "opt-correct" : o.s >= 3 ? "opt-partial" : "opt-wrong") : ""}"
+            data-mg-vcopt="${i}" data-mg-vclid="${lid}" data-mg-vcstep="${currentStep}">
+            <span>${o.t}</span>
+            ${showFb ? `<span class="opt-feedback">${o.f}</span>` : ""}
+          </button>`;
+        }).join("")}
+      </div>
+      ${mgs.answers[currentStep] !== undefined && !mgs.stepSubmitted
+        ? `<button class="mg-submit-btn" data-mg-vcconfirm="${lid}">Xác nhận</button>`
+        : ""}
+      ${mgs.stepSubmitted && currentStep < mg.steps.length - 1
+        ? `<button class="mg-submit-btn" data-mg-vcnext="${lid}">Bước tiếp theo →</button>`
+        : ""}
+      ${mgs.stepSubmitted && currentStep === mg.steps.length - 1
+        ? `<button class="mg-submit-btn" data-mg-submit="${lid}">Xem kết quả</button>`
+        : ""}
+    </div>
+  </section>`;
+}
+
+// --- URL Detective ---
+function renderUrlDetective(mg, mgs, lid) {
+  const labels = { safe: "An toàn", suspicious: "Đáng nghi", danger: "Nguy hiểm" };
+  if (mgs.submitted) {
+    const correct = mg.urls.filter(u => mgs.answers[u.id] === u.ans).length;
+    const passed = correct >= 6;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · URL Detective</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Đạt!" : "⚠️ Cần luyện thêm"}</strong>
+        <p>Phân loại đúng <strong>${correct}/${mg.urls.length}</strong> đường link.</p>
+      </div>
+      <div class="url-list">
+        ${mg.urls.map(u => `<div class="url-row ${mgs.answers[u.id] === u.ans ? "row-correct" : "row-wrong"}">
+          <code class="url-code">${u.url}</code>
+          <div class="url-row-meta">
+            <span class="url-badge url-${u.ans}">${labels[u.ans]}</span>
+            <span class="url-hint">${u.hint}</span>
+          </div>
+        </div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  const answered = Object.keys(mgs.answers).length;
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · URL Detective</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <div class="url-list">
+      ${mg.urls.map(u => `<div class="url-row">
+        <code class="url-code">${u.url}</code>
+        <div class="url-choices">
+          ${["safe", "suspicious", "danger"].map(c => `<button class="url-choice-btn url-${c} ${mgs.answers[u.id] === c ? "choice-selected" : ""}"
+            data-mg-url="${u.id}" data-mg-choice="${c}" data-mg-lesson="${lid}">${labels[c]}</button>`).join("")}
+        </div>
+      </div>`).join("")}
+    </div>
+    <p class="mg-hint">Đã phân loại: ${answered}/${mg.urls.length} link</p>
+    <button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>
+  </section>`;
+}
+
+// --- OTP Trap ---
+function renderOtpTrap(mg, mgs, lid) {
+  if (mgs.submitted) {
+    const chosen = mg.opts[mgs.selected[0]];
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · OTP Trap</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-scenario">${mg.scenario}</div>
+      <div class="mg-result ${chosen.s >= 8 ? "mg-pass" : chosen.s >= 3 ? "mg-partial" : "mg-fail"}">
+        <p><strong>Bạn chọn:</strong> ${chosen.t}</p>
+        <p>${chosen.f}</p>
+      </div>
+      <div class="option-list">
+        ${mg.opts.map((o, i) => `<div class="option-card static ${i === mgs.selected[0] ? (o.s >= 8 ? "opt-correct" : o.s >= 3 ? "opt-partial" : "opt-wrong") : ""}"
+          style="opacity:${i === mgs.selected[0] ? 1 : 0.45}">${o.t}</div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · OTP Trap</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <div class="mg-scenario">${mg.scenario}</div>
+    <p class="mg-intro"><strong>${mg.q}</strong></p>
+    <div class="option-list">
+      ${mg.opts.map((o, i) => `<button class="option-card ${mgs.selected.includes(i) ? "opt-selected" : ""}"
+        data-mg-opt="${i}" data-mg-lesson="${lid}">${o.t}</button>`).join("")}
+    </div>
+    ${mgs.selected.length > 0 ? `<button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>` : ""}
+  </section>`;
+}
+
+// --- Scam Chat Triage ---
+function renderScamChatTriage(mg, mgs, lid) {
+  if (mgs.submitted) {
+    const shouldFlag = mg.chat.filter(c => c.flag);
+    const correctFlags = shouldFlag.filter(c => mgs.selected.includes(c.id)).length;
+    const falseFlags = mgs.selected.filter(id => !mg.chat.find(c => c.id === id)?.flag).length;
+    const passed = correctFlags >= mg.minCorrect && falseFlags <= 1;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · Scam Chat Triage</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Tốt!" : "⚠️ Cần xem lại"}</strong>
+        <p>Đánh dấu đúng <strong>${correctFlags}/${shouldFlag.length}</strong> dấu hiệu lừa đảo${falseFlags > 0 ? `, đánh nhầm ${falseFlags} tin nhắn bình thường` : ""}.</p>
+      </div>
+      <div class="chat-list">
+        ${mg.chat.map(c => `<div class="chat-bubble ${c.flag ? (mgs.selected.includes(c.id) ? "bubble-correct" : "bubble-missed") : (mgs.selected.includes(c.id) ? "bubble-false" : "")}">
+          <span class="chat-sender">${c.sender}</span>
+          <p>${c.text}</p>
+          ${c.flag ? `<span class="tactic-label">${c.tactic}</span>` : ""}
+          ${!c.flag && mgs.selected.includes(c.id) ? `<span class="tactic-label tactic-wrong">✗ Tin nhắn bình thường</span>` : ""}
+        </div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · Scam Chat Triage</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <div class="chat-list">
+      ${mg.chat.map(c => `<button class="chat-bubble clickable-bubble ${mgs.selected.includes(c.id) ? "bubble-flagged" : ""}"
+        data-mg-chat="${c.id}" data-mg-lesson="${lid}">
+        <span class="chat-sender">${c.sender}</span>
+        <p>${c.text}</p>
+        ${mgs.selected.includes(c.id) ? '<span class="flag-indicator">🚩 Đã đánh dấu</span>' : ""}
+      </button>`).join("")}
+    </div>
+    <p class="mg-hint">Đã đánh dấu: ${mgs.selected.length} tin nhắn</p>
+    <button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>
+  </section>`;
+}
+
+// --- Evidence Collector ---
+function renderEvidenceCollector(mg, mgs, lid) {
+  if (mgs.submitted) {
+    const shouldKeep = mg.items.filter(i => i.keep);
+    const correct = shouldKeep.filter(i => mgs.selected.includes(i.id)).length;
+    const wrongSel = mgs.selected.filter(id => !mg.items.find(i => i.id === id)?.keep).length;
+    const passed = correct >= shouldKeep.length - 1 && wrongSel === 0;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · Evidence Collector</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Tốt!" : "⚠️ Cần xem lại"}</strong>
+        <p>Chọn đúng <strong>${correct}/${shouldKeep.length}</strong> bằng chứng cần lưu${wrongSel > 0 ? `, chọn nhầm ${wrongSel} hành động sai` : ""}.</p>
+      </div>
+      <div class="evidence-list">
+        ${mg.items.map(item => `<div class="evidence-item ${item.keep ? (mgs.selected.includes(item.id) ? "ev-correct" : "ev-missed") : (mgs.selected.includes(item.id) ? "ev-wrong" : "ev-ok")}">
+          <span class="ev-text">${item.keep ? "✅" : "❌"} ${item.text}</span>
+          <small class="ev-reason">${item.reason}</small>
+        </div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · Evidence Collector</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <div class="evidence-list">
+      ${mg.items.map(item => `<button class="evidence-item ev-clickable ${mgs.selected.includes(item.id) ? "ev-selected" : ""}"
+        data-mg-ev="${item.id}" data-mg-lesson="${lid}">
+        <span class="ev-text">${item.text}</span>
+      </button>`).join("")}
+    </div>
+    <p class="mg-hint">Đã chọn: ${mgs.selected.length} mục</p>
+    <button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>
+  </section>`;
+}
+
+// --- Pressure Meter ---
+function renderPressureMeter(mg, mgs, lid) {
+  if (mgs.submitted) {
+    const totalTactics = mg.segs.filter(s => s.isTactic).length;
+    const found = mg.segs.filter(s => s.isTactic && mgs.selected.includes(s.id)).length;
+    const falsePos = mgs.selected.filter(id => !mg.segs.find(s => s.id === id)?.isTactic).length;
+    const passed = found >= totalTactics - 1 && falsePos === 0;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · Pressure Meter</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Xuất sắc!" : "⚠️ Cần luyện thêm"}</strong>
+        <p>Nhận ra <strong>${found}/${totalTactics}</strong> kỹ thuật thao túng tâm lý.</p>
+      </div>
+      <p class="mg-hint">${mg.scene}</p>
+      <div class="pressure-list">
+        ${mg.segs.map(s => `<div class="pressure-seg ${s.isTactic ? (mgs.selected.includes(s.id) ? "seg-correct" : "seg-missed") : (mgs.selected.includes(s.id) ? "seg-wrong" : "")}">
+          <p class="seg-text">"${s.text}"</p>
+          ${s.isTactic ? `<span class="tactic-label">${s.label}</span>` : ""}
+        </div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · Pressure Meter</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <p class="mg-hint">${mg.scene}</p>
+    <div class="pressure-list">
+      ${mg.segs.map(s => `<button class="pressure-seg seg-clickable ${mgs.selected.includes(s.id) ? "seg-flagged" : ""}"
+        data-mg-seg="${s.id}" data-mg-lesson="${lid}">
+        <p class="seg-text">"${s.text}"</p>
+        ${mgs.selected.includes(s.id) ? '<span class="flag-indicator">🚩</span>' : ""}
+      </button>`).join("")}
+    </div>
+    <p class="mg-hint">Đã đánh dấu: ${mgs.selected.length} câu</p>
+    <button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>
+  </section>`;
 }
 
 function renderModuleStrip() {
@@ -631,6 +1471,7 @@ function renderLearning() {
       <h3>Điểm cần nhớ</h3>
       <ul>${lessonItem.takeaways.map((item) => `<li>${item}</li>`).join("")}</ul>
     </div>
+    ${renderLessonMinigame(lessonItem.id)}
     ${renderInlineCheckpoint()}
   `;
 
@@ -943,6 +1784,118 @@ function bindEvents() {
       const result = document.querySelector("#inlineCheckpointResult");
       if (result) result.textContent = renderInlineCheckpointResult();
     }
+
+    // ---- Minigame event handlers ----
+
+    // Artifact Spotter: toggle zone
+    const mgZone = event.target.closest("[data-mg-zone]");
+    if (mgZone) {
+      const lid = mgZone.dataset.mgLesson;
+      const zid = mgZone.dataset.mgZone;
+      const mgs = getMgState(lid);
+      mgs.selected = mgs.selected.includes(zid) ? mgs.selected.filter(z => z !== zid) : [...mgs.selected, zid];
+      refreshMinigame(lid);
+    }
+
+    // URL Detective: classify url
+    const mgUrl = event.target.closest("[data-mg-url]");
+    if (mgUrl) {
+      const lid = mgUrl.dataset.mgLesson;
+      const mgs = getMgState(lid);
+      mgs.answers[mgUrl.dataset.mgUrl] = mgUrl.dataset.mgChoice;
+      refreshMinigame(lid);
+    }
+
+    // OTP Trap: pick option
+    const mgOpt = event.target.closest("[data-mg-opt]");
+    if (mgOpt) {
+      const lid = mgOpt.dataset.mgLesson;
+      const mgs = getMgState(lid);
+      mgs.selected = [Number(mgOpt.dataset.mgOpt)];
+      refreshMinigame(lid);
+    }
+
+    // Scam Chat Triage: toggle flag
+    const mgChat = event.target.closest("[data-mg-chat]");
+    if (mgChat) {
+      const lid = mgChat.dataset.mgLesson;
+      const cid = mgChat.dataset.mgChat;
+      const mgs = getMgState(lid);
+      mgs.selected = mgs.selected.includes(cid) ? mgs.selected.filter(c => c !== cid) : [...mgs.selected, cid];
+      refreshMinigame(lid);
+    }
+
+    // Evidence Collector: toggle item
+    const mgEv = event.target.closest("[data-mg-ev]");
+    if (mgEv) {
+      const lid = mgEv.dataset.mgLesson;
+      const eid = mgEv.dataset.mgEv;
+      const mgs = getMgState(lid);
+      mgs.selected = mgs.selected.includes(eid) ? mgs.selected.filter(e => e !== eid) : [...mgs.selected, eid];
+      refreshMinigame(lid);
+    }
+
+    // Pressure Meter: toggle segment
+    const mgSeg = event.target.closest("[data-mg-seg]");
+    if (mgSeg) {
+      const lid = mgSeg.dataset.mgLesson;
+      const sid = mgSeg.dataset.mgSeg;
+      const mgs = getMgState(lid);
+      mgs.selected = mgs.selected.includes(sid) ? mgs.selected.filter(s => s !== sid) : [...mgs.selected, sid];
+      refreshMinigame(lid);
+    }
+
+    // Verification Call: pick step option
+    const mgVcOpt = event.target.closest("[data-mg-vcopt]");
+    if (mgVcOpt) {
+      const lid = mgVcOpt.dataset.mgVclid;
+      const mgs = getMgState(lid);
+      mgs.answers[Number(mgVcOpt.dataset.mgVcstep)] = Number(mgVcOpt.dataset.mgVcopt);
+      mgs.stepSubmitted = false;
+      refreshMinigame(lid);
+    }
+
+    // Verification Call: confirm step
+    const mgVcConfirm = event.target.closest("[data-mg-vcconfirm]");
+    if (mgVcConfirm) {
+      const lid = mgVcConfirm.dataset.mgVcconfirm;
+      const mgs = getMgState(lid);
+      const mg = MINIGAMES[lid];
+      const step = mgs.step || 0;
+      const chosen = mg.steps[step].opts[mgs.answers[step]];
+      if (chosen) mgs.totalScore = (mgs.totalScore || 0) + chosen.s;
+      mgs.stepSubmitted = true;
+      refreshMinigame(lid);
+    }
+
+    // Verification Call: go to next step
+    const mgVcNext = event.target.closest("[data-mg-vcnext]");
+    if (mgVcNext) {
+      const lid = mgVcNext.dataset.mgVcnext;
+      const mgs = getMgState(lid);
+      mgs.step = (mgs.step || 0) + 1;
+      mgs.stepSubmitted = false;
+      refreshMinigame(lid);
+    }
+
+    // Submit minigame (all types)
+    const mgSubmit = event.target.closest("[data-mg-submit]");
+    if (mgSubmit) {
+      const lid = mgSubmit.dataset.mgSubmit;
+      const mgs = getMgState(lid);
+      mgs.submitted = true;
+      refreshMinigame(lid);
+    }
+
+    // Reset minigame
+    const mgReset = event.target.closest("[data-mg-reset]");
+    if (mgReset) {
+      const lid = mgReset.dataset.mgReset;
+      state.minigameState[lid] = { selected: [], answers: {}, step: 0, totalScore: 0, submitted: false, stepSubmitted: false };
+      refreshMinigame(lid);
+    }
+
+    // ---- End minigame handlers ----
 
     const assessmentButton = event.target.closest("[data-assessment]");
     if (assessmentButton) {

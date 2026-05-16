@@ -1,0 +1,150 @@
+{
+  "moduleId": 1,
+  "title": "Deepfake là gì?",
+  "questions": [
+    {
+      "id": "m1q01",
+      "text": "Thuật ngữ \"deepfake\" được ghép từ những từ nào?",
+      "options": [
+        "Deep learning + fake",
+        "Deep web + fake news",
+        "Deep state + fake media",
+        "Deep data + fake image"
+      ],
+      "correct": 0,
+      "explanation": "\"Deepfake\" là sự kết hợp của \"deep learning\" (học sâu — một nhánh của AI) và \"fake\" (giả mạo), ám chỉ nội dung giả mạo được tạo ra bằng kỹ thuật học sâu."
+    },
+    {
+      "id": "m1q02",
+      "text": "Kỹ thuật cốt lõi nào được dùng để tạo ra phần lớn deepfake hiện nay?",
+      "options": [
+        "Mã hóa đối xứng (Symmetric encryption)",
+        "Mạng đối nghịch sinh (GAN — Generative Adversarial Networks)",
+        "Cây quyết định (Decision tree)",
+        "Hồi quy tuyến tính (Linear regression)"
+      ],
+      "correct": 1,
+      "explanation": "GAN (Generative Adversarial Networks) gồm hai mạng neural: Generator tạo nội dung giả, Discriminator cố phân biệt thật/giả. Hai mạng cạnh tranh nhau, khiến kết quả ngày càng chân thực."
+    },
+    {
+      "id": "m1q03",
+      "text": "Deepfake KHÔNG chỉ giới hạn ở hình ảnh và video. Loại nội dung nào dưới đây CŨNG có thể là deepfake?",
+      "options": [
+        "Chỉ hình ảnh tĩnh",
+        "Chỉ video chuyển động",
+        "Âm thanh, giọng nói (voice cloning)",
+        "Chỉ ảnh chụp màn hình"
+      ],
+      "correct": 2,
+      "explanation": "Deepfake bao gồm cả audio deepfake (voice cloning) — tạo giả giọng nói của một người chỉ từ vài giây ghi âm. Đây là hình thức ngày càng phổ biến trong lừa đảo qua điện thoại."
+    },
+    {
+      "id": "m1q04",
+      "text": "Đặc điểm nào sau đây là dấu hiệu phổ biến nhất của deepfake video khuôn mặt thế hệ cũ?",
+      "options": [
+        "Giọng nói quá to",
+        "Màu sắc nền quá sáng",
+        "Vùng viền khuôn mặt bị mờ hoặc nhòe bất thường",
+        "Video chạy quá nhanh"
+      ],
+      "correct": 2,
+      "explanation": "Các mô hình deepfake thế hệ đầu thường để lại dấu vết rõ nhất ở đường viền khuôn mặt — nơi khuôn mặt ghép vào nền không khớp hoàn hảo, tạo ra hiệu ứng mờ hoặc nhòe."
+    },
+    {
+      "id": "m1q05",
+      "text": "Deepfake xuất hiện lần đầu gây chú ý của công chúng vào khoảng năm nào?",
+      "options": [
+        "2010 — 2012",
+        "2017 — 2018",
+        "2020 — 2021",
+        "2005 — 2007"
+      ],
+      "correct": 1,
+      "explanation": "Khoảng năm 2017, người dùng Reddit bắt đầu chia sẻ video ghép mặt người nổi tiếng dùng kỹ thuật AI, tạo ra làn sóng chú ý toàn cầu và đặt ra nhiều lo ngại về đạo đức."
+    },
+    {
+      "id": "m1q06",
+      "text": "Mục đích nào dưới đây là ứng dụng TÍCH CỰC, hợp lệ của công nghệ deepfake/synthetic media?",
+      "options": [
+        "Tạo video khiêu dâm không có sự đồng ý của nạn nhân",
+        "Sản xuất phim điện ảnh (làm trẻ hóa diễn viên, hồi sinh nhân vật)",
+        "Phát tán tin giả về chính trị",
+        "Giả mạo giọng nói người thân để lừa đảo tài chính"
+      ],
+      "correct": 1,
+      "explanation": "Công nghệ synthetic media có nhiều ứng dụng hợp lệ: làm trẻ diễn viên trong phim, tạo nhân vật ảo, dịch thuật video giữ nguyên khẩu hình, hay mô phỏng trong y tế và giáo dục."
+    },
+    {
+      "id": "m1q07",
+      "text": "\"Face swap\" (hoán đổi khuôn mặt) trong deepfake hoạt động như thế nào về cơ bản?",
+      "options": [
+        "Cắt ghép thủ công bằng Photoshop",
+        "AI học đặc điểm khuôn mặt của người A rồi áp lên khuôn mặt người B trong video",
+        "Quay lại video với diễn viên đóng thế",
+        "Dùng bộ lọc màu để thay đổi ngoại hình"
+      ],
+      "correct": 1,
+      "explanation": "Face swap dùng AI (thường là autoencoder hoặc GAN) để học biểu diễn khuôn mặt của người A, sau đó tổng hợp khuôn mặt đó lên chuyển động và biểu cảm của người B trong video nguồn."
+    },
+    {
+      "id": "m1q08",
+      "text": "Tại sao deepfake ngày càng khó phát hiện bằng mắt thường?",
+      "options": [
+        "Vì chúng được quay bằng camera chất lượng cao hơn",
+        "Vì các mô hình AI liên tục cải tiến, loại bỏ các dấu hiệu giả truyền thống",
+        "Vì người xem không chú ý kỹ",
+        "Vì internet ngày càng nhanh hơn"
+      ],
+      "correct": 1,
+      "explanation": "Mỗi thế hệ mô hình deepfake mới học cách vượt qua các bộ phát hiện trước đó. Kết quả là các dấu hiệu nhận biết như nhòe viền, nháy mắt bất thường đã gần như biến mất ở deepfake thế hệ mới."
+    },
+    {
+      "id": "m1q09",
+      "text": "Phản ứng đúng đắn khi bạn nhận được một video gây sốc hoặc không thể tin được về một người nổi tiếng là gì?",
+      "options": [
+        "Chia sẻ ngay để cảnh báo mọi người",
+        "Tin tưởng hoàn toàn vì \"mắt thấy tai nghe\"",
+        "Tạm dừng, kiểm chứng nguồn gốc trước khi lan truyền",
+        "Xóa ứng dụng mạng xã hội"
+      ],
+      "correct": 2,
+      "explanation": "Nguyên tắc vàng: DỪNG — KIỂM TRA — SAU ĐÓ MỚI CHIA SẺ. Video gây sốc thường được thiết kế để kích thích phản ứng cảm xúc và chia sẻ nhanh trước khi người ta kịp suy nghĩ."
+    },
+    {
+      "id": "m1q10",
+      "text": "Loại tấn công nào sử dụng deepfake audio để giả giọng sếp, yêu cầu nhân viên chuyển tiền khẩn cấp?",
+      "options": [
+        "Phishing qua email",
+        "Vishing với AI voice cloning (Business Email Compromise biến thể)",
+        "Ransomware",
+        "SQL injection"
+      ],
+      "correct": 1,
+      "explanation": "Tấn công \"CEO fraud\" hay \"voice vishing\" dùng AI cloning giọng nói đã xảy ra thực tế — ví dụ năm 2019, một công ty ở UK bị lừa chuyển 220.000 EUR vì giả mạo giọng CEO bằng AI."
+    },
+    {
+      "id": "m1q11",
+      "text": "\"Tư duy phòng vệ\" (defensive mindset) trong bối cảnh deepfake có nghĩa là gì?",
+      "options": [
+        "Không xem bất kỳ video nào trên internet",
+        "Luôn nghi ngờ mọi người xung quanh",
+        "Thói quen kiểm chứng thông tin trước khi tin và chia sẻ",
+        "Cài đặt phần mềm chống deepfake trên điện thoại"
+      ],
+      "correct": 2,
+      "explanation": "Tư duy phòng vệ không phải là hoang mang hay nghi ngờ tất cả, mà là thói quen lành mạnh: hỏi \"nguồn này đáng tin không?\", \"có động cơ gì để tạo nội dung này?\", \"tôi có thể xác minh không?\""
+    },
+    {
+      "id": "m1q12",
+      "text": "Deepfake có thể ảnh hưởng đến ai?",
+      "options": [
+        "Chỉ người nổi tiếng và chính trị gia",
+        "Chỉ người thường không có tài khoản mạng xã hội",
+        "Bất kỳ ai có ảnh hoặc video được công khai trên internet",
+        "Chỉ ảnh hưởng đến người cao tuổi"
+      ],
+      "correct": 2,
+      "explanation": "Bất kỳ ai có ảnh hoặc video công khai đều có nguy cơ bị dùng để tạo deepfake. Với sự phát triển của công cụ AI miễn phí, ngưỡng kỹ thuật ngày càng thấp — không cần là chuyên gia IT."
+    }
+  ]
+}
