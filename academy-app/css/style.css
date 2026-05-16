@@ -490,6 +490,24 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 }
 .sidebar-home-link:hover { color: var(--clr-primary); opacity: 1; }
 
+.btn-cert-sidebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: .82rem;
+  font-weight: 700;
+  color: #000;
+  background: var(--clr-primary);
+  border-radius: var(--r-md);
+  padding: 9px 14px;
+  width: 100%;
+  transition: all var(--tr);
+  letter-spacing: .02em;
+}
+.btn-cert-sidebar:hover { background: #33f4ff; }
+.btn-cert-sidebar.hidden { display: none !important; }
+
 /* Sidebar overlay (mobile) */
 .sidebar-overlay {
   position: fixed;

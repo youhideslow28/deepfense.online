@@ -17,6 +17,7 @@ import {
 
 import { startQuiz } from './quiz.js';
 import { startMidterm, getMidtermConfig } from './midterm.js';
+import { checkCertEligibility, showCertView } from './certificate.js';
 
 // ── State ──────────────────────────────────────────────────────
 const state = {
@@ -55,10 +56,12 @@ const dom = {
   topbarDpfVal:   $('topbar-dpf-val'),
   contentArea:    $('content-area'),
   // Views
-  viewDashboard:  $('view-dashboard'),
-  viewLesson:     $('view-lesson'),
-  viewQuiz:       $('view-quiz'),
-  viewExam:       $('view-exam'),
+  viewDashboard:    $('view-dashboard'),
+  viewLesson:       $('view-lesson'),
+  viewQuiz:         $('view-quiz'),
+  viewExam:         $('view-exam'),
+  viewCertificate:  $('view-certificate'),
+  btnViewCert:      $('btn-view-cert'),
   // Dashboard
   statCompleted:  $('stat-completed'),
   statDpfEarned:  $('stat-dpf-earned'),
@@ -359,7 +362,7 @@ const updateProgressBar = (course) => {
 
 // ── Views ──────────────────────────────────────────────────────
 
-const VIEWS = ['viewDashboard', 'viewLesson', 'viewQuiz', 'viewExam'];
+const VIEWS = ['viewDashboard', 'viewLesson', 'viewQuiz', 'viewExam', 'viewCertificate'];
 
 const showView = (viewKey) => {
   VIEWS.forEach((k) => dom[k].classList.toggle('hidden', k !== viewKey));
@@ -377,6 +380,21 @@ const navigateToDashboard = async () => {
   updateBreadcrumb([course.title]);
   showView('viewDashboard');
 };
+
+const navigateToCertificate = async () => {
+  const course = await loadManifest();
+  state.currentModuleId  = null;
+  state.currentMidtermId = null;
+  updateBreadcrumb([course.title, 'Chứng chỉ']);
+  showView('viewCertificate');
+  dom.contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+  closeSidebar();
+  await showCertView(state.progress);
+};
+window.navigateToCertificate = navigateToCertificate;
+
+// Cert button trong sidebar
+dom.btnViewCert?.addEventListener('click', navigateToCertificate);
 
 const navigateToMidterm = async (midtermId) => {
   const course = await loadManifest();
@@ -697,13 +715,17 @@ const startSubscriptions = (user) => {
   // Lắng nghe tiến độ học
   const unsubProgress = listenProgress(user.uid, async (data) => {
     state.progress = data;
+
+    // Show/hide cert button in sidebar
+    if (dom.btnViewCert) {
+      const eligible = checkCertEligibility(data);
+      dom.btnViewCert.classList.toggle('hidden', !eligible);
+    }
+
     if (state.manifest) {
       updateProgressBar(state.manifest);
       renderModuleNav(state.manifest);
-      // Nếu đang ở dashboard thì re-render stats
-      if (state.currentView === 'dashboard') {
-        renderDashboard(state.manifest);
-      }
+      if (state.currentView === 'dashboard') renderDashboard(state.manifest);
     }
   });
 

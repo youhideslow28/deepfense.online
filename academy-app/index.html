@@ -120,16 +120,21 @@
       </nav>
 
       <!-- Sidebar Footer -->
-      <div class="sidebar-footer">
-        <button id="btn-logout" class="btn-logout">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
-          Đăng xuất
+      <div class="sidebar-footer" style="flex-direction:column;gap:8px;align-items:stretch">
+        <button id="btn-view-cert" class="btn-cert-sidebar hidden">
+          🎓 Xem chứng chỉ
         </button>
-        <a href="https://deepfense.online" class="sidebar-home-link">← deepfense.online</a>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <button id="btn-logout" class="btn-logout">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Đăng xuất
+          </button>
+          <a href="https://deepfense.online" class="sidebar-home-link">← deepfense.online</a>
+        </div>
       </div>
 
     </aside>
@@ -236,6 +241,13 @@
           </div>
           <div id="exam-content" class="exam-content">
             <!-- Exam rendered here -->
+          </div>
+        </section>
+
+        <!-- Certificate View -->
+        <section id="view-certificate" class="view hidden">
+          <div id="cert-view-inner">
+            <!-- Rendered by certificate.js -->
           </div>
         </section>
 
