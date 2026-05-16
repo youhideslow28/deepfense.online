@@ -181,6 +181,133 @@ const assessments = [
   { title: "Final Exam", scope: "Cuối khóa", detail: "50 câu, phân bổ trên toàn bộ 9 module. Đây là điều kiện chính để mở certificate.", questions: "50 câu" },
 ];
 
+// ============================================================
+// MINIGAMES — lồng ghép vào bài học (7 loại)
+// ============================================================
+const MINIGAMES = {
+  "4.3.3": {
+    type: "artifact_spotter",
+    title: "🔍 Thực hành: Spot the Artifact",
+    intro: "Bạn đang xem mô tả một video call đáng nghi. Bấm vào TẤT CẢ các dấu hiệu bất thường bạn nhận ra.",
+    zones: [
+      { id: "z1", label: "Viền khuôn mặt hơi mờ, không khớp với cổ", suspicious: true },
+      { id: "z2", label: "Miệng đôi khi không khớp lời nói", suspicious: true },
+      { id: "z3", label: "Ánh sáng trên mặt khác hướng với nền phòng", suspicious: true },
+      { id: "z4", label: "Mắt chớp theo nhịp bình thường", suspicious: false },
+      { id: "z5", label: "Tóc trông tự nhiên và rõ nét", suspicious: false },
+      { id: "z6", label: "Giọng có âm nền quá sạch, thiếu tiếng động phòng", suspicious: true },
+      { id: "z7", label: "Video giật ở vùng vai khi đầu xoay", suspicious: true },
+      { id: "z8", label: "Màu da trên trán và cằm hơi khác nhau", suspicious: true },
+    ],
+    minRequired: 4,
+    feedback: {
+      good: "Bạn đã phát hiện đủ dấu hiệu. Không có một tín hiệu nào là kết luận tuyệt đối — nhưng khi gom nhiều tín hiệu, bạn có cơ sở để kiểm chứng thêm.",
+      poor: "Bạn bỏ sót một số dấu hiệu. Hãy nhớ: không chỉ nhìn khuôn mặt — quan sát cả ánh sáng, viền, giọng nói và chuyển động.",
+    },
+  },
+  "5.3.3": {
+    type: "verification_call",
+    title: "📞 Thực hành: Cuộc gọi xác minh",
+    intro: "Bạn nhận video call từ 'ba/mẹ' yêu cầu chuyển tiền gấp vì tai nạn. Giọng nghe rất giống. Bạn sẽ làm gì?",
+    steps: [
+      {
+        q: "Phản ứng đầu tiên của bạn?",
+        opts: [
+          { t: "Chuyển tiền ngay — giọng quá giống", s: 0, f: "❌ Không bao giờ chuyển tiền dưới áp lực, dù giọng giống đến đâu. Voice deepfake có thể tái tạo giọng rất chính xác." },
+          { t: "Hỏi thêm thông tin rồi quyết định", s: 5, f: "⚠️ Tốt hơn, nhưng chưa đủ. Hỏi thêm trong cùng cuộc gọi chưa phải là xác minh độc lập." },
+          { t: "Xin ngắt máy để gọi lại qua số đã lưu sẵn", s: 10, f: "✅ Đúng! Gọi lại qua kênh bạn đã biết là cách xác minh hiệu quả nhất." },
+          { t: "Nhờ người khác nghe xem giọng có giống không", s: 3, f: "⚠️ Có thể hỗ trợ tâm lý, nhưng cách tốt nhất vẫn là xác minh qua kênh độc lập." },
+        ],
+      },
+      {
+        q: "Người gọi nói không có thời gian chờ, cần tiền ngay. Bạn làm gì?",
+        opts: [
+          { t: "Chuyển tiền trước, hỏi sau", s: 0, f: "❌ Áp lực thời gian là kỹ thuật social engineering. Đây là dấu hiệu lừa đảo, không phải khẩn cấp thật." },
+          { t: "Hỏi câu chỉ người thật mới biết (kỷ niệm riêng, tên thú cưng)", s: 10, f: "✅ Câu hỏi xác minh cá nhân rất hiệu quả — kẻ giả mạo không thể biết." },
+          { t: "Gọi người thân khác để xác nhận độc lập", s: 10, f: "✅ Gọi kênh khác để xác nhận là phản xạ đúng và an toàn nhất." },
+          { t: "Tin vào cảm giác vì giọng quá giống", s: 0, f: "❌ Cảm giác không phải xác minh. Voice deepfake được thiết kế để đánh lừa cảm xúc." },
+        ],
+      },
+    ],
+    maxScore: 20,
+  },
+  "6.1.3": {
+    type: "url_detective",
+    title: "🔗 Thực hành: URL Detective",
+    intro: "Phân loại từng đường link: An toàn, Đáng nghi, hay Nguy hiểm. Nhìn kỹ tên miền, ký tự và cấu trúc.",
+    urls: [
+      { id: "u1", url: "vietcombank.com.vn/dang-nhap", ans: "safe", hint: "Domain chính thức .com.vn của Vietcombank" },
+      { id: "u2", url: "vietc0mbank-login.net/verify", ans: "danger", hint: "Số 0 thay chữ o, domain .net lạ" },
+      { id: "u3", url: "facebook.com/security/checkpoint", ans: "safe", hint: "Subdomain hợp lệ của facebook.com" },
+      { id: "u4", url: "faceb00k-support.info/login", ans: "danger", hint: "00 thay oo, domain .info lạ" },
+      { id: "u5", url: "bit.ly/xacminh-tk-vcb-2025", ans: "suspicious", hint: "Link rút gọn che giấu đích thực" },
+      { id: "u6", url: "moh.gov.vn/thong-bao", ans: "safe", hint: "Domain .gov.vn của chính phủ Việt Nam" },
+      { id: "u7", url: "moh-gov-vn.com/thong-bao", ans: "danger", hint: "Dùng gạch ngang giả domain gov.vn" },
+      { id: "u8", url: "tinyurl.com/nhan-qua-zalo", ans: "suspicious", hint: "Link rút gọn + nội dung hấp dẫn nghi ngờ" },
+    ],
+  },
+  "7.2.1": {
+    type: "otp_trap",
+    title: "🔐 Thực hành: OTP Trap",
+    scenario: "Số lạ nhắn tin: \"Anh/chị ơi, em gửi nhầm mã OTP về số anh/chị rồi ạ. Anh/chị đọc giúp em số đó với, em đang cấp bách lắm 🙏\"",
+    q: "Bạn sẽ phản ứng như thế nào?",
+    opts: [
+      { t: "Đọc OTP cho họ — thấy họ cấp bách nên giúp", s: 0, f: "❌ Đây là kỹ thuật social engineering cổ điển. OTP về SIM của bạn là để bảo vệ TÀI KHOẢN CỦA BẠN — không bao giờ chia sẻ với ai." },
+      { t: "Hỏi thêm họ cần OTP cho dịch vụ gì", s: 3, f: "⚠️ Tốt hơn nhưng chưa đủ an toàn. Không có lý do hợp lệ nào để chia sẻ OTP với người lạ dù họ giải thích thế nào." },
+      { t: "Không trả lời và chặn số lạ đó", s: 8, f: "✅ Phản xạ đúng! OTP không bao giờ được chia sẻ với bất kỳ ai." },
+      { t: "Liên hệ ngân hàng/dịch vụ để báo cáo số lạ này", s: 10, f: "✅ Xuất sắc! Báo cáo giúp bảo vệ người dùng khác khỏi cùng kịch bản lừa đảo." },
+    ],
+  },
+  "7.3.3": {
+    type: "scam_chat_triage",
+    title: "💬 Thực hành: Phân tích chat lừa đảo",
+    intro: "Đọc đoạn chat bên dưới. Bấm vào từng tin nhắn có dấu hiệu lừa đảo để đánh dấu. Sau đó nộp để xem kết quả.",
+    chat: [
+      { id: "c1", sender: "Chị Lan — Kế toán trưởng", text: "Em ơi, chị đang họp với đối tác nước ngoài.", flag: false, tactic: null },
+      { id: "c2", sender: "Chị Lan — Kế toán trưởng", text: "Anh Giám đốc cần thanh toán hợp đồng GẤP trong 15 phút.", flag: true, tactic: "⏱ Tạo áp lực thời gian" },
+      { id: "c3", sender: "Chị Lan — Kế toán trưởng", text: "Chuyển ngay 80 triệu vào STK: 9988776655 - NGUYEN VAN A - BIDV.", flag: true, tactic: "💸 Yêu cầu chuyển tiền ngay" },
+      { id: "c4", sender: "Chị Lan — Kế toán trưởng", text: "Đừng hỏi ai nhé, đây là thông tin bảo mật công ty.", flag: true, tactic: "🤫 Yêu cầu giữ bí mật / cô lập" },
+      { id: "c5", sender: "Chị Lan — Kế toán trưởng", text: "Chuyển xong chị hoàn lại ngay, anh GĐ đã xác nhận rồi.", flag: true, tactic: "👤 Giả danh thẩm quyền" },
+      { id: "c6", sender: "Chị Lan — Kế toán trưởng", text: "Chờ chị một chút nhé.", flag: false, tactic: null },
+      { id: "c7", sender: "Chị Lan — Kế toán trưởng", text: "Nếu không chuyển kịp, hợp đồng bị huỷ — em chịu trách nhiệm đấy.", flag: true, tactic: "⚠️ Đe dọa và đổ lỗi" },
+      { id: "c8", sender: "Chị Lan — Kế toán trưởng", text: "Gọi cho chị thì đang họp kín, không nghe được.", flag: true, tactic: "🚫 Chặn xác minh qua kênh khác" },
+    ],
+    minCorrect: 4,
+  },
+  "8.2.1": {
+    type: "evidence_collector",
+    title: "🗂️ Thực hành: Thu thập bằng chứng",
+    intro: "Bạn vừa nghi bị lừa qua mạng. Hãy chọn TẤT CẢ những gì cần lưu lại trước khi báo cáo.",
+    items: [
+      { id: "e1", text: "Ảnh chụp màn hình toàn bộ đoạn chat", keep: true, reason: "Bằng chứng chính về nội dung giao tiếp." },
+      { id: "e2", text: "Số tài khoản ngân hàng kẻ lừa đảo cung cấp", keep: true, reason: "Dùng để truy vết và báo cáo ngân hàng." },
+      { id: "e3", text: "Tên tài khoản mạng xã hội của đối tượng", keep: true, reason: "Giúp nền tảng xác minh và gỡ tài khoản." },
+      { id: "e4", text: "Link bài đăng hoặc tin nhắn gốc", keep: true, reason: "URL giúp xác minh nguồn và báo cáo chính xác." },
+      { id: "e5", text: "Thời gian xảy ra (ngày, giờ)", keep: true, reason: "Mốc thời gian hỗ trợ điều tra." },
+      { id: "e6", text: "Số điện thoại đối tượng đã gọi", keep: true, reason: "Dùng để báo cáo nhà mạng và cơ quan chức năng." },
+      { id: "e7", text: "Mã giao dịch ngân hàng (nếu đã chuyển tiền)", keep: true, reason: "Bằng chứng tài chính quan trọng nhất." },
+      { id: "e8", text: "Xóa đoạn chat để người khác không nhìn thấy", keep: false, reason: "SAI — xóa là mất bằng chứng. Cần giữ nguyên để báo cáo." },
+      { id: "e9", text: "Đăng ngay lên mạng xã hội để cảnh báo mọi người", keep: false, reason: "Sai — chia sẻ vội có thể lộ thông tin cá nhân và gây hại thêm." },
+      { id: "e10", text: "Email hoặc file đính kèm kẻ tấn công gửi", keep: true, reason: "File/email là bằng chứng kỹ thuật quan trọng." },
+    ],
+  },
+  "9.1.2": {
+    type: "pressure_meter",
+    title: "🎯 Thực hành: Nhận diện thao túng tâm lý",
+    intro: "Đọc kịch bản dưới đây và bấm vào từng câu chứa kỹ thuật thao túng tâm lý.",
+    scene: "Cuộc gọi từ người tự xưng 'Thiếu tá Bùi Văn Minh — Công an thành phố':",
+    segs: [
+      { id: "p1", text: "Tôi là Thiếu tá Bùi Văn Minh, Công an thành phố.", isTactic: true, label: "Giả danh quyền lực" },
+      { id: "p2", text: "Tài khoản ngân hàng của anh/chị liên quan đến vụ rửa tiền đang điều tra.", isTactic: true, label: "Tạo nỗi sợ hãi" },
+      { id: "p3", text: "Chúng tôi sẽ phong tỏa tài sản trong 24 giờ nếu không hợp tác ngay.", isTactic: true, label: "Đe dọa" },
+      { id: "p4", text: "Để bảo vệ tài sản, anh/chị cần chuyển tiền vào tài khoản 'tạm giữ an toàn' ngay.", isTactic: true, label: "Tạo áp lực hành động ngay" },
+      { id: "p5", text: "Tuyệt đối không được kể với ai — kể cả gia đình — vì điều tra bí mật.", isTactic: true, label: "Cô lập nạn nhân" },
+      { id: "p6", text: "Nếu không làm theo, sẽ bắt giữ ngay trong hôm nay.", isTactic: true, label: "Đe dọa bắt giữ" },
+      { id: "p7", text: "Thời gian còn 10 phút để anh/chị quyết định.", isTactic: true, label: "Tạo áp lực thời gian" },
+    ],
+  },
+};
+
 let state = {
   route: "overview",
   moduleIndex: 0,
@@ -189,6 +316,7 @@ let state = {
   quiz: null,
   inlineAnswers: {},
   inlineSubmitted: false,
+  minigameState: {},
 };
 
 const AUTH_KEY = "deepfenseAcademyAuth";
@@ -586,6 +714,337 @@ function renderOverview() {
   if (!grid) return;
 }
 
+// ============================================================
+// MINIGAME RENDER ENGINE
+// ============================================================
+
+function getMgState(lessonId) {
+  if (!state.minigameState[lessonId]) {
+    state.minigameState[lessonId] = { selected: [], answers: {}, step: 0, totalScore: 0, submitted: false, stepSubmitted: false };
+  }
+  return state.minigameState[lessonId];
+}
+
+function refreshMinigame(lessonId) {
+  const block = document.querySelector(`.minigame-block[data-mg-lesson="${lessonId}"]`);
+  if (!block) return;
+  const mg = MINIGAMES[lessonId];
+  const mgs = getMgState(lessonId);
+  const html = renderMinigameHtml(mg, mgs, lessonId);
+  block.outerHTML = html;
+}
+
+function renderLessonMinigame(lessonId) {
+  const mg = MINIGAMES[lessonId];
+  if (!mg) return "";
+  const mgs = getMgState(lessonId);
+  return renderMinigameHtml(mg, mgs, lessonId);
+}
+
+function renderMinigameHtml(mg, mgs, lid) {
+  switch (mg.type) {
+    case "artifact_spotter": return renderArtifactSpotter(mg, mgs, lid);
+    case "verification_call": return renderVerificationCall(mg, mgs, lid);
+    case "url_detective": return renderUrlDetective(mg, mgs, lid);
+    case "otp_trap": return renderOtpTrap(mg, mgs, lid);
+    case "scam_chat_triage": return renderScamChatTriage(mg, mgs, lid);
+    case "evidence_collector": return renderEvidenceCollector(mg, mgs, lid);
+    case "pressure_meter": return renderPressureMeter(mg, mgs, lid);
+    default: return "";
+  }
+}
+
+function mgResetBtn(lid) {
+  return `<button class="mg-reset-btn" data-mg-reset="${lid}">↩ Thử lại</button>`;
+}
+
+// --- Artifact Spotter ---
+function renderArtifactSpotter(mg, mgs, lid) {
+  const susZones = mg.zones.filter(z => z.suspicious);
+  if (mgs.submitted) {
+    const found = susZones.filter(z => mgs.selected.includes(z.id)).length;
+    const passed = found >= mg.minRequired;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · Spot the Artifact</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Đạt!" : "⚠️ Chưa đủ"}</strong>
+        <p>Bạn phát hiện <strong>${found}/${susZones.length}</strong> dấu hiệu bất thường.</p>
+        <p>${passed ? mg.feedback.good : mg.feedback.poor}</p>
+      </div>
+      <div class="artifact-grid">
+        ${mg.zones.map(z => `<div class="artifact-zone ${mgs.selected.includes(z.id) ? (z.suspicious ? "zone-correct" : "zone-wrong") : (z.suspicious ? "zone-missed" : "zone-ok")}">
+          ${z.label}
+          ${z.suspicious ? '<span class="zone-tag warn">⚠ Đáng nghi</span>' : '<span class="zone-tag ok">✓ Bình thường</span>'}
+        </div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · Spot the Artifact</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <div class="artifact-grid">
+      ${mg.zones.map(z => `<button class="artifact-zone clickable ${mgs.selected.includes(z.id) ? "zone-selected" : ""}" data-mg-zone="${z.id}" data-mg-lesson="${lid}">${z.label}</button>`).join("")}
+    </div>
+    <p class="mg-hint">Đã chọn: ${mgs.selected.length} dấu hiệu · Cần ít nhất ${mg.minRequired} đúng</p>
+    <button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>
+  </section>`;
+}
+
+// --- Verification Call ---
+function renderVerificationCall(mg, mgs, lid) {
+  if (mgs.submitted) {
+    const total = mgs.totalScore || 0;
+    const passed = total >= mg.maxScore * 0.6;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · Verification Call</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Bạn biết cách xác minh!" : "⚠️ Cần luyện thêm kỹ năng xác minh"}</strong>
+        <p>Điểm: <strong>${total}/${mg.maxScore}</strong></p>
+      </div>
+      ${mg.steps.map((step, si) => {
+        const chosen = step.opts[mgs.answers[si] ?? -1];
+        return `<div class="verification-step step-done">
+          <p><strong>${step.q}</strong></p>
+          ${chosen ? `<div class="mg-result ${chosen.s >= 8 ? "mg-pass" : chosen.s >= 3 ? "mg-partial" : "mg-fail"} mg-compact">${chosen.f}</div>` : ""}
+        </div>`;
+      }).join("")}
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  const currentStep = mgs.step || 0;
+  const stepData = mg.steps[currentStep];
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · Verification Call</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <div class="verification-step">
+      <p class="mg-step-label">Bước ${currentStep + 1} / ${mg.steps.length}</p>
+      <p><strong>${stepData.q}</strong></p>
+      <div class="option-list">
+        ${stepData.opts.map((o, i) => {
+          const sel = mgs.answers[currentStep] === i;
+          const showFb = sel && mgs.stepSubmitted;
+          return `<button class="option-card ${sel ? "opt-selected" : ""} ${showFb ? (o.s >= 8 ? "opt-correct" : o.s >= 3 ? "opt-partial" : "opt-wrong") : ""}"
+            data-mg-vcopt="${i}" data-mg-vclid="${lid}" data-mg-vcstep="${currentStep}">
+            <span>${o.t}</span>
+            ${showFb ? `<span class="opt-feedback">${o.f}</span>` : ""}
+          </button>`;
+        }).join("")}
+      </div>
+      ${mgs.answers[currentStep] !== undefined && !mgs.stepSubmitted
+        ? `<button class="mg-submit-btn" data-mg-vcconfirm="${lid}">Xác nhận</button>`
+        : ""}
+      ${mgs.stepSubmitted && currentStep < mg.steps.length - 1
+        ? `<button class="mg-submit-btn" data-mg-vcnext="${lid}">Bước tiếp theo →</button>`
+        : ""}
+      ${mgs.stepSubmitted && currentStep === mg.steps.length - 1
+        ? `<button class="mg-submit-btn" data-mg-submit="${lid}">Xem kết quả</button>`
+        : ""}
+    </div>
+  </section>`;
+}
+
+// --- URL Detective ---
+function renderUrlDetective(mg, mgs, lid) {
+  const labels = { safe: "An toàn", suspicious: "Đáng nghi", danger: "Nguy hiểm" };
+  if (mgs.submitted) {
+    const correct = mg.urls.filter(u => mgs.answers[u.id] === u.ans).length;
+    const passed = correct >= 6;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · URL Detective</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Đạt!" : "⚠️ Cần luyện thêm"}</strong>
+        <p>Phân loại đúng <strong>${correct}/${mg.urls.length}</strong> đường link.</p>
+      </div>
+      <div class="url-list">
+        ${mg.urls.map(u => `<div class="url-row ${mgs.answers[u.id] === u.ans ? "row-correct" : "row-wrong"}">
+          <code class="url-code">${u.url}</code>
+          <div class="url-row-meta">
+            <span class="url-badge url-${u.ans}">${labels[u.ans]}</span>
+            <span class="url-hint">${u.hint}</span>
+          </div>
+        </div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  const answered = Object.keys(mgs.answers).length;
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · URL Detective</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <div class="url-list">
+      ${mg.urls.map(u => `<div class="url-row">
+        <code class="url-code">${u.url}</code>
+        <div class="url-choices">
+          ${["safe", "suspicious", "danger"].map(c => `<button class="url-choice-btn url-${c} ${mgs.answers[u.id] === c ? "choice-selected" : ""}"
+            data-mg-url="${u.id}" data-mg-choice="${c}" data-mg-lesson="${lid}">${labels[c]}</button>`).join("")}
+        </div>
+      </div>`).join("")}
+    </div>
+    <p class="mg-hint">Đã phân loại: ${answered}/${mg.urls.length} link</p>
+    <button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>
+  </section>`;
+}
+
+// --- OTP Trap ---
+function renderOtpTrap(mg, mgs, lid) {
+  if (mgs.submitted) {
+    const chosen = mg.opts[mgs.selected[0]];
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · OTP Trap</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-scenario">${mg.scenario}</div>
+      <div class="mg-result ${chosen.s >= 8 ? "mg-pass" : chosen.s >= 3 ? "mg-partial" : "mg-fail"}">
+        <p><strong>Bạn chọn:</strong> ${chosen.t}</p>
+        <p>${chosen.f}</p>
+      </div>
+      <div class="option-list">
+        ${mg.opts.map((o, i) => `<div class="option-card static ${i === mgs.selected[0] ? (o.s >= 8 ? "opt-correct" : o.s >= 3 ? "opt-partial" : "opt-wrong") : ""}"
+          style="opacity:${i === mgs.selected[0] ? 1 : 0.45}">${o.t}</div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · OTP Trap</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <div class="mg-scenario">${mg.scenario}</div>
+    <p class="mg-intro"><strong>${mg.q}</strong></p>
+    <div class="option-list">
+      ${mg.opts.map((o, i) => `<button class="option-card ${mgs.selected.includes(i) ? "opt-selected" : ""}"
+        data-mg-opt="${i}" data-mg-lesson="${lid}">${o.t}</button>`).join("")}
+    </div>
+    ${mgs.selected.length > 0 ? `<button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>` : ""}
+  </section>`;
+}
+
+// --- Scam Chat Triage ---
+function renderScamChatTriage(mg, mgs, lid) {
+  if (mgs.submitted) {
+    const shouldFlag = mg.chat.filter(c => c.flag);
+    const correctFlags = shouldFlag.filter(c => mgs.selected.includes(c.id)).length;
+    const falseFlags = mgs.selected.filter(id => !mg.chat.find(c => c.id === id)?.flag).length;
+    const passed = correctFlags >= mg.minCorrect && falseFlags <= 1;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · Scam Chat Triage</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Tốt!" : "⚠️ Cần xem lại"}</strong>
+        <p>Đánh dấu đúng <strong>${correctFlags}/${shouldFlag.length}</strong> dấu hiệu lừa đảo${falseFlags > 0 ? `, đánh nhầm ${falseFlags} tin nhắn bình thường` : ""}.</p>
+      </div>
+      <div class="chat-list">
+        ${mg.chat.map(c => `<div class="chat-bubble ${c.flag ? (mgs.selected.includes(c.id) ? "bubble-correct" : "bubble-missed") : (mgs.selected.includes(c.id) ? "bubble-false" : "")}">
+          <span class="chat-sender">${c.sender}</span>
+          <p>${c.text}</p>
+          ${c.flag ? `<span class="tactic-label">${c.tactic}</span>` : ""}
+          ${!c.flag && mgs.selected.includes(c.id) ? `<span class="tactic-label tactic-wrong">✗ Tin nhắn bình thường</span>` : ""}
+        </div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · Scam Chat Triage</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <div class="chat-list">
+      ${mg.chat.map(c => `<button class="chat-bubble clickable-bubble ${mgs.selected.includes(c.id) ? "bubble-flagged" : ""}"
+        data-mg-chat="${c.id}" data-mg-lesson="${lid}">
+        <span class="chat-sender">${c.sender}</span>
+        <p>${c.text}</p>
+        ${mgs.selected.includes(c.id) ? '<span class="flag-indicator">🚩 Đã đánh dấu</span>' : ""}
+      </button>`).join("")}
+    </div>
+    <p class="mg-hint">Đã đánh dấu: ${mgs.selected.length} tin nhắn</p>
+    <button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>
+  </section>`;
+}
+
+// --- Evidence Collector ---
+function renderEvidenceCollector(mg, mgs, lid) {
+  if (mgs.submitted) {
+    const shouldKeep = mg.items.filter(i => i.keep);
+    const correct = shouldKeep.filter(i => mgs.selected.includes(i.id)).length;
+    const wrongSel = mgs.selected.filter(id => !mg.items.find(i => i.id === id)?.keep).length;
+    const passed = correct >= shouldKeep.length - 1 && wrongSel === 0;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · Evidence Collector</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Tốt!" : "⚠️ Cần xem lại"}</strong>
+        <p>Chọn đúng <strong>${correct}/${shouldKeep.length}</strong> bằng chứng cần lưu${wrongSel > 0 ? `, chọn nhầm ${wrongSel} hành động sai` : ""}.</p>
+      </div>
+      <div class="evidence-list">
+        ${mg.items.map(item => `<div class="evidence-item ${item.keep ? (mgs.selected.includes(item.id) ? "ev-correct" : "ev-missed") : (mgs.selected.includes(item.id) ? "ev-wrong" : "ev-ok")}">
+          <span class="ev-text">${item.keep ? "✅" : "❌"} ${item.text}</span>
+          <small class="ev-reason">${item.reason}</small>
+        </div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · Evidence Collector</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <div class="evidence-list">
+      ${mg.items.map(item => `<button class="evidence-item ev-clickable ${mgs.selected.includes(item.id) ? "ev-selected" : ""}"
+        data-mg-ev="${item.id}" data-mg-lesson="${lid}">
+        <span class="ev-text">${item.text}</span>
+      </button>`).join("")}
+    </div>
+    <p class="mg-hint">Đã chọn: ${mgs.selected.length} mục</p>
+    <button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>
+  </section>`;
+}
+
+// --- Pressure Meter ---
+function renderPressureMeter(mg, mgs, lid) {
+  if (mgs.submitted) {
+    const totalTactics = mg.segs.filter(s => s.isTactic).length;
+    const found = mg.segs.filter(s => s.isTactic && mgs.selected.includes(s.id)).length;
+    const falsePos = mgs.selected.filter(id => !mg.segs.find(s => s.id === id)?.isTactic).length;
+    const passed = found >= totalTactics - 1 && falsePos === 0;
+    return `<section class="minigame-block" data-mg-lesson="${lid}">
+      <p class="eyebrow">Minigame · Pressure Meter</p>
+      <h3 class="mg-title">${mg.title}</h3>
+      <div class="mg-result ${passed ? "mg-pass" : "mg-fail"}">
+        <strong>${passed ? "✅ Xuất sắc!" : "⚠️ Cần luyện thêm"}</strong>
+        <p>Nhận ra <strong>${found}/${totalTactics}</strong> kỹ thuật thao túng tâm lý.</p>
+      </div>
+      <p class="mg-hint">${mg.scene}</p>
+      <div class="pressure-list">
+        ${mg.segs.map(s => `<div class="pressure-seg ${s.isTactic ? (mgs.selected.includes(s.id) ? "seg-correct" : "seg-missed") : (mgs.selected.includes(s.id) ? "seg-wrong" : "")}">
+          <p class="seg-text">"${s.text}"</p>
+          ${s.isTactic ? `<span class="tactic-label">${s.label}</span>` : ""}
+        </div>`).join("")}
+      </div>
+      ${mgResetBtn(lid)}
+    </section>`;
+  }
+  return `<section class="minigame-block" data-mg-lesson="${lid}">
+    <p class="eyebrow">Minigame · Pressure Meter</p>
+    <h3 class="mg-title">${mg.title}</h3>
+    <p class="mg-intro">${mg.intro}</p>
+    <p class="mg-hint">${mg.scene}</p>
+    <div class="pressure-list">
+      ${mg.segs.map(s => `<button class="pressure-seg seg-clickable ${mgs.selected.includes(s.id) ? "seg-flagged" : ""}"
+        data-mg-seg="${s.id}" data-mg-lesson="${lid}">
+        <p class="seg-text">"${s.text}"</p>
+        ${mgs.selected.includes(s.id) ? '<span class="flag-indicator">🚩</span>' : ""}
+      </button>`).join("")}
+    </div>
+    <p class="mg-hint">Đã đánh dấu: ${mgs.selected.length} câu</p>
+    <button class="mg-submit-btn" data-mg-submit="${lid}">Nộp kết quả</button>
+  </section>`;
+}
+
 function renderModuleStrip() {
   const saved = readProgress();
   document.querySelector("#moduleStrip").innerHTML = modules.map((module, index) => `
@@ -631,6 +1090,7 @@ function renderLearning() {
       <h3>Điểm cần nhớ</h3>
       <ul>${lessonItem.takeaways.map((item) => `<li>${item}</li>`).join("")}</ul>
     </div>
+    ${renderLessonMinigame(lessonItem.id)}
     ${renderInlineCheckpoint()}
   `;
 
@@ -943,6 +1403,118 @@ function bindEvents() {
       const result = document.querySelector("#inlineCheckpointResult");
       if (result) result.textContent = renderInlineCheckpointResult();
     }
+
+    // ---- Minigame event handlers ----
+
+    // Artifact Spotter: toggle zone
+    const mgZone = event.target.closest("[data-mg-zone]");
+    if (mgZone) {
+      const lid = mgZone.dataset.mgLesson;
+      const zid = mgZone.dataset.mgZone;
+      const mgs = getMgState(lid);
+      mgs.selected = mgs.selected.includes(zid) ? mgs.selected.filter(z => z !== zid) : [...mgs.selected, zid];
+      refreshMinigame(lid);
+    }
+
+    // URL Detective: classify url
+    const mgUrl = event.target.closest("[data-mg-url]");
+    if (mgUrl) {
+      const lid = mgUrl.dataset.mgLesson;
+      const mgs = getMgState(lid);
+      mgs.answers[mgUrl.dataset.mgUrl] = mgUrl.dataset.mgChoice;
+      refreshMinigame(lid);
+    }
+
+    // OTP Trap: pick option
+    const mgOpt = event.target.closest("[data-mg-opt]");
+    if (mgOpt) {
+      const lid = mgOpt.dataset.mgLesson;
+      const mgs = getMgState(lid);
+      mgs.selected = [Number(mgOpt.dataset.mgOpt)];
+      refreshMinigame(lid);
+    }
+
+    // Scam Chat Triage: toggle flag
+    const mgChat = event.target.closest("[data-mg-chat]");
+    if (mgChat) {
+      const lid = mgChat.dataset.mgLesson;
+      const cid = mgChat.dataset.mgChat;
+      const mgs = getMgState(lid);
+      mgs.selected = mgs.selected.includes(cid) ? mgs.selected.filter(c => c !== cid) : [...mgs.selected, cid];
+      refreshMinigame(lid);
+    }
+
+    // Evidence Collector: toggle item
+    const mgEv = event.target.closest("[data-mg-ev]");
+    if (mgEv) {
+      const lid = mgEv.dataset.mgLesson;
+      const eid = mgEv.dataset.mgEv;
+      const mgs = getMgState(lid);
+      mgs.selected = mgs.selected.includes(eid) ? mgs.selected.filter(e => e !== eid) : [...mgs.selected, eid];
+      refreshMinigame(lid);
+    }
+
+    // Pressure Meter: toggle segment
+    const mgSeg = event.target.closest("[data-mg-seg]");
+    if (mgSeg) {
+      const lid = mgSeg.dataset.mgLesson;
+      const sid = mgSeg.dataset.mgSeg;
+      const mgs = getMgState(lid);
+      mgs.selected = mgs.selected.includes(sid) ? mgs.selected.filter(s => s !== sid) : [...mgs.selected, sid];
+      refreshMinigame(lid);
+    }
+
+    // Verification Call: pick step option
+    const mgVcOpt = event.target.closest("[data-mg-vcopt]");
+    if (mgVcOpt) {
+      const lid = mgVcOpt.dataset.mgVclid;
+      const mgs = getMgState(lid);
+      mgs.answers[Number(mgVcOpt.dataset.mgVcstep)] = Number(mgVcOpt.dataset.mgVcopt);
+      mgs.stepSubmitted = false;
+      refreshMinigame(lid);
+    }
+
+    // Verification Call: confirm step
+    const mgVcConfirm = event.target.closest("[data-mg-vcconfirm]");
+    if (mgVcConfirm) {
+      const lid = mgVcConfirm.dataset.mgVcconfirm;
+      const mgs = getMgState(lid);
+      const mg = MINIGAMES[lid];
+      const step = mgs.step || 0;
+      const chosen = mg.steps[step].opts[mgs.answers[step]];
+      if (chosen) mgs.totalScore = (mgs.totalScore || 0) + chosen.s;
+      mgs.stepSubmitted = true;
+      refreshMinigame(lid);
+    }
+
+    // Verification Call: go to next step
+    const mgVcNext = event.target.closest("[data-mg-vcnext]");
+    if (mgVcNext) {
+      const lid = mgVcNext.dataset.mgVcnext;
+      const mgs = getMgState(lid);
+      mgs.step = (mgs.step || 0) + 1;
+      mgs.stepSubmitted = false;
+      refreshMinigame(lid);
+    }
+
+    // Submit minigame (all types)
+    const mgSubmit = event.target.closest("[data-mg-submit]");
+    if (mgSubmit) {
+      const lid = mgSubmit.dataset.mgSubmit;
+      const mgs = getMgState(lid);
+      mgs.submitted = true;
+      refreshMinigame(lid);
+    }
+
+    // Reset minigame
+    const mgReset = event.target.closest("[data-mg-reset]");
+    if (mgReset) {
+      const lid = mgReset.dataset.mgReset;
+      state.minigameState[lid] = { selected: [], answers: {}, step: 0, totalScore: 0, submitted: false, stepSubmitted: false };
+      refreshMinigame(lid);
+    }
+
+    // ---- End minigame handlers ----
 
     const assessmentButton = event.target.closest("[data-assessment]");
     if (assessmentButton) {
