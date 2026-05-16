@@ -33,9 +33,10 @@ export const checkCertEligibility = (progress) => {
   if (!progress) return false;
   const modules  = Array.isArray(progress.completedModules)  ? progress.completedModules  : [];
   const midterms = Array.isArray(progress.completedMidterms) ? progress.completedMidterms : [];
-  const hasModules  = REQUIRED_MODULES.every((id) => modules.includes(id));
-  const hasMidterms = REQUIRED_MIDTERMS.every((id) => midterms.includes(id));
-  return hasModules && hasMidterms;
+  const hasModules   = REQUIRED_MODULES.every((id) => modules.includes(id));
+  const hasMidterms  = REQUIRED_MIDTERMS.every((id) => midterms.includes(id));
+  const hasFinalExam = progress.completedFinalExam === true;
+  return hasModules && hasMidterms && hasFinalExam;
 };
 
 // ── Generate certificate ID ────────────────────────────────────
@@ -486,8 +487,9 @@ export const showCertView = async (progress, containerId = 'cert-view-inner') =>
 const renderNotEligible = (progress) => {
   const mods  = Array.isArray(progress?.completedModules)  ? progress.completedModules  : [];
   const mts   = Array.isArray(progress?.completedMidterms) ? progress.completedMidterms : [];
-  const modsDone  = REQUIRED_MODULES.filter((id) => mods.includes(id)).length;
-  const mtDone    = REQUIRED_MIDTERMS.filter((id) => mts.includes(id)).length;
+  const modsDone     = REQUIRED_MODULES.filter((id) => mods.includes(id)).length;
+  const mtDone       = REQUIRED_MIDTERMS.filter((id) => mts.includes(id)).length;
+  const hasFinalExam = progress?.completedFinalExam === true;
 
   return `
     <div style="max-width:520px;margin:0 auto;text-align:center;padding:40px 24px">
@@ -529,14 +531,30 @@ const renderNotEligible = (progress) => {
             ${mtDone} / 2
           </span>
         </div>
-        <div style="height:5px;background:var(--clr-border-2);border-radius:99px;overflow:hidden">
+        <div style="height:5px;background:var(--clr-border-2);border-radius:99px;
+                    margin-bottom:14px;overflow:hidden">
           <div style="width:${Math.round((mtDone/2)*100)}%;height:100%;
                       background:${mtDone === 2 ? 'var(--clr-success)' : 'var(--clr-warning)'};
                       border-radius:99px"></div>
         </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;
+                    font-size:.88rem">
+          <span style="color:var(--clr-text-2)">Final Exam</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:700;
+                       color:${hasFinalExam ? 'var(--clr-success)' : 'var(--clr-text)'}">
+            ${hasFinalExam ? '✓ Đạt' : '✗ Chưa thi'}
+          </span>
+        </div>
       </div>
 
       <button class="btn btn--ghost" onclick="window.navigateToDashboard()">← Về Dashboard</button>
+      ${!hasFinalExam && mtDone === 2 && modsDone === 6 ? `
+        <div style="margin-top:10px">
+          <button class="btn btn--primary" onclick="window.navigateToFinalExam()">
+            🏁 Thi Final Exam →
+          </button>
+        </div>` : ''}
     </div>`;
 };
 

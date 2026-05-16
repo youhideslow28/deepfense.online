@@ -18,6 +18,7 @@ import {
 import { startQuiz } from './quiz.js';
 import { startMidterm, getMidtermConfig } from './midterm.js';
 import { checkCertEligibility, showCertView } from './certificate.js';
+import { startFinalExam, getFinalExamStatus } from './final-exam.js';
 
 // ── State ──────────────────────────────────────────────────────
 const state = {
@@ -161,6 +162,12 @@ const isMidtermUnlocked = (midtermId, course) => {
   return cfg.modules.every((id) => isModuleDone(id));
 };
 
+// Final Exam mở khi cả 2 midterm đã pass
+const isFinalExamUnlocked = () =>
+  isMidtermDone('midterm1') && isMidtermDone('midterm2');
+const isFinalExamDone = () =>
+  state.progress?.completedFinalExam === true;
+
 /**
  * Một module mở được khi:
  *  - Là module đầu tiên (id = 1), hoặc
@@ -176,7 +183,10 @@ const isModuleUnlocked = (module, allModules) => {
 // ── Render sidebar nav ─────────────────────────────────────────
 
 const renderModuleNav = (course) => {
-  const completed = getCompletedModules();
+  const completed       = getCompletedModules();
+  const feUnlocked      = isFinalExamUnlocked();
+  const feDone          = isFinalExamDone();
+  const feActive        = state.currentView === 'finalexam';
   const parts = course.parts.map((part) => ({
     ...part,
     modules: course.modules.filter((m) => m.part === part.id),
@@ -220,7 +230,17 @@ const renderModuleNav = (course) => {
           </svg>
         </div>` : ''}
     `;
-  }).join('');
+  }).join('') + `
+    <div class="nav-part-title">Final</div>
+    <div class="nav-module-item nav-exam-item ${feDone ? 'is-done' : ''} ${feActive ? 'is-active' : ''} ${!feUnlocked ? 'is-locked' : ''}"
+         id="nav-final-exam" role="button" tabindex="${feUnlocked ? 0 : -1}"
+         style="border-left-color:${feDone ? '' : feUnlocked ? 'var(--clr-danger)' : ''}">
+      <span class="nav-module-num" style="color:var(--clr-danger)">🏁</span>
+      <span class="nav-module-name" style="font-weight:600">Final Exam</span>
+      <svg class="nav-module-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>`;
 
   // Click: module items
   dom.moduleNav.querySelectorAll('.nav-module-item[data-module-id]').forEach((el) => {
@@ -251,12 +271,26 @@ const renderModuleNav = (course) => {
     });
     el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') el.click(); });
   });
+
+  // Click: final exam item
+  const navExamEl = dom.moduleNav.querySelector('#nav-final-exam');
+  navExamEl?.addEventListener('click', () => {
+    if (!isFinalExamUnlocked()) {
+      showToast('Hoàn thành cả 2 Midterm để mở khóa Final Exam.', 'info');
+      return;
+    }
+    navigateToFinalExam();
+  });
+  navExamEl?.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') navExamEl.click(); });
 };
 
 // ── Render dashboard ───────────────────────────────────────────
 
 const renderDashboard = (course) => {
-  const completed = getCompletedModules();
+  const completed    = getCompletedModules();
+  const feUnlocked   = isFinalExamUnlocked();
+  const feDone       = isFinalExamDone();
+  const feStatus     = getFinalExamStatus(state.progress);
   dom.statCompleted.textContent = completed.length;
   dom.statDpfEarned.textContent = state.progress?.dpfEarned ?? 0;
 
@@ -264,6 +298,41 @@ const renderDashboard = (course) => {
     ...part,
     modules: course.modules.filter((m) => m.part === part.id),
   }));
+
+  const finalExamCard = `
+    <div style="margin-bottom:6px">
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+                  color:var(--clr-text-3);padding:12px 0 6px">Final</div>
+      <div class="dash-module-card ${feDone ? 'is-done' : ''} ${!feUnlocked ? 'is-locked' : ''}"
+           id="dash-final-exam" role="button" tabindex="${feUnlocked ? 0 : -1}"
+           style="border-color:${feDone ? 'rgba(34,197,94,.25)' : feUnlocked ? 'rgba(239,68,68,.3)' : ''};
+                  background:${feUnlocked && !feDone ? 'rgba(239,68,68,.04)' : ''}">
+        <span class="dash-module-num" style="color:var(--clr-danger)">🏁</span>
+        <div class="dash-module-info">
+          <div class="dash-module-title"
+               style="color:${feUnlocked ? 'var(--clr-text)' : 'var(--clr-text-3)'}">
+            Final Exam
+          </div>
+          <div class="dash-module-meta">
+            <span>50 câu · tối đa 3 lần thi</span>
+            <span class="dash-module-level"
+                  style="background:rgba(239,68,68,.15);color:#f87171">Final</span>
+          </div>
+          ${feDone && feStatus.bestScore !== null ? `
+            <div style="font-size:.72rem;color:var(--clr-success);margin-top:3px">
+              Điểm cao nhất: ${Math.round(feStatus.bestScore * 100)}%
+            </div>` : ''}
+          ${!feDone && feStatus.attempts > 0 ? `
+            <div style="font-size:.72rem;color:var(--clr-warning);margin-top:3px">
+              Đã thi ${feStatus.attempts} lần · còn ${feStatus.remaining} lượt
+            </div>` : ''}
+        </div>
+        <span class="dash-module-status ${feDone ? 'status-done' : feUnlocked ? '' : 'status-locked'}"
+              style="${feUnlocked && !feDone ? 'background:rgba(239,68,68,.12);color:#f87171' : ''}">
+          ${feDone ? 'Hoàn thành' : feUnlocked ? (feStatus.attempts > 0 ? 'Thi lại' : 'Thi ngay') : 'Khóa'}
+        </span>
+      </div>
+    </div>`;
 
   dom.dashboardModules.innerHTML = parts.map((part) => {
     const midtermId  = PART_MIDTERM[part.id];
@@ -323,7 +392,7 @@ const renderDashboard = (course) => {
         ${moduleCards}
         ${midtermCard}
       </div>`;
-  }).join('');
+  }).join('') + finalExamCard;
 
   // Click: module cards
   dom.dashboardModules.querySelectorAll('[data-module-id]').forEach((el) => {
@@ -347,6 +416,14 @@ const renderDashboard = (course) => {
       }
       navigateToMidterm(midtermId);
     });
+  });
+
+  // Click: final exam card
+  document.getElementById('dash-final-exam')?.addEventListener('click', () => {
+    if (!isFinalExamUnlocked()) {
+      showToast('Hoàn thành cả 2 Midterm để mở khóa Final Exam.', 'info'); return;
+    }
+    navigateToFinalExam();
   });
 };
 
@@ -395,6 +472,28 @@ window.navigateToCertificate = navigateToCertificate;
 
 // Cert button trong sidebar
 dom.btnViewCert?.addEventListener('click', navigateToCertificate);
+
+const navigateToFinalExam = async () => {
+  const course = await loadManifest();
+  state.currentModuleId  = null;
+  state.currentMidtermId = null;
+  state.currentView      = 'finalexam';
+  renderModuleNav(course);
+  updateBreadcrumb([course.title, 'Final Exam']);
+  closeSidebar();
+  dom.contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+
+  startFinalExam(async (passed) => {
+    state.currentView = 'dashboard';
+    if (passed) {
+      showToast('🏆 Vượt qua Final Exam! Chứng chỉ đã mở khóa.', 'success');
+      await navigateToCertificate();
+    } else {
+      navigateToDashboard();
+    }
+  });
+};
+window.navigateToFinalExam = navigateToFinalExam;
 
 const navigateToMidterm = async (midtermId) => {
   const course = await loadManifest();
