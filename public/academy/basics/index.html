@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DEEPFENSE BASIC | Academy Course</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="course-shell">
+      <aside class="course-sidebar" id="courseSidebar" aria-label="Course navigation">
+        <div class="sidebar-head">
+          <a class="brand" href="/academy" aria-label="Back to DEEPFENSE Academy">
+            <img class="brand-logo" src="/logo/favicon-32x32.png" alt="DEEPFENSE" />
+            <span>
+              <strong>DEEPFENSE</strong>
+              <small>BASIC</small>
+            </span>
+          </a>
+          <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Đóng mục lục" aria-expanded="true">×</button>
+        </div>
+
+        <div class="progress-card" aria-label="Course progress">
+          <div class="progress-row">
+            <span>Progress</span>
+            <strong id="courseProgressText">0%</strong>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="courseProgressBar"></div>
+          </div>
+        </div>
+
+        <nav class="module-list" id="moduleStrip" aria-label="Modules"></nav>
+      </aside>
+
+      <main class="reader">
+        <header class="reader-header">
+          <button class="sidebar-open" id="sidebarOpen" type="button" hidden>Mục lục</button>
+          <div>
+            <p class="eyebrow" id="topEyebrow">Learning path</p>
+            <h1 id="topTitle">DEEPFENSE BASIC</h1>
+          </div>
+        </header>
+
+        <section class="route active" id="route-overview">
+          <article class="start-card">
+            <p class="eyebrow">Start here</p>
+            <h2>Tiếp tục từ vị trí gần nhất.</h2>
+            <p>Đọc bài theo từng trang, hoàn thành quiz module để mở phần tiếp theo, đánh giá khóa học rồi thi cuối khóa.</p>
+            <div class="action-row">
+              <button class="primary-btn" id="continueLearning">Vào bài học</button>
+              <button class="ghost-btn" data-route-jump="pretest">Đánh giá đầu vào</button>
+            </div>
+          </article>
+        </section>
+
+        <section class="route" id="route-pretest">
+          <article class="start-card" id="pretestStage"></article>
+        </section>
+
+        <section class="route" id="route-learn">
+          <div class="lesson-layout">
+            <section class="lesson-main" aria-label="Lesson reader">
+              <div class="section-tabs" id="sectionTabs" aria-label="Module sections"></div>
+              <div class="lesson-tabs" id="lessonTabs" aria-label="Lessons"></div>
+              <article class="lesson-card" id="lessonCard"></article>
+              <div class="reader-nav">
+                <button class="ghost-btn" id="prevLesson">Trước</button>
+                <button class="primary-btn" id="nextLesson">Tiếp theo</button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="route" id="route-exam">
+          <article class="start-card compact-start">
+            <p class="eyebrow">Final steps</p>
+            <h2>Hoàn tất khóa học</h2>
+            <p>Đánh giá khóa học là bước bắt buộc trước Final Exam. Sau khi đạt bài thi, certificate sẽ mở.</p>
+          </article>
+          <section class="evaluation-panel" id="courseEvaluationPanel" aria-label="Course evaluation"></section>
+          <div class="assessment-list" id="assessmentGrid"></div>
+          <section class="certificate-final" id="certificateFinal" hidden>
+            <p class="eyebrow">Certificate</p>
+            <h2>Chứng chỉ đã sẵn sàng</h2>
+            <p>Certificate chỉ xuất hiện sau khi bạn hoàn thành khóa học, gửi đánh giá và đạt Final Exam.</p>
+            <a id="certificateLink" href="/academy/certificate-template/certificate-template.html">Tải certificate</a>
+          </section>
+        </section>
+
+        <footer class="reader-footer">
+          <a id="backToAcademy" href="/academy">Quay về trang academy</a>
+        </footer>
+      </main>
+    </div>
+
+    <div class="auth-wall" id="authWall" hidden>
+      <div>
+        <strong>Yêu cầu đăng nhập Google</strong>
+        <p>Bạn cần đăng nhập từ cổng DEEPFENSE Academy trước khi vào hệ thống học.</p>
+        <a href="/academy">Quay lại cổng đăng nhập</a>
+      </div>
+    </div>
+
+    <div class="modal" id="quizModal" aria-hidden="true">
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalQuizTitle">
+        <button class="modal-close" id="closeQuiz" aria-label="Đóng quiz">×</button>
+        <div class="quiz-header">
+          <div>
+            <p class="eyebrow" id="modalQuizType">Quiz</p>
+            <h2 id="modalQuizTitle">Quiz</h2>
+          </div>
+          <span id="quizCounter">1/10</span>
+        </div>
+        <div class="quiz-progress"><div id="quizProgress"></div></div>
+        <article class="quiz-card" id="quizCard"></article>
+        <div class="quiz-nav">
+          <button class="ghost-btn" id="prevQuestion">Trước</button>
+          <button class="primary-btn" id="nextQuestion">Tiếp theo</button>
+        </div>
+        <div class="quiz-result" id="quizResult"></div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
