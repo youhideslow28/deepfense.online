@@ -60,6 +60,20 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     const saved = localStorage.getItem('df_completed_modules');
     return saved ? JSON.parse(saved) : [];
   });
+
+  // Check if passed via standalone HTML course reader (deepfense-basics-final-exam key)
+  const [htmlCoursePassed] = useState<boolean>(() => {
+    try {
+      const result = JSON.parse(localStorage.getItem('deepfense-basics-final-exam') || 'null');
+      return !!result?.passed;
+    } catch { return false; }
+  });
+  const [htmlCourseEvalDone] = useState<boolean>(() => {
+    try {
+      const ev = JSON.parse(localStorage.getItem('deepfense-basics-course-evaluation') || 'null');
+      return !!ev?.submittedAt;
+    } catch { return false; }
+  });
   const [lessonStep, setLessonStep] = useState<'content' | 'review' | 'checkpoint'>('content');
 
   // Sync auth state to currentView
@@ -179,7 +193,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     { label: isVi ? 'Khóa học' : 'Enrolled', value: isSignedIn ? 1 : 0, icon: BookOpen, color: 'text-blue-400' },
     { label: isVi ? 'Thời gian' : 'Total Time', value: '45m', icon: Clock, color: 'text-cyan-400' },
     { label: isVi ? 'Đã xong' : 'Finished', value: completedLessons.length, icon: CheckCircle2, color: 'text-emerald-400' },
-    { label: isVi ? 'Chứng chỉ' : 'Certs', value: completedModules.includes(99) ? 1 : 0, icon: Award, color: 'text-amber-400' },
+    { label: isVi ? 'Chứng chỉ' : 'Certs', value: (completedModules.includes(99) || (htmlCoursePassed && htmlCourseEvalDone)) ? 1 : 0, icon: Award, color: 'text-amber-400' },
   ];
 
   const WelcomeView = () => (
@@ -284,8 +298,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
 
   const Dashboard = () => (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      {/* Certificate Claim (Only if passed final exam) */}
-      {completedModules.includes(99) && (
+      {/* Certificate Claim (Only if passed final exam - via React course or standalone HTML reader) */}
+      {(completedModules.includes(99) || (htmlCoursePassed && htmlCourseEvalDone)) && (
         <div className="glass-dark border border-amber-400/30 rounded-2xl p-6 bg-amber-400/5 relative overflow-hidden animate-in fade-in slide-in-from-right-4 duration-1000">
           <div className="absolute top-0 right-0 p-4 opacity-10">
             <Award size={100} className="text-amber-400" />
@@ -350,7 +364,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 key={track.id}
                 className={`glass-dark rounded-2xl p-6 border transition-all relative overflow-hidden group ${track.locked ? 'border-white/5 opacity-60 grayscale cursor-not-allowed' : 'border-white/10 hover:border-blue-500/40 cursor-pointer'}`}
                 onClick={() => {
-                  if (!track.locked) {
+                  if (track.locked) return;
+                  if (track.id === 'basics') {
+                    window.location.href = '/academy/basics/';
+                  } else {
                     setSelectedCourseId(track.id);
                     setCurrentView('course');
                   }
