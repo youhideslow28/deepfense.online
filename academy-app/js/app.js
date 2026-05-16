@@ -16,16 +16,18 @@ import {
 } from './firebase-init.js';
 
 import { startQuiz } from './quiz.js';
+import { startMidterm, getMidtermConfig } from './midterm.js';
 
 // ── State ──────────────────────────────────────────────────────
 const state = {
-  user:        null,
-  progress:    null,   // doc từ academy_learners/{uid}
-  dpfBalance:  0,
-  manifest:    null,   // course-manifest.json
-  currentView: 'dashboard',  // 'dashboard' | 'lesson' | 'quiz' | 'exam'
-  currentModuleId: null,
-  unsubs: [],          // danh sách Firestore unsubscribers
+  user:             null,
+  progress:         null,   // doc từ academy_learners/{uid}
+  dpfBalance:       0,
+  manifest:         null,   // course-manifest.json
+  currentView:      'dashboard',
+  currentModuleId:  null,
+  currentMidtermId: null,
+  unsubs:           [],
 };
 
 // ── DOM refs ───────────────────────────────────────────────────
@@ -133,11 +135,28 @@ const loadManifest = async () => {
 
 const getCompletedModules = () =>
   Array.isArray(state.progress?.completedModules)
-    ? state.progress.completedModules
-    : [];
+    ? state.progress.completedModules : [];
 
-const isModuleDone = (moduleId) =>
-  getCompletedModules().includes(moduleId);
+const getCompletedMidterms = () =>
+  Array.isArray(state.progress?.completedMidterms)
+    ? state.progress.completedMidterms : [];
+
+const isModuleDone    = (id) => getCompletedModules().includes(id);
+const isMidtermDone   = (id) => getCompletedMidterms().includes(id);
+
+// Tất cả modules của một part đã xong chưa?
+const isPartDone = (partId, allModules) =>
+  allModules.filter((m) => m.part === partId).every((m) => isModuleDone(m.id));
+
+// Midterm config mapping: partId → midtermId
+const PART_MIDTERM = { foundation: 'midterm1', recognition: 'midterm2' };
+
+// Midterm mở được khi tất cả modules trong part đã xong
+const isMidtermUnlocked = (midtermId, course) => {
+  const cfg = getMidtermConfig(midtermId);
+  if (!cfg) return false;
+  return cfg.modules.every((id) => isModuleDone(id));
+};
 
 /**
  * Một module mở được khi:
@@ -160,32 +179,48 @@ const renderModuleNav = (course) => {
     modules: course.modules.filter((m) => m.part === part.id),
   }));
 
-  dom.moduleNav.innerHTML = parts.map((part) => `
-    <div class="nav-part-title">${part.title}</div>
-    ${part.modules.map((mod) => {
-      const done     = completed.includes(mod.id);
-      const unlocked = isModuleUnlocked(mod, course.modules);
-      const active   = state.currentModuleId === mod.id;
-      const cls = [
-        'nav-module-item',
-        done     ? 'is-done'   : '',
-        active   ? 'is-active' : '',
-        !unlocked ? 'is-locked' : '',
-      ].filter(Boolean).join(' ');
+  dom.moduleNav.innerHTML = parts.map((part) => {
+    const midtermId = PART_MIDTERM[part.id];
+    const mtCfg     = midtermId ? getMidtermConfig(midtermId) : null;
+    const mtDone    = midtermId ? isMidtermDone(midtermId) : false;
+    const mtUnlocked = midtermId ? isMidtermUnlocked(midtermId, course) : false;
+    const mtActive  = state.currentMidtermId === midtermId;
 
-      return `
-        <div class="${cls}" data-module-id="${mod.id}" role="button" tabindex="0">
-          <span class="nav-module-num">${String(mod.id).padStart(2, '0')}</span>
-          <span class="nav-module-name">${mod.title}</span>
+    return `
+      <div class="nav-part-title">${part.title}</div>
+      ${part.modules.map((mod) => {
+        const done     = completed.includes(mod.id);
+        const unlocked = isModuleUnlocked(mod, course.modules);
+        const active   = state.currentModuleId === mod.id;
+        const cls = ['nav-module-item',
+          done ? 'is-done' : '', active ? 'is-active' : '',
+          !unlocked ? 'is-locked' : ''].filter(Boolean).join(' ');
+
+        return `
+          <div class="${cls}" data-module-id="${mod.id}" role="button" tabindex="0">
+            <span class="nav-module-num">${String(mod.id).padStart(2, '0')}</span>
+            <span class="nav-module-name">${mod.title}</span>
+            <svg class="nav-module-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>`;
+      }).join('')}
+
+      ${mtCfg ? `
+        <div class="nav-module-item nav-midterm-item ${mtDone ? 'is-done' : ''} ${mtActive ? 'is-active' : ''} ${!mtUnlocked ? 'is-locked' : ''}"
+             data-midterm-id="${midtermId}" role="button" tabindex="0"
+             style="border-left-color:${mtDone ? '' : mtUnlocked ? 'var(--clr-warning)' : ''}">
+          <span class="nav-module-num" style="color:var(--clr-warning)">🎯</span>
+          <span class="nav-module-name" style="font-weight:600">${mtCfg.title}</span>
           <svg class="nav-module-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <polyline points="20 6 9 17 4 12"/>
           </svg>
-        </div>`;
-    }).join('')}
-  `).join('');
+        </div>` : ''}
+    `;
+  }).join('');
 
-  // Click handlers
-  dom.moduleNav.querySelectorAll('.nav-module-item').forEach((el) => {
+  // Click: module items
+  dom.moduleNav.querySelectorAll('.nav-module-item[data-module-id]').forEach((el) => {
     el.addEventListener('click', () => {
       const moduleId = Number(el.dataset.moduleId);
       const mod = course.modules.find((m) => m.id === moduleId);
@@ -197,10 +232,21 @@ const renderModuleNav = (course) => {
       closeSidebar();
       navigateToModule(moduleId);
     });
+    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') el.click(); });
+  });
 
-    el.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') el.click();
+  // Click: midterm items
+  dom.moduleNav.querySelectorAll('.nav-midterm-item[data-midterm-id]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const midtermId = el.dataset.midtermId;
+      if (!isMidtermUnlocked(midtermId, course)) {
+        showToast('Hãy hoàn thành tất cả module trước để mở khóa midterm.', 'info');
+        return;
+      }
+      closeSidebar();
+      navigateToMidterm(midtermId);
     });
+    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') el.click(); });
   });
 };
 
@@ -216,47 +262,87 @@ const renderDashboard = (course) => {
     modules: course.modules.filter((m) => m.part === part.id),
   }));
 
-  dom.dashboardModules.innerHTML = parts.map((part) => `
-    <div style="margin-bottom: 6px;">
-      <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-                  color:var(--clr-text-3);padding:12px 0 6px;">${part.title}</div>
-      ${part.modules.map((mod) => {
-        const done     = completed.includes(mod.id);
-        const unlocked = isModuleUnlocked(mod, course.modules);
-        const statusLabel = done ? 'Hoàn thành' : (unlocked ? 'Bắt đầu' : 'Khóa');
-        const statusCls   = done ? 'status-done' : (unlocked ? 'status-active' : 'status-locked');
-        const levelKey    = (mod.level ?? '').toLowerCase();
-        const levelCls    = `level-${levelKey}`;
+  dom.dashboardModules.innerHTML = parts.map((part) => {
+    const midtermId  = PART_MIDTERM[part.id];
+    const mtCfg      = midtermId ? getMidtermConfig(midtermId) : null;
+    const mtDone     = midtermId ? isMidtermDone(midtermId) : false;
+    const mtUnlocked = midtermId ? isMidtermUnlocked(midtermId, course) : false;
 
-        return `
-          <div class="dash-module-card ${done ? 'is-done' : ''} ${!unlocked ? 'is-locked' : ''}"
-               data-module-id="${mod.id}" role="button" tabindex="${unlocked ? 0 : -1}">
-            <span class="dash-module-num">${String(mod.id).padStart(2, '0')}</span>
-            <div class="dash-module-info">
-              <div class="dash-module-title">${mod.title}</div>
-              <div class="dash-module-meta">
-                <span>${mod.duration ?? ''}</span>
-                <span class="dash-module-level ${levelCls}">${mod.level ?? ''}</span>
-              </div>
+    const moduleCards = part.modules.map((mod) => {
+      const done        = completed.includes(mod.id);
+      const unlocked    = isModuleUnlocked(mod, course.modules);
+      const statusLabel = done ? 'Hoàn thành' : (unlocked ? 'Bắt đầu' : 'Khóa');
+      const statusCls   = done ? 'status-done' : (unlocked ? 'status-active' : 'status-locked');
+      const levelCls    = `level-${(mod.level ?? '').toLowerCase()}`;
+
+      return `
+        <div class="dash-module-card ${done ? 'is-done' : ''} ${!unlocked ? 'is-locked' : ''}"
+             data-module-id="${mod.id}" role="button" tabindex="${unlocked ? 0 : -1}">
+          <span class="dash-module-num">${String(mod.id).padStart(2, '0')}</span>
+          <div class="dash-module-info">
+            <div class="dash-module-title">${mod.title}</div>
+            <div class="dash-module-meta">
+              <span>${mod.duration ?? ''}</span>
+              <span class="dash-module-level ${levelCls}">${mod.level ?? ''}</span>
             </div>
-            <span class="dash-module-status ${statusCls}">${statusLabel}</span>
-          </div>`;
-      }).join('')}
-    </div>
-  `).join('');
+          </div>
+          <span class="dash-module-status ${statusCls}">${statusLabel}</span>
+        </div>`;
+    }).join('');
 
-  // Click handlers on dashboard cards
-  dom.dashboardModules.querySelectorAll('.dash-module-card').forEach((el) => {
+    // Midterm card sau mỗi part (nếu có)
+    const midtermCard = mtCfg ? `
+      <div class="dash-module-card ${mtDone ? 'is-done' : ''} ${!mtUnlocked ? 'is-locked' : ''}"
+           data-midterm-id="${midtermId}" role="button" tabindex="${mtUnlocked ? 0 : -1}"
+           style="border-color:${mtDone ? 'rgba(34,197,94,.25)' : mtUnlocked ? 'rgba(245,158,11,.3)' : ''};
+                  background:${mtUnlocked && !mtDone ? 'rgba(245,158,11,.04)' : ''}">
+        <span class="dash-module-num" style="color:var(--clr-warning)">🎯</span>
+        <div class="dash-module-info">
+          <div class="dash-module-title" style="color:${mtUnlocked ? 'var(--clr-text)' : 'var(--clr-text-3)'}">
+            ${mtCfg.title}
+          </div>
+          <div class="dash-module-meta">
+            <span>${mtCfg.subtitle}</span>
+            <span class="dash-module-level"
+                  style="background:rgba(245,158,11,.15);color:#fbbf24">Milestone</span>
+          </div>
+        </div>
+        <span class="dash-module-status ${mtDone ? 'status-done' : mtUnlocked ? '' : 'status-locked'}"
+              style="${mtUnlocked && !mtDone ? 'background:rgba(245,158,11,.12);color:#fbbf24' : ''}">
+          ${mtDone ? 'Hoàn thành' : mtUnlocked ? 'Thi ngay' : 'Khóa'}
+        </span>
+      </div>` : '';
+
+    return `
+      <div style="margin-bottom:6px">
+        <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+                    color:var(--clr-text-3);padding:12px 0 6px">${part.title}</div>
+        ${moduleCards}
+        ${midtermCard}
+      </div>`;
+  }).join('');
+
+  // Click: module cards
+  dom.dashboardModules.querySelectorAll('[data-module-id]').forEach((el) => {
     el.addEventListener('click', () => {
       const moduleId = Number(el.dataset.moduleId);
       const mod = course.modules.find((m) => m.id === moduleId);
-      if (!mod || !isModuleUnlocked(mod, course.modules)) {
-        if (!isModuleUnlocked(mod, course.modules)) {
-          showToast('Hãy hoàn thành module trước để mở khóa.', 'info');
-        }
-        return;
+      if (!mod) return;
+      if (!isModuleUnlocked(mod, course.modules)) {
+        showToast('Hãy hoàn thành module trước để mở khóa.', 'info'); return;
       }
       navigateToModule(moduleId);
+    });
+  });
+
+  // Click: midterm cards
+  dom.dashboardModules.querySelectorAll('[data-midterm-id]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const midtermId = el.dataset.midtermId;
+      if (!isMidtermUnlocked(midtermId, course)) {
+        showToast('Hãy hoàn thành tất cả module trong phần này trước.', 'info'); return;
+      }
+      navigateToMidterm(midtermId);
     });
   });
 };
@@ -284,11 +370,33 @@ const showView = (viewKey) => {
 
 const navigateToDashboard = async () => {
   const course = await loadManifest();
-  state.currentModuleId = null;
+  state.currentModuleId  = null;
+  state.currentMidtermId = null;
   renderModuleNav(course);
   renderDashboard(course);
   updateBreadcrumb([course.title]);
   showView('viewDashboard');
+};
+
+const navigateToMidterm = async (midtermId) => {
+  const course = await loadManifest();
+  const cfg    = getMidtermConfig(midtermId);
+  if (!cfg) return;
+
+  state.currentModuleId  = null;
+  state.currentMidtermId = midtermId;
+  renderModuleNav(course);
+  updateBreadcrumb([course.title, cfg.title]);
+
+  startMidterm(midtermId, async (passed) => {
+    state.currentMidtermId = null;
+    if (passed) {
+      showToast(`🏆 ${cfg.title} hoàn thành! +50 DPF`, 'success');
+    } else {
+      showToast('Ôn lại các module rồi thử lại nhé!', 'info');
+    }
+    navigateToDashboard();
+  });
 };
 
 const navigateToModule = async (moduleId) => {
@@ -296,7 +404,8 @@ const navigateToModule = async (moduleId) => {
   const mod = course.modules.find((m) => m.id === moduleId);
   if (!mod) return;
 
-  state.currentModuleId = moduleId;
+  state.currentModuleId  = moduleId;
+  state.currentMidtermId = null;
   renderModuleNav(course);
 
   // Nếu module có sourceFile → hiện lesson view

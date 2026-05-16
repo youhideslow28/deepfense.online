@@ -1,0 +1,247 @@
+{
+  "midtermId": "midterm1",
+  "title": "Midterm 1 — Phần I: Nền tảng",
+  "scope": "Module 1, 2, 3",
+  "questions": [
+    {
+      "id": "mt1q01",
+      "tag": "Module 1 — Deepfake là gì",
+      "text": "Kỹ thuật nào tạo ra deepfake bằng cách đặt hai mạng AI cạnh tranh nhau — một mạng tạo nội dung giả, một mạng cố phân biệt thật/giả?",
+      "options": ["CNN (Convolutional Neural Network)", "GAN (Generative Adversarial Networks)", "RNN (Recurrent Neural Network)", "SVM (Support Vector Machine)"],
+      "correct": 1,
+      "explanation": "GAN — Generator tạo ảnh/video giả, Discriminator cố phân biệt. Hai mạng cạnh tranh liên tục cho đến khi Generator tạo ra nội dung đủ chân thực để đánh lừa Discriminator."
+    },
+    {
+      "id": "mt1q02",
+      "tag": "Module 1 — Deepfake là gì",
+      "text": "Deepfake được đặt tên bằng cách ghép \"deep learning\" với \"fake\". Từ \"deep\" ở đây chỉ điều gì?",
+      "options": ["Nội dung sâu sắc, khó hiểu", "Kỹ thuật học sâu (deep learning) — mạng neural nhiều tầng", "Deepfake được phát hiện ở vùng deep web", "Nội dung chứa thông điệp ẩn sâu"],
+      "correct": 1,
+      "explanation": "\"Deep\" trong deep learning chỉ các mạng neural nhiều lớp (deep neural networks) — khả năng học các biểu diễn phức tạp từ dữ liệu thô mà không cần feature engineering thủ công."
+    },
+    {
+      "id": "mt1q03",
+      "tag": "Module 1 — Deepfake là gì",
+      "text": "Đâu là ví dụ về ứng dụng HỢP PHÁP và tích cực của công nghệ deepfake/synthetic media?",
+      "options": ["Tạo video thù địch về đối thủ chính trị", "Sản xuất nội dung khiêu dâm về người nổi tiếng", "Làm trẻ hóa diễn viên trong phim điện ảnh", "Giả mạo giọng sếp để gian lận tài chính"],
+      "correct": 2,
+      "explanation": "Công nghệ de-aging trong điện ảnh (như Marvel, Star Wars) là ứng dụng hợp pháp với sự đồng ý của diễn viên. Các ứng dụng khác: phục hồi di sản văn hóa, giáo dục, y tế mô phỏng."
+    },
+    {
+      "id": "mt1q04",
+      "tag": "Module 1 — Deepfake là gì",
+      "text": "Deepfake audio (voice cloning) nguy hiểm hơn deepfake video trong lừa đảo vì lý do gì?",
+      "options": ["Chất lượng âm thanh tốt hơn hình ảnh", "Giọng nói tạo phản ứng cảm xúc tức thì và cần ít dữ liệu nguồn hơn để tạo", "Deepfake audio không thể bị phát hiện bởi AI", "Chỉ cần wifi để tạo deepfake audio"],
+      "correct": 1,
+      "explanation": "Giọng nói kích hoạt tin tưởng và cảm xúc tức thì trong não người. Đồng thời, voice cloning chỉ cần 3-30 giây mẫu giọng — thấp hơn nhiều so với lượng dữ liệu cần cho video deepfake."
+    },
+    {
+      "id": "mt1q05",
+      "tag": "Module 1 — Deepfake là gì",
+      "text": "Tại sao deepfake ngày càng dễ tạo ra hơn cho người dùng thông thường?",
+      "options": ["Vì phần cứng máy tính ngày càng rẻ hơn", "Vì các công cụ AI deepfake dễ dùng, miễn phí, và không cần kỹ năng kỹ thuật cao đang bùng nổ", "Vì internet ngày càng nhanh hơn", "Vì người dùng học lập trình nhiều hơn"],
+      "correct": 1,
+      "explanation": "Sự dân chủ hóa AI: các ứng dụng như FaceApp, DeepFaceLab, ElevenLabs, và hàng trăm ứng dụng khác cho phép tạo deepfake không cần kiến thức kỹ thuật. Ngưỡng kỹ năng ngày càng giảm."
+    },
+    {
+      "id": "mt1q06",
+      "tag": "Module 2 — Tác động",
+      "text": "Loại deepfake gây hại cho cá nhân phổ biến và nghiêm trọng nhất hiện nay là?",
+      "options": ["Deepfake thay đổi màu tóc", "NCII — Non-consensual intimate imagery deepfake", "Deepfake thay đổi giọng nói trong game", "Deepfake để làm avatar ảo"],
+      "correct": 1,
+      "explanation": "NCII deepfake (ghép mặt vào nội dung khiêu dâm không có sự đồng ý) chiếm hơn 96% deepfake trên internet và gây tổn thương tâm lý nghiêm trọng tương đương bạo lực tình dục."
+    },
+    {
+      "id": "mt1q07",
+      "tag": "Module 2 — Tác động",
+      "text": "\"Liar's dividend\" — cổ tức của kẻ nói dối — là hậu quả gián tiếp nguy hiểm nào của sự phổ biến deepfake?",
+      "options": ["Tội phạm kiếm được nhiều tiền từ deepfake", "Kẻ xấu dùng sự tồn tại của deepfake để tuyên bố bằng chứng thật là giả mạo", "Các công ty deepfake được định giá cao hơn", "Luật sư kiếm được nhiều tiền hơn từ các vụ kiện deepfake"],
+      "correct": 1,
+      "explanation": "Khi deepfake phổ biến, bất kỳ video thật nào cũng có thể bị tuyên bố là \"deepfake\". Điều này cho phép tội phạm từ chối trách nhiệm trước bằng chứng video xác thực — làm suy yếu hệ thống pháp lý."
+    },
+    {
+      "id": "mt1q08",
+      "tag": "Module 2 — Tác động",
+      "text": "Tác động của deepfake đến doanh nghiệp theo hai hướng chính là?",
+      "options": ["Tăng chi phí marketing và giảm doanh số", "Gian lận tài chính (giả CEO) và phá hoại thương hiệu (video CEO giả phát ngôn sai)", "Gián điệp công nghiệp và rò rỉ bí mật kinh doanh", "Làm chậm hệ thống IT và mất năng suất"],
+      "correct": 1,
+      "explanation": "Doanh nghiệp đối mặt với: (1) CEO fraud — giả giọng/video CEO để ra lệnh chuyển tiền; (2) Reputation attack — tạo video CEO giả thừa nhận gian lận để làm sụt giá cổ phiếu hoặc gây khủng hoảng PR."
+    },
+    {
+      "id": "mt1q09",
+      "tag": "Module 2 — Tác động",
+      "text": "Nghiên cứu MIT (2018) về tốc độ lan truyền của tin giả trên Twitter cho thấy kết quả gì?",
+      "options": ["Tin thật lan nhanh hơn tin giả", "Tin giả lan nhanh hơn tin thật 6 lần", "Tốc độ lan truyền không có sự khác biệt đáng kể", "Chỉ tin giả về chính trị lan nhanh hơn"],
+      "correct": 1,
+      "explanation": "Nghiên cứu Soroush Vosoughi et al. (MIT, 2018) trên 126.000 câu chuyện Twitter: tin giả lan nhanh hơn, sâu hơn, và rộng hơn tin thật — đặc biệt là thông tin chính trị. Nội dung mới lạ và kích thích cảm xúc lan nhanh nhất."
+    },
+    {
+      "id": "mt1q10",
+      "tag": "Module 2 — Tác động",
+      "text": "Tại sao nạn nhân của deepfake NCII thường không tìm kiếm giúp đỡ pháp lý?",
+      "options": ["Vì không biết luật bảo vệ họ", "Vì xấu hổ, sợ bị phán xét, và không biết ai/tổ chức nào có thể giúp", "Vì chi phí pháp lý quá cao", "Vì deepfake không phải tội phạm ở hầu hết quốc gia"],
+      "correct": 1,
+      "explanation": "Rào cản tìm kiếm giúp đỡ chủ yếu là tâm lý: xấu hổ, sợ bị phán xét \"tại sao có ảnh/video đó\", và thiếu nhận thức về các kênh hỗ trợ. Đây là lý do các tổ chức hỗ trợ nạn nhân cần nâng cao nhận thức cộng đồng."
+    },
+    {
+      "id": "mt1q11",
+      "tag": "Module 3 — Đạo đức & Pháp lý",
+      "text": "Luật An ninh mạng Việt Nam 2018 cấm hành vi nào liên quan đến thông tin sai sự thật?",
+      "options": ["Chỉ cấm tin giả về chính phủ", "Đăng tải, chia sẻ thông tin sai sự thật gây hoang mang trong nhân dân hoặc xúc phạm danh dự người khác", "Chỉ cấm trên mạng xã hội nước ngoài", "Chỉ cấm khi nạn nhân là người nổi tiếng"],
+      "correct": 1,
+      "explanation": "Điều 8 Luật An ninh mạng 2018 cấm \"thông tin sai sự thật gây hoang mang trong nhân dân, gây thiệt hại cho các hoạt động kinh tế — xã hội, gây khó khăn cho hoạt động của cơ quan nhà nước\". Vi phạm có thể bị phạt tù."
+    },
+    {
+      "id": "mt1q12",
+      "tag": "Module 3 — Đạo đức & Pháp lý",
+      "text": "Nguyên tắc \"informed consent\" yêu cầu điều kiện gì khi sử dụng hình ảnh của người khác?",
+      "options": ["Chỉ cần người đó đã đăng ảnh công khai", "Người được hỏi hiểu rõ mục đích, không bị ép buộc, và có thể rút lại đồng ý", "Chỉ cần thông báo sau khi đã sử dụng", "Đồng ý ngầm định khi follow trên mạng xã hội là đủ"],
+      "correct": 1,
+      "explanation": "Informed consent là nền tảng đạo đức: (1) Hiểu rõ — biết ảnh/video của mình sẽ dùng làm gì; (2) Tự nguyện — không áp lực; (3) Có thể rút lại. Đăng ảnh lên Instagram không mặc định đồng ý cho mọi mục đích."
+    },
+    {
+      "id": "mt1q13",
+      "tag": "Module 3 — Đạo đức & Pháp lý",
+      "text": "\"Dấu vết số\" (digital footprint) và rủi ro deepfake có mối liên hệ như thế nào?",
+      "options": ["Không liên quan — deepfake chỉ cần một ảnh là đủ", "Dấu vết số phong phú (nhiều ảnh/video đa góc độ) cung cấp dataset tốt hơn để tạo deepfake chân thực hơn", "Dấu vết số lớn đồng nghĩa có nhiều người bảo vệ bạn", "Chỉ dấu vết số trên dark web mới nguy hiểm"],
+      "correct": 1,
+      "explanation": "Model deepfake cần nhiều mẫu đa dạng (góc độ, ánh sáng, biểu cảm) để tạo ra kết quả chân thực. Người đăng nhiều ảnh/video từ nhiều góc độ vô tình cung cấp dataset huấn luyện tốt hơn cho kẻ xấu."
+    },
+    {
+      "id": "mt1q14",
+      "tag": "Module 3 — Đạo đức & Pháp lý",
+      "text": "Chuẩn kỹ thuật C2PA (Coalition for Content Provenance and Authenticity) giải quyết vấn đề deepfake bằng cách nào?",
+      "options": ["Tự động xóa nội dung AI tạo ra", "Ghi nhận lịch sử nguồn gốc nội dung — ai tạo, khi nào, bằng công cụ gì — không thể giả mạo", "Cấm các công cụ AI tạo ra deepfake", "Đánh thuế nội dung AI"],
+      "correct": 1,
+      "explanation": "C2PA (Adobe, Microsoft, Google, Intel, Sony) phát triển tiêu chuẩn ghi lịch sử nội dung (content provenance) vào metadata có chữ ký điện tử — giúp bất kỳ ai có thể truy nguồn gốc ảnh/video qua công cụ kiểm tra."
+    },
+    {
+      "id": "mt1q15",
+      "tag": "Module 1 — Deepfake là gì",
+      "text": "Deepfake và \"shallowfake\" khác nhau ở điểm nào?",
+      "options": ["Shallowfake là deepfake chất lượng kém hơn", "Shallowfake dùng chỉnh sửa đơn giản (cắt, ghép, tua chậm) không cần AI; deepfake dùng AI để tổng hợp nội dung mới", "Shallowfake chỉ ảnh hưởng đến hình ảnh, không ảnh hưởng video", "Không có sự khác biệt thực tế"],
+      "correct": 1,
+      "explanation": "Shallowfake (cheap fake): thao túng đơn giản — cắt bỏ ngữ cảnh, tua chậm để trông say rượu, chạy ngược... Deepfake: dùng AI để tổng hợp nội dung hoàn toàn mới. Cả hai đều nguy hiểm với mục đích thao túng."
+    },
+    {
+      "id": "mt1q16",
+      "tag": "Module 2 — Tác động",
+      "text": "Tác động nào của deepfake lên hệ thống pháp lý là đáng lo ngại nhất?",
+      "options": ["Tăng chi phí xét xử vì cần phân tích video", "Bằng chứng video có thể bị bác bỏ hoặc phủ nhận tính xác thực, làm suy yếu hệ thống chứng cứ số", "Thẩm phán phải học kỹ năng kỹ thuật", "Tòa án phải mua thiết bị đắt tiền hơn"],
+      "correct": 1,
+      "explanation": "Deepfake tấn công nền tảng của hệ thống pháp lý hiện đại: bằng chứng video. Khi mọi video đều có thể bị nghi ngờ, hệ thống chứng minh tội phạm/biện hộ vô tội trở nên phức tạp hơn nhiều."
+    },
+    {
+      "id": "mt1q17",
+      "tag": "Module 3 — Đạo đức & Pháp lý",
+      "text": "\"Confirmation bias\" — thiên kiến xác nhận — ảnh hưởng đến việc chia sẻ deepfake như thế nào?",
+      "options": ["Người dùng kiểm chứng kỹ hơn nội dung phù hợp với niềm tin của họ", "Người dùng chia sẻ nội dung phù hợp với quan điểm của họ mà không kiểm chứng kỹ vì nó \"cảm giác đúng\"", "Không có ảnh hưởng vì người dùng thông minh sẽ kiểm tra", "Chỉ ảnh hưởng người cao tuổi"],
+      "correct": 1,
+      "explanation": "Deepfake được thiết kế để khai thác confirmation bias: tạo nội dung mà target muốn tin. Khi nội dung phù hợp với quan điểm, não người ít phản xạ kiểm chứng hơn — đây là lỗ hổng tâm lý mà kẻ xấu khai thác."
+    },
+    {
+      "id": "mt1q18",
+      "tag": "Module 2 — Tác động",
+      "text": "Vì sao tác động của deepfake với trẻ em và thanh thiếu niên đặc biệt nghiêm trọng?",
+      "options": ["Vì trẻ em dùng internet nhiều hơn người lớn", "Vì tổn thương tâm lý ở độ tuổi phát triển có thể để lại hậu quả lâu dài hơn; và trẻ em có ít công cụ pháp lý để tự bảo vệ", "Vì trẻ em ít biết về AI hơn", "Vì phụ huynh không kiểm soát được điện thoại của con"],
+      "correct": 1,
+      "explanation": "Ngoài tổn thương tâm lý nghiêm trọng hơn ở giai đoạn phát triển bản sắc, trẻ em là \"đặc biệt được bảo vệ\" trong pháp luật — tạo NCII với trẻ em (kể cả deepfake) là tội phạm nghiêm trọng hơn."
+    },
+    {
+      "id": "mt1q19",
+      "tag": "Module 3 — Đạo đức & Pháp lý",
+      "text": "Khi bạn chia sẻ một bài deepfake mà không biết đó là deepfake, bạn có chịu trách nhiệm không?",
+      "options": ["Không, vì không cố ý", "Phụ thuộc: nếu thực hiện \"duty of care\" (kiểm chứng hợp lý trước khi chia sẻ) thì giảm trách nhiệm; nếu vô trách nhiệm thì có thể chịu trách nhiệm dân sự hoặc hình sự", "Có, luôn luôn chịu hoàn toàn", "Chỉ nền tảng mạng xã hội mới chịu trách nhiệm"],
+      "correct": 1,
+      "explanation": "Pháp luật nhiều quốc gia theo hướng: người chia sẻ có \"duty of care\" — nghĩa vụ kiểm chứng hợp lý trước khi phát tán. Kiểm chứng tốt trước khi chia sẻ vừa là trách nhiệm đạo đức, vừa giảm rủi ro pháp lý."
+    },
+    {
+      "id": "mt1q20",
+      "tag": "Module 1 — Deepfake là gì",
+      "text": "Khi đánh giá nguy cơ deepfake với bản thân, điều quan trọng nhất cần xem xét là?",
+      "options": ["Bạn có nổi tiếng không", "Lượng và tính đa dạng của ảnh/video cá nhân bạn để công khai trên internet", "Bạn có nhiều bạn bè trên mạng không", "Điện thoại của bạn có phần mềm chống virus không"],
+      "correct": 1,
+      "explanation": "Nguy cơ deepfake tỉ lệ thuận với lượng dữ liệu hình ảnh/giọng nói có sẵn công khai. Quản lý quyền riêng tư trên mạng xã hội — giới hạn ai xem ảnh, tránh đăng video dài — là phòng ngừa hiệu quả nhất."
+    },
+    {
+      "id": "mt1q21",
+      "tag": "Module 3 — Đạo đức & Pháp lý",
+      "text": "AI Watermarking (đánh dấu nội dung AI) hiện đang có hạn chế thực tế nào?",
+      "options": ["Kỹ thuật này quá phức tạp để triển khai", "Watermark có thể bị xóa bỏ hoặc phá vỡ, và không phải công cụ AI nào cũng áp dụng tiêu chuẩn này", "Watermark làm giảm chất lượng hình ảnh quá nhiều", "Watermark chỉ hoạt động với hình ảnh, không hoạt động với video"],
+      "correct": 1,
+      "explanation": "Dù là bước quan trọng, AI watermarking không phải giải pháp hoàn toàn: (1) Có thể bị strip bằng công cụ đơn giản; (2) Chỉ hiệu quả với nội dung có áp dụng watermark; (3) Kẻ xấu không bắt buộc phải dùng công cụ có watermark."
+    },
+    {
+      "id": "mt1q22",
+      "tag": "Module 2 — Tác động",
+      "text": "Phong trào #MeToo và các tổ chức quyền phụ nữ đã tác động như thế nào đến pháp luật về NCII deepfake?",
+      "options": ["Không có ảnh hưởng vì đây là vấn đề kỹ thuật", "Thúc đẩy nhiều quốc gia ban hành luật cụ thể hóa tội danh NCII deepfake với hình phạt nặng hơn", "Chỉ ảnh hưởng đến chính sách của các công ty mạng xã hội", "Dẫn đến việc cấm hoàn toàn công nghệ AI tạo ảnh"],
+      "correct": 1,
+      "explanation": "Sự lên tiếng của cộng đồng đã thúc đẩy lập pháp: UK (Online Safety Act), Mỹ (nhiều tiểu bang), Hàn Quốc, Singapore đã có luật xử phạt NCII deepfake riêng. Việt Nam đang trong quá trình hoàn thiện khung pháp lý này."
+    },
+    {
+      "id": "mt1q23",
+      "tag": "Module 1 — Deepfake là gì",
+      "text": "Sự khác biệt giữa \"face swap\" và \"face reenactment\" trong deepfake là gì?",
+      "options": ["Không có sự khác biệt", "Face swap thay thế toàn bộ khuôn mặt; face reenactment điều khiển biểu cảm/chuyển động của một khuôn mặt theo người khác", "Face swap chỉ dùng cho ảnh, face reenactment chỉ dùng cho video", "Face reenactment yêu cầu phần cứng đắt tiền hơn"],
+      "correct": 1,
+      "explanation": "Face swap: hoán đổi khuôn mặt hoàn toàn (A thay bằng B). Face reenactment: khuôn mặt A vẫn giữ nguyên nhưng biểu cảm/miệng được điều khiển theo biểu cảm của B — dùng để tạo video \"nói\" từ ảnh tĩnh."
+    },
+    {
+      "id": "mt1q24",
+      "tag": "Module 3 — Đạo đức & Pháp lý",
+      "text": "\"Quyền được quên lãng\" (right to be forgotten) liên quan đến deepfake như thế nào?",
+      "options": ["Không liên quan gì", "Nạn nhân có thể yêu cầu xóa nội dung deepfake khỏi internet, nhưng enforcement thực tế còn nhiều hạn chế", "Chỉ áp dụng cho dữ liệu tài chính", "Đây là quyền tuyệt đối được đảm bảo 100%"],
+      "correct": 1,
+      "explanation": "GDPR (EU) và nhiều luật bảo vệ dữ liệu trao quyền yêu cầu xóa nội dung. Thực tế: xóa khỏi một nền tảng không xóa khỏi tất cả nơi đã lan truyền, và các nền tảng khác nhau có chính sách tuân thủ khác nhau."
+    },
+    {
+      "id": "mt1q25",
+      "tag": "Module 2 — Tác động",
+      "text": "Tác động kinh tế vĩ mô dài hạn của sự không tin tưởng vào nội dung số có thể là gì?",
+      "options": ["Không có tác động vì kinh tế không phụ thuộc vào niềm tin", "Làm chậm giao dịch số, tăng chi phí xác minh, gây rào cản với thương mại điện tử và truyền thông kỹ thuật số", "Chỉ ảnh hưởng đến ngành media", "Dẫn đến mọi người dùng tiền mặt nhiều hơn"],
+      "correct": 1,
+      "explanation": "Niềm tin là nền tảng của kinh tế số. Khi giao dịch video call bị nghi ngờ, hợp đồng từ xa khó xác minh, và thông tin thị trường không đáng tin — toàn bộ hệ sinh thái kinh tế số bị ảnh hưởng."
+    },
+    {
+      "id": "mt1q26",
+      "tag": "Module 1 — Deepfake là gì",
+      "text": "Vì sao các nghiên cứu phát hiện deepfake (deepfake detection) liên tục phải cập nhật?",
+      "options": ["Vì phần cứng máy tính thay đổi", "Vì là cuộc chạy đua vũ trang: model deepfake mới học cách vượt qua detector cũ, buộc detector phải cập nhật", "Vì pháp luật thay đổi liên tục", "Vì chỉ cần update phần mềm là đủ"],
+      "correct": 1,
+      "explanation": "Adversarial arms race: khi một detector được công bố, người tạo deepfake có thể dùng nó để \"adversarial train\" model của họ để vượt qua detector đó. Đây là lý do không có giải pháp phát hiện deepfake \"vĩnh viễn\"."
+    },
+    {
+      "id": "mt1q27",
+      "tag": "Module 3 — Đạo đức & Pháp lý",
+      "text": "Nguyên tắc \"do no harm\" (không gây hại) áp dụng cho người dùng AI như thế nào?",
+      "options": ["Chỉ áp dụng cho nhà phát triển AI, không áp dụng người dùng thông thường", "Người dùng có trách nhiệm kiểm tra mục đích và hậu quả tiềm tàng trước khi tạo và chia sẻ nội dung AI", "Chỉ áp dụng khi sử dụng AI thương mại, không áp dụng với AI miễn phí", "Nguyên tắc này không tồn tại trong thực tế"],
+      "correct": 1,
+      "explanation": "Trách nhiệm AI là shared responsibility: nhà phát triển tạo ra công cụ an toàn; người dùng dùng công cụ một cách có trách nhiệm. \"Do no harm\" nghĩa là cân nhắc tác hại tiềm tàng với người thật trước mọi hành động."
+    },
+    {
+      "id": "mt1q28",
+      "tag": "Module 2 — Tác động",
+      "text": "Hậu quả \"chilling effect\" (tác dụng làm lạnh) của deepfake đối với xã hội là gì?",
+      "options": ["Người dùng internet cảm thấy lạnh lẽo hơn", "Sợ bị deepfake khiến người ta tự kiểm duyệt, rút lui khỏi không gian công, hoặc từ chối tham gia chính trị và công việc công", "Người dùng dùng điện nhiều hơn để chạy AI", "Deepfake làm giảm nhiệt độ toàn cầu"],
+      "correct": 1,
+      "explanation": "Chilling effect: nỗi sợ bị deepfake khiến nhiều người — đặc biệt phụ nữ và nhà báo — giảm bớt hoặc dừng hẳn các hoạt động công khai. Điều này thu hẹp không gian dân chủ và đa dạng tiếng nói xã hội."
+    },
+    {
+      "id": "mt1q29",
+      "tag": "Module 1 — Deepfake là gì",
+      "text": "Diffusion model (mô hình khuếch tán) như Stable Diffusion, DALL-E khác GAN ở điểm nào trong tạo nội dung AI?",
+      "options": ["Diffusion model chỉ tạo ảnh tĩnh, không tạo video được", "Diffusion model tạo nội dung bằng cách học đảo ngược quá trình thêm nhiễu; thường cho chất lượng cao hơn và dễ kiểm soát hơn GAN", "Diffusion model cần ít dữ liệu huấn luyện hơn GAN", "Không có sự khác biệt kỹ thuật nào đáng kể"],
+      "correct": 1,
+      "explanation": "Diffusion models: học cách \"denoising\" — bắt đầu từ nhiễu ngẫu nhiên và dần dần tái tạo ảnh. Ổn định hơn GAN trong huấn luyện và cho kết quả chất lượng cao hơn. Ngày càng thay thế GAN trong nhiều ứng dụng."
+    },
+    {
+      "id": "mt1q30",
+      "tag": "Module 3 — Đạo đức & Pháp lý",
+      "text": "Điều nào sau đây MÔ TẢ ĐÚNG về tư duy phòng vệ trước deepfake?",
+      "options": ["Nghi ngờ mọi người và không tin bất kỳ thông tin nào", "Cân bằng giữa tin tưởng hợp lý và hoài nghi phê phán — đặc biệt với nội dung kích thích cảm xúc mạnh", "Chỉ tin thông tin từ chính phủ", "Tắt hoàn toàn mạng xã hội"],
+      "correct": 1,
+      "explanation": "Tư duy phòng vệ không phải hoang mang hay nghi ngờ tất cả — đó là phương pháp: (1) Nhận ra cảm xúc khi xem nội dung; (2) Dừng lại và hỏi \"tại sao nội dung này được tạo?\"; (3) Tìm kiếm xác minh từ nhiều nguồn; (4) Sau đó mới quyết định hành động."
+    }
+  ]
+}
