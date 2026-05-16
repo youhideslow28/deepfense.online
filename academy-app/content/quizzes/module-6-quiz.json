@@ -1,0 +1,150 @@
+{
+  "moduleId": 6,
+  "title": "Kiểm chứng bối cảnh, nguồn tin và metadata cơ bản",
+  "questions": [
+    {
+      "id": "m6q01",
+      "text": "Lateral reading (đọc ngang) là kỹ thuật kiểm chứng thông tin như thế nào?",
+      "options": [
+        "Đọc toàn bộ bài viết từ đầu đến cuối rất kỹ",
+        "Mở tab mới, tra cứu nguồn tin ĐỘC LẬP với bài viết đang xem, thay vì chỉ đọc kỹ bài đó",
+        "Đọc từ cuối bài lên đầu để tìm thông tin ẩn",
+        "So sánh hai bài viết trên cùng một trang web"
+      ],
+      "correct": 1,
+      "explanation": "Lateral reading là kỹ thuật của fact-checker chuyên nghiệp: thay vì đọc sâu một nguồn, hãy mở tab mới và tìm kiếm xem người khác nói gì về nguồn đó. Nếu một website đáng tin, nhiều nguồn uy tín khác sẽ đề cập đến nó."
+    },
+    {
+      "id": "m6q02",
+      "text": "EXIF metadata của ảnh chứa thông tin gì có ích cho việc kiểm chứng?",
+      "options": [
+        "Số lần ảnh được xem và chia sẻ",
+        "Ngày giờ chụp, model máy ảnh/điện thoại, và đôi khi tọa độ GPS",
+        "Tên người chụp và địa chỉ nhà",
+        "Chỉ chứa thông tin màu sắc và độ phân giải"
+      ],
+      "correct": 1,
+      "explanation": "EXIF metadata có thể tiết lộ: khi nào ảnh được chụp (so sánh với ngày sự kiện), thiết bị nào được dùng, và đôi khi GPS coordinates. Lưu ý: ảnh tải lên Facebook/Instagram thường bị xóa EXIF — đây cũng là thông tin để nghi ngờ."
+    },
+    {
+      "id": "m6q03",
+      "text": "Khi kiểm tra nguồn tin, câu hỏi \"SIFT\" bao gồm những bước nào?",
+      "options": [
+        "Search, Identify, Filter, Trace",
+        "Stop — Investigate the source — Find better coverage — Trace claims to origin",
+        "Share, Inform, Follow, Track",
+        "Screen, Inspect, Fact-check, Test"
+      ],
+      "correct": 1,
+      "explanation": "SIFT là framework kiểm chứng của Mike Caulfield: (S) Dừng lại trước khi chia sẻ; (I) Tìm hiểu về nguồn tin; (F) Tìm nguồn đưa tin tốt hơn; (T) Truy về nguồn gốc của tuyên bố. Đây là quy trình được nhiều tổ chức fact-checking toàn cầu áp dụng."
+    },
+    {
+      "id": "m6q04",
+      "text": "Bối cảnh (context) bị thay đổi là hình thức thao túng thông tin phổ biến nhất. Ví dụ điển hình là?",
+      "options": [
+        "Dùng ảnh thật nhưng mô tả sai sự kiện, thời điểm hoặc địa điểm",
+        "Chỉnh sửa ảnh bằng Photoshop",
+        "Thêm bình luận sai vào bài viết",
+        "Dùng font chữ sai trong tiêu đề"
+      ],
+      "correct": 0,
+      "explanation": "Ảnh có thể là 100% thật nhưng vẫn là thông tin sai nếu bối cảnh bị thay đổi. Ví dụ: ảnh lũ lụt từ 10 năm trước được đăng kèm caption \"lũ lụt hôm nay ở...\" — đây là misrepresentation, không phải deepfake nhưng cũng rất nguy hiểm."
+    },
+    {
+      "id": "m6q05",
+      "text": "Công cụ nào dưới đây HỮU ÍCH nhất để kiểm tra xem một tên miền website đáng tin cậy không?",
+      "options": [
+        "Chỉ cần nhìn vào thiết kế website",
+        "WHOIS lookup để xem lịch sử đăng ký, tuổi tên miền, và chủ sở hữu",
+        "Đếm số bài viết trên trang",
+        "Kiểm tra số lượng follower trên mạng xã hội"
+      ],
+      "correct": 1,
+      "explanation": "WHOIS lookup (whois.domaintools.com) cho thấy: tên miền được đăng ký khi nào (tên miền mới tạo tuần trước đăng tin về \"sự kiện lịch sử\" là đáng ngờ), đăng ký ở đâu, và đôi khi ai sở hữu. Tên miền mới + ẩn danh = cờ đỏ."
+    },
+    {
+      "id": "m6q06",
+      "text": "\"Confirmation bias\" (thiên kiến xác nhận) ảnh hưởng đến việc kiểm chứng thông tin như thế nào?",
+      "options": [
+        "Giúp chúng ta kiểm chứng thông tin nhanh hơn",
+        "Khiến chúng ta ít nghi ngờ thông tin phù hợp với niềm tin sẵn có và kiểm chứng kỹ hơn thông tin trái chiều",
+        "Không có ảnh hưởng đến người có học thức cao",
+        "Chỉ ảnh hưởng đến người cao tuổi"
+      ],
+      "correct": 1,
+      "explanation": "Confirmation bias là kẻ thù của tư duy phê phán: chúng ta tự nhiên tìm kiếm và chấp nhận thông tin phù hợp với quan điểm của mình. Deepfake và tin giả thường được thiết kế để khai thác thiên kiến này — tạo ra nội dung mà \"target\" muốn tin."
+    },
+    {
+      "id": "m6q07",
+      "text": "Khi thấy ảnh/video lan truyền mạnh với caption gây phẫn nộ, phản ứng đầu tiên nên là?",
+      "options": [
+        "Chia sẻ ngay để mọi người biết",
+        "Dừng lại, nhận ra cảm xúc phẫn nộ, và kiểm chứng trước khi hành động",
+        "Bình luận phản bác ngay",
+        "Báo cáo tài khoản đã đăng"
+      ],
+      "correct": 1,
+      "explanation": "Cảm xúc mạnh (phẫn nộ, kinh ngạc, sợ hãi) là tín hiệu cảnh báo — không phải lý do để chia sẻ ngay. Tin giả và deepfake được thiết kế để khai thác cảm xúc và tắt lý trí. Càng muốn chia sẻ nhanh, càng cần dừng lại kiểm tra."
+    },
+    {
+      "id": "m6q08",
+      "text": "Các trang fact-checking uy tín tại Việt Nam và quốc tế bao gồm?",
+      "options": [
+        "Wikipedia và Google",
+        "Snopes, PolitiFact, AFP Fact Check, và tại Việt Nam: Mekong FACT, VTV Fact Check",
+        "Facebook và Twitter/X",
+        "Reddit và YouTube"
+      ],
+      "correct": 1,
+      "explanation": "Các tổ chức fact-checking chuyên nghiệp như Snopes, AFP Fact Check (có phiên bản tiếng Việt), và VTV Fact Check áp dụng quy trình kiểm chứng nghiêm ngặt. Đây là nguồn tham khảo đáng tin cho thông tin đang nghi ngờ."
+    },
+    {
+      "id": "m6q09",
+      "text": "Metadata của video có thể bị xóa hoặc chỉnh sửa không? Điều này có ý nghĩa gì cho việc kiểm chứng?",
+      "options": [
+        "Không thể xóa, metadata là vĩnh viễn",
+        "Có thể xóa/chỉnh sửa — thiếu metadata hoặc metadata không nhất quán cũng là dấu hiệu đáng ngờ",
+        "Metadata chỉ bị xóa khi tải lên mạng xã hội",
+        "Chỉnh sửa metadata là bất hợp pháp nên không ai làm"
+      ],
+      "correct": 1,
+      "explanation": "Metadata có thể bị xóa (stripped) hoặc chỉnh sửa. Cả hai đều là thông tin: metadata bị xóa có thể có nghĩa ảnh đã qua chỉnh sửa; metadata ngày giờ không khớp với sự kiện được mô tả là cờ đỏ rõ ràng."
+    },
+    {
+      "id": "m6q10",
+      "text": "Phương pháp \"3-source rule\" trong kiểm chứng thông tin là gì?",
+      "options": [
+        "Chỉ tin thông tin được 3 người chia sẻ",
+        "Tìm ít nhất 3 nguồn đáng tin cậy ĐỘC LẬP xác nhận cùng một thông tin trước khi tin và chia sẻ",
+        "Đọc 3 bài viết về cùng chủ đề",
+        "Chỉ dùng 3 trang web tin tức yêu thích"
+      ],
+      "correct": 1,
+      "explanation": "\"3-source rule\" nghĩa là: tìm 3 nguồn ĐỘC LẬP (không phải 3 nguồn đều trích từ cùng một nguồn gốc) xác nhận thông tin. Nếu không tìm được 3 nguồn độc lập, đây là lý do để hoài nghi và không chia sẻ."
+    },
+    {
+      "id": "m6q11",
+      "text": "Một video deepfake lan truyền nhanh vì nhiều người nổi tiếng chia sẻ. Điều này có ý nghĩa gì về tính xác thực?",
+      "options": [
+        "Video chắc chắn là thật vì người nổi tiếng đã kiểm tra",
+        "Không có ý nghĩa gì — số lần chia sẻ và người chia sẻ nổi tiếng không xác nhận tính xác thực",
+        "Video đáng tin hơn vì có nhiều người xem",
+        "Chỉ cần một người uy tín chia sẻ là đủ để tin"
+      ],
+      "correct": 1,
+      "explanation": "\"Argument from popularity\" (lập luận từ sự phổ biến) là ngụy biện logic: thứ gì đó không trở thành thật chỉ vì nhiều người tin hoặc chia sẻ. Người nổi tiếng cũng có thể bị lừa và lan truyền deepfake vô tình."
+    },
+    {
+      "id": "m6q12",
+      "text": "Công cụ InVID/WeVerify hỗ trợ kiểm chứng video như thế nào?",
+      "options": [
+        "Tự động dịch video sang nhiều ngôn ngữ",
+        "Phân mảnh video thành frames để reverse search, trích xuất metadata, và phát hiện chỉnh sửa",
+        "Tải video về máy tính để phân tích offline",
+        "So sánh âm thanh với cơ sở dữ liệu giọng nói"
+      ],
+      "correct": 1,
+      "explanation": "InVID/WeVerify (browser extension miễn phí) là công cụ chuyên nghiệp cho fact-checker: phân mảnh video thành keyframes → tìm kiếm ngược từng frame → trích xuất metadata → kiểm tra tính toàn vẹn. Đây là công cụ thiết thực để kiểm chứng video nghi ngờ."
+    }
+  ]
+}

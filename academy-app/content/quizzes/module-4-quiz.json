@@ -1,0 +1,150 @@
+{
+  "moduleId": 4,
+  "title": "Nhận diện dấu hiệu hình ảnh và video",
+  "questions": [
+    {
+      "id": "m4q01",
+      "text": "Khu vực nào trên khuôn mặt thường lộ dấu hiệu deepfake rõ nhất ở video chất lượng thấp-trung bình?",
+      "options": [
+        "Vùng trán và đỉnh đầu",
+        "Vùng viền khuôn mặt, tai, và đường chân tóc",
+        "Vùng cổ họng",
+        "Vùng vai và ngực"
+      ],
+      "correct": 1,
+      "explanation": "Mô hình deepfake thường được huấn luyện để tái tạo phần trung tâm khuôn mặt (mắt, mũi, miệng) tốt hơn vùng ngoại vi. Viền mặt, tai, và đường chân tóc là nơi \"mặt ghép\" gặp \"da và tóc thật\" — dễ tạo ra sự không nhất quán."
+    },
+    {
+      "id": "m4q02",
+      "text": "Dấu hiệu bất thường ở MẮT trong deepfake bao gồm điều gì?",
+      "options": [
+        "Mắt quá to bất thường",
+        "Nháy mắt không tự nhiên, ánh mắt không theo hướng đầu, phản chiếu ánh sáng trong mắt không nhất quán",
+        "Mắt nhìn thẳng quá nhiều",
+        "Màu mắt thay đổi theo thời gian trong video"
+      ],
+      "correct": 1,
+      "explanation": "Mắt là cửa sổ phát hiện deepfake: (1) Nháy mắt hiếm hoặc bất thường — model cũ không xử lý tốt; (2) Hướng nhìn không đồng bộ với chuyển động đầu; (3) Phản chiếu ánh sáng (catchlight) khác nhau giữa hai mắt hoặc khác với ánh sáng môi trường."
+    },
+    {
+      "id": "m4q03",
+      "text": "Trong deepfake video, \"temporal inconsistency\" (không nhất quán theo thời gian) là gì?",
+      "options": [
+        "Video quay ở tốc độ khung hình khác nhau",
+        "Đặc điểm khuôn mặt thay đổi đột ngột hoặc nhấp nháy giữa các khung hình liên tiếp",
+        "Âm thanh không đồng bộ với hình ảnh",
+        "Video bị tua nhanh ở một số đoạn"
+      ],
+      "correct": 1,
+      "explanation": "Temporal inconsistency xảy ra khi model deepfake xử lý từng frame độc lập mà không đảm bảo tính liên tục. Kết quả: nốt ruồi xuất hiện/biến mất, màu da thay đổi nhẹ, hay kết cấu da \"rung\" giữa các frame."
+    },
+    {
+      "id": "m4q04",
+      "text": "Ánh sáng và bóng tối trong deepfake có thể lộ dấu hiệu gian lận như thế nào?",
+      "options": [
+        "Deepfake luôn có hình ảnh quá sáng",
+        "Bóng đổ của khuôn mặt không nhất quán với nguồn sáng trong môi trường, hoặc không có bóng đổ hợp lý",
+        "Màu da quá đậm bất thường",
+        "Ánh sáng trong deepfake luôn quá đều"
+      ],
+      "correct": 1,
+      "explanation": "Ánh sáng là thách thức lớn với deepfake: khuôn mặt thật được ghép vào phải nhận ánh sáng từ đúng hướng và góc độ của môi trường. Bóng đổ không khớp (khuôn mặt sáng trong khi môi trường tối, hoặc bóng đổ sai hướng) là dấu hiệu rõ ràng."
+    },
+    {
+      "id": "m4q05",
+      "text": "\"Uncanny valley\" trong deepfake đề cập đến điều gì?",
+      "options": [
+        "Vùng địa lý có nhiều deepfake nhất",
+        "Cảm giác \"không thoải mái\" khi thấy khuôn mặt/chuyển động gần như người thật nhưng có điều gì đó không đúng",
+        "Lỗi kỹ thuật của mô hình AI",
+        "Vùng mờ xung quanh khuôn mặt trong deepfake"
+      ],
+      "correct": 1,
+      "explanation": "\"Uncanny valley\" là hiện tượng tâm lý: não người rất nhạy với điều \"gần như thật nhưng không hoàn toàn\". Deepfake thường rơi vào uncanny valley — bạn không thể nói ngay cái gì sai, nhưng cảm giác có điều gì đó kỳ lạ."
+    },
+    {
+      "id": "m4q06",
+      "text": "Khi xem video nghi ngờ deepfake, bạn nên làm gì để kiểm tra kỹ hơn?",
+      "options": [
+        "Xem trên màn hình nhỏ nhất có thể",
+        "Tua chậm hoặc xem frame-by-frame, đặc biệt ở những đoạn có chuyển động đầu hoặc biểu cảm mạnh",
+        "Tăng độ sáng màn hình lên tối đa",
+        "Nhờ người khác xem thay"
+      ],
+      "correct": 1,
+      "explanation": "Xem frame-by-frame giúp phát hiện các lỗi temporal inconsistency và các hiện vật (artifact) mà mắt thường bỏ qua khi video chạy bình thường. Các đoạn chuyển đầu hoặc cười là thời điểm model deepfake dễ mắc lỗi nhất."
+    },
+    {
+      "id": "m4q07",
+      "text": "Chất lượng hình ảnh xung quanh MIỆNG trong deepfake thường có vấn đề gì?",
+      "options": [
+        "Môi quá dày hoặc quá mỏng",
+        "Vùng răng, lưỡi và bên trong miệng thường bị render kém, thiếu chi tiết hoặc bất thường",
+        "Màu môi không đúng với tông da",
+        "Miệng không mở được rộng trong deepfake"
+      ],
+      "correct": 1,
+      "explanation": "Bên trong miệng (răng, lưỡi, amygdala) là thách thức lớn với deepfake — dataset huấn luyện ít ảnh bên trong miệng hơn, nên model thường tạo ra răng mờ, thiếu chi tiết, hoặc lưỡi có hình dạng bất thường."
+    },
+    {
+      "id": "m4q08",
+      "text": "Deepfake ảnh tĩnh (photo deepfake) khó phát hiện hơn deepfake video vì lý do nào?",
+      "options": [
+        "Ảnh tĩnh có độ phân giải thấp hơn",
+        "Không có chuyển động để phát hiện temporal inconsistency — chỉ có thể dựa vào dấu hiệu không gian trong frame",
+        "Ảnh tĩnh ít được chia sẻ trên internet hơn",
+        "Công nghệ tạo ảnh deepfake phức tạp hơn video"
+      ],
+      "correct": 1,
+      "explanation": "Với video, bạn có thêm chiều thời gian để phát hiện lỗi. Với ảnh tĩnh, bạn chỉ có một frame — phải dựa vào: ánh sáng nhất quán không, texture da có tự nhiên không, các đặc điểm đối xứng có hợp lý không."
+    },
+    {
+      "id": "m4q09",
+      "text": "Công cụ \"reverse image search\" (tìm kiếm ngược ảnh) hữu ích trong việc phát hiện deepfake như thế nào?",
+      "options": [
+        "Nó phân tích pixel để tìm dấu hiệu AI",
+        "Tìm ra nguồn gốc ảnh gốc và xem ảnh đã bị chỉnh sửa hay lấy từ nguồn khác",
+        "Kiểm tra metadata EXIF của ảnh",
+        "Đo độ phân giải và màu sắc"
+      ],
+      "correct": 1,
+      "explanation": "Reverse image search (Google Images, TinEye) giúp bạn tìm nguồn gốc ảnh: nếu \"ảnh sự kiện mới\" thực ra là ảnh cũ từ 5 năm trước, hoặc ảnh \"ở Việt Nam\" thực ra được chụp ở nước khác — đây là dấu hiệu rõ ràng của thao túng."
+    },
+    {
+      "id": "m4q10",
+      "text": "Điều nào sau đây KHÔNG phải là dấu hiệu nhận biết deepfake hình ảnh/video?",
+      "options": [
+        "Viền khuôn mặt bị mờ hoặc nhòe",
+        "Ánh sáng khuôn mặt không khớp với ánh sáng nền",
+        "Người quay có nhiều follower trên mạng xã hội",
+        "Chuyển động của đầu không đồng bộ với biểu cảm"
+      ],
+      "correct": 2,
+      "explanation": "Số lượng follower của người đăng KHÔNG liên quan đến tính xác thực của nội dung. Thực ra, các tài khoản nhiều follower đôi khi được dùng như \"mồi\" để tăng tín nhiệm cho nội dung giả."
+    },
+    {
+      "id": "m4q11",
+      "text": "Khi khuôn mặt trong video \"bơi\" hoặc \"trôi\" khỏi đầu trong một số khung hình, đây là dấu hiệu của?",
+      "options": [
+        "Camera bị rung",
+        "Lỗi tracking khuôn mặt trong model deepfake — face không được gắn chặt vào đầu trong video gốc",
+        "Người quay bị say sóng",
+        "Video bị nén quá mạnh"
+      ],
+      "correct": 1,
+      "explanation": "\"Face drifting\" — khuôn mặt bị ghép không bám chặt vào đầu gốc — là lỗi tracking của model deepfake, đặc biệt khi đầu người chuyển động nhanh hoặc ở các góc không phổ biến trong dataset huấn luyện."
+    },
+    {
+      "id": "m4q12",
+      "text": "Phương pháp nào dưới đây là CÁC BƯỚC ĐÚNG để kiểm tra một ảnh/video nghi ngờ?",
+      "options": [
+        "Tin ngay nếu người chia sẻ là người quen",
+        "Phóng to → kiểm tra viền khuôn mặt → xem nguồn gốc → tìm kiếm ngược ảnh → tra nguồn tin",
+        "Chỉ kiểm tra khi ảnh được chia sẻ nhiều lần",
+        "Nhờ AI chatbot xác nhận là đủ"
+      ],
+      "correct": 1,
+      "explanation": "Quy trình kiểm tra hiệu quả: (1) Phóng to vùng nghi ngờ; (2) Tìm kiếm ngược ảnh để kiểm tra nguồn gốc; (3) Xác minh với nguồn tin gốc đáng tin cậy; (4) Kiểm tra metadata nếu có. Người quen chia sẻ KHÔNG đảm bảo tính xác thực."
+    }
+  ]
+}

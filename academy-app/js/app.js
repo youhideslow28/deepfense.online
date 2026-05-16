@@ -15,6 +15,8 @@ import {
   listenDpfBalance,
 } from './firebase-init.js';
 
+import { startQuiz } from './quiz.js';
+
 // ── State ──────────────────────────────────────────────────────
 const state = {
   user:        null,
@@ -365,32 +367,32 @@ const showLessonView = async (mod, course) => {
   dom.contentArea.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-// ── Quiz view (placeholder — đầy đủ sẽ build sau) ─────────────
+// ── Quiz view ──────────────────────────────────────────────────
 
 const showQuizView = (mod, course) => {
-  $('quiz-title').textContent          = `Quiz — ${mod.title}`;
-  $('quiz-progress-label').textContent = `Module ${mod.id}`;
-
-  $('quiz-content').innerHTML = `
-    <div style="background:var(--clr-surface);border:1px solid var(--clr-border);
-                border-radius:16px;padding:36px;text-align:center;">
-      <div style="font-size:2.5rem;margin-bottom:12px">📝</div>
-      <div style="font-size:1.1rem;font-weight:700;color:var(--clr-text);margin-bottom:8px">
-        Quiz Module ${mod.id}
-      </div>
-      <p style="color:var(--clr-text-3);font-size:.9rem;margin-bottom:24px">
-        ${mod.quiz?.questions ?? 10} câu hỏi · Cần đúng ${Math.round((mod.quiz?.passThreshold ?? 0.7) * 100)}% để qua
-      </p>
-      <p style="color:var(--clr-text-3);font-size:.85rem">
-        Hệ thống quiz đang được xây dựng — sẽ ra mắt ở phiên bản tiếp theo.
-      </p>
-      <button class="btn btn--ghost" style="margin-top:24px"
-              onclick="navigateToDashboard()">← Về Dashboard</button>
-    </div>`;
-
   updateBreadcrumb([course.title, mod.title, 'Quiz']);
-  showView('viewQuiz');
-  dom.contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Gọi engine quiz thật; callback xử lý sau khi xong
+  startQuiz(mod, course, async (passed) => {
+    if (passed) {
+      // Cập nhật sidebar + dashboard
+      const allMods = course.modules;
+      const idx     = allMods.findIndex((m) => m.id === mod.id);
+      const nextMod = allMods[idx + 1] ?? null;
+
+      showToast('🎉 Module hoàn thành! Tiếp tục nào.', 'success');
+
+      if (nextMod && isModuleUnlocked(nextMod, allMods)) {
+        navigateToModule(nextMod.id);
+      } else {
+        navigateToDashboard();
+      }
+    } else {
+      // Chưa pass → về lesson để ôn lại
+      showToast('Ôn lại bài học và thử lại nhé!', 'info');
+      showLessonView(mod, course);
+    }
+  });
 };
 
 // Expose for inline onclick (quiz view placeholder button)

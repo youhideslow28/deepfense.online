@@ -1,0 +1,150 @@
+{
+  "moduleId": 3,
+  "title": "Rủi ro, đạo đức và niềm tin số",
+  "questions": [
+    {
+      "id": "m3q01",
+      "text": "Nguyên tắc cơ bản nào trong đạo đức sử dụng AI bị vi phạm khi tạo deepfake của người khác mà không có sự đồng ý?",
+      "options": [
+        "Nguyên tắc hiệu quả (efficiency)",
+        "Nguyên tắc tự chủ và tôn trọng cá nhân (autonomy & respect for persons)",
+        "Nguyên tắc đổi mới (innovation)",
+        "Nguyên tắc minh bạch trong kinh doanh (business transparency)"
+      ],
+      "correct": 1,
+      "explanation": "Quyền tự chủ — quyền kiểm soát hình ảnh và danh tính của bản thân — là quyền cơ bản. Tạo nội dung sử dụng hình ảnh người khác mà không có sự đồng ý vi phạm quyền này, bất kể mục đích."
+    },
+    {
+      "id": "m3q02",
+      "text": "Theo Luật An ninh mạng Việt Nam 2018, hành vi đăng tải thông tin sai sự thật gây hại cho người khác có thể bị?",
+      "options": [
+        "Chỉ nhắc nhở nhẹ nhàng",
+        "Phạt tiền hoặc truy cứu trách nhiệm hình sự tùy mức độ",
+        "Không có quy định xử phạt cụ thể",
+        "Chỉ bị xóa tài khoản mạng xã hội"
+      ],
+      "correct": 1,
+      "explanation": "Luật An ninh mạng 2018 và Bộ luật Hình sự Việt Nam quy định xử phạt cho hành vi phát tán thông tin sai sự thật gây hại: từ phạt hành chính đến phạt tù tùy mức độ thiệt hại gây ra."
+    },
+    {
+      "id": "m3q03",
+      "text": "Khái niệm \"quyền riêng tư số\" (digital privacy) bao gồm điều nào?",
+      "options": [
+        "Chỉ quyền bảo vệ mật khẩu",
+        "Quyền kiểm soát thông tin cá nhân, hình ảnh và dữ liệu của mình trên môi trường số",
+        "Chỉ quyền không bị theo dõi địa lý",
+        "Chỉ áp dụng với dữ liệu tài chính"
+      ],
+      "correct": 1,
+      "explanation": "Quyền riêng tư số là quyền toàn diện: bao gồm thông tin cá nhân, hình ảnh, giọng nói, hành vi duyệt web, vị trí, và đặc biệt là quyền kiểm soát cách dữ liệu của bạn được dùng để huấn luyện AI."
+    },
+    {
+      "id": "m3q04",
+      "text": "Khi chia sẻ một video gây sốc về người khác mà bạn chưa kiểm chứng, bạn đang?",
+      "options": [
+        "Thực hiện quyền tự do ngôn luận hợp pháp",
+        "Có thể vô tình tiếp tay gây hại cho người vô tội",
+        "Giúp cộng đồng được thông tin",
+        "Không chịu trách nhiệm vì chỉ chia sẻ lại"
+      ],
+      "correct": 1,
+      "explanation": "Về mặt đạo đức và pháp lý, người chia sẻ nội dung sai cũng có thể chịu trách nhiệm. Nhiều quốc gia quy định \"chia sẻ cũng là phát tán\" — bạn không thể hoàn toàn vô can khi lan truyền nội dung gây hại."
+    },
+    {
+      "id": "m3q05",
+      "text": "\"Sự đồng ý có thông tin\" (informed consent) trong bối cảnh AI và deepfake có nghĩa là gì?",
+      "options": [
+        "Người dùng đồng ý với điều khoản dịch vụ dài mà không đọc",
+        "Người được đề cập hiểu rõ hình ảnh của họ sẽ được dùng như thế nào và tự nguyện đồng ý",
+        "Chỉ cần đồng ý bằng miệng là đủ",
+        "Đồng ý ngầm định khi đăng ảnh lên mạng xã hội"
+      ],
+      "correct": 1,
+      "explanation": "Informed consent yêu cầu: (1) Người được hỏi hiểu rõ mục đích sử dụng; (2) Không bị ép buộc; (3) Có thể rút lại sự đồng ý. Đăng ảnh lên mạng xã hội KHÔNG mặc định có nghĩa đồng ý cho mọi mục đích."
+    },
+    {
+      "id": "m3q06",
+      "text": "Điều nào sau đây là ví dụ về \"đạo đức chia sẻ\" (ethical sharing) thông tin trực tuyến?",
+      "options": [
+        "Chia sẻ ngay tin tức nóng để được nhiều like",
+        "Xác minh nguồn gốc, kiểm tra tính xác thực trước khi chia sẻ, và ghi nguồn rõ ràng",
+        "Chỉ chia sẻ thông tin có lợi cho quan điểm của mình",
+        "Không bao giờ chia sẻ bất kỳ thông tin nào"
+      ],
+      "correct": 1,
+      "explanation": "Đạo đức chia sẻ bao gồm: kiểm tra nguồn (ai tạo ra?), kiểm tra bằng chứng (có thể xác minh không?), kiểm tra ý định (tại sao được tạo?), và cân nhắc tác hại tiềm tàng với người được đề cập."
+    },
+    {
+      "id": "m3q07",
+      "text": "Tại sao việc đăng nhiều ảnh và video cá nhân lên mạng xã hội có thể làm tăng rủi ro deepfake?",
+      "options": [
+        "Vì nó làm chậm internet",
+        "Vì cung cấp dữ liệu huấn luyện phong phú để tạo ra deepfake chân thực hơn của bạn",
+        "Vì thu hút hacker tấn công thiết bị",
+        "Vì vi phạm điều khoản của mạng xã hội"
+      ],
+      "correct": 1,
+      "explanation": "Mô hình deepfake cần nhiều ảnh/video từ nhiều góc độ, ánh sáng, biểu cảm để tạo ra kết quả chân thực. Người đăng nhiều nội dung cá nhân vô tình cung cấp \"dataset\" cho kẻ xấu tiềm năng."
+    },
+    {
+      "id": "m3q08",
+      "text": "Niềm tin số (digital trust) bị xói mòn khi nào?",
+      "options": [
+        "Khi internet quá chậm",
+        "Khi người dùng không thể phân biệt nội dung thật và giả, dẫn đến hoài nghi với tất cả thông tin",
+        "Chỉ khi xảy ra hack dữ liệu lớn",
+        "Khi ứng dụng mạng xã hội thay đổi giao diện"
+      ],
+      "correct": 1,
+      "explanation": "Niềm tin số là nền tảng của giao tiếp kỹ thuật số. Khi deepfake phổ biến đến mức mọi video đều bị nghi ngờ, hậu quả là tê liệt thông tin: cả tin giả lẫn tin thật đều không được tin — đây là \"khủng hoảng epistemology\"."
+    },
+    {
+      "id": "m3q09",
+      "text": "Từ góc độ pháp lý, bằng chứng video trong tòa án đang phải đối mặt với thách thức mới nào do deepfake?",
+      "options": [
+        "Video quá nặng để lưu trữ",
+        "Tòa án không có thiết bị phát video",
+        "Khó xác thực video là thật hay giả, làm suy yếu giá trị chứng cứ của video",
+        "Luật sư không biết cách dùng video làm bằng chứng"
+      ],
+      "correct": 2,
+      "explanation": "Các tòa án thế giới đang phải cập nhật quy trình xét xử: yêu cầu chuyên gia forensic xác thực video, phân tích metadata gốc, và đặt câu hỏi về tính xác thực — điều mà trước đây không cần thiết."
+    },
+    {
+      "id": "m3q10",
+      "text": "Phong trào \"AI Watermarking\" (đánh dấu nội dung AI) nhằm mục đích gì?",
+      "options": [
+        "Tăng chất lượng hình ảnh AI",
+        "Giúp người xem nhận biết nội dung được tạo bởi AI để phán đoán tốt hơn",
+        "Bảo vệ bản quyền công ty AI",
+        "Làm chậm quá trình tạo deepfake"
+      ],
+      "correct": 1,
+      "explanation": "AI Watermarking nhúng dấu hiệu nhận dạng vào nội dung AI tạo ra (có thể ẩn hoặc hiện) để người xem và hệ thống phát hiện biết đây là nội dung tổng hợp. Google, Meta và nhiều tổ chức đang phát triển tiêu chuẩn này."
+    },
+    {
+      "id": "m3q11",
+      "text": "\"Dấu vết số\" (digital footprint) của bạn ảnh hưởng đến rủi ro deepfake như thế nào?",
+      "options": [
+        "Dấu vết số càng lớn, deepfake càng khó tạo",
+        "Không có mối liên hệ nào giữa dấu vết số và rủi ro deepfake",
+        "Dấu vết số phong phú (nhiều ảnh/video công khai) cung cấp nguyên liệu để tạo deepfake chân thực hơn",
+        "Chỉ dấu vết số trên dark web mới gây rủi ro"
+      ],
+      "correct": 2,
+      "explanation": "Dấu vết số = tổng thể dữ liệu bạn để lại trên internet. Ảnh, video, giọng nói càng nhiều và đa dạng thì AI càng có thể tạo deepfake chân thực. Quản lý dấu vết số là phòng ngừa proactive."
+    },
+    {
+      "id": "m3q12",
+      "text": "Chuẩn C2PA (Coalition for Content Provenance and Authenticity) đang phát triển giải pháp gì cho vấn đề deepfake?",
+      "options": [
+        "Phần mềm xóa deepfake tự động",
+        "Tiêu chuẩn kỹ thuật để ghi nhận \"nguồn gốc nội dung\" — ai tạo ra, khi nào, bằng công cụ gì",
+        "Thuế toàn cầu đánh vào nội dung AI",
+        "Hệ thống kiểm duyệt AI tập trung"
+      ],
+      "correct": 1,
+      "explanation": "C2PA (có sự tham gia của Adobe, Microsoft, Google, Intel, Sony) phát triển tiêu chuẩn ghi lịch sử nội dung (content provenance) vào metadata không thể giả mạo, giúp truy nguồn gốc của bất kỳ ảnh/video nào."
+    }
+  ]
+}
