@@ -7,7 +7,7 @@ export const checkpoint = (label, questions) => ({ label, questions });
 export const COURSE = {
   title: 'DEEPFENSE BASICS',
   subtitle: 'Nhận diện & phòng ngừa deepfake',
-  totalModules: 10,
+  totalModules: 7,
 };
 
 // ── MODULES ─────────────────────────────────────────────────────
@@ -1572,31 +1572,6 @@ export const MODULES = [
     ],
   },
 
-  // ── MODULES 7–9: Placeholder ──────────────────────────────
-  ...[7, 8, 9].map(id => ({
-    id, part: 'response',
-    title: [
-      'Phòng ngừa deepfake cho cá nhân',
-      'Ứng phó khi gặp hoặc trở thành nạn nhân',
-      'Deepfake trong tổ chức: SOC, GRC và security awareness',
-    ][id - 7],
-    duration: '90-100 phút', level: 'Response',
-    scenario: 'Nội dung đang được xây dựng. Sẽ cập nhật sớm.',
-    outcomes: ['Nội dung đang được phát triển.'],
-    sections: [
-      {
-        title: `${id}.1 Nội dung đang được xây dựng`,
-        lessons: [
-          lesson(`${id}.0.0`, 'Module đang được phát triển', [
-            `Module ${id} đang trong quá trình xây dựng. Nội dung sẽ được cập nhật sớm.`,
-            'Bạn có thể tiếp tục với các module đã hoàn thành và quay lại đây sau.',
-          ], ['Nội dung module này sẽ sớm được cập nhật.']),
-        ],
-        checkpoint: null,
-      },
-    ],
-    quiz: [q('Module này đang được xây dựng.', ['OK', 'Hiểu rồi', 'Sẽ quay lại', 'Cảm ơn'], 0)],
-  })),
 ];
 
 // ── HELPERS FOR NAVIGATION ───────────────────────────────────────
