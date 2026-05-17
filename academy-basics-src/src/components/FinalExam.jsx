@@ -54,6 +54,9 @@ export default function FinalExam({ onComplete, completedLessons }) {
       attempts:  store.attempts + 1,
       passed:    store.passed || passed,
       bestScore: Math.max(store.bestScore || 0, score),
+      // Store passedAt only on first pass so the certificate shows correct date
+      ...(passed && !store.passed ? { passedAt: Date.now() } : {}),
+      ...(store.passedAt ? { passedAt: store.passedAt } : {}),
     };
     saveStore(newStore);
     setStore(newStore);
@@ -238,6 +241,27 @@ export default function FinalExam({ onComplete, completedLessons }) {
               </button>
             )}
           </div>
+
+          {/* Certificate CTA — only when passed */}
+          {result.passed && (
+            <div className="exam-cert-cta">
+              <div className="exam-cert-cta-inner">
+                <div className="exam-cert-cta-icon">🎓</div>
+                <div className="exam-cert-cta-body">
+                  <div className="exam-cert-cta-title">Chứng chỉ DEEPFENSE AWARE</div>
+                  <div className="exam-cert-cta-sub">Nhận và tải về chứng chỉ hoàn thành khoá học của bạn.</div>
+                </div>
+                <a
+                  className="exam-cert-cta-btn"
+                  href="../certificate-template/certificate-template.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Xem chứng chỉ →
+                </a>
+              </div>
+            </div>
+          )}
 
           {/* Review */}
           <div className="exam-review">
