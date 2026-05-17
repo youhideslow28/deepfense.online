@@ -9,6 +9,44 @@ export interface Lesson {
   duration?: number;
 }
 
+// ── MINI-GAME TYPES ──────────────────────────────────────────────────
+
+export type MiniGameType = 'tag-the-trick' | 'sort-cards' | 'order-steps' | 'shield-match' | 'risk-meter';
+
+/** tag-the-trick: message contains [[phrase|id]] markers */
+export interface TagTheTrickData {
+  message: { vi: string; en: string };
+  targets: { id: number; tag: { vi: string; en: string }; explanation: { vi: string; en: string } }[];
+}
+
+export interface SortCardsData {
+  buckets: { id: string; label: { vi: string; en: string }; icon: string }[];
+  cards: { id: number; text: { vi: string; en: string }; correctBucket: string; explanation: { vi: string; en: string } }[];
+}
+
+export interface OrderStepsData {
+  steps: { id: number; label: { vi: string; en: string }; icon: string; description: { vi: string; en: string } }[];
+}
+
+export interface ShieldMatchData {
+  rules: { id: string; label: { vi: string; en: string }; icon: string }[];
+  scenarios: { id: number; text: { vi: string; en: string }; correctRule: string; explanation: { vi: string; en: string } }[];
+}
+
+export interface RiskMeterData {
+  scenarios: { id: number; text: { vi: string; en: string }; expertRating: number; explanation: { vi: string; en: string } }[];
+}
+
+export interface MiniGameConfig {
+  type: MiniGameType;
+  title: { vi: string; en: string };
+  instruction: { vi: string; en: string };
+  reward: number;
+  data: TagTheTrickData | SortCardsData | OrderStepsData | ShieldMatchData | RiskMeterData;
+}
+
+// ─────────────────────────────────────────────────────────────────────
+
 export interface Checkpoint {
   label: string;
   questions: {
@@ -17,6 +55,7 @@ export interface Checkpoint {
     answer: number;
     explanation?: string;
   }[];
+  miniGame?: MiniGameConfig;
 }
 
 export interface Section {
@@ -231,18 +270,30 @@ export const basicsCourse = {
               "Yêu cầu về tiền và OTP luôn là rủi ro cao nhất."
             ])
           ],
-          checkpoint: checkpoint("1.1", [
-            q("Deepfake là gì?", ["Mọi nội dung sai trên Internet", "Nội dung hình ảnh, video hoặc âm thanh được tạo/chỉnh sửa để khiến người xem tin một người đã nói hoặc làm điều họ không thực sự nói/làm", "Chỉ là ảnh chỉnh màu", "Chỉ là tin nhắn lừa đảo không có hình ảnh"], 1, "Deepfake thường liên quan đến việc mạo danh hoặc làm sai lệch hành động/lời nói của một người."),
-            q("Điều nào sau đây là ví dụ về deepvoice?", ["Một ảnh phong cảnh do AI tạo", "Một đoạn giọng nói giả giống người thân yêu cầu chuyển tiền", "Một bài viết sai chính tả", "Một video thật được đăng lại từ năm trước"], 1, "Deepvoice liên quan đến giả lập hoặc chỉnh sửa giọng nói."),
-            q("Repurposed media là gì?", ["Nội dung thật nhưng bị đặt sai bối cảnh", "Nội dung luôn do AI tạo ra", "Nội dung không có âm thanh", "Nội dung được đăng bởi tài khoản chính thức"], 0, "Nội dung có thể thật, nhưng chú thích, thời gian, địa điểm hoặc ý nghĩa đi kèm có thể sai."),
-            q("Tất cả synthetic media đều là deepfake. Đúng hay sai?", ["Đúng", "Sai"], 1, "Synthetic media có thể dùng cho mục đích sáng tạo, giáo dục hoặc minh họa. Nó trở thành vấn đề khi bị dùng để mạo danh, đánh lừa hoặc gây hại."),
-            q("Một video bị cắt ngắn làm thay đổi ý nghĩa câu nói ban đầu. Đây phù hợp nhất là:", ["Edited media", "Deepvoice", "Mã độc", "Mật khẩu yếu"], 0, "Cắt ghép hoặc biên tập gây hiểu nhầm là một dạng edited media."),
-            q("Một hình ảnh người không tồn tại do AI tạo ra, được dùng làm ảnh đại diện cho tài khoản lừa đảo. Rủi ro chính là gì?", ["Ảnh quá đẹp", "Người xem có thể tin vào một danh tính giả", "Ảnh không có âm thanh", "Ảnh tải chậm"], 1, "Hình ảnh AI có thể được dùng để dựng hồ sơ hoặc danh tính giả."),
-            q("Vì sao không nên kết luận 'video thật' chỉ vì gương mặt và giọng nói giống?", ["Vì gương mặt và giọng nói có thể bị tạo hoặc chỉnh sửa bằng AI", "Vì video nào trên mạng cũng giả", "Vì chỉ ảnh mới có thể bị giả", "Vì âm thanh luôn đáng tin hơn hình ảnh"], 0, "Deepfake và deepvoice có thể mạo phỏng cả khuôn mặt lẫn giọng nói."),
-            q("Một video thật từ quốc gia khác được đăng với chú thích 'đang xảy ra tại thành phố của bạn'. Bạn nên nghi ngờ điều gì?", ["Sai bối cảnh", "Máy tính bị virus", "Mật khẩu bị lộ", "Điện thoại bị hỏng"], 0, "Đây là dấu hiệu của repurposed media."),
-            q("Điều nào đúng nhất?", ["Deepfake chỉ nguy hiểm nếu hoàn hảo 100%", "Deepfake có thể nguy hiểm ngay cả khi chỉ đủ giống trong vài giây và đi kèm áp lực khẩn cấp", "Deepfake chỉ xuất hiện trong phim", "Người bình thường không bao giờ là mục tiêu của deepfake"], 1, "Trong lừa đảo, kẻ xấu thường kết hợp mạo danh với cảm xúc và thời gian gấp."),
-            q("Câu hỏi nào hữu ích nhất khi xem một hình ảnh nghi do AI tạo?", ["Ảnh này có nhiều màu không?", "Ảnh này đang được dùng để khiến mình tin điều gì?", "Ảnh này có kích thước bao nhiêu?", "Ảnh này có được đăng buổi sáng không?"], 1, "Mục đích sử dụng và ngữ cảnh quyết định mức độ rủi ro của nội dung.")
-          ])
+          checkpoint: { label: "1.1", questions: [], miniGame: {
+            type: 'sort-cards' as MiniGameType,
+            title: { vi: '🗂️ Phân loại nội dung giả mạo', en: '🗂️ Classify Manipulated Media' },
+            instruction: { vi: 'Kéo (hoặc nhấn) mỗi tình huống vào đúng loại nội dung. Áp dụng những gì bạn vừa học về Deepfake, Deepvoice, Edited Media và Repurposed Media.', en: 'Tap each scenario card and assign it to the correct media type. Apply what you just learned about Deepfake, Deepvoice, Edited Media and Repurposed Media.' },
+            reward: 2,
+            data: {
+              buckets: [
+                { id: 'deepfake', label: { vi: '🎭 Deepfake / Face Swap', en: '🎭 Deepfake / Face Swap' }, icon: '🎭' },
+                { id: 'deepvoice', label: { vi: '🔊 Deepvoice', en: '🔊 Deepvoice' }, icon: '🔊' },
+                { id: 'edited', label: { vi: '✂️ Edited / Repurposed', en: '✂️ Edited / Repurposed' }, icon: '✂️' },
+                { id: 'aigenerated', label: { vi: '🤖 AI-Generated', en: '🤖 AI-Generated' }, icon: '🤖' },
+              ],
+              cards: [
+                { id: 1, text: { vi: 'Video người nổi tiếng kêu gọi đầu tư crypto — gương mặt và giọng đúng nhưng họ chưa từng phát biểu điều này.', en: 'A celebrity appears to promote a crypto investment — face and voice match but they never said this.' }, correctBucket: 'deepfake', explanation: { vi: 'Mạo danh gương mặt và lời nói người thật → Deepfake.', en: 'Face and speech impersonation of a real person → Deepfake.' } },
+                { id: 2, text: { vi: 'Cuộc gọi thoại giống sếp yêu cầu chuyển tiền gấp — chỉ có âm thanh, không có video.', en: 'Voice call mimicking your boss asking for urgent transfer — audio only, no video.' }, correctBucket: 'deepvoice', explanation: { vi: 'Giả lập giọng nói mà không có hình → Deepvoice.', en: 'Voice-only impersonation → Deepvoice.' } },
+                { id: 3, text: { vi: 'Clip bài phát biểu 1 tiếng bị cắt còn 10 giây, đổi hẳn ý nghĩa câu nói.', en: 'A 1-hour speech clipped to 10 seconds, completely changing the meaning.' }, correctBucket: 'edited', explanation: { vi: 'Nội dung thật bị cắt ghép làm thay đổi ý nghĩa → Edited Media.', en: 'Real content edited to distort meaning → Edited Media.' } },
+                { id: 4, text: { vi: 'Video lũ lụt từ năm 2020 ở nước ngoài được chia sẻ như đang xảy ra hôm nay tại Việt Nam.', en: 'A 2020 flood video from abroad shared as if happening today in Vietnam.' }, correctBucket: 'edited', explanation: { vi: 'Nội dung thật đặt sai bối cảnh → Repurposed Media.', en: 'Real content placed in false context → Repurposed Media.' } },
+                { id: 5, text: { vi: 'Ảnh đại diện "chuyên gia tư vấn tài chính" trên Zalo — không ai biết người này là ai ngoài đời thật.', en: 'A "financial advisor" profile photo on Zalo — no one knows this person in real life.' }, correctBucket: 'aigenerated', explanation: { vi: 'Gương mặt người không tồn tại được tạo bằng AI → AI-Generated Image.', en: 'Face of a non-existent person made by AI → AI-Generated Image.' } },
+                { id: 6, text: { vi: 'Video call học sinh bị ghép mặt vào nội dung nhạy cảm không phải của người đó.', en: 'A student\'s face swapped onto sensitive content they did not create.' }, correctBucket: 'deepfake', explanation: { vi: 'Ghép khuôn mặt người thật vào nội dung khác → Deepfake / Face Swap.', en: 'Real person\'s face swapped onto other content → Deepfake / Face Swap.' } },
+                { id: 7, text: { vi: 'Tin nhắn thoại ngắn giả giọng người mẹ: "Con ơi, mẹ đang kẹt tiền, con chuyển cho mẹ đi."', en: 'Short voice message mimicking a mother: "Honey, I\'m stuck, please send me money."' }, correctBucket: 'deepvoice', explanation: { vi: 'Giả lập giọng người thân để mượn tiền → Deepvoice.', en: 'Voice clone of a family member to request money → Deepvoice.' } },
+                { id: 8, text: { vi: 'Ảnh minh họa AI "robot y tế" được dùng trong bài báo khoa học với ghi chú rõ ràng.', en: 'AI-generated "medical robot" illustration used in a science article, clearly labeled.' }, correctBucket: 'aigenerated', explanation: { vi: 'Ảnh AI minh bạch, có ghi chú rõ → AI-Generated Image (rủi ro thấp).', en: 'Transparent AI image, clearly labeled → AI-Generated Image (low risk).' } },
+              ]
+            } as SortCardsData
+          } }
         }
       ],
       quiz: [
@@ -297,10 +348,25 @@ export const basicsCourse = {
               "Nhận diện ngôn ngữ là bước quan trọng của Observe."
             ])
           ],
-          checkpoint: checkpoint("2.1", [
-            q("Kẻ xấu nói 'Đừng nói với ai, đây là bí mật' nhằm mục đích gì?", ["Bảo vệ bạn", "Cô lập bạn khỏi sự giúp đỡ và kiểm chứng", "Tạo sự bất ngờ", "Tuân thủ pháp luật"], 1),
-            q("Cụm từ nào là dấu hiệu của sự đe dọa?", ["Bạn có thể suy nghĩ thêm", "Nếu không chuyển tiền, tài khoản sẽ bị khóa vĩnh viễn", "Hãy gọi lại khi rảnh", "Kiểm tra kỹ thông tin nhé"], 1)
-          ])
+          checkpoint: { label: "2.1", questions: [], miniGame: {
+            type: 'tag-the-trick' as MiniGameType,
+            title: { vi: '🎯 Nhận diện ngôn ngữ thao túng', en: '🎯 Tag the Manipulation Trick' },
+            instruction: { vi: 'Nhấn vào các cụm từ đáng ngờ trong tin nhắn bên dưới. Tìm tất cả 5 thủ thuật thao túng mà kẻ xấu đang dùng.', en: 'Tap the suspicious phrases in the message below. Find all 5 manipulation tricks the scammer is using.' },
+            reward: 3,
+            data: {
+              message: {
+                vi: 'Mẹ ơi, con đang bị tai nạn nặng lắm, đang ở bệnh viện. Bác sĩ bảo phải [[mổ ngay không thì nguy hiểm tính mạng|1]]. Mẹ chuyển [[NGAY|2]] 20 triệu vào STK này đi, [[đừng nói cho ai biết|3]] nha mẹ, con [[xấu hổ lắm|4]]. Nhanh lên mẹ ơi, [[chỉ còn 30 phút|5]]!',
+                en: 'Mom, I was in a terrible accident, I\'m at the hospital. The doctor says I need [[emergency surgery or my life is at risk|1]]. Please transfer [[IMMEDIATELY|2]] 20 million to this account, [[don\'t tell anyone|3]] okay mom, [[I\'m so ashamed|4]]. Hurry mom, [[only 30 minutes left|5]]!'
+              },
+              targets: [
+                { id: 1, tag: { vi: '🚨 Đe dọa', en: '🚨 Threat' }, explanation: { vi: '"Mổ ngay không thì nguy hiểm tính mạng" — đẩy cảm xúc sợ hãi lên mức tối đa để não bộ bỏ qua kiểm chứng.', en: '"Emergency surgery or life is at risk" — maximises fear to bypass rational thinking.' } },
+                { id: 2, tag: { vi: '⏰ Áp lực thời gian', en: '⏰ Time Pressure' }, explanation: { vi: '"NGAY" (viết hoa) — chữ hoa tạo cảm giác khẩn cấp giả tạo, kích hoạt hành động vội vàng.', en: '"IMMEDIATELY" (caps) — capitalisation creates artificial urgency, triggering hasty action.' } },
+                { id: 3, tag: { vi: '🔇 Cô lập', en: '🔇 Isolation' }, explanation: { vi: '"Đừng nói cho ai biết" — ngăn bạn xác minh với người khác, cô lập nạn nhân với nguồn trợ giúp.', en: '"Don\'t tell anyone" — prevents you from verifying with others, isolating the victim from help.' } },
+                { id: 4, tag: { vi: '💔 Thao túng cảm xúc', en: '💔 Emotional Manipulation' }, explanation: { vi: '"Xấu hổ lắm" — khai thác cảm xúc xấu hổ để bạn không muốn thảo luận với ai khác.', en: '"I\'m so ashamed" — exploits shame so you won\'t discuss the situation with others.' } },
+                { id: 5, tag: { vi: '⏰ Áp lực thời gian', en: '⏰ Time Pressure' }, explanation: { vi: '"Chỉ còn 30 phút" — deadline giả tạo để bạn hành động trước khi kịp suy nghĩ.', en: '"Only 30 minutes left" — fake deadline to force action before you can think clearly.' } }
+              ]
+            } as TagTheTrickData
+          } }
         }
       ],
       quiz: [
@@ -430,10 +496,21 @@ export const basicsCourse = {
               "Luôn kết hợp kết quả công cụ với phân tích bối cảnh."
             ])
           ],
-          checkpoint: checkpoint("4.1", [
-            q("Trong Deepfense Check, 'Verify' có nghĩa là gì?", ["Hỏi lại chính người gửi", "Xác minh qua một kênh độc lập mà bạn đã biết từ trước", "Tin vào cảm giác", "Chờ 1 ngày"], 1),
-            q("Điều nào ĐÚNG về AI Detector?", ["Luôn chính xác 100%", "Chỉ là một tín hiệu tham khảo, có thể sai", "Dùng để thay thế mọi bước kiểm tra khác", "Chỉ dùng được cho ảnh"], 1)
-          ])
+          checkpoint: { label: "4.1", questions: [], miniGame: {
+            type: 'order-steps' as MiniGameType,
+            title: { vi: '🔢 Sắp xếp quy trình Deepfense Check', en: '🔢 Order the Deepfense Check Steps' },
+            instruction: { vi: 'Nhấn vào từng bước theo đúng thứ tự của quy trình Deepfense Check. Có 5 bước cần sắp xếp.', en: 'Tap each step in the correct order of the Deepfense Check process. There are 5 steps to arrange.' },
+            reward: 3,
+            data: {
+              steps: [
+                { id: 1, label: { vi: '⏸️ Pause', en: '⏸️ Pause' }, icon: '⏸️', description: { vi: 'Dừng lại 30 giây. Không làm gì ngay — kể cả không chia sẻ, không chuyển tiền, không trả lời.', en: 'Stop for 30 seconds. Do nothing immediately — no sharing, no transfers, no replies.' } },
+                { id: 2, label: { vi: '👁️ Observe', en: '👁️ Observe' }, icon: '👁️', description: { vi: 'Quan sát kỹ nội dung: dấu hiệu kỹ thuật, ngôn ngữ thao túng, bối cảnh bất thường.', en: 'Examine carefully: technical artifacts, manipulation language, unusual context.' } },
+                { id: 3, label: { vi: '✅ Verify', en: '✅ Verify' }, icon: '✅', description: { vi: 'Xác minh danh tính qua kênh độc lập bạn đã biết từ trước — không dùng link hay số trong tin nhắn.', en: 'Verify identity via an independent channel you already know — not links or numbers from the message.' } },
+                { id: 4, label: { vi: '🔍 Trace', en: '🔍 Trace' }, icon: '🔍', description: { vi: 'Truy tìm nguồn gốc đầu tiên của nội dung — ai đăng đầu tiên, khi nào, ở đâu.', en: 'Trace the original source — who posted first, when, and where.' } },
+                { id: 5, label: { vi: '🎯 Decide', en: '🎯 Decide' }, icon: '🎯', description: { vi: 'Đưa ra quyết định dựa trên thông tin đã kiểm chứng, không dựa trên cảm xúc vội vàng.', en: 'Make a decision based on verified information, not rushed emotions.' } }
+              ]
+            } as OrderStepsData
+          } }
         }
       ],
       quiz: [
@@ -495,10 +572,34 @@ export const basicsCourse = {
               "Chia sẻ có trách nhiệm là góp phần xây dựng mạng lưới an toàn."
             ])
           ],
-          checkpoint: checkpoint("5.1", [
-            q("Dấu hiệu đỏ mạnh nhất trong một cuộc gọi mượn tiền là gì?", ["Video bị lag", "Yêu cầu chuyển tiền vào một tài khoản không phải tên người thân và bảo giữ bí mật", "Nói chuyện lâu", "Chào hỏi thân mật"], 1),
-            q("Liar's dividend gây hại gì?", ["Giúp kẻ xấu phủ nhận những sự thật hiển nhiên bằng cách gọi nó là deepfake", "Làm tăng giá trị đồng tiền", "Làm đẹp video", "Làm tăng tốc độ mạng"], 0)
-          ])
+          checkpoint: { label: "5.1", questions: [], miniGame: {
+            type: 'risk-meter' as MiniGameType,
+            title: { vi: '📊 Đánh giá mức độ rủi ro', en: '📊 Risk Meter' },
+            instruction: { vi: 'Đọc từng kịch bản và kéo thanh trượt để đánh giá mức rủi ro (1 = Rất thấp → 5 = Rất cao). Sau đó so sánh với đánh giá của chuyên gia.', en: 'Read each scenario and drag the slider to rate the risk level (1 = Very Low → 5 = Very High). Then compare with the expert\'s rating.' },
+            reward: 2,
+            data: {
+              scenarios: [
+                {
+                  id: 1,
+                  text: { vi: 'Video call từ "sếp" yêu cầu chuyển gấp 200 triệu cho đối tác, bảo sẽ giải thích sau, không cần báo kế toán.', en: 'Video call from your "CEO" urgently requesting a 200M VND transfer to a partner, says they\'ll explain later, no need to notify accounting.' },
+                  expertRating: 5,
+                  explanation: { vi: 'Mức nguy hiểm tối đa: giả danh quyền lực + áp lực thời gian + né quy trình tổ chức + số tiền lớn = dấu hiệu lừa đảo điển hình.', en: 'Maximum risk: authority impersonation + time pressure + bypassing organisational process + large sum = classic scam indicators.' }
+                },
+                {
+                  id: 2,
+                  text: { vi: 'Người yêu quen qua mạng 6 tháng (chưa gặp mặt) đột nhiên xin tiền giải quyết "khẩn cấp gia đình".', en: 'An online romantic partner of 6 months (never met in person) suddenly asks for money to handle a "family emergency".' },
+                  expertRating: 5,
+                  explanation: { vi: 'Đây là "pig butchering scam" — xây dựng niềm tin dài hạn rồi mới ra đòn. Chưa gặp mặt + xin tiền = cờ đỏ cực lớn.', en: 'This is "pig butchering scam" — long-term trust building then the strike. Never met + money request = major red flag.' }
+                },
+                {
+                  id: 3,
+                  text: { vi: 'Bạn thân nhờ share link bài viết về sự kiện âm nhạc miễn phí cuối tuần.', en: 'A close friend asks you to share a link about a free music event this weekend.' },
+                  expertRating: 2,
+                  explanation: { vi: 'Rủi ro thấp hơn nhưng không phải không có: link có thể là phishing, tài khoản bạn bè có thể đã bị hack. Nên kiểm tra link trước khi share.', en: 'Lower risk but not zero: link may be phishing, friend\'s account may be compromised. Still worth checking the link before sharing.' }
+                }
+              ]
+            } as RiskMeterData
+          } }
         }
       ],
       quiz: [
@@ -554,10 +655,28 @@ export const basicsCourse = {
               "Không cần chứng minh deepfake 100% để bảo vệ tiền của mình."
             ])
           ],
-          checkpoint: checkpoint("6.1", [
-            q("Family Code nên dựa trên thông tin nào?", ["Ngày sinh", "Tên trường học", "Một cụm từ riêng tư, dễ nhớ với người nhà nhưng không có trên mạng", "Địa chỉ nhà"], 2),
-            q("Trong Capstone, tín hiệu nào là Red Flag mạnh nhất?", ["Video có độ phân giải thấp", "Yêu cầu nạp tiền ngay hôm nay kèm link rút gọn và né xác minh trực tiếp", "Bạn cũ nhắn tin vào buổi tối", "Có nhiều bình luận khen"], 1)
-          ])
+          checkpoint: { label: "6.1", questions: [], miniGame: {
+            type: 'shield-match' as MiniGameType,
+            title: { vi: '🛡️ Ghép lá chắn với tình huống', en: '🛡️ Shield Match' },
+            instruction: { vi: 'Nhấn vào một tình huống, sau đó nhấn vào quy tắc phòng vệ phù hợp nhất để ghép đôi. Ghép đúng cả 5 cặp.', en: 'Tap a scenario, then tap the best matching defence rule to pair them. Match all 5 pairs correctly.' },
+            reward: 3,
+            data: {
+              rules: [
+                { id: 'family-code', label: { vi: '🔑 Mật mã gia đình', en: '🔑 Family Code' }, icon: '🔑' },
+                { id: 'money-delay', label: { vi: '⏳ Trì hoãn 24h', en: '⏳ Money Delay' }, icon: '⏳' },
+                { id: 'dual-channel', label: { vi: '📱 Hai kênh xác minh', en: '📱 Dual Channel' }, icon: '📱' },
+                { id: 'no-shame', label: { vi: '🗣️ Báo cáo không xấu hổ', en: '🗣️ No Shame Reporting' }, icon: '🗣️' },
+                { id: 'evidence-first', label: { vi: '📸 Lưu bằng chứng trước', en: '📸 Evidence First' }, icon: '📸' }
+              ],
+              scenarios: [
+                { id: 1, text: { vi: '"Con" gọi video báo bị tai nạn, yêu cầu chuyển tiền gấp mà không để hỏi thêm.', en: 'Your "child" video calls about an accident and demands urgent money before you can ask questions.' }, correctRule: 'family-code', explanation: { vi: 'Hỏi mật mã gia đình đã thỏa thuận trước — kẻ giả mạo không biết đáp án và sẽ bị lộ.', en: 'Ask for the pre-agreed family code — the impostor won\'t know the answer and will be exposed.' } },
+                { id: 2, text: { vi: 'Sếp nhắn tin yêu cầu chuyển 50 triệu cho đối tác ngay trước cuộc họp quan trọng.', en: 'Your boss messages asking for a 50M VND transfer to a partner right before an important meeting.' }, correctRule: 'money-delay', explanation: { vi: 'Trì hoãn và xác minh qua kênh khác — áp lực "ngay bây giờ" là dấu hiệu lừa đảo điển hình.', en: 'Delay and verify via another channel — "right now" pressure is a classic scam indicator.' } },
+                { id: 3, text: { vi: 'Ngân hàng gửi SMS kèm link "đăng nhập khẩn cấp để bảo vệ tài khoản".', en: 'Your bank sends an SMS with a link to "urgently log in to protect your account".' }, correctRule: 'dual-channel', explanation: { vi: 'Tự gọi tổng đài chính thức của ngân hàng — không dùng link hay số điện thoại từ trong SMS.', en: 'Call the bank\'s official hotline yourself — never use links or phone numbers from the SMS.' } },
+                { id: 4, text: { vi: 'Bạn phát hiện ảnh cá nhân của mình bị ghép vào nội dung xấu và lan truyền.', en: 'You discover your personal photo has been placed in inappropriate content and is spreading online.' }, correctRule: 'evidence-first', explanation: { vi: 'Chụp màn hình lưu bằng chứng trước khi báo cáo, chặn kẻ xấu hoặc xóa nội dung — bằng chứng rất quan trọng cho cơ quan chức năng.', en: 'Screenshot and save evidence before reporting, blocking, or deleting — evidence is crucial for authorities.' } },
+                { id: 5, text: { vi: 'Người thân bị lừa mất tiền, cảm thấy xấu hổ và muốn im lặng, không muốn ai biết.', en: 'A family member was scammed, feels ashamed and wants to stay silent rather than tell anyone.' }, correctRule: 'no-shame', explanation: { vi: 'Khuyến khích họ báo cáo với ngân hàng và cơ quan chức năng — lừa đảo không phải lỗi của nạn nhân.', en: 'Encourage them to report to the bank and authorities — being scammed is not the victim\'s fault.' } }
+              ]
+            } as ShieldMatchData
+          } }
         }
       ],
       quiz: [

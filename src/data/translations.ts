@@ -21,6 +21,9 @@ export interface TranslationData {
   scenario_filter_family: string; scenario_filter_romance: string; scenario_filter_authority: string;
   difficulty_basic: string; difficulty_medium: string; difficulty_advanced: string;
   change_scenario: string; reward_preview: string;
+  minigame_check: string; minigame_continue: string; minigame_score: string;
+  minigame_reward: string; minigame_correct: string; minigame_incorrect: string;
+  minigame_expert_says: string; minigame_your_rating: string; minigame_select_phrase: string;
   crisis_title: string; crisis_desc: string; btn_report_pdf: string; btn_first_aid: string;
   report_locked: string; latest_live: string; tbd: string;
   tools_scan_title: string; tools_protect_title: string; tools_knowledge_title: string;
@@ -88,6 +91,15 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     difficulty_advanced: "Nâng cao",
     change_scenario: "Đổi kịch bản",
     reward_preview: "Thưởng tối đa",
+    minigame_check: "Kiểm tra đáp án",
+    minigame_continue: "Tiếp tục →",
+    minigame_score: "Kết quả",
+    minigame_reward: "Thưởng mini-game",
+    minigame_correct: "Chính xác!",
+    minigame_incorrect: "Chưa đúng",
+    minigame_expert_says: "Chuyên gia đánh giá",
+    minigame_your_rating: "Đánh giá của bạn",
+    minigame_select_phrase: "Nhấn vào cụm từ đáng ngờ",
     crisis_title: "TRUNG TÂM ỨNG CỨU",
     crisis_desc: "Cổng hỗ trợ khẩn cấp nạn nhân của tội phạm công nghệ cao và lừa đảo Deepfake.",
     btn_report_pdf: "Đơn Tố Giác (PDF)",
@@ -168,6 +180,15 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     difficulty_advanced: "Advanced",
     change_scenario: "Change Scenario",
     reward_preview: "Max Reward",
+    minigame_check: "Check Answers",
+    minigame_continue: "Continue →",
+    minigame_score: "Score",
+    minigame_reward: "Mini-game Reward",
+    minigame_correct: "Correct!",
+    minigame_incorrect: "Not quite",
+    minigame_expert_says: "Expert says",
+    minigame_your_rating: "Your rating",
+    minigame_select_phrase: "Tap the suspicious phrases",
     crisis_title: "CRISIS HUB",
     crisis_desc: "Emergency support portal for victims of high-tech crimes and Deepfake fraud.",
     btn_report_pdf: "Report Form (PDF)",
