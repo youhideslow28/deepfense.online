@@ -604,180 +604,208 @@ export const MODULES = [
   // ── MODULE 4 ─────────────────────────────────────────────────
   {
     id: 4, part: 'recognition',
-    title: 'Nhận diện dấu hiệu hình ảnh và video',
-    duration: '90-100 phút', level: 'Trung cấp',
-    scenario: 'Minh, 31 tuổi, làm truyền thông. Đồng nghiệp gửi vào nhóm chat một video: lãnh đạo cấp cao đang phát biểu điều gì gây tranh cãi. Mọi người đang phản ứng. Minh nhìn video — chất lượng tốt, khuôn mặt quen thuộc, âm thanh rõ. Nhưng có gì đó không ổn. Làm thế nào Minh biết phải nhìn vào đâu?',
+    title: 'Quy trình Deepfense Check',
+    duration: '115-125 phút', level: 'Intermediate',
+    scenario: 'An đã học được nhiều điều: deepfake là gì, kẻ xấu dùng cảm xúc và áp lực như thế nào, cách quan sát hình ảnh và âm thanh. Nhưng khi nội dung thật sự xuất hiện trên màn hình, An vẫn bối rối. Một video đầu tư thì làm gì trước? Một cuộc gọi giống người thân thì kiểm tra thế nào? An cần một quy trình.',
     outcomes: [
-      'Nhận diện ít nhất 10 dấu hiệu nghi vấn cụ thể trong hình ảnh và video.',
-      'Áp dụng phương pháp SCAN để quan sát có hệ thống từ khuôn mặt đến bối cảnh.',
-      'Hiểu giới hạn của quan sát bằng mắt thường và khi nào cần công cụ hỗ trợ.',
+      'Ghi nhớ và áp dụng quy trình 5 bước: Pause — Observe — Verify — Trace — Decide.',
+      'Biết xác minh qua kênh độc lập trong các tình huống rủi ro.',
+      'Biết truy nguồn cơ bản với hình ảnh, video, bài đăng và tài khoản.',
+      'Biết dùng công cụ kiểm chứng ở mức phổ thông và hiểu giới hạn của chúng.',
     ],
     sections: [
       {
-        title: '4.1 Khuôn mặt — vùng trọng tâm của deepfake',
+        title: '4.0 Câu chuyện dẫn nhập',
         lessons: [
-          lesson('4.1.0', 'Tại sao deepfake tập trung vào khuôn mặt', [
-            'Deepfake video thuong thay the khuon mat cua mot nguoi bang khuon mat cua nguoi khac, hoac tong hop hoan toan mot khuon mat moi. Khuon mat la trung tam vi do la thu nao nguoi tap trung khi nhan dien danh tinh.',
-            'Hau het cac mo hinh deepfake duoc huan luyen de tai tao vung tu tran den cam — tuc la vung oval cua khuon mat. Vung ngoai vung nay (toc, tai, co) thuong kem chinh xac hon vi khong phai la uu tien huan luyen.',
-            'Dieu nay co nghia la: khi ban nghi ngo mot video, hay bat dau bang cach quan sat khuon mat — nhung khong chi khuon mat. Ranh gioi giua khuon mat va phan con lai thuong la noi de lo dau vet dau tien.',
+          lesson('4.0.0', 'An cần một quy trình', [
+            'Đến lúc này, An đã học được khá nhiều điều. An biết deepfake là gì. An biết kẻ xấu thường dùng cảm xúc và áp lực. An biết cách quan sát hình ảnh, âm thanh và ngữ cảnh. An cũng biết rằng mắt thường và công cụ phát hiện đều có giới hạn.',
+            'Nhưng khi nội dung thật sự xuất hiện trên màn hình, An vẫn có thể bối rối. Một video đầu tư thì cần làm gì trước? Một cuộc gọi giống người thân thì kiểm tra thế nào? Một hình ảnh trong nhóm lớp thì có nên phân tích không? Một clip xã hội gây phẫn nộ thì có nên chia sẻ để cảnh báo không?',
+            'Kiến thức rời rạc chưa đủ. An cần một quy trình. Một quy trình tốt giúp bạn không phải nghĩ lại từ đầu trong từng tình huống. Nó giống như dây an toàn: bạn dùng trước khi tai nạn xảy ra, không phải sau đó mới tìm.',
           ], null),
-          lesson('4.1.1', 'Viền mặt, tóc và ranh giới da', [
-            'Mot trong nhung diem yeu pho bien nhat cua deepfake la vien khuon mat — dac biet o vung tiep giap giua da va toc, hoac giua da va nen. Dau hieu dang chu y: vien mat bi mo hoac nhoe bat thuong, toc trong phang va thieu chi tiet soi toc rieng le, co su chenh lech mau sac hoac anh sang giua khuon mat va toc.',
-            'Voi deepfake chat luong thap, ban co the thay mot duong vien mo bao quanh khuon mat — nhu the khuon mat duoc dan len tren phan con lai cua video. Voi deepfake chat luong cao hon, ranh gioi nay tinh te hon nhung thuong van de lo o nhung khung hinh co chuyen dong nhanh.',
-            'Cach kiem tra: Tam dung video o nhieu diem khac nhau va phong to vung toc va vien mat. Toc that co hang nghin soi rieng le bat sang theo nhieu huong khac nhau. Toc trong deepfake thuong thieu chi tiet nay va trong nhu mot khoi dong nhat.',
+          lesson('4.0.1', 'Deepfense Check: 5 bước tổng quan', [
+            'Trong DEEPFENSE BASIC, quy trình kiểm chứng cốt lõi là Deepfense Check, gồm 5 bước: (1) Pause — Dừng lại. (2) Observe — Quan sát. (3) Verify — Xác minh. (4) Trace — Truy nguồn. (5) Decide — Quyết định.',
+            'Năm bước này không biến bạn thành chuyên gia pháp y số. Nhưng chúng giúp bạn trở thành người dùng Internet khó bị kéo đi bởi cảm xúc, áp lực và nội dung giả mạo.',
+            'Module 4 sẽ đi sâu vào từng bước, giải thích kênh độc lập là gì, hướng dẫn các công cụ kiểm chứng phổ thông, và cho bạn thực hành qua các hồ sơ tình huống thực tế.',
           ], null),
-          lesson('4.1.2', 'Kết cấu da: lỗ chân lông, nếp nhăn, chi tiết nhỏ', [
-            'Da nguoi that co ket cau phuc tap: lo chan long, nep nhan nho, tan nhang, seo, long min, su thay doi mau sac tinh te theo do day cua da. Cac mo hinh deepfake, du ngay cang tien tien, van thuong tao ra da trong qua min mang — nhu da nhua hoac da duoc chinh anh nang.',
-            'Dac biet chu y den: vung quanh mieng va mui (noi nhieu nep nhan dong khi noi), vung duoi mat (nep nhan khi cuoi), va vung tran khi nhan vat thay doi bieu cam. Trong video deepfake, nhung vung nay thuong thieu su bien doi nho tu nhien.',
-            'Mot dau hieu tinh te khac: long may. Long may that co cac soi long rieng le, bi bong toi va anh sang chieu theo nhieu huong. Long may trong deepfake thuong trong phang va thieu chieu sau.',
+        ],
+        checkpoint: null,
+      },
+      {
+        title: '4.1 Quy trình 5 bước Deepfense Check',
+        lessons: [
+          lesson('4.1.0', 'Bước 1 — Pause: Dừng lại', [
+            'Pause là bước đơn giản nhất, nhưng thường khó nhất. Pause nghĩa là bạn tạm dừng trước khi: chuyển tiền, bấm link, gửi OTP, cài ứng dụng, chia sẻ bài đăng, bình luận tấn công ai đó, lưu hoặc chuyển tiếp hình ảnh nhạy cảm, hay tin một kết luận gây sốc.',
+            'Pause không có nghĩa là bạn thờ ơ. Pause có nghĩa là bạn không để người khác điều khiển tốc độ phản ứng của mình. Hãy Pause ngay khi nội dung gây sợ hãi, gây phẫn nộ, khiến bạn thương hại và muốn giúp ngay, hứa lợi ích quá tốt, yêu cầu hành động gấp, hoặc liên quan đến tiền, tài khoản, danh dự, pháp lý hoặc an toàn.',
+            'Câu lệnh tự nhắc: <em>Dừng 30 giây trước khi làm điều không thể rút lại.</em> Khi An nhận cuộc gọi giống Minh Anh yêu cầu chuyển tiền, việc đầu tiên không phải là phân tích khuôn mặt — việc đầu tiên là dừng lại. Nếu An không dừng, các bước sau không có cơ hội xảy ra.',
           ], null),
-          lesson('4.1.3', 'Màu sắc da và ánh sáng không nhất quán', [
-            'Mau sac da trong deepfake thuong khong khop hoan hao voi phan con lai cua co the. Ban co the thay: khuon mat trong sang hon hoac toi hon so voi co va vai, tong mau da thay doi bat thuong giua cac khung hinh, va su thieu nhat quan trong cach anh sang chieu len khuon mat so voi boi canh.',
-            'Anh sang la mot trong nhung thu kho gia nhat. Anh sang that chieu len khuon mat tu mot nguon cu the trong moi truong cu the. Deepfake thuong ghep khuon mat tu mot nguon anh sang khac vao video co nguon anh sang khac — tao ra su mau thuan tinh te: bong do sai huong, anh phan chieu trong mat khong khop voi bong tren mat.',
-            'Cach kiem tra: Nhin vao bong do duoi mui va cam. So sanh huong bong tren khuon mat voi huong bong tren cac vat the xung quanh trong cung khung hinh. Neu chung mau thuan nhau, day la dau hieu dang nghi.',
+          lesson('4.1.1', 'Bước 2 — Observe: Quan sát', [
+            'Observe nghĩa là xem xét nội dung theo ba lớp: (1) Hình ảnh/video, (2) Âm thanh/giọng nói, (3) Ngữ cảnh/hành vi. Bạn đã học ba lớp này ở Module 3. Trong bước Observe, bạn không cố kết luận ngay — bạn chỉ thu thập tín hiệu.',
+            'Với hình ảnh/video: khuôn mặt, miệng, mắt, ánh sáng, tay, nền có gì lạ không? Video có bị cắt quá ngắn không? Với âm thanh: giọng có tự nhiên không? Có né trả lời câu hỏi bất ngờ không? Với ngữ cảnh: ai gửi? Gửi từ tài khoản nào? Nội dung muốn mình làm gì? Có link lạ, yêu cầu OTP hoặc chuyển tiền không?',
+            'Bốn lỗi phổ biến khi Observe: (1) Chỉ nhìn mặt, quên nhìn nguồn. (2) Thấy một lỗi kỹ thuật rồi kết luận ngay là giả. (3) Không thấy lỗi kỹ thuật rồi tin ngay là thật. (4) Quên rằng ngữ cảnh có thể nguy hiểm hơn hình ảnh. Câu lệnh tự nhắc: <em>Quan sát để tìm tín hiệu, không phải để phán quyết vội.</em>',
+          ], null),
+          lesson('4.1.2', 'Bước 3 — Verify: Xác minh', [
+            'Verify nghĩa là kiểm tra thông tin bằng một kênh đáng tin hơn hoặc độc lập hơn. Đây là bước quan trọng nhất trong các tình huống liên quan đến người quen, tiền bạc, tài khoản, OTP hoặc danh dự cá nhân.',
+            'Xác minh không phải là hỏi lại trong cùng kênh đang nghi vấn. Nếu một tài khoản đang bị nghi mạo danh nhắn tin mượn tiền, hỏi lại chính tài khoản đó không đủ an toàn — vì nếu kẻ xấu đang điều khiển tài khoản, chúng sẽ trả lời ngay rằng đúng rồi.',
+            'Xác minh tốt hơn là dùng kênh độc lập: gọi số điện thoại đã lưu từ trước, gọi người thân khác, kiểm tra website chính thức, gọi tổng đài chính thức tự tìm từ nguồn đáng tin, hỏi trực tiếp nếu có thể. Câu lệnh tự nhắc: <em>Xác minh bằng kênh mình đã biết, không phải kênh kẻ nghi vấn vừa đưa.</em>',
+          ], null),
+          lesson('4.1.3', 'Bước 4 — Trace: Truy nguồn', [
+            'Trace nghĩa là tìm nguồn gốc và bối cảnh của nội dung. Bước này đặc biệt hữu ích với: video gây phẫn nộ, ảnh sự kiện, bài đăng lan truyền, lời kêu gọi đầu tư, ảnh chụp màn hình, nội dung liên quan người nổi tiếng, xã hội, chính trị, thiên tai, tai nạn.',
+            'Truy nguồn là hỏi: Nội dung này xuất hiện lần đầu ở đâu? Ai đăng đầu tiên? Đăng khi nào? Có bản đầy đủ không? Có nguồn chính thức không? Có dấu hiệu bị đăng lại từ sự kiện cũ không? Có bị cắt khỏi bối cảnh không?',
+            'Ví dụ: Một clip ghi "vừa xảy ra hôm nay" có thể đã xuất hiện từ nhiều năm trước. Một câu nói gây sốc có thể được cắt từ bài phát biểu dài. Một ảnh hiện trường có thể là ảnh AI hoặc ảnh từ quốc gia khác. Trace giúp bạn phát hiện các trường hợp nội dung thật nhưng chú thích sai. Câu lệnh tự nhắc: <em>Trước khi tin câu chuyện đi kèm, hãy tìm nguồn của nội dung.</em>',
+          ], null),
+          lesson('4.1.4', 'Bước 5 — Decide: Quyết định', [
+            'Decide nghĩa là chọn hành động an toàn dựa trên những gì bạn đã quan sát, xác minh và truy nguồn. Kết quả không nhất thiết phải là "thật" hoặc "giả". Bạn có thể quyết định: tin ở mức thận trọng, chưa đủ dữ liệu, không chia sẻ, không chuyển tiền, không bấm link, báo cáo nội dung, cảnh báo người thân, lưu bằng chứng.',
+            'Ba mức quyết định: Mức 1 — Rủi ro thấp: nội dung rõ ràng là minh họa, parody hoặc có nguồn minh bạch. Mức 2 — Chưa đủ dữ liệu: không có đủ cơ sở để tin hoặc bác bỏ, hành động an toàn là không chia sẻ và kiểm chứng thêm. Mức 3 — Rủi ro cao: nội dung yêu cầu tiền, OTP, mật khẩu, cài app, lan truyền hình ảnh nhạy cảm, hoặc kích động hành động gây hại.',
+            'Câu lệnh tự nhắc: <em>Không cần biết chắc 100% mới được chọn phương án an toàn.</em>',
+          ], null),
+          lesson('4.1.5', 'Tóm tắt Deepfense Check và lưu ý thực tế', [
+            'Bảng tóm tắt 5 bước: Pause — Nội dung có đang đẩy mình hành động nhanh không? Dừng lại trước khi bấm, chuyển, gửi, chia sẻ. Observe — Mình thấy/nghe/đọc được tín hiệu gì? Quan sát hình ảnh, âm thanh, ngữ cảnh. Verify — Có kênh độc lập nào để xác minh không? Gọi số đã lưu, kiểm tra kênh chính thức. Trace — Nguồn gốc nội dung ở đâu? Tìm bài gốc, nguồn đầu tiên, bản đầy đủ. Decide — Hành động an toàn nhất là gì? Không chia sẻ, báo cáo, lưu bằng chứng.',
+            'Lưu ý quan trọng: Không phải tình huống nào cũng cần đủ 5 bước theo thứ tự cứng nhắc. Nếu ai đó yêu cầu OTP, bạn có thể quyết định ngay: không gửi. Nếu một video người nổi tiếng quảng cáo đầu tư, bạn cần Pause, Observe, Verify và Trace trước khi Decide. Nếu tin nhắn từ người thân yêu cầu chuyển tiền, Verify có thể quan trọng hơn Trace.',
+            'Quy trình là bản đồ, không phải cái còng tay. Mục tiêu là giúp bạn không bỏ qua bước quan trọng nhất trong từng tình huống.',
           ], [
-            'Deepfake tập trung vào vùng oval khuôn mặt — viền và tóc thường kém chính xác hơn.',
-            'Da deepfake thường quá mịn: thiếu lỗ chân lông, nếp nhăn và chi tiết nhỏ tự nhiên.',
-            'Ánh sáng và màu sắc da không nhất quán giữa khuôn mặt và cổ/vai là dấu hiệu đáng chú ý.',
+            'Deepfense Check: Pause → Observe → Verify → Trace → Decide.',
+            'Pause là bước khó nhất vì cảm xúc và áp lực luôn muốn bạn hành động ngay.',
+            'Decide không cần chắc 100% thật/giả — chỉ cần chọn hành động an toàn nhất.',
           ]),
         ],
         checkpoint: checkpoint('4.1', [
-          q('Vùng nào của deepfake thường kém chính xác nhất?', ['Viền mặt, tóc và vùng ngoài oval khuôn mặt', 'Trung tâm khuôn mặt (mũi)', 'Màu sắc nền', 'Phụ đề video'], 0),
-          q('Da trong deepfake thường có đặc điểm gì?', ['Quá mịn, thiếu lỗ chân lông và chi tiết tự nhiên', 'Quá thô và nhiều đốm', 'Có màu xanh lá', 'Luôn trông rất thật'], 0),
-          q('Khi kiểm tra ánh sáng trong video, nên so sánh điều gì?', ['Hướng bóng trên khuôn mặt với bóng trên vật thể xung quanh', 'Âm lượng âm thanh với độ sáng màn hình', 'Tốc độ chuyển động với tốc độ audio', 'Màu tóc với màu nền'], 0),
-          q('Tóc trong deepfake thường có vấn đề gì?', ['Thiếu chi tiết sợi tóc riêng lẻ, trông như một khối đồng nhất', 'Màu quá tối', 'Di chuyển quá nhanh', 'Luôn bị che khuất'], 0),
+          q('Thứ tự đúng của Deepfense Check là gì?', ['Pause — Observe — Verify — Trace — Decide', 'Decide — Trace — Verify — Observe — Pause', 'Observe — Share — Believe — Delete — Decide', 'Trace — Pay — Verify — Pause — Share'], 0),
+          q('Mục tiêu chính của bước Pause là gì?', ['Không để cảm xúc và áp lực khiến bạn hành động vội', 'Kéo dài thời gian cho vui', 'Kết luận nội dung là giả', 'Tìm lỗi trong khuôn mặt'], 0),
+          q('Trong bước Observe, điều nào đúng?', ['Quan sát hình ảnh/video, âm thanh và ngữ cảnh', 'Chỉ cần nhìn mặt', 'Chỉ cần nghe giọng', 'Không cần xem người gửi'], 0),
+          q('Một tài khoản quen nhắn mượn tiền. Cách Verify an toàn nhất là gì?', ['Gọi số điện thoại đã lưu từ trước hoặc dùng kênh độc lập đã biết', 'Hỏi lại trong cùng tài khoản đang nhắn', 'Chuyển khoản nhỏ trước để thử', 'Tin vì ảnh đại diện đúng'], 0),
+          q('Trace đặc biệt hữu ích trong tình huống nào?', ['Kiểm tra nguồn gốc một video lan truyền gây phẫn nộ', 'Gửi OTP cho ngân hàng', 'Đổi hình nền điện thoại', 'Chọn nhạc chuông'], 0),
+          q('Nếu một nội dung yêu cầu OTP, bạn nên quyết định thế nào?', ['Không gửi OTP qua cuộc gọi hoặc tin nhắn', 'Gửi nếu giọng nói giống người quen', 'Gửi nếu người gọi nói gấp', 'Gửi một nửa mã'], 0),
+          q('Câu nào thể hiện đúng tinh thần Decide?', ['Nếu rủi ro cao, có thể chọn không hành động dù chưa chứng minh được deepfake', 'Phải biết chắc 100% thật/giả mới được hành động an toàn', 'Nếu video trông thật thì luôn chia sẻ được', 'Nếu nhiều người bình luận tích cực thì không cần kiểm chứng'], 0),
+          q('Kênh nào KHÔNG phải kênh độc lập an toàn?', ['Link do người đang yêu cầu chuyển tiền vừa gửi', 'Số điện thoại đã lưu từ trước', 'Website chính thức tự tìm từ nguồn đáng tin', 'Người thân khác mà bạn đã biết'], 0),
+          q('Một hình ảnh nhạy cảm nghi là của bạn học xuất hiện trong nhóm chat. Bạn nên làm gì?', ['Không lan truyền, báo cáo và tìm người có trách nhiệm hỗ trợ', 'Lưu lại và gửi cho nhiều người để hỏi thật giả', 'Bình luận đùa nếu có thể là ảnh AI', 'Phóng to phân tích công khai'], 0),
+          q('Điều nào đúng nhất về Deepfense Check?', ['Là quy trình giúp giảm rủi ro khi gặp nội dung nghi vấn', 'Là công cụ đảm bảo phát hiện mọi deepfake', 'Chỉ dùng cho chuyên gia công nghệ', 'Chỉ dùng khi có video, không dùng cho âm thanh hoặc tin nhắn'], 0),
         ]),
       },
       {
-        title: '4.2 Mắt, miệng và biểu cảm',
+        title: '4.2 Kênh độc lập là gì?',
         lessons: [
-          lesson('4.2.0', 'Chuyển động mắt và chớp mắt bất thường', [
-            'Mat nguoi thuong chop tu 15 den 20 lan moi phut — khong deu dan, khong may moc. Cac mo hinh deepfake the he dau thuong khong chop mat hoac chop mat theo nhip deu bat tu nhien. Cac mo hinh hien dai da cai thien dieu nay, nhung van co nhung dau hieu tinh te.',
-            'Dau hieu dang chu y o mat: Chop mat qua nhanh hoac qua cham so voi tinh huong cam xuc. Chuyen dong mat thieu tu nhien — mat nguoi that luon co nhung chuyen dong nho (saccade) ngay ca khi nhin thang. Anh phan chieu trong mat khong khop voi nguon sang trong canh quay. Ca hai mat khong chop hoan toan dong bo — mot mat co the chop truoc mot phan nho giay.',
-            'Quan sat dac biet: vung duoi mat khi nhan vat cuoi. Nu cuoi that tao ra cac nep nhan nho o duoi mat (chan chim). Nu cuoi deepfake thuong thieu phan nay, hoac phan nay khong dong bo voi chuyen dong mieng.',
+          lesson('4.2.0', 'Vì sao cần kênh độc lập?', [
+            'Khi một kênh đang bị nghi vấn, bạn không nên dùng chính kênh đó làm bằng chứng duy nhất. Ví dụ: bạn nhận tin nhắn từ tài khoản Facebook của bạn thân nhắn mượn tiền gấp. Nếu bạn hỏi lại trong cùng cuộc chat và nhận được câu xác nhận, bạn vẫn chưa xác minh được.',
+            'Vì nếu tài khoản đã bị chiếm quyền, kẻ xấu cũng đang đọc và trả lời tin nhắn đó. Kênh độc lập giúp bạn thoát khỏi vùng mà kẻ xấu có thể kiểm soát.',
+            'Đây là lý do tại sao Verify yêu cầu một kênh khác — không phải kênh đang bị nghi vấn.',
           ], null),
-          lesson('4.2.1', 'Đồng bộ môi — âm thanh (lip sync)', [
-            'Lip sync — su dong bo giua chuyen dong moi va am thanh — la mot trong nhung diem de kiem tra nhat. Mac du cac mo hinh hien dai da cai thien dang ke, van con nhung dau hieu dac trung.',
-            'Dau hieu lip sync bat thuong: Do tre — moi chuyen dong truoc hoac sau am thanh tu 1-3 khung hinh. Chuyen dong moi khong khop chinh xac voi am thanh phu am cu the (dac biet cac phu am nhu B, P, M yeu cau hai moi cham nhau). Vung quanh mieng trong cung hoac thieu tu nhien khi cac am tiet thay doi nhanh. Hinh dang mieng khong khop voi nguyen am dang phat am.',
-            'Cach kiem tra thuc te: Xem video khong co am thanh trong 10-15 giay, sau do xem lai voi am thanh. Nao ban se de phat hien su khong khop hon khi da quen voi chuyen dong moi truoc. Hoac tua cham video o nhung doan noi nhanh — day la noi lip sync thuong bi lo nhat.',
+          lesson('4.2.1', 'Kênh độc lập tốt là gì?', [
+            'Một kênh độc lập tốt thường có 3 đặc điểm: (1) Bạn đã biết nó từ trước. (2) Nó không được cung cấp bởi người đang bị nghi vấn trong lúc khẩn cấp. (3) Nó cho phép bạn xác minh với người thật, tổ chức thật hoặc nguồn chính thức.',
+            'Ví dụ kênh độc lập tốt: số điện thoại người thân đã lưu từ lâu, gặp trực tiếp, gọi người thân khác, email nội bộ công ty đã biết, hệ thống phê duyệt chuyển khoản của công ty, website chính thức tự tìm qua nguồn đáng tin, tổng đài ngân hàng lấy từ thẻ hoặc app chính thức.',
+            'Kênh mạng xã hội có dấu xác minh và lịch sử rõ ràng cũng có thể là kênh độc lập — nhưng chỉ khi bạn tự tìm đến, không phải click từ link do người nghi vấn gửi.',
           ], null),
-          lesson('4.2.2', 'Biểu cảm cảm xúc: tự nhiên hay máy móc?', [
-            'Bieu cam khuon mat that la qua trinh phuc tap lien quan den hon 40 co mat hoat dong theo cach khong hoan toan doi xung va khong hoan toan co the kiem soat. Deepfake thuong tai tao bieu cam chi theo phan trung tam khuon mat — mieng va mat — nhung bo qua cac vi chuyen dong co mat nho hon.',
-            'Dau hieu bieu cam bat tu nhien: Bieu cam qua doi xung — khuon mat that co su bat doi xung nho tu nhien. Chuyen dong co mat qua tron tru va thieu cac micro-expression (vi bieu cam thoang qua). Su chuyen tiep giua cac bieu cam qua nhanh hoac qua cham. Cam xuc vung mat khong khop voi cam xuc vung mieng.',
-            'Diem cuoi quan trong: Nao nguoi rat gioi phat hien su bat tu nhien trong bieu cam — day la ly do tai sao ban co the cam thay mot video trong la ma khong giai thich duoc nguyen nhan. Tin vao cam giac do va bat dau phan tich co he thong.',
+          lesson('4.2.2', 'Kênh không nên tin ngay', [
+            'Hãy cẩn trọng với: số điện thoại mới được gửi trong tin nhắn khẩn cấp, link xác minh do người lạ gửi, website có tên miền gần giống trang thật, tài khoản mới lập, tài khoản quen nhưng hành vi bất thường, ảnh chụp màn hình không có link gốc, mã QR không rõ nguồn, file cài đặt gửi qua chat, nhóm chat vừa được tạo để xử lý việc gấp.',
+            'Những kênh này không phải lúc nào cũng xấu. Nhưng chúng không nên là cơ sở duy nhất để bạn chuyển tiền, gửi OTP hoặc chia sẻ thông tin nhạy cảm.',
+          ], null),
+          lesson('4.2.3', 'Family code — mật khẩu gia đình', [
+            'Một cách đơn giản để phòng trường hợp giả giọng người thân là tạo family code: một câu hoặc từ khóa bí mật chỉ các thành viên thân thiết biết, dùng trong tình huống khẩn cấp để xác minh nhanh. Ví dụ: một câu hỏi riêng mà người ngoài khó biết, một cụm từ gia đình tự đặt, hoặc một quy tắc gọi lại trước khi chuyển tiền.',
+            'Family code nên: dễ nhớ với người trong gia đình, không đăng lên mạng, không dựa vào thông tin công khai như ngày sinh hay tên thú cưng đã đăng, và được cập nhật nếu nghi đã lộ.',
+            'Lưu ý: Family code hữu ích nhưng không thay thế hoàn toàn kênh độc lập. Nếu tình huống liên quan đến tiền lớn hoặc rủi ro an toàn, vẫn nên gọi lại bằng số đã lưu hoặc xác minh qua người thân khác.',
+          ], null),
+          lesson('4.2.4', 'Quy tắc xác minh cho công việc và trường học', [
+            'Trong công việc và trường học, xác minh không nên phụ thuộc vào cảm giác cá nhân. Nên có quy trình rõ: yêu cầu chuyển tiền phải qua kênh phê duyệt chính thức, yêu cầu thay đổi tài khoản nhận tiền phải xác minh bằng cuộc gọi hoặc văn bản chính thức, yêu cầu dữ liệu nhạy cảm phải có người phụ trách xác nhận.',
+            'Trong trường học: giáo viên và học sinh không xử lý hình ảnh nhạy cảm trong nhóm chat công khai. Khi có nội dung nghi xâm hại, ưu tiên báo người có trách nhiệm và giảm lan truyền.',
+            'Nếu một sếp hoặc giáo viên yêu cầu bỏ qua quy trình vì đang gấp, đó là dấu hiệu cần cảnh giác — không phải lý do để tuân theo. Kẻ tấn công thường dùng áp lực thời gian để vô hiệu hóa quy trình xác minh.',
           ], [
-            'Mắt: chú ý chớp mắt bất thường và ánh phản chiếu không khớp với nguồn sáng.',
-            'Lip sync: xem không tiếng trước, sau đó xem lại có tiếng để phát hiện độ trễ.',
-            'Biểu cảm deepfake thường quá đối xứng và thiếu vi chuyển động cơ mặt nhỏ.',
+            'Kênh độc lập là kênh bạn đã biết từ trước — không phải kênh do người nghi vấn vừa cung cấp.',
+            'Family code là lớp xác minh nhanh cho gia đình, không thay thế kênh độc lập trong rủi ro lớn.',
+            'Áp lực gấp là dấu hiệu cảnh giác, không phải lý do để bỏ qua quy trình xác minh.',
           ]),
         ],
-        checkpoint: checkpoint('4.2', [
-          q('Tần suất chớp mắt bình thường của người là bao nhiêu?', ['15-20 lần mỗi phút, không đều đặn', '1-2 lần mỗi phút, đều đặn', '50 lần mỗi phút', 'Mỗi 5 giây chính xác'], 0),
-          q('Cách nào giúp phát hiện lip sync bất thường hiệu quả?', ['Xem không tiếng trước, sau đó xem lại có tiếng', 'Tắt màn hình và chỉ nghe', 'Tăng tốc video lên 2x', 'Xem trên điện thoại thay vì máy tính'], 0),
-          q('Biểu cảm khuôn mặt thật thường có đặc điểm gì?', ['Bất đối xứng nhỏ và có vi chuyển động cơ mặt', 'Hoàn toàn đối xứng và trơn tru', 'Không bao giờ thay đổi nhanh', 'Luôn cân đối hai bên'], 0),
-          q('Ánh phản chiếu trong mắt của deepfake thường có vấn đề gì?', ['Không khớp với nguồn sáng thực trong cảnh quay', 'Quá sáng', 'Quá tối', 'Không tồn tại ánh phản chiếu'], 0),
-        ]),
+        checkpoint: null,
       },
       {
-        title: '4.3 Chuyển động, artifact và thời gian',
+        title: '4.3 Công cụ kiểm chứng cơ bản',
         lessons: [
-          lesson('4.3.0', 'Chuyển động đầu, cổ và cơ thể', [
-            'Deepfake thuong chi xu ly vung khuon mat, de lai phan co, vai va co the nguyen goc. Dieu nay tao ra su bat nhat giua chuyen dong khuon mat va chuyen dong co the — dac biet ro rang khi nhan vat quay dau hoac nghieng nguoi.',
-            'Dau hieu dang chu y: Khuon mat va co khong chuyen dong lien tuc va nhat quan khi dau quay. Vung cam va co co the bi bien dang hoac nhoe khi nghieng dau. Chuyen dong dau trong thieu quan tinh — dau nguoi that co trong luc va quan tinh, khong the chuyen huong tuc thoi.',
-            'Voi video toan than: Khi nhan vat gio tay hoac cham vao mat, day la thoi diem deepfake thuong bi lo ro nhat. Khu vuc giao thoa giua tay va khuon mat rat kho de mo hinh deepfake xu ly chinh xac.',
+          lesson('4.3.0', 'Nguyên tắc trước khi dùng công cụ', [
+            'Công cụ kiểm chứng có thể hữu ích, nhưng trước khi dùng hãy nhớ: (1) Không tải lên hình ảnh nhạy cảm của người khác vào công cụ lạ. (2) Không tải lên giấy tờ cá nhân, ảnh riêng tư, dữ liệu công ty hoặc thông tin mật. (3) Không tin tuyệt đối vào một kết quả tự động. (4) Không cài extension hoặc app lạ chỉ vì một bài viết hướng dẫn. (5) Ưu tiên công cụ và nguồn có uy tín.',
+            'Với nội dung nghi xâm hại, mục tiêu đầu tiên là giảm lan truyền và báo cáo an toàn — không phải phân tích công khai.',
+            'Câu cần nhớ: <em>Kiểm chứng không được tạo thêm rủi ro cho nạn nhân hoặc chính bạn.</em>',
           ], null),
-          lesson('4.3.1', 'Artifact, nhòe và méo ở vùng biên', [
-            'Artifact la cac loi hinh anh xuat hien khi thuat toan deepfake khong xu ly duoc mot vung nhat dinh. Chung co the trong nhu: diem anh bi meo hoac nhoe xung quanh vien khuon mat, mau sac khong khop tai ranh gioi giua khuon mat va nen, vung da bi vo hat hoac co hoa van ky la khi nhan vat chuyen dong.',
-            'Artifact thuong xuat hien o nhung khung hinh cu the — khong lien tuc. Day la ly do tai sao viec tua cham video rat quan trong. Mot video deepfake co the trong hoan hao o toc do binh thuong nhung lo ro artifact o 0.25x hoac 0.5x toc do.',
-            'Vung tai la mot vi du dien hinh. Tai nguoi co cau truc 3D phuc tap va thuong bi deepfake xu ly kem — dac biet o nhung goc nhin nghieng. Neu tai trong phang, bi cat bot hoac co hinh dang bat thuong, day la dau hieu dang chu y.',
+          lesson('4.3.1', 'Reverse image search — tìm kiếm ngược bằng hình ảnh', [
+            'Reverse image search là tìm kiếm ngược bằng hình ảnh: thay vì nhập từ khóa, bạn dùng một hình ảnh để tìm xem nó đã từng xuất hiện ở đâu. Phương pháp này hữu ích khi bạn muốn biết: ảnh có cũ không, ảnh có bị gán sai địa điểm không, ảnh đại diện có bị lấy từ nơi khác không.',
+            'Các bước cơ bản: (1) Lưu ảnh hoặc chụp màn hình phần cần kiểm tra. (2) Dùng tính năng tìm kiếm bằng hình ảnh trên các công cụ tìm kiếm phổ biến. (3) Xem các kết quả cũ hơn. (4) So sánh ngày đăng, nguồn đăng và bối cảnh. (5) Không chỉ xem một kết quả đầu tiên; hãy so sánh nhiều nguồn.',
+            'Giới hạn: Reverse image search có thể không tìm được nếu ảnh mới hoàn toàn, đã bị cắt/làm mờ/lật ngang, hoặc là ảnh AI chưa từng xuất hiện trước đó. Vì vậy, không tìm thấy kết quả không có nghĩa là ảnh thật.',
           ], null),
-          lesson('4.3.2', 'Sự nhất quán theo thời gian trong video', [
-            'Mot video that co su nhat quan theo thoi gian: anh sang thay doi nhat quan theo thoi gian thuc, chuyen dong la lien tuc va khong gian doan, va cac chi tiet nho (nhu mot soi toc lac, mot vet nuoc tren da) duy tri nhat quan qua cac khung hinh.',
-            'Deepfake thuong thieu su nhat quan nay: Chi tiet nho tren khuon mat co the bien mat hoac xuat hien giua cac khung hinh. Mau sac da co the thay doi nhe theo cach khong tu nhien. Artifact xuat hien o mot khung hinh roi bien mat o khung tiep theo.',
-            'Phuong phap kiem tra: Neu ban co the tai video ve, chay no o toc do cham (0.25x) va chu y den vung khuon mat. Dac biet theo doi mot diem co dinh — vi du mot not ruoi hoac mot chi tiet cu the — va xem no co duy tri nhat quan khong.',
+          lesson('4.3.2', 'Cắt frame từ video để truy nguồn', [
+            'Video khó tìm kiếm hơn ảnh, nhưng bạn có thể kiểm tra bằng cách lấy một hoặc vài khung hình đặc trưng: khung hình có mặt người, có bảng hiệu, có địa điểm, có logo, hoặc có vật thể đặc biệt. Sau đó dùng reverse image search với khung hình đó.',
+            'Cách làm: (1) Tạm dừng video tại một khung hình rõ. (2) Chụp màn hình. (3) Cắt bớt phần giao diện nền tảng nếu cần. (4) Tìm kiếm bằng hình ảnh. (5) So sánh kết quả với chú thích hiện tại.',
+            'Ví dụ: Một video được đăng với chú thích "Vụ việc vừa xảy ra tối nay" — nhưng khi tìm khung hình, bạn thấy video đã xuất hiện từ 2 năm trước ở một quốc gia khác. Khi đó vấn đề có thể không phải deepfake — mà là sai bối cảnh.',
+          ], null),
+          lesson('4.3.3', 'Kiểm tra kênh chính thức và tài khoản nhái', [
+            'Với người nổi tiếng, cơ quan, trường học, ngân hàng hoặc doanh nghiệp, hãy kiểm tra kênh chính thức: Nội dung này có trên website chính thức không? Có trên fanpage hoặc kênh đã xác minh không? Có thông báo từ app chính thức không? Có báo chí uy tín hoặc nguồn độc lập xác nhận không?',
+            'Tài khoản nhái có thể: dùng ảnh đại diện giống, dùng tên gần giống, thêm dấu chấm hoặc ký tự lạ, mua tương tác hoặc bình luận, ghim bài viết giả tạo uy tín.',
+            'Nếu một video đầu tư chỉ xuất hiện ở tài khoản lạ mà không có trên kênh chính thức, rủi ro rất cao — dù khuôn mặt và giọng nói trong video trông có vẻ thật đến đâu.',
+          ], null),
+          lesson('4.3.4', 'Kiểm tra website, đường link và metadata', [
+            'Nhiều vụ lừa đảo dùng website giả. Hãy chú ý: tên miền có gần giống trang thật không, có ký tự lạ không, có yêu cầu đăng nhập hoặc OTP không. Nguyên tắc: không đăng nhập tài khoản quan trọng qua link được gửi trong tin nhắn nghi vấn. Nếu cần kiểm tra ngân hàng, hãy tự mở app chính thức hoặc tự nhập địa chỉ website đã biết.',
+            'Một số nội dung số có thể chứa metadata: thông tin về thời gian tạo, thiết bị, phần mềm hoặc quá trình chỉnh sửa. Nếu một nội dung có thông tin provenance rõ ràng, đó là tín hiệu tốt. Nhưng nếu không có metadata, không thể kết luận ngay là giả — vì metadata có thể bị xóa khi đăng lên mạng xã hội hoặc khi chụp màn hình.',
+            'Provenance là một lớp hỗ trợ niềm tin, không phải phép màu.',
+          ], null),
+          lesson('4.3.5', 'Detector deepfake — dùng như thế nào cho đúng?', [
+            'Detector là công cụ cố gắng phát hiện nội dung do AI tạo hoặc bị chỉnh sửa. Nên dùng detector như thế nào: dùng như một tín hiệu phụ, đọc kỹ mức độ chắc chắn và giới hạn của công cụ, không tải nội dung nhạy cảm lên công cụ không rõ chính sách dữ liệu, kết hợp với nguồn, ngữ cảnh và xác minh độc lập.',
+            'Không nên dùng detector như thế nào: không xem "AI 90%" là phán quyết cuối cùng, không xem "không phát hiện AI" là chứng nhận thật, không dùng để phân tích hình ảnh nhạy cảm của người khác trong nhóm chat.',
+            'Câu cần nhớ: <em>Detector có thể giúp bạn nghi ngờ có cơ sở hơn, nhưng không thay bạn chịu trách nhiệm cho quyết định.</em>',
           ], [
-            'Chuyển động đầu và cổ không nhất quán, đặc biệt khi tay chạm vào mặt, là dấu hiệu mạnh.',
-            'Artifact thường xuất hiện ở vùng biên khuôn mặt và tai — rõ nhất khi tua chậm video.',
-            'Sự thiếu nhất quán theo thời gian (chi tiết biến mất/xuất hiện) là lỗi đặc trưng của deepfake.',
+            'Reverse image search giúp phát hiện ảnh cũ bị gán sai bối cảnh — nhưng không tìm thấy không có nghĩa là thật.',
+            'Kiểm tra kênh chính thức: nếu nội dung không xuất hiện trên kênh chính thức, rủi ro rất cao.',
+            'Detector deepfake chỉ là tín hiệu hỗ trợ, không phải phán quyết cuối cùng.',
           ]),
         ],
         checkpoint: checkpoint('4.3', [
-          q('Khi nào deepfake video thường bị lộ rõ nhất?', ['Khi tay nhân vật chạm vào khuôn mặt', 'Khi nhân vật đứng yên', 'Khi video có âm nhạc nền', 'Khi video có phụ đề'], 0),
-          q('Vì sao artifact thường không thấy ở tốc độ bình thường?', ['Chúng xuất hiện không liên tục và chỉ rõ khi tua chậm', 'Chúng bị ẩn bởi âm thanh', 'Màn hình độ phân giải thấp che đi', 'Chúng chỉ xuất hiện ở định dạng .mp4'], 0),
-          q('Vùng nào của khuôn mặt thường bị deepfake xử lý kém nhất?', ['Tai — do cấu trúc 3D phức tạp', 'Mũi — do màu sắc', 'Trán — do thiếu dữ liệu huấn luyện', 'Môi — do chuyển động'], 0),
+          q('Reverse image search không thể phát hiện điều gì?', ['Ảnh AI hoàn toàn mới chưa từng xuất hiện trước đó', 'Ảnh bị lấy từ sự kiện cũ', 'Ảnh bị gán sai địa điểm', 'Ảnh đại diện bị lấy từ nơi khác'], 0),
+          q('Khi nghi ngờ một tài khoản mạo danh người nổi tiếng, bước kiểm tra đầu tiên nên là gì?', ['Tìm kênh chính thức của người đó và xem có cùng nội dung không', 'Bấm vào link trong video để xem sản phẩm', 'Hỏi bình luận trong video', 'Dùng detector deepfake ngay'], 0),
+          q('Điều nào đúng về detector deepfake?', ['Kết quả là tín hiệu hỗ trợ, không phải phán quyết cuối cùng', 'Kết quả AI 90% chứng minh chắc chắn nội dung là giả', 'Không phát hiện AI nghĩa là nội dung thật 100%', 'Nên dùng để phân tích hình ảnh nhạy cảm trong nhóm chat'], 0),
         ]),
       },
       {
-        title: '4.4 Ánh sáng, nền và bối cảnh',
+        title: '4.4 Thực hành: Deepfense Check',
         lessons: [
-          lesson('4.4.0', 'Ánh sáng và bóng tối mâu thuẫn', [
-            'Anh sang la bang chung vat ly. Trong the gioi that, anh sang chieu tu nguon cu the tao ra bong do theo huong nhat quan cho tat ca moi vat trong cung mot canh. Khi deepfake ghep khuon mat tu mot moi truong anh sang khac vao canh quay, su mau thuan nay thuong de lo dau vet.',
-            'Kiem tra ba thu dong thoi: Huong bong do duoi mui cua nhan vat. Huong bong do cua cac vat the trong nen. Vi tri cua anh phan chieu (catchlight) trong mat nhan vat. Trong video that, ca ba thu nay se nhat quan voi nhau.',
-            'Dau hieu cu the: Khuon mat duoc chieu sang deu tu phia truoc trong khi nen co anh sang ben canh. Vung cam khong co bong trong khi mui co bong ro rang. Hai ben khuon mat cung muc do sang du anh sang den tu mot phia.',
+          lesson('4.4.0', 'Hướng dẫn điền mẫu Deepfense Check', [
+            'Trong phần thực hành này, bạn sẽ áp dụng quy trình Pause — Observe — Verify — Trace — Decide vào 3 hồ sơ tình huống thực tế. Với mỗi hồ sơ, hãy suy nghĩ: Điều gì khiến bạn cần Pause? Bạn Observe được tín hiệu gì? Bạn sẽ Verify qua kênh nào? Bạn sẽ Trace nguồn gì? Hành động Decide an toàn nhất là gì?',
+            'Không phải hồ sơ nào cũng cần tất cả các bước ở mức độ như nhau. Hãy chọn bước phù hợp với rủi ro của từng tình huống.',
+            'Câu cần nhớ: <em>Một quy trình tốt không cần làm bạn chậm mãi. Nó chỉ cần làm bạn chậm đúng lúc.</em>',
           ], null),
-          lesson('4.4.1', 'Nền bị méo, biến dạng hoặc lặp', [
-            'Khi thuat toan deepfake khong hoan hao, no co the anh huong den vung nen xung quanh khuon mat. Dau hieu bao gom: cac duong thang trong nen (nhu tuong, cua, ke sach) bi cong hoac meo o vung gan khuon mat, cac hoa van lap lai bat thuong, vung nen bi nhoe tap trung xung quanh vien dau nhan vat.',
-            'Mot truong hop dac biet: deepfake trong cac cuoc goi video voi nen ao (virtual background). Neu nen ao bi cat xen bat thuong xung quanh toc hoac vien dau — hoac neu toc bien mat vao nen mot cach ky la — day la dau hieu dang nghi.',
-            'Cung chu y den su nhat quan cua nen theo thoi gian. Nen that co nhung thay doi nho tu nhien (bui ban, anh sang thay doi cham). Nen duoc xu ly boi deepfake doi khi co su lap lai hoac dong bang bat thuong o nhung vung nhat dinh.',
+          lesson('4.4.1', 'Hồ sơ 1: Người nổi tiếng và ứng dụng đầu tư', [
+            'Tình huống: Bạn thấy một video người nổi tiếng nói rằng đang dùng một ứng dụng đầu tư. Video được đăng bởi tài khoản tên gần giống tài khoản chính thức. Mô tả có link đăng ký. Bình luận rất tích cực. Kênh chính thức của người nổi tiếng không có video này.',
+            'Phân tích: Pause — nội dung liên quan đến đầu tư, tiền, link đăng ký và người nổi tiếng. Observe — tài khoản không chính thức, lời hứa tài chính, bình luận có thể là seeding. Verify — kiểm tra kênh chính thức của người nổi tiếng, nguồn báo chí uy tín. Trace — tìm video gốc, kiểm tra tài khoản đăng đầu tiên, kiểm tra tên miền của link.',
+            'Decide: Không bấm link, không chuyển tiền, không đăng ký. Cảnh báo người thân nếu họ đang định tham gia. Đây là kịch bản lừa đảo đầu tư deepfake phổ biến nhất hiện nay tại Việt Nam.',
           ], null),
-          lesson('4.4.2', 'Chi tiết phụ: tai, cổ, vai và phụ kiện', [
-            'Ngoai khuon mat trung tam, cac chi tiet phu thuong la noi deepfake de lo ro nhat vi chung it duoc mo hinh chu y xu ly. Tai da de cap o phan truoc. Them vao do, hay chu y den: co va vung tiep giap giua cam va co, vai va vung tiep giap voi toc, kinh (neu nhan vat deo) — gong kinh va phan chieu trong kinh rat kho de deepfake xu ly chinh xac, bong tai va do trang suc khac.',
-            'Kinh la vi du dien hinh. Kinh that phan chieu anh sang tu moi truong xung quanh — ban co the thay phong, cua so, den trong phan chieu. Kinh trong deepfake thuong co phan chieu don gian hoac bat nhat voi moi truong trong video.',
-            'Bong tai va do trang suc co hinh dang 3D phuc tap thay doi theo goc nhin. Deepfake thuong lam phang nhung chi tiet nay hoac lam chung bien dang khi dau quay. Day la diem kiem tra nhanh va hieu qua.',
+          lesson('4.4.2', 'Hồ sơ 2: Tin nhắn thoại từ người thân', [
+            'Tình huống: Tài khoản của người thân gửi tin nhắn thoại nghe giống giọng thật: "Chuyển giúp 3 triệu vào tài khoản này ngay, đừng gọi lại, đang rối lắm." Số tài khoản nhận tiền là tên người lạ.',
+            'Phân tích: Pause — có yêu cầu chuyển tiền gấp và yêu cầu không gọi lại — đây là hai dấu hiệu áp lực cổ điển. Observe — giọng giống nhưng hành vi bất thường; tài khoản nhận tiền lạ; có dấu hiệu cô lập (đừng gọi lại). Verify — gọi số điện thoại đã lưu, gọi người thân khác, dùng family code nếu có.',
+            'Decide: Không chuyển tiền khi chưa xác minh qua kênh độc lập. Lưu ý: yêu cầu không gọi lại là dấu hiệu rất mạnh của lừa đảo — người thân thật không cần bạn tránh xác minh.',
+          ], null),
+          lesson('4.4.3', 'Hồ sơ 3: Clip gây phẫn nộ trong nhóm chat', [
+            'Tình huống: Một clip 12 giây được chia sẻ trong nhóm chat với chú thích "Vừa xảy ra ở gần trường mình, chia sẻ để mọi người biết." Clip gây phẫn nộ. Không có link gốc. Có người trong nhóm kêu gọi tìm danh tính người trong clip.',
+            'Phân tích: Pause — nội dung gây phẫn nộ, kêu gọi chia sẻ và có nguy cơ làm hại người trong clip. Observe — clip rất ngắn, thiếu bối cảnh, không có nguồn gốc rõ, có lời kêu gọi hành động tập thể. Trace — tìm nguồn đầu tiên, kiểm tra clip có cũ hoặc sai địa điểm không.',
+            'Decide: Không chia sẻ thêm, không truy tìm hoặc bêu tên cá nhân, báo người có trách nhiệm nếu có rủi ro thật. Lưu ý quan trọng: dù clip thật hay deepfake, lan truyền và truy tìm danh tính đều có thể gây hại nghiêm trọng cho nạn nhân.',
           ], [
-            'Ánh sáng là bằng chứng vật lý: bóng mũi, bóng nền và catchlight trong mắt phải nhất quán.',
-            'Nền bị méo xung quanh viền đầu là dấu hiệu của deepfake xử lý kém.',
-            'Kính mắt, bông tai và đồ trang sức là điểm kiểm tra nhanh — deepfake thường xử lý những thứ này kém nhất.',
+            'Hồ sơ 1: Video đầu tư người nổi tiếng trên tài khoản không chính thức — không bấm link, không chuyển tiền.',
+            'Hồ sơ 2: Yêu cầu không gọi lại là dấu hiệu lừa đảo mạnh — luôn xác minh qua kênh độc lập.',
+            'Hồ sơ 3: Clip ngắn gây phẫn nộ không rõ nguồn — không chia sẻ, không truy tìm danh tính.',
           ]),
         ],
         checkpoint: checkpoint('4.4', [
-          q('Khi kiểm tra ánh sáng, cần so sánh đồng thời những gì?', ['Bóng đổ dưới mũi, bóng vật thể xung quanh và catchlight trong mắt', 'Âm lượng và độ sáng màn hình', 'Màu tóc và màu nền', 'Tốc độ chuyển động và tốc độ nói'], 0),
-          q('Tại sao kính mắt là điểm kiểm tra hữu ích?', ['Phản chiếu trong kính phải khớp với môi trường thực — deepfake thường xử lý sai điều này', 'Kính luôn bị deepfake bỏ qua hoàn toàn', 'Kính làm lộ màu mắt thật', 'Deepfake không thể tái tạo gọng kính'], 0),
-          q('Nền bị méo xung quanh đầu nhân vật thường gợi ý điều gì?', ['Thuật toán deepfake đang xử lý vùng đó không hoàn hảo', 'Camera có vấn đề', 'Video được quay ở độ phân giải thấp', 'Ánh sáng quá mạnh'], 0),
-        ]),
-      },
-      {
-        title: '4.5 Quy trình SCAN và giới hạn quan sát',
-        lessons: [
-          lesson('4.5.0', 'Phương pháp SCAN: 4 bước quan sát có hệ thống', [
-            'SCAN la quy trinh 4 buoc de quan sat video nghi van mot cach co he thong. S — Surface (Be mat): Nhin tong the lan dau. Cam giac ban dau co gi khong on? Vien mat, mau sac tong the, anh sang chung. C — Close-up (Chi tiet): Tap trung vao cac vung cu the: mat, moi, tai, toc, co. Tua cham neu co the. A — Action (Chuyen dong): Chu y den chuyen dong — chop mat, lip sync, chuyen dong dau, tay cham mat. N — Narrative (Ngu canh): Ngu canh co hop ly khong? Tai sao video nay ton tai? Ai muon ban tin dieu nay?',
-            'SCAN khong phai la quy trinh tuyen tinh cung nhac. Trong thuc te, ban thuong lam nhieu buoc dong thoi. Nhung khuon kho nay giup ban khong bo sot cac lop quan sat quan trong.',
-            'Quan trong: SCAN khong thay the kiem chung nguon. No la buoc dau tien trong quy trinh danh gia. Neu SCAN cho ket qua nghi van cao, buoc tiep theo la kiem chung nguon (Module 6) va trong truong hop nghiem trong, su dung cong cu phan tich.',
-          ], null),
-          lesson('4.5.1', 'Checklist nhanh khi gặp nội dung nghi vấn', [
-            'Duoi day la checklist 10 diem de kiem tra nhanh khi ban gap video nghi van: (1) Vien khuon mat co bi nhoe hoac co duong vien la khong? (2) Toc co thieu chi tiet soi toc rieng le khong? (3) Da co qua min, thieu lo chan long khong? (4) Mau sac da co khop voi co va vai khong? (5) Chop mat co bat thuong khong? (6) Lip sync co khop chinh xac khong? (7) Bieu cam co qua doi xung hoac thieu tu nhien khong? (8) Anh sang tren mat va tren nen co nhat quan khong? (9) Tai, kinh, trang suc co binh thuong khong? (10) Co artifact hoac meo o vung bien khuon mat khong?',
-            'Moi cau tra loi duong tinh (co dau hieu) tang muc do nghi van. Khong can tat ca 10 diem deu duong tinh. Tu 3-4 diem duong tinh tro len la muc nghi van cao va can kiem chung tiep.',
-            'Luu y quan trong: Checklist nay khong the thay the cong cu phan tich chuyen nghiep. No la bo loc dau tien — giup ban quyet dinh noi dung nao can dau tu thoi gian kiem chung ky hon.',
-          ], null),
-          lesson('4.5.2', 'Giới hạn của mắt thường và khi nào dùng công cụ', [
-            'Quan sat bang mat thuong co gioi han ro rang: Deepfake chat luong cao ngay cang kho phat hien bang mat thuong. Dieu kien xem (man hinh nho, anh sang moi truong, chat luong video bi nen) anh huong den kha nang phat hien. Nao nguoi co xu huong tin vao khuon mat quen thuoc — hieu ung nay lam giam kha nang phat hien su bat thuong.',
-            'Khi nao nen dung cong cu: Khi noi dung co tac dong lon — quyet dinh tai chinh, thong tin y te, tin tuc chinh tri quan trong. Khi nhieu diem trong checklist cho ket qua nghi van. Khi noi dung dang duoc lan truyen rong va ban dang can nhac chia se. Cong cu phan tich deepfake phan tich cac dac diem ky thuat ma mat thuong khong the thay.',
-            'Ket luan module: Mat thuong la buoc dau tien, khong phai buoc cuoi cung. Ky nang quan sat giup ban dat cau hoi dung va quyet dinh khi nao can leo thang len cong cu. Module 5 se mo rong sang nhan dien giong noi va am thanh gia mao.',
-          ], [
-            'SCAN — Surface, Close-up, Action, Narrative — là 4 bước quan sát có hệ thống.',
-            'Checklist 10 điểm: 3-4 dấu hiệu dương tính trở lên là mức nghi vấn cần kiểm chứng thêm.',
-            'Mắt thường có giới hạn — dùng công cụ khi nội dung có tác động lớn hoặc nghi vấn cao.',
-          ]),
-        ],
-        checkpoint: checkpoint('4.5', [
-          q('SCAN là viết tắt của gì?', ['Surface, Close-up, Action, Narrative', 'Scan, Check, Analyze, Note', 'See, Compare, Ask, Next', 'Source, Content, Audio, Network'], 0),
-          q('Bao nhiêu điểm dương tính trong checklist 10 điểm là mức nghi vấn cao?', ['3-4 điểm trở lên', '10/10 điểm', 'Chỉ cần 1 điểm', 'Ít nhất 8 điểm'], 0),
-          q('Giới hạn quan trọng nhất của quan sát mắt thường là gì?', ['Deepfake chất lượng cao ngày càng khó phát hiện và điều kiện xem ảnh hưởng lớn', 'Mắt người không thể nhìn màu sắc chính xác', 'Mắt người chỉ phát hiện được chuyển động', 'Mắt người không thể so sánh hai video cùng lúc'], 0),
-          q('Nên dùng công cụ phân tích khi nào?', ['Khi nội dung có tác động lớn hoặc nhiều điểm checklist cho kết quả nghi vấn', 'Luôn luôn dùng công cụ, không cần quan sát bằng mắt', 'Chỉ khi nội dung liên quan đến chính trị', 'Chỉ khi bạn là chuyên gia bảo mật'], 0),
+          q('Trong Hồ sơ 1, dấu hiệu nghi vấn quan trọng nhất là gì?', ['Video chỉ xuất hiện ở tài khoản không chính thức, không có trên kênh chính thức', 'Bình luận quá tích cực', 'Video có chất lượng cao', 'Người nổi tiếng nói chậm'], 0),
+          q('Trong Hồ sơ 2, tại sao yêu cầu đừng gọi lại là dấu hiệu cảnh giác mạnh?', ['Người thân thật không cần bạn tránh xác minh — chỉ kẻ xấu mới muốn bạn không kiểm tra', 'Vì gọi lại tốn tiền', 'Vì người thân đang bận', 'Vì cuộc gọi có thể bị nghe lén'], 0),
+          q('Trong Hồ sơ 3, tại sao không nên chia sẻ hoặc truy tìm danh tính ngay cả khi nghi là deepfake?', ['Dù thật hay giả, hành động đó vẫn có thể gây hại nghiêm trọng cho người trong clip', 'Vì deepfake không vi phạm pháp luật', 'Vì chỉ nên chia sẻ khi clip đã xác nhận là thật', 'Vì truy tìm danh tính cần kỹ năng chuyên gia'], 0),
         ]),
       },
     ],
     quiz: [
-      q('Vùng nào của deepfake video thường kém chính xác nhất?', ['Viền mặt, tóc và các chi tiết ngoài oval khuôn mặt', 'Trung tâm khuôn mặt', 'Màu sắc tổng thể video', 'Chất lượng âm thanh'], 0),
-      q('Da trong deepfake thường có đặc điểm gì nổi bật?', ['Qua min, thieu lo chan long va chi tiet ket cau tu nhien', 'Có nhiều đốm và vết bẩn', 'Màu xanh lá đặc trưng', 'Luôn trông rất thật và không thể phân biệt'], 0),
-      q('Cách nào giúp phát hiện lip sync bất thường hiệu quả nhất?', ['Xem video không tiếng trước để quen với chuyển động môi, sau đó xem lại có tiếng', 'Tắt màn hình và chỉ nghe âm thanh', 'Tăng tốc độ phát lên 3x', 'So sánh với video khác của cùng người'], 0),
-      q('SCAN trong quy trình quan sát là viết tắt của gì?', ['Surface, Close-up, Action, Narrative', 'Scan, Check, Analyze, Note', 'See, Compare, Ask, Next', 'Source, Content, Audio, Network'], 0),
-      q('Tại sao tai là vùng hữu ích để kiểm tra deepfake?', ['Cấu trúc 3D phức tạp khiến deepfake thường xử lý tai kém', 'Tai không bao giờ xuất hiện trong deepfake', 'Tai có màu sắc đặc biệt dễ phát hiện', 'Deepfake luôn xóa tai khỏi video'], 0),
-      q('Khi nào artifact trong deepfake thường rõ nhất?', ['Khi tua chậm video (0.25x hoặc 0.5x)', 'Khi xem ở tốc độ bình thường', 'Khi tăng âm lượng', 'Khi đổi sang màn hình lớn hơn'], 0),
-      q('Checklist 10 điểm được dùng để làm gì?', ['Đánh giá nhanh mức độ nghi vấn và quyết định có cần kiểm chứng thêm không', 'Kết luận chắc chắn video là deepfake', 'Thay thế hoàn toàn công cụ phân tích', 'Báo cáo video lên cơ quan chức năng'], 0),
-      q('Khi nào nên dùng công cụ phân tích deepfake thay vì chỉ dùng mắt thường?', ['Khi nội dung có tác động lớn và nhiều điểm nghi vấn trong checklist', 'Chỉ khi là chuyên gia bảo mật', 'Luôn luôn, mắt thường không có giá trị', 'Chỉ khi video dài hơn 10 phút'], 0),
+      q('Deepfense Check gồm mấy bước và theo thứ tự nào?', ['5 bước: Pause — Observe — Verify — Trace — Decide', '3 bước: Stop — Check — Share', '4 bước: Scan — Analyze — Report — Delete', '5 bước: Detect — Verify — Block — Report — Ignore'], 0),
+      q('Khi nào cần Pause ngay lập tức?', ['Khi nội dung yêu cầu hành động gấp liên quan đến tiền, OTP hoặc chia sẻ', 'Khi video có độ phân giải thấp', 'Khi người gửi là người lạ hoàn toàn', 'Chỉ khi nội dung bằng tiếng nước ngoài'], 0),
+      q('Kênh độc lập an toàn nhất để Verify là gì?', ['Số điện thoại người thân đã lưu từ trước — không phải kênh do người nghi vấn vừa cung cấp', 'Link do người đang nhắn tin vừa gửi', 'Hỏi lại ngay trong cùng cuộc chat', 'Bình luận công khai trong video'], 0),
+      q('Trace đặc biệt quan trọng trong tình huống nào?', ['Video lan truyền gây phẫn nộ không rõ nguồn gốc', 'Khi nhận OTP từ ngân hàng', 'Khi thay đổi hình nền điện thoại', 'Khi cài ứng dụng từ kho ứng dụng chính thức'], 0),
+      q('Decide yêu cầu bạn phải làm gì?', ['Chọn hành động an toàn nhất dù chưa chứng minh được deepfake', 'Xác nhận 100% là deepfake trước khi từ chối', 'Hỏi ý kiến số đông trước khi quyết định', 'Đợi báo chí đưa tin rồi mới hành động'], 0),
+      q('Family code nên có đặc điểm nào?', ['Dễ nhớ với gia đình, không đăng công khai, không dựa vào thông tin có thể tra được', 'Càng phức tạp càng tốt', 'Nên dùng ngày sinh để dễ nhớ', 'Nên chia sẻ rộng để nhiều người biết'], 0),
+      q('Reverse image search không giúp phát hiện điều gì?', ['Ảnh AI mới hoàn toàn chưa từng xuất hiện trên internet', 'Ảnh bị tái sử dụng từ sự kiện cũ', 'Ảnh bị gán sai bối cảnh', 'Ảnh đại diện bị lấy từ nguồn khác'], 0),
+      q('Khi clip gây phẫn nộ xuất hiện trong nhóm chat, hành động nào đúng nhất?', ['Không chia sẻ thêm, không truy tìm danh tính, báo người có trách nhiệm', 'Chia sẻ ngay để cảnh báo mọi người', 'Phân tích công khai trong nhóm', 'Dùng detector để xác nhận thật giả rồi mới quyết định'], 0),
     ],
   },
+
 
   // ── MODULES 5–9: Placeholder ──────────────────────────────────
   ...[5, 6, 7, 8, 9].map(id => ({
