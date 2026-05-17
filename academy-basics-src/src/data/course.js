@@ -601,17 +601,194 @@ export const MODULES = [
     ],
   },
 
-  // ── MODULES 4–9: Placeholder ──────────────────────────────────
-  ...[4, 5, 6, 7, 8, 9].map(id => ({
+  // ── MODULE 4 ─────────────────────────────────────────────────
+  {
+    id: 4, part: 'recognition',
+    title: 'Nhận diện dấu hiệu hình ảnh và video',
+    duration: '90-100 phút', level: 'Trung cấp',
+    scenario: 'Minh, 31 tuổi, làm truyền thông. Đồng nghiệp gửi vào nhóm chat một video: lãnh đạo cấp cao đang phát biểu điều gì gây tranh cãi. Mọi người đang phản ứng. Minh nhìn video — chất lượng tốt, khuôn mặt quen thuộc, âm thanh rõ. Nhưng có gì đó không ổn. Làm thế nào Minh biết phải nhìn vào đâu?',
+    outcomes: [
+      'Nhận diện ít nhất 10 dấu hiệu nghi vấn cụ thể trong hình ảnh và video.',
+      'Áp dụng phương pháp SCAN để quan sát có hệ thống từ khuôn mặt đến bối cảnh.',
+      'Hiểu giới hạn của quan sát bằng mắt thường và khi nào cần công cụ hỗ trợ.',
+    ],
+    sections: [
+      {
+        title: '4.1 Khuôn mặt — vùng trọng tâm của deepfake',
+        lessons: [
+          lesson('4.1.0', 'Tại sao deepfake tập trung vào khuôn mặt', [
+            'Deepfake video thuong thay the khuon mat cua mot nguoi bang khuon mat cua nguoi khac, hoac tong hop hoan toan mot khuon mat moi. Khuon mat la trung tam vi do la thu nao nguoi tap trung khi nhan dien danh tinh.',
+            'Hau het cac mo hinh deepfake duoc huan luyen de tai tao vung tu tran den cam — tuc la vung oval cua khuon mat. Vung ngoai vung nay (toc, tai, co) thuong kem chinh xac hon vi khong phai la uu tien huan luyen.',
+            'Dieu nay co nghia la: khi ban nghi ngo mot video, hay bat dau bang cach quan sat khuon mat — nhung khong chi khuon mat. Ranh gioi giua khuon mat va phan con lai thuong la noi de lo dau vet dau tien.',
+          ], null),
+          lesson('4.1.1', 'Viền mặt, tóc và ranh giới da', [
+            'Mot trong nhung diem yeu pho bien nhat cua deepfake la vien khuon mat — dac biet o vung tiep giap giua da va toc, hoac giua da va nen. Dau hieu dang chu y: vien mat bi mo hoac nhoe bat thuong, toc trong phang va thieu chi tiet soi toc rieng le, co su chenh lech mau sac hoac anh sang giua khuon mat va toc.',
+            'Voi deepfake chat luong thap, ban co the thay mot duong vien mo bao quanh khuon mat — nhu the khuon mat duoc dan len tren phan con lai cua video. Voi deepfake chat luong cao hon, ranh gioi nay tinh te hon nhung thuong van de lo o nhung khung hinh co chuyen dong nhanh.',
+            'Cach kiem tra: Tam dung video o nhieu diem khac nhau va phong to vung toc va vien mat. Toc that co hang nghin soi rieng le bat sang theo nhieu huong khac nhau. Toc trong deepfake thuong thieu chi tiet nay va trong nhu mot khoi dong nhat.',
+          ], null),
+          lesson('4.1.2', 'Kết cấu da: lỗ chân lông, nếp nhăn, chi tiết nhỏ', [
+            'Da nguoi that co ket cau phuc tap: lo chan long, nep nhan nho, tan nhang, seo, long min, su thay doi mau sac tinh te theo do day cua da. Cac mo hinh deepfake, du ngay cang tien tien, van thuong tao ra da trong qua min mang — nhu da nhua hoac da duoc chinh anh nang.',
+            'Dac biet chu y den: vung quanh mieng va mui (noi nhieu nep nhan dong khi noi), vung duoi mat (nep nhan khi cuoi), va vung tran khi nhan vat thay doi bieu cam. Trong video deepfake, nhung vung nay thuong thieu su bien doi nho tu nhien.',
+            'Mot dau hieu tinh te khac: long may. Long may that co cac soi long rieng le, bi bong toi va anh sang chieu theo nhieu huong. Long may trong deepfake thuong trong phang va thieu chieu sau.',
+          ], null),
+          lesson('4.1.3', 'Màu sắc da và ánh sáng không nhất quán', [
+            'Mau sac da trong deepfake thuong khong khop hoan hao voi phan con lai cua co the. Ban co the thay: khuon mat trong sang hon hoac toi hon so voi co va vai, tong mau da thay doi bat thuong giua cac khung hinh, va su thieu nhat quan trong cach anh sang chieu len khuon mat so voi boi canh.',
+            'Anh sang la mot trong nhung thu kho gia nhat. Anh sang that chieu len khuon mat tu mot nguon cu the trong moi truong cu the. Deepfake thuong ghep khuon mat tu mot nguon anh sang khac vao video co nguon anh sang khac — tao ra su mau thuan tinh te: bong do sai huong, anh phan chieu trong mat khong khop voi bong tren mat.',
+            'Cach kiem tra: Nhin vao bong do duoi mui va cam. So sanh huong bong tren khuon mat voi huong bong tren cac vat the xung quanh trong cung khung hinh. Neu chung mau thuan nhau, day la dau hieu dang nghi.',
+          ], [
+            'Deepfake tập trung vào vùng oval khuôn mặt — viền và tóc thường kém chính xác hơn.',
+            'Da deepfake thường quá mịn: thiếu lỗ chân lông, nếp nhăn và chi tiết nhỏ tự nhiên.',
+            'Ánh sáng và màu sắc da không nhất quán giữa khuôn mặt và cổ/vai là dấu hiệu đáng chú ý.',
+          ]),
+        ],
+        checkpoint: checkpoint('4.1', [
+          q('Vùng nào của deepfake thường kém chính xác nhất?', ['Viền mặt, tóc và vùng ngoài oval khuôn mặt', 'Trung tâm khuôn mặt (mũi)', 'Màu sắc nền', 'Phụ đề video'], 0),
+          q('Da trong deepfake thường có đặc điểm gì?', ['Quá mịn, thiếu lỗ chân lông và chi tiết tự nhiên', 'Quá thô và nhiều đốm', 'Có màu xanh lá', 'Luôn trông rất thật'], 0),
+          q('Khi kiểm tra ánh sáng trong video, nên so sánh điều gì?', ['Hướng bóng trên khuôn mặt với bóng trên vật thể xung quanh', 'Âm lượng âm thanh với độ sáng màn hình', 'Tốc độ chuyển động với tốc độ audio', 'Màu tóc với màu nền'], 0),
+          q('Tóc trong deepfake thường có vấn đề gì?', ['Thiếu chi tiết sợi tóc riêng lẻ, trông như một khối đồng nhất', 'Màu quá tối', 'Di chuyển quá nhanh', 'Luôn bị che khuất'], 0),
+        ]),
+      },
+      {
+        title: '4.2 Mắt, miệng và biểu cảm',
+        lessons: [
+          lesson('4.2.0', 'Chuyển động mắt và chớp mắt bất thường', [
+            'Mat nguoi thuong chop tu 15 den 20 lan moi phut — khong deu dan, khong may moc. Cac mo hinh deepfake the he dau thuong khong chop mat hoac chop mat theo nhip deu bat tu nhien. Cac mo hinh hien dai da cai thien dieu nay, nhung van co nhung dau hieu tinh te.',
+            'Dau hieu dang chu y o mat: Chop mat qua nhanh hoac qua cham so voi tinh huong cam xuc. Chuyen dong mat thieu tu nhien — mat nguoi that luon co nhung chuyen dong nho (saccade) ngay ca khi nhin thang. Anh phan chieu trong mat khong khop voi nguon sang trong canh quay. Ca hai mat khong chop hoan toan dong bo — mot mat co the chop truoc mot phan nho giay.',
+            'Quan sat dac biet: vung duoi mat khi nhan vat cuoi. Nu cuoi that tao ra cac nep nhan nho o duoi mat (chan chim). Nu cuoi deepfake thuong thieu phan nay, hoac phan nay khong dong bo voi chuyen dong mieng.',
+          ], null),
+          lesson('4.2.1', 'Đồng bộ môi — âm thanh (lip sync)', [
+            'Lip sync — su dong bo giua chuyen dong moi va am thanh — la mot trong nhung diem de kiem tra nhat. Mac du cac mo hinh hien dai da cai thien dang ke, van con nhung dau hieu dac trung.',
+            'Dau hieu lip sync bat thuong: Do tre — moi chuyen dong truoc hoac sau am thanh tu 1-3 khung hinh. Chuyen dong moi khong khop chinh xac voi am thanh phu am cu the (dac biet cac phu am nhu B, P, M yeu cau hai moi cham nhau). Vung quanh mieng trong cung hoac thieu tu nhien khi cac am tiet thay doi nhanh. Hinh dang mieng khong khop voi nguyen am dang phat am.',
+            'Cach kiem tra thuc te: Xem video khong co am thanh trong 10-15 giay, sau do xem lai voi am thanh. Nao ban se de phat hien su khong khop hon khi da quen voi chuyen dong moi truoc. Hoac tua cham video o nhung doan noi nhanh — day la noi lip sync thuong bi lo nhat.',
+          ], null),
+          lesson('4.2.2', 'Biểu cảm cảm xúc: tự nhiên hay máy móc?', [
+            'Bieu cam khuon mat that la qua trinh phuc tap lien quan den hon 40 co mat hoat dong theo cach khong hoan toan doi xung va khong hoan toan co the kiem soat. Deepfake thuong tai tao bieu cam chi theo phan trung tam khuon mat — mieng va mat — nhung bo qua cac vi chuyen dong co mat nho hon.',
+            'Dau hieu bieu cam bat tu nhien: Bieu cam qua doi xung — khuon mat that co su bat doi xung nho tu nhien. Chuyen dong co mat qua tron tru va thieu cac micro-expression (vi bieu cam thoang qua). Su chuyen tiep giua cac bieu cam qua nhanh hoac qua cham. Cam xuc vung mat khong khop voi cam xuc vung mieng.',
+            'Diem cuoi quan trong: Nao nguoi rat gioi phat hien su bat tu nhien trong bieu cam — day la ly do tai sao ban co the cam thay mot video trong la ma khong giai thich duoc nguyen nhan. Tin vao cam giac do va bat dau phan tich co he thong.',
+          ], [
+            'Mắt: chú ý chớp mắt bất thường và ánh phản chiếu không khớp với nguồn sáng.',
+            'Lip sync: xem không tiếng trước, sau đó xem lại có tiếng để phát hiện độ trễ.',
+            'Biểu cảm deepfake thường quá đối xứng và thiếu vi chuyển động cơ mặt nhỏ.',
+          ]),
+        ],
+        checkpoint: checkpoint('4.2', [
+          q('Tần suất chớp mắt bình thường của người là bao nhiêu?', ['15-20 lần mỗi phút, không đều đặn', '1-2 lần mỗi phút, đều đặn', '50 lần mỗi phút', 'Mỗi 5 giây chính xác'], 0),
+          q('Cách nào giúp phát hiện lip sync bất thường hiệu quả?', ['Xem không tiếng trước, sau đó xem lại có tiếng', 'Tắt màn hình và chỉ nghe', 'Tăng tốc video lên 2x', 'Xem trên điện thoại thay vì máy tính'], 0),
+          q('Biểu cảm khuôn mặt thật thường có đặc điểm gì?', ['Bất đối xứng nhỏ và có vi chuyển động cơ mặt', 'Hoàn toàn đối xứng và trơn tru', 'Không bao giờ thay đổi nhanh', 'Luôn cân đối hai bên'], 0),
+          q('Ánh phản chiếu trong mắt của deepfake thường có vấn đề gì?', ['Không khớp với nguồn sáng thực trong cảnh quay', 'Quá sáng', 'Quá tối', 'Không tồn tại ánh phản chiếu'], 0),
+        ]),
+      },
+      {
+        title: '4.3 Chuyển động, artifact và thời gian',
+        lessons: [
+          lesson('4.3.0', 'Chuyển động đầu, cổ và cơ thể', [
+            'Deepfake thuong chi xu ly vung khuon mat, de lai phan co, vai va co the nguyen goc. Dieu nay tao ra su bat nhat giua chuyen dong khuon mat va chuyen dong co the — dac biet ro rang khi nhan vat quay dau hoac nghieng nguoi.',
+            'Dau hieu dang chu y: Khuon mat va co khong chuyen dong lien tuc va nhat quan khi dau quay. Vung cam va co co the bi bien dang hoac nhoe khi nghieng dau. Chuyen dong dau trong thieu quan tinh — dau nguoi that co trong luc va quan tinh, khong the chuyen huong tuc thoi.',
+            'Voi video toan than: Khi nhan vat gio tay hoac cham vao mat, day la thoi diem deepfake thuong bi lo ro nhat. Khu vuc giao thoa giua tay va khuon mat rat kho de mo hinh deepfake xu ly chinh xac.',
+          ], null),
+          lesson('4.3.1', 'Artifact, nhòe và méo ở vùng biên', [
+            'Artifact la cac loi hinh anh xuat hien khi thuat toan deepfake khong xu ly duoc mot vung nhat dinh. Chung co the trong nhu: diem anh bi meo hoac nhoe xung quanh vien khuon mat, mau sac khong khop tai ranh gioi giua khuon mat va nen, vung da bi vo hat hoac co hoa van ky la khi nhan vat chuyen dong.',
+            'Artifact thuong xuat hien o nhung khung hinh cu the — khong lien tuc. Day la ly do tai sao viec tua cham video rat quan trong. Mot video deepfake co the trong hoan hao o toc do binh thuong nhung lo ro artifact o 0.25x hoac 0.5x toc do.',
+            'Vung tai la mot vi du dien hinh. Tai nguoi co cau truc 3D phuc tap va thuong bi deepfake xu ly kem — dac biet o nhung goc nhin nghieng. Neu tai trong phang, bi cat bot hoac co hinh dang bat thuong, day la dau hieu dang chu y.',
+          ], null),
+          lesson('4.3.2', 'Sự nhất quán theo thời gian trong video', [
+            'Mot video that co su nhat quan theo thoi gian: anh sang thay doi nhat quan theo thoi gian thuc, chuyen dong la lien tuc va khong gian doan, va cac chi tiet nho (nhu mot soi toc lac, mot vet nuoc tren da) duy tri nhat quan qua cac khung hinh.',
+            'Deepfake thuong thieu su nhat quan nay: Chi tiet nho tren khuon mat co the bien mat hoac xuat hien giua cac khung hinh. Mau sac da co the thay doi nhe theo cach khong tu nhien. Artifact xuat hien o mot khung hinh roi bien mat o khung tiep theo.',
+            'Phuong phap kiem tra: Neu ban co the tai video ve, chay no o toc do cham (0.25x) va chu y den vung khuon mat. Dac biet theo doi mot diem co dinh — vi du mot not ruoi hoac mot chi tiet cu the — va xem no co duy tri nhat quan khong.',
+          ], [
+            'Chuyển động đầu và cổ không nhất quán, đặc biệt khi tay chạm vào mặt, là dấu hiệu mạnh.',
+            'Artifact thường xuất hiện ở vùng biên khuôn mặt và tai — rõ nhất khi tua chậm video.',
+            'Sự thiếu nhất quán theo thời gian (chi tiết biến mất/xuất hiện) là lỗi đặc trưng của deepfake.',
+          ]),
+        ],
+        checkpoint: checkpoint('4.3', [
+          q('Khi nào deepfake video thường bị lộ rõ nhất?', ['Khi tay nhân vật chạm vào khuôn mặt', 'Khi nhân vật đứng yên', 'Khi video có âm nhạc nền', 'Khi video có phụ đề'], 0),
+          q('Vì sao artifact thường không thấy ở tốc độ bình thường?', ['Chúng xuất hiện không liên tục và chỉ rõ khi tua chậm', 'Chúng bị ẩn bởi âm thanh', 'Màn hình độ phân giải thấp che đi', 'Chúng chỉ xuất hiện ở định dạng .mp4'], 0),
+          q('Vùng nào của khuôn mặt thường bị deepfake xử lý kém nhất?', ['Tai — do cấu trúc 3D phức tạp', 'Mũi — do màu sắc', 'Trán — do thiếu dữ liệu huấn luyện', 'Môi — do chuyển động'], 0),
+        ]),
+      },
+      {
+        title: '4.4 Ánh sáng, nền và bối cảnh',
+        lessons: [
+          lesson('4.4.0', 'Ánh sáng và bóng tối mâu thuẫn', [
+            'Anh sang la bang chung vat ly. Trong the gioi that, anh sang chieu tu nguon cu the tao ra bong do theo huong nhat quan cho tat ca moi vat trong cung mot canh. Khi deepfake ghep khuon mat tu mot moi truong anh sang khac vao canh quay, su mau thuan nay thuong de lo dau vet.',
+            'Kiem tra ba thu dong thoi: Huong bong do duoi mui cua nhan vat. Huong bong do cua cac vat the trong nen. Vi tri cua anh phan chieu (catchlight) trong mat nhan vat. Trong video that, ca ba thu nay se nhat quan voi nhau.',
+            'Dau hieu cu the: Khuon mat duoc chieu sang deu tu phia truoc trong khi nen co anh sang ben canh. Vung cam khong co bong trong khi mui co bong ro rang. Hai ben khuon mat cung muc do sang du anh sang den tu mot phia.',
+          ], null),
+          lesson('4.4.1', 'Nền bị méo, biến dạng hoặc lặp', [
+            'Khi thuat toan deepfake khong hoan hao, no co the anh huong den vung nen xung quanh khuon mat. Dau hieu bao gom: cac duong thang trong nen (nhu tuong, cua, ke sach) bi cong hoac meo o vung gan khuon mat, cac hoa van lap lai bat thuong, vung nen bi nhoe tap trung xung quanh vien dau nhan vat.',
+            'Mot truong hop dac biet: deepfake trong cac cuoc goi video voi nen ao (virtual background). Neu nen ao bi cat xen bat thuong xung quanh toc hoac vien dau — hoac neu toc bien mat vao nen mot cach ky la — day la dau hieu dang nghi.',
+            'Cung chu y den su nhat quan cua nen theo thoi gian. Nen that co nhung thay doi nho tu nhien (bui ban, anh sang thay doi cham). Nen duoc xu ly boi deepfake doi khi co su lap lai hoac dong bang bat thuong o nhung vung nhat dinh.',
+          ], null),
+          lesson('4.4.2', 'Chi tiết phụ: tai, cổ, vai và phụ kiện', [
+            'Ngoai khuon mat trung tam, cac chi tiet phu thuong la noi deepfake de lo ro nhat vi chung it duoc mo hinh chu y xu ly. Tai da de cap o phan truoc. Them vao do, hay chu y den: co va vung tiep giap giua cam va co, vai va vung tiep giap voi toc, kinh (neu nhan vat deo) — gong kinh va phan chieu trong kinh rat kho de deepfake xu ly chinh xac, bong tai va do trang suc khac.',
+            'Kinh la vi du dien hinh. Kinh that phan chieu anh sang tu moi truong xung quanh — ban co the thay phong, cua so, den trong phan chieu. Kinh trong deepfake thuong co phan chieu don gian hoac bat nhat voi moi truong trong video.',
+            'Bong tai va do trang suc co hinh dang 3D phuc tap thay doi theo goc nhin. Deepfake thuong lam phang nhung chi tiet nay hoac lam chung bien dang khi dau quay. Day la diem kiem tra nhanh va hieu qua.',
+          ], [
+            'Ánh sáng là bằng chứng vật lý: bóng mũi, bóng nền và catchlight trong mắt phải nhất quán.',
+            'Nền bị méo xung quanh viền đầu là dấu hiệu của deepfake xử lý kém.',
+            'Kính mắt, bông tai và đồ trang sức là điểm kiểm tra nhanh — deepfake thường xử lý những thứ này kém nhất.',
+          ]),
+        ],
+        checkpoint: checkpoint('4.4', [
+          q('Khi kiểm tra ánh sáng, cần so sánh đồng thời những gì?', ['Bóng đổ dưới mũi, bóng vật thể xung quanh và catchlight trong mắt', 'Âm lượng và độ sáng màn hình', 'Màu tóc và màu nền', 'Tốc độ chuyển động và tốc độ nói'], 0),
+          q('Tại sao kính mắt là điểm kiểm tra hữu ích?', ['Phản chiếu trong kính phải khớp với môi trường thực — deepfake thường xử lý sai điều này', 'Kính luôn bị deepfake bỏ qua hoàn toàn', 'Kính làm lộ màu mắt thật', 'Deepfake không thể tái tạo gọng kính'], 0),
+          q('Nền bị méo xung quanh đầu nhân vật thường gợi ý điều gì?', ['Thuật toán deepfake đang xử lý vùng đó không hoàn hảo', 'Camera có vấn đề', 'Video được quay ở độ phân giải thấp', 'Ánh sáng quá mạnh'], 0),
+        ]),
+      },
+      {
+        title: '4.5 Quy trình SCAN và giới hạn quan sát',
+        lessons: [
+          lesson('4.5.0', 'Phương pháp SCAN: 4 bước quan sát có hệ thống', [
+            'SCAN la quy trinh 4 buoc de quan sat video nghi van mot cach co he thong. S — Surface (Be mat): Nhin tong the lan dau. Cam giac ban dau co gi khong on? Vien mat, mau sac tong the, anh sang chung. C — Close-up (Chi tiet): Tap trung vao cac vung cu the: mat, moi, tai, toc, co. Tua cham neu co the. A — Action (Chuyen dong): Chu y den chuyen dong — chop mat, lip sync, chuyen dong dau, tay cham mat. N — Narrative (Ngu canh): Ngu canh co hop ly khong? Tai sao video nay ton tai? Ai muon ban tin dieu nay?',
+            'SCAN khong phai la quy trinh tuyen tinh cung nhac. Trong thuc te, ban thuong lam nhieu buoc dong thoi. Nhung khuon kho nay giup ban khong bo sot cac lop quan sat quan trong.',
+            'Quan trong: SCAN khong thay the kiem chung nguon. No la buoc dau tien trong quy trinh danh gia. Neu SCAN cho ket qua nghi van cao, buoc tiep theo la kiem chung nguon (Module 6) va trong truong hop nghiem trong, su dung cong cu phan tich.',
+          ], null),
+          lesson('4.5.1', 'Checklist nhanh khi gặp nội dung nghi vấn', [
+            'Duoi day la checklist 10 diem de kiem tra nhanh khi ban gap video nghi van: (1) Vien khuon mat co bi nhoe hoac co duong vien la khong? (2) Toc co thieu chi tiet soi toc rieng le khong? (3) Da co qua min, thieu lo chan long khong? (4) Mau sac da co khop voi co va vai khong? (5) Chop mat co bat thuong khong? (6) Lip sync co khop chinh xac khong? (7) Bieu cam co qua doi xung hoac thieu tu nhien khong? (8) Anh sang tren mat va tren nen co nhat quan khong? (9) Tai, kinh, trang suc co binh thuong khong? (10) Co artifact hoac meo o vung bien khuon mat khong?',
+            'Moi cau tra loi duong tinh (co dau hieu) tang muc do nghi van. Khong can tat ca 10 diem deu duong tinh. Tu 3-4 diem duong tinh tro len la muc nghi van cao va can kiem chung tiep.',
+            'Luu y quan trong: Checklist nay khong the thay the cong cu phan tich chuyen nghiep. No la bo loc dau tien — giup ban quyet dinh noi dung nao can dau tu thoi gian kiem chung ky hon.',
+          ], null),
+          lesson('4.5.2', 'Giới hạn của mắt thường và khi nào dùng công cụ', [
+            'Quan sat bang mat thuong co gioi han ro rang: Deepfake chat luong cao ngay cang kho phat hien bang mat thuong. Dieu kien xem (man hinh nho, anh sang moi truong, chat luong video bi nen) anh huong den kha nang phat hien. Nao nguoi co xu huong tin vao khuon mat quen thuoc — hieu ung nay lam giam kha nang phat hien su bat thuong.',
+            'Khi nao nen dung cong cu: Khi noi dung co tac dong lon — quyet dinh tai chinh, thong tin y te, tin tuc chinh tri quan trong. Khi nhieu diem trong checklist cho ket qua nghi van. Khi noi dung dang duoc lan truyen rong va ban dang can nhac chia se. Cong cu phan tich deepfake phan tich cac dac diem ky thuat ma mat thuong khong the thay.',
+            'Ket luan module: Mat thuong la buoc dau tien, khong phai buoc cuoi cung. Ky nang quan sat giup ban dat cau hoi dung va quyet dinh khi nao can leo thang len cong cu. Module 5 se mo rong sang nhan dien giong noi va am thanh gia mao.',
+          ], [
+            'SCAN — Surface, Close-up, Action, Narrative — là 4 bước quan sát có hệ thống.',
+            'Checklist 10 điểm: 3-4 dấu hiệu dương tính trở lên là mức nghi vấn cần kiểm chứng thêm.',
+            'Mắt thường có giới hạn — dùng công cụ khi nội dung có tác động lớn hoặc nghi vấn cao.',
+          ]),
+        ],
+        checkpoint: checkpoint('4.5', [
+          q('SCAN là viết tắt của gì?', ['Surface, Close-up, Action, Narrative', 'Scan, Check, Analyze, Note', 'See, Compare, Ask, Next', 'Source, Content, Audio, Network'], 0),
+          q('Bao nhiêu điểm dương tính trong checklist 10 điểm là mức nghi vấn cao?', ['3-4 điểm trở lên', '10/10 điểm', 'Chỉ cần 1 điểm', 'Ít nhất 8 điểm'], 0),
+          q('Giới hạn quan trọng nhất của quan sát mắt thường là gì?', ['Deepfake chất lượng cao ngày càng khó phát hiện và điều kiện xem ảnh hưởng lớn', 'Mắt người không thể nhìn màu sắc chính xác', 'Mắt người chỉ phát hiện được chuyển động', 'Mắt người không thể so sánh hai video cùng lúc'], 0),
+          q('Nên dùng công cụ phân tích khi nào?', ['Khi nội dung có tác động lớn hoặc nhiều điểm checklist cho kết quả nghi vấn', 'Luôn luôn dùng công cụ, không cần quan sát bằng mắt', 'Chỉ khi nội dung liên quan đến chính trị', 'Chỉ khi bạn là chuyên gia bảo mật'], 0),
+        ]),
+      },
+    ],
+    quiz: [
+      q('Vùng nào của deepfake video thường kém chính xác nhất?', ['Viền mặt, tóc và các chi tiết ngoài oval khuôn mặt', 'Trung tâm khuôn mặt', 'Màu sắc tổng thể video', 'Chất lượng âm thanh'], 0),
+      q('Da trong deepfake thường có đặc điểm gì nổi bật?', ['Qua min, thieu lo chan long va chi tiet ket cau tu nhien', 'Có nhiều đốm và vết bẩn', 'Màu xanh lá đặc trưng', 'Luôn trông rất thật và không thể phân biệt'], 0),
+      q('Cách nào giúp phát hiện lip sync bất thường hiệu quả nhất?', ['Xem video không tiếng trước để quen với chuyển động môi, sau đó xem lại có tiếng', 'Tắt màn hình và chỉ nghe âm thanh', 'Tăng tốc độ phát lên 3x', 'So sánh với video khác của cùng người'], 0),
+      q('SCAN trong quy trình quan sát là viết tắt của gì?', ['Surface, Close-up, Action, Narrative', 'Scan, Check, Analyze, Note', 'See, Compare, Ask, Next', 'Source, Content, Audio, Network'], 0),
+      q('Tại sao tai là vùng hữu ích để kiểm tra deepfake?', ['Cấu trúc 3D phức tạp khiến deepfake thường xử lý tai kém', 'Tai không bao giờ xuất hiện trong deepfake', 'Tai có màu sắc đặc biệt dễ phát hiện', 'Deepfake luôn xóa tai khỏi video'], 0),
+      q('Khi nào artifact trong deepfake thường rõ nhất?', ['Khi tua chậm video (0.25x hoặc 0.5x)', 'Khi xem ở tốc độ bình thường', 'Khi tăng âm lượng', 'Khi đổi sang màn hình lớn hơn'], 0),
+      q('Checklist 10 điểm được dùng để làm gì?', ['Đánh giá nhanh mức độ nghi vấn và quyết định có cần kiểm chứng thêm không', 'Kết luận chắc chắn video là deepfake', 'Thay thế hoàn toàn công cụ phân tích', 'Báo cáo video lên cơ quan chức năng'], 0),
+      q('Khi nào nên dùng công cụ phân tích deepfake thay vì chỉ dùng mắt thường?', ['Khi nội dung có tác động lớn và nhiều điểm nghi vấn trong checklist', 'Chỉ khi là chuyên gia bảo mật', 'Luôn luôn, mắt thường không có giá trị', 'Chỉ khi video dài hơn 10 phút'], 0),
+    ],
+  },
+
+  // ── MODULES 5–9: Placeholder ──────────────────────────────────
+  ...[5, 6, 7, 8, 9].map(id => ({
     id, part: id <= 6 ? 'recognition' : 'response',
     title: [
-      'Nhận diện dấu hiệu hình ảnh và video',
       'Nhận diện giọng nói và âm thanh giả mạo',
       'Kiểm chứng bối cảnh, nguồn tin và metadata',
       'Phòng ngừa deepfake cho cá nhân',
       'Ứng phó khi gặp hoặc trở thành nạn nhân',
       'Deepfake trong tổ chức: SOC, GRC và security awareness',
-    ][id - 4],
+    ][id - 5],
     duration: '90-100 phút', level: id <= 6 ? 'Recognition' : 'Response',
     scenario: 'Nội dung đang được xây dựng. Sẽ cập nhật sớm.',
     outcomes: ['Nội dung đang được phát triển.'],
