@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MODULES } from '../data/course.js';
 
-export default function Sidebar({ currentLesson, completedLessons, onSelectLesson, lessonIndex }) {
+export default function Sidebar({ currentLesson, completedLessons, onSelectLesson, lessonIndex, onHome }) {
   const [openModules, setOpenModules] = useState(() => {
     const init = {};
     if (currentLesson) init[currentLesson.moduleId] = true;
@@ -30,14 +30,14 @@ export default function Sidebar({ currentLesson, completedLessons, onSelectLesso
 
   return (
     <aside className="sidebar">
-      {/* Logo */}
-      <div className="sidebar-logo">
+      {/* Logo — clickable home */}
+      <button className="sidebar-logo" onClick={onHome} title="Về trang chủ">
         <div className="sidebar-logo-icon">DF</div>
         <div className="sidebar-logo-text">
           Deepfense
           <span>BASICS</span>
         </div>
-      </div>
+      </button>
 
       {/* Global progress */}
       <div className="sidebar-progress-wrap">
@@ -56,8 +56,8 @@ export default function Sidebar({ currentLesson, completedLessons, onSelectLesso
           const { total, done } = getModuleStats(mod);
           const isModActive = currentLesson?.moduleId === mod.id;
           const isOpen = openModules[mod.id];
-          const statusCls = done === total && total > 0 ? 'done' : done > 0 ? 'partial' : 'empty';
-          const statusIcon = done === total && total > 0 ? '✓' : done > 0 ? '…' : '';
+          const statusCls = done === total && total > 0 ? 'done' : 'empty';
+          const statusIcon = done === total && total > 0 ? '✓' : '';
 
           return (
             <div className="sidebar-module" key={mod.id}>
