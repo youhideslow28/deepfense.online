@@ -6,9 +6,10 @@
 export interface ScenarioDefinition {
   id: string;
   level: 'basic' | 'medium' | 'advanced';
-  category: 'financial' | 'family' | 'romance' | 'authority';
+  category: 'financial' | 'family' | 'romance' | 'authority' | 'job';
   reward: { fast: number; slow: number };
   fastThreshold: number;
+  minExchanges: number;
   senderName: { vi: string; en: string };
   senderRole: { vi: string; en: string };
   senderInitials: string;
@@ -28,6 +29,7 @@ export const SCENARIOS: ScenarioDefinition[] = [
     category: 'financial',
     reward: { fast: 10, slow: 5 },
     fastThreshold: 180,
+    minExchanges: 2,
     senderName: { vi: 'Trần Văn Hoàng (CEO)', en: 'Hoang Tran (CEO)' },
     senderRole: { vi: 'Giám đốc — ABC Company', en: 'Director — ABC Company' },
     senderInitials: 'TVH',
@@ -54,6 +56,7 @@ export const SCENARIOS: ScenarioDefinition[] = [
     category: 'financial',
     reward: { fast: 15, slow: 10 },
     fastThreshold: 180,
+    minExchanges: 3,
     senderName: { vi: 'Nguyễn Thu Hằng — BIDV', en: 'Thu Hang Nguyen — BIDV' },
     senderRole: { vi: 'Nhân viên hỗ trợ khách hàng 24/7', en: 'Customer Support — 24/7 Hotline' },
     senderInitials: 'NTH',
@@ -80,6 +83,7 @@ export const SCENARIOS: ScenarioDefinition[] = [
     category: 'family',
     reward: { fast: 15, slow: 10 },
     fastThreshold: 180,
+    minExchanges: 3,
     senderName: { vi: 'Bệnh viện Bạch Mai — Cấp cứu', en: 'Bach Mai Hospital — ER' },
     senderRole: { vi: 'Khoa Cấp Cứu — Phòng C12', en: 'Emergency Department — Ward C12' },
     senderInitials: 'BVM',
@@ -101,11 +105,39 @@ export const SCENARIOS: ScenarioDefinition[] = [
     },
   },
   {
+    id: 'fake-job-scam',
+    level: 'medium',
+    category: 'job',
+    reward: { fast: 15, slow: 10 },
+    fastThreshold: 180,
+    minExchanges: 3,
+    senderName: { vi: 'Trần Thị Lan — TechViet HR', en: 'Lan Tran — TechViet HR' },
+    senderRole: { vi: 'Trưởng phòng Tuyển dụng — TechViet Solutions', en: 'Recruitment Manager — TechViet Solutions' },
+    senderInitials: 'TTL',
+    avatarColor: 'from-violet-500 to-purple-600',
+    icon: '💼',
+    initialMessage: {
+      vi: 'Chào bạn! Mình là Lan, HR của TechViet Solutions. Mình thấy profile LinkedIn của bạn rất phù hợp với vị trí Data Entry Remote đang tuyển gấp. Thu nhập 800k–1.2tr/ngày, làm tại nhà hoàn toàn, không cần kinh nghiệm. Chỉ cần đặt cọc thiết bị 2 triệu — sẽ hoàn lại ngay trong tuần lương đầu tiên. Bạn có muốn tham gia không?',
+      en: "Hi! I'm Lan, HR at TechViet Solutions. I came across your LinkedIn profile and think you'd be a great fit for our urgent Remote Data Entry opening. Earn 800K–1.2M VND/day, fully work from home, no experience needed. Just a 2M VND equipment deposit — fully refunded in your first paycheck. Interested?",
+    },
+    actionLabel: { vi: 'ĐẶT CỌC NHẬN VIỆC', en: 'PAY DEPOSIT & JOIN' },
+    actionColor: 'bg-violet-700 hover:bg-violet-600',
+    failLesson: {
+      vi: 'Việc làm thật KHÔNG BAO GIỜ yêu cầu đặt cọc tiền trước. Đây là thủ đoạn phổ biến nhắm vào sinh viên và người tìm việc — bạn mất tiền và không có việc nào cả.',
+      en: 'Legitimate jobs NEVER require an upfront deposit. This is a common scheme targeting students and job seekers — you lose the money and receive no job in return.',
+    },
+    successLesson: {
+      vi: 'Chính xác! Bất kỳ "nhà tuyển dụng" nào yêu cầu nộp tiền trước đều là lừa đảo. Việc làm thật trả tiền cho bạn, không phải ngược lại.',
+      en: 'Correct! Any "employer" asking for upfront payment is a scam. Real jobs pay you — not the other way around.',
+    },
+  },
+  {
     id: 'romance-scam',
     level: 'advanced',
     category: 'romance',
     reward: { fast: 20, slow: 15 },
     fastThreshold: 240,
+    minExchanges: 4,
     senderName: { vi: 'Alex Morgan', en: 'Alex Morgan' },
     senderRole: { vi: 'Kỹ sư dầu khí — đang công tác tại UAE', en: 'Petroleum Engineer — Currently in UAE' },
     senderInitials: 'AM',
@@ -132,6 +164,7 @@ export const SCENARIOS: ScenarioDefinition[] = [
     category: 'authority',
     reward: { fast: 20, slow: 15 },
     fastThreshold: 240,
+    minExchanges: 4,
     senderName: { vi: 'Thượng úy Trần Đức Minh', en: 'Lt. Tran Duc Minh' },
     senderRole: { vi: 'Cục An ninh mạng — Bộ Công an Việt Nam', en: 'Cybersecurity Division — Vietnam Ministry of Public Security' },
     senderInitials: 'TDM',
