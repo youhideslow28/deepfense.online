@@ -11,6 +11,7 @@ import type { User } from 'firebase/auth';
 import GlowButton from '@/components/ui/GlowButton';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { basicsCourse, Module, Section, Lesson } from '@/data/basicsCourseData';
+import LessonMiniGame from '@/features/academy/LessonMiniGame';
 
 interface AcademyProps { 
   lang: Language; 
@@ -75,6 +76,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     } catch { return false; }
   });
   const [lessonStep, setLessonStep] = useState<'content' | 'review' | 'checkpoint'>('content');
+  const [miniGameDone, setMiniGameDone] = useState(false);
 
   // Sync auth state to currentView
   useEffect(() => {
@@ -99,6 +101,27 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
   const [finalExamQuestions, setFinalExamQuestions] = useState<any[]>([]);
+
+  // Mini-game completion handler
+  const handleMiniGameComplete = (_score: number) => {
+    if (!activeModule) return;
+    const isLastSection = activeSectionIdx === activeModule.sections.length - 1;
+    setMiniGameDone(false);
+    if (isLastSection) {
+      setLessonStep('content');
+      setActiveSectionIdx(0);
+      setActiveLessonIdx(0);
+      setCurrentView('quiz');
+      setQuizAnswers({});
+      setQuizSubmitted(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      setLessonStep('content');
+      setActiveSectionIdx(prev => prev + 1);
+      setActiveLessonIdx(0);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   // Effect to select 50 random questions for final exam
   useEffect(() => {
@@ -851,6 +874,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     const hasCheckpoint = !!section.checkpoint;
     const isReview = lessonStep === 'review';
     const isCheckpoint = lessonStep === 'checkpoint';
+    const hasMiniGame = !!(section.checkpoint?.miniGame);
 
     const isFirstLesson = activeSectionIdx === 0 && activeLessonIdx === 0;
 
@@ -968,57 +992,69 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
 
             {lessonStep === 'checkpoint' && (
               <div className="space-y-6 animate-in slide-in-from-bottom-8 duration-500">
-                <div className="glass-dark border border-amber-500/20 rounded-2xl p-6 flex items-center gap-4 mb-4">
-                  <ShieldCheck size={32} className="text-amber-400" />
-                  <div>
-                    <h3 className="text-lg font-black text-white uppercase italic">{isVi ? 'KIỂM TRA NHANH' : 'QUICK CHECK'}</h3>
-                    <p className="text-[10px] text-gray-500 uppercase tracking-widest font-mono">{section.checkpoint?.label}</p>
-                  </div>
-                </div>
-
-                {section.checkpoint?.questions.map((q, qIdx) => (
-                  <div key={qIdx} className="glass-dark border border-white/10 rounded-2xl p-6 md:p-8">
-                    <p className="text-white font-bold text-lg mb-6 leading-relaxed flex items-start gap-4">
-                      <span className="text-amber-400 font-black italic shrink-0">#{qIdx + 1}</span>
-                      <span>{q.text}</span>
-                    </p>
-                    <div className="grid grid-cols-1 gap-3">
-                      {q.options.map((opt: string, oIdx: number) => {
-                        const isSelected = checkpointAnswers[qIdx] === oIdx;
-                        const isCorrect = oIdx === q.answer;
-                        const showResult = checkpointSubmitted;
-                        
-                        return (
-                          <button
-                            key={oIdx}
-                            disabled={checkpointSubmitted}
-                            onClick={() => setCheckpointAnswers(prev => ({ ...prev, [qIdx]: oIdx }))}
-                            className={`p-4 rounded-xl text-left transition-all border flex items-center justify-between group ${
-                              showResult
-                                ? isCorrect
-                                  ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-                                  : isSelected
-                                    ? 'bg-red-500/10 border-red-500/30 text-red-400'
-                                    : 'bg-white/5 border-white/5 opacity-40'
-                                : isSelected
-                                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-300 ring-1 ring-amber-500/20'
-                                  : 'bg-white/5 border-white/5 hover:border-white/20 text-gray-400'
-                            }`}
-                          >
-                            <span className="text-sm font-bold">{opt}</span>
-                            {!showResult && isSelected && <Zap size={14} className="text-amber-400 animate-pulse" />}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    {checkpointSubmitted && q.explanation && (
-                      <div className="mt-4 p-4 rounded-xl bg-amber-500/5 border border-amber-500/10 text-[11px] text-amber-300/80 italic leading-relaxed">
-                        <span className="font-black mr-2 uppercase tracking-widest">{isVi ? 'Gợi ý:' : 'Hint:'}</span>
-                        {q.explanation}
+                {section.checkpoint?.miniGame ? (
+                  /* ── Mini-game replaces quiz ── */
+                  <LessonMiniGame
+                    config={section.checkpoint.miniGame}
+                    lang={lang}
+                    onComplete={handleMiniGameComplete}
+                  />
+                ) : (
+                  /* ── Standard quiz checkpoint ── */
+                  <>
+                    <div className="glass-dark border border-amber-500/20 rounded-2xl p-6 flex items-center gap-4 mb-4">
+                      <ShieldCheck size={32} className="text-amber-400" />
+                      <div>
+                        <h3 className="text-lg font-black text-white uppercase italic">{isVi ? 'KIỂM TRA NHANH' : 'QUICK CHECK'}</h3>
+                        <p className="text-[10px] text-gray-500 uppercase tracking-widest font-mono">{section.checkpoint?.label}</p>
                       </div>
-                    )}
-                  </div>
-                ))}
+                    </div>
+
+                    {section.checkpoint?.questions.map((q, qIdx) => (
+                      <div key={qIdx} className="glass-dark border border-white/10 rounded-2xl p-6 md:p-8">
+                        <p className="text-white font-bold text-lg mb-6 leading-relaxed flex items-start gap-4">
+                          <span className="text-amber-400 font-black italic shrink-0">#{qIdx + 1}</span>
+                          <span>{q.text}</span>
+                        </p>
+                        <div className="grid grid-cols-1 gap-3">
+                          {q.options.map((opt: string, oIdx: number) => {
+                            const isSelected = checkpointAnswers[qIdx] === oIdx;
+                            const isCorrect = oIdx === q.answer;
+                            const showResult = checkpointSubmitted;
+
+                            return (
+                              <button
+                                key={oIdx}
+                                disabled={checkpointSubmitted}
+                                onClick={() => setCheckpointAnswers(prev => ({ ...prev, [qIdx]: oIdx }))}
+                                className={`p-4 rounded-xl text-left transition-all border flex items-center justify-between group ${
+                                  showResult
+                                    ? isCorrect
+                                      ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                                      : isSelected
+                                        ? 'bg-red-500/10 border-red-500/30 text-red-400'
+                                        : 'bg-white/5 border-white/5 opacity-40'
+                                    : isSelected
+                                      ? 'bg-amber-500/10 border-amber-500/30 text-amber-300 ring-1 ring-amber-500/20'
+                                      : 'bg-white/5 border-white/5 hover:border-white/20 text-gray-400'
+                                }`}
+                              >
+                                <span className="text-sm font-bold">{opt}</span>
+                                {!showResult && isSelected && <Zap size={14} className="text-amber-400 animate-pulse" />}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        {checkpointSubmitted && q.explanation && (
+                          <div className="mt-4 p-4 rounded-xl bg-amber-500/5 border border-amber-500/10 text-[11px] text-amber-300/80 italic leading-relaxed">
+                            <span className="font-black mr-2 uppercase tracking-widest">{isVi ? 'Gợi ý:' : 'Hint:'}</span>
+                            {q.explanation}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </>
+                )}
               </div>
             )}
 
@@ -1039,7 +1075,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 {isVi ? 'TRƯỚC' : 'BACK'}
               </button>
 
-              <GlowButton 
+              {!(isCheckpoint && hasMiniGame) && <GlowButton
                 color={isCheckpoint ? 'secondary' : 'primary'}
                 onClick={() => {
                   if (lessonStep === 'content') {
@@ -1099,10 +1135,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   ? (activeLessonIdx === section.lessons.length - 1 && hasCheckpoint ? (isVi ? 'ĐIỂM CẦN NHỚ' : 'REVIEW') : (isVi ? 'TIẾP THEO' : 'NEXT'))
                   : lessonStep === 'review'
                     ? (isVi ? 'BẮT ĐẦU KIỂM TRA' : 'START TEST')
-                    : !checkpointSubmitted 
-                      ? (isVi ? 'XÁC NHẬN' : 'SUBMIT') 
+                    : !checkpointSubmitted
+                      ? (isVi ? 'XÁC NHẬN' : 'SUBMIT')
                       : (activeSectionIdx === activeModule.sections.length - 1 ? (isVi ? 'VÀO BÀI THI MODULE' : 'MODULE QUIZ') : (isVi ? 'TIẾP TỤC' : 'CONTINUE'))}
-              </GlowButton>
+              </GlowButton>}
             </div>
           </div>
 
