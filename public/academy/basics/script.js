@@ -504,11 +504,329 @@ const modules = [
       q("Điều quan trọng nhất của Module 2 là gì?", ["Khi cảm xúc bị đẩy lên cao, khả năng kiểm chứng thường bị kéo xuống thấp", "Chỉ cần nhìn hình ảnh là biết deepfake", "Không bao giờ bắt điện thoại từ người thân", "Chỉ tin tưởng cuộc gọi video có độ phân giải cao"], 0),
     ],
   },
-  buildModule(3, "foundation", "Rủi ro, đạo đức và niềm tin số", "Module 3 đặt deepfake trong khung đạo đức, pháp lý nhận thức và trách nhiệm xã hội.", "Một người bạn gửi video nghi ngờ ghép mặt một bạn học vào nội dung xấu. Nhóm chat muốn đăng lên mạng để \"cảnh báo\". Bạn nên làm gì?", [
-    ["3.1 Quyền riêng tư và sự đồng ý", [["3.1.1", "Danh tính số", "Danh tính số gồm hình ảnh, giọng nói, tên, tài khoản và các dấu hiệu nhận diện trực tuyến."], ["3.1.2", "Sự đồng ý", "Dùng khuôn mặt hoặc giọng nói người khác khi chưa được phép có thể gây hại nghiêm trọng."], ["3.1.3", "Bảo vệ nạn nhân", "Nạn nhân cần được hỗ trợ, không bị đổ lỗi hoặc biến thành nội dung giải trí."]]],
-    ["3.2 Đạo đức chia sẻ", [["3.2.1", "Trách nhiệm người xem", "Người xem không tạo deepfake nhưng vẫn có trách nhiệm nếu chia sẻ nội dung chưa kiểm chứng."], ["3.2.2", "Dừng trước khi chia sẻ", "Hãy hỏi: nguồn là ai, có xác nhận độc lập không, nếu sai ai bị hại?"], ["3.2.3", "Không giải trí hóa nạn nhân", "Bình luận xúc phạm hoặc lan truyền vì tò mò có thể làm nạn nhân tổn thương thêm."]]],
-    ["3.3 Pháp lý nhận thức", [["3.3.1", "Hiểu rủi ro pháp lý", "Không cần học luật sâu, nhưng cần hiểu tạo hoặc phát tán deepfake gây hại có thể dẫn đến hậu quả pháp lý."], ["3.3.2", "Nhóm vấn đề thường gặp", "Quyền riêng tư, danh dự, lừa đảo tài chính, bản quyền và trách nhiệm khi phát tán thông tin sai."], ["3.3.3", "Khi cần hỗ trợ", "Nếu có tống tiền, đe dọa, bôi nhọ nghiêm trọng hoặc xâm hại trẻ vị thành niên, cần tìm hỗ trợ phù hợp."]]],
-  ], ["Hiểu danh tính số và sự đồng ý.", "Chia sẻ thông tin có trách nhiệm.", "Biết khi nào cần lưu bằng chứng và tìm hỗ trợ."]),
+  // ─── MODULE 3 ───────────────────────────────────────────────
+  {
+    id: 3,
+    part: "foundation",
+    title: "Nhin, nghe, doc: dau hieu nghi van",
+    duration: "100-110 phut",
+    level: "Foundation",
+    scenario: "An mo lai video nguoi noi tieng keu goi dau tu tu Module 1. Lan nay, An khong voi tin. An tu hoi: khuon mat co gi la khong? Khau hinh co khop giong noi khong? Video tu tai khoan nao? Module 3 giup ban hoc cach quan sat theo ba lop: hinh anh, am thanh va ngu canh.",
+    outcomes: [
+      "Biet quan sat cac dau hieu nghi van trong hinh anh va video.",
+      "Nhan dien mot so dau hieu thuong gap cua deepvoice hoac am thanh bi chinh sua.",
+      "Biet phan biet dau hieu ky thuat voi dau hieu ngu canh.",
+      "Hieu gioi han cua viec nhin/nghe bang cam giac.",
+      "Su dung duoc checklist 3 lop: hinh anh - am thanh - ngu canh.",
+    ],
+    sections: [
+      {
+        title: "3.1 Dau hieu hinh anh va video",
+        lessons: [
+          lesson("3.0.0", "Cau chuyen dan nhap: An xem lai video dau tu", [
+            "Sau cuoc goi luc 22:47, An bat dau can than hon.",
+            "Sang hom sau, An mo lai video nguoi noi tieng keu goi dau tu da thay o Module 1. Lan nay, An khong voi tin.",
+            "An bat video cham hon, nhin ky hon va tu hoi: Khuon mat co gi la khong? Khau hinh co khop voi giong noi khong? Anh sang tren mat co hop voi boi canh khong? Giong noi co tu nhien khong? Noi dung co hua loi nhuan qua cao khong? Video duoc dang tu tai khoan chinh thuc hay tai khoan la? Co nguon nao khac xac nhan khong?",
+            "An nhan ra: quan sat khong chi la nhin mat. Quan sat la xem toan bo tinh huong. Mot video co the trong muot nhung ngu canh rat dang ngo. Mot video co the hoi mo nhung lai hoan toan that. Mot giong noi co the giong nhung yeu cau di kem lai nguy hiem.",
+            "Module 3 giup ban hoc cach quan sat theo ba lop: Lop hinh anh/video (mat nhin thay gi?), Lop am thanh/giong noi (tai nghe thay gi?), Lop ngu canh/hanh vi (noi dung dang yeu cau ban tin hoac lam gi?).",
+          ], [
+            "Quan sat khong chi la nhin mat -- quan sat la xem toan bo tinh huong.",
+            "Ba lop quan sat: hinh anh, am thanh, ngu canh.",
+          ]),
+          lesson("3.1.0", "Vung quan sat 1: Nguyen tac dau tien -- quan sat cham lai", [
+            "Khi mot video gay soc, con nguoi thuong phan ung truoc khi quan sat. Ta nhin thay guong mat quen, nghe mot cau gay choang, doc binh luan ben duoi va lap tuc cam thay tin, gian, so hoac muon chia se.",
+            "Vi vay, buoc quan sat dau tien khong phai la tim loi ky thuat. Buoc dau tien la cham lai. Ban co the tu nhac: Minh dang xem mot noi dung tren man hinh. Minh chua can ket luan ngay.",
+            "Sau do, quan sat theo vong: (1) Nhin tong the, (2) Nhin khuon mat, (3) Nhin mieng va am thanh, (4) Nhin anh sang va bong, (5) Nhin tay, toc, tai, phu kien, (6) Nhin nen va vat the xung quanh, (7) Nhin nguon dang va chu thich.",
+          ], [
+            "Cam xuc manh keo ban phan ung truoc khi quan sat -- hay co y thuc cham lai.",
+            "Quan sat theo vong tu tong the den chi tiet.",
+          ]),
+          lesson("3.1.2", "Vung quan sat 2: Khuon mat", [
+            "Deepfake thuong tap trung vao khuon mat, vi khuon mat la noi con nguoi nhan dien danh tinh va cam xuc.",
+            "Khi quan sat khuon mat, ban co the chu y: Da mat co qua min, qua bong hoac khac chat luong voi co/tay khong? Ria khuon mat co bi nhoe, rung hoac meo khi nguoi do quay dau khong? Hai ben mat co anh sang hop ly khong? Bieu cam co khop voi noi dung loi noi khong? Mat co nhin tu nhien khong? Kinh, toc, tai, khau trang hoac vat che mat co bi bien dang khong?",
+            "Vi du: Mot nguoi trong video quay dau sang trai. Trong khoanh khac do, phan ma va tai hoi nhoe, ria mat nhu dinh vao nen. Day co the la dau hieu dang chu y -- nhung video chat luong thap, anh sang yeu hoac mang kem cung co the tao hien tuong nhoe.",
+            "Vi vay, ban khong ket luan ngay: chac chan deepfake. Ban chi ghi nhan: co dau hieu hinh anh can kiem tra them.",
+          ], [
+            "Khuon mat la vung quan trong nhung khong phai vung duy nhat.",
+            "Ria mat, da, anh sang va bieu cam la cac diem can chu y.",
+          ]),
+          lesson("3.1.3", "Vung quan sat 3: Mat", [
+            "Nhieu huong dan cu noi rang deepfake thuong chop mat bat thuong. Hien nay, dau hieu nay khong con du tin cay.",
+            "Ban van co the quan sat mat, nhung dung phu thuoc vao mot dau hieu duy nhat. Hay chu y: Anh mat co khop voi huong dau khong? Mat co phan chieu anh sang hop ly khong? Hai mat co chuyen dong dong bo khong? Vung mi mat co bi nhoe khi chop khong? Cam xuc trong mat co khop voi giong noi va noi dung khong?",
+            "Diem can nho: Mot nguoi that cung co the chop mat it khi dang doc kich ban, cang thang hoac nhin vao man hinh. Mot deepfake tot cung co the chop mat rat tu nhien. Mat la noi de quan sat, khong phai noi de phan quyet.",
+          ], [
+            "Dau hieu chop mat khong con du tin cay de ket luan.",
+            "Mat la noi quan sat, khong phai noi phan quyet.",
+          ]),
+          lesson("3.1.4", "Vung quan sat 4: Mieng va khau hinh", [
+            "Mieng la vung quan trong khi video co loi noi. Ban co the quan sat: Khau hinh co khop voi am thanh khong? Co do tre la giua moi va tieng khong? Rang co bi meo, bien dang hoac thay doi bat thuong khong? Luoi, moi, cam co chuyen dong tu nhien khong? Khi nguoi noi quay dau, mieng co bi nhoe hoac lech khong?",
+            "Vi du: Nguoi noi phat am cau dai nhung moi chi chuyen dong rat nhe, hoac am thanh bat dau truoc khi mieng mo. Do la dau hieu can chu y.",
+            "Nhung cung co truong hop video that bi lech tieng do duong truyen kem, file bi nen, ung dung phat video loi, hoac nguoi dang quay lai man hinh tu mot video khac. Vi vay, khau hinh lech la tin hieu, khong phai ket luan.",
+          ], [
+            "Khau hinh khong khop am thanh la tin hieu can chu y.",
+            "Video that cung co the lech tieng vi nhieu ly do ky thuat.",
+          ]),
+          lesson("3.1.5", "Vung quan sat 5: Anh sang va bong", [
+            "Anh sang giup chung ta phat hien su khong nhat quan. Khi xem hinh anh hoac video nghi van, hay hoi: Nguon sang chinh den tu dau? Bong tren mat co hop voi bong trong nen khong? Mat co sang hon hoac toi hon bat thuong so voi co/tay khong? Kinh, mat, trang suc co phan chieu hop ly khong? Co vung nao trong nhu duoc dan len khong?",
+            "Vi du: Nen phia sau co anh sang tu ben trai, nhung khuon mat lai sang manh tu ben phai. Hoac co co mau da va anh sang khac han mat. Day co the la dau hieu chinh sua.",
+            "Tuy nhien, anh sang trong doi that cung co the phuc tap: mot nguoi co the dung gan man hinh, den ban, cua so hoac nhieu nguon sang cung luc. Hay dung anh sang nhu mot phan cua buc tranh tong the.",
+          ], [
+            "Anh sang khong nhat quan giua mat va nen la tin hieu dang chu y.",
+            "Anh sang thuc te co the phuc tap -- dat trong buc tranh tong the.",
+          ]),
+          lesson("3.1.6", "Vung quan sat 6: Toc, tai, kinh, tay va phu kien", [
+            "Cac chi tiet nho thuong kho xu ly hon khuon mat chinh dien. Hay chu y: Toc co bi nhoe, dinh vao nen hoac thay doi hinh dang ky la khong? Tai co bien mat, meo hoac khac nhau bat thuong khong? Gong kinh co bi cong, dut doan hoac phan chieu sai khong? Bong tai, day chuyen, mu, khau trang co bi rung hoac bien dang khong? Tay khi dua len mat co lam khuon mat bi meo khong? Ngon tay co so luong, hinh dang hoac chuyen dong la khong?",
+            "Vi du: Mot nguoi dua tay che mieng khi noi. Trong khoanh khac tay di qua mat, vung mieng bi bien dang, ria tay bi nhoe, hoac mat nhu truot khoi vi tri. Day la tin hieu dang chu y.",
+            "Nhung hay nho: video nen tren mang xa hoi cung co the lam chi tiet nho bi vo.",
+          ], [
+            "Chi tiet nho (toc, tay, tai, kinh) thuong kho xu ly hon voi AI.",
+            "Video nen cung co the lam chi tiet bi vo -- khong ket luan voi.",
+          ]),
+          lesson("3.1.7", "Vung quan sat 7: Chuyen dong va nhip co the", [
+            "Con nguoi chuyen dong bang ca co the, khong chi bang khuon mat. Khi quan sat video, hay de y: Dau, co va vai co chuyen dong tu nhien cung nhau khong? Bieu cam mat co khop voi cu chi khong? Nguoi noi co qua cung, it chop mat, it thay doi tu the khong? Chuyen dong co bi giat, lap hoac muot mot cach bat thuong khong? Khi quay nghieng, khuon mat co giu duoc hinh dang tu nhien khong?",
+            "Deepfake kem chat luong co the lo loi khi nhan vat: quay dau nhanh, cui xuong, che mat, cuoi lon, noi trong anh sang yeu, hoac xuat hien cung nhieu nguoi khac.",
+            "Nhung khong nen ket luan chi vi trong hoi la. Nguoi that cung co the cung vi dang doc script, ngai camera hoac met.",
+          ], [
+            "Chuyen dong toan than cung cap them tin hieu ben canh khuon mat.",
+            "Deepfake chat luong thap thuong lo loi o cac chuyen dong phuc tap.",
+          ]),
+          lesson("3.1.8", "Vung quan sat 8: Nen, chu va vat the xung quanh", [
+            "Nhieu nguoi chi nhin mat ma quen nhin nen. Nen co the cho ban biet nhieu dieu: Co chu nao bi meo, sai chinh ta hoac bien dang khong? Logo co dung khong? Dong ho, bien so, man hinh, bang hieu co bat thuong khong? Vat the trong nen co thay doi hinh dang giua cac khung hinh khong? Co chi tiet nao khong hop voi dia diem duoc noi den khong? Thoi tiet, anh sang, trang phuc co khop voi boi canh khong?",
+            "Vi du: Mot video duoc chu thich la quay tai Ha Noi vao buoi sang, nhung bang hieu trong nen dung ngon ngu khac, thoi tiet khong khop voi ngay duoc noi den, hoac video da tung xuat hien o noi khac.",
+            "Truong hop nay co the khong phai deepfake. No co the la repurposed media: noi dung that nhung bi dat sai boi canh.",
+          ], [
+            "Nen giup phat hien sai boi canh -- khong chi deepfake ma ca repurposed media.",
+            "Chu meo, logo sai, chi tiet dia diem khong khop la tin hieu quan trong.",
+          ]),
+          lesson("3.1.9", "Vung quan sat 9: Dau hieu tong hop", [
+            "Mot dau hieu don le hiem khi du: video mo -- chua du; mat hoi la -- chua du; khau hinh lech nhe -- chua du; anh sang khac -- chua du.",
+            "Nhung neu ban thay nhieu dau hieu cung luc: video tu tai khoan la, nguoi noi tieng keu goi chuyen tien, khau hinh hoi lech, khong co tren kenh chinh thuc, binh luan giong seeding, link dan den trang la -- thi muc rui ro tang len rat nhieu.",
+            "Ban khong can ket luan 100% deepfake de hanh dong an toan. Ban chi can ket luan: rui ro du cao de khong tin, khong chuyen tien, khong chia se va can kiem chung them.",
+          ], [
+            "Nhieu tin hieu cung luc moi du nang -- mot tin hieu don le chua du.",
+            "Khong can chung minh deepfake moi duoc quyen khong hanh dong theo yeu cau rui ro.",
+          ]),
+        ],
+        checkpoint: checkpoint("3.1", [
+          q("Buoc dau tien khi xem mot video gay soc la gi?", ["Chia se ngay de hoi moi nguoi", "Dung lai va quan sat cham hon", "Ket luan ngay la deepfake", "Tin neu video co nhieu luot thich"], 1),
+          q("Khau hinh lech trong video co nghia la gi?", ["Chac chan deepfake", "Chac chan video that", "La mot tin hieu can chu y, nhung can them kiem chung", "Khong bao gio quan trong"], 2),
+          q("Dau hieu nao sau day thuoc lop hinh anh/video?", ["Yeu cau chuyen tien trong 5 phut", "Ria khuon mat bi nhoe khi quay dau", "Nguoi gui bao dung noi voi ai", "Link dan den trang la"], 1),
+          q("Dieu nao dung nhat ve dau hieu chop mat?", ["Chop mat la luon chung minh video la deepfake", "Khong chop mat luon chung minh video la gia", "Mat la vung nen quan sat, nhung khong du de ket luan mot minh", "Khong can quan sat mat"], 2),
+          q("Khi thay khuon mat sang khac han co va nen, ban nen lam gi?", ["Ghi nhan la dau hieu can kiem tra them", "Ket luan ngay la gia", "Bo qua hoan toan", "Chia se de nguoi khac tu kiem tra"], 0),
+          q("Vi sao can quan sat nen va vat the xung quanh?", ["Vi deepfake chi loi o nen", "Vi nen co the tiet lo sai boi canh, chu meo, logo sai hoac dia diem khong khop", "Vi khuon mat luon dang tin", "Vi vat the trong nen khong bao gio bi chinh sua"], 1),
+          q("Mot video nguoi noi tieng keu goi dau tu xuat hien tu tai khoan la, khong co tren kenh chinh thuc, co link dang ky la. Du video trong kha that, ban nen danh gia the nao?", ["Rui ro cao, can kiem chung va khong bam link/chuyen tien", "An toan vi video trong that", "An toan neu co nhieu binh luan tich cuc", "Chi can xem mat nguoi do chop co deu khong"], 0),
+          q("Mot dau hieu don le nhu video mo thuong nen duoc hieu nhu the nao?", ["Chac chan gia", "Chac chan that", "Chua du de ket luan", "Khong can quan tam den nguon nua"], 2),
+          q("Khi tay di qua mat trong video va khuon mat bi bien dang, day co the la dau hieu gi?", ["Dau hieu hinh anh can chu y", "Dau hieu chac chan tai khoan ngan hang bi khoa", "Dau hieu video luon an toan", "Dau hieu khong lien quan"], 0),
+          q("Muc tieu dung cua quan sat hinh anh/video la gi?", ["Ket luan that gia trong 3 giay", "Tim tin hieu ban dau de quyet dinh co can kiem chung them khong", "Tin vao cam giac dau tien", "Thay the hoan toan viec kiem tra nguon"], 1),
+        ]),
+      },
+      {
+        title: "3.1.1 Gioi han cua quan sat",
+        lessons: [
+          lesson("3.1.1.0", "Muc tieu phan 3.1.1", [
+            "Sau phan 3.1.1, ban se: Hieu vi sao nhin thay dau hieu la chua du de ket luan deepfake. Hieu vi sao khong thay loi ky thuat cung chua du de tin noi dung. Biet cac yeu to doi thuong co the lam video that trong dang ngo. Biet cach noi can kiem chung them thay vi ket luan voi.",
+          ], [
+            "Gioi han quan sat di theo ca hai huong: video that trong la, video gia trong that.",
+          ]),
+          lesson("3.1.1.1", "Video that cung co the trong la", [
+            "Khong phai moi thu trong la deu la gia. Mot video that co the co: anh sang xau, camera kem, mang yeu, am thanh tre, hinh anh bi nen, nguoi noi met/cang thang/ngai camera, goc quay ky la, bo loc lam dep, ung dung goi video lam min da, video bi quay lai tu man hinh khac.",
+            "Nhung yeu to nay co the tao ra cam giac sai sai. Neu ban thay mot dau hieu la, hay ghi nhan no -- nhung dung bien no thanh ket luan duy nhat.",
+            "Vi du: Mot giao vien trong buoi hoc online co giong bi lech so voi hinh -- co the do mang yeu, khong nhat thiet la deepfake. Mot nguoi trong video co mat qua min -- co the do bo loc lam dep, khong nhat thiet la mao danh.",
+          ], [
+            "Nhieu yeu to doi thuong co the lam video that trong dang ngo.",
+            "Ghi nhan dau hieu la, dung bien mot dau hieu thanh ket luan duy nhat.",
+          ]),
+          lesson("3.1.1.2", "Video gia cung co the trong rat that", [
+            "Nguoc lai, khong thay loi khong co nghia la that. Cong nghe tao hinh anh, video va giong noi dang tien nhanh. Mot so noi dung gia co the: khau hinh kha khop, giong noi kha tu nhien, guong mat it loi, anh sang hop ly, chat luong san xuat tot, duoc dang kem binh luan tao niem tin.",
+            "Neu ban chi hoi: toi co thay loi ky thuat khong? -- ban co the bo qua rui ro lon hon.",
+            "Hay hoi them: Ai dang? Dang o dau? Dang luc nao? Co nguon chinh thuc khong? Noi dung muon minh lam gi? Co yeu cau tien, OTP, thong tin ca nhan hoac chia se gap khong?",
+          ], [
+            "Khong thay loi ky thuat khong dong nghia voi noi dung la that.",
+            "Hoi ve ngu canh va yeu cau, khong chi ve chat luong hinh anh.",
+          ]),
+          lesson("3.1.1.3", "Detector cung khong thay the duoc phan doan", [
+            "Mot cong cu phat hien deepfake co the ho tro ban, nhung khong thay the duoc quy trinh kiem chung. Cong cu co the sai theo hai huong: bao gia voi noi dung that, hoac bao that voi noi dung gia.",
+            "Nguyen nhan co the den tu: chat luong file thap, video da bi nen nhieu lan, cong nghe gia mao moi, du lieu huan luyen cua cong cu han che, noi dung khong thuoc loai cong cu duoc thiet ke de phat hien.",
+            "Cach nghi dung: Detector la mot chiec den pin -- no giup ban soi them mot goc, nhung no khong phai toan bo can phong.",
+          ], [
+            "Detector deepfake ho tro nhung co the sai theo ca hai huong.",
+            "Khong dung ket qua detector nhu ban an cuoi cung.",
+          ]),
+          lesson("3.1.1.4", "Ba muc ket luan an toan", [
+            "Khi quan sat noi dung, thay vi chi chon that hoac gia, ban co the dung 3 muc ket luan.",
+            "Muc 1: Chua thay dau hieu ro, nhung van can nguon -- dung khi noi dung khong co dau hieu ky thuat dang ngo, nhung ban van chua biet nguon goc. Vi du: Video trong binh thuong, nhung minh can xem no co tu nguon chinh thuc khong.",
+            "Muc 2: Co dau hieu nghi van, can kiem chung them -- dung khi ban thay mot hoac vai tin hieu bat thuong. Vi du: Khau hinh hoi lech va tai khoan dang kha la. Minh chua ket luan, nhung khong nen chia se ngay.",
+            "Muc 3: Rui ro cao, khong hanh dong theo yeu cau -- dung khi noi dung di kem yeu cau nguy hiem nhu chuyen tien, OTP, cai app, lan truyen hinh anh nhay cam hoac chia se gap.",
+          ], [
+            "Ba muc ket luan: chua thay dau hieu ro / co nghi van / rui ro cao.",
+            "Quan sat tot khong phai doan that gia that nhanh -- ma biet khi nao can kiem chung them.",
+          ]),
+        ],
+        checkpoint: null,
+      },
+      {
+        title: "3.2 Dau hieu am thanh va deepvoice",
+        lessons: [
+          lesson("3.2.0", "Muc tieu phan 3.2", [
+            "Sau phan 3.2, ban se: Biet cac dau hieu am thanh can chu y trong cuoc goi, tin nhan thoai va video. Hieu vi sao giong noi giong khong du de xac minh danh tinh. Biet cach phan ung khi nhan yeu cau rui ro qua giong noi. Thuc hanh checklist nghe an toan.",
+          ], [
+            "Giong noi giong khong du de xac minh danh tinh -- yeu cau rui ro moi quyet dinh ban can xac minh.",
+          ]),
+          lesson("3.2.1", "Giong noi la tin hieu manh nhung khong tuyet doi", [
+            "Ta thuong nhan ra nguoi quen qua giong. Chi can nghe vai tu, nhieu nguoi da biet do la me, ban than, giao vien, dong nghiep hoac sep. Vi vay, khi nghe mot giong noi quen thuoc yeu cau giup do, ta de tin.",
+            "Nhung trong thoi dai deepvoice, giong noi khong con la bang chung tuyet doi. Dieu nay khong co nghia la ban phai nghi ngo moi cuoc goi cua nguoi than.",
+            "No co nghia la: neu cuoc goi yeu cau dieu rui ro -- chuyen tien, gui OTP, cung cap mat khau, gui anh giay to, cai app, bam link, giu bi mat voi nguoi khac, hoac gui hinh anh nhay cam -- ban can xac minh.",
+          ], [
+            "Giong quen thuoc kich hoat niem tin -- deepvoice loi dung dieu nay.",
+            "Yeu cau rui ro qua giong noi can xac minh qua kenh doc lap.",
+          ]),
+          lesson("3.2.2", "Dau hieu am thanh can chu y", [
+            "Ban co the de y: Giong noi deu deu, thieu nhip tho tu nhien. Cam xuc khong khop voi tinh huong. Ngat nghi ky la. Phat am sai ten rieng, biet danh, dia danh quen thuoc. Tra loi vong vo khi bi hoi cau bat ngo. Ne goi lai. Co tieng nen khong khop voi cau chuyen. Am thanh qua sach so voi moi truong duoc mo ta. Cau tra loi lap lai hoac giong kich ban.",
+            "Vi du: Nguoi goi noi dang o hien truong tai nan, nhung am thanh nen lai rat yen tinh. Hoac nguoi goi noi dang o benh vien nhung khong tra loi duoc benh vien nao.",
+            "Nhung giong nhu video, am thanh cung co the bi anh huong boi mang, micro, tieng on, tam trang va moi truong. Vi vay, dau hieu am thanh can di cung xac minh.",
+          ], [
+            "Chin dau hieu am thanh can chu y: giong deu, cam xuc la, ngat nghi ky, ne goi lai...",
+            "Dau hieu am thanh can di cung xac minh qua kenh khac.",
+          ]),
+          lesson("3.2.3", "Cau hoi bat ngo co the huu ich, nhung chua du", [
+            "Mot so nguoi khuyen hay hoi cau rieng tu: ten con cho nha minh la gi? Hom qua minh an o dau? Biet danh hoi nho cua em la gi? Cach nay co the huu ich trong mot so tinh huong.",
+            "Nhung khong nen phu thuoc hoan toan vao no. Vi: ke xau co the biet thong tin tu mang xa hoi, tai khoan cua nguoi quen co the da bi chiem quyen, nguoi that trong luc hoang loan co the tra loi khong ro, cau hoi rieng tu co the bi doan neu thong tin qua pho bien.",
+            "Voi yeu cau rui ro cao, cach tot nhat van la: dung cuoc goi nghi van va xac minh qua kenh doc lap.",
+          ], [
+            "Cau hoi bat ngo huu ich nhung khong du -- ke xau co the biet cau tra loi.",
+            "Cach tot nhat: dung cuoc goi va xac minh qua kenh doc lap.",
+          ]),
+          lesson("3.2.4", "Kich ban deepvoice thuong gap", [
+            "Kich ban 1 -- Nguoi than gap nan: Giong giong nguoi than, noi nhanh/hoang, can tien gap, khong muon ban goi nguoi khac. Phan ung an toan: ket thuc cuoc goi, goi lai so da luu, goi nguoi than khac, khong chuyen tien khi chua xac minh.",
+            "Kich ban 2 -- Sep yeu cau xu ly gap: Giong giong sep, yeu cau chuyen khoan hoac gui du lieu, bao bo qua quy trinh vi dang gap, dung kenh la hoac tai khoan moi. Phan ung an toan: tuan thu quy trinh xac nhan noi bo, xac minh qua kenh chinh thuc.",
+            "Kich ban 3 -- Ngan hang/co quan chuc nang: Tu xung co tham quyen, de doa khoa tai khoan, yeu cau doc OTP/tai app/bam link. Phan ung an toan: khong doc OTP, khong cai app, tu tim so tong dai chinh thuc.",
+            "Kich ban 4 -- Tong tien bang giong noi/hinh anh: Noi co hinh anh/am thanh nhay cam, yeu cau tien hoac giu im lang. Phan ung an toan: khong thuong luong mot minh trong hoang loan, luu bang chung, bao nguoi tin cay hoac co quan co trach nhiem.",
+          ], [
+            "Bon kich ban deepvoice thuong gap: nguoi than gap nan, sep gap, ngan hang/co quan, tong tien.",
+            "Xac minh qua kenh doc lap la phan ung an toan cho moi kich ban.",
+          ]),
+          lesson("3.2.5", "Checklist nghe an toan", [
+            "Khi nghe mot giong noi quen nhung yeu cau bat thuong, hay hoi 7 cau: (1) Nguoi nay co yeu cau tien, OTP, mat khau, giay to hoac anh nhay cam khong? (2) Co yeu cau hanh dong ngay khong? (3) Co yeu cau giu bi mat khong? (4) Co ne goi lai hoac ne kenh chinh thuc khong? (5) Co dung so/tai khoan/link moi khong? (6) Co tra loi duoc cac cau hoi bat ngo khong? (7) Co the xac minh qua so da luu hoac nguoi thu ba dang tin khong?",
+            "Takeaway phan 3.2: Giong giong giup ban chu y. Nhung yeu cau rui ro moi quyet dinh ban can xac minh.",
+          ], [
+            "7 cau hoi checklist nghe an toan: tien/OTP? hanh dong ngay? bi mat? ne goi lai?...",
+            "Giong giong giup chu y -- yeu cau rui ro moi quyet dinh can xac minh.",
+          ]),
+        ],
+        checkpoint: null,
+      },
+      {
+        title: "3.3 Dau hieu ngu canh",
+        lessons: [
+          lesson("3.3.0", "Muc tieu phan 3.3", [
+            "Sau phan 3.3, ban se: Nhan dien duoc cac dau hieu rui ro nam ngoai hinh anh va am thanh. Hieu vi sao ngu canh thuong quan trong hon loi ky thuat. Biet kiem tra nguoi gui, muc dich, nguon, hanh dong duoc yeu cau va hau qua neu sai. Biet su dung checklist ngu canh truoc khi tin hoac chia se.",
+          ], [
+            "Ngu canh thuong quan trong hon loi ky thuat trong viec danh gia rui ro.",
+          ]),
+          lesson("3.3.1", "Ngu canh la gi?", [
+            "Ngu canh la moi thu xung quanh noi dung: Ai gui? Gui qua kenh nao? Gui khi nao? Noi dung muon ban tin dieu gi? Noi dung muon ban lam gi? Co nguon goc ro khong? Co ai duoc loi neu ban tin khong? Ai co the bi hai neu ban chia se sai?",
+            "Trong nhieu truong hop, ngu canh cho thay rui ro ro hon loi ky thuat. Vi du: Mot video nguoi noi tieng keu goi dau tu co the trong rat that. Nhung neu no duoc dang tu tai khoan moi lap, dan den website la, hua loi nhuan cao va khong xuat hien tren kenh chinh thuc, thi rui ro da rat cao.",
+            "Ban khong can chung minh video la deepfake moi co quyen tu choi bam link.",
+          ], [
+            "Ngu canh = ai gui, qua kenh nao, muon ban lam gi, ai duoc loi, ai bi hai.",
+            "Khong can chung minh deepfake moi co quyen tu choi yeu cau rui ro.",
+          ]),
+          lesson("3.3.2", "Ai la nguoi gui?", [
+            "Hay kiem tra: Tai khoan co phai chinh thuc khong? Ten tai khoan co bi nhai khong? Anh dai dien co moi doi khong? Tai khoan co lich su hoat dong dang tin khong? Co dau hieu bi chiem quyen khong? Nguoi gui co hanh vi khac thuong khong?",
+            "Dau hieu tai khoan dang nghi: Moi tao, it lich su, ten gan giong tai khoan that, dung ky tu la de bat chuoc ten, dot nhien nhan muon tien, dot nhien gui link, dot nhien dung cach xung ho khac thuong, ne cuoc goi xac minh.",
+          ], [
+            "8 dau hieu tai khoan dang nghi: moi tao, it lich su, ten nhai, xung ho la, ne goi...",
+            "Kiem tra nguoi gui truoc khi tin hoac hanh dong.",
+          ]),
+          lesson("3.3.3", "Noi dung muon ban lam gi?", [
+            "Day la cau hoi rat manh: Noi dung nay dang muon minh lam gi? Neu noi dung chi muon ban xem mot tro dua ro rang, rui ro co the thap.",
+            "Neu noi dung muon ban: chuyen tien, bam link, cai app, gui OTP, gui mat khau, cung cap giay to, gui anh nhay cam, chia se gap, tan cong/chui boi/boi nho ai do -- thi rui ro cao hon nhieu.",
+            "Noi dung cang thuc day hanh dong manh, ban cang can kiem chung ky.",
+          ], [
+            "Cau hoi manh nhat: noi dung nay dang muon minh lam gi?",
+            "Hanh dong duoc yeu cau cang rui ro, can kiem chung cang ky.",
+          ]),
+          lesson("3.3.4", "Nguon dau tien o dau?", [
+            "Mot cau hoi quan trong: Noi dung nay xuat hien lan dau o dau? Neu ban chi thay noi dung qua anh chup man hinh, video tai lai hoac tin nhan chuyen tiep, hay can than.",
+            "Noi dung cang xa nguon goc, cang de bi: cat, ghep, doi chu thich, dang sai thoi gian, dang sai dia diem, them binh luan dan dat.",
+            "Ban co the kiem tra: Co link bai goc khong? Bai goc tu tai khoan nao? Tai khoan do co dang tin khong? Co nguon chinh thuc khong? Co co quan/bao chi uy tin xac nhan khong? Co ban day du thay vi doan cat ngan khong?",
+          ], [
+            "Noi dung xa nguon goc de bi cat, ghep, dat sai boi canh.",
+            "Luon tim nguon dau tien -- link goc, tai khoan goc, xac nhan doc lap.",
+          ]),
+          lesson("3.3.5", "Binh luan khong phai bang chung", [
+            "Binh luan co the giup ban tham khao phan ung cua nguoi khac, nhung khong phai bang chung chac chan. Mot phan binh luan co the la: nguoi that nhung chua kiem chung, tai khoan gia, binh luan seeding, nguoi bi cuon theo cam xuc, nguoi dang dua, hoac nguoi co tinh dan dat.",
+            "Cac cau nhu minh nhan tien roi, minh xac nhan la that, ban minh cung lam duoc, tin chuan nha -- khong du de xac minh.",
+            "Neu mot video dau tu co hang tram binh luan tich cuc nhung khong co nguon chinh thuc, van can canh giac.",
+          ], [
+            "Binh luan tich cuc khong phai bang chung -- co the la seeding hoac cam xuc.",
+            "Khong co nguon chinh thuc thi van can canh giac du binh luan tot.",
+          ]),
+          lesson("3.3.6", "Ai co the bi hai?", [
+            "Truoc khi chia se mot noi dung nghi van, hay hoi: Neu noi dung nay sai, ai co the bi hai? Co the la: nguoi bi mao danh, nan nhan trong hinh anh nhay cam, nguoi bi vu khong, gia dinh cua nguoi lien quan, ban be/lop hoc/cong ty, nguoi chuyen tien theo loi keu goi, cong dong bi kich dong boi thong tin sai, hoac chinh ban neu chia se noi dung vi pham.",
+            "Cau hoi nay giup ban chuyen tu tam ly xem cho biet sang trach nhiem so. Dac biet voi hinh anh nhay cam: khong biet that gia khong phai ly do de luu, gui tiep hoac binh luan.",
+          ], [
+            "Hoi ai co the bi hai giup chuyen tu xem cho biet sang trach nhiem so.",
+            "Hinh anh nhay cam: khong biet that gia khong phai ly do de luu hay gui tiep.",
+          ]),
+          lesson("3.3.7", "Checklist ngu canh va tong ket phan 3.3", [
+            "Truoc khi tin, chia se hoac hanh dong, hay hoi 10 cau: (1) Ai gui noi dung nay? (2) Tai khoan/kenh gui co dang tin khong? (3) Noi dung co nguon goc ro khong? (4) Co nguon chinh thuc hoac nguon doc lap xac nhan khong? (5) Noi dung co yeu cau tien, OTP, mat khau, cai app hoac bam link khong? (6) Noi dung co tao ap luc khan cap, so hai, xau ho hoac phan no khong? (7) Co ai duoc loi neu minh tin hoac chia se khong? (8) Ai co the bi hai neu noi dung sai? (9) Minh co du du lieu de ket luan chua? (10) Hanh dong an toan nhat bay gio la gi?",
+            "Takeaway phan 3.3: Loi ky thuat giup ban nghi ngo. Ngu canh giup ban quyet dinh co nen hanh dong hay khong.",
+          ], [
+            "10 cau checklist ngu canh: ai gui, nguon goc, yeu cau gi, ai duoc loi, ai bi hai...",
+            "Loi ky thuat giup nghi ngo -- ngu canh giup quyet dinh hanh dong.",
+          ]),
+        ],
+        checkpoint: null,
+      },
+      {
+        title: "3.4 Thuc hanh: Checklist 3 lop",
+        lessons: [
+          lesson("3.4.0", "Huong dan thuc hanh", [
+            "Ban se nhan 3 tinh huong mo phong. Voi moi tinh huong, hay dien checklist 3 lop: (1) Hinh anh/video: Co dau hieu gi can chu y? (2) Am thanh/giong noi: Co dau hieu gi can chu y? (3) Ngu canh/hanh vi: Noi dung dang yeu cau gi? Ai gui? Rui ro la gi? (4) Ket luan tam thoi: Tin, khong tin, hay chua du du lieu? (5) Hanh dong an toan: Ban se lam gi tiep?",
+          ], [
+            "5 buoc checklist 3 lop: hinh anh -- am thanh -- ngu canh -- ket luan -- hanh dong.",
+          ]),
+          lesson("3.4.1", "Tinh huong 1: Video dau tu", [
+            "Ban thay mot video nguoi noi tieng noi ve mot ung dung dau tu. Video trong kha that. Tai khoan dang khong co dau xac minh, ten gan giong tai khoan chinh thuc. Mo ta co link dang ky. Binh luan co nhieu nguoi noi da nhan loi nhuan.",
+            "Goi y phan hoi -- Hinh anh/video: Chua du du lieu; can quan sat khau hinh, anh sang, dau hieu chinh sua neu co. Am thanh: Giong giong chua du de xac minh. Ngu canh: Rui ro cao vi dau tu, link la, tai khoan khong chinh thuc, binh luan co the seeding.",
+            "Ket luan tam thoi: Chua du du lieu de tin; rui ro cao. Hanh dong an toan: Khong bam link, kiem tra kenh chinh thuc, tim canh bao lua dao neu co.",
+          ], [
+            "Ngu canh rui ro (link la, tai khoan khong chinh thuc, seeding) quan trong hon video trong that.",
+          ]),
+          lesson("3.4.2", "Tinh huong 2: Tin nhan thoai tu nguoi than", [
+            "Ban nhan tin nhan thoai tu tai khoan cua nguoi than. Giong noi nghe giong, nhung noi dung yeu cau chuyen tien ngay vao tai khoan ten nguoi la. Nguoi do nhan them: Dung goi lai, dang rat roi.",
+            "Goi y phan hoi -- Hinh anh/video: Khong co. Am thanh: Giong giong nhung la yeu cau rui ro cao. Ngu canh: Chuyen tien gap, tai khoan la, yeu cau khong goi lai.",
+            "Ket luan tam thoi: Rui ro cao. Hanh dong an toan: Goi so da luu, hoi nguoi than khac, khong chuyen tien khi chua xac minh.",
+          ], [
+            "Yeu cau dung goi lai la dau hieu rui ro rat cao -- luon xac minh qua kenh doc lap.",
+          ]),
+          lesson("3.4.3", "Tinh huong 3: Hinh anh trong nhom lop", [
+            "Mot hinh anh nhay cam duoc chia se trong nhom lop, kem chu thich la cua mot ban hoc. Mot so nguoi noi anh bi AI tao, mot so nguoi noi that. Khong co nguon ro rang.",
+            "Goi y phan hoi -- Hinh anh/video: Khong nen phan tich cong khai hay phong to lan truyen them. Am thanh: Khong co. Ngu canh: Hinh anh nhay cam, co nguy co xam hai danh du va bat nat.",
+            "Ket luan tam thoi: Du that hay gia, rui ro gay hai rat cao. Hanh dong an toan: Khong luu, khong chuyen tiep, bao cao nen tang/nha truong/nguoi co trach nhiem, ho tro nguoi bi hai.",
+            "Takeaway bai thuc hanh: Quan sat tot la quan sat du ba lop -- nhin gi, nghe gi, va tinh huong dang day minh lam gi.",
+          ], [
+            "Voi hinh anh nhay cam: du that hay gia, khong luu, khong chuyen tiep.",
+            "Ba lop quan sat: hinh anh -- am thanh -- ngu canh va hanh vi yeu cau.",
+          ]),
+        ],
+        checkpoint: null,
+      },
+    ],
+    quiz: [
+      q("Buoc dau tien khi xem mot video gay soc la gi?", ["Chia se ngay de hoi moi nguoi", "Dung lai va quan sat cham hon", "Ket luan ngay la deepfake", "Tin neu video co nhieu luot thich"], 1),
+      q("Khau hinh lech trong video co nghia la gi?", ["Chac chan deepfake", "Chac chan video that", "La mot tin hieu can chu y, nhung can them kiem chung", "Khong bao gio quan trong"], 2),
+      q("Dau hieu nao sau day thuoc lop hinh anh/video?", ["Yeu cau chuyen tien trong 5 phut", "Ria khuon mat bi nhoe khi quay dau", "Nguoi gui bao dung noi voi ai", "Link dan den trang la"], 1),
+      q("Dieu nao dung nhat ve dau hieu chop mat?", ["Chop mat la luon chung minh video la deepfake", "Khong chop mat luon chung minh video la gia", "Mat la vung nen quan sat, nhung khong du de ket luan mot minh", "Khong can quan sat mat"], 2),
+      q("Khi thay khuon mat sang khac han co va nen, ban nen lam gi?", ["Ghi nhan la dau hieu can kiem tra them", "Ket luan ngay la gia", "Bo qua hoan toan", "Chia se de nguoi khac tu kiem tra"], 0),
+      q("Vi sao can quan sat nen va vat the xung quanh?", ["Vi deepfake chi loi o nen", "Vi nen co the tiet lo sai boi canh, chu meo, logo sai hoac dia diem khong khop", "Vi khuon mat luon dang tin", "Vi vat the trong nen khong bao gio bi chinh sua"], 1),
+      q("Mot video nguoi noi tieng keu goi dau tu tu tai khoan la, khong tren kenh chinh thuc, co link la. Du trong kha that, danh gia the nao?", ["Rui ro cao, can kiem chung va khong bam link/chuyen tien", "An toan vi video trong that", "An toan neu co nhieu binh luan tich cuc", "Chi can xem mat nguoi do chop co deu khong"], 0),
+      q("Mot dau hieu don le nhu video mo thuong nen duoc hieu nhu the nao?", ["Chac chan gia", "Chac chan that", "Chua du de ket luan", "Khong can quan tam den nguon nua"], 2),
+      q("Khi tay di qua mat trong video va khuon mat bi bien dang, day co the la dau hieu gi?", ["Dau hieu hinh anh can chu y", "Dau hieu chac chan tai khoan ngan hang bi khoa", "Dau hieu video luon an toan", "Dau hieu khong lien quan"], 0),
+      q("Muc tieu dung cua quan sat hinh anh/video la gi?", ["Ket luan that gia trong 3 giay", "Tim tin hieu ban dau de quyet dinh co can kiem chung them khong", "Tin vao cam giac dau tien", "Thay the hoan toan viec kiem tra nguon"], 1),
+    ],
+  },
   buildModule(4, "recognition", "Nhận diện dấu hiệu hình ảnh và video", "Nhận diện cần kết hợp nhiều dấu hiệu, không kết luận từ một chi tiết đơn lẻ.", "Một video có khuôn mặt hơi mượt, ánh sáng trên mặt khác nền, môi có vẻ không khớp lời nói. Đây có chắc là deepfake không?", [
     ["4.1 Dấu hiệu khuôn mặt", [["4.1.1", "Viền mặt và vùng ghép", "Quan sát vùng da gần tóc, tai, cổ và ranh giới mặt-cổ, nhưng không kết luận chỉ từ một lỗi."], ["4.1.2", "Mắt và chớp mắt", "Mắt thiếu tự nhiên, phản chiếu ánh sáng lạ hoặc nhịp chớp bất thường là dấu hiệu cần kiểm tra thêm."], ["4.1.3", "Miệng và răng", "Môi không khớp âm thanh, răng thiếu chi tiết hoặc vùng miệng méo là điểm quan sát quan trọng."]]],
     ["4.2 Ánh sáng và chất lượng", [["4.2.1", "Ánh sáng không nhất quán", "Mặt và môi trường có nguồn sáng khác nhau là điểm đáng chú ý."], ["4.2.2", "Bóng đổ và phản chiếu", "Bóng trên mặt, kính, mắt hoặc nền có thể tiết lộ thiếu nhất quán."], ["4.2.3", "Lỗi nén", "Video chất lượng thấp có thể tạo artifact giống deepfake, nên cần phân biệt lỗi nén với dấu hiệu gia mạo."]]],
