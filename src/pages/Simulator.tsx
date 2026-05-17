@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Target, MessageSquare, Timer, ShieldCheck, XCircle, Play, ArrowLeft } from 'lucide-react';
+import { Target, Timer, ShieldCheck, XCircle, Play, ArrowLeft } from 'lucide-react';
 import { Language } from '@/types';
 import { TRANSLATIONS } from '@/data';
 import { SCENARIOS, ScenarioDefinition } from '@/data/scenarios';
@@ -16,8 +16,6 @@ interface ChatMessage {
   text: string;
 }
 
-type SimCategory = 'all' | 'financial' | 'family' | 'romance' | 'authority';
-
 const DIFFICULTY_COLORS: Record<string, string> = {
   basic: 'bg-green-500/20 text-green-400 border-green-500/40',
   medium: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/40',
@@ -29,7 +27,6 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
 
   // Scenario selection state
   const [selectedScenario, setSelectedScenario] = useState<ScenarioDefinition | null>(null);
-  const [categoryFilter, setCategoryFilter] = useState<SimCategory>('all');
 
   // Simulation state
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -56,26 +53,10 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
     return () => clearInterval(interval);
   }, [status]);
 
-  const filteredScenarios =
-    categoryFilter === 'all'
-      ? SCENARIOS
-      : SCENARIOS.filter((s) => s.category === categoryFilter);
-
   const difficultyLabel = (level: string) => {
     if (level === 'basic') return t.difficulty_basic;
     if (level === 'medium') return t.difficulty_medium;
     return t.difficulty_advanced;
-  };
-
-  const categoryLabel = (cat: SimCategory): string => {
-    const map: Record<SimCategory, string> = {
-      all: t.scenario_filter_all,
-      financial: t.scenario_filter_financial,
-      family: t.scenario_filter_family,
-      romance: t.scenario_filter_romance,
-      authority: t.scenario_filter_authority,
-    };
-    return map[cat];
   };
 
   const startSimulation = (scenario: ScenarioDefinition) => {
@@ -205,26 +186,9 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
           {t.scenario_select_title}
         </h2>
 
-        {/* Filter tabs */}
-        <div className="flex flex-wrap gap-2">
-          {(['all', 'financial', 'family', 'romance', 'authority'] as SimCategory[]).map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setCategoryFilter(cat)}
-              className={`px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wide border transition-colors ${
-                categoryFilter === cat
-                  ? 'bg-purple-600 border-purple-600 text-white'
-                  : 'bg-black/30 border-white/10 text-gray-400 hover:border-purple-500 hover:text-purple-300'
-              }`}
-            >
-              {categoryLabel(cat)}
-            </button>
-          ))}
-        </div>
-
         {/* Scenario cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filteredScenarios.map((scenario) => (
+          {SCENARIOS.map((scenario) => (
             <div
               key={scenario.id}
               onClick={() => {
@@ -419,7 +383,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                 <p className="text-xs text-green-400">Online</p>
               </div>
             </div>
-            {status === 'playing' && messages.length >= 3 && (
+            {status === 'playing' && messages.length >= 1 + scenario.minExchanges * 2 && (
               <button
                 onClick={handleReport}
                 className="bg-green-600/20 hover:bg-green-600 text-green-500 hover:text-white border border-green-500/50 hover:border-green-600 text-xs px-3 py-1.5 rounded uppercase font-bold transition-colors animate-in fade-in duration-300"
@@ -487,7 +451,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                   </button>
                 </div>
 
-                {messages.length >= 3 ? (
+                {messages.length >= 1 + scenario.minExchanges * 2 ? (
                   <div className="flex gap-2 justify-end animate-in fade-in duration-300">
                     <button
                       onClick={handleTransfer}
@@ -504,9 +468,13 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                   </div>
                 ) : (
                   <p className="text-center text-gray-600 text-xs uppercase tracking-widest">
-                    {lang === 'vi'
-                      ? '💬 Hãy trao đổi trước khi quyết định...'
-                      : '💬 Engage with them before deciding...'}
+                    {(() => {
+                      const exchangesDone = Math.floor((messages.length - 1) / 2);
+                      const remaining = scenario.minExchanges - exchangesDone;
+                      return lang === 'vi'
+                        ? `💬 Còn ${remaining} lượt trao đổi nữa để mở khoá quyết định...`
+                        : `💬 ${remaining} more exchange${remaining > 1 ? 's' : ''} before you can decide...`;
+                    })()}
                   </p>
                 )}
               </div>
