@@ -12,14 +12,16 @@ export default function LessonView({
   const isFirst = currentIdx === 0;
   const isLast = currentIdx === lessonIndex.length - 1;
 
-  // Find if this is the last lesson in its section (for checkpoint trigger)
+  // Last lesson in this section (regardless of checkpoint)
   const isLastInSection = (() => {
-    if (!checkpoint) return false;
-    // Find next entry
     const next = lessonIndex[currentIdx + 1];
     if (!next) return true;
     return next.sectionTitle !== sectionTitle || next.moduleId !== moduleId;
   })();
+
+  // Show takeaways only: module >= 1, last lesson of section, data exists
+  const showTakeaways = moduleId >= 1 && isLastInSection
+    && lesson.takeaways && lesson.takeaways.length > 0;
 
   const isDone = completedLessons.has(lesson.id);
 
@@ -58,8 +60,8 @@ export default function LessonView({
           ))}
         </div>
 
-        {/* Takeaways */}
-        {lesson.takeaways && lesson.takeaways.length > 0 && (
+        {/* Takeaways — only last lesson of section, module 1+ */}
+        {showTakeaways && (
           <div className="lesson-takeaways">
             <div className="lesson-takeaways-title">Điểm ghi nhớ</div>
             {lesson.takeaways.map((t, i) => (
@@ -87,9 +89,6 @@ export default function LessonView({
           <button className="lesson-nav-btn" onClick={onPrev} disabled={isFirst}>
             ← Bài trước
           </button>
-          <span className="lesson-nav-center">
-            {currentIdx + 1} / {lessonIndex.length}
-          </span>
           <button
             className={`lesson-nav-btn ${isLast ? '' : 'primary'}`}
             onClick={handleNext}

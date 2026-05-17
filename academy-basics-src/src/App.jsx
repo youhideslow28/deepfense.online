@@ -105,14 +105,15 @@ export default function App() {
         completedLessons={completed}
         onSelectLesson={handleSelectLesson}
         lessonIndex={lessonIndex}
+        onHome={() => setCurrentIdx(null)}
       />
 
       {/* Main */}
       <main className="main">
         {/* Top bar */}
         <header className="topbar">
-          <button className="topbar-back" onClick={() => setCurrentIdx(null)}>
-            ← Tổng quan
+          <button className="topbar-home" onClick={() => setCurrentIdx(null)} title="Về trang chủ">
+            ⌂ Trang chủ
           </button>
           <div className="topbar-breadcrumb">
             {currentEntry ? (
@@ -128,9 +129,7 @@ export default function App() {
             <div className="topbar-progress-bar">
               <div className="topbar-progress-fill" style={{ width: `${pct}%` }} />
             </div>
-            <span className="topbar-progress-text">
-              <strong>{totalDone}</strong>/{totalLessons} bài
-            </span>
+            <span className="topbar-progress-text">{pct}%</span>
           </div>
         </header>
 

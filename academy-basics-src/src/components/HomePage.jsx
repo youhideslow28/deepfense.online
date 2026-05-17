@@ -7,7 +7,6 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
   const totalDone = completedLessons.size;
   const pct = totalLessons > 0 ? Math.round((totalDone / totalLessons) * 100) : 0;
 
-  const PART_COLORS = { intro: '#64748b', foundation: '#7c3aed', recognition: '#0ea5e9', response: '#22c55e' };
   const PART_LABELS = { intro: 'Khởi động', foundation: 'Nền tảng', recognition: 'Nhận diện', response: 'Ứng phó' };
 
   return (
@@ -65,12 +64,11 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
             const modLessons = mod.sections.reduce((s, sec) => s + sec.lessons.length, 0);
             const modDone = mod.sections.reduce((s, sec) =>
               s + sec.lessons.filter(l => completedLessons.has(l.id)).length, 0);
-            const color = PART_COLORS[mod.part] || '#7c3aed';
             const modPct = modLessons > 0 ? Math.round((modDone / modLessons) * 100) : 0;
 
             return (
               <div key={mod.id} className="home-module-card" onClick={() => onSelectModule(mod.id)}>
-                <div className="home-module-card-num" style={{ color }}>
+                <div className="home-module-card-num">
                   Module {mod.id} · {PART_LABELS[mod.part]}
                 </div>
                 <div className="home-module-card-title">{mod.title}</div>
