@@ -1557,6 +1557,19 @@ export const MODULES = [
         checkpoint: null,
       },
       // ── M6-62-E ──────────────────────────────────────────────────
+      {
+        title: '6.3 Bài kiểm tra cuối khóa',
+        lessons: [
+          {
+            id: 'final-exam',
+            title: 'DEEPFENSE BASIC — Bài kiểm tra cuối khóa',
+            type: 'exam',
+            paragraphs: [],
+            takeaways: [],
+          },
+        ],
+        checkpoint: null,
+      },
     ],
     quiz: [
       q('Family Code dùng để làm gì?', ['Tăng lượt thích trên mạng xã hội.', 'Xác minh nhanh trong tình huống khẩn cấp giữa những người tin cậy.', 'Thay thế hoàn toàn ngân hàng.', 'Đăng công khai để mọi người biết.'], 1),
