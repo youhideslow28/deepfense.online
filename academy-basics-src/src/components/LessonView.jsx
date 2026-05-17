@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import QuizModal from './QuizModal.jsx';
+import FinalExam from './FinalExam.jsx';
 
 export default function LessonView({
   lessonIndex, currentIdx, currentEntry,
@@ -9,6 +10,17 @@ export default function LessonView({
   const [quizDone, setQuizDone] = useState(false);
 
   const { lesson, moduleId, sectionTitle, checkpoint } = currentEntry;
+
+  // ── Final exam special render ──────────────────────────────────────────────
+  if (lesson.type === 'exam') {
+    return (
+      <FinalExam
+        onComplete={onComplete}
+        completedLessons={completedLessons}
+      />
+    );
+  }
+
   const isFirst = currentIdx === 0;
   const isLast = currentIdx === lessonIndex.length - 1;
 
