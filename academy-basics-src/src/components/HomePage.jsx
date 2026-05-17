@@ -1,5 +1,5 @@
 import React from 'react';
-import { MODULES, COURSE } from '../data/course.js';
+import { MODULES } from '../data/course.js';
 
 export default function HomePage({ onStart, onSelectModule, completedLessons }) {
   const totalLessons = MODULES.reduce((sum, m) =>
@@ -24,14 +24,14 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
         </h1>
 
         <p className="home-desc">
-          Khoá học 9 module giúp bạn hiểu deepfake là gì, nhận diện các dấu hiệu nghi vấn
+          Khoá học {MODULES.length} module giúp bạn hiểu deepfake là gì, nhận diện các dấu hiệu nghi vấn
           trong hình ảnh, video và âm thanh, và bảo vệ bản thân trước các kịch bản lừa đảo phổ biến.
         </p>
 
         {/* Stats */}
         <div className="home-stats">
           <div className="home-stat">
-            <span className="home-stat-num">9</span>
+            <span className="home-stat-num">{MODULES.length}</span>
             <span className="home-stat-label">Module</span>
           </div>
           <div className="home-stat">
@@ -39,7 +39,7 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
             <span className="home-stat-label">Bài học</span>
           </div>
           <div className="home-stat">
-            <span className="home-stat-num">~12h</span>
+            <span className="home-stat-num">~9h</span>
             <span className="home-stat-label">Thời lượng</span>
           </div>
           {totalDone > 0 && (
@@ -54,6 +54,16 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
         <button className="home-cta" onClick={onStart}>
           {totalDone > 0 ? 'Tiếp tục học →' : 'Bắt đầu khoá học →'}
         </button>
+      </div>
+
+      {/* External links */}
+      <div className="home-ext-links">
+        <a className="home-ext-btn" href="https://deepfense.online/academy/" target="_blank" rel="noopener noreferrer">
+          🎓 Trang Academy
+        </a>
+        <a className="home-ext-btn home-ext-btn--secondary" href="https://deepfense.online" target="_blank" rel="noopener noreferrer">
+          🌐 deepfense.online
+        </a>
       </div>
 
       {/* Module grid */}

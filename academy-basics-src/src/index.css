@@ -245,6 +245,18 @@ a { color: inherit; text-decoration: none; }
   font-variant-numeric: tabular-nums;
 }
 .topbar-progress-text strong { color: var(--accent-light); }
+.topbar-ext {
+  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+}
+.topbar-ext-link {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 500;
+  color: var(--text-3); padding: 5px 10px;
+  border-radius: 7px; border: 1px solid var(--border);
+  text-decoration: none; white-space: nowrap;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.topbar-ext-link:hover { background: var(--bg-hover); color: var(--text-1); border-color: rgba(255,255,255,0.15); }
 
 /* ── CONTENT AREA ────────────────────────────────────────────── */
 .content {
@@ -294,6 +306,21 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 0 48px rgba(124,58,237,0.35);
   transform: translateY(-1px);
 }
+
+.home-ext-links {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  margin-top: 40px;
+}
+.home-ext-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13.5px; font-weight: 600;
+  color: var(--text-2); padding: 9px 20px;
+  border-radius: var(--radius); border: 1px solid var(--border);
+  text-decoration: none; transition: all var(--trans);
+  background: var(--bg-card);
+}
+.home-ext-btn:hover { background: var(--bg-hover); color: var(--text-1); border-color: rgba(255,255,255,0.15); transform: translateY(-1px); }
+.home-ext-btn--secondary { background: transparent; }
 
 .home-modules {
   margin-top: 64px;

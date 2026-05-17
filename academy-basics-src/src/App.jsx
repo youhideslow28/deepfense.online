@@ -125,6 +125,10 @@ export default function App() {
               'DEEPFENSE BASICS'
             )}
           </div>
+          <div className="topbar-ext">
+            <a className="topbar-ext-link" href="https://deepfense.online/academy/" target="_blank" rel="noopener noreferrer" title="Trang Academy">🎓 Academy</a>
+            <a className="topbar-ext-link" href="https://deepfense.online" target="_blank" rel="noopener noreferrer" title="deepfense.online">🌐 Trang chủ</a>
+          </div>
           <div className="topbar-progress">
             <div className="topbar-progress-bar">
               <div className="topbar-progress-fill" style={{ width: `${pct}%` }} />
