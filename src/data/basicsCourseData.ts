@@ -1,5 +1,112 @@
 import { BookOpen, ShieldCheck, Target, Award, Brain, Zap, AlertTriangle, Clock, CheckCircle2 } from 'lucide-react';
 
+// ── CONTENT BLOCK TYPES ──────────────────────────────────────────────
+
+export interface TextBlock {
+  type: 'text';
+  content: { vi: string; en: string };
+  variant?: 'normal' | 'lead' | 'caption';
+}
+
+export interface ImageBlock {
+  type: 'image';
+  src: string;
+  alt: { vi: string; en: string };
+  caption?: { vi: string; en: string };
+  width?: 'full' | 'wide' | 'medium';
+}
+
+export interface CompareBlock {
+  type: 'compare';
+  before: { src: string; label: { vi: string; en: string } };
+  after: { src: string; label: { vi: string; en: string } };
+  caption?: { vi: string; en: string };
+  mode?: 'slider' | 'side-by-side';
+}
+
+export interface CalloutBlock {
+  type: 'callout';
+  variant: 'tip' | 'warning' | 'danger' | 'info';
+  icon?: string;
+  title?: { vi: string; en: string };
+  content: { vi: string; en: string };
+}
+
+export interface AudioBlock {
+  type: 'audio';
+  src: string;
+  title: { vi: string; en: string };
+  description?: { vi: string; en: string };
+  duration?: string;
+}
+
+export interface TableBlock {
+  type: 'table';
+  caption?: { vi: string; en: string };
+  headers: { vi: string; en: string }[];
+  rows: { vi: string; en: string }[][];
+}
+
+export interface ExerciseBlock {
+  type: 'exercise';
+  variant: 'fill-blank' | 'single-choice';
+  question: { vi: string; en: string };
+  template?: { vi: string; en: string };
+  options: { vi: string; en: string }[];
+  correctIndex: number;
+  explanation: { vi: string; en: string };
+  reward?: number;
+}
+
+export interface SandboxTurn {
+  speaker: 'scammer' | 'system';
+  message: { vi: string; en: string };
+  choices?: {
+    label: { vi: string; en: string };
+    outcome: 'good' | 'bad' | 'neutral';
+    feedback: { vi: string; en: string };
+  }[];
+}
+
+export interface SandboxBlock {
+  type: 'sandbox';
+  title: { vi: string; en: string };
+  description?: { vi: string; en: string };
+  turns: SandboxTurn[];
+  reward?: number;
+}
+
+export interface AnnotateTarget {
+  id: number;
+  x: number;
+  y: number;
+  radius: number;
+  label: { vi: string; en: string };
+  explanation: { vi: string; en: string };
+}
+
+export interface AnnotateBlock {
+  type: 'annotate';
+  src: string;
+  alt: { vi: string; en: string };
+  instruction: { vi: string; en: string };
+  targets: AnnotateTarget[];
+  reward?: number;
+}
+
+export type ContentBlock =
+  | TextBlock
+  | ImageBlock
+  | CompareBlock
+  | CalloutBlock
+  | AudioBlock
+  | TableBlock
+  | ExerciseBlock
+  | SandboxBlock
+  | AnnotateBlock;
+
+// ─────────────────────────────────────────────────────────────────────
+
 export interface Lesson {
   id: string;
   title: string;
@@ -7,6 +114,7 @@ export interface Lesson {
   takeaways: string[];
   type?: 'video' | 'interactive' | 'lab';
   duration?: number;
+  blocks?: ContentBlock[];
 }
 
 // ── MINI-GAME TYPES ──────────────────────────────────────────────────
@@ -82,8 +190,8 @@ export interface Module {
   locked?: boolean;
 }
 
-const lesson = (id: string, title: string, paragraphs: string[], takeaways: string[]): Lesson => ({
-  id, title, paragraphs, takeaways, type: 'interactive', duration: 5
+const lesson = (id: string, title: string, paragraphs: string[], takeaways: string[], blocks?: ContentBlock[]): Lesson => ({
+  id, title, paragraphs, takeaways, type: 'interactive', duration: 5, ...(blocks ? { blocks } : {})
 });
 
 const q = (text: string, options: string[], answer: number, explanation?: string) => ({ text, options, answer, explanation });
@@ -239,6 +347,37 @@ export const basicsCourse = {
               "Nội dung thật bị đặt sai bối cảnh vẫn có thể gây lừa dối.",
               "Nghe giống không có nghĩa là đúng người.",
               "Nội dung thật đặt sai bối cảnh vẫn có thể dẫn đến niềm tin sai."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 1 sample ──────────────────────
+              {
+                type: 'callout',
+                variant: 'warning',
+                icon: '⚠️',
+                title: { vi: 'Con số đáng lo ngại', en: 'A worrying number' },
+                content: {
+                  vi: 'Năm 2023, số lượng deepfake được phát hiện trên internet tăng hơn 900% so với 2019. Phần lớn nạn nhân không biết mình đã bị nhắm mục tiêu cho đến khi thiệt hại đã xảy ra.',
+                  en: 'In 2023, detected deepfakes on the internet increased by over 900% compared to 2019. Most victims didn\'t realise they had been targeted until the damage was already done.'
+                }
+              } as CalloutBlock,
+              {
+                type: 'image',
+                src: 'https://picsum.photos/seed/deepfake-demo/800/420',
+                alt: { vi: 'Minh họa kỹ thuật face-swap trong deepfake', en: 'Illustration of face-swap technique in deepfake' },
+                caption: { vi: '🔬 Ảnh minh họa — gương mặt bên phải được ghép bằng AI. Trong thực tế, chất lượng ngày càng khó phân biệt bằng mắt thường.', en: '🔬 Illustration only — the face on the right was AI-composited. In practice, quality is increasingly hard to distinguish with the naked eye.' }
+              } as ImageBlock,
+              {
+                type: 'compare',
+                mode: 'side-by-side',
+                before: {
+                  src: 'https://picsum.photos/seed/original-face/400/320',
+                  label: { vi: '🎥 Video gốc', en: '🎥 Original video' }
+                },
+                after: {
+                  src: 'https://picsum.photos/seed/deepfake-face/400/320',
+                  label: { vi: '🤖 Sau khi áp dụng deepfake', en: '🤖 After deepfake applied' }
+                },
+                caption: { vi: 'Hãy chú ý viền tóc, vùng tai và da cổ — đây là những khu vực thường bị lỗi kỹ thuật nhất trong deepfake.', en: 'Pay attention to the hairline, ear area and neck skin — these are the zones most prone to technical artefacts in deepfakes.' }
+              } as CompareBlock
             ]),
             lesson("1.1.2", "Vì sao deepfake ngày càng khó nhận ra?", [
               "Công nghệ tốt hơn, chi phí thấp hơn: Trước đây, để tạo một video giả thuyết phục, người ta cần nhiều kỹ năng, thiết bị và thời gian. Bây giờ, nhiều công cụ AI đã làm cho việc tạo ảnh, giọng nói và video trở nên dễ tiếp cận hơn. Khi công cụ mạnh hơn và rẻ hơn, kỹ năng phòng vệ của người dùng cũng cần tốt hơn.",
