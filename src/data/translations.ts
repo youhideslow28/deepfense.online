@@ -17,6 +17,10 @@ export interface TranslationData {
   trap_msg: string; trap_lesson: string; verify_msg: string; verify_reason: string;
   retest: string; replay: string; report_scam: string; chat_placeholder: string;
   transfer_btn: string; reject_btn: string; chat_inactive: string; session_ended: string;
+  scenario_select_title: string; scenario_filter_all: string; scenario_filter_financial: string;
+  scenario_filter_family: string; scenario_filter_romance: string; scenario_filter_authority: string;
+  difficulty_basic: string; difficulty_medium: string; difficulty_advanced: string;
+  change_scenario: string; reward_preview: string;
   crisis_title: string; crisis_desc: string; btn_report_pdf: string; btn_first_aid: string;
   report_locked: string; latest_live: string; tbd: string;
   tools_scan_title: string; tools_protect_title: string; tools_knowledge_title: string;
@@ -73,6 +77,17 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     reject_btn: "TỪ CHỐI / BÁO CÁO",
     chat_inactive: "KHUNG CHAT CHƯA KÍCH HOẠT",
     session_ended: "PHIÊN GIAO DỊCH ĐÃ KẾT THÚC",
+    scenario_select_title: "CHỌN KỊCH BẢN MÔ PHỎNG",
+    scenario_filter_all: "Tất cả",
+    scenario_filter_financial: "Tài chính",
+    scenario_filter_family: "Gia đình",
+    scenario_filter_romance: "Tình cảm",
+    scenario_filter_authority: "Công an",
+    difficulty_basic: "Cơ bản",
+    difficulty_medium: "Trung bình",
+    difficulty_advanced: "Nâng cao",
+    change_scenario: "Đổi kịch bản",
+    reward_preview: "Thưởng tối đa",
     crisis_title: "TRUNG TÂM ỨNG CỨU",
     crisis_desc: "Cổng hỗ trợ khẩn cấp nạn nhân của tội phạm công nghệ cao và lừa đảo Deepfake.",
     btn_report_pdf: "Đơn Tố Giác (PDF)",
@@ -142,6 +157,17 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     reject_btn: "REJECT / REPORT",
     chat_inactive: "CHAT BOX INACTIVE",
     session_ended: "SESSION ENDED",
+    scenario_select_title: "SELECT SIMULATION SCENARIO",
+    scenario_filter_all: "All",
+    scenario_filter_financial: "Financial",
+    scenario_filter_family: "Family",
+    scenario_filter_romance: "Romance",
+    scenario_filter_authority: "Authority",
+    difficulty_basic: "Basic",
+    difficulty_medium: "Medium",
+    difficulty_advanced: "Advanced",
+    change_scenario: "Change Scenario",
+    reward_preview: "Max Reward",
     crisis_title: "CRISIS HUB",
     crisis_desc: "Emergency support portal for victims of high-tech crimes and Deepfake fraud.",
     btn_report_pdf: "Report Form (PDF)",
