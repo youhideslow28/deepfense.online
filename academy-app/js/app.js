@@ -19,6 +19,7 @@ import { startQuiz } from './quiz.js';
 import { startMidterm, getMidtermConfig } from './midterm.js';
 import { checkCertEligibility, showCertView } from './certificate.js';
 import { startFinalExam, getFinalExamStatus } from './final-exam.js';
+import { startMinigame } from './minigame.js';
 
 // ── State ──────────────────────────────────────────────────────
 const state = {
@@ -167,6 +168,11 @@ const isFinalExamUnlocked = () =>
   isMidtermDone('midterm1') && isMidtermDone('midterm2');
 const isFinalExamDone = () =>
   state.progress?.completedFinalExam === true;
+
+// Minigame helpers
+const isMiniDone = (gameId) =>
+  Array.isArray(state.progress?.completedMinigames) &&
+  state.progress.completedMinigames.includes(gameId);
 
 /**
  * Một module mở được khi:
@@ -341,11 +347,51 @@ const renderDashboard = (course) => {
     const mtUnlocked = midtermId ? isMidtermUnlocked(midtermId, course) : false;
 
     const moduleCards = part.modules.map((mod) => {
-      const done        = completed.includes(mod.id);
-      const unlocked    = isModuleUnlocked(mod, course.modules);
-      const statusLabel = done ? 'Hoàn thành' : (unlocked ? 'Bắt đầu' : 'Khóa');
-      const statusCls   = done ? 'status-done' : (unlocked ? 'status-active' : 'status-locked');
-      const levelCls    = `level-${(mod.level ?? '').toLowerCase()}`;
+      const done     = completed.includes(mod.id);
+      const unlocked = isModuleUnlocked(mod, course.modules);
+      const isPrimaryGame = mod.minigame?.primary === true;
+      const levelCls = `level-${(mod.level ?? '').toLowerCase()}`;
+
+      // Status label / class
+      let statusLabel, statusCls, statusStyle = '';
+      if (done) {
+        statusLabel = 'Hoàn thành'; statusCls = 'status-done';
+      } else if (!unlocked) {
+        statusLabel = 'Khóa'; statusCls = 'status-locked';
+      } else if (isPrimaryGame) {
+        statusLabel = '🎮 Chơi ngay'; statusCls = '';
+        statusStyle = 'background:rgba(0,240,255,.1);color:var(--clr-primary)';
+      } else {
+        statusLabel = 'Bắt đầu'; statusCls = 'status-active';
+      }
+
+      // Bonus minigame sub-card (chỉ hiện sau khi module done)
+      const bonusCard = (mod.minigame && !mod.minigame.primary && done) ? (() => {
+        const g    = mod.minigame;
+        const gDone = isMiniDone(g.id);
+        return `
+          <div class="dash-module-card dash-bonus-card ${gDone ? 'is-done' : ''}"
+               data-game-id="${g.id}" data-module-id="${mod.id}"
+               role="button" tabindex="0"
+               style="border-color:${gDone ? 'rgba(34,197,94,.2)' : 'rgba(0,240,255,.2)'};
+                      background:${gDone ? '' : 'rgba(0,240,255,.03)'}">
+            <span class="dash-module-num" style="color:var(--clr-primary);font-size:.95rem">🎮</span>
+            <div class="dash-module-info">
+              <div class="dash-module-title" style="font-size:.88rem;color:var(--clr-text-2)">
+                ${g.label}
+              </div>
+              <div class="dash-module-meta">
+                <span>Bonus · Module ${mod.id}</span>
+                <span class="dash-module-level"
+                      style="background:rgba(0,240,255,.1);color:var(--clr-primary)">+${g.dpf} DPF</span>
+              </div>
+            </div>
+            <span class="dash-module-status ${gDone ? 'status-done' : ''}"
+                  style="${!gDone ? 'background:rgba(0,240,255,.1);color:var(--clr-primary)' : ''}">
+              ${gDone ? 'Hoàn thành' : 'Chơi ngay'}
+            </span>
+          </div>`;
+      })() : '';
 
       return `
         <div class="dash-module-card ${done ? 'is-done' : ''} ${!unlocked ? 'is-locked' : ''}"
@@ -358,8 +404,9 @@ const renderDashboard = (course) => {
               <span class="dash-module-level ${levelCls}">${mod.level ?? ''}</span>
             </div>
           </div>
-          <span class="dash-module-status ${statusCls}">${statusLabel}</span>
-        </div>`;
+          <span class="dash-module-status ${statusCls}" style="${statusStyle}">${statusLabel}</span>
+        </div>
+        ${bonusCard}`;
     }).join('');
 
     // Midterm card sau mỗi part (nếu có)
@@ -415,6 +462,16 @@ const renderDashboard = (course) => {
         showToast('Hãy hoàn thành tất cả module trong phần này trước.', 'info'); return;
       }
       navigateToMidterm(midtermId);
+    });
+  });
+
+  // Click: bonus minigame cards
+  dom.dashboardModules.querySelectorAll('[data-game-id]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const moduleId = Number(el.dataset.moduleId);
+      const mod = course.modules.find((m) => m.id === moduleId);
+      if (!mod?.minigame) return;
+      navigateToMinigame(mod, course);
     });
   });
 
@@ -516,6 +573,34 @@ const navigateToFinalExam = async () => {
 };
 window.navigateToFinalExam = navigateToFinalExam;
 
+const navigateToMinigame = async (mod, course) => {
+  const gameCfg = mod.minigame;
+  if (!gameCfg) return;
+
+  state.currentModuleId  = mod.id;
+  state.currentMidtermId = null;
+  state.currentView      = 'minigame';
+  renderModuleNav(course);
+  updateBreadcrumb([course.title, mod.title, gameCfg.label ?? 'Minigame']);
+  closeSidebar();
+  dom.contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+
+  startMinigame(gameCfg, gameCfg.primary ? mod.id : null, async (passed, score, dpfEarned) => {
+    state.currentModuleId = null;
+    state.currentView     = 'dashboard';
+    if (passed) {
+      const msg = gameCfg.primary
+        ? `🎮 ${gameCfg.label ?? 'Minigame'} hoàn thành! +${dpfEarned} DPF`
+        : `🎯 Bonus hoàn thành! +${dpfEarned} DPF`;
+      showToast(msg, 'success');
+    } else {
+      showToast('Ôn lại rồi thử lại nhé!', 'info');
+    }
+    navigateToDashboard();
+  });
+};
+window.navigateToMinigame = navigateToMinigame;
+
 const navigateToMidterm = async (midtermId) => {
   const course = await loadManifest();
   const cfg    = getMidtermConfig(midtermId);
@@ -546,11 +631,12 @@ const navigateToModule = async (moduleId) => {
   state.currentMidtermId = null;
   renderModuleNav(course);
 
-  // Nếu module có sourceFile → hiện lesson view
   if (mod.sourceFile) {
     showLessonView(mod, course);
+  } else if (mod.minigame?.primary) {
+    // Module dùng minigame làm bài thi chính (không có lesson text)
+    navigateToMinigame(mod, course);
   } else {
-    // Module chưa có content — thông báo coming soon
     showToast(`Module ${mod.id}: Nội dung đang được cập nhật.`, 'info');
   }
 };
@@ -598,10 +684,13 @@ const showLessonView = async (mod, course) => {
   btnPrev.disabled = !prevMod;
   btnPrev.onclick  = prevMod ? () => navigateToModule(prevMod.id) : null;
 
-  // Next: nếu có quiz → đi quiz; nếu không có → module tiếp theo hoặc dashboard
+  // Next: quiz → minigame bonus → next module / dashboard
   if (mod.quiz) {
     btnNext.textContent = 'Làm Quiz →';
     btnNext.onclick = () => showQuizView(mod, course);
+  } else if (mod.minigame) {
+    btnNext.textContent = `${mod.minigame.label ?? '🎮 Minigame'} →`;
+    btnNext.onclick = () => navigateToMinigame(mod, course);
   } else if (nextMod) {
     btnNext.textContent = 'Tiếp theo →';
     btnNext.onclick = () => navigateToModule(nextMod.id);
@@ -622,20 +711,21 @@ const showQuizView = (mod, course) => {
   // Gọi engine quiz thật; callback xử lý sau khi xong
   startQuiz(mod, course, async (passed) => {
     if (passed) {
-      // Cập nhật sidebar + dashboard
+      // Có bonus minigame → gợi ý chơi
+      if (mod.minigame && !mod.minigame.primary && !isMiniDone(mod.minigame.id)) {
+        showToast(`🎮 Mở khóa bonus: ${mod.minigame.label} (+${mod.minigame.dpf} DPF)`, 'success', 4500);
+      } else {
+        showToast('🎉 Module hoàn thành! Tiếp tục nào.', 'success');
+      }
       const allMods = course.modules;
       const idx     = allMods.findIndex((m) => m.id === mod.id);
       const nextMod = allMods[idx + 1] ?? null;
-
-      showToast('🎉 Module hoàn thành! Tiếp tục nào.', 'success');
-
       if (nextMod && isModuleUnlocked(nextMod, allMods)) {
         navigateToModule(nextMod.id);
       } else {
         navigateToDashboard();
       }
     } else {
-      // Chưa pass → về lesson để ôn lại
       showToast('Ôn lại bài học và thử lại nhé!', 'info');
       showLessonView(mod, course);
     }
