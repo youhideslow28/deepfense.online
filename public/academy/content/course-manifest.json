@@ -75,7 +75,8 @@
         "level": "Recognition",
         "sourceFile": "DEEPFENSE_BASIC_Module_5_Content_v1.md",
         "quiz": { "questions": 10, "passThreshold": 0.7, "countForFinalExam": true },
-        "sections": ["5.1 Voice deepfake", "5.2 Dấu hiệu âm thanh", "5.3 Xác minh cuộc gọi"]
+        "sections": ["5.1 Voice deepfake", "5.2 Dấu hiệu âm thanh", "5.3 Xác minh cuộc gọi"],
+        "minigame": { "id": "otp-trap", "label": "📱 OTP Trap", "dpf": 20, "primary": false }
       },
       {
         "id": 6,
