@@ -370,14 +370,11 @@ export const drawCertificate = async (canvas, certData) => {
   ctx.lineWidth   = 2;
   ctx.beginPath(); ctx.moveTo(200, CERT_H - 76); ctx.lineTo(CERT_W - 200, CERT_H - 76); ctx.stroke();
 
-  // ── Verification URL (đáy certificate) ───────────────────────
+  // ── Verification URL ──────────────────────────────────────────
+  ctx.font      = '400 11px "JetBrains Mono", monospace';
+  ctx.fillStyle = 'rgba(60, 60, 60, 1)';
   ctx.textAlign = 'center';
-  ctx.font      = '600 11px "Inter", sans-serif';
-  ctx.fillStyle = 'rgba(60, 60, 60, 0.9)';
-  ctx.fillText('Deepfense.online', CERT_W / 2, CERT_H - 58);
-  ctx.font      = '400 10px "JetBrains Mono", monospace';
-  ctx.fillStyle = 'rgba(80, 80, 80, 0.7)';
-  ctx.fillText(`Deepfense.online Academic Board  ·  ${certId}`, CERT_W / 2, CERT_H - 44);
+  ctx.fillText(`Deepfense.online Academic Board  ·  ${certId}`, CERT_W / 2, CERT_H - 50);
 };
 
 // ── Helper: rounded rect ──────────────────────────────────────
