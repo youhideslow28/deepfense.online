@@ -19,6 +19,7 @@ import {
   doc,
   getDoc,
   setDoc,
+  updateDoc,
   onSnapshot,
   serverTimestamp,
 } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
@@ -143,6 +144,63 @@ export const listenDpfBalance = (uid, onChange) => {
     if (!snap.exists()) { onChange(0); return; }
     const val = snap.data().webBalance;
     onChange(typeof val === 'number' && Number.isFinite(val) ? val : 0);
+  });
+};
+
+// ── Admin helpers (dev-only, visible only for deepfense@gmail.com) ────────────
+
+/**
+ * Ghi toàn bộ dữ liệu hoàn thành vào academy_learners/{uid}
+ * Dùng để test certificate flow mà không cần học thật.
+ */
+export const adminCompleteAll = async (uid) => {
+  const ref = doc(db, 'academy_learners', uid);
+  const now = serverTimestamp();
+  await setDoc(ref, {
+    completedModules:  [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    completedMidterms: ['midterm1', 'midterm2'],
+    completedFinalExam: true,
+    completedMinigames: ['url-detective', 'scam-chat-triage', 'pressure-meter'],
+    minigameScores: {
+      'url-detective':    { score: 1, passed: true, moduleId: 6,    completedAt: now },
+      'scam-chat-triage': { score: 1, passed: true, moduleId: 8,    completedAt: now },
+      'pressure-meter':   { score: 1, passed: true, moduleId: 9,    completedAt: now },
+    },
+    quizScores: {
+      1: { score: 1, passed: true, completedAt: now },
+      2: { score: 1, passed: true, completedAt: now },
+      3: { score: 1, passed: true, completedAt: now },
+      4: { score: 1, passed: true, completedAt: now },
+      5: { score: 1, passed: true, completedAt: now },
+      6: { score: 1, passed: true, completedAt: now },
+    },
+    finalExam: {
+      passed:    true,
+      bestScore: 1,
+      attempts:  1,
+      lastAttemptAt: now,
+      history: [{ score: 1, passed: true, completedAt: now }],
+    },
+    dpfEarned: 500,
+    updatedAt: now,
+  }, { merge: true });
+};
+
+/**
+ * Xóa toàn bộ tiến độ về trạng thái ban đầu.
+ */
+export const adminResetProgress = async (uid) => {
+  const ref = doc(db, 'academy_learners', uid);
+  await updateDoc(ref, {
+    completedModules:   [],
+    completedMidterms:  [],
+    completedFinalExam: false,
+    completedMinigames: [],
+    minigameScores:     {},
+    quizScores:         {},
+    finalExam:          {},
+    dpfEarned:          0,
+    updatedAt:          serverTimestamp(),
   });
 };
 
