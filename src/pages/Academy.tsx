@@ -59,8 +59,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     return saved ? JSON.parse(saved) : [];
   });
   const [completedModules, setCompletedModules] = useState<number[]>(() => {
-    const saved = localStorage.getItem('df_completed_modules');
-    return saved ? JSON.parse(saved) : [];
+    // Seed from df_completed_modules, merged with shared sync key (written by /academy/basics/ SPA)
+    const saved = (() => { try { return JSON.parse(localStorage.getItem('df_completed_modules') || '[]'); } catch { return []; } })() as number[];
+    const synced = (() => { try { return JSON.parse(localStorage.getItem('dfb_module_sync_v1') || '{}'); } catch { return {}; } })() as { completedModules?: number[] };
+    return [...new Set([...saved, ...(synced.completedModules ?? [])])];
   });
 
   // Check if passed via standalone HTML course reader (deepfense-basics-final-exam key)
@@ -95,6 +97,12 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
 
   useEffect(() => {
     localStorage.setItem('df_completed_modules', JSON.stringify(completedModules));
+    // Keep shared sync key up-to-date so /academy/basics/ SPA can read it
+    try {
+      const prev = JSON.parse(localStorage.getItem('dfb_module_sync_v1') || '{}') as { completedModules?: number[] };
+      const merged = [...new Set([...(prev.completedModules ?? []), ...completedModules])];
+      localStorage.setItem('dfb_module_sync_v1', JSON.stringify({ completedModules: merged, updatedAt: Date.now() }));
+    } catch {}
   }, [completedModules]);
   const [showAnswers, setShowAnswers] = useState<Record<string, boolean>>({});
   const [checkpointAnswers, setCheckpointAnswers] = useState<Record<number, number>>({});
@@ -624,7 +632,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 </div>
               )}
 
-              {user?.email !== 'deepfense@gmail.com' && (
+              {user?.email === 'deepfense@gmail.com' && (
                 <div className="glass-dark border border-red-500/20 rounded-2xl p-6">
                   <h3 className="font-black text-red-400 uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
                     <AlertCircle size={14} />

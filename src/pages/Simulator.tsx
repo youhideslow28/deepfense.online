@@ -463,7 +463,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                         const exchangesDone = Math.floor((messages.length - 1) / 2);
                         const remaining = scenario.minExchanges - exchangesDone;
                         return lang === 'vi'
-                          ? `💬 Còn ${remaining} lượt trao đổi nữa để mở khoá nút từ chối...`
+                          ? `💬 Còn ${remaining} lượt trao đổi thêm để phòng tránh...`
                           : `💬 ${remaining} more exchange${remaining > 1 ? 's' : ''} to unlock the reject button...`;
                       })()}
                     </p>
