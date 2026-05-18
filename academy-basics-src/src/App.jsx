@@ -145,17 +145,26 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  // On mount: seed lesson completion from shared module-sync key (written by /academy/)
-  useEffect(() => {
+  // Seed from shared sync key and keep in sync when other tab (Academy.tsx) updates it
+  const applyModuleSync = (prevSet) => {
     const { completedModules } = readModuleSync();
-    if (!Array.isArray(completedModules) || completedModules.length === 0) return;
-    setCompleted(prev => {
-      const next = new Set(prev);
-      for (const entry of lessonIndex) {
-        if (completedModules.includes(entry.moduleId)) next.add(entry.lesson.id);
-      }
-      return next;
-    });
+    if (!Array.isArray(completedModules) || completedModules.length === 0) return prevSet;
+    const next = new Set(prevSet);
+    for (const entry of lessonIndex) {
+      if (completedModules.includes(entry.moduleId)) next.add(entry.lesson.id);
+    }
+    return next;
+  };
+
+  useEffect(() => {
+    // Apply on mount
+    setCompleted(prev => applyModuleSync(prev));
+    // Re-apply whenever Academy.tsx (same origin, other tab) writes the sync key
+    const onStorage = (e) => {
+      if (e.key === MODULE_SYNC_KEY) setCompleted(prev => applyModuleSync(prev));
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Whenever lesson progress changes: compute fully-done modules and write to shared key
