@@ -56,16 +56,6 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
         </button>
       </div>
 
-      {/* External links */}
-      <div className="home-ext-links">
-        <a className="home-ext-btn" href="https://deepfense.online/academy/" target="_blank" rel="noopener noreferrer">
-          🎓 Trang Academy
-        </a>
-        <a className="home-ext-btn home-ext-btn--secondary" href="https://deepfense.online" target="_blank" rel="noopener noreferrer">
-          🌐 deepfense.online
-        </a>
-      </div>
-
       {/* Module grid */}
       <div className="home-modules">
         <div className="home-modules-title">Danh sách module</div>

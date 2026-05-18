@@ -919,6 +919,20 @@ const cleanupSubscriptions = () => {
   state.unsubs = [];
 };
 
+// ── Shared localStorage bridge (syncs module progress with /academy/basics/) ──
+const MODULE_SYNC_KEY = 'dfb_module_sync_v1';
+
+function writeModuleSync(completedModuleNums) {
+  try {
+    const prev = JSON.parse(localStorage.getItem(MODULE_SYNC_KEY) || '{}');
+    const merged = {
+      completedModules: [...new Set([...(prev.completedModules || []), ...completedModuleNums])],
+      updatedAt: Date.now(),
+    };
+    localStorage.setItem(MODULE_SYNC_KEY, JSON.stringify(merged));
+  } catch {}
+}
+
 const startSubscriptions = (user) => {
   cleanupSubscriptions();
 
@@ -931,6 +945,10 @@ const startSubscriptions = (user) => {
       const eligible = checkCertEligibility(data);
       dom.btnViewCert.classList.toggle('hidden', !eligible);
     }
+
+    // Sync completed modules → shared key (read by /academy/basics/ SPA)
+    const completedMods = Array.isArray(data?.completedModules) ? data.completedModules : [];
+    if (completedMods.length > 0) writeModuleSync(completedMods);
 
     if (state.manifest) {
       updateProgressBar(state.manifest);

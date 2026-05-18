@@ -1,13 +1,29 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { MODULES, buildLessonIndex } from './data/course.js';
+import { buildLessonIndex } from './data/course.js';
 import Sidebar from './components/Sidebar.jsx';
 import LessonView from './components/LessonView.jsx';
 import HomePage from './components/HomePage.jsx';
 import NotesPanel, { hasNoteFor } from './components/NotesPanel.jsx';
 import SearchModal from './components/SearchModal.jsx';
 
-const STORAGE_KEY = 'dfb_progress_v2';
-const THEME_KEY   = 'dfb_theme_v1';
+const STORAGE_KEY     = 'dfb_progress_v2';
+const THEME_KEY       = 'dfb_theme_v1';
+const MODULE_SYNC_KEY = 'dfb_module_sync_v1';
+
+function readModuleSync() {
+  try { return JSON.parse(localStorage.getItem(MODULE_SYNC_KEY) || '{}'); } catch { return {}; }
+}
+
+function writeModuleSync(completedModuleNums) {
+  try {
+    const prev = readModuleSync();
+    const merged = {
+      completedModules: [...new Set([...(prev.completedModules || []), ...completedModuleNums])],
+      updatedAt: Date.now(),
+    };
+    localStorage.setItem(MODULE_SYNC_KEY, JSON.stringify(merged));
+  } catch {}
+}
 
 function initTheme() {
   const saved = localStorage.getItem(THEME_KEY) || 'dark';
@@ -111,6 +127,33 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  // On mount: seed lesson completion from shared module-sync key (written by /academy/)
+  useEffect(() => {
+    const { completedModules } = readModuleSync();
+    if (!Array.isArray(completedModules) || completedModules.length === 0) return;
+    setCompleted(prev => {
+      const next = new Set(prev);
+      for (const entry of lessonIndex) {
+        if (completedModules.includes(entry.moduleId)) next.add(entry.lesson.id);
+      }
+      return next;
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Whenever lesson progress changes: compute fully-done modules and write to shared key
+  useEffect(() => {
+    const counts = {}, done = {};
+    for (const entry of lessonIndex) {
+      const mid = entry.moduleId;
+      counts[mid] = (counts[mid] || 0) + 1;
+      if (completed.has(entry.lesson.id)) done[mid] = (done[mid] || 0) + 1;
+    }
+    const doneModules = Object.keys(counts)
+      .filter(mid => done[mid] === counts[mid])
+      .map(Number);
+    writeModuleSync(doneModules);
+  }, [completed]); // eslint-disable-line react-hooks/exhaustive-deps
+
   function goToLesson(idx) {
     setCurrentIdx(idx);
     setSidebarOpen(false); // auto-close on mobile after picking a lesson
@@ -160,10 +203,6 @@ export default function App() {
   const totalLessons = lessonIndex.length;
   const totalDone = completed.size;
   const pct = totalLessons > 0 ? Math.round((totalDone / totalLessons) * 100) : 0;
-
-  const currentMod = currentEntry
-    ? MODULES.find(m => m.id === currentEntry.moduleId)
-    : null;
 
   return (
     <div className="layout">
@@ -232,19 +271,22 @@ export default function App() {
             ☰
           </button>
 
-          <button className="topbar-home" onClick={() => setCurrentIdx(null)} title="Về trang chủ">
-            ⌂ <span className="topbar-home-label">Trang chủ</span>
-          </button>
+          {/* Ext links — left side (moved from right) */}
+          <div className="topbar-ext">
+            <a className="topbar-ext-link" href="https://deepfense.online/academy/" target="_blank" rel="noopener noreferrer" title="Trang Academy">🎓 Academy</a>
+            <a className="topbar-ext-link" href="https://deepfense.online" target="_blank" rel="noopener noreferrer" title="deepfense.online">🌐 Trang chủ</a>
+          </div>
+
+          {/* Breadcrumb — only visible when inside a lesson */}
           <div className="topbar-breadcrumb">
-            {currentEntry ? (
+            {currentEntry && (
               <>
                 <span>Module {currentEntry.moduleId} · </span>
                 {currentEntry.sectionTitle}
               </>
-            ) : (
-              'DEEPFENSE BASICS'
             )}
           </div>
+
           {/* Search button */}
           <button
             className="topbar-search-btn"
@@ -279,10 +321,6 @@ export default function App() {
             </button>
           )}
 
-          <div className="topbar-ext">
-            <a className="topbar-ext-link" href="https://deepfense.online/academy/" target="_blank" rel="noopener noreferrer" title="Trang Academy">🎓 Academy</a>
-            <a className="topbar-ext-link" href="https://deepfense.online" target="_blank" rel="noopener noreferrer" title="deepfense.online">🌐 Trang chủ</a>
-          </div>
           <div className="topbar-progress">
             <div className="topbar-progress-bar">
               <div className="topbar-progress-fill" style={{ width: `${pct}%` }} />
