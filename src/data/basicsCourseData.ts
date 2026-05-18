@@ -1,5 +1,112 @@
 import { BookOpen, ShieldCheck, Target, Award, Brain, Zap, AlertTriangle, Clock, CheckCircle2 } from 'lucide-react';
 
+// ── CONTENT BLOCK TYPES ──────────────────────────────────────────────
+
+export interface TextBlock {
+  type: 'text';
+  content: { vi: string; en: string };
+  variant?: 'normal' | 'lead' | 'caption';
+}
+
+export interface ImageBlock {
+  type: 'image';
+  src: string;
+  alt: { vi: string; en: string };
+  caption?: { vi: string; en: string };
+  width?: 'full' | 'wide' | 'medium';
+}
+
+export interface CompareBlock {
+  type: 'compare';
+  before: { src: string; label: { vi: string; en: string } };
+  after: { src: string; label: { vi: string; en: string } };
+  caption?: { vi: string; en: string };
+  mode?: 'slider' | 'side-by-side';
+}
+
+export interface CalloutBlock {
+  type: 'callout';
+  variant: 'tip' | 'warning' | 'danger' | 'info';
+  icon?: string;
+  title?: { vi: string; en: string };
+  content: { vi: string; en: string };
+}
+
+export interface AudioBlock {
+  type: 'audio';
+  src: string;
+  title: { vi: string; en: string };
+  description?: { vi: string; en: string };
+  duration?: string;
+}
+
+export interface TableBlock {
+  type: 'table';
+  caption?: { vi: string; en: string };
+  headers: { vi: string; en: string }[];
+  rows: { vi: string; en: string }[][];
+}
+
+export interface ExerciseBlock {
+  type: 'exercise';
+  variant: 'fill-blank' | 'single-choice';
+  question: { vi: string; en: string };
+  template?: { vi: string; en: string };
+  options: { vi: string; en: string }[];
+  correctIndex: number;
+  explanation: { vi: string; en: string };
+  reward?: number;
+}
+
+export interface SandboxTurn {
+  speaker: 'scammer' | 'system';
+  message: { vi: string; en: string };
+  choices?: {
+    label: { vi: string; en: string };
+    outcome: 'good' | 'bad' | 'neutral';
+    feedback: { vi: string; en: string };
+  }[];
+}
+
+export interface SandboxBlock {
+  type: 'sandbox';
+  title: { vi: string; en: string };
+  description?: { vi: string; en: string };
+  turns: SandboxTurn[];
+  reward?: number;
+}
+
+export interface AnnotateTarget {
+  id: number;
+  x: number;
+  y: number;
+  radius: number;
+  label: { vi: string; en: string };
+  explanation: { vi: string; en: string };
+}
+
+export interface AnnotateBlock {
+  type: 'annotate';
+  src: string;
+  alt: { vi: string; en: string };
+  instruction: { vi: string; en: string };
+  targets: AnnotateTarget[];
+  reward?: number;
+}
+
+export type ContentBlock =
+  | TextBlock
+  | ImageBlock
+  | CompareBlock
+  | CalloutBlock
+  | AudioBlock
+  | TableBlock
+  | ExerciseBlock
+  | SandboxBlock
+  | AnnotateBlock;
+
+// ─────────────────────────────────────────────────────────────────────
+
 export interface Lesson {
   id: string;
   title: string;
@@ -7,6 +114,7 @@ export interface Lesson {
   takeaways: string[];
   type?: 'video' | 'interactive' | 'lab';
   duration?: number;
+  blocks?: ContentBlock[];
 }
 
 // ── MINI-GAME TYPES ──────────────────────────────────────────────────
@@ -82,8 +190,8 @@ export interface Module {
   locked?: boolean;
 }
 
-const lesson = (id: string, title: string, paragraphs: string[], takeaways: string[]): Lesson => ({
-  id, title, paragraphs, takeaways, type: 'interactive', duration: 5
+const lesson = (id: string, title: string, paragraphs: string[], takeaways: string[], blocks?: ContentBlock[]): Lesson => ({
+  id, title, paragraphs, takeaways, type: 'interactive', duration: 5, ...(blocks ? { blocks } : {})
 });
 
 const q = (text: string, options: string[], answer: number, explanation?: string) => ({ text, options, answer, explanation });
@@ -239,6 +347,37 @@ export const basicsCourse = {
               "Nội dung thật bị đặt sai bối cảnh vẫn có thể gây lừa dối.",
               "Nghe giống không có nghĩa là đúng người.",
               "Nội dung thật đặt sai bối cảnh vẫn có thể dẫn đến niềm tin sai."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 1 sample ──────────────────────
+              {
+                type: 'callout',
+                variant: 'warning',
+                icon: '⚠️',
+                title: { vi: 'Con số đáng lo ngại', en: 'A worrying number' },
+                content: {
+                  vi: 'Năm 2023, số lượng deepfake được phát hiện trên internet tăng hơn 900% so với 2019. Phần lớn nạn nhân không biết mình đã bị nhắm mục tiêu cho đến khi thiệt hại đã xảy ra.',
+                  en: 'In 2023, detected deepfakes on the internet increased by over 900% compared to 2019. Most victims didn\'t realise they had been targeted until the damage was already done.'
+                }
+              } as CalloutBlock,
+              {
+                type: 'image',
+                src: 'https://picsum.photos/seed/deepfake-demo/800/420',
+                alt: { vi: 'Minh họa kỹ thuật face-swap trong deepfake', en: 'Illustration of face-swap technique in deepfake' },
+                caption: { vi: '🔬 Ảnh minh họa — gương mặt bên phải được ghép bằng AI. Trong thực tế, chất lượng ngày càng khó phân biệt bằng mắt thường.', en: '🔬 Illustration only — the face on the right was AI-composited. In practice, quality is increasingly hard to distinguish with the naked eye.' }
+              } as ImageBlock,
+              {
+                type: 'compare',
+                mode: 'side-by-side',
+                before: {
+                  src: 'https://picsum.photos/seed/original-face/400/320',
+                  label: { vi: '🎥 Video gốc', en: '🎥 Original video' }
+                },
+                after: {
+                  src: 'https://picsum.photos/seed/deepfake-face/400/320',
+                  label: { vi: '🤖 Sau khi áp dụng deepfake', en: '🤖 After deepfake applied' }
+                },
+                caption: { vi: 'Hãy chú ý viền tóc, vùng tai và da cổ — đây là những khu vực thường bị lỗi kỹ thuật nhất trong deepfake.', en: 'Pay attention to the hairline, ear area and neck skin — these are the zones most prone to technical artefacts in deepfakes.' }
+              } as CompareBlock
             ]),
             lesson("1.1.2", "Vì sao deepfake ngày càng khó nhận ra?", [
               "Công nghệ tốt hơn, chi phí thấp hơn: Trước đây, để tạo một video giả thuyết phục, người ta cần nhiều kỹ năng, thiết bị và thời gian. Bây giờ, nhiều công cụ AI đã làm cho việc tạo ảnh, giọng nói và video trở nên dễ tiếp cận hơn. Khi công cụ mạnh hơn và rẻ hơn, kỹ năng phòng vệ của người dùng cũng cần tốt hơn.",
@@ -253,6 +392,21 @@ export const basicsCourse = {
               "Dữ liệu cá nhân của bạn là nguyên liệu của deepfake.",
               "Áp lực thời gian là đồng minh của kẻ lừa đảo.",
               "Trong thời đại deepfake, người an toàn không phải người đoán nhanh nhất. Người an toàn là người biết kiểm chứng trước khi hành động."
+            ], [
+              {
+                type: 'callout',
+                variant: 'danger',
+                icon: '🚨',
+                title: { vi: 'Dữ liệu của bạn là nguyên liệu deepfake', en: 'Your Data Is Deepfake Raw Material' },
+                content: { vi: 'Mỗi bức ảnh, đoạn video, clip giọng nói bạn đăng công khai lên mạng xã hội đều có thể được thu thập và dùng để huấn luyện AI giả mạo bạn. Ngay cả một bài đăng bình thường cũng đủ để kẻ xấu hiểu phong cách nói chuyện, mối quan hệ và thói quen hằng ngày của bạn.', en: 'Every photo, video, and voice clip you post publicly on social media can be harvested and used to train AI to impersonate you. Even a casual post gives bad actors enough to understand your speech patterns, relationships, and daily habits.' }
+              } as CalloutBlock,
+              {
+                type: 'callout',
+                variant: 'tip',
+                icon: '🛡️',
+                title: { vi: 'Kiểm soát dấu chân kỹ thuật số', en: 'Control Your Digital Footprint' },
+                content: { vi: 'Bước đơn giản nhất để giảm rủi ro:\n• Kiểm tra lại quyền riêng tư trên Facebook, TikTok, Zalo.\n• Hạn chế đăng ảnh/video chất lượng cao kèm tiêu đề đầy đủ tên, ngày sinh, địa chỉ.\n• Dùng tính năng Khiên AI (Fawkes) của DEEPFENSE để tiêm nhiễu tàng hình vào ảnh trước khi đăng.', en: 'Simplest steps to reduce risk:\n• Review your privacy settings on social media.\n• Avoid posting high-quality photos/videos with your full name, birthdate, and address.\n• Use the DEEPFENSE AI Shield (Fawkes) feature to inject invisible noise into photos before posting.' }
+              } as CalloutBlock
             ])
           ]
         },
@@ -327,6 +481,38 @@ export const basicsCourse = {
             ], [
               "Càng vội vàng, càng dễ mắc sai lầm.",
               "Niềm tin cá nhân là 'lỗ hổng' mà deepfake khai thác triệt để."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 2 audio sample ────────────────
+              {
+                type: 'callout',
+                variant: 'danger',
+                icon: '🎙️',
+                title: { vi: 'Nghe thử — giọng nói deepvoice thực tế', en: 'Listen — a real deepvoice sample' },
+                content: {
+                  vi: 'Đoạn âm thanh bên dưới mô phỏng kiểu giọng nói deepvoice thường dùng trong lừa đảo qua điện thoại. Hãy chú ý đến sự đều đều bất thường, thiếu nhịp thở và các âm thanh xung quanh.',
+                  en: 'The audio below simulates the type of deepvoice commonly used in phone scams. Notice the unusual uniformity, lack of natural breathing, and absence of background sounds.'
+                }
+              } as CalloutBlock,
+              {
+                type: 'audio',
+                src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+                title: { vi: '🔊 Mô phỏng cuộc gọi deepvoice — "sếp" yêu cầu chuyển tiền', en: '🔊 Simulated deepvoice call — "boss" requesting transfer' },
+                description: {
+                  vi: '"Anh ơi, chuyển gấp 200 triệu cho đối tác Hà Nội. Anh đang bận họp, xử lý trước đi, đừng hỏi kế toán..."',
+                  en: '"Hey, transfer 200M urgently to the Hanoi partner. I\'m in a meeting, handle it first, don\'t ask accounting..."'
+                },
+                duration: '0:28'
+              } as AudioBlock,
+              {
+                type: 'callout',
+                variant: 'tip',
+                icon: '💡',
+                title: { vi: '3 dấu hiệu âm thanh cần chú ý', en: '3 audio red flags to notice' },
+                content: {
+                  vi: '**1. Giọng quá đều:** Thiếu nhịp ngắt, hơi thở, âm điệu lên xuống tự nhiên. **2. Không có tạp âm nền:** Cuộc gọi thật từ cuộc họp luôn có tiếng môi trường. **3. Phát âm cứng:** Các từ địa phương hoặc tên riêng thường bị phát âm lạ.',
+                  en: '**1. Too uniform:** Missing natural pauses, breathing, and intonation variations. **2. No background noise:** A real call from a meeting always has ambient sounds. **3. Stiff pronunciation:** Local words or proper names are often mispronounced.'
+                }
+              } as CalloutBlock
             ]),
             lesson("2.1.2", "Quyền lực và Lợi ích", [
               "Quyền lực: Giả danh công an, bác sĩ, sếp, cán bộ ngân hàng... để đe dọa hoặc yêu cầu bạn làm điều sai quy trình.",
@@ -346,6 +532,51 @@ export const basicsCourse = {
             ], [
               "Ngôn ngữ thao túng luôn hướng bạn đến hành động vội vàng.",
               "Nhận diện ngôn ngữ là bước quan trọng của Observe."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 3 ExerciseBlock ────────────────
+              {
+                type: 'exercise',
+                variant: 'single-choice',
+                question: {
+                  vi: 'Kẻ lừa đảo nhắn: "Chuyển tiền ngay, đừng nói với ai, chỉ còn 10 phút!" — Đây là kết hợp của những kỹ thuật nào?',
+                  en: 'The scammer messages: "Transfer now, don\'t tell anyone, only 10 minutes left!" — This combines which techniques?'
+                },
+                options: [
+                  { vi: 'Tạo lòng tin dài hạn + Hứa hẹn lợi nhuận', en: 'Building long-term trust + Profit promises' },
+                  { vi: 'Áp lực thời gian + Cô lập + Đe dọa ngầm', en: 'Time pressure + Isolation + Implicit threat' },
+                  { vi: 'Giả nhân nghĩa + Cam kết ảo', en: 'False goodwill + Fake commitment' },
+                  { vi: 'Dụ dỗ lợi ích + Khen ngợi', en: 'Benefit lure + Flattery' }
+                ],
+                correctIndex: 1,
+                explanation: {
+                  vi: '"Chuyển ngay" = áp lực thời gian. "Đừng nói với ai" = cô lập nạn nhân khỏi nguồn hỗ trợ. "Chỉ còn 10 phút" = deadline giả để bạn hành động trước khi kịp suy nghĩ. Cả 3 cùng lúc là dấu hiệu lừa đảo rõ ràng nhất.',
+                  en: '"Transfer now" = time pressure. "Don\'t tell anyone" = isolates victim from support. "Only 10 minutes" = fake deadline to force action before thinking. All 3 together is the clearest scam indicator.'
+                },
+                reward: 2
+              } as ExerciseBlock,
+              {
+                type: 'exercise',
+                variant: 'fill-blank',
+                question: {
+                  vi: 'Hoàn thành câu sau:',
+                  en: 'Complete the sentence:'
+                },
+                template: {
+                  vi: 'Khi ai đó yêu cầu bạn "đừng nói với ai", đây là kỹ thuật [[BLANK]] — nhằm ngăn bạn xác minh với người khác.',
+                  en: 'When someone asks you to "don\'t tell anyone", this is the [[BLANK]] technique — designed to prevent you from verifying with others.'
+                },
+                options: [
+                  { vi: 'cô lập', en: 'isolation' },
+                  { vi: 'áp lực thời gian', en: 'time pressure' },
+                  { vi: 'giả nhân nghĩa', en: 'false goodwill' }
+                ],
+                correctIndex: 0,
+                explanation: {
+                  vi: 'Cô lập là kỹ thuật tách nạn nhân ra khỏi mạng lưới hỗ trợ — gia đình, bạn bè, đồng nghiệp. Kẻ lừa đảo biết rằng nếu bạn hỏi thêm người khác, khả năng lừa thành công sẽ giảm mạnh.',
+                  en: 'Isolation separates the victim from their support network — family, friends, colleagues. Scammers know that if you consult others, the chance of success drops drastically.'
+                },
+                reward: 1
+              } as ExerciseBlock
             ])
           ],
           checkpoint: { label: "2.1", questions: [], miniGame: {
@@ -401,6 +632,75 @@ export const basicsCourse = {
             ], [
               "Tập trung vào những chi tiết AI khó xử lý: tóc, tai, kẽ răng và vùng biên.",
               "Lỗi kỹ thuật là tín hiệu, không phải kết luận duy nhất."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 2 table sample ────────────────
+              {
+                type: 'callout',
+                variant: 'info',
+                icon: '🔬',
+                title: { vi: 'Bảng tham chiếu nhanh', en: 'Quick reference table' },
+                content: {
+                  vi: 'Bảng dưới tổng hợp các khu vực thường xuất hiện lỗi kỹ thuật trong deepfake, mức độ nguy hiểm và cách nhận biết. Dùng làm checklist khi xem nội dung nghi vấn.',
+                  en: 'The table below summarises common artefact zones in deepfakes, their risk level, and how to spot them. Use as a checklist when reviewing suspicious content.'
+                }
+              } as CalloutBlock,
+              {
+                type: 'table',
+                caption: { vi: 'Dấu hiệu kỹ thuật thường gặp trong deepfake video', en: 'Common technical artefacts in deepfake video' },
+                headers: [
+                  { vi: 'Khu vực', en: 'Zone' },
+                  { vi: 'Dấu hiệu nghi vấn', en: 'Suspicious artefact' },
+                  { vi: 'Mức rủi ro', en: 'Risk level' },
+                  { vi: 'Cách kiểm tra', en: 'How to check' }
+                ],
+                rows: [
+                  [
+                    { vi: '💇 Tóc / Viền đầu', en: '💇 Hair / Hairline' },
+                    { vi: 'Mờ, nhòe, pixel lạ ở rìa', en: 'Blur, smear, odd pixels at edge' },
+                    { vi: '🔴 Cao', en: '🔴 High' },
+                    { vi: 'Tua chậm đoạn người quay đầu', en: 'Slow-scrub head-turn moments' }
+                  ],
+                  [
+                    { vi: '👁️ Mắt', en: '👁️ Eyes' },
+                    { vi: 'Không chớp, phản chiếu ánh sáng bất thường', en: 'No blinking, odd light reflection' },
+                    { vi: '🔴 Cao', en: '🔴 High' },
+                    { vi: 'Đếm số lần chớp mắt trong 10 giây', en: 'Count blinks over 10 seconds' }
+                  ],
+                  [
+                    { vi: '👂 Tai / Cổ', en: '👂 Ears / Neck' },
+                    { vi: 'Biến dạng khi quay đầu', en: 'Distorts when head turns' },
+                    { vi: '🟡 Trung bình', en: '🟡 Medium' },
+                    { vi: 'Quan sát tai khi nhân vật quay sang bên', en: 'Watch ears during profile turns' }
+                  ],
+                  [
+                    { vi: '💡 Ánh sáng / Bóng đổ', en: '💡 Lighting / Shadow' },
+                    { vi: 'Bóng trên mặt không khớp nguồn sáng nền', en: 'Face shadow mismatches background light' },
+                    { vi: '🟡 Trung bình', en: '🟡 Medium' },
+                    { vi: 'So sánh hướng bóng đổ trên mặt vs. nền', en: 'Compare shadow direction on face vs. background' }
+                  ],
+                  [
+                    { vi: '🦷 Răng / Miệng', en: '🦷 Teeth / Mouth' },
+                    { vi: 'Răng mờ, méo khi nói nhanh', en: 'Teeth blur or warp during fast speech' },
+                    { vi: '🟡 Trung bình', en: '🟡 Medium' },
+                    { vi: 'Xem frame-by-frame đoạn nói nhanh', en: 'Step frame-by-frame through fast speech' }
+                  ],
+                  [
+                    { vi: '🖼️ Nền video', en: '🖼️ Background' },
+                    { vi: 'Nhòe, flicker, đường thẳng bị méo', en: 'Blur, flicker, warped straight lines' },
+                    { vi: '🟢 Thấp', en: '🟢 Low' },
+                    { vi: 'Nhìn vào cạnh tường, bảng hiệu, khung cửa', en: 'Look at wall edges, signs, door frames' }
+                  ]
+                ]
+              } as TableBlock,
+              {
+                type: 'callout',
+                variant: 'warning',
+                icon: '⚠️',
+                content: {
+                  vi: 'Không có lỗi kỹ thuật **không đồng nghĩa** với "video thật". Các mô hình deepfake thế hệ mới ngày càng ít lỗi hơn. Luôn kết hợp phân tích kỹ thuật với kiểm chứng nguồn gốc và bối cảnh.',
+                  en: 'No artefacts found does **not** mean "real video". Newer deepfake models produce fewer visible errors. Always combine technical analysis with source and context verification.'
+                }
+              } as CalloutBlock
             ]),
             lesson("3.1.2", "Ánh sáng và Nền", [
               "Ánh sáng: Bóng trên mặt không khớp với nguồn sáng trong nền. Da mặt có độ sáng khác hẳn với cổ.",
@@ -408,6 +708,66 @@ export const basicsCourse = {
             ], [
               "Quan sát sự nhất quán giữa người và cảnh.",
               "Logo và chữ viết thường là điểm yếu của các mô hình AI tạo hình."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 3 AnnotateBlock ────────────────
+              {
+                type: 'callout',
+                variant: 'info',
+                icon: '🔍',
+                title: { vi: 'Thực hành quan sát', en: 'Observation practice' },
+                content: {
+                  vi: 'Ảnh dưới đây mô phỏng một khuôn mặt deepfake điển hình. Nhấn vào các vùng bạn thấy bất thường, sau đó nhấn "Phân tích" để xem kết quả.',
+                  en: 'The image below simulates a typical deepfake face. Tap the areas you find suspicious, then press "Analyse" to see the results.'
+                }
+              } as CalloutBlock,
+              {
+                type: 'annotate',
+                src: 'https://picsum.photos/seed/deepface/600/400',
+                alt: {
+                  vi: 'Ảnh chân dung mô phỏng deepfake để luyện tập nhận diện',
+                  en: 'Portrait image simulating a deepfake for recognition training'
+                },
+                instruction: {
+                  vi: 'Nhấn vào các vùng bạn nghi là có lỗi deepfake (viền tóc, mắt, tai, cổ, nền...)',
+                  en: 'Tap the areas you suspect contain deepfake artifacts (hairline, eyes, ears, neck, background...)'
+                },
+                targets: [
+                  {
+                    id: 1,
+                    x: 50,
+                    y: 12,
+                    radius: 8,
+                    label: { vi: 'Viền tóc', en: 'Hairline' },
+                    explanation: {
+                      vi: 'Viền tóc thường bị nhòe hoặc có pixel lạ — AI khó xử lý vùng chuyển tiếp giữa tóc và da.',
+                      en: 'The hairline is often blurred or has strange pixels — AI struggles with the transition between hair and skin.'
+                    }
+                  },
+                  {
+                    id: 2,
+                    x: 38,
+                    y: 38,
+                    radius: 7,
+                    label: { vi: 'Mắt trái', en: 'Left eye' },
+                    explanation: {
+                      vi: 'Ánh sáng phản chiếu trong mắt (catchlight) bất thường hoặc không khớp giữa hai mắt là dấu hiệu deepfake phổ biến.',
+                      en: 'Abnormal or asymmetric catchlights (reflections in the eyes) are a common deepfake indicator.'
+                    }
+                  },
+                  {
+                    id: 3,
+                    x: 15,
+                    y: 50,
+                    radius: 6,
+                    label: { vi: 'Vùng tai', en: 'Ear area' },
+                    explanation: {
+                      vi: 'Tai và vùng cạnh mặt thường bị biến dạng khi người quay đầu — AI khó duy trì hình học 3D chính xác.',
+                      en: 'Ears and face edges often distort when the person turns their head — AI struggles to maintain accurate 3D geometry.'
+                    }
+                  }
+                ],
+                reward: 3
+              } as AnnotateBlock
             ])
           ]
         },
@@ -475,6 +835,76 @@ export const basicsCourse = {
             ], [
               "Kênh độc lập phải là kênh bạn đã biết và tin tưởng từ trước.",
               "Không dùng link hoặc số điện thoại mới được cung cấp trong chính tin nhắn nghi vấn."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 3 SandboxBlock ────────────────
+              {
+                type: 'sandbox',
+                title: { vi: '🎭 Thực hành: Nhận diện kịch bản ngân hàng giả', en: '🎭 Practice: Spot the Fake Bank Scenario' },
+                description: {
+                  vi: 'Bạn nhận được một tin nhắn. Hãy vận dụng bước Verify đã học để phản ứng đúng.',
+                  en: 'You receive a message. Apply the Verify step you just learned to respond correctly.'
+                },
+                turns: [
+                  {
+                    speaker: 'scammer',
+                    message: {
+                      vi: '🏦 [Ngân hàng VCB - Thông báo khẩn]\n\nTài khoản của bạn vừa bị đăng nhập từ thiết bị lạ tại Hà Nội. Để bảo vệ tài khoản, hãy xác minh ngay tại:\n\n🔗 bit.ly/vcb-secure-2024\n\nNếu không xác minh trong 30 phút, tài khoản sẽ bị khóa.',
+                      en: '🏦 [VCB Bank - Urgent Notice]\n\nYour account was just accessed from an unknown device in Hanoi. To protect your account, verify immediately at:\n\n🔗 bit.ly/vcb-secure-2024\n\nIf not verified within 30 minutes, your account will be locked.'
+                    },
+                    choices: [
+                      {
+                        label: { vi: 'A. Nhấp vào link để xác minh nhanh', en: 'A. Click the link to verify quickly' },
+                        outcome: 'bad',
+                        feedback: {
+                          vi: '❌ Nguy hiểm! Link rút gọn che giấu URL thật. Đây là kỹ thuật phishing cổ điển — trang giả sẽ thu thập thông tin đăng nhập của bạn. Ngân hàng thật KHÔNG BAO GIỜ gửi link rút gọn.',
+                          en: '❌ Dangerous! Short links hide the real URL. This is classic phishing — the fake page will steal your login credentials. Real banks NEVER send shortened links.'
+                        }
+                      },
+                      {
+                        label: { vi: 'B. Tự mở app VCB chính thức để kiểm tra', en: 'B. Open the official VCB app yourself to check' },
+                        outcome: 'good',
+                        feedback: {
+                          vi: '✅ Đúng! Đây là kênh độc lập an toàn nhất. Bạn tự điều hướng đến nguồn đã biết thay vì đi theo link người lạ cung cấp. Nếu tài khoản thật sự bị vấn đề, app sẽ thông báo.',
+                          en: '✅ Correct! This is the safest independent channel. You navigate to a known source instead of following a stranger\'s link. If there\'s a real issue, the app will notify you.'
+                        }
+                      },
+                      {
+                        label: { vi: 'C. Gọi số điện thoại ghi trong tin nhắn', en: 'C. Call the phone number listed in the message' },
+                        outcome: 'bad',
+                        feedback: {
+                          vi: '❌ Cẩn thận! Số điện thoại trong tin nhắn nghi vấn có thể là số của kẻ lừa đảo. Hãy tìm số hotline chính thức trên mặt sau thẻ ngân hàng hoặc website chính thống.',
+                          en: '❌ Careful! The phone number in a suspicious message may belong to the scammer. Find the official hotline on the back of your bank card or the official website.'
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    speaker: 'system',
+                    message: {
+                      vi: '📱 Bạn mở app VCB. Không có thông báo bất thường nào. Tài khoản hoàn toàn bình thường.',
+                      en: '📱 You open the VCB app. No unusual notifications. Account is completely normal.'
+                    },
+                    choices: [
+                      {
+                        label: { vi: 'Báo cáo tin nhắn lừa đảo cho ngân hàng', en: 'Report the scam message to the bank' },
+                        outcome: 'good',
+                        feedback: {
+                          vi: '✅ Xuất sắc! Báo cáo giúp ngân hàng cảnh báo những người dùng khác. Bạn đã hoàn thành đầy đủ quy trình: Verify → phát hiện giả → Decide → báo cáo.',
+                          en: '✅ Excellent! Reporting helps the bank warn other users. You completed the full process: Verify → detected fake → Decide → report.'
+                        }
+                      },
+                      {
+                        label: { vi: 'Xóa tin nhắn và bỏ qua', en: 'Delete the message and ignore it' },
+                        outcome: 'neutral',
+                        feedback: {
+                          vi: '⚠️ Ổn. Bạn đã tự bảo vệ được mình, nhưng bỏ lỡ cơ hội giúp người khác. Báo cáo tin nhắn lừa đảo giúp ngăn những nạn nhân tiếp theo.',
+                          en: '⚠️ Okay. You protected yourself, but missed a chance to help others. Reporting scam messages prevents future victims.'
+                        }
+                      }
+                    ]
+                  }
+                ]
+              } as SandboxBlock
             ]),
             lesson("4.1.3", "Decide", [
               "Decide: Ra quyết định. Có 3 hướng: 1. Tin và hành động (nếu đã xác minh 100%). 2. Không tin và bỏ qua. 3. Cảnh báo và báo cáo (nếu thấy dấu hiệu lừa đảo rõ ràng)."

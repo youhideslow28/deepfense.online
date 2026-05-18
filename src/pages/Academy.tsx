@@ -12,6 +12,7 @@ import GlowButton from '@/components/ui/GlowButton';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { basicsCourse, Module, Section, Lesson } from '@/data/basicsCourseData';
 import LessonMiniGame from '@/features/academy/LessonMiniGame';
+import LessonContentBlock from '@/features/academy/LessonContentBlock';
 
 interface AcademyProps { 
   lang: Language; 
@@ -954,13 +955,27 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   
                   <h1 className="text-3xl md:text-4xl font-black text-white mb-8 uppercase leading-tight italic">{lesson.title}</h1>
                   
-                  <div className="prose prose-invert prose-blue max-w-none">
-                    {lesson.paragraphs.map((p, i) => (
-                      <p key={i} className="text-gray-300 text-base leading-relaxed mb-6 last:mb-0">
-                        {p}
-                      </p>
-                    ))}
-                  </div>
+                  {lesson.blocks && lesson.blocks.length > 0 ? (
+                    <div className="space-y-4">
+                      {lesson.blocks.map((block, bi) => (
+                        <LessonContentBlock
+                          key={bi}
+                          block={block}
+                          lang={lang}
+                          lessonId={lesson.id}
+                          blockIndex={bi}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="prose prose-invert prose-blue max-w-none">
+                      {lesson.paragraphs.map((p, i) => (
+                        <p key={i} className="text-gray-300 text-base leading-relaxed mb-6 last:mb-0">
+                          {p}
+                        </p>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
