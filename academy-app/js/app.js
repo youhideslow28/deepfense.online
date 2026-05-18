@@ -1041,10 +1041,21 @@ const startSubscriptions = (user) => {
 
 // ── Auth state listener ────────────────────────────────────────
 
+// ── Auth session key (read by /academy/basics/ as access gate) ──
+const SESSION_KEY = 'dfb_session_v1';
+
 listenAuth(async (user) => {
   if (user) {
     // Đã đăng nhập
     state.user = user;
+
+    // Ghi session để /academy/basics/ biết đã xác thực
+    try {
+      localStorage.setItem(SESSION_KEY, JSON.stringify({
+        uid: user.uid,
+        loginAt: Date.now(),
+      }));
+    } catch {}
 
     // Cập nhật sidebar user info
     dom.sidebarAvatar.src = user.photoURL || '';
@@ -1071,7 +1082,8 @@ listenAuth(async (user) => {
 
     showScreen('screenApp');
   } else {
-    // Đã đăng xuất
+    // Đã đăng xuất — xoá session
+    try { localStorage.removeItem(SESSION_KEY); } catch {}
     state.user    = null;
     state.progress = null;
     cleanupSubscriptions();
