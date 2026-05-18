@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Target, Timer, ShieldCheck, XCircle, Play, ArrowLeft } from 'lucide-react';
+import { Target, ShieldCheck, XCircle, Play, ArrowLeft } from 'lucide-react';
 import { Language } from '@/types';
 import { TRANSLATIONS } from '@/data';
 import { SCENARIOS, ScenarioDefinition } from '@/data/scenarios';
@@ -259,16 +259,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
 
         {/* LEFT PANEL */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-black/40 border border-white/10 rounded-2xl p-6 backdrop-blur-xl flex flex-col items-center">
-            <Timer
-              size={48}
-              className={status === 'playing' ? 'text-yellow-500 animate-pulse' : 'text-gray-500'}
-            />
-            <div className="text-6xl font-mono mt-4 mb-2 font-black text-white">{timer}s</div>
-            <p className="text-gray-400 text-sm uppercase tracking-widest text-center">
-              {t.detection_time}
-            </p>
-          </div>
+          {/* Timer runs silently in background; seconds shown only in result panels */}
 
           {/* Scenario info badge */}
           <div className="bg-black/30 border border-white/10 rounded-2xl p-4 flex items-center gap-3">
