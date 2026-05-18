@@ -1,0 +1,78 @@
+{
+  "title": "URL Detective",
+  "subtitle": "Phân loại 10 đường link: Thật / Đáng nghi / Giả",
+  "passThreshold": 0.7,
+  "dpf": 20,
+  "rounds": [
+    {
+      "url": "vietcombank.com.vn/dang-nhap",
+      "context": "Bạn nhận được email từ 'Vietcombank' yêu cầu xác minh tài khoản. Email có logo ngân hàng, đúng màu sắc, và kèm đường link này.",
+      "verdict": "real",
+      "explanation": "Đây là tên miền chính thức của Vietcombank. vietcombank.com.vn là domain hợp lệ, đuôi .com.vn được cấp bởi VNNIC cho doanh nghiệp Việt Nam.",
+      "flags": ["Domain khớp tên ngân hàng chính thức", "Đuôi .com.vn đúng chuẩn"]
+    },
+    {
+      "url": "vietc0mbank.com/dang-nhap-xac-minh",
+      "context": "Tin nhắn SMS: 'Tài khoản của bạn bị khóa do đăng nhập lạ. Xác minh ngay tại đường link sau để mở khóa.'",
+      "verdict": "fake",
+      "explanation": "Chữ 'o' trong 'vietcombank' bị thay bằng số '0' — đây là kỹ thuật typosquatting. Đuôi .com (không có .vn) cũng là dấu hiệu giả mạo. Kẻ tấn công mua tên miền gần giống để đánh lừa người nhìn lướt.",
+      "flags": ["Ký tự '0' thay cho chữ 'o'", "Thiếu đuôi .vn", "Đường dẫn chứa từ 'xac-minh' tạo cảm giác khẩn cấp"]
+    },
+    {
+      "url": "support.google.com/accounts/answer/185833",
+      "context": "Bạn quên mật khẩu Google và tìm kiếm hướng dẫn khôi phục. Kết quả đầu tiên của Google Search dẫn đến link này.",
+      "verdict": "real",
+      "explanation": "support.google.com là subdomain chính thức của Google dành cho hỗ trợ. Root domain là google.com — tên miền hợp lệ không thể giả mạo nếu bạn nhìn đúng phần root.",
+      "flags": ["Root domain: google.com", "Subdomain 'support' chính thức"]
+    },
+    {
+      "url": "google-accounts-security.com/verify",
+      "context": "Email cảnh báo: 'Ai đó đăng nhập vào tài khoản Google của bạn từ thiết bị lạ ở Hà Nội. Xác nhận ngay.'",
+      "verdict": "fake",
+      "explanation": "Root domain là google-accounts-security.com — không phải google.com. Đây là kỹ thuật thêm từ khóa uy tín ('google', 'accounts', 'security') vào tên miền giả. Google không bao giờ dùng domain ngoài google.com.",
+      "flags": ["Root domain KHÔNG phải google.com", "Kết hợp nhiều từ uy tín để đánh lừa", "Tạo cảm giác chính thức bằng cách đặt tên"]
+    },
+    {
+      "url": "momo.vn/chuyen-tien",
+      "context": "Bạn cần chuyển tiền cho bạn bè qua ví MoMo. Bạn gõ momo.vn vào trình duyệt.",
+      "verdict": "real",
+      "explanation": "momo.vn là tên miền chính thức của ví điện tử MoMo, được cấp phép hoạt động tại Việt Nam. Domain ngắn, đúng tên thương hiệu, đuôi .vn hợp lệ.",
+      "flags": ["Domain khớp thương hiệu chính thức", "Đuôi .vn hợp lệ"]
+    },
+    {
+      "url": "m0m0-xacminh.net/nhan-thuong",
+      "context": "Bạn nhận tin nhắn Zalo: 'Chúc mừng! Tài khoản MoMo của bạn được chọn ngẫu nhiên nhận thưởng 500.000đ. Đăng nhập tại đây để nhận.'",
+      "verdict": "fake",
+      "explanation": "Hai dấu hiệu đỏ: (1) Chữ 'o' thay bằng số '0' trong m0m0; (2) Đuôi .net thay vì .vn. Thêm vào đó, /nhan-thuong là mồi nhử điển hình của scam 'trúng thưởng'. MoMo không thông báo thưởng qua Zalo cá nhân.",
+      "flags": ["Ký tự '0' thay cho chữ 'o'", "Đuôi .net không khớp thương hiệu VN", "Mồi 'nhận thưởng' không có lý do"]
+    },
+    {
+      "url": "secure-login.vietinbank.vn.user-auth.com/login",
+      "context": "Kết quả quảng cáo trên Facebook: 'Đăng nhập VietinBank iPay nhanh hơn — nhấn để mở.' Có logo ngân hàng, màu xanh đặc trưng.",
+      "verdict": "fake",
+      "explanation": "Nhìn kỹ: root domain là user-auth.com, không phải vietinbank.vn. Kẻ tấn công đặt 'vietinbank.vn' làm subdomain để đánh lừa người đọc lướt từ trái sang. Đây là kỹ thuật subdomain spoofing rất phổ biến.",
+      "flags": ["Root domain thực là user-auth.com", "vietinbank.vn chỉ là subdomain giả mạo", "Quảng cáo trả tiền không xác minh đích đến"]
+    },
+    {
+      "url": "shopee.vn/flash-sale/dien-thoai",
+      "context": "Bạn đang tìm điện thoại giảm giá. Bạn bè gửi link flash sale Shopee qua Messenger.",
+      "verdict": "real",
+      "explanation": "shopee.vn là tên miền chính thức của Shopee Việt Nam. /flash-sale/dien-thoai là đường dẫn nội bộ hợp lệ. Không có dấu hiệu bất thường trong URL này.",
+      "flags": ["Root domain shopee.vn chính thức", "Đường dẫn tự nhiên, không ép buộc"]
+    },
+    {
+      "url": "sh0pee-flashsale.com/giam-80-phan-tram",
+      "context": "Bạn thấy bài đăng Facebook: 'Shopee Flash Sale sập giá 80% hôm nay thôi — đặt hàng ngay kẻo hết!' kèm đường link này.",
+      "verdict": "fake",
+      "explanation": "Chữ 'o' thứ hai trong Shopee bị thay bằng số '0'. Đuôi .com thay vì .vn. Đường dẫn /giam-80-phan-tram là mồi nhử khẩn cấp. Giảm 80% là con số phi thực tế thường dùng trong scam mua hàng.",
+      "flags": ["Ký tự '0' trong tên domain", "Đuôi .com thay .vn", "Tỷ lệ giảm giá phi thực tế 80%", "Áp lực thời gian 'hôm nay thôi'"]
+    },
+    {
+      "url": "dichvucong.gov.vn/cam-nang-cong-dan",
+      "context": "Bạn đang tìm cách làm căn cước công dân online. Một người trong nhóm Zalo gia đình gửi link này và bảo 'đăng ký ở đây nhanh lắm'.",
+      "verdict": "suspicious",
+      "explanation": "dichvucong.gov.vn là website chính phủ hợp lệ. Tuy nhiên, cần thận trọng: (1) đường dẫn /cam-nang-cong-dan không phải trang đăng ký trực tiếp; (2) link từ nhóm chat không đảm bảo đây là link mới nhất hay đúng quy trình. Nên tự gõ địa chỉ vào trình duyệt thay vì nhấn link được gửi.",
+      "flags": ["Domain .gov.vn hợp lệ", "Nhưng link được gửi qua chat — nên tự kiểm tra trực tiếp", "Đường dẫn không phải trang dịch vụ chính thức"]
+    }
+  ]
+}
