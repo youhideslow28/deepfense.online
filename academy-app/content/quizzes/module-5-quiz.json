@@ -1,150 +1,137 @@
 {
   "moduleId": 5,
-  "title": "Nhận diện giọng nói và âm thanh giả mạo",
+  "title": "OTP và ứng dụng độc hại",
+  "tag": "Module 5 — OTP và ứng dụng độc hại",
   "questions": [
     {
       "id": "m5q01",
-      "text": "Voice deepfake (AI cloning giọng nói) cần tối thiểu bao nhiêu dữ liệu âm thanh để tạo ra bản sao chấp nhận được?",
+      "tag": "Module 5 — OTP và ứng dụng độc hại",
+      "text": "OTP (One-Time Password) là gì và đặc điểm quan trọng nhất của nó là gì?",
       "options": [
-        "Ít nhất 10 giờ ghi âm",
-        "Ngày nay chỉ cần 3-30 giây — thậm chí vài giây với các model tiên tiến nhất",
-        "Ít nhất 1 giờ ghi âm chất lượng cao",
-        "Cần toàn bộ lịch sử gọi điện của nạn nhân"
+        "Mật khẩu thông thường dùng nhiều lần, cần ghi nhớ",
+        "Mã xác minh dùng một lần, hết hạn sau vài phút và không thể dùng lại",
+        "Mật khẩu đặc biệt do ngân hàng cấp, dùng vĩnh viễn",
+        "Mã PIN ATM thay thế"
       ],
       "correct": 1,
-      "explanation": "Công nghệ voice cloning đã tiến bộ vượt bậc: các model như ElevenLabs, OpenVoice chỉ cần vài giây ghi âm để tạo ra giọng nói có thể đánh lừa người thân. Điều này làm mọi cuộc gọi bình thường đều tiềm ẩn nguy cơ."
+      "explanation": "OTP là mã bảo mật chỉ hợp lệ cho MỘT giao dịch duy nhất và hết hạn nhanh (thường 1-5 phút). Tính \"dùng một lần\" là lớp bảo vệ quan trọng: dù kẻ xấu đánh cắp được, mã đó cũng vô dụng sau khi bạn dùng hoặc sau khi hết hạn."
     },
     {
       "id": "m5q02",
-      "text": "Dấu hiệu âm thanh nào THƯỜNG gặp trong voice deepfake thế hệ cũ (trước 2022)?",
+      "tag": "Module 5 — OTP và ứng dụng độc hại",
+      "text": "\"Nhân viên ngân hàng\" gọi điện và nói họ cần mã OTP vừa gửi vào điện thoại của bạn để \"xác minh tài khoản và ngăn giao dịch đáng ngờ\". Bạn nên làm gì?",
       "options": [
-        "Giọng quá trầm",
-        "Tiếng ồn nền nhân tạo, ngắt quãng không tự nhiên, và thiếu âm thanh hít thở",
-        "Phát âm quá rõ ràng",
-        "Giọng quá to và rõ"
+        "Đọc mã OTP vì đây là tình huống khẩn cấp",
+        "Hỏi tên nhân viên trước khi đọc mã",
+        "KHÔNG đọc mã OTP — ngân hàng KHÔNG BAO GIỜ hỏi OTP qua điện thoại. Cúp máy và gọi lại tổng đài chính thức",
+        "Đọc một nửa mã OTP để kiểm tra"
       ],
-      "correct": 1,
-      "explanation": "Voice deepfake thế hệ đầu thường: (1) Thiếu tiếng thở và âm thanh tự nhiên giữa câu; (2) Có tiếng ồn nền nhân tạo hoặc âm \"robot\"; (3) Ngắt câu không đúng chỗ; (4) Mất sự biến đổi tự nhiên của cao độ (intonation)."
+      "correct": 2,
+      "explanation": "Đây là chiêu lừa đảo OTP phổ biến nhất. Ngân hàng, ví điện tử hay bất kỳ tổ chức tài chính hợp pháp nào TUYỆT ĐỐI KHÔNG yêu cầu OTP của bạn qua điện thoại. OTP chỉ để bạn tự nhập vào app/web — không phải để đọc cho ai nghe."
     },
     {
       "id": "m5q03",
-      "text": "Kỹ thuật \"voice phishing\" (vishing) kết hợp AI voice cloning thường nhắm vào điều gì?",
+      "tag": "Module 5 — OTP và ứng dụng độc hại",
+      "text": "Tấn công \"SIM swap\" (hoán đổi SIM) là gì?",
       "options": [
-        "Đánh cắp mật khẩu email",
-        "Giả giọng người thân hoặc lãnh đạo để yêu cầu chuyển tiền hoặc cung cấp thông tin nhạy cảm",
-        "Cài phần mềm độc hại vào điện thoại",
-        "Theo dõi vị trí GPS của nạn nhân"
+        "Kẻ tấn công vật lý lấy cắp SIM card của bạn",
+        "Kẻ tấn công thuyết phục nhà mạng chuyển số điện thoại của bạn sang SIM mới do họ kiểm soát, từ đó nhận được tất cả OTP của bạn",
+        "Virus tấn công điện thoại qua kết nối SIM",
+        "Kẻ tấn công clone SIM card bằng thiết bị đặc biệt"
       ],
       "correct": 1,
-      "explanation": "AI vishing là hình thức lừa đảo nguy hiểm: kẻ tấn công giả giọng con cái gọi cho cha mẹ nói bị tai nạn cần tiền, hoặc giả CEO gọi cho kế toán ra lệnh chuyển khoản khẩn cấp. Năm 2019 đã có vụ thiệt hại 220.000 EUR tại UK."
+      "explanation": "SIM swap: kẻ tấn công gọi cho nhà mạng, giả vờ là bạn (dùng thông tin cá nhân đã thu thập trước), yêu cầu chuyển số sang SIM mới. Khi thành công, điện thoại bạn mất sóng — kẻ tấn công nhận được mọi SMS OTP gửi đến số của bạn."
     },
     {
       "id": "m5q04",
-      "text": "Khi nhận cuộc gọi từ \"người thân\" yêu cầu chuyển tiền khẩn cấp, bước xác minh đơn giản nhất là?",
+      "tag": "Module 5 — OTP và ứng dụng độc hại",
+      "text": "So với OTP qua SMS, ứng dụng xác thực (Authenticator app như Google Authenticator, Authy) an toàn hơn vì lý do gì?",
       "options": [
-        "Tin tưởng vì nhận ra giọng",
-        "Cúp máy và gọi lại cho người đó qua số điện thoại bạn đã lưu sẵn (không phải số lạ gọi đến)",
-        "Hỏi thêm về thông tin cá nhân của người đó",
-        "Chuyển một nửa tiền trước để kiểm tra"
+        "Mã từ authenticator app dài hơn và khó đoán hơn",
+        "Authenticator app không phụ thuộc vào mạng điện thoại — không thể bị đánh cắp qua SIM swap hay chặn SMS",
+        "Authenticator app miễn phí còn SMS phải trả tiền",
+        "Mã từ authenticator app không bao giờ hết hạn"
       ],
       "correct": 1,
-      "explanation": "\"Cúp máy, gọi lại\" là phương pháp xác minh cực kỳ hiệu quả. Gọi lại qua số bạn tự lưu (không phải số lạ) đảm bảo bạn liên lạc đúng người thật. Đây là cách đơn giản nhất để phá vỡ mọi cuộc tấn công voice vishing."
+      "explanation": "OTP qua SMS có thể bị đánh cắp bởi SIM swap, malware đọc SMS, hoặc tấn công vào mạng SS7. Authenticator app tạo mã ngay trên thiết bị của bạn mà không cần kết nối mạng — loại bỏ hoàn toàn các vector tấn công qua mạng viễn thông."
     },
     {
       "id": "m5q05",
-      "text": "\"Codeword\" hoặc \"secret phrase\" gia đình giúp chống voice deepfake như thế nào?",
+      "tag": "Module 5 — OTP và ứng dụng độc hại",
+      "text": "Bạn tải ứng dụng đèn pin (flashlight) miễn phí. Khi cài đặt, app yêu cầu quyền truy cập danh bạ, camera, microphone, và vị trí GPS. Đây là dấu hiệu gì?",
       "options": [
-        "Mã hóa cuộc gọi điện thoại",
-        "Chỉ người thật mới biết từ khóa bí mật — AI cloning giọng không thể biết thông tin này",
-        "Tăng chất lượng âm thanh cuộc gọi",
-        "Giúp tìm điện thoại khi bị mất"
+        "Bình thường, app cần nhiều quyền để hoạt động tốt",
+        "Dấu hiệu đỏ: ứng dụng đèn pin không cần bất kỳ quyền nào trong số này — có thể là spyware hoặc adware",
+        "App chất lượng cao luôn xin nhiều quyền để tối ưu trải nghiệm",
+        "Chỉ lo ngại nếu app xin quyền tài chính"
       ],
       "correct": 1,
-      "explanation": "Thiết lập một từ/cụm từ bí mật với gia đình (ví dụ: tên thú cưng hồi nhỏ) là hàng phòng thủ hiệu quả. AI clone chỉ tái tạo được giọng nói, không thể biết thông tin riêng tư này. Hỏi từ khóa ngay khi nghi ngờ."
+      "explanation": "Nguyên tắc \"tối thiểu đặc quyền\" (least privilege): app chỉ nên xin quyền cần thiết cho chức năng cốt lõi. Ứng dụng đèn pin chỉ cần quyền bật đèn flash. Yêu cầu danh bạ, camera, vị trí là bất thường và có thể được dùng để thu thập dữ liệu hoặc gián điệp."
     },
     {
       "id": "m5q06",
-      "text": "Deepfake âm thanh trong \"robocall\" lừa đảo bầu cử hoạt động như thế nào?",
+      "tag": "Module 5 — OTP và ứng dụng độc hại",
+      "text": "\"Sideloading APK\" (cài ứng dụng từ ngoài CH Play) có rủi ro gì?",
       "options": [
-        "Gọi điện quảng cáo sản phẩm giả",
-        "Giả giọng ứng cử viên hoặc quan chức để phát thông điệp gây hiểu lầm tới cử tri",
-        "Tấn công hệ thống bỏ phiếu điện tử",
-        "Gửi tin nhắn SMS giả mạo"
+        "App sẽ chạy chậm hơn bình thường",
+        "App không có icon đẹp như app từ CH Play",
+        "APK từ nguồn không rõ ràng không qua kiểm duyệt bảo mật, có thể chứa malware, spyware hoặc trojan",
+        "Chỉ nguy hiểm nếu cài từ website nước ngoài"
       ],
-      "correct": 1,
-      "explanation": "Năm 2024, trước bầu cử sơ bộ ở New Hampshire (Mỹ), hàng nghìn cử tri nhận được robocall giả giọng Biden khuyên không đi bầu. Đây là hình thức can thiệp bầu cử mới và rất nguy hiểm."
+      "correct": 2,
+      "explanation": "Google Play Store có hệ thống quét bảo mật Play Protect. APK từ nguồn bên ngoài không qua bất kỳ kiểm duyệt nào: kẻ xấu có thể sửa đổi app hợp pháp (ví dụ: giả Zalo, giả app ngân hàng) để nhúng malware rồi phân phối. Chỉ cài app từ kho ứng dụng chính thức."
     },
     {
       "id": "m5q07",
-      "text": "Lợi thế của kẻ tấn công khi dùng voice deepfake so với phishing email truyền thống là?",
+      "tag": "Module 5 — OTP và ứng dụng độc hại",
+      "text": "Bạn muốn tải app ngân hàng Agribank. Cách nào an toàn nhất để xác minh đây là app thật?",
       "options": [
-        "Voice deepfake rẻ hơn và dễ làm hơn email",
-        "Giọng nói tạo cảm giác khẩn cấp và tin tưởng tức thời mà email không có, ít thời gian để suy nghĩ",
-        "Voice deepfake không thể bị phát hiện bởi hệ thống bảo mật",
-        "Email thường bị lọc spam, còn cuộc gọi thì không"
+        "Tìm kiếm \"Agribank app\" trên Google và bấm link đầu tiên",
+        "Hỏi bạn bè xin file APK",
+        "Vào website chính thức của Agribank (agribank.com.vn) và truy cập link tải app từ đó, sau đó kiểm tra tên nhà phát triển trên CH Play",
+        "App nào có lượt tải cao nhất trên CH Play là thật"
       ],
-      "correct": 1,
-      "explanation": "Cuộc gọi điện thoại — đặc biệt từ giọng nói quen thuộc — kích hoạt phản ứng cảm xúc và cảm giác khẩn cấp mạnh hơn email. Não người xử lý giọng nói khác với văn bản, ít phản xạ kiểm tra hơn."
+      "correct": 2,
+      "explanation": "Tìm app ngân hàng qua website chính thức của ngân hàng, sau đó kiểm tra nhà phát triển (developer name) trên CH Play. App Agribank thật có tên nhà phát triển chính thức, không phải tên ngẫu nhiên. Lượt tải cao có thể bị làm giả."
     },
     {
       "id": "m5q08",
-      "text": "Khi nghe một đoạn âm thanh/video và cảm thấy \"có điều gì đó kỳ lạ\" nhưng không nói được cụ thể là gì, bạn nên?",
+      "tag": "Module 5 — OTP và ứng dụng độc hại",
+      "text": "Buổi sáng, điện thoại của bạn đột ngột không còn sóng mạng dù ở khu vực thường có sóng tốt. Bạn không thể gọi hay nhận cuộc gọi. Đây có thể là dấu hiệu của gì?",
       "options": [
-        "Bỏ qua cảm giác đó vì không chắc chắn",
-        "Tin vào trực giác, dừng lại và kiểm chứng trước khi hành động hoặc chia sẻ",
-        "Hỏi AI chatbot để xác nhận",
-        "Chia sẻ ngay với ghi chú \"chưa xác minh\""
+        "Điện thoại cần sạc pin",
+        "Nhà mạng bảo trì hệ thống",
+        "Có thể bạn đang là nạn nhân của SIM swap — liên hệ ngay nhà mạng và ngân hàng để xác minh và khóa tài khoản nếu cần",
+        "SIM card bị hỏng, cần thay SIM mới"
       ],
-      "correct": 1,
-      "explanation": "Trực giác \"uncanny valley\" của não người là hệ thống cảnh báo tự nhiên đáng tin. Khi não cảm nhận \"điều gì đó không đúng\" với giọng nói hay âm thanh, đừng bỏ qua — đây thường là dấu hiệu của sự không tự nhiên mà não bạn nhận ra trước khi bạn có thể mô tả."
+      "correct": 2,
+      "explanation": "Mất sóng đột ngột (đặc biệt sau khi có hoạt động bất thường) có thể là dấu hiệu SIM đã bị swap. Hành động ngay: gọi từ điện thoại khác cho nhà mạng xác minh, thông báo cho ngân hàng, và kiểm tra xem có giao dịch lạ nào không. Thời gian là yếu tố quan trọng."
     },
     {
       "id": "m5q09",
-      "text": "Âm thanh nào sau đây khó bị giả mạo bằng AI nhất trong hiện tại?",
+      "tag": "Module 5 — OTP và ứng dụng độc hại",
+      "text": "Kẻ tấn công biết username và mật khẩu ngân hàng của bạn. Nếu bạn đã bật xác thực 2 yếu tố (2FA), họ vẫn gặp khó khăn gì?",
       "options": [
-        "Giọng đọc văn bản chuẩn bị sẵn",
-        "Phản ứng tự nhiên, tức thì trước câu hỏi bất ngờ với nội dung riêng tư mà chỉ người thật biết",
-        "Giọng hát bài hát quen thuộc",
-        "Tiếng khóc hoặc cười"
+        "Không khó khăn gì, 2FA dễ dàng bị bỏ qua",
+        "Họ cần thêm mã OTP/xác minh từ thiết bị thứ hai mà họ không có",
+        "2FA chỉ làm chậm tấn công vài giây",
+        "Họ có thể dùng mật khẩu để tắt 2FA"
       ],
       "correct": 1,
-      "explanation": "AI voice cloning chỉ sao chép đặc điểm giọng nói, không thể biết thông tin riêng tư. Hỏi bất ngờ về kỷ niệm cụ thể (\"Em nhớ không, chúng ta đặt tên con mèo năm đó là gì?\") là thử thách mà AI clone không thể vượt qua."
+      "explanation": "2FA (xác thực 2 yếu tố) thêm một lớp bảo vệ: \"thứ bạn biết\" (mật khẩu) + \"thứ bạn có\" (điện thoại/authenticator). Dù mật khẩu bị lộ, kẻ tấn công vẫn cần OTP từ thiết bị của bạn — đây là lý do 2FA giảm đáng kể rủi ro xâm nhập tài khoản."
     },
     {
       "id": "m5q10",
-      "text": "Tại sao cuộc gọi video (video call) không đảm bảo tuyệt đối rằng người bạn đang nói chuyện là thật?",
+      "tag": "Module 5 — OTP và ứng dụng độc hại",
+      "text": "Bạn nhận được cuộc gọi: \"Tôi là nhân viên hỗ trợ kỹ thuật VCB. Tài khoản của anh/chị đang bị tấn công. Để bảo vệ tài khoản, anh/chị cần cài app hỗ trợ từ xa này và cho chúng tôi điều khiển máy để kiểm tra.\" Bạn nên làm gì?",
       "options": [
-        "Vì chất lượng video thường kém",
-        "Vì deepfake real-time (video + audio) ngày càng khả thi với công nghệ hiện tại",
-        "Vì người ta có thể tắt camera",
-        "Vì kết nối internet không ổn định"
+        "Làm theo hướng dẫn vì nhân viên ngân hàng biết cách bảo vệ tài khoản tốt nhất",
+        "Hỏi tên nhân viên và mã số nhân viên trước khi cài app",
+        "Từ chối hoàn toàn, cúp máy, gọi lại tổng đài VCB chính thức — ngân hàng không bao giờ yêu cầu quyền điều khiển từ xa thiết bị của khách hàng",
+        "Cài app nhưng theo dõi chặt để chắc chắn họ không làm gì xấu"
       ],
-      "correct": 1,
-      "explanation": "Công nghệ real-time deepfake (như DeepFaceLive) có thể hoạt động trong cuộc gọi video trực tiếp. Đây là lý do xác minh danh tính trong giao dịch nhạy cảm không nên chỉ dựa vào video call mà cần thêm bước xác minh độc lập."
-    },
-    {
-      "id": "m5q11",
-      "text": "\"Liveness detection\" trong hệ thống xác minh danh tính hoạt động như thế nào?",
-      "options": [
-        "Kiểm tra xem người dùng có online hay không",
-        "Yêu cầu hành động ngẫu nhiên (nháy mắt, quay đầu, đọc số) để xác nhận đây là người thật, không phải ảnh hoặc deepfake",
-        "Đo nhịp tim qua camera",
-        "Quét mống mắt để xác minh"
-      ],
-      "correct": 1,
-      "explanation": "Liveness detection là kỹ thuật chống deepfake trong KYC (Know Your Customer): yêu cầu người dùng thực hiện hành động ngẫu nhiên trong thời gian thực để chứng minh đây không phải ảnh chụp, video phát lại, hay deepfake."
-    },
-    {
-      "id": "m5q12",
-      "text": "Hành động nào là ĐÚNG khi nhận cuộc gọi khẩn cấp lạ giọng của người thân?",
-      "options": [
-        "Hỏi \"Con có ổn không?\" — vì thông tin về tình huống khẩn cấp có thể đã bị thu thập trước",
-        "Hỏi câu hỏi cụ thể chỉ người thật biết, sau đó cúp máy và gọi lại qua số đã lưu",
-        "Chuyển tiền ngay và hỏi sau",
-        "Tin tưởng hoàn toàn vì \"nhận ra giọng\""
-      ],
-      "correct": 1,
-      "explanation": "Tránh hỏi câu hỏi có thể trả lời \"có/không\" (kẻ lừa đảo có thể đã nghiên cứu về bạn). Thay vào đó hỏi: \"Tên con thú cưng đầu tiên của mình là gì?\" — thông tin riêng tư AI không thể biết. Sau đó luôn gọi lại để xác minh."
+      "correct": 2,
+      "explanation": "Yêu cầu cài app điều khiển từ xa (như AnyDesk, TeamViewer) là kỹ thuật lừa đảo nguy hiểm: kẻ tấn công sẽ có toàn quyền truy cập điện thoại, nhìn thấy OTP, và thực hiện giao dịch. Ngân hàng hợp pháp KHÔNG BAO GIỜ yêu cầu điều này. Cúp máy ngay."
     }
   ]
 }

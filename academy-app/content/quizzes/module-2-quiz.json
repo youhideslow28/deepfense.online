@@ -1,150 +1,137 @@
 {
   "moduleId": 2,
-  "title": "Deepfake tác động như thế nào?",
+  "title": "Deepfake Audio",
+  "tag": "Module 2 — Deepfake Audio",
   "questions": [
     {
       "id": "m2q01",
-      "text": "Hình thức tấn công cá nhân nào liên quan đến deepfake phổ biến nhất hiện nay?",
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Công nghệ voice cloning (nhân bản giọng nói) hoạt động như thế nào về cơ bản?",
       "options": [
-        "Hack tài khoản ngân hàng trực tiếp",
-        "Non-consensual intimate imagery (NCII) — ảnh/video khiêu dâm deepfake không được đồng ý",
-        "Gửi virus qua email",
-        "Thay đổi điểm số học tập"
+        "Thuê diễn viên lồng tiếng bắt chước giọng của người mục tiêu",
+        "AI phân tích đặc điểm giọng nói từ vài chục giây đến vài phút ghi âm, sau đó tổng hợp giọng nói mới mô phỏng y hệt người đó",
+        "Cắt ghép các đoạn ghi âm thật của người đó lại với nhau",
+        "Dùng bộ lọc âm thanh (equalizer) để biến đổi giọng người khác"
       ],
       "correct": 1,
-      "explanation": "NCII (Non-consensual intimate imagery) deepfake là hình thức phổ biến và gây tổn thương nặng nề nhất với cá nhân — chủ yếu nhắm vào phụ nữ, gây tổn hại danh dự, sức khỏe tâm thần và đời sống cá nhân."
+      "explanation": "Voice cloning dùng mô hình TTS (Text-to-Speech) hoặc GAN âm thanh để học các đặc trưng giọng nói (cao độ, nhịp điệu, âm sắc). Với chỉ 3–30 giây ghi âm, các công cụ hiện đại có thể tạo giọng nói tổng hợp gần như không thể phân biệt với giọng thật."
     },
     {
       "id": "m2q02",
-      "text": "Khi deepfake của bạn lan truyền trên mạng, tác động tâm lý nào thường xảy ra với nạn nhân?",
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Bạn nhận được cuộc gọi điện thoại từ giọng nói giống hệt người thân, nói rằng họ đang gặp tai nạn và cần bạn chuyển tiền ngay. Dấu hiệu giọng AI nào dưới đây nên khiến bạn nghi ngờ?",
       "options": [
-        "Nạn nhân thường cảm thấy vui vì được chú ý",
-        "Lo âu, trầm cảm, xấu hổ, và trong nhiều trường hợp nghiêm trọng là ý định tự làm hại bản thân",
-        "Không có tác động tâm lý nào đáng kể",
-        "Chỉ cảm thấy khó chịu trong vài ngày"
+        "Giọng quá to và rõ ràng",
+        "Cuộc gọi có tiếng ồn nền",
+        "Giọng nói đều đều một chiều, thiếu cảm xúc tự nhiên, các khoảng dừng bất thường hoặc không đúng chỗ",
+        "Người gọi nói tiếng Việt có giọng địa phương"
       ],
-      "correct": 1,
-      "explanation": "Nghiên cứu cho thấy nạn nhân của deepfake NCII trải qua tổn thương tâm lý nghiêm trọng tương tự nạn nhân bạo lực tình dục: lo âu mãn tính, trầm cảm, PTSD, và mất tin tưởng vào cộng đồng."
+      "correct": 2,
+      "explanation": "Giọng AI thường thiếu những biến thể cảm xúc vi tế mà con người thể hiện trong tình huống căng thẳng: run giọng, nghẹn ngào, nhịp thở nhanh. Khoảng dừng (pause) của AI thường xuất hiện đột ngột hoặc không đúng nhịp tự nhiên của câu nói."
     },
     {
       "id": "m2q03",
-      "text": "Đối với doanh nghiệp, rủi ro deepfake nghiêm trọng nhất liên quan đến lĩnh vực nào?",
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Bạn nhận được cuộc gọi từ người tự xưng là công an, giọng nghe có vẻ khẩn trương, nói bạn liên quan đến vụ án rửa tiền và cần chuyển tiền vào tài khoản \"an toàn\" ngay. Đây là kịch bản lừa đảo nào?",
       "options": [
-        "Thiết kế website",
-        "Gian lận tài chính và thiệt hại uy tín thương hiệu",
-        "Quản lý kho hàng",
-        "Chăm sóc khách hàng thông thường"
+        "Phishing qua email",
+        "Giả mạo công an (vishing) — kịch bản lừa đảo qua điện thoại phổ biến nhất tại Việt Nam",
+        "Ransomware tấn công thiết bị",
+        "Social engineering qua mạng xã hội"
       ],
       "correct": 1,
-      "explanation": "Deepfake nhắm vào doanh nghiệp theo hai hướng chính: (1) Gian lận tài chính — giả giọng/hình ảnh CEO để ra lệnh chuyển tiền; (2) Phá hoại thương hiệu — tạo video giả CEO phát ngôn sai để sụt giá cổ phiếu hoặc gây khủng hoảng PR."
+      "explanation": "Giả danh cơ quan công an là kịch bản vishing (voice phishing) phổ biến nhất tại Việt Nam. Kẻ lừa đảo tạo áp lực tâm lý bằng từ ngữ pháp lý, yêu cầu bảo mật tuyệt đối, và thời hạn gấp để nạn nhân không kịp suy nghĩ hoặc hỏi ý kiến người khác."
     },
     {
       "id": "m2q04",
-      "text": "Năm 2023, một video deepfake của CEO một công ty niêm yết lan truyền với nội dung \"thừa nhận gian lận\". Hậu quả gần nhất có thể xảy ra là?",
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Kẻ lừa đảo gọi cho nhân viên kế toán bằng giọng y hệt giám đốc, yêu cầu chuyển tiền gấp cho đối tác mới trước khi hết giờ làm. Dấu hiệu nào trong kịch bản này cho thấy đây có thể là deepfake audio?",
       "options": [
-        "Cổ phiếu công ty tăng mạnh",
-        "Cổ phiếu giảm ngay lập tức và mất niềm tin nhà đầu tư",
-        "Không ảnh hưởng gì vì thị trường chứng khoán ổn định",
-        "Sản phẩm của công ty bán chạy hơn"
+        "Giám đốc gọi điện thay vì nhắn tin",
+        "Yêu cầu khẩn cấp bất thường, giao dịch không qua quy trình thông thường, và yêu cầu bảo mật \"không được nói với ai\"",
+        "Giám đốc nói tiếng Anh lẫn tiếng Việt",
+        "Cuộc gọi đến vào giờ làm việc bình thường"
       ],
       "correct": 1,
-      "explanation": "Thị trường tài chính phản ứng với thông tin gần như ngay lập tức. Ngay cả khi deepfake bị vạch trần sau đó, thiệt hại ngắn hạn về giá cổ phiếu và niềm tin đã xảy ra rồi — không thể hoàn toàn lấy lại."
+      "explanation": "Ba dấu hiệu đỏ của lừa đảo deepfake audio doanh nghiệp: (1) Áp lực thời gian bất thường, (2) Bỏ qua quy trình phê duyệt thông thường, (3) Yêu cầu giữ bí mật. Không có giao dịch tài chính hợp lệ nào cần những điều kiện này."
     },
     {
       "id": "m2q05",
-      "text": "Deepfake trong bối cảnh chính trị gây ra mối đe dọa gì cho xã hội?",
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Bạn nhận được cuộc gọi từ người xưng là con trai đang du học ở nước ngoài, giọng nghe đúng nhưng có khoảng lặng lạ, nói cần tiền gấp vì mất ví. Bước xác minh HIỆU QUẢ NHẤT là gì?",
       "options": [
-        "Làm tăng sự tham gia bầu cử của công dân",
-        "Xói mòn niềm tin vào thể chế, kích động bạo loạn, và can thiệp bầu cử",
-        "Giúp người dân hiểu chính trị tốt hơn",
-        "Không có tác động xã hội đáng kể"
+        "Hỏi tên đầy đủ và ngày sinh của con để xác nhận danh tính",
+        "Yêu cầu gửi ảnh chụp giấy tờ tùy thân qua zalo",
+        "Kết thúc cuộc gọi ngay, gọi lại trực tiếp cho con theo số đã lưu từ trước, hoặc liên lạc qua kênh khác (video call, nhắn tin)",
+        "Chuyển một khoản nhỏ trước để kiểm tra xem tài khoản có đúng không"
       ],
-      "correct": 1,
-      "explanation": "Deepfake chính trị có thể: (1) Khiến chính trị gia nói điều họ không nói; (2) Tạo \"tình huống khủng hoảng\" giả để gây hoảng loạn; (3) Làm mờ ranh giới thật/giả đến mức công chúng mất tin tưởng vào mọi thông tin."
+      "correct": 2,
+      "explanation": "Xác minh hiệu quả nhất là ngắt cuộc gọi và liên lạc lại theo kênh độc lập đã biết từ trước. Kẻ lừa đảo có thể đã biết tên, ngày sinh từ mạng xã hội — câu hỏi xác minh dựa trên thông tin công khai không an toàn."
     },
     {
       "id": "m2q06",
-      "text": "\"Liar's dividend\" (cổ tức của kẻ nói dối) trong bối cảnh deepfake là gì?",
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "\"Từ khóa an toàn gia đình\" (family safe word) là gì và tại sao nó quan trọng trong thời đại deepfake audio?",
       "options": [
-        "Lợi nhuận từ việc bán công nghệ deepfake",
-        "Kẻ xấu dùng sự tồn tại của deepfake để phủ nhận bằng chứng thật là \"deepfake\"",
-        "Tiền thưởng cho người phát hiện deepfake",
-        "Thuế đánh vào nội dung AI tạo ra"
+        "Mật khẩu dùng để khóa tài khoản mạng xã hội của gia đình",
+        "Một từ hoặc cụm từ bí mật chỉ các thành viên gia đình biết, dùng để xác nhận danh tính thật trong tình huống khẩn cấp qua điện thoại",
+        "Từ khóa đặt trên router wifi để bảo vệ mạng gia đình",
+        "Ký hiệu bí mật để nhận ra tin nhắn quan trọng trong nhóm chat gia đình"
       ],
       "correct": 1,
-      "explanation": "\"Liar's dividend\" là hệ quả nguy hiểm: khi deepfake phổ biến, bất kỳ video thật nào cũng có thể bị tuyên bố là deepfake để bác bỏ. Điều này cho phép tội phạm và chính trị gia từ chối trách nhiệm trước bằng chứng xác thực."
+      "explanation": "Family safe word là lớp bảo vệ đơn giản nhưng hiệu quả: một từ bí mật chỉ gia đình biết mà AI không thể đoán được. Nếu người gọi không biết từ khóa này, đó là tín hiệu cảnh báo dù giọng nghe có giống đến đâu."
     },
     {
       "id": "m2q07",
-      "text": "Tác động của deepfake đến lòng tin xã hội được mô tả chính xác nhất là?",
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Đặc điểm kỹ thuật nào của giọng nói AI tổng hợp thường bộc lộ rõ nhất khi cần đọc những câu chứa nhiều tên riêng, địa danh hoặc thuật ngữ chuyên ngành?",
       "options": [
-        "Chỉ ảnh hưởng đến người già không quen công nghệ",
-        "Tạo ra \"khủng hoảng nhận thức\" — khó phân biệt nội dung thật với giả ở quy mô xã hội",
-        "Không đáng kể vì mọi người đều thông minh",
-        "Chỉ xảy ra ở các nước đang phát triển"
+        "Giọng đọc nhanh hơn bình thường",
+        "Phát âm sai hoặc nhấn trọng âm không tự nhiên ở những từ ít gặp trong dữ liệu huấn luyện",
+        "Âm lượng tăng đột ngột khi đọc tên riêng",
+        "Giọng chuyển sang tiếng Anh khi gặp từ nước ngoài"
       ],
       "correct": 1,
-      "explanation": "Khi công chúng không còn chắc chắn điều gì là thật, họ có xu hướng hoặc tin tất cả hoặc không tin gì. Cả hai đều nguy hiểm: tạo điều kiện cho tin giả và làm tê liệt khả năng phản ứng với thông tin quan trọng."
+      "explanation": "Mô hình TTS và voice cloning học từ dữ liệu âm thanh — các từ hiếm gặp (tên riêng, địa danh đặc biệt, thuật ngữ chuyên ngành) thường được phát âm không tự nhiên hoặc sai trọng âm. Đây là điểm yếu kỹ thuật quan trọng để phát hiện giọng AI."
     },
     {
       "id": "m2q08",
-      "text": "Một học sinh bị bạn cùng lớp tạo deepfake ghép mặt vào nội dung xấu rồi phát tán trong trường. Đây là hành vi gì?",
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Bạn đang nói chuyện qua điện thoại và nghi ngờ giọng phía bên kia là AI. Câu hỏi nào dưới đây HỮU ÍCH NHẤT để kiểm tra?",
       "options": [
-        "Trò đùa vô hại",
-        "Hành vi bắt nạt mạng (cyberbullying) nghiêm trọng có thể cấu thành tội phạm",
-        "Chỉ là sự cố kỹ thuật",
-        "Không đáng lo ngại nếu chỉ trong phạm vi bạn bè"
+        "\"Anh/chị sinh năm nào?\" — hỏi thông tin cá nhân cơ bản",
+        "\"Anh/chị tên đầy đủ là gì?\" — hỏi tên đầy đủ",
+        "\"Lần cuối chúng ta gặp nhau, chúng ta đã làm gì cùng nhau?\" — hỏi ký ức chung cụ thể mà AI không thể có",
+        "\"Anh/chị đang ở đâu bây giờ?\" — hỏi vị trí hiện tại"
       ],
-      "correct": 1,
-      "explanation": "Tạo và phát tán NCII deepfake — kể cả với đối tượng chưa thành niên — là hành vi cấu thành tội phạm tại nhiều quốc gia. Tại Việt Nam, hành vi này vi phạm Luật An ninh mạng và có thể bị truy tố hình sự."
+      "correct": 2,
+      "explanation": "Câu hỏi về ký ức chung cụ thể (bữa ăn chung, sự kiện đặc biệt, chi tiết chỉ hai người biết) là bẫy hiệu quả nhất với AI. AI không có ký ức thật về mối quan hệ của bạn, trong khi thông tin như tên, ngày sinh có thể bị khai thác từ mạng xã hội."
     },
     {
       "id": "m2q09",
-      "text": "Tại sao nhóm dễ bị tổn thương nhất bởi deepfake thường là phụ nữ và trẻ em gái?",
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Nguyên tắc nào KHÔNG BAO GIỜ nên vi phạm khi nhận cuộc gọi yêu cầu chuyển tiền, dù giọng nghe như người thân hay lãnh đạo?",
       "options": [
-        "Vì họ sử dụng internet nhiều hơn",
-        "Vì NCII deepfake chủ yếu nhắm vào họ như một hình thức bạo lực giới",
-        "Vì họ ít hiểu biết về công nghệ hơn",
-        "Vì họ thường có nhiều ảnh công khai hơn trên mạng"
+        "Không được tắt máy trước khi người kia nói xong",
+        "Không bao giờ thực hiện giao dịch tài chính chỉ dựa trên lệnh qua điện thoại mà chưa xác minh qua kênh độc lập",
+        "Không được để cuộc gọi kéo dài quá 5 phút",
+        "Không nên hỏi lại nhiều lần để tránh làm phiền người gọi"
       ],
       "correct": 1,
-      "explanation": "Theo nghiên cứu của Sensity AI (2019), hơn 96% deepfake online là NCII nhắm vào phụ nữ — phản ánh bạo lực giới có cấu trúc. Đây không chỉ là vấn đề công nghệ mà là vấn đề bình đẳng giới."
+      "explanation": "Nguyên tắc vàng: KHÔNG CHUYỂN TIỀN chỉ vì một cuộc gọi điện thoại, dù nghe giống ai đi nữa. Mọi giao dịch tài chính đều phải được xác nhận qua ít nhất một kênh độc lập (gặp mặt trực tiếp, video call có xác minh, hoặc gọi lại số đã biết từ trước)."
     },
     {
       "id": "m2q10",
-      "text": "Tác động kinh tế trực tiếp của một cuộc tấn công deepfake vào doanh nghiệp có thể bao gồm?",
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Nếu bạn đã lỡ chuyển tiền vì bị lừa qua cuộc gọi deepfake audio, bước nào cần thực hiện NGAY LẬP TỨC?",
       "options": [
-        "Chỉ chi phí PR để xử lý khủng hoảng",
-        "Tổn thất tài chính từ gian lận, chi phí kiểm tra pháp lý, thiệt hại cổ phiếu, và mất hợp đồng kinh doanh",
-        "Không có tác động kinh tế vì bảo hiểm sẽ chi trả",
-        "Chỉ ảnh hưởng đến công ty nhỏ, không đáng kể với tập đoàn lớn"
-      ],
-      "correct": 1,
-      "explanation": "Chi phí từ sự cố deepfake với doanh nghiệp là đa tầng: thiệt hại tài chính trực tiếp (gian lận chuyển tiền), chi phí kiểm tra và xử lý sự cố, thiệt hại thị trường (cổ phiếu), và thiệt hại dài hạn từ mất niềm tin đối tác/khách hàng."
-    },
-    {
-      "id": "m2q11",
-      "text": "Điều nào sau đây MÔ TẢ CHÍNH XÁC về tốc độ lan truyền của deepfake trên mạng xã hội?",
-      "options": [
-        "Deepfake lan truyền chậm vì các nền tảng có hệ thống kiểm duyệt tốt",
-        "Nội dung gây sốc và gây cảm xúc mạnh (bao gồm deepfake) lan truyền nhanh hơn thông tin chính xác",
-        "Deepfake chỉ lan truyền trên Dark Web",
-        "Tốc độ lan truyền của deepfake tương đương nội dung thông thường"
-      ],
-      "correct": 1,
-      "explanation": "Nghiên cứu MIT (2018) trên Twitter cho thấy tin giả lan nhanh hơn tin thật 6 lần. Nội dung kích thích cảm xúc mạnh — đặc biệt là kinh ngạc, tức giận — có tỉ lệ chia sẻ cao nhất, bất kể tính xác thực."
-    },
-    {
-      "id": "m2q12",
-      "text": "Hành động nào KHÔNG nên làm khi bạn phát hiện ra mình là nạn nhân của deepfake?",
-      "options": [
-        "Lưu bằng chứng (ảnh chụp màn hình, URL, thời điểm)",
-        "Báo cáo với nền tảng mạng xã hội nơi nội dung xuất hiện",
-        "Cố gắng tranh luận và phản bác từng người chia sẻ nội dung",
-        "Liên hệ cơ quan công an hoặc tổ chức hỗ trợ pháp lý"
+        "Gọi lại số điện thoại vừa lừa bạn để đòi lại tiền",
+        "Đăng lên mạng xã hội để cảnh báo mọi người trước",
+        "Liên hệ ngân hàng ngay để yêu cầu đóng băng/hủy giao dịch, sau đó trình báo công an với đầy đủ bằng chứng (số điện thoại, thời gian, nội dung cuộc gọi, thông tin tài khoản nhận tiền)",
+        "Chờ xem tiền có được hoàn trả tự động không"
       ],
       "correct": 2,
-      "explanation": "Cố tranh luận với từng người là vô ích và gây kiệt sức, đồng thời làm nội dung lan truyền rộng hơn. Ưu tiên đúng: bảo tồn bằng chứng → báo cáo nền tảng → tìm hỗ trợ pháp lý chuyên nghiệp."
+      "explanation": "Hai bước khẩn cấp: (1) Gọi ngân hàng NGAY — trong vòng vài giờ đầu có cơ hội chặn giao dịch trước khi tiền được rút; (2) Trình báo công an với đầy đủ bằng chứng. Không liên lạc lại với kẻ lừa đảo — điều này sẽ để lộ thêm thông tin và không thu hồi được tiền."
     }
   ]
 }

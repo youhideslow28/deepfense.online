@@ -1,150 +1,137 @@
 {
   "moduleId": 4,
-  "title": "Nhận diện dấu hiệu hình ảnh và video",
+  "title": "Phishing và URL giả mạo",
+  "tag": "Module 4 — Phishing và URL giả mạo",
   "questions": [
     {
       "id": "m4q01",
-      "text": "Khu vực nào trên khuôn mặt thường lộ dấu hiệu deepfake rõ nhất ở video chất lượng thấp-trung bình?",
+      "tag": "Module 4 — Phishing và URL giả mạo",
+      "text": "URL nào sau đây có khả năng cao là giả mạo trang web của Vietcombank?",
       "options": [
-        "Vùng trán và đỉnh đầu",
-        "Vùng viền khuôn mặt, tai, và đường chân tóc",
-        "Vùng cổ họng",
-        "Vùng vai và ngực"
+        "vietcombank.com.vn",
+        "vietcombank.com.evil.vn",
+        "www.vietcombank.com.vn/dang-nhap",
+        "online.vietcombank.com.vn"
       ],
       "correct": 1,
-      "explanation": "Mô hình deepfake thường được huấn luyện để tái tạo phần trung tâm khuôn mặt (mắt, mũi, miệng) tốt hơn vùng ngoại vi. Viền mặt, tai, và đường chân tóc là nơi \"mặt ghép\" gặp \"da và tóc thật\" — dễ tạo ra sự không nhất quán."
+      "explanation": "\"vietcombank.com.evil.vn\" sử dụng kỹ thuật subdomain trick: tên miền thật là \"evil.vn\", còn \"vietcombank.com\" chỉ là subdomain (tên miền phụ). Nhiều người đọc từ trái sang và dừng lại ở \"vietcombank.com\" mà không đọc hết — đây là bẫy nguy hiểm."
     },
     {
       "id": "m4q02",
-      "text": "Dấu hiệu bất thường ở MẮT trong deepfake bao gồm điều gì?",
+      "tag": "Module 4 — Phishing và URL giả mạo",
+      "text": "Tấn công \"homograph\" (đồng âm ký tự) trong URL hoạt động như thế nào?",
       "options": [
-        "Mắt quá to bất thường",
-        "Nháy mắt không tự nhiên, ánh mắt không theo hướng đầu, phản chiếu ánh sáng trong mắt không nhất quán",
-        "Mắt nhìn thẳng quá nhiều",
-        "Màu mắt thay đổi theo thời gian trong video"
+        "Kẻ tấn công đăng ký tên miền có lỗi chính tả",
+        "Kẻ tấn công dùng ký tự từ bảng chữ khác (ví dụ: chữ 'а' Cyrillic) trông giống hệt chữ 'a' Latin nhưng là ký tự khác",
+        "Kẻ tấn công rút gọn URL bằng dịch vụ bit.ly",
+        "Kẻ tấn công dùng địa chỉ IP thay vì tên miền"
       ],
       "correct": 1,
-      "explanation": "Mắt là cửa sổ phát hiện deepfake: (1) Nháy mắt hiếm hoặc bất thường — model cũ không xử lý tốt; (2) Hướng nhìn không đồng bộ với chuyển động đầu; (3) Phản chiếu ánh sáng (catchlight) khác nhau giữa hai mắt hoặc khác với ánh sáng môi trường."
+      "explanation": "Homograph attack dùng ký tự Unicode trông giống ký tự Latin nhưng thực ra khác nhau (ví dụ: chữ 'а' Cyrillic U+0430 so với 'a' Latin U+0061). URL \"pаypal.com\" với chữ 'а' Cyrillic trông y hệt \"paypal.com\" nhưng là tên miền khác hoàn toàn."
     },
     {
       "id": "m4q03",
-      "text": "Trong deepfake video, \"temporal inconsistency\" (không nhất quán theo thời gian) là gì?",
+      "tag": "Module 4 — Phishing và URL giả mạo",
+      "text": "Một trang web có ổ khóa HTTPS và chứng chỉ SSL hợp lệ. Điều này có nghĩa là trang web đó an toàn để nhập mật khẩu không?",
       "options": [
-        "Video quay ở tốc độ khung hình khác nhau",
-        "Đặc điểm khuôn mặt thay đổi đột ngột hoặc nhấp nháy giữa các khung hình liên tiếp",
-        "Âm thanh không đồng bộ với hình ảnh",
-        "Video bị tua nhanh ở một số đoạn"
+        "Có, HTTPS đảm bảo trang web là hợp pháp và đáng tin cậy",
+        "Không, HTTPS chỉ mã hóa kết nối — kẻ lừa đảo cũng có thể có HTTPS trên trang giả mạo",
+        "Có, vì để có chứng chỉ SSL phải qua kiểm tra danh tính nghiêm ngặt",
+        "Chỉ an toàn nếu có EV SSL (ô xanh lá)"
       ],
       "correct": 1,
-      "explanation": "Temporal inconsistency xảy ra khi model deepfake xử lý từng frame độc lập mà không đảm bảo tính liên tục. Kết quả: nốt ruồi xuất hiện/biến mất, màu da thay đổi nhẹ, hay kết cấu da \"rung\" giữa các frame."
+      "explanation": "HTTPS = kết nối được mã hóa, KHÔNG có nghĩa là trang web hợp pháp. Kẻ lừa đảo dễ dàng lấy chứng chỉ SSL miễn phí (Let's Encrypt) cho trang phishing của họ. Bạn có thể \"an toàn\" gửi thông tin cho kẻ xấu qua kết nối được mã hóa. Luôn kiểm tra tên miền, không chỉ ổ khóa."
     },
     {
       "id": "m4q04",
-      "text": "Ánh sáng và bóng tối trong deepfake có thể lộ dấu hiệu gian lận như thế nào?",
+      "tag": "Module 4 — Phishing và URL giả mạo",
+      "text": "Bạn nhận được link rút gọn bit.ly/xK8mPq trong email. Rủi ro chính của URL rút gọn là gì?",
       "options": [
-        "Deepfake luôn có hình ảnh quá sáng",
-        "Bóng đổ của khuôn mặt không nhất quán với nguồn sáng trong môi trường, hoặc không có bóng đổ hợp lý",
-        "Màu da quá đậm bất thường",
-        "Ánh sáng trong deepfake luôn quá đều"
+        "Link rút gọn tải chậm hơn link thường",
+        "Link rút gọn ẩn tên miền đích thật sự, ngăn bạn kiểm tra trước khi bấm",
+        "Link rút gọn thường dẫn đến trang quảng cáo",
+        "Link rút gọn không hoạt động trên điện thoại"
       ],
       "correct": 1,
-      "explanation": "Ánh sáng là thách thức lớn với deepfake: khuôn mặt thật được ghép vào phải nhận ánh sáng từ đúng hướng và góc độ của môi trường. Bóng đổ không khớp (khuôn mặt sáng trong khi môi trường tối, hoặc bóng đổ sai hướng) là dấu hiệu rõ ràng."
+      "explanation": "URL rút gọn che giấu tên miền thật, khiến bạn không thể đánh giá được đích đến. Bạn có thể dùng dịch vụ \"mở rộng URL\" (như checkshorturl.com) hoặc thêm \"+\" vào cuối link bit.ly để xem trước đích đến mà không cần bấm vào."
     },
     {
       "id": "m4q05",
-      "text": "\"Uncanny valley\" trong deepfake đề cập đến điều gì?",
+      "tag": "Module 4 — Phishing và URL giả mạo",
+      "text": "Thói quen \"hover before click\" (di chuột qua link trước khi bấm) giúp ích gì?",
       "options": [
-        "Vùng địa lý có nhiều deepfake nhất",
-        "Cảm giác \"không thoải mái\" khi thấy khuôn mặt/chuyển động gần như người thật nhưng có điều gì đó không đúng",
-        "Lỗi kỹ thuật của mô hình AI",
-        "Vùng mờ xung quanh khuôn mặt trong deepfake"
+        "Làm chậm tốc độ tải trang để tránh malware",
+        "Hiển thị URL đích thật sự ở thanh trạng thái trình duyệt, giúp kiểm tra trước khi bấm",
+        "Kích hoạt tính năng bảo mật của trình duyệt",
+        "Không có tác dụng thực tế"
       ],
       "correct": 1,
-      "explanation": "\"Uncanny valley\" là hiện tượng tâm lý: não người rất nhạy với điều \"gần như thật nhưng không hoàn toàn\". Deepfake thường rơi vào uncanny valley — bạn không thể nói ngay cái gì sai, nhưng cảm giác có điều gì đó kỳ lạ."
+      "explanation": "Khi bạn di chuột qua một link (không bấm), trình duyệt hiển thị URL đích thật ở góc dưới màn hình. Đây là cách đơn giản nhất để phát hiện link giả mạo: văn bản hiển thị có thể là \"Vietcombank\" nhưng URL thật có thể là trang hoàn toàn khác."
     },
     {
       "id": "m4q06",
-      "text": "Khi xem video nghi ngờ deepfake, bạn nên làm gì để kiểm tra kỹ hơn?",
+      "tag": "Module 4 — Phishing và URL giả mạo",
+      "text": "\"Typosquatting\" là kỹ thuật gì?",
       "options": [
-        "Xem trên màn hình nhỏ nhất có thể",
-        "Tua chậm hoặc xem frame-by-frame, đặc biệt ở những đoạn có chuyển động đầu hoặc biểu cảm mạnh",
-        "Tăng độ sáng màn hình lên tối đa",
-        "Nhờ người khác xem thay"
+        "Đặt tên miền giống thương hiệu nổi tiếng nhưng có lỗi đánh máy nhỏ (ví dụ: vietcomhank.com thay vì vietcombank.com)",
+        "Dùng font chữ nhỏ để ẩn thông tin quan trọng",
+        "Tấn công bằng cách gõ lệnh nhanh vào hệ thống",
+        "Đánh cắp mật khẩu qua bàn phím vật lý"
       ],
-      "correct": 1,
-      "explanation": "Xem frame-by-frame giúp phát hiện các lỗi temporal inconsistency và các hiện vật (artifact) mà mắt thường bỏ qua khi video chạy bình thường. Các đoạn chuyển đầu hoặc cười là thời điểm model deepfake dễ mắc lỗi nhất."
+      "correct": 0,
+      "explanation": "Typosquatting (domain squatting) là đăng ký tên miền có lỗi đánh máy phổ biến của thương hiệu thật: vietcomhank.com, googel.com, faceboook.com. Kẻ tấn công trông chờ người dùng gõ nhầm và truy cập trang giả mạo của họ."
     },
     {
       "id": "m4q07",
-      "text": "Chất lượng hình ảnh xung quanh MIỆNG trong deepfake thường có vấn đề gì?",
+      "tag": "Module 4 — Phishing và URL giả mạo",
+      "text": "Bạn đang ở trên trang có URL \"secure-banking.vn\" nhưng giao diện trang web hiển thị logo và thiết kế của Techcombank. Điều bạn nên tin tưởng là gì?",
       "options": [
-        "Môi quá dày hoặc quá mỏng",
-        "Vùng răng, lưỡi và bên trong miệng thường bị render kém, thiếu chi tiết hoặc bất thường",
-        "Màu môi không đúng với tông da",
-        "Miệng không mở được rộng trong deepfake"
+        "Giao diện trang vì nó trông giống Techcombank thật",
+        "Cả hai đều đáng tin",
+        "Thanh địa chỉ trình duyệt — tên miền là danh tính thật của trang, không phải thiết kế",
+        "Không thể phán đoán được"
       ],
-      "correct": 1,
-      "explanation": "Bên trong miệng (răng, lưỡi, amygdala) là thách thức lớn với deepfake — dataset huấn luyện ít ảnh bên trong miệng hơn, nên model thường tạo ra răng mờ, thiếu chi tiết, hoặc lưỡi có hình dạng bất thường."
+      "correct": 2,
+      "explanation": "Bất kỳ ai cũng có thể sao chép toàn bộ giao diện của một trang web (logo, màu sắc, bố cục) trong vài giờ. Thanh địa chỉ trình duyệt là nguồn sự thật duy nhất về danh tính trang web. Nếu URL không khớp với tổ chức thật, đừng nhập bất kỳ thông tin gì."
     },
     {
       "id": "m4q08",
-      "text": "Deepfake ảnh tĩnh (photo deepfake) khó phát hiện hơn deepfake video vì lý do nào?",
+      "tag": "Module 4 — Phishing và URL giả mạo",
+      "text": "Bạn muốn kiểm tra xem chứng chỉ SSL của một trang ngân hàng có hợp lệ không. Bạn nên làm gì?",
       "options": [
-        "Ảnh tĩnh có độ phân giải thấp hơn",
-        "Không có chuyển động để phát hiện temporal inconsistency — chỉ có thể dựa vào dấu hiệu không gian trong frame",
-        "Ảnh tĩnh ít được chia sẻ trên internet hơn",
-        "Công nghệ tạo ảnh deepfake phức tạp hơn video"
+        "Kiểm tra xem có ổ khóa màu xanh không là đủ",
+        "Bấm vào ổ khóa để xem chi tiết chứng chỉ: tên tổ chức phát hành, tên miền được xác thực, và ngày hết hạn",
+        "Chứng chỉ SSL không cần kiểm tra, HTTPS là đủ",
+        "Chỉ tin trang web nếu có ổ khóa màu vàng"
       ],
       "correct": 1,
-      "explanation": "Với video, bạn có thêm chiều thời gian để phát hiện lỗi. Với ảnh tĩnh, bạn chỉ có một frame — phải dựa vào: ánh sáng nhất quán không, texture da có tự nhiên không, các đặc điểm đối xứng có hợp lý không."
+      "explanation": "Bấm vào ổ khóa cho phép xem chi tiết: tên miền trong chứng chỉ có khớp với trang bạn đang thấy không? Ai cấp chứng chỉ? Chứng chỉ còn hiệu lực không? Chứng chỉ EV (Extended Validation) còn hiển thị tên tổ chức được xác minh."
     },
     {
       "id": "m4q09",
-      "text": "Công cụ \"reverse image search\" (tìm kiếm ngược ảnh) hữu ích trong việc phát hiện deepfake như thế nào?",
+      "tag": "Module 4 — Phishing và URL giả mạo",
+      "text": "Bạn vô tình bấm vào link và thấy trang web trông rất giống trang đăng nhập ngân hàng của bạn. Hành động đúng nhất ngay lúc này là gì?",
       "options": [
-        "Nó phân tích pixel để tìm dấu hiệu AI",
-        "Tìm ra nguồn gốc ảnh gốc và xem ảnh đã bị chỉnh sửa hay lấy từ nguồn khác",
-        "Kiểm tra metadata EXIF của ảnh",
-        "Đo độ phân giải và màu sắc"
+        "Đăng nhập nhanh để kiểm tra tài khoản",
+        "Đóng tab ngay lập tức, KHÔNG nhập bất kỳ thông tin gì, sau đó vào trang chính thức bằng cách gõ URL trực tiếp",
+        "Nhập tên đăng nhập xem thử nhưng không nhập mật khẩu",
+        "Chụp màn hình và gửi cho bạn bè hỏi ý kiến"
       ],
       "correct": 1,
-      "explanation": "Reverse image search (Google Images, TinEye) giúp bạn tìm nguồn gốc ảnh: nếu \"ảnh sự kiện mới\" thực ra là ảnh cũ từ 5 năm trước, hoặc ảnh \"ở Việt Nam\" thực ra được chụp ở nước khác — đây là dấu hiệu rõ ràng của thao túng."
+      "explanation": "Khi nghi ngờ đây là trang phishing: ĐÓNG NGAY — KHÔNG nhập bất kỳ thông tin gì kể cả tên đăng nhập. Sau đó truy cập trang ngân hàng thật bằng cách gõ trực tiếp URL vào thanh địa chỉ hoặc dùng bookmark đã lưu từ trước."
     },
     {
       "id": "m4q10",
-      "text": "Điều nào sau đây KHÔNG phải là dấu hiệu nhận biết deepfake hình ảnh/video?",
+      "tag": "Module 4 — Phishing và URL giả mạo",
+      "text": "Bạn phát hiện một trang web phishing đang giả mạo ngân hàng. Ngoài việc không sử dụng trang đó, bạn có thể làm gì?",
       "options": [
-        "Viền khuôn mặt bị mờ hoặc nhòe",
-        "Ánh sáng khuôn mặt không khớp với ánh sáng nền",
-        "Người quay có nhiều follower trên mạng xã hội",
-        "Chuyển động của đầu không đồng bộ với biểu cảm"
+        "Không cần làm gì thêm",
+        "Đăng thông tin trang web đó lên mạng xã hội cá nhân",
+        "Báo cáo cho ngân hàng bị giả mạo, Google Safe Browsing (safebrowsing.google.com/safebrowsing/report_phish), hoặc Cục An toàn thông tin",
+        "Cố gắng hack lại trang web phishing đó"
       ],
       "correct": 2,
-      "explanation": "Số lượng follower của người đăng KHÔNG liên quan đến tính xác thực của nội dung. Thực ra, các tài khoản nhiều follower đôi khi được dùng như \"mồi\" để tăng tín nhiệm cho nội dung giả."
-    },
-    {
-      "id": "m4q11",
-      "text": "Khi khuôn mặt trong video \"bơi\" hoặc \"trôi\" khỏi đầu trong một số khung hình, đây là dấu hiệu của?",
-      "options": [
-        "Camera bị rung",
-        "Lỗi tracking khuôn mặt trong model deepfake — face không được gắn chặt vào đầu trong video gốc",
-        "Người quay bị say sóng",
-        "Video bị nén quá mạnh"
-      ],
-      "correct": 1,
-      "explanation": "\"Face drifting\" — khuôn mặt bị ghép không bám chặt vào đầu gốc — là lỗi tracking của model deepfake, đặc biệt khi đầu người chuyển động nhanh hoặc ở các góc không phổ biến trong dataset huấn luyện."
-    },
-    {
-      "id": "m4q12",
-      "text": "Phương pháp nào dưới đây là CÁC BƯỚC ĐÚNG để kiểm tra một ảnh/video nghi ngờ?",
-      "options": [
-        "Tin ngay nếu người chia sẻ là người quen",
-        "Phóng to → kiểm tra viền khuôn mặt → xem nguồn gốc → tìm kiếm ngược ảnh → tra nguồn tin",
-        "Chỉ kiểm tra khi ảnh được chia sẻ nhiều lần",
-        "Nhờ AI chatbot xác nhận là đủ"
-      ],
-      "correct": 1,
-      "explanation": "Quy trình kiểm tra hiệu quả: (1) Phóng to vùng nghi ngờ; (2) Tìm kiếm ngược ảnh để kiểm tra nguồn gốc; (3) Xác minh với nguồn tin gốc đáng tin cậy; (4) Kiểm tra metadata nếu có. Người quen chia sẻ KHÔNG đảm bảo tính xác thực."
+      "explanation": "Báo cáo trang phishing là hành động có ích cho cộng đồng: ngân hàng có thể gửi cảnh báo đến khách hàng, Google có thể đưa URL vào danh sách đen Safe Browsing (bảo vệ hàng tỷ người dùng Chrome), và cơ quan chức năng có thể điều tra."
     }
   ]
 }

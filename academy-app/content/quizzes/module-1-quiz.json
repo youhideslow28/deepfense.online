@@ -1,150 +1,137 @@
 {
   "moduleId": 1,
-  "title": "Deepfake là gì?",
+  "title": "Deepfake Video",
+  "tag": "Module 1 — Deepfake Video",
   "questions": [
     {
       "id": "m1q01",
-      "text": "Thuật ngữ \"deepfake\" được ghép từ những từ nào?",
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Trong kỹ thuật GAN tạo deepfake video, hai thành phần chính là gì và chúng hoạt động như thế nào?",
       "options": [
-        "Deep learning + fake",
-        "Deep web + fake news",
-        "Deep state + fake media",
-        "Deep data + fake image"
+        "Encoder và Decoder — encoder nén video, decoder giải nén lại",
+        "Generator và Discriminator — Generator tạo nội dung giả, Discriminator cố phân biệt thật/giả, hai bên cạnh tranh nhau",
+        "Camera và Microphone — camera quay hình, microphone thu âm rồi ghép lại",
+        "Client và Server — client gửi ảnh, server xử lý và trả về video"
       ],
-      "correct": 0,
-      "explanation": "\"Deepfake\" là sự kết hợp của \"deep learning\" (học sâu — một nhánh của AI) và \"fake\" (giả mạo), ám chỉ nội dung giả mạo được tạo ra bằng kỹ thuật học sâu."
+      "correct": 1,
+      "explanation": "GAN (Generative Adversarial Networks) gồm Generator (tạo khuôn mặt giả ngày càng chân thực hơn) và Discriminator (học cách phát hiện giả). Hai mạng cạnh tranh liên tục khiến chất lượng deepfake ngày càng cao và khó phát hiện bằng mắt thường."
     },
     {
       "id": "m1q02",
-      "text": "Kỹ thuật cốt lõi nào được dùng để tạo ra phần lớn deepfake hiện nay?",
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Bạn xem một video và thấy người trong video gần như không chớp mắt trong suốt 30 giây. Đây có thể là dấu hiệu gì?",
       "options": [
-        "Mã hóa đối xứng (Symmetric encryption)",
-        "Mạng đối nghịch sinh (GAN — Generative Adversarial Networks)",
-        "Cây quyết định (Decision tree)",
-        "Hồi quy tuyến tính (Linear regression)"
+        "Người đó đang tập trung cao độ vào cuộc trò chuyện",
+        "Camera bị lỗi kỹ thuật",
+        "Có thể là deepfake — mô hình AI thế hệ cũ thường thiếu dữ liệu huấn luyện về hành động chớp mắt tự nhiên",
+        "Ánh sáng quay phim quá mạnh khiến người quay không chớp được"
       ],
-      "correct": 1,
-      "explanation": "GAN (Generative Adversarial Networks) gồm hai mạng neural: Generator tạo nội dung giả, Discriminator cố phân biệt thật/giả. Hai mạng cạnh tranh nhau, khiến kết quả ngày càng chân thực."
+      "correct": 2,
+      "explanation": "Chớp mắt tự nhiên của con người xảy ra khoảng 15–20 lần/phút. Các mô hình deepfake thế hệ đầu thường bỏ qua hành động này vì ảnh huấn luyện thường chụp lúc mắt mở. Ngày nay dấu hiệu này đã được cải thiện nhưng vẫn là điểm đáng chú ý."
     },
     {
       "id": "m1q03",
-      "text": "Deepfake KHÔNG chỉ giới hạn ở hình ảnh và video. Loại nội dung nào dưới đây CŨNG có thể là deepfake?",
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Khi xem kỹ một video deepfake, bạn nhận ra vùng da ở ranh giới giữa khuôn mặt và tóc/cổ trông mờ nhòe và không khớp với phần còn lại. Hiện tượng này gọi là gì?",
       "options": [
-        "Chỉ hình ảnh tĩnh",
-        "Chỉ video chuyển động",
-        "Âm thanh, giọng nói (voice cloning)",
-        "Chỉ ảnh chụp màn hình"
+        "Motion blur — nhòe do chuyển động nhanh",
+        "Facial boundary blur — nhòe đường viền khuôn mặt do ghép mặt chưa hoàn hảo",
+        "Compression artifact — méo do nén video chất lượng thấp",
+        "Lens distortion — méo do ống kính góc rộng"
       ],
-      "correct": 2,
-      "explanation": "Deepfake bao gồm cả audio deepfake (voice cloning) — tạo giả giọng nói của một người chỉ từ vài giây ghi âm. Đây là hình thức ngày càng phổ biến trong lừa đảo qua điện thoại."
+      "correct": 1,
+      "explanation": "Facial boundary blur là dấu hiệu đặc trưng của face-swap deepfake: khuôn mặt được ghép vào chưa hòa trộn hoàn hảo với phần đầu, tóc và cổ của người gốc, tạo ra đường viền mờ hoặc không tự nhiên — đặc biệt rõ khi người quay đầu."
     },
     {
       "id": "m1q04",
-      "text": "Đặc điểm nào sau đây là dấu hiệu phổ biến nhất của deepfake video khuôn mặt thế hệ cũ?",
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Trong một video cuộc họp trực tuyến, bạn để ý rằng ánh sáng chiếu lên khuôn mặt của một người đến từ bên trái, nhưng ánh sáng trong phòng lại rõ ràng chiếu từ bên phải. Đây là dấu hiệu của điều gì?",
       "options": [
-        "Giọng nói quá to",
-        "Màu sắc nền quá sáng",
-        "Vùng viền khuôn mặt bị mờ hoặc nhòe bất thường",
-        "Video chạy quá nhanh"
+        "Người đó đang ngồi gần cửa sổ",
+        "Camera của họ có chất lượng thấp",
+        "Không nhất quán ánh sáng (lighting inconsistency) — dấu hiệu deepfake khuôn mặt được ghép từ nguồn khác",
+        "Phần mềm họp trực tuyến đang điều chỉnh màu sắc tự động"
       ],
       "correct": 2,
-      "explanation": "Các mô hình deepfake thế hệ đầu thường để lại dấu vết rõ nhất ở đường viền khuôn mặt — nơi khuôn mặt ghép vào nền không khớp hoàn hảo, tạo ra hiệu ứng mờ hoặc nhòe."
+      "explanation": "Lighting inconsistency xảy ra khi khuôn mặt deepfake được lấy từ một cảnh quay có nguồn sáng khác với môi trường video gốc. Hướng bóng đổ, độ sáng trên mũi và má không khớp với ánh sáng xung quanh là dấu hiệu đáng ngờ."
     },
     {
       "id": "m1q05",
-      "text": "Deepfake xuất hiện lần đầu gây chú ý của công chúng vào khoảng năm nào?",
+      "tag": "Module 1 — Deepfake Video",
+      "text": "\"Temporal flickering\" trong deepfake video là gì và tại sao nó xảy ra?",
       "options": [
-        "2010 — 2012",
-        "2017 — 2018",
-        "2020 — 2021",
-        "2005 — 2007"
+        "Màn hình nhấp nháy do pin yếu",
+        "Khuôn mặt hoặc da bị nhấp nháy/thay đổi đột ngột giữa các frame liên tiếp do AI xử lý từng frame độc lập",
+        "Hiệu ứng ánh sáng nhân tạo được thêm vào khi hậu kỳ",
+        "Lỗi đường truyền internet khi phát video trực tiếp"
       ],
       "correct": 1,
-      "explanation": "Khoảng năm 2017, người dùng Reddit bắt đầu chia sẻ video ghép mặt người nổi tiếng dùng kỹ thuật AI, tạo ra làn sóng chú ý toàn cầu và đặt ra nhiều lo ngại về đạo đức."
+      "explanation": "Temporal flickering xảy ra khi mô hình deepfake xử lý từng khung hình riêng lẻ mà không đảm bảo sự nhất quán theo thời gian. Kết quả là màu da, kết cấu da, hoặc đường viền khuôn mặt thay đổi nhẹ giữa các frame, tạo ra hiệu ứng nhấp nháy khi xem liên tục."
     },
     {
       "id": "m1q06",
-      "text": "Mục đích nào dưới đây là ứng dụng TÍCH CỰC, hợp lệ của công nghệ deepfake/synthetic media?",
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Bạn nhận được video một người nổi tiếng tuyên bố điều gây sốc, nhưng khẩu hình miệng và âm thanh không khớp nhau — miệng mở ra nhưng âm thanh đến muộn hơn 0,5 giây. Đây là dấu hiệu của loại lỗi nào?",
       "options": [
-        "Tạo video khiêu dâm không có sự đồng ý của nạn nhân",
-        "Sản xuất phim điện ảnh (làm trẻ hóa diễn viên, hồi sinh nhân vật)",
-        "Phát tán tin giả về chính trị",
-        "Giả mạo giọng nói người thân để lừa đảo tài chính"
+        "Lỗi truyền dữ liệu do mạng kém",
+        "Audio-video desync (lệch đồng bộ âm thanh-hình ảnh) — thường gặp trong deepfake khi audio và video được tổng hợp riêng lẻ",
+        "Người quay phim sử dụng microphone ngoài không đồng bộ",
+        "Phần mềm chỉnh sửa video xuất file bị lỗi"
       ],
       "correct": 1,
-      "explanation": "Công nghệ synthetic media có nhiều ứng dụng hợp lệ: làm trẻ diễn viên trong phim, tạo nhân vật ảo, dịch thuật video giữ nguyên khẩu hình, hay mô phỏng trong y tế và giáo dục."
+      "explanation": "Audio-video mismatch hay desync là dấu hiệu quan trọng của deepfake: khi giọng nói được tổng hợp riêng (TTS hoặc voice cloning) rồi ghép vào video, thời điểm bắt đầu âm thanh và chuyển động miệng thường không khớp hoàn hảo."
     },
     {
       "id": "m1q07",
-      "text": "\"Face swap\" (hoán đổi khuôn mặt) trong deepfake hoạt động như thế nào về cơ bản?",
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Bạn muốn kiểm tra xem một video lan truyền trên mạng có phải là deepfake không. Công cụ InVID/WeVerify giúp bạn làm gì cụ thể?",
       "options": [
-        "Cắt ghép thủ công bằng Photoshop",
-        "AI học đặc điểm khuôn mặt của người A rồi áp lên khuôn mặt người B trong video",
-        "Quay lại video với diễn viên đóng thế",
-        "Dùng bộ lọc màu để thay đổi ngoại hình"
+        "Tự động phát hiện deepfake bằng AI với độ chính xác 100%",
+        "Trích xuất các frame từ video để thực hiện tìm kiếm hình ảnh ngược (reverse image search), tìm nguồn gốc và bối cảnh ban đầu của video",
+        "Dịch phụ đề video sang tiếng Việt",
+        "Xóa deepfake và khôi phục video gốc"
       ],
       "correct": 1,
-      "explanation": "Face swap dùng AI (thường là autoencoder hoặc GAN) để học biểu diễn khuôn mặt của người A, sau đó tổng hợp khuôn mặt đó lên chuyển động và biểu cảm của người B trong video nguồn."
+      "explanation": "InVID/WeVerify là bộ công cụ kiểm chứng video cho phép: trích xuất keyframe, tìm kiếm hình ảnh ngược trên Google/Yandex/Baidu, phân tích metadata, và xem lịch sử xuất hiện của video. Điều này giúp xác định video có bị cắt ghép sai ngữ cảnh không."
     },
     {
       "id": "m1q08",
-      "text": "Tại sao deepfake ngày càng khó phát hiện bằng mắt thường?",
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Khi thực hiện tìm kiếm hình ảnh ngược (reverse image search) với một frame từ video đáng ngờ, bạn thấy frame đó xuất hiện trong một sự kiện hoàn toàn khác, từ 3 năm trước. Điều này cho thấy điều gì?",
       "options": [
-        "Vì chúng được quay bằng camera chất lượng cao hơn",
-        "Vì các mô hình AI liên tục cải tiến, loại bỏ các dấu hiệu giả truyền thống",
-        "Vì người xem không chú ý kỹ",
-        "Vì internet ngày càng nhanh hơn"
+        "Video mới vừa được quay lại tại cùng địa điểm",
+        "Video có thể bị cắt ghép, lấy cảnh từ sự kiện cũ và ghép vào nội dung giả mạo mới",
+        "Người trong video đã tham gia nhiều sự kiện giống nhau",
+        "Công cụ tìm kiếm hình ảnh bị lỗi"
       ],
       "correct": 1,
-      "explanation": "Mỗi thế hệ mô hình deepfake mới học cách vượt qua các bộ phát hiện trước đó. Kết quả là các dấu hiệu nhận biết như nhòe viền, nháy mắt bất thường đã gần như biến mất ở deepfake thế hệ mới."
+      "explanation": "Kết quả tìm kiếm ngược cho thấy nguồn gốc thật của hình ảnh/video. Nếu cảnh quay đó xuất hiện trong ngữ cảnh hoàn toàn khác và từ thời điểm xa hơn, đây là bằng chứng mạnh rằng video hiện tại bị cắt xén hoặc ngữ cảnh bị làm giả."
     },
     {
       "id": "m1q09",
-      "text": "Phản ứng đúng đắn khi bạn nhận được một video gây sốc hoặc không thể tin được về một người nổi tiếng là gì?",
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Bạn nhận được video call từ người tự xưng là giám đốc công ty, yêu cầu chuyển tiền gấp. Khuôn mặt trông đúng nhưng bạn thấy hình ảnh bị giật nhẹ mỗi khi ông ấy quay đầu. Phản ứng đúng đắn nhất là gì?",
       "options": [
-        "Chia sẻ ngay để cảnh báo mọi người",
-        "Tin tưởng hoàn toàn vì \"mắt thấy tai nghe\"",
-        "Tạm dừng, kiểm chứng nguồn gốc trước khi lan truyền",
-        "Xóa ứng dụng mạng xã hội"
+        "Chuyển tiền ngay vì nhìn thấy mặt giám đốc thật",
+        "Yêu cầu họ mở camera rõ hơn rồi mới quyết định",
+        "Kết thúc cuộc gọi, gọi lại cho giám đốc theo số điện thoại đã biết từ trước để xác nhận",
+        "Nhờ đồng nghiệp khác xem video call và cho ý kiến"
       ],
       "correct": 2,
-      "explanation": "Nguyên tắc vàng: DỪNG — KIỂM TRA — SAU ĐÓ MỚI CHIA SẺ. Video gây sốc thường được thiết kế để kích thích phản ứng cảm xúc và chia sẻ nhanh trước khi người ta kịp suy nghĩ."
+      "explanation": "Nguyên tắc vàng khi nghi ngờ deepfake video call: KHÔNG hành động ngay, HẠ MÁY và gọi lại theo số đã biết từ trước (từ danh bạ công ty, không phải số vừa gọi đến). Deepfake kết hợp áp lực thời gian là chiêu lừa đảo phổ biến nhất."
     },
     {
       "id": "m1q10",
-      "text": "Loại tấn công nào sử dụng deepfake audio để giả giọng sếp, yêu cầu nhân viên chuyển tiền khẩn cấp?",
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Khi kiểm tra một video đáng ngờ, bạn nên chú ý đến yếu tố nào NGOÀI khuôn mặt để đánh giá xác thực?",
       "options": [
-        "Phishing qua email",
-        "Vishing với AI voice cloning (Business Email Compromise biến thể)",
-        "Ransomware",
-        "SQL injection"
-      ],
-      "correct": 1,
-      "explanation": "Tấn công \"CEO fraud\" hay \"voice vishing\" dùng AI cloning giọng nói đã xảy ra thực tế — ví dụ năm 2019, một công ty ở UK bị lừa chuyển 220.000 EUR vì giả mạo giọng CEO bằng AI."
-    },
-    {
-      "id": "m1q11",
-      "text": "\"Tư duy phòng vệ\" (defensive mindset) trong bối cảnh deepfake có nghĩa là gì?",
-      "options": [
-        "Không xem bất kỳ video nào trên internet",
-        "Luôn nghi ngờ mọi người xung quanh",
-        "Thói quen kiểm chứng thông tin trước khi tin và chia sẻ",
-        "Cài đặt phần mềm chống deepfake trên điện thoại"
+        "Chỉ cần kiểm tra khuôn mặt là đủ",
+        "Màu áo và phong cách thời trang của người trong video",
+        "Metadata của file video (ngày tạo, thiết bị, vị trí GPS), âm thanh nền, và sự nhất quán của bối cảnh xung quanh",
+        "Số lượt xem và bình luận trên mạng xã hội"
       ],
       "correct": 2,
-      "explanation": "Tư duy phòng vệ không phải là hoang mang hay nghi ngờ tất cả, mà là thói quen lành mạnh: hỏi \"nguồn này đáng tin không?\", \"có động cơ gì để tạo nội dung này?\", \"tôi có thể xác minh không?\""
-    },
-    {
-      "id": "m1q12",
-      "text": "Deepfake có thể ảnh hưởng đến ai?",
-      "options": [
-        "Chỉ người nổi tiếng và chính trị gia",
-        "Chỉ người thường không có tài khoản mạng xã hội",
-        "Bất kỳ ai có ảnh hoặc video được công khai trên internet",
-        "Chỉ ảnh hưởng đến người cao tuổi"
-      ],
-      "correct": 2,
-      "explanation": "Bất kỳ ai có ảnh hoặc video công khai đều có nguy cơ bị dùng để tạo deepfake. Với sự phát triển của công cụ AI miễn phí, ngưỡng kỹ thuật ngày càng thấp — không cần là chuyên gia IT."
+      "explanation": "Kiểm chứng toàn diện bao gồm: metadata file (có thể bị chỉnh sửa nhưng vẫn cung cấp manh mối), âm thanh nền (tiếng động có khớp với bối cảnh không), chi tiết môi trường (biển số xe, biển hiệu, thời tiết có khớp với thời điểm/địa điểm được khai không). Deepfake khuôn mặt không thể giả toàn bộ ngữ cảnh."
     }
   ]
 }
