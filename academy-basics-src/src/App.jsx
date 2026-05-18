@@ -3,6 +3,7 @@ import { MODULES, buildLessonIndex } from './data/course.js';
 import Sidebar from './components/Sidebar.jsx';
 import LessonView from './components/LessonView.jsx';
 import HomePage from './components/HomePage.jsx';
+import NotesPanel, { hasNoteFor } from './components/NotesPanel.jsx';
 
 const STORAGE_KEY = 'dfb_progress_v2';
 
@@ -38,12 +39,19 @@ export default function App() {
     return null; // null = home page
   });
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [notesOpen,   setNotesOpen]   = useState(false);
+  const [noteExists,  setNoteExists]  = useState(false);
 
   const currentEntry = currentIdx !== null ? lessonIndex[currentIdx] : null;
 
   useEffect(() => {
     saveProgress(completed, currentEntry?.lesson?.id || null);
   }, [completed, currentEntry]);
+
+  // Refresh note-exists indicator whenever the current lesson changes
+  useEffect(() => {
+    setNoteExists(hasNoteFor(currentEntry?.lesson?.id ?? null));
+  }, [currentEntry]);
 
   function goToLesson(idx) {
     setCurrentIdx(idx);
@@ -117,6 +125,18 @@ export default function App() {
         <div className="sidebar-mob-overlay" onClick={() => setSidebarOpen(false)} aria-hidden="true" />
       )}
 
+      {/* Notes panel */}
+      <NotesPanel
+        isOpen={notesOpen}
+        onClose={() => setNotesOpen(false)}
+        lessonId={currentEntry?.lesson?.id ?? null}
+        lessonTitle={currentEntry?.lesson?.title ?? ''}
+        moduleId={currentEntry?.moduleId ?? null}
+        onNoteChange={(id, hasContent) => {
+          if (id === currentEntry?.lesson?.id) setNoteExists(hasContent);
+        }}
+      />
+
       {/* Main */}
       <main className="main">
         {/* Top bar */}
@@ -144,6 +164,19 @@ export default function App() {
               'DEEPFENSE BASICS'
             )}
           </div>
+          {/* Notes toggle — only when viewing a lesson */}
+          {currentEntry && (
+            <button
+              className={`topbar-notes-btn${notesOpen ? ' active' : ''}`}
+              onClick={() => setNotesOpen(o => !o)}
+              title={notesOpen ? 'Đóng ghi chú' : 'Mở ghi chú'}
+              aria-pressed={notesOpen}
+            >
+              📝 <span className="topbar-notes-label">Ghi chú</span>
+              {noteExists && !notesOpen && <span className="notes-dot" aria-hidden="true" />}
+            </button>
+          )}
+
           <div className="topbar-ext">
             <a className="topbar-ext-link" href="https://deepfense.online/academy/" target="_blank" rel="noopener noreferrer" title="Trang Academy">🎓 Academy</a>
             <a className="topbar-ext-link" href="https://deepfense.online" target="_blank" rel="noopener noreferrer" title="deepfense.online">🌐 Trang chủ</a>
