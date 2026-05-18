@@ -1,0 +1,68 @@
+{
+  "id": "pressure-meter",
+  "title": "🎯 Pressure Meter",
+  "subtitle": "Nhận diện kỹ thuật thao túng tâm lý",
+  "instructions": "Đọc kịch bản bên dưới rồi tích vào tất cả kỹ thuật thao túng mà bạn nhận ra. Chọn nhiều đáp án.",
+  "dpf": 25,
+  "passThreshold": 0.6,
+  "tacticDefs": [
+    { "id": "urgency",    "label": "Tạo khẩn cấp giả",        "desc": "Deadline, đếm ngược, 'ngay bây giờ'" },
+    { "id": "authority",  "label": "Giả danh quyền lực",       "desc": "Tự xưng công an, ngân hàng, cấp trên" },
+    { "id": "fear",       "label": "Tạo sợ hãi / đe dọa",     "desc": "Bị bắt, bị phạt, mất tiền, mất tài khoản" },
+    { "id": "greed",      "label": "Dụ lòng tham",             "desc": "Trúng thưởng, hoàn tiền, nhận quà miễn phí" },
+    { "id": "isolation",  "label": "Cô lập nạn nhân",          "desc": "Không cho gọi người khác, giữ bí mật" },
+    { "id": "identity",   "label": "Giả danh người thân",      "desc": "Số mới, mượn máy, người quen giả mạo" },
+    { "id": "rush",       "label": "Ép hành động ngay",        "desc": "Không cho thời gian suy nghĩ, làm ngay" },
+    { "id": "guilt",      "label": "Gây tội lỗi / xấu hổ",    "desc": "'Anh/chị không tin em à?', gây cảm giác có lỗi" }
+  ],
+  "scripts": [
+    {
+      "id": "p1",
+      "title": "Cuộc gọi từ 'Công an'",
+      "type": "call",
+      "scene": "Bạn nhận cuộc gọi lúc 2 giờ chiều từ số máy bàn. Giọng người đàn ông nghiêm nghị:",
+      "dialogue": [
+        { "from": "caller", "text": "Đây là Thiếu tá Nguyễn Hùng, Phòng An ninh mạng, Bộ Công an. Anh/chị có phải Trần Văn X không?" },
+        { "from": "caller", "text": "Tài khoản ngân hàng của anh/chị bị phát hiện có giao dịch đáng ngờ liên quan đến tổ chức tội phạm quốc tế. Đây là vụ án nghiêm trọng." },
+        { "from": "caller", "text": "Nếu anh/chị không phối hợp ngay bây giờ, chúng tôi sẽ phát lệnh bắt trong 2 giờ tới. Anh/chị sẽ bị tạm giam." },
+        { "from": "caller", "text": "Tuyệt đối không được kể với ai — kể cả gia đình — vì đây là bí mật điều tra. Vi phạm có thể bị xử lý hình sự." },
+        { "from": "caller", "text": "Để chứng minh tài khoản sạch, anh/chị cần chuyển ngay toàn bộ số dư vào tài khoản 'phong tỏa bảo hộ' do chúng tôi chỉ định. Sau khi điều tra xong sẽ hoàn trả." }
+      ],
+      "presentTactics": ["urgency", "authority", "fear", "isolation", "rush"],
+      "absentTactics": ["greed", "identity", "guilt"],
+      "analysis": "Kịch bản 'công an giả' là một trong những scam phổ biến nhất tại Việt Nam. Công an thật không bao giờ: gọi điện thông báo điều tra, yêu cầu chuyển tiền, hoặc cấm kể với gia đình."
+    },
+    {
+      "id": "p2",
+      "title": "Tin nhắn từ 'Sếp'",
+      "type": "chat",
+      "scene": "9h sáng, bạn nhận Zalo từ số mới tự xưng là giám đốc công ty:",
+      "dialogue": [
+        { "from": "caller", "text": "Đây là anh Nam GĐ, số mới. Em lưu giúp anh." },
+        { "from": "caller", "text": "Hôm nay anh đang họp quan trọng với đối tác nước ngoài, điện thoại cũ hỏng rồi. Em đang dùng tài khoản ngân hàng nào?" },
+        { "from": "caller", "text": "Anh cần em chuyển gấp 30 triệu cho đối tác để chốt hợp đồng. Họ chỉ chờ đến 10h. Chuyển rồi anh hoàn lại ngay buổi chiều." },
+        { "from": "caller", "text": "Chuyển xong báo anh liền nhé. Đừng nói với ai trong công ty, anh sẽ giải thích sau, tế nhị lắm." },
+        { "from": "caller", "text": "Nhanh lên em, anh đang họp không ra ngoài được. Em làm được không? Nếu không được anh phải nhờ người khác." }
+      ],
+      "presentTactics": ["urgency", "authority", "identity", "isolation", "rush", "guilt"],
+      "absentTactics": ["fear", "greed"],
+      "analysis": "Kịch bản 'sếp giả' (CEO Fraud / BEC - Business Email Compromise) nhắm vào nhân viên. Luôn xác minh bằng cách gọi điện vào số điện thoại cũ đã biết của người đó — không phản hồi trực tiếp trên kênh đáng ngờ."
+    },
+    {
+      "id": "p3",
+      "title": "Video call người thân bị tai nạn",
+      "type": "call",
+      "scene": "Bạn nhận video call từ số lạ. Trên màn hình là khuôn mặt giống người thân — giọng hơi khác, hình ảnh đôi lúc giật:",
+      "dialogue": [
+        { "from": "caller", "text": "Ba/Mẹ ơi! Con đang ở bệnh viện. Con bị tai nạn xe, gãy chân rồi!" },
+        { "from": "caller", "text": "Bác sĩ nói phải mổ ngay, cần đặt cọc 20 triệu trước 3 giờ chiều nay, không thì bệnh viện không tiếp nhận." },
+        { "from": "caller", "text": "Ba/Mẹ chuyển nhanh đi, con đau lắm. Đừng gọi điện về nhà làm lo thêm, tự con xử lý được." },
+        { "from": "caller", "text": "Chuyển vào Vietcombank 1234567890 tên TRAN VAN A. Nhanh lên, con đang chờ." },
+        { "from": "caller", "text": "Sau khi chuyển rồi báo con, con sẽ kể hết cho Ba/Mẹ nghe. Nhanh lên đi ạ!" }
+      ],
+      "presentTactics": ["urgency", "fear", "identity", "isolation", "rush", "guilt"],
+      "absentTactics": ["authority", "greed"],
+      "analysis": "Deepfake video call giả người thân đang là xu hướng scam nguy hiểm nhất hiện nay. Dấu hiệu nhận biết: hình ảnh giật/mờ, giọng khác, từ chối cuộc gọi lại, yêu cầu bí mật. Hành động: CÚP MÁY và gọi trực tiếp vào số điện thoại đã biết của người thân đó."
+    }
+  ]
+}

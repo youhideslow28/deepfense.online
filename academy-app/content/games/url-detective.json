@@ -1,0 +1,90 @@
+{
+  "id": "url-detective",
+  "title": "🔍 URL Detective",
+  "subtitle": "Soi link trước khi bấm",
+  "instructions": "Mỗi link dưới đây được gửi qua tin nhắn hoặc email. Phân tích kỹ rồi quyết định: link này Thật, Đáng nghi, hay Giả?",
+  "dpf": 20,
+  "passThreshold": 0.7,
+  "rounds": [
+    {
+      "id": "u01",
+      "context": "Bạn nhận SMS: \"Tài khoản Vietcombank bị hạn chế, đăng nhập ngay để mở khóa:\"",
+      "url": "vietcombank-secure.net/verify/login",
+      "verdict": "fake",
+      "explanation": "Domain chính thức của Vietcombank là vietcombank.com.vn — không bao giờ là .net. Thêm '-secure' vào tên thương hiệu là thủ thuật phổ biến của phishing.",
+      "flags": ["Đuôi .net thay vì .com.vn", "Thêm '-secure' vào tên thương hiệu", "Không có đường dẫn chính thức"]
+    },
+    {
+      "id": "u02",
+      "context": "IT công ty gửi link đặt lại mật khẩu Google Workspace cho bạn:",
+      "url": "accounts.google.com/signin/v2/challenge/pwd",
+      "verdict": "real",
+      "explanation": "accounts.google.com là domain chính thức của Google. Đây là link xác thực hợp lệ — domain gốc là google.com, 'accounts' chỉ là subdomain.",
+      "flags": []
+    },
+    {
+      "id": "u03",
+      "context": "Facebook gửi email cảnh báo đăng nhập lạ, yêu cầu xác minh tại:",
+      "url": "faceb00k-login.security-verify.com",
+      "verdict": "fake",
+      "explanation": "'faceb00k' dùng số 0 thay chữ 'o' để đánh lừa mắt người đọc. Domain thật là security-verify.com — hoàn toàn không liên quan đến Facebook.",
+      "flags": ["'00' thay 'oo' trong 'facebook'", "Domain gốc là security-verify.com", "Facebook không bao giờ dùng link như thế này"]
+    },
+    {
+      "id": "u04",
+      "context": "Bạn nhận link trên Zalo từ người lạ và thấy URL như sau:",
+      "url": "bit.ly/3xK9mWq",
+      "verdict": "suspicious",
+      "explanation": "Link rút gọn ẩn hoàn toàn địa chỉ thật. Không thể biết link dẫn đến đâu chỉ bằng cách nhìn. Dùng unshorten.it hoặc checkshorturl.com trước khi bấm.",
+      "flags": ["Link rút gọn ẩn địa chỉ đích", "Không xác định được domain", "Phổ biến trong spam và phishing"]
+    },
+    {
+      "id": "u05",
+      "context": "Bạn nhận email từ 'Techcombank' yêu cầu cập nhật thông tin tài khoản:",
+      "url": "techcombank.com.vn.account-update.info/form",
+      "verdict": "fake",
+      "explanation": "Domain thật là phần CUỐI CÙNG trước dấu /: ở đây là 'account-update.info'. 'techcombank.com.vn' chỉ là subdomain giả để đánh lừa. Kỹ thuật này gọi là subdomain spoofing.",
+      "flags": ["Domain gốc là account-update.info", "techcombank.com.vn chỉ là subdomain lừa đảo", "Kỹ thuật subdomain spoofing kinh điển"]
+    },
+    {
+      "id": "u06",
+      "context": "Bạn muốn kiểm tra ví MoMo. Một ứng dụng khác gợi ý link sau:",
+      "url": "momo.vn/vi/account/wallet",
+      "verdict": "real",
+      "explanation": "momo.vn là domain chính thức của MoMo (được Ngân hàng Nhà nước cấp phép). Đường dẫn /vi/account/wallet là hợp lệ.",
+      "flags": []
+    },
+    {
+      "id": "u07",
+      "context": "Messenger từ tài khoản lạ: \"Mày bị chụp ảnh nhạy cảm, vào đây xem ngay:\"",
+      "url": "drive.google.com.file-viewer.net/share/abc123",
+      "verdict": "fake",
+      "explanation": "Domain thật là 'file-viewer.net' — 'drive.google.com' chỉ là subdomain giả. Cộng thêm nội dung gây sợ hãi: đây là kịch bản sextortion/tống tiền điển hình.",
+      "flags": ["Domain gốc là file-viewer.net", "'drive.google.com' chỉ là subdomain giả", "Nội dung tạo sợ hãi để ép bấm link"]
+    },
+    {
+      "id": "u08",
+      "context": "Bạn tìm 'VKU đăng ký học phần' trên Google và thấy kết quả:",
+      "url": "vku.edu.vn/sinh-vien/dang-ky-hoc-phan",
+      "verdict": "real",
+      "explanation": "vku.edu.vn là domain chính thức của Đại học VKU, được xác minh qua đuôi .edu.vn của Bộ GD&ĐT cấp. Đường dẫn hợp lệ.",
+      "flags": []
+    },
+    {
+      "id": "u09",
+      "context": "Bạn nhận email tiêu đề 'Thông báo hoàn tiền Shopee' với link:",
+      "url": "sh0pee-refund.vip/claim?token=eyJhbGci",
+      "verdict": "fake",
+      "explanation": "'sh0pee' dùng số 0 giả chữ 'o'. Shopee chính thức là shopee.vn — không bao giờ gửi link hoàn tiền qua domain .vip hay domain lạ. Mọi giao dịch hoàn tiền đều xử lý trong app.",
+      "flags": ["'sh0pee' dùng số 0 giả chữ 'o'", "Domain .vip không thuộc Shopee", "Shopee không xử lý hoàn tiền qua link ngoài app"]
+    },
+    {
+      "id": "u10",
+      "context": "Bạn nhận email từ noreply@deepfense.online với link đặt lại mật khẩu:",
+      "url": "deepfense.online/account/reset-password?token=eyJhbGciOiJIUzI1Ni",
+      "verdict": "real",
+      "explanation": "deepfense.online là domain chính thức. Email từ @deepfense.online và link về đúng domain là hợp lệ. Token dài trong URL là bình thường cho reset password — chứa thông tin xác thực mã hóa.",
+      "flags": []
+    }
+  ]
+}

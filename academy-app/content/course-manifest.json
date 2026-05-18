@@ -91,6 +91,7 @@
         "level": "Recognition",
         "sourceFile": "DEEPFENSE_BASIC_Module_6_Content_v1.md",
         "quiz": { "questions": 10, "passThreshold": 0.7, "countForFinalExam": true },
+        "minigame": { "id": "url-detective", "label": "🔍 URL Detective", "dpf": 20, "primary": false },
         "sections": ["6.1 Kiểm chứng nguồn", "6.2 Kiểm chứng bối cảnh", "6.3 Metadata cơ bản"]
       },
       {
@@ -105,16 +106,18 @@
         "id": 8,
         "part": "response",
         "title": "Ứng phó khi gặp hoặc trở thành nạn nhân",
-        "duration": "40 phút",
+        "duration": "30 phút",
         "level": "Response",
+        "minigame": { "id": "scam-chat-triage", "label": "💬 Scam Chat Triage", "dpf": 25, "primary": true },
         "sections": ["8.1 Khi gặp nội dung nghi ngờ", "8.2 Lưu bằng chứng", "8.3 Tìm hỗ trợ"]
       },
       {
         "id": 9,
         "part": "response",
         "title": "Deepfake trong tổ chức: SOC, GRC và security awareness",
-        "duration": "40 phút",
+        "duration": "30 phút",
         "level": "Response",
+        "minigame": { "id": "pressure-meter", "label": "🎯 Pressure Meter", "dpf": 25, "primary": true },
         "sections": ["9.1 Security awareness", "9.2 SOC và incident response", "9.3 GRC và chính sách"]
       }
     ],
