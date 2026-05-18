@@ -335,43 +335,52 @@
       /* ── Print ───────────────────────────────────────────────── */
       @page { size: A4 landscape; margin: 0; }
       @media print {
-        html {
-          width: 297mm;
-          height: 210mm;
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }
+
+        html, body {
+          display: block !important;
+          width: 297mm !important;
+          height: 210mm !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow: hidden !important;
+          background: white !important;
         }
-        body {
-          display: block;
-          width: 297mm;
-          height: 210mm;
-          margin: 0;
-          padding: 0;
-          overflow: hidden;
-          background: white;
-        }
+
         .toolbar, .locked { display: none !important; }
+
         .certificate {
-          display: block;
-          width: 297mm;
-          height: 210mm;
-          aspect-ratio: unset;
-          margin: 0;
-          padding: 48px;
-          border: 1px solid rgba(14,165,233,0.42);
-          box-shadow: none;
-          overflow: hidden;
-          /* reset any transforms/shadows that confuse print renderer */
-          transform: none;
+          width: 297mm !important;
+          height: 210mm !important;
+          max-width: none !important;
+          aspect-ratio: unset !important;
+          margin: 0 !important;
+          padding: 44px 48px !important;
+          border: 1px solid rgba(14,165,233,0.42) !important;
+          box-shadow: none !important;
+          overflow: hidden !important;
+          background: var(--paper) !important;
         }
-        /* keep grid layout intact in print */
+
         .content {
-          height: 100%;
+          display: grid !important;
+          grid-template-rows: auto 1fr auto !important;
+          gap: 16px !important;
+          height: 100% !important;
         }
+
+        /* Keep signature + QR side-by-side */
+        .signature-row {
+          display: grid !important;
+          grid-template-columns: 1fr auto !important;
+          align-items: end !important;
+          gap: 34px !important;
+        }
+
         .verified-stamp {
-          border-color: rgba(2,132,199,0.38);
-          color: rgba(2,132,199,0.45);
-          background: transparent;
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
+          border-color: rgba(2,132,199,0.38) !important;
+          color: rgba(2,132,199,0.45) !important;
+          background: transparent !important;
         }
       }
 
