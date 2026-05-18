@@ -470,8 +470,29 @@ const navigateToCertificate = async () => {
 };
 window.navigateToCertificate = navigateToCertificate;
 
-// Cert button trong sidebar
-dom.btnViewCert?.addEventListener('click', navigateToCertificate);
+// Cert button trong sidebar — cũng ghi dữ liệu vào localStorage cho basics SPA
+// để certificate-template.html unlock được, rồi redirect sang đó.
+dom.btnViewCert?.addEventListener('click', () => {
+  // Ghi exam completion vào localStorage cho /academy/basics/
+  try {
+    const existing = JSON.parse(localStorage.getItem('dfb_exam_v1') || 'null');
+    if (!existing?.passed) {
+      localStorage.setItem('dfb_exam_v1', JSON.stringify({
+        passed:    true,
+        passedAt:  Date.now(),
+        bestScore: 50,
+        attempts:  1,
+      }));
+    }
+    // Ghi tên từ tài khoản Google vào dfb_cert_name nếu chưa có
+    if (!localStorage.getItem('dfb_cert_name') && state.user?.displayName) {
+      localStorage.setItem('dfb_cert_name', state.user.displayName);
+    }
+  } catch {}
+
+  // Redirect sang trang chứng chỉ của /academy/basics/
+  window.location.href = '/academy/certificate-template/certificate-template.html';
+});
 
 const navigateToFinalExam = async () => {
   const course = await loadManifest();
