@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { EXAM_CONFIG, drawExam } from '../data/exam-bank.js';
+import Confetti from './Confetti.jsx';
 
 const STORAGE_KEY  = 'dfb_exam_v1';
 const PAGE_SIZE    = 10;
@@ -26,6 +27,7 @@ export default function FinalExam({ onComplete, completedLessons }) {
   const [answers,   setAnswers]   = useState({});        // { id: idx }
   const [page,      setPage]      = useState(0);
   const [result,    setResult]    = useState(null);
+  const [confetti,  setConfetti]  = useState(false);
 
   const { questionsPerAttempt, passingScore, passingPercent, maxAttempts } = EXAM_CONFIG;
   const totalPages  = Math.ceil(questionsPerAttempt / PAGE_SIZE);
@@ -62,7 +64,11 @@ export default function FinalExam({ onComplete, completedLessons }) {
     setStore(newStore);
     setResult({ score, passed });
     setPhase('result');
-    if (passed) onComplete?.('final-exam');
+    if (passed) {
+      onComplete?.('final-exam');
+      setConfetti(true);
+      setTimeout(() => setConfetti(false), 5000);
+    }
   }
 
   // ── page slice ─────────────────────────────────────────────────────────────
@@ -217,15 +223,38 @@ export default function FinalExam({ onComplete, completedLessons }) {
     const pct = Math.round((result.score / questionsPerAttempt) * 100);
     return (
       <div className="content">
+        {/* Confetti burst on pass */}
+        {confetti && <Confetti count={120} duration={5000} />}
+
         <div className="exam-result-wrap">
+
+          {/* ── PASS: Celebration banner ── */}
+          {result.passed && (
+            <div className="exam-celebrate-banner">
+              <div className="exam-celebrate-orbs" aria-hidden="true">
+                <span className="ecb-orb ecb-orb--1" />
+                <span className="ecb-orb ecb-orb--2" />
+                <span className="ecb-orb ecb-orb--3" />
+              </div>
+              <div className="exam-celebrate-emoji">🏆</div>
+              <div className="exam-celebrate-title">Xuất sắc!</div>
+              <div className="exam-celebrate-sub">
+                Bạn đã vượt qua Final Exam và hoàn thành <strong>DEEPFENSE BASIC</strong>.
+              </div>
+              <div className="exam-celebrate-badge">
+                <span className="ecb-dot" /><span>DEEPFENSE AWARE</span><span className="ecb-dot" />
+              </div>
+            </div>
+          )}
+
           {/* Score card */}
           <div className={`exam-score-card ${result.passed ? 'pass' : 'fail'}`}>
-            <div className="exam-score-badge">{result.passed ? '🎉 Đạt!' : '📚 Chưa đạt'}</div>
+            <div className="exam-score-badge">{result.passed ? '✓ Đạt' : '📚 Chưa đạt'}</div>
             <div className="exam-score-num">{result.score}<span>/{questionsPerAttempt}</span></div>
             <div className="exam-score-pct">{pct}%</div>
             <div className="exam-score-sub">
               {result.passed
-                ? 'Chúc mừng! Bạn đã hoàn thành DEEPFENSE BASIC.'
+                ? `Điểm đạt yêu cầu — đúng ${result.score}/${questionsPerAttempt} câu.`
                 : `Cần đạt ${passingScore}/${questionsPerAttempt} (${passingPercent}%) để qua. Còn ${maxAttempts - store.attempts} lần thử.`}
             </div>
           </div>
