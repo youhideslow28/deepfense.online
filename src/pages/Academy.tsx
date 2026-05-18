@@ -390,6 +390,15 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 onClick={() => {
                   if (track.locked) return;
                   if (track.id === 'basics') {
+                    // Ghi session để /academy/basics/ auth gate cho qua
+                    if (user) {
+                      try {
+                        localStorage.setItem('dfb_session_v1', JSON.stringify({
+                          uid: user.uid,
+                          loginAt: Date.now(),
+                        }));
+                      } catch {}
+                    }
                     window.location.href = '/academy/basics/';
                   } else {
                     setSelectedCourseId(track.id);
