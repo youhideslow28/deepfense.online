@@ -18,6 +18,7 @@ import {
 import { startUrlDetective  } from './games/url-detective.js';
 import { startScamChatTriage } from './games/scam-chat-triage.js';
 import { startPressureMeter  } from './games/pressure-meter.js';
+import { startOtpTrap        } from './games/otp-trap.js';
 
 // ── Constants ──────────────────────────────────────────────────
 const DPF_SEASON = 'genesis-2026';
@@ -27,6 +28,7 @@ const REGISTRY = {
   'url-detective':    startUrlDetective,
   'scam-chat-triage': startScamChatTriage,
   'pressure-meter':   startPressureMeter,
+  'otp-trap':          startOtpTrap,
 };
 
 // ── Load game JSON ─────────────────────────────────────────────

@@ -160,11 +160,12 @@ export const adminCompleteAll = async (uid) => {
     completedModules:  [1, 2, 3, 4, 5, 6],
     completedMidterms: ['midterm1', 'midterm2'],
     completedFinalExam: true,
-    completedMinigames: ['url-detective', 'scam-chat-triage', 'pressure-meter'],
+    completedMinigames: ['url-detective', 'scam-chat-triage', 'pressure-meter', 'otp-trap'],
     minigameScores: {
       'url-detective':    { score: 1, passed: true, moduleId: 6,    completedAt: now },
       'scam-chat-triage': { score: 1, passed: true, moduleId: 8,    completedAt: now },
       'pressure-meter':   { score: 1, passed: true, moduleId: 6,    completedAt: now },
+      'otp-trap':          { score: 1, passed: true, moduleId: 5,    completedAt: now },
     },
     quizScores: {
       1: { score: 1, passed: true, completedAt: now },
