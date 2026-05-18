@@ -716,3 +716,167 @@ a { color: inherit; text-decoration: none; }
 
 /* ── MISC UTILITY ────────────────────────────────────────────── */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* ── MOBILE / RESPONSIVE ─────────────────────────────────────── */
+
+/* Hamburger button — hidden on desktop, shown on mobile */
+.topbar-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-2);
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: all var(--trans);
+}
+.topbar-menu-btn:hover { background: var(--bg-hover); color: var(--text-1); }
+
+/* Sidebar close button — hidden on desktop */
+.sidebar-close-btn {
+  display: none;
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--text-3);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--trans), color var(--trans);
+  flex-shrink: 0;
+}
+.sidebar-close-btn:hover { background: var(--bg-hover); color: var(--text-1); cursor: pointer; }
+
+/* Mobile overlay behind sidebar */
+.sidebar-mob-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: fadeIn 0.18s ease;
+}
+
+/* ── Breakpoint: tablet + phone (≤ 767px) ──────────────────── */
+@media (max-width: 767px) {
+  /* Show hamburger */
+  .topbar-menu-btn { display: flex; }
+
+  /* Show sidebar close button */
+  .sidebar-close-btn { display: flex; }
+
+  /* Sidebar becomes a slide-in drawer */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.26s cubic-bezier(.4, 0, .2, 1);
+    box-shadow: none;
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
+    box-shadow: 6px 0 40px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Topbar */
+  .topbar {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  /* Hide external links in topbar */
+  .topbar-ext { display: none; }
+
+  /* "Trang chủ" label hidden, keep the ⌂ icon */
+  .topbar-home-label { display: none; }
+  .topbar-home { padding: 6px 10px; }
+
+  /* Shrink progress bar */
+  .topbar-progress-bar { width: 80px; }
+  .topbar-progress-text { font-size: 11px; }
+
+  /* Content area */
+  .content { padding: 24px 18px 48px; }
+
+  /* Home page */
+  .home-title { font-size: 28px; }
+  .home-desc { font-size: 15px; }
+  .home-stats { gap: 20px; }
+  .home-stat-num { font-size: 22px; }
+  .home-cta { font-size: 14px; padding: 12px 22px; }
+  .home-module-grid { grid-template-columns: 1fr; }
+
+  /* Lesson view */
+  .lesson-title { font-size: 22px; margin-bottom: 20px; }
+  .lesson-para  { font-size: 14.5px; }
+
+  /* Lesson nav — stack vertically on very small */
+  .lesson-nav { gap: 10px; }
+  .lesson-nav-btn { padding: 10px 14px; font-size: 13px; }
+
+  /* Checkpoint notice — stack vertically */
+  .checkpoint-notice { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .checkpoint-btn { margin-left: 0; width: 100%; text-align: center; }
+
+  /* Exam wrap */
+  .exam-wrap { padding-bottom: 40px; }
+  .exam-question { padding: 18px 16px; }
+  .exam-q-text { font-size: 14px; }
+  .exam-option { padding: 9px 12px; }
+  .exam-option-text { font-size: 13px; }
+
+  /* Exam pagination — wrap dots */
+  .exam-pagination { flex-wrap: wrap; gap: 8px; }
+  .exam-page-dots { flex-wrap: wrap; gap: 5px; }
+  .exam-page-dot { width: 28px; height: 28px; font-size: 11px; }
+
+  /* Exam result */
+  .exam-score-num { font-size: 44px; }
+  .exam-result-wrap { gap: 20px; }
+
+  /* Cert CTA — stack vertically */
+  .exam-cert-cta-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .exam-cert-cta-btn { width: 100%; justify-content: center; }
+
+  /* Quiz modal */
+  .modal { border-radius: 12px; }
+  .modal-body { padding: 18px; }
+  .modal-header { padding: 16px 18px 12px; }
+  .modal-footer { padding: 12px 18px; }
+  .quiz-question { font-size: 15px; }
+
+  /* Exam intro */
+  .exam-intro-title { font-size: 26px; }
+  .exam-intro-wrap { padding: 28px 0 40px; gap: 20px; }
+  .exam-rules { padding: 16px 18px; }
+}
+
+/* ── Breakpoint: phone only (≤ 480px) ──────────────────────── */
+@media (max-width: 480px) {
+  .topbar-breadcrumb { font-size: 12px; }
+
+  .home-title { font-size: 24px; }
+  .home-stats { flex-direction: column; gap: 12px; }
+
+  .lesson-title { font-size: 20px; }
+
+  /* Lesson nav — full width buttons */
+  .lesson-nav { flex-direction: column; gap: 10px; }
+  .lesson-nav-btn { width: 100%; justify-content: center; }
+
+  /* Exam page dots — smaller */
+  .exam-page-dot { width: 26px; height: 26px; border-radius: 6px; font-size: 10px; }
+
+  /* Quiz result stats — single column */
+  .quiz-result-detail { grid-template-columns: 1fr; }
+}
