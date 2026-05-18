@@ -1,0 +1,180 @@
+{
+  "id": "otp-trap",
+  "title": "OTP Trap",
+  "subtitle": "Nhận biết và xử lý đúng các bẫy OTP",
+  "passThreshold": 0.7,
+  "dpf": 20,
+  "instructions": "Đọc kỹ từng tình huống và chọn hành động đúng nhất để bảo vệ tài khoản.",
+  "rounds": [
+    {
+      "id": "otp1",
+      "type": "call",
+      "typeLabel": "📞 Cuộc gọi đến",
+      "sender": "0901 234 567",
+      "senderLabel": "\"Vietcombank Bảo mật\"",
+      "context": "Một cuộc gọi từ số lạ, tự xưng là nhân viên bảo mật Vietcombank.",
+      "content": "\"Chào anh/chị, tôi là Nguyễn Văn An — bộ phận Bảo mật Vietcombank. Tài khoản của anh/chị vừa phát sinh giao dịch đáng ngờ 48 triệu đồng. Để chặn giao dịch này, anh/chị vui lòng đọc ngay mã OTP vừa gửi đến điện thoại.\"",
+      "options": [
+        { "label": "📱 Đọc OTP ngay để chặn giao dịch", "correct": false },
+        { "label": "🔴 Cúp máy, gọi lại hotline VCB (1800.1004)", "correct": true },
+        { "label": "❓ Hỏi thêm: số tài khoản bị ảnh hưởng", "correct": false },
+        { "label": "⏸️ Giữ máy, kiểm tra app ngân hàng song song", "correct": false }
+      ],
+      "explanation": "Ngân hàng KHÔNG BAO GIỜ hỏi OTP qua điện thoại — không có ngoại lệ. Kẻ tấn công tạo áp lực thời gian để bạn không kịp suy nghĩ. Cúp máy ngay, sau đó gọi lại hotline chính thức in sau thẻ.",
+      "flags": [
+        "Ngân hàng KHÔNG BAO GIỜ hỏi OTP qua điện thoại",
+        "Số 0901.234.567 không phải hotline chính thức (1800.1004)",
+        "Chiến thuật: tạo cảm giác khẩn cấp để bạn không kịp suy nghĩ"
+      ]
+    },
+    {
+      "id": "otp2",
+      "type": "sms",
+      "typeLabel": "💬 Tin nhắn SMS",
+      "sender": "BIDV",
+      "senderLabel": "BIDV",
+      "context": "Bạn nhận OTP từ ngân hàng nhưng KHÔNG hề đăng nhập hay thực hiện giao dịch nào.",
+      "content": "Ma OTP BIDV cua ban la: 847291. Hieu luc 5 phut. Khong cung cap cho bat ky ai. -- BIDV",
+      "options": [
+        { "label": "🤷 Bỏ qua, chắc hệ thống gửi nhầm", "correct": false },
+        { "label": "🚨 Đổi mật khẩu ngay + gọi ngân hàng báo", "correct": true },
+        { "label": "🔑 Dùng OTP này đăng nhập thử xem sao", "correct": false },
+        { "label": "📤 Hỏi bạn bè xem ai vừa dùng tài khoản mình", "correct": false }
+      ],
+      "explanation": "OTP đến mà bạn không yêu cầu = ai đó đã có mật khẩu của bạn và đang chờ OTP cuối cùng để đăng nhập. Mỗi giây trì hoãn là nguy hiểm. Đổi mật khẩu ngay lập tức và gọi ngân hàng để khóa tài khoản tạm thời.",
+      "flags": [
+        "OTP không yêu cầu = kẻ tấn công đã có mật khẩu, chỉ còn thiếu OTP",
+        "Họ đang ngồi chờ — bạn có 5 phút trước khi hết hạn",
+        "Hành động: đổi mật khẩu NGAY, gọi BIDV 1800.9247, kiểm tra thiết bị đã đăng nhập"
+      ]
+    },
+    {
+      "id": "otp3",
+      "type": "sms",
+      "typeLabel": "💬 Tin nhắn từ bạn",
+      "sender": "Hùng (bạn thân)",
+      "senderLabel": "Hùng",
+      "context": "Tin nhắn từ số đã lưu tên 'Hùng' — người bạn thân của bạn.",
+      "content": "\"Ê mày ơi, tao đang đặt hàng trên trang web lỡ nhập nhầm số mày. Cái OTP mà trang web vừa gửi cho mày ấy — forward cho tao ngay với, sắp hết hạn rồi\"",
+      "options": [
+        { "label": "📨 Forward OTP ngay, bạn bè mà", "correct": false },
+        { "label": "📞 Gọi lại trực tiếp Hùng để xác minh", "correct": true },
+        { "label": "❓ Hỏi qua tin nhắn: mày đang mua gì?", "correct": false },
+        { "label": "🙈 Bỏ qua, không phản hồi", "correct": false }
+      ],
+      "explanation": "Tài khoản Zalo/điện thoại của Hùng có thể đã bị chiếm để gửi tin này. OTP không thể 'gửi nhầm' — mỗi OTP gắn với tài khoản của người nhận, không ai khác dùng được. Gọi trực tiếp (không nhắn tin) để xác minh.",
+      "flags": [
+        "OTP không thể 'gửi nhầm số' — OTP gắn với tài khoản người đăng ký",
+        "Tài khoản Zalo/Facebook của Hùng có thể đã bị hack",
+        "Không bao giờ chia sẻ OTP dù cho ai, kể cả người thân"
+      ]
+    },
+    {
+      "id": "otp4",
+      "type": "web",
+      "typeLabel": "🌐 Trang web",
+      "sender": "secure-vcb-cancel.tk",
+      "senderLabel": "🔒 secure-vcb-cancel.tk",
+      "context": "Bạn nhận SMS cảnh báo 'giao dịch đáng ngờ' và nhấp vào link trong tin nhắn.",
+      "content": "⚠️ CẢNH BÁO KHẨN: Tài khoản của bạn đang có giao dịch chuyển 49.500.000 VNĐ đến ngân hàng nước ngoài. Nhập mã OTP bên dưới để HỦY giao dịch này NGAY.",
+      "options": [
+        { "label": "✅ Nhập OTP để hủy giao dịch", "correct": false },
+        { "label": "🔙 Đóng trang, gọi trực tiếp ngân hàng", "correct": true },
+        { "label": "🔍 Kiểm tra URL kỹ rồi mới nhập", "correct": false },
+        { "label": "📧 Liên hệ email hỗ trợ trên trang này", "correct": false }
+      ],
+      "explanation": "Domain 'secure-vcb-cancel.tk' không phải vietcombank.com.vn. Kẻ tấn công dùng kỹ thuật 'hủy giao dịch' để khiến bạn chủ động nhập OTP — thực ra bạn đang XÁC NHẬN giao dịch giả đó. Đóng trang ngay, gọi hotline ngân hàng thật.",
+      "flags": [
+        "Domain '.tk' là miễn phí — thường dùng cho site giả mạo",
+        "Tên miền không phải vietcombank.com.vn",
+        "OTP nhập vào đây sẽ đến tay kẻ tấn công trong vài giây",
+        "Ngân hàng thật KHÔNG yêu cầu OTP qua trang web từ link SMS lạ"
+      ]
+    },
+    {
+      "id": "otp5",
+      "type": "app",
+      "typeLabel": "📱 Yêu cầu quyền ứng dụng",
+      "sender": "FlashLight Pro Ultra",
+      "senderLabel": "FlashLight Pro Ultra",
+      "context": "Bạn vừa cài ứng dụng đèn pin từ CH Play. App yêu cầu các quyền sau:",
+      "content": "Ứng dụng yêu cầu quyền:\n\n• Đọc và gửi tin nhắn SMS\n• Truy cập danh bạ\n• Vị trí chính xác\n• Chạy ngầm khi tắt màn hình",
+      "options": [
+        { "label": "✅ Cho phép tất cả — cài nhanh cho xong", "correct": false },
+        { "label": "✅ Chỉ cho phép đọc SMS thôi", "correct": false },
+        { "label": "🚫 Từ chối + gỡ cài đặt ứng dụng này", "correct": true },
+        { "label": "⚙️ Cho phép tạm, xem lại cài đặt quyền sau", "correct": false }
+      ],
+      "explanation": "Ứng dụng đèn pin chỉ cần quyền bật đèn flash — không cần đọc SMS, danh bạ hay vị trí. Quyền đọc SMS cho phép ứng dụng đánh cắp mã OTP của bạn ngay khi nhận được. Gỡ ngay.",
+      "flags": [
+        "Đèn pin chỉ cần quyền Camera (để bật flash) — không hơn",
+        "Quyền đọc SMS = có thể đánh cắp OTP của bạn",
+        "Quyền 'chạy ngầm' = hoạt động liên tục thu thập dữ liệu"
+      ]
+    },
+    {
+      "id": "otp6",
+      "type": "sms",
+      "typeLabel": "💬 SIM mất sóng đột ngột",
+      "sender": "MobiFone",
+      "senderLabel": "MobiFone",
+      "context": "SIM điện thoại bạn đột nhiên mất sóng hoàn toàn. Bạn thấy tin nhắn này trên thiết bị khác.",
+      "content": "SIM cua ban tam thoi bi khoa vi phat hien truy cap bat thuong. Bam vao link sau de kich hoat lai ngay: http://mobi-reactivate.tk/verify?id=8821",
+      "options": [
+        { "label": "🔗 Nhấp link để kích hoạt lại SIM", "correct": false },
+        { "label": "⏳ Chờ vài tiếng, chắc lỗi mạng tự khắc phục", "correct": false },
+        { "label": "📞 Gọi ngay 9090 hoặc ra cửa hàng MobiFone", "correct": true },
+        { "label": "🔄 Rút SIM ra cắm lại để reset", "correct": false }
+      ],
+      "explanation": "SIM mất sóng đột ngột là dấu hiệu cảnh báo tấn công SIM Swap — kẻ tấn công đã liên hệ nhà mạng để chuyển số điện thoại của bạn sang SIM của chúng. Từ đó tất cả OTP sẽ đến chúng. Đến cửa hàng MobiFone ngay với CMND gốc.",
+      "flags": [
+        "SIM mất sóng đột ngột = nguy cơ SIM Swap cao",
+        "Kẻ tấn công đang nhận OTP thay bạn từ lúc SIM tắt sóng",
+        "Nhà mạng thật KHÔNG gửi link kích hoạt qua SMS",
+        "Hành động: đến cửa hàng ngay, mang CMND gốc, báo khóa tài khoản ngân hàng"
+      ]
+    },
+    {
+      "id": "otp7",
+      "type": "call",
+      "typeLabel": "📞 Cuộc gọi đến",
+      "sender": "+84 28 7300 9182",
+      "senderLabel": "\"Microsoft Security Vietnam\"",
+      "context": "Cuộc gọi từ số lạ, người tự xưng là nhân viên Microsoft.",
+      "content": "\"Xin chào, tôi là nhân viên Trung tâm Bảo mật Microsoft. Tài khoản Microsoft của bạn vừa bị đăng nhập từ IP Nga. Chúng tôi cần mã OTP vừa gửi đến điện thoại để xác minh danh tính và khóa kẻ tấn công ngay lập tức.\"",
+      "options": [
+        { "label": "📱 Đọc OTP để Microsoft khóa hacker giúp", "correct": false },
+        { "label": "🔴 Cúp máy — Microsoft không gọi điện thế này", "correct": true },
+        { "label": "❓ Yêu cầu họ gửi email xác nhận trước", "correct": false },
+        { "label": "🔒 Đổi mật khẩu ngay trong lúc đang nghe", "correct": false }
+      ],
+      "explanation": "Microsoft, Google và Apple KHÔNG BAO GIỜ chủ động gọi điện yêu cầu OTP hay thông tin tài khoản. Đây là kỹ thuật 'Tech Support Scam' kinh điển. Cúp máy ngay, sau đó tự đăng nhập vào account.microsoft.com để kiểm tra.",
+      "flags": [
+        "Microsoft/Google/Apple không bao giờ chủ động gọi điện",
+        "Tech Support Scam — kẻ giả mạo hỗ trợ kỹ thuật rất phổ biến",
+        "Hành động đúng: cúp máy, tự kiểm tra tài khoản trên trang chính thức"
+      ]
+    },
+    {
+      "id": "otp8",
+      "type": "app",
+      "typeLabel": "📱 Thông báo trong app",
+      "sender": "Techcombank",
+      "senderLabel": "Techcombank App",
+      "context": "Bạn đang dùng app Techcombank thì xuất hiện pop-up này.",
+      "content": "🔔 CẬP NHẬT BẢO MẬT QUAN TRỌNG\n\nĐể tiếp tục sử dụng dịch vụ, tải và cài đặt Security Certificate mới nhất:\n\nbit.ly/tcb-security-update-2025\n\n⚠️ Phiên bản hiện tại sẽ hết hạn sau 24 giờ.",
+      "options": [
+        { "label": "📲 Tải và cài đặt ngay qua link", "correct": false },
+        { "label": "⏰ Để 24 tiếng nữa rồi tính", "correct": false },
+        { "label": "🚫 Đóng pop-up, cập nhật chính thức qua CH Play", "correct": true },
+        { "label": "🔍 Nhấp link để xem file trước khi cài", "correct": false }
+      ],
+      "explanation": "App ngân hàng thật cập nhật qua CH Play (Android) hoặc App Store (iOS) — không bao giờ qua link trong pop-up. 'bit.ly' là link rút gọn che giấu đích thực. Pop-up trong app yêu cầu cài app ngoài là dấu hiệu thiết bị đã bị nhiễm malware.",
+      "flags": [
+        "Cập nhật app ngân hàng chỉ qua CH Play / App Store chính thức",
+        "bit.ly ẩn đích thực — có thể trỏ đến APK độc hại",
+        "Pop-up yêu cầu cài ngoài CH Play = dấu hiệu thiết bị đã bị nhiễm"
+      ]
+    }
+  ]
+}
