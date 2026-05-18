@@ -374,7 +374,7 @@ export const drawCertificate = async (canvas, certData) => {
   ctx.font      = '400 11px "JetBrains Mono", monospace';
   ctx.fillStyle = 'rgba(60, 60, 60, 1)';
   ctx.textAlign = 'center';
-  ctx.fillText(`academy.deepfense.online  ·  ${certId}`, CERT_W / 2, CERT_H - 50);
+  ctx.fillText(`Deepfense.online Academic Board  ·  ${certId}`, CERT_W / 2, CERT_H - 50);
 };
 
 // ── Helper: rounded rect ──────────────────────────────────────
@@ -635,7 +635,7 @@ const renderCertReady = (certName) => `
     </div>
 
     <p style="font-size:.75rem;color:var(--clr-text-3);text-align:center;margin-top:12px">
-      Mã chứng chỉ có thể được xác minh tại academy.deepfense.online
+      Mã chứng chỉ có thể được xác minh tại Deepfense.online Academic Board
     </p>
   </div>`;
 
