@@ -223,21 +223,21 @@
         font-size: 12px;
       }
 
-      /* ── Verified Stamp — covers the whole signature block ───── */
+      /* ── Verified Stamp — overlaps signature block bottom-left ─ */
       .verified-stamp {
         position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-60%, -44%) rotate(-14deg);
-        width: 160px;
-        height: 160px;
+        left: 10px;
+        top: -5px;
+        transform: rotate(-14deg);
+        width: 100px;
+        height: 100px;
         display: grid;
         place-items: center;
-        border: 3.5px solid rgba(2,132,199,0.55);
+        border: 3px solid rgba(2,132,199,0.55);
         border-radius: 999px;
         color: rgba(2,132,199,0.62);
         background: rgba(255,255,255,0.04);
-        font-size: 13px;
+        font-size: 10px;
         font-weight: 950;
         text-align: center;
         mix-blend-mode: multiply;
@@ -246,7 +246,7 @@
       .verified-stamp::before {
         content: "";
         position: absolute;
-        inset: 9px;
+        inset: 7px;
         border: 1.5px dashed currentColor;
         border-radius: 999px;
       }
