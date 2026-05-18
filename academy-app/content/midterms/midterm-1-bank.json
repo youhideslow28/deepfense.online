@@ -1,247 +1,319 @@
 {
   "midtermId": "midterm1",
-  "title": "Midterm 1 — Phần I: Nền tảng",
-  "scope": "Module 1, 2, 3",
+  "title": "Midterm 1 — Phần I: Nhận diện Deepfake",
+  "scope": "Module 1, 2",
   "questions": [
     {
       "id": "mt1q01",
-      "tag": "Module 1 — Deepfake là gì",
-      "text": "Kỹ thuật nào tạo ra deepfake bằng cách đặt hai mạng AI cạnh tranh nhau — một mạng tạo nội dung giả, một mạng cố phân biệt thật/giả?",
-      "options": ["CNN (Convolutional Neural Network)", "GAN (Generative Adversarial Networks)", "RNN (Recurrent Neural Network)", "SVM (Support Vector Machine)"],
-      "correct": 1,
-      "explanation": "GAN — Generator tạo ảnh/video giả, Discriminator cố phân biệt. Hai mạng cạnh tranh liên tục cho đến khi Generator tạo ra nội dung đủ chân thực để đánh lừa Discriminator."
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Công nghệ nền tảng thường được dùng để tạo video deepfake là gì?",
+      "options": [
+        "Mạng đối nghịch tổng quát (GAN)",
+        "Thuật toán nén video H.264",
+        "Phần mềm chỉnh sửa Adobe Premiere",
+        "Công nghệ nhận dạng chuyển động quang học"
+      ],
+      "correct": 0,
+      "explanation": "GAN (Generative Adversarial Network) là kiến trúc học sâu cốt lõi trong hầu hết các hệ thống tạo deepfake: một mạng sinh tạo nội dung giả, một mạng phân biệt đánh giá tính thực, hai mạng cạnh tranh nhau cho đến khi kết quả trông thuyết phục."
     },
     {
       "id": "mt1q02",
-      "tag": "Module 1 — Deepfake là gì",
-      "text": "Deepfake được đặt tên bằng cách ghép \"deep learning\" với \"fake\". Từ \"deep\" ở đây chỉ điều gì?",
-      "options": ["Nội dung sâu sắc, khó hiểu", "Kỹ thuật học sâu (deep learning) — mạng neural nhiều tầng", "Deepfake được phát hiện ở vùng deep web", "Nội dung chứa thông điệp ẩn sâu"],
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Trong video deepfake, dấu hiệu bất thường nào liên quan đến mắt thường dễ nhận ra nhất?",
+      "options": [
+        "Mắt có màu sắc quá sặc sỡ bất thường",
+        "Tốc độ chớp mắt không tự nhiên — quá ít hoặc chớp ở thời điểm sai",
+        "Đồng tử mắt có hình dạng chữ nhật",
+        "Lông mi quá dài bất thường"
+      ],
       "correct": 1,
-      "explanation": "\"Deep\" trong deep learning chỉ các mạng neural nhiều lớp (deep neural networks) — khả năng học các biểu diễn phức tạp từ dữ liệu thô mà không cần feature engineering thủ công."
+      "explanation": "Các mô hình deepfake thường được huấn luyện trên ảnh tĩnh — trong đó người ta thường mở mắt. Kết quả là video deepfake có xu hướng chớp mắt ít hơn hoặc chớp mắt ở các thời điểm không tự nhiên, khác với nhịp sinh học bình thường của con người."
     },
     {
       "id": "mt1q03",
-      "tag": "Module 1 — Deepfake là gì",
-      "text": "Đâu là ví dụ về ứng dụng HỢP PHÁP và tích cực của công nghệ deepfake/synthetic media?",
-      "options": ["Tạo video thù địch về đối thủ chính trị", "Sản xuất nội dung khiêu dâm về người nổi tiếng", "Làm trẻ hóa diễn viên trong phim điện ảnh", "Giả mạo giọng sếp để gian lận tài chính"],
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Bạn đang xem video một người nổi tiếng. Vùng da mặt trông mịn màng bất thường, nhưng ranh giới giữa khuôn mặt và cổ trông mờ nhạt, không rõ nét. Đây là dấu hiệu của điều gì?",
+      "options": [
+        "Video được quay bằng camera chất lượng thấp",
+        "Người trong video đang đeo lớp nền trang điểm dày",
+        "Kỹ thuật hoán đổi khuôn mặt (face swap) deepfake tạo ra vùng biên mờ tại ranh giới mặt",
+        "Hiệu ứng ánh sáng sân khấu bình thường"
+      ],
       "correct": 2,
-      "explanation": "Công nghệ de-aging trong điện ảnh (như Marvel, Star Wars) là ứng dụng hợp pháp với sự đồng ý của diễn viên. Các ứng dụng khác: phục hồi di sản văn hóa, giáo dục, y tế mô phỏng."
+      "explanation": "Kỹ thuật face swap trong deepfake ghép khuôn mặt lên đầu người khác, tạo ra vùng biên (boundary) mờ hoặc không đồng đều tại ranh giới giữa khuôn mặt được ghép và phần cổ/tai/tóc gốc. Đây là một trong các artifact phổ biến nhất để nhận diện deepfake."
     },
     {
       "id": "mt1q04",
-      "tag": "Module 1 — Deepfake là gì",
-      "text": "Deepfake audio (voice cloning) nguy hiểm hơn deepfake video trong lừa đảo vì lý do gì?",
-      "options": ["Chất lượng âm thanh tốt hơn hình ảnh", "Giọng nói tạo phản ứng cảm xúc tức thì và cần ít dữ liệu nguồn hơn để tạo", "Deepfake audio không thể bị phát hiện bởi AI", "Chỉ cần wifi để tạo deepfake audio"],
-      "correct": 1,
-      "explanation": "Giọng nói kích hoạt tin tưởng và cảm xúc tức thì trong não người. Đồng thời, voice cloning chỉ cần 3-30 giây mẫu giọng — thấp hơn nhiều so với lượng dữ liệu cần cho video deepfake."
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Trong video deepfake, hiện tượng 'temporal flickering' là gì?",
+      "options": [
+        "Âm thanh bị gián đoạn đột ngột giữa các câu",
+        "Video bị giật lag do đường truyền mạng kém",
+        "Hiệu ứng nhấp nháy do màn hình điện thoại tần số thấp",
+        "Sự thay đổi không nhất quán về ánh sáng, màu da, hoặc chi tiết khuôn mặt giữa các frame liên tiếp"
+      ],
+      "correct": 3,
+      "explanation": "Temporal flickering xảy ra khi mô hình deepfake xử lý từng frame độc lập mà không tối ưu hóa tính nhất quán theo thời gian. Kết quả là màu da, ánh sáng hoặc các chi tiết nhỏ trên khuôn mặt thay đổi không ổn định giữa các frame kế tiếp nhau."
     },
     {
       "id": "mt1q05",
-      "tag": "Module 1 — Deepfake là gì",
-      "text": "Tại sao deepfake ngày càng dễ tạo ra hơn cho người dùng thông thường?",
-      "options": ["Vì phần cứng máy tính ngày càng rẻ hơn", "Vì các công cụ AI deepfake dễ dùng, miễn phí, và không cần kỹ năng kỹ thuật cao đang bùng nổ", "Vì internet ngày càng nhanh hơn", "Vì người dùng học lập trình nhiều hơn"],
-      "correct": 1,
-      "explanation": "Sự dân chủ hóa AI: các ứng dụng như FaceApp, DeepFaceLab, ElevenLabs, và hàng trăm ứng dụng khác cho phép tạo deepfake không cần kiến thức kỹ thuật. Ngưỡng kỹ năng ngày càng giảm."
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Tại sao tóc và tai thường là vùng kém chất lượng nhất trong video deepfake?",
+      "options": [
+        "Vì tóc và tai có cấu trúc phức tạp, nhiều chi tiết mảnh mà mô hình GAN khó tái tạo chính xác",
+        "Vì camera thường lấy nét vào mắt và miệng, bỏ qua các vùng ngoại vi",
+        "Vì hầu hết deepfake chỉ sử dụng ảnh khuôn mặt không có tóc để huấn luyện",
+        "Vì não người ít chú ý đến tóc và tai hơn mắt"
+      ],
+      "correct": 0,
+      "explanation": "Tóc có hàng nghìn sợi mảnh và tai có cấu trúc 3D phức tạp với nhiều đường nét nhỏ. Các mô hình GAN được tối ưu hóa cho vùng trung tâm khuôn mặt (mắt, mũi, miệng), dẫn đến tóc và tai thường có chất lượng thấp hơn — trông bị nhòe, méo, hoặc thiếu chi tiết tự nhiên."
     },
     {
       "id": "mt1q06",
-      "tag": "Module 2 — Tác động",
-      "text": "Loại deepfake gây hại cho cá nhân phổ biến và nghiêm trọng nhất hiện nay là?",
-      "options": ["Deepfake thay đổi màu tóc", "NCII — Non-consensual intimate imagery deepfake", "Deepfake thay đổi giọng nói trong game", "Deepfake để làm avatar ảo"],
-      "correct": 1,
-      "explanation": "NCII deepfake (ghép mặt vào nội dung khiêu dâm không có sự đồng ý) chiếm hơn 96% deepfake trên internet và gây tổn thương tâm lý nghiêm trọng tương đương bạo lực tình dục."
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Công cụ InVID/WeVerify được sử dụng để làm gì trong việc xác minh video?",
+      "options": [
+        "Tạo video deepfake chất lượng cao phục vụ nghiên cứu",
+        "Mã hóa video trước khi gửi qua mạng an toàn",
+        "Trích xuất frame từ video, phân tích metadata và thực hiện tìm kiếm ngược để xác minh nguồn gốc",
+        "Chỉnh sửa và cắt ghép video chuyên nghiệp"
+      ],
+      "correct": 2,
+      "explanation": "InVID (hiện là WeVerify) là công cụ xác minh video được dùng bởi các nhà báo và nhà nghiên cứu. Nó cho phép trích xuất keyframe, kiểm tra metadata của video, và thực hiện tìm kiếm ngược hình ảnh để truy xuất nguồn gốc và phát hiện nội dung bị chỉnh sửa."
     },
     {
       "id": "mt1q07",
-      "tag": "Module 2 — Tác động",
-      "text": "\"Liar's dividend\" — cổ tức của kẻ nói dối — là hậu quả gián tiếp nguy hiểm nào của sự phổ biến deepfake?",
-      "options": ["Tội phạm kiếm được nhiều tiền từ deepfake", "Kẻ xấu dùng sự tồn tại của deepfake để tuyên bố bằng chứng thật là giả mạo", "Các công ty deepfake được định giá cao hơn", "Luật sư kiếm được nhiều tiền hơn từ các vụ kiện deepfake"],
-      "correct": 1,
-      "explanation": "Khi deepfake phổ biến, bất kỳ video thật nào cũng có thể bị tuyên bố là \"deepfake\". Điều này cho phép tội phạm từ chối trách nhiệm trước bằng chứng video xác thực — làm suy yếu hệ thống pháp lý."
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Trong video deepfake, nguồn sáng chiếu lên khuôn mặt không khớp với môi trường xung quanh. Điều này cho thấy điều gì?",
+      "options": [
+        "Video được quay ngoài trời vào buổi sáng",
+        "Người quay đang dùng đèn flash phụ quá mạnh",
+        "Camera điện thoại tự động cân bằng ánh sáng không đúng",
+        "Khuôn mặt trong video được ghép từ nguồn khác có điều kiện ánh sáng khác, tạo ra sự không nhất quán về hướng và màu ánh sáng"
+      ],
+      "correct": 3,
+      "explanation": "Sự không nhất quán về ánh sáng (lighting inconsistency) là một artifact phổ biến của deepfake face swap: khuôn mặt nguồn được chụp với ánh sáng từ một hướng nhất định, nhưng khi ghép vào video đích — có điều kiện ánh sáng khác — bóng đổ và điểm sáng trên mặt không khớp với môi trường xung quanh."
     },
     {
       "id": "mt1q08",
-      "tag": "Module 2 — Tác động",
-      "text": "Tác động của deepfake đến doanh nghiệp theo hai hướng chính là?",
-      "options": ["Tăng chi phí marketing và giảm doanh số", "Gian lận tài chính (giả CEO) và phá hoại thương hiệu (video CEO giả phát ngôn sai)", "Gián điệp công nghiệp và rò rỉ bí mật kinh doanh", "Làm chậm hệ thống IT và mất năng suất"],
-      "correct": 1,
-      "explanation": "Doanh nghiệp đối mặt với: (1) CEO fraud — giả giọng/video CEO để ra lệnh chuyển tiền; (2) Reputation attack — tạo video CEO giả thừa nhận gian lận để làm sụt giá cổ phiếu hoặc gây khủng hoảng PR."
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Bạn nhận được video 'bằng chứng' cho thấy một người quen thực hiện hành vi xấu. Bước đầu tiên để xác minh tính xác thực của video là gì?",
+      "options": [
+        "Ngay lập tức chia sẻ video lên mạng xã hội để hỏi ý kiến cộng đồng",
+        "Tin tưởng ngay vì video là bằng chứng trực quan không thể làm giả",
+        "Gọi điện ngay cho người trong video để hỏi thẳng",
+        "Chụp màn hình một frame và dùng tính năng tìm kiếm ngược hình ảnh để kiểm tra nguồn gốc"
+      ],
+      "correct": 3,
+      "explanation": "Tìm kiếm ngược hình ảnh (reverse image search) — chụp một frame từ video và tìm kiếm trên Google Images hay TinEye — cho phép kiểm tra xem hình ảnh đó đã xuất hiện ở đâu trước đây. Đây là bước xác minh nhanh đầu tiên trước khi kết luận về tính xác thực."
     },
     {
       "id": "mt1q09",
-      "tag": "Module 2 — Tác động",
-      "text": "Nghiên cứu MIT (2018) về tốc độ lan truyền của tin giả trên Twitter cho thấy kết quả gì?",
-      "options": ["Tin thật lan nhanh hơn tin giả", "Tin giả lan nhanh hơn tin thật 6 lần", "Tốc độ lan truyền không có sự khác biệt đáng kể", "Chỉ tin giả về chính trị lan nhanh hơn"],
-      "correct": 1,
-      "explanation": "Nghiên cứu Soroush Vosoughi et al. (MIT, 2018) trên 126.000 câu chuyện Twitter: tin giả lan nhanh hơn, sâu hơn, và rộng hơn tin thật — đặc biệt là thông tin chính trị. Nội dung mới lạ và kích thích cảm xúc lan nhanh nhất."
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Phân tích metadata của một file video có thể giúp gì trong việc phát hiện video giả?",
+      "options": [
+        "Metadata có thể tiết lộ thông tin về phần mềm chỉnh sửa đã dùng, thời gian tạo file, và sự không nhất quán kỹ thuật",
+        "Metadata cho biết chính xác ai đã tạo video và mục đích sử dụng",
+        "Metadata xác nhận nội dung video là thật hay giả một cách tự động",
+        "Metadata không có giá trị gì trong việc xác minh video"
+      ],
+      "correct": 0,
+      "explanation": "Metadata của file video (EXIF/container metadata) có thể chứa thông tin về phần mềm tạo/chỉnh sửa, thời gian tạo, thiết bị ghi, v.v. Sự không khớp giữa metadata và bối cảnh được khai báo, hoặc sự hiện diện của phần mềm chỉnh sửa, là tín hiệu cảnh báo đáng điều tra thêm."
     },
     {
       "id": "mt1q10",
-      "tag": "Module 2 — Tác động",
-      "text": "Tại sao nạn nhân của deepfake NCII thường không tìm kiếm giúp đỡ pháp lý?",
-      "options": ["Vì không biết luật bảo vệ họ", "Vì xấu hổ, sợ bị phán xét, và không biết ai/tổ chức nào có thể giúp", "Vì chi phí pháp lý quá cao", "Vì deepfake không phải tội phạm ở hầu hết quốc gia"],
-      "correct": 1,
-      "explanation": "Rào cản tìm kiếm giúp đỡ chủ yếu là tâm lý: xấu hổ, sợ bị phán xét \"tại sao có ảnh/video đó\", và thiếu nhận thức về các kênh hỗ trợ. Đây là lý do các tổ chức hỗ trợ nạn nhân cần nâng cao nhận thức cộng đồng."
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Sự không khớp giữa chuyển động môi và âm thanh (lip sync mismatch) trong video là dấu hiệu của điều gì?",
+      "options": [
+        "Video được quay trong điều kiện âm thanh kém",
+        "Đây là kỹ thuật quay phim đặc biệt được dùng trong điện ảnh",
+        "Có thể là dấu hiệu deepfake — đặc biệt khi audio và video được ghép từ hai nguồn khác nhau hoặc AI chưa đồng bộ hoàn hảo",
+        "Video bị nén mạnh làm mất đồng bộ"
+      ],
+      "correct": 2,
+      "explanation": "Lip sync mismatch — miệng chuyển động không khớp với âm thanh — là một artifact phổ biến trong deepfake, đặc biệt trong các video được tạo bằng cách ghép audio AI-generated vào video gốc, hoặc khi mô hình sinh video chưa tối ưu hóa được sự đồng bộ miệng-tiếng."
     },
     {
       "id": "mt1q11",
-      "tag": "Module 3 — Đạo đức & Pháp lý",
-      "text": "Luật An ninh mạng Việt Nam 2018 cấm hành vi nào liên quan đến thông tin sai sự thật?",
-      "options": ["Chỉ cấm tin giả về chính phủ", "Đăng tải, chia sẻ thông tin sai sự thật gây hoang mang trong nhân dân hoặc xúc phạm danh dự người khác", "Chỉ cấm trên mạng xã hội nước ngoài", "Chỉ cấm khi nạn nhân là người nổi tiếng"],
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Bạn thấy video một chính trị gia phát biểu điều gây sốc. Cả miệng lẫn tiếng nói đều khớp nhau, nhưng bạn vẫn nghi ngờ. Bước tiếp theo phù hợp nhất là gì?",
+      "options": [
+        "Tin tưởng video vì âm thanh và hình ảnh đã khớp với nhau",
+        "Tìm kiếm nguồn tin tức chính thống xác nhận hay bác bỏ tuyên bố đó, và sử dụng công cụ như InVID để trích xuất frame phân tích",
+        "Gửi video cho nhiều người xem để họ cùng đánh giá",
+        "Chờ xem video có bị gỡ xuống không thì mới kết luận"
+      ],
       "correct": 1,
-      "explanation": "Điều 8 Luật An ninh mạng 2018 cấm \"thông tin sai sự thật gây hoang mang trong nhân dân, gây thiệt hại cho các hoạt động kinh tế — xã hội, gây khó khăn cho hoạt động của cơ quan nhà nước\". Vi phạm có thể bị phạt tù."
+      "explanation": "Ngay cả khi lip sync có vẻ khớp, bước xác minh chuẩn mực là: tìm kiếm bằng tên nhân vật + tuyên bố trên các nguồn tin chính thống (Reuters, AP, báo uy tín), dùng InVID/WeVerify để trích xuất và phân tích frame, kiểm tra nguồn đăng tải ban đầu. Đây là quy trình fact-checking tiêu chuẩn."
     },
     {
       "id": "mt1q12",
-      "tag": "Module 3 — Đạo đức & Pháp lý",
-      "text": "Nguyên tắc \"informed consent\" yêu cầu điều kiện gì khi sử dụng hình ảnh của người khác?",
-      "options": ["Chỉ cần người đó đã đăng ảnh công khai", "Người được hỏi hiểu rõ mục đích, không bị ép buộc, và có thể rút lại đồng ý", "Chỉ cần thông báo sau khi đã sử dụng", "Đồng ý ngầm định khi follow trên mạng xã hội là đủ"],
+      "tag": "Module 1 — Deepfake Video",
+      "text": "Khi nhận được video đáng ngờ qua tin nhắn, hành động KHÔNG nên làm là gì?",
+      "options": [
+        "Chụp màn hình một frame và thực hiện tìm kiếm ngược hình ảnh",
+        "Chia sẻ ngay lập tức cho nhiều người khác trước khi xác minh",
+        "Kiểm tra thông tin trên các nguồn tin tức chính thống",
+        "Phân tích các dấu hiệu artifact trên khuôn mặt người trong video"
+      ],
       "correct": 1,
-      "explanation": "Informed consent là nền tảng đạo đức: (1) Hiểu rõ — biết ảnh/video của mình sẽ dùng làm gì; (2) Tự nguyện — không áp lực; (3) Có thể rút lại. Đăng ảnh lên Instagram không mặc định đồng ý cho mọi mục đích."
+      "explanation": "Chia sẻ video chưa được xác minh có thể góp phần lan truyền thông tin sai lệch. Hành động đúng đắn là xác minh trước (tìm kiếm ngược, kiểm tra nguồn tin chính thống, phân tích artifact) trước khi quyết định có chia sẻ hay không."
     },
     {
       "id": "mt1q13",
-      "tag": "Module 3 — Đạo đức & Pháp lý",
-      "text": "\"Dấu vết số\" (digital footprint) và rủi ro deepfake có mối liên hệ như thế nào?",
-      "options": ["Không liên quan — deepfake chỉ cần một ảnh là đủ", "Dấu vết số phong phú (nhiều ảnh/video đa góc độ) cung cấp dataset tốt hơn để tạo deepfake chân thực hơn", "Dấu vết số lớn đồng nghĩa có nhiều người bảo vệ bạn", "Chỉ dấu vết số trên dark web mới nguy hiểm"],
-      "correct": 1,
-      "explanation": "Model deepfake cần nhiều mẫu đa dạng (góc độ, ánh sáng, biểu cảm) để tạo ra kết quả chân thực. Người đăng nhiều ảnh/video từ nhiều góc độ vô tình cung cấp dataset huấn luyện tốt hơn cho kẻ xấu."
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Công nghệ nào cho phép AI tạo ra giọng nói tổng hợp nghe gần giống giọng người thật?",
+      "options": [
+        "Công nghệ Bluetooth tần số cao",
+        "Thuật toán nén âm thanh MP3 nâng cao",
+        "Text-to-Speech (TTS) nâng cao và các mô hình như WaveNet của Google",
+        "Phần mềm điều chỉnh pitch (cao độ) đơn giản"
+      ],
+      "correct": 2,
+      "explanation": "TTS (Text-to-Speech) nâng cao, đặc biệt là các mô hình neural như WaveNet của Google DeepMind, có thể tạo ra giọng nói tổng hợp với chất lượng rất cao — bao gồm cả nhân bản giọng cụ thể (voice cloning) chỉ từ vài giây đến vài phút mẫu giọng."
     },
     {
       "id": "mt1q14",
-      "tag": "Module 3 — Đạo đức & Pháp lý",
-      "text": "Chuẩn kỹ thuật C2PA (Coalition for Content Provenance and Authenticity) giải quyết vấn đề deepfake bằng cách nào?",
-      "options": ["Tự động xóa nội dung AI tạo ra", "Ghi nhận lịch sử nguồn gốc nội dung — ai tạo, khi nào, bằng công cụ gì — không thể giả mạo", "Cấm các công cụ AI tạo ra deepfake", "Đánh thuế nội dung AI"],
-      "correct": 1,
-      "explanation": "C2PA (Adobe, Microsoft, Google, Intel, Sony) phát triển tiêu chuẩn ghi lịch sử nội dung (content provenance) vào metadata có chữ ký điện tử — giúp bất kỳ ai có thể truy nguồn gốc ảnh/video qua công cụ kiểm tra."
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Dấu hiệu nào sau đây gợi ý một cuộc gọi sử dụng giọng nói được tạo bởi AI?",
+      "options": [
+        "Nhịp điệu phát ngôn đều đặn một cách bất thường, thiếu ngữ điệu cảm xúc tự nhiên và có khoảng ngừng ở những vị trí không tự nhiên",
+        "Người gọi nói chuyện bằng tiếng Việt chuẩn",
+        "Cuộc gọi đến từ số điện thoại lạ",
+        "Người gọi nói nhanh hơn bình thường"
+      ],
+      "correct": 0,
+      "explanation": "Giọng AI thường thiếu sự biến đổi cảm xúc tự nhiên: nhịp điệu quá đều đặn, thiếu các điểm nhấn ngữ điệu tự nhiên, chuyển tiếp giữa các câu có thể nghe máy móc, và khoảng ngừng (pause) xuất hiện ở vị trí không tự nhiên. Đây là các tín hiệu quan trọng cần chú ý."
     },
     {
       "id": "mt1q15",
-      "tag": "Module 1 — Deepfake là gì",
-      "text": "Deepfake và \"shallowfake\" khác nhau ở điểm nào?",
-      "options": ["Shallowfake là deepfake chất lượng kém hơn", "Shallowfake dùng chỉnh sửa đơn giản (cắt, ghép, tua chậm) không cần AI; deepfake dùng AI để tổng hợp nội dung mới", "Shallowfake chỉ ảnh hưởng đến hình ảnh, không ảnh hưởng video", "Không có sự khác biệt thực tế"],
-      "correct": 1,
-      "explanation": "Shallowfake (cheap fake): thao túng đơn giản — cắt bỏ ngữ cảnh, tua chậm để trông say rượu, chạy ngược... Deepfake: dùng AI để tổng hợp nội dung hoàn toàn mới. Cả hai đều nguy hiểm với mục đích thao túng."
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Kịch bản lừa đảo phổ biến nào sử dụng giọng nói AI giả danh công an hoặc Viện Kiểm sát?",
+      "options": [
+        "Gọi điện mời bạn tham gia khóa học trực tuyến miễn phí",
+        "Gọi điện nhắc nhở gia hạn bảo hiểm xe máy",
+        "Gọi điện thông báo bạn trúng thưởng xổ số và cần đóng thuế ngay",
+        "Gọi điện cảnh báo bạn liên quan đến vụ án rửa tiền, yêu cầu 'phối hợp điều tra' và chuyển tiền vào tài khoản 'an toàn' để 'bảo quản bằng chứng'"
+      ],
+      "correct": 3,
+      "explanation": "Kịch bản giả danh công an/VKS là một trong các lừa đảo phổ biến nhất tại Việt Nam: kẻ gian giả vờ là điều tra viên, thông báo nạn nhân liên quan đến tội phạm nghiêm trọng (rửa tiền, ma túy), tạo áp lực tâm lý và yêu cầu chuyển tiền hoặc cung cấp thông tin tài khoản ngân hàng."
     },
     {
       "id": "mt1q16",
-      "tag": "Module 2 — Tác động",
-      "text": "Tác động nào của deepfake lên hệ thống pháp lý là đáng lo ngại nhất?",
-      "options": ["Tăng chi phí xét xử vì cần phân tích video", "Bằng chứng video có thể bị bác bỏ hoặc phủ nhận tính xác thực, làm suy yếu hệ thống chứng cứ số", "Thẩm phán phải học kỹ năng kỹ thuật", "Tòa án phải mua thiết bị đắt tiền hơn"],
-      "correct": 1,
-      "explanation": "Deepfake tấn công nền tảng của hệ thống pháp lý hiện đại: bằng chứng video. Khi mọi video đều có thể bị nghi ngờ, hệ thống chứng minh tội phạm/biện hộ vô tội trở nên phức tạp hơn nhiều."
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Bạn nhận cuộc gọi từ 'giọng sếp' yêu cầu chuyển tiền khẩn cấp trong vòng 30 phút. Hành động đúng đắn nhất là gì?",
+      "options": [
+        "Chuyển tiền ngay vì đây là lệnh từ cấp trên",
+        "Hỏi lại mã xác nhận nội bộ qua điện thoại đó",
+        "Gác máy và gọi lại trực tiếp cho sếp qua số điện thoại đã lưu sẵn trong danh bạ từ trước — không gọi lại số vừa gọi đến",
+        "Nhắn tin qua ứng dụng chat công ty để xác nhận rồi chuyển tiền"
+      ],
+      "correct": 2,
+      "explanation": "Quy tắc vàng: gác máy và gọi lại qua số điện thoại đã lưu từ trước trong danh bạ. Không bao giờ gọi lại số vừa gọi đến vì đó có thể là số do kẻ gian kiểm soát. Việc chuyển tiền dưới áp lực khẩn cấp qua điện thoại là dấu hiệu đỏ kinh điển của lừa đảo."
     },
     {
       "id": "mt1q17",
-      "tag": "Module 3 — Đạo đức & Pháp lý",
-      "text": "\"Confirmation bias\" — thiên kiến xác nhận — ảnh hưởng đến việc chia sẻ deepfake như thế nào?",
-      "options": ["Người dùng kiểm chứng kỹ hơn nội dung phù hợp với niềm tin của họ", "Người dùng chia sẻ nội dung phù hợp với quan điểm của họ mà không kiểm chứng kỹ vì nó \"cảm giác đúng\"", "Không có ảnh hưởng vì người dùng thông minh sẽ kiểm tra", "Chỉ ảnh hưởng người cao tuổi"],
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "'Mật khẩu gia đình' (safe word/family code word) được sử dụng như thế nào để chống lại lừa đảo giọng nói AI?",
+      "options": [
+        "Đây là mật khẩu để mở khóa tài khoản ngân hàng gia đình",
+        "Một từ hoặc cụm từ bí mật được gia đình thỏa thuận trước — khi có cuộc gọi khẩn cấp, người thật sẽ biết từ này còn AI giả mạo sẽ không biết",
+        "Mật khẩu để đăng nhập vào ứng dụng nhắn tin gia đình",
+        "Câu hỏi bảo mật để khôi phục tài khoản mạng xã hội"
+      ],
       "correct": 1,
-      "explanation": "Deepfake được thiết kế để khai thác confirmation bias: tạo nội dung mà target muốn tin. Khi nội dung phù hợp với quan điểm, não người ít phản xạ kiểm chứng hơn — đây là lỗ hổng tâm lý mà kẻ xấu khai thác."
+      "explanation": "Safe word gia đình là một từ/cụm từ bí mật mà chỉ các thành viên trong gia đình biết. Khi nhận cuộc gọi 'khẩn cấp' từ người thân (bị tai nạn, cần tiền gấp), hãy yêu cầu họ nói safe word. Nếu là AI voice clone, nó sẽ không biết từ đó. Đây là lớp xác thực đơn giản nhưng hiệu quả."
     },
     {
       "id": "mt1q18",
-      "tag": "Module 2 — Tác động",
-      "text": "Vì sao tác động của deepfake với trẻ em và thanh thiếu niên đặc biệt nghiêm trọng?",
-      "options": ["Vì trẻ em dùng internet nhiều hơn người lớn", "Vì tổn thương tâm lý ở độ tuổi phát triển có thể để lại hậu quả lâu dài hơn; và trẻ em có ít công cụ pháp lý để tự bảo vệ", "Vì trẻ em ít biết về AI hơn", "Vì phụ huynh không kiểm soát được điện thoại của con"],
-      "correct": 1,
-      "explanation": "Ngoài tổn thương tâm lý nghiêm trọng hơn ở giai đoạn phát triển bản sắc, trẻ em là \"đặc biệt được bảo vệ\" trong pháp luật — tạo NCII với trẻ em (kể cả deepfake) là tội phạm nghiêm trọng hơn."
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Dấu hiệu nào sau đây KHÔNG phải là tín hiệu cảnh báo của giọng nói AI-generated?",
+      "options": [
+        "Chuyển tiếp giữa các câu nghe có vẻ máy móc, không tự nhiên",
+        "Thiếu tiếng ồn nền tự nhiên (tiếng gió, xe cộ, tiếng động môi trường)",
+        "Người nói sử dụng tiếng địa phương và các từ lóng quen thuộc một cách tự nhiên",
+        "Cảm xúc trong giọng nói nghe phẳng và thiếu biến đổi tự nhiên"
+      ],
+      "correct": 2,
+      "explanation": "Việc sử dụng tiếng địa phương, từ lóng và cách diễn đạt tự nhiên đặc trưng của người thật là điều AI khó tái tạo — đây là tín hiệu cho thấy giọng có thể là thật, không phải AI. Các lựa chọn A, B, D đều là tín hiệu cảnh báo thực sự của AI-generated voice."
     },
     {
       "id": "mt1q19",
-      "tag": "Module 3 — Đạo đức & Pháp lý",
-      "text": "Khi bạn chia sẻ một bài deepfake mà không biết đó là deepfake, bạn có chịu trách nhiệm không?",
-      "options": ["Không, vì không cố ý", "Phụ thuộc: nếu thực hiện \"duty of care\" (kiểm chứng hợp lý trước khi chia sẻ) thì giảm trách nhiệm; nếu vô trách nhiệm thì có thể chịu trách nhiệm dân sự hoặc hình sự", "Có, luôn luôn chịu hoàn toàn", "Chỉ nền tảng mạng xã hội mới chịu trách nhiệm"],
-      "correct": 1,
-      "explanation": "Pháp luật nhiều quốc gia theo hướng: người chia sẻ có \"duty of care\" — nghĩa vụ kiểm chứng hợp lý trước khi phát tán. Kiểm chứng tốt trước khi chia sẻ vừa là trách nhiệm đạo đức, vừa giảm rủi ro pháp lý."
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Kịch bản lừa đảo nào liên quan đến giả giọng người thân gặp tai nạn?",
+      "options": [
+        "Kẻ gian gọi điện giả vờ là người thân, nói đang gặp tai nạn/bị bắt, cần chuyển tiền gấp để 'giải quyết' trước khi báo cảnh sát",
+        "Kẻ gian nhắn tin yêu cầu chia sẻ mã OTP",
+        "Kẻ gian gửi email thông báo người thân thắng kiện và cần lệ phí",
+        "Kẻ gian tạo tài khoản mạng xã hội giả của người thân để xin tiền"
+      ],
+      "correct": 0,
+      "explanation": "Kịch bản giả người thân gặp nạn (còn gọi là 'virtual kidnapping' hoặc 'emergency scam'): kẻ gian dùng AI voice clone nhân bản giọng người thân (lấy từ video mạng xã hội), gọi điện báo cấp cứu/bị bắt, tạo áp lực thời gian để nạn nhân không kịp xác minh và chuyển tiền ngay."
     },
     {
       "id": "mt1q20",
-      "tag": "Module 1 — Deepfake là gì",
-      "text": "Khi đánh giá nguy cơ deepfake với bản thân, điều quan trọng nhất cần xem xét là?",
-      "options": ["Bạn có nổi tiếng không", "Lượng và tính đa dạng của ảnh/video cá nhân bạn để công khai trên internet", "Bạn có nhiều bạn bè trên mạng không", "Điện thoại của bạn có phần mềm chống virus không"],
-      "correct": 1,
-      "explanation": "Nguy cơ deepfake tỉ lệ thuận với lượng dữ liệu hình ảnh/giọng nói có sẵn công khai. Quản lý quyền riêng tư trên mạng xã hội — giới hạn ai xem ảnh, tránh đăng video dài — là phòng ngừa hiệu quả nhất."
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Tại sao không nên đưa ra quyết định tài chính dưới áp lực trong cuộc gọi điện thoại?",
+      "options": [
+        "Vì điện thoại có thể bị nghe lén bởi nhà mạng",
+        "Vì các giao dịch qua điện thoại bị pháp luật cấm",
+        "Vì tín hiệu điện thoại không đủ mạnh để bảo mật thông tin tài chính",
+        "Vì áp lực tâm lý (urgency, sợ hãi, khẩn cấp) làm suy giảm khả năng phán đoán; đây là kỹ thuật thao túng cố ý được kẻ gian sử dụng để ngăn nạn nhân suy nghĩ bình tĩnh"
+      ],
+      "correct": 3,
+      "explanation": "Tạo áp lực khẩn cấp (urgency) là kỹ thuật thao túng tâm lý cốt lõi trong hầu hết các lừa đảo: nó kích hoạt phản ứng 'chiến hay chạy', làm tắt tư duy phân tích. Kẻ gian cố tình tạo cảm giác 'không có thời gian suy nghĩ' để nạn nhân hành động trước khi có thể xác minh."
     },
     {
       "id": "mt1q21",
-      "tag": "Module 3 — Đạo đức & Pháp lý",
-      "text": "AI Watermarking (đánh dấu nội dung AI) hiện đang có hạn chế thực tế nào?",
-      "options": ["Kỹ thuật này quá phức tạp để triển khai", "Watermark có thể bị xóa bỏ hoặc phá vỡ, và không phải công cụ AI nào cũng áp dụng tiêu chuẩn này", "Watermark làm giảm chất lượng hình ảnh quá nhiều", "Watermark chỉ hoạt động với hình ảnh, không hoạt động với video"],
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Kẻ gian có thể lấy mẫu giọng nói để clone từ đâu phổ biến nhất?",
+      "options": [
+        "Chỉ từ các cuộc gọi bí mật được thu âm lén",
+        "Từ video đăng công khai trên mạng xã hội (Facebook, TikTok, YouTube) chứa giọng của nạn nhân",
+        "Chỉ từ hệ thống viễn thông bị xâm phạm",
+        "Từ hồ sơ y tế điện tử có chứa file ghi âm"
+      ],
       "correct": 1,
-      "explanation": "Dù là bước quan trọng, AI watermarking không phải giải pháp hoàn toàn: (1) Có thể bị strip bằng công cụ đơn giản; (2) Chỉ hiệu quả với nội dung có áp dụng watermark; (3) Kẻ xấu không bắt buộc phải dùng công cụ có watermark."
+      "explanation": "Các công cụ voice cloning hiện đại chỉ cần từ 3–30 giây mẫu giọng để tạo bản sao. Nguồn phổ biến nhất là video công khai trên mạng xã hội — nơi nhiều người đăng video tự quay có chứa giọng nói. Đây là lý do cần cẩn thận với nội dung âm thanh đăng công khai."
     },
     {
       "id": "mt1q22",
-      "tag": "Module 2 — Tác động",
-      "text": "Phong trào #MeToo và các tổ chức quyền phụ nữ đã tác động như thế nào đến pháp luật về NCII deepfake?",
-      "options": ["Không có ảnh hưởng vì đây là vấn đề kỹ thuật", "Thúc đẩy nhiều quốc gia ban hành luật cụ thể hóa tội danh NCII deepfake với hình phạt nặng hơn", "Chỉ ảnh hưởng đến chính sách của các công ty mạng xã hội", "Dẫn đến việc cấm hoàn toàn công nghệ AI tạo ảnh"],
-      "correct": 1,
-      "explanation": "Sự lên tiếng của cộng đồng đã thúc đẩy lập pháp: UK (Online Safety Act), Mỹ (nhiều tiểu bang), Hàn Quốc, Singapore đã có luật xử phạt NCII deepfake riêng. Việt Nam đang trong quá trình hoàn thiện khung pháp lý này."
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Thiết bị 'real-time voice changer' được kẻ gian sử dụng để làm gì trong các vụ lừa đảo?",
+      "options": [
+        "Cải thiện chất lượng âm thanh trong cuộc gọi kém tín hiệu",
+        "Dịch ngôn ngữ tự động trong cuộc gọi quốc tế",
+        "Loại bỏ tiếng ồn nền trong môi trường ồn ào",
+        "Thay đổi giọng nói theo thời gian thực — ví dụ đổi giọng nam thành nữ, hoặc giả giọng người cụ thể — trong khi đang thực hiện cuộc gọi lừa đảo"
+      ],
+      "correct": 3,
+      "explanation": "Real-time voice changer cho phép kẻ gian thay đổi đặc điểm giọng nói theo thời gian thực trong cuộc gọi trực tiếp — khác với voice cloning phải tạo file âm thanh trước. Điều này cho phép kẻ gian tương tác hội thoại động, trả lời câu hỏi và phản ứng tức thì trong khi vẫn đang giả mạo giọng người khác."
     },
     {
       "id": "mt1q23",
-      "tag": "Module 1 — Deepfake là gì",
-      "text": "Sự khác biệt giữa \"face swap\" và \"face reenactment\" trong deepfake là gì?",
-      "options": ["Không có sự khác biệt", "Face swap thay thế toàn bộ khuôn mặt; face reenactment điều khiển biểu cảm/chuyển động của một khuôn mặt theo người khác", "Face swap chỉ dùng cho ảnh, face reenactment chỉ dùng cho video", "Face reenactment yêu cầu phần cứng đắt tiền hơn"],
-      "correct": 1,
-      "explanation": "Face swap: hoán đổi khuôn mặt hoàn toàn (A thay bằng B). Face reenactment: khuôn mặt A vẫn giữ nguyên nhưng biểu cảm/miệng được điều khiển theo biểu cảm của B — dùng để tạo video \"nói\" từ ảnh tĩnh."
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Nếu bạn nghi ngờ giọng nói trong cuộc gọi là AI, câu hỏi nào khó nhất để AI trả lời chính xác?",
+      "options": [
+        "Hỏi về thông tin cá nhân cơ bản như tên và địa chỉ",
+        "Hỏi về thời tiết hôm nay",
+        "Hỏi về ký ức riêng tư, kỷ niệm cụ thể mà chỉ người thật mới biết — kết hợp với yêu cầu nói safe word gia đình",
+        "Yêu cầu đọc một đoạn văn bản dài"
+      ],
+      "correct": 2,
+      "explanation": "Các câu hỏi về ký ức cụ thể ('buổi sinh nhật lần X của con chúng ta ở đâu?', 'món quà bố tặng mẹ ngày cưới là gì?') kết hợp với yêu cầu safe word tạo ra lớp xác thực mà AI voice clone không thể vượt qua — vì AI không có quyền truy cập vào những thông tin riêng tư này."
     },
     {
       "id": "mt1q24",
-      "tag": "Module 3 — Đạo đức & Pháp lý",
-      "text": "\"Quyền được quên lãng\" (right to be forgotten) liên quan đến deepfake như thế nào?",
-      "options": ["Không liên quan gì", "Nạn nhân có thể yêu cầu xóa nội dung deepfake khỏi internet, nhưng enforcement thực tế còn nhiều hạn chế", "Chỉ áp dụng cho dữ liệu tài chính", "Đây là quyền tuyệt đối được đảm bảo 100%"],
+      "tag": "Module 2 — Deepfake Audio",
+      "text": "Âm thanh nền trong cuộc gọi lừa đảo dùng AI voice thường có đặc điểm gì?",
+      "options": [
+        "Có tiếng ồn nền phong phú và tự nhiên giống môi trường thực",
+        "Thường quá im lặng hoặc có tiếng ồn nền đều đặn bất thường — thiếu âm thanh môi trường ngẫu nhiên tự nhiên",
+        "Có âm nhạc nền nhẹ nhàng",
+        "Âm thanh nền giống hệt tiếng động văn phòng bình thường"
+      ],
       "correct": 1,
-      "explanation": "GDPR (EU) và nhiều luật bảo vệ dữ liệu trao quyền yêu cầu xóa nội dung. Thực tế: xóa khỏi một nền tảng không xóa khỏi tất cả nơi đã lan truyền, và các nền tảng khác nhau có chính sách tuân thủ khác nhau."
-    },
-    {
-      "id": "mt1q25",
-      "tag": "Module 2 — Tác động",
-      "text": "Tác động kinh tế vĩ mô dài hạn của sự không tin tưởng vào nội dung số có thể là gì?",
-      "options": ["Không có tác động vì kinh tế không phụ thuộc vào niềm tin", "Làm chậm giao dịch số, tăng chi phí xác minh, gây rào cản với thương mại điện tử và truyền thông kỹ thuật số", "Chỉ ảnh hưởng đến ngành media", "Dẫn đến mọi người dùng tiền mặt nhiều hơn"],
-      "correct": 1,
-      "explanation": "Niềm tin là nền tảng của kinh tế số. Khi giao dịch video call bị nghi ngờ, hợp đồng từ xa khó xác minh, và thông tin thị trường không đáng tin — toàn bộ hệ sinh thái kinh tế số bị ảnh hưởng."
-    },
-    {
-      "id": "mt1q26",
-      "tag": "Module 1 — Deepfake là gì",
-      "text": "Vì sao các nghiên cứu phát hiện deepfake (deepfake detection) liên tục phải cập nhật?",
-      "options": ["Vì phần cứng máy tính thay đổi", "Vì là cuộc chạy đua vũ trang: model deepfake mới học cách vượt qua detector cũ, buộc detector phải cập nhật", "Vì pháp luật thay đổi liên tục", "Vì chỉ cần update phần mềm là đủ"],
-      "correct": 1,
-      "explanation": "Adversarial arms race: khi một detector được công bố, người tạo deepfake có thể dùng nó để \"adversarial train\" model của họ để vượt qua detector đó. Đây là lý do không có giải pháp phát hiện deepfake \"vĩnh viễn\"."
-    },
-    {
-      "id": "mt1q27",
-      "tag": "Module 3 — Đạo đức & Pháp lý",
-      "text": "Nguyên tắc \"do no harm\" (không gây hại) áp dụng cho người dùng AI như thế nào?",
-      "options": ["Chỉ áp dụng cho nhà phát triển AI, không áp dụng người dùng thông thường", "Người dùng có trách nhiệm kiểm tra mục đích và hậu quả tiềm tàng trước khi tạo và chia sẻ nội dung AI", "Chỉ áp dụng khi sử dụng AI thương mại, không áp dụng với AI miễn phí", "Nguyên tắc này không tồn tại trong thực tế"],
-      "correct": 1,
-      "explanation": "Trách nhiệm AI là shared responsibility: nhà phát triển tạo ra công cụ an toàn; người dùng dùng công cụ một cách có trách nhiệm. \"Do no harm\" nghĩa là cân nhắc tác hại tiềm tàng với người thật trước mọi hành động."
-    },
-    {
-      "id": "mt1q28",
-      "tag": "Module 2 — Tác động",
-      "text": "Hậu quả \"chilling effect\" (tác dụng làm lạnh) của deepfake đối với xã hội là gì?",
-      "options": ["Người dùng internet cảm thấy lạnh lẽo hơn", "Sợ bị deepfake khiến người ta tự kiểm duyệt, rút lui khỏi không gian công, hoặc từ chối tham gia chính trị và công việc công", "Người dùng dùng điện nhiều hơn để chạy AI", "Deepfake làm giảm nhiệt độ toàn cầu"],
-      "correct": 1,
-      "explanation": "Chilling effect: nỗi sợ bị deepfake khiến nhiều người — đặc biệt phụ nữ và nhà báo — giảm bớt hoặc dừng hẳn các hoạt động công khai. Điều này thu hẹp không gian dân chủ và đa dạng tiếng nói xã hội."
-    },
-    {
-      "id": "mt1q29",
-      "tag": "Module 1 — Deepfake là gì",
-      "text": "Diffusion model (mô hình khuếch tán) như Stable Diffusion, DALL-E khác GAN ở điểm nào trong tạo nội dung AI?",
-      "options": ["Diffusion model chỉ tạo ảnh tĩnh, không tạo video được", "Diffusion model tạo nội dung bằng cách học đảo ngược quá trình thêm nhiễu; thường cho chất lượng cao hơn và dễ kiểm soát hơn GAN", "Diffusion model cần ít dữ liệu huấn luyện hơn GAN", "Không có sự khác biệt kỹ thuật nào đáng kể"],
-      "correct": 1,
-      "explanation": "Diffusion models: học cách \"denoising\" — bắt đầu từ nhiễu ngẫu nhiên và dần dần tái tạo ảnh. Ổn định hơn GAN trong huấn luyện và cho kết quả chất lượng cao hơn. Ngày càng thay thế GAN trong nhiều ứng dụng."
-    },
-    {
-      "id": "mt1q30",
-      "tag": "Module 3 — Đạo đức & Pháp lý",
-      "text": "Điều nào sau đây MÔ TẢ ĐÚNG về tư duy phòng vệ trước deepfake?",
-      "options": ["Nghi ngờ mọi người và không tin bất kỳ thông tin nào", "Cân bằng giữa tin tưởng hợp lý và hoài nghi phê phán — đặc biệt với nội dung kích thích cảm xúc mạnh", "Chỉ tin thông tin từ chính phủ", "Tắt hoàn toàn mạng xã hội"],
-      "correct": 1,
-      "explanation": "Tư duy phòng vệ không phải hoang mang hay nghi ngờ tất cả — đó là phương pháp: (1) Nhận ra cảm xúc khi xem nội dung; (2) Dừng lại và hỏi \"tại sao nội dung này được tạo?\"; (3) Tìm kiếm xác minh từ nhiều nguồn; (4) Sau đó mới quyết định hành động."
+      "explanation": "Môi trường âm thanh tự nhiên (văn phòng, đường phố, nhà ở) luôn có tiếng ồn nền ngẫu nhiên và không đồng đều. Giọng AI thường được tạo trong môi trường thu âm kiểm soát, dẫn đến âm thanh nền quá sạch hoặc có tiếng ồn nền nhân tạo đều đặn — khác với sự ngẫu nhiên của môi trường thực."
     }
   ]
 }

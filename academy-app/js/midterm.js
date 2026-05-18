@@ -23,8 +23,8 @@ import {
 const DPF_PER_MIDTERM = 50;
 const DPF_SEASON      = 'genesis-2026';
 const MIDTERM_CONFIG  = {
-  midterm1: { id: 'midterm1', title: 'Midterm 1', subtitle: 'Phần I — Nền tảng (Module 1, 2, 3)', questions: 25, passThreshold: 0.7, bankFile: 'midterm-1-bank.json', modules: [1, 2, 3] },
-  midterm2: { id: 'midterm2', title: 'Midterm 2', subtitle: 'Phần II — Nhận diện (Module 4, 5, 6)', questions: 25, passThreshold: 0.7, bankFile: 'midterm-2-bank.json', modules: [4, 5, 6] },
+  midterm1: { id: 'midterm1', title: 'Midterm 1', subtitle: 'Phần I — Nhận diện Deepfake (Module 1, 2)', questions: 20, passThreshold: 0.7, bankFile: 'midterm-1-bank.json', modules: [1, 2] },
+  midterm2: { id: 'midterm2', title: 'Midterm 2', subtitle: 'Phần II — Nhận diện Tấn công (Module 3, 4)', questions: 20, passThreshold: 0.7, bankFile: 'midterm-2-bank.json', modules: [3, 4] },
 };
 
 export const getMidtermConfig = (id) => MIDTERM_CONFIG[id] ?? null;

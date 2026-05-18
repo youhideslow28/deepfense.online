@@ -1,150 +1,137 @@
 {
   "moduleId": 6,
-  "title": "Kiểm chứng bối cảnh, nguồn tin và metadata cơ bản",
+  "title": "Thao túng tâm lý",
+  "tag": "Module 6 — Thao túng tâm lý",
   "questions": [
     {
       "id": "m6q01",
-      "text": "Lateral reading (đọc ngang) là kỹ thuật kiểm chứng thông tin như thế nào?",
+      "tag": "Module 6 — Thao túng tâm lý",
+      "text": "Trong bối cảnh an ninh mạng, \"social engineering\" (kỹ thuật xã hội) được định nghĩa như thế nào?",
       "options": [
-        "Đọc toàn bộ bài viết từ đầu đến cuối rất kỹ",
-        "Mở tab mới, tra cứu nguồn tin ĐỘC LẬP với bài viết đang xem, thay vì chỉ đọc kỹ bài đó",
-        "Đọc từ cuối bài lên đầu để tìm thông tin ẩn",
-        "So sánh hai bài viết trên cùng một trang web"
+        "Kỹ thuật lập trình mạng xã hội như Facebook, TikTok",
+        "Thao túng tâm lý con người để khiến họ tự nguyện tiết lộ thông tin hoặc thực hiện hành động có lợi cho kẻ tấn công",
+        "Tấn công kỹ thuật vào hạ tầng mạng xã hội",
+        "Kỹ thuật tối ưu hóa thuật toán mạng xã hội"
       ],
       "correct": 1,
-      "explanation": "Lateral reading là kỹ thuật của fact-checker chuyên nghiệp: thay vì đọc sâu một nguồn, hãy mở tab mới và tìm kiếm xem người khác nói gì về nguồn đó. Nếu một website đáng tin, nhiều nguồn uy tín khác sẽ đề cập đến nó."
+      "explanation": "Social engineering tấn công vào \"lỗ hổng con người\" thay vì lỗ hổng phần mềm. Kẻ tấn công lợi dụng tâm lý (lòng tin, sợ hãi, lòng tham, tình cảm) để khiến nạn nhân tự làm những việc có hại — thường hiệu quả hơn hack kỹ thuật."
     },
     {
       "id": "m6q02",
-      "text": "EXIF metadata của ảnh chứa thông tin gì có ích cho việc kiểm chứng?",
+      "tag": "Module 6 — Thao túng tâm lý",
+      "text": "Bạn nhận cuộc gọi: \"Tài khoản ngân hàng của anh/chị sẽ bị phong tỏa trong 10 phút nếu không chuyển tiền xác minh ngay. Anh/chị phải hành động NGAY BÂY GIỜ!\". Chiến thuật tâm lý nào đang được sử dụng?",
       "options": [
-        "Số lần ảnh được xem và chia sẻ",
-        "Ngày giờ chụp, model máy ảnh/điện thoại, và đôi khi tọa độ GPS",
-        "Tên người chụp và địa chỉ nhà",
-        "Chỉ chứa thông tin màu sắc và độ phân giải"
+        "Quyền lợi hấp dẫn (reciprocity)",
+        "Bằng chứng xã hội (social proof)",
+        "Áp lực khẩn cấp và khan hiếm thời gian để vô hiệu hóa tư duy phê phán",
+        "Kêu gọi lòng trắc ẩn (appeal to sympathy)"
       ],
-      "correct": 1,
-      "explanation": "EXIF metadata có thể tiết lộ: khi nào ảnh được chụp (so sánh với ngày sự kiện), thiết bị nào được dùng, và đôi khi GPS coordinates. Lưu ý: ảnh tải lên Facebook/Instagram thường bị xóa EXIF — đây cũng là thông tin để nghi ngờ."
+      "correct": 2,
+      "explanation": "Áp lực thời gian là vũ khí tâm lý mạnh nhất của kẻ lừa đảo: khi bị dồn vào deadline, não người chuyển sang \"chế độ khẩn cấp\" và tắt tư duy phân tích. Tổ chức hợp pháp KHÔNG BAO GIỜ tạo deadline tính bằng phút cho các quyết định tài chính."
     },
     {
       "id": "m6q03",
-      "text": "Khi kiểm tra nguồn tin, câu hỏi \"SIFT\" bao gồm những bước nào?",
+      "tag": "Module 6 — Thao túng tâm lý",
+      "text": "Kẻ lừa đảo gọi điện tự xưng là \"Thiếu tá Nguyễn Văn A, Cục Cảnh sát điều tra tội phạm\" và nói bạn liên quan đến vụ án rửa tiền. Kỹ thuật tâm lý nào đang được sử dụng?",
       "options": [
-        "Search, Identify, Filter, Trace",
-        "Stop — Investigate the source — Find better coverage — Trace claims to origin",
-        "Share, Inform, Follow, Track",
-        "Screen, Inspect, Fact-check, Test"
+        "Lừa đảo tình cảm (romance scam)",
+        "Mạo danh cơ quan quyền lực để khai thác tâm lý sợ hãi và phục tùng",
+        "Lừa đảo trúng thưởng (lottery scam)",
+        "Tấn công kỹ thuật (technical attack)"
       ],
       "correct": 1,
-      "explanation": "SIFT là framework kiểm chứng của Mike Caulfield: (S) Dừng lại trước khi chia sẻ; (I) Tìm hiểu về nguồn tin; (F) Tìm nguồn đưa tin tốt hơn; (T) Truy về nguồn gốc của tuyên bố. Đây là quy trình được nhiều tổ chức fact-checking toàn cầu áp dụng."
+      "explanation": "Giả danh công an, viện kiểm sát, tòa án là chiêu lừa đảo cực kỳ phổ biến tại Việt Nam. Kẻ lừa đảo khai thác tâm lý sợ cơ quan nhà nước và xu hướng phục tùng quyền lực. Thực tế: cơ quan điều tra hợp pháp làm việc qua giấy triệu tập chính thức, KHÔNG qua điện thoại yêu cầu chuyển tiền."
     },
     {
       "id": "m6q04",
-      "text": "Bối cảnh (context) bị thay đổi là hình thức thao túng thông tin phổ biến nhất. Ví dụ điển hình là?",
+      "tag": "Module 6 — Thao túng tâm lý",
+      "text": "\"Kịch bản bắt con tin\" qua điện thoại hoạt động như thế nào?",
       "options": [
-        "Dùng ảnh thật nhưng mô tả sai sự kiện, thời điểm hoặc địa điểm",
-        "Chỉnh sửa ảnh bằng Photoshop",
-        "Thêm bình luận sai vào bài viết",
-        "Dùng font chữ sai trong tiêu đề"
+        "Kẻ tấn công thực sự bắt cóc người thân của bạn",
+        "Kẻ lừa đảo gọi điện tự xưng đang giữ người thân, tạo ra tiếng khóc/la hét giả để khai thác nỗi sợ hãi và yêu cầu tiền chuộc",
+        "Kẻ tấn công gửi tin nhắn đe dọa qua email",
+        "Kẻ lừa đảo chỉ đe dọa bằng lời nói mà không có tình huống cụ thể"
       ],
-      "correct": 0,
-      "explanation": "Ảnh có thể là 100% thật nhưng vẫn là thông tin sai nếu bối cảnh bị thay đổi. Ví dụ: ảnh lũ lụt từ 10 năm trước được đăng kèm caption \"lũ lụt hôm nay ở...\" — đây là misrepresentation, không phải deepfake nhưng cũng rất nguy hiểm."
+      "correct": 1,
+      "explanation": "Kịch bản bắt con tin giả: kẻ lừa đảo gọi điện, phát tiếng ai đó đang khóc/la hét, tự xưng đang giữ con/cháu của bạn và yêu cầu tiền chuộc ngay. Phản ứng: Đừng hoảng loạn. Cúp máy và GỌI NGAY trực tiếp cho người thân được đề cập để xác minh."
     },
     {
       "id": "m6q05",
-      "text": "Công cụ nào dưới đây HỮU ÍCH nhất để kiểm tra xem một tên miền website đáng tin cậy không?",
+      "tag": "Module 6 — Thao túng tâm lý",
+      "text": "\"Giao thức xác minh\" (verification protocol) khi nhận cuộc gọi đáng ngờ từ tổ chức tài chính là gì?",
       "options": [
-        "Chỉ cần nhìn vào thiết kế website",
-        "WHOIS lookup để xem lịch sử đăng ký, tuổi tên miền, và chủ sở hữu",
-        "Đếm số bài viết trên trang",
-        "Kiểm tra số lượng follower trên mạng xã hội"
+        "Cung cấp thông tin để xác minh danh tính của bạn với họ",
+        "Cúp máy và gọi lại theo số điện thoại chính thức mà bạn TỰ TÌM trên website hoặc thẻ ngân hàng — không dùng số có trong cuộc gọi",
+        "Hỏi tên và mã nhân viên rồi tiếp tục cuộc trò chuyện",
+        "Yêu cầu họ gửi email xác nhận trước"
       ],
       "correct": 1,
-      "explanation": "WHOIS lookup (whois.domaintools.com) cho thấy: tên miền được đăng ký khi nào (tên miền mới tạo tuần trước đăng tin về \"sự kiện lịch sử\" là đáng ngờ), đăng ký ở đâu, và đôi khi ai sở hữu. Tên miền mới + ẩn danh = cờ đỏ."
+      "explanation": "Cúp máy và gọi lại qua kênh chính thức (số in trên thẻ, website chính thức) là cách duy nhất để xác minh danh tính thật của người gọi. Kẻ lừa đảo có thể giả tên nhân viên, giả mã nhân viên, nhưng không thể giả mạo số tổng đài chính thức thật của ngân hàng."
     },
     {
       "id": "m6q06",
-      "text": "\"Confirmation bias\" (thiên kiến xác nhận) ảnh hưởng đến việc kiểm chứng thông tin như thế nào?",
+      "tag": "Module 6 — Thao túng tâm lý",
+      "text": "Bạn nhận cuộc gọi từ \"sếp\" yêu cầu chuyển gấp 200 triệu đồng cho đối tác vì đang trong cuộc họp không tiện gọi trực tiếp. Ngay cả khi giọng nghe rất giống sếp thật, bạn nên làm gì?",
       "options": [
-        "Giúp chúng ta kiểm chứng thông tin nhanh hơn",
-        "Khiến chúng ta ít nghi ngờ thông tin phù hợp với niềm tin sẵn có và kiểm chứng kỹ hơn thông tin trái chiều",
-        "Không có ảnh hưởng đến người có học thức cao",
-        "Chỉ ảnh hưởng đến người cao tuổi"
+        "Chuyển tiền ngay vì sếp yêu cầu khẩn cấp",
+        "Nhắn tin cho sếp qua kênh khác để xác minh",
+        "Xác minh yêu cầu qua kênh độc lập (gọi video trực tiếp, gặp mặt) trước khi thực hiện bất kỳ giao dịch tài chính lớn nào",
+        "Chuyển nửa số tiền trước để thể hiện thiện chí"
       ],
-      "correct": 1,
-      "explanation": "Confirmation bias là kẻ thù của tư duy phê phán: chúng ta tự nhiên tìm kiếm và chấp nhận thông tin phù hợp với quan điểm của mình. Deepfake và tin giả thường được thiết kế để khai thác thiên kiến này — tạo ra nội dung mà \"target\" muốn tin."
+      "correct": 2,
+      "explanation": "Voice cloning AI có thể tạo giọng rất giống người thật. Quy trình chuẩn cho giao dịch tài chính lớn: luôn xác minh qua kênh độc lập thứ hai (gặp mặt, video call). \"Tôi sẽ xác nhận lại với sếp qua video call trước\" là câu trả lời đúng cho bất kỳ yêu cầu chuyển tiền khẩn cấp nào."
     },
     {
       "id": "m6q07",
-      "text": "Khi thấy ảnh/video lan truyền mạnh với caption gây phẫn nộ, phản ứng đầu tiên nên là?",
+      "tag": "Module 6 — Thao túng tâm lý",
+      "text": "\"Mã từ gia đình\" (family code word) là biện pháp bảo vệ như thế nào?",
       "options": [
-        "Chia sẻ ngay để mọi người biết",
-        "Dừng lại, nhận ra cảm xúc phẫn nộ, và kiểm chứng trước khi hành động",
-        "Bình luận phản bác ngay",
-        "Báo cáo tài khoản đã đăng"
+        "Mật khẩu WiFi gia đình",
+        "Từ bí mật đã thỏa thuận trước với gia đình — khi nhận cuộc gọi khẩn cấp, hỏi từ này để xác minh đây thật sự là người thân",
+        "Mã PIN chung cho tài khoản gia đình",
+        "Câu hỏi bảo mật cho email gia đình"
       ],
       "correct": 1,
-      "explanation": "Cảm xúc mạnh (phẫn nộ, kinh ngạc, sợ hãi) là tín hiệu cảnh báo — không phải lý do để chia sẻ ngay. Tin giả và deepfake được thiết kế để khai thác cảm xúc và tắt lý trí. Càng muốn chia sẻ nhanh, càng cần dừng lại kiểm tra."
+      "explanation": "Gia đình có thể thỏa thuận một từ bí mật (ví dụ: \"hướng dương\") không ai khác biết. Khi nhận cuộc gọi tự xưng là người thân trong tình huống khẩn cấp, hỏi: \"Cho mình biết từ bí mật của gia đình mình?\" — kẻ lừa đảo sẽ không biết câu trả lời."
     },
     {
       "id": "m6q08",
-      "text": "Các trang fact-checking uy tín tại Việt Nam và quốc tế bao gồm?",
+      "tag": "Module 6 — Thao túng tâm lý",
+      "text": "Tổ chức hợp pháp (ngân hàng, cơ quan nhà nước, bảo hiểm) có yêu cầu bạn chuyển tiền ngay lập tức qua điện thoại không?",
       "options": [
-        "Wikipedia và Google",
-        "Snopes, PolitiFact, AFP Fact Check, và tại Việt Nam: Mekong FACT, VTV Fact Check",
-        "Facebook và Twitter/X",
-        "Reddit và YouTube"
+        "Có, trong các tình huống khẩn cấp đặc biệt",
+        "Có, nếu là cán bộ cấp cao yêu cầu",
+        "Không bao giờ — tổ chức hợp pháp có quy trình giao dịch chính thức, không xử lý tài chính qua cuộc gọi điện thoại đột xuất",
+        "Chỉ với số tiền nhỏ dưới 5 triệu đồng"
       ],
-      "correct": 1,
-      "explanation": "Các tổ chức fact-checking chuyên nghiệp như Snopes, AFP Fact Check (có phiên bản tiếng Việt), và VTV Fact Check áp dụng quy trình kiểm chứng nghiêm ngặt. Đây là nguồn tham khảo đáng tin cho thông tin đang nghi ngờ."
+      "correct": 2,
+      "explanation": "Đây là nguyên tắc vàng: KHÔNG CÓ tổ chức hợp pháp nào (ngân hàng, công an, tòa án, bảo hiểm) yêu cầu bạn chuyển tiền ngay lập tức qua điện thoại để \"xử lý vấn đề\". Nếu ai đó yêu cầu điều này, 100% là lừa đảo."
     },
     {
       "id": "m6q09",
-      "text": "Metadata của video có thể bị xóa hoặc chỉnh sửa không? Điều này có ý nghĩa gì cho việc kiểm chứng?",
+      "tag": "Module 6 — Thao túng tâm lý",
+      "text": "\"Thời gian làm nguội\" (cooling-off period) trước các quyết định tài chính lớn có tác dụng gì?",
       "options": [
-        "Không thể xóa, metadata là vĩnh viễn",
-        "Có thể xóa/chỉnh sửa — thiếu metadata hoặc metadata không nhất quán cũng là dấu hiệu đáng ngờ",
-        "Metadata chỉ bị xóa khi tải lên mạng xã hội",
-        "Chỉnh sửa metadata là bất hợp pháp nên không ai làm"
+        "Làm chậm giao dịch để ngân hàng xử lý kịp",
+        "Cho phép hệ thống kiểm tra giao dịch tự động",
+        "Giúp não bộ thoát khỏi trạng thái kích động cảm xúc và đánh giá lại quyết định bằng tư duy lý trí",
+        "Chỉ áp dụng cho giao dịch trên 100 triệu đồng"
       ],
-      "correct": 1,
-      "explanation": "Metadata có thể bị xóa (stripped) hoặc chỉnh sửa. Cả hai đều là thông tin: metadata bị xóa có thể có nghĩa ảnh đã qua chỉnh sửa; metadata ngày giờ không khớp với sự kiện được mô tả là cờ đỏ rõ ràng."
+      "correct": 2,
+      "explanation": "Kẻ lừa đảo luôn tạo áp lực để ngăn bạn có thời gian suy nghĩ. Nguyên tắc: với bất kỳ quyết định tài chính lớn hay bất thường nào, hãy tự cho mình ít nhất 30 phút — gọi người thân tin cậy hỏi ý kiến, tìm kiếm thông tin, hoặc đơn giản là ngủ một đêm trước khi quyết định."
     },
     {
       "id": "m6q10",
-      "text": "Phương pháp \"3-source rule\" trong kiểm chứng thông tin là gì?",
+      "tag": "Module 6 — Thao túng tâm lý",
+      "text": "Kẻ lừa đảo thường thao túng cảm xúc nào để khiến nạn nhân hành động mà không suy nghĩ?",
       "options": [
-        "Chỉ tin thông tin được 3 người chia sẻ",
-        "Tìm ít nhất 3 nguồn đáng tin cậy ĐỘC LẬP xác nhận cùng một thông tin trước khi tin và chia sẻ",
-        "Đọc 3 bài viết về cùng chủ đề",
-        "Chỉ dùng 3 trang web tin tức yêu thích"
+        "Chỉ lòng tham và ham muốn tiền bạc",
+        "Sợ hãi, tham lam, tình cảm gia đình, và lòng trắc ẩn — bất kỳ cảm xúc mạnh nào làm giảm tư duy phê phán",
+        "Chỉ sợ hãi và áp lực quyền lực",
+        "Chỉ tình cảm lãng mạn trong romance scam"
       ],
       "correct": 1,
-      "explanation": "\"3-source rule\" nghĩa là: tìm 3 nguồn ĐỘC LẬP (không phải 3 nguồn đều trích từ cùng một nguồn gốc) xác nhận thông tin. Nếu không tìm được 3 nguồn độc lập, đây là lý do để hoài nghi và không chia sẻ."
-    },
-    {
-      "id": "m6q11",
-      "text": "Một video deepfake lan truyền nhanh vì nhiều người nổi tiếng chia sẻ. Điều này có ý nghĩa gì về tính xác thực?",
-      "options": [
-        "Video chắc chắn là thật vì người nổi tiếng đã kiểm tra",
-        "Không có ý nghĩa gì — số lần chia sẻ và người chia sẻ nổi tiếng không xác nhận tính xác thực",
-        "Video đáng tin hơn vì có nhiều người xem",
-        "Chỉ cần một người uy tín chia sẻ là đủ để tin"
-      ],
-      "correct": 1,
-      "explanation": "\"Argument from popularity\" (lập luận từ sự phổ biến) là ngụy biện logic: thứ gì đó không trở thành thật chỉ vì nhiều người tin hoặc chia sẻ. Người nổi tiếng cũng có thể bị lừa và lan truyền deepfake vô tình."
-    },
-    {
-      "id": "m6q12",
-      "text": "Công cụ InVID/WeVerify hỗ trợ kiểm chứng video như thế nào?",
-      "options": [
-        "Tự động dịch video sang nhiều ngôn ngữ",
-        "Phân mảnh video thành frames để reverse search, trích xuất metadata, và phát hiện chỉnh sửa",
-        "Tải video về máy tính để phân tích offline",
-        "So sánh âm thanh với cơ sở dữ liệu giọng nói"
-      ],
-      "correct": 1,
-      "explanation": "InVID/WeVerify (browser extension miễn phí) là công cụ chuyên nghiệp cho fact-checker: phân mảnh video thành keyframes → tìm kiếm ngược từng frame → trích xuất metadata → kiểm tra tính toàn vẹn. Đây là công cụ thiết thực để kiểm chứng video nghi ngờ."
+      "explanation": "Kẻ lừa đảo là \"kỹ sư cảm xúc\": sợ hãi (\"tài khoản sắp bị phong tỏa\"), tham lam (\"trúng thưởng\"), tình thương (\"con ơi bố cần tiền\"), lòng trắc ẩn (\"em đang kẹt tiền ở nước ngoài\"). Khi nhận thấy mình đang có cảm xúc mạnh trong tình huống tài chính, đó là tín hiệu cần DỪNG LẠI và xác minh."
     }
   ]
 }

@@ -1,247 +1,319 @@
 {
   "midtermId": "midterm2",
-  "title": "Midterm 2 — Phần II: Nhận diện",
-  "scope": "Module 4, 5, 6",
+  "title": "Midterm 2 — Phần II: Nhận diện Tấn công số",
+  "scope": "Module 3, 4",
   "questions": [
     {
       "id": "mt2q01",
-      "tag": "Module 4 — Nhận diện hình ảnh/video",
-      "text": "Khu vực nào trên khuôn mặt trong deepfake video thường lộ lỗi nhiều nhất?",
-      "options": ["Vùng trán và đỉnh đầu", "Viền khuôn mặt, đường chân tóc, và vùng tai", "Vùng cổ và vai", "Vùng ngực và tay"],
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "SMS giả mạo VNPost thông báo 'bưu kiện của bạn đang chờ xác nhận địa chỉ, nhấp ngay vào liên kết' là ví dụ điển hình của hình thức tấn công nào?",
+      "options": [
+        "Email phishing",
+        "Smishing (SMS phishing)",
+        "Vishing (voice phishing)",
+        "Pharming"
+      ],
       "correct": 1,
-      "explanation": "Viền khuôn mặt là ranh giới giữa khuôn mặt ghép và phần da/tóc thật — nơi model deepfake khó xử lý nhất. Tóc, tai, và đường viền là những khu vực hay bị mờ, nhòe, hoặc inconsistent nhất."
+      "explanation": "Smishing là hình thức phishing qua SMS. Kẻ gian giả mạo các thương hiệu quen thuộc như VNPost, Grab, ngân hàng để tạo cảm giác hợp lệ, kết hợp ngôn ngữ khẩn cấp ('nhấp ngay') để thúc đẩy nạn nhân hành động trước khi kiểm chứng."
     },
     {
       "id": "mt2q02",
-      "tag": "Module 4 — Nhận diện hình ảnh/video",
-      "text": "\"Temporal inconsistency\" trong deepfake video là hiện tượng gì?",
-      "options": ["Video bị lag hoặc giật hình", "Đặc điểm khuôn mặt thay đổi đột ngột giữa các frame — nốt ruồi biến mất, màu da thay đổi", "Âm thanh không đồng bộ với hình ảnh", "Video bị nhiễu ở vùng tối"],
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "Tin nhắn SMS ghi 'TÀI KHOẢN CỦA BẠN BỊ KHÓA — nhấp ngay để xác minh' khai thác tâm lý nào của nạn nhân?",
+      "options": [
+        "Tâm lý tò mò và thích khám phá điều mới",
+        "Tâm lý sợ mất mát và áp lực thời gian khẩn cấp",
+        "Tâm lý muốn tiết kiệm tiền",
+        "Tâm lý muốn được khen ngợi"
+      ],
       "correct": 1,
-      "explanation": "Temporal inconsistency: model xử lý từng frame độc lập, thiếu tính liên tục theo thời gian. Quan sát ở tốc độ chậm: nốt ruồi xuất hiện/biến mất, texture da \"rung\", hoặc màu da thay đổi giữa các frame liên tiếp."
+      "explanation": "Ngôn ngữ 'bị khóa' và 'nhấp ngay' khai thác sợ mất mát (loss aversion) và tạo áp lực thời gian giả tạo. Hai yếu tố này kết hợp tắt tư duy phê phán và thúc đẩy hành động bốc đồng — đây là cơ chế tâm lý cốt lõi của lừa đảo khẩn cấp."
     },
     {
       "id": "mt2q03",
-      "tag": "Module 4 — Nhận diện hình ảnh/video",
-      "text": "Khi kiểm tra ảnh nghi ngờ deepfake, bước đầu tiên nên là?",
-      "options": ["Chia sẻ với bạn bè để hỏi ý kiến", "Phóng to và kiểm tra viền khuôn mặt, texture da, và ánh sáng", "Tải ảnh về và dùng Photoshop kiểm tra", "Gọi điện cho người trong ảnh để xác nhận"],
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "Kẻ gian giả mạo sếp qua tin nhắn Zalo nhắn: 'Anh đang họp không nghe được, em chuyển gấp 50 triệu cho đối tác rồi anh hoàn lại'. Đây là kịch bản lừa đảo nào?",
+      "options": [
+        "Phishing đánh cắp mật khẩu",
+        "Lừa đảo mạo danh cấp trên (CEO fraud / BEC — Business Email Compromise dạng tin nhắn)",
+        "Lừa đảo đầu tư tiền điện tử",
+        "Lừa đảo tuyển dụng việc làm"
+      ],
       "correct": 1,
-      "explanation": "Phóng to là bước đầu tiên dễ dàng nhất: kiểm tra viền khuôn mặt (có mờ/nhòe không?), texture da (quá mịn bất thường không?), ánh sáng (khuôn mặt có khớp với ánh sáng nền không?)."
+      "explanation": "Đây là BEC (Business Email Compromise) biến thể qua ứng dụng nhắn tin: kẻ gian giả mạo cấp trên, tạo bối cảnh không thể gọi điện xác minh ('đang họp'), yêu cầu chuyển tiền khẩn và hứa hoàn lại. Kịch bản này cực kỳ phổ biến và gây thiệt hại lớn cho doanh nghiệp."
     },
     {
       "id": "mt2q04",
-      "tag": "Module 4 — Nhận diện hình ảnh/video",
-      "text": "Vùng bên trong miệng (răng, lưỡi) trong deepfake thường có vấn đề gì?",
-      "options": ["Miệng quá rộng so với bình thường", "Răng mờ, thiếu chi tiết, lưỡi hình dạng bất thường — vì dataset ít ảnh bên trong miệng", "Môi quá đỏ so với da mặt", "Không có vấn đề gì — đây là vùng dễ deepfake nhất"],
-      "correct": 1,
-      "explanation": "Dataset huấn luyện deepfake thường ít ảnh bên trong miệng (khi mở), nên model tạo ra không tốt bằng các vùng khác. Quan sát kỹ khi nhân vật nói hoặc cười rộng là cách kiểm tra hiệu quả."
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "Bạn nhận tin nhắn 'Chúc mừng! Bạn đã trúng thưởng iPhone 15 từ chương trình khách hàng thân thiết. Nhập mã xác minh 6 số vừa được gửi đến điện thoại bạn để nhận thưởng'. Mục đích thực sự của yêu cầu 'mã xác minh' này là gì?",
+      "options": [
+        "Xác minh danh tính để giao thưởng",
+        "Bảo vệ tài khoản của bạn khỏi gian lận",
+        "Đánh cắp mã OTP để chiếm quyền tài khoản ngân hàng hoặc ví điện tử của bạn",
+        "Kiểm tra xem số điện thoại của bạn còn hoạt động không"
+      ],
+      "correct": 2,
+      "explanation": "Mã xác minh OTP là chìa khóa để đăng nhập hoặc xác nhận giao dịch. Kẻ gian dùng kịch bản 'trúng thưởng' để nạn nhân tự tay nhập OTP — vốn được ngân hàng gửi để bảo vệ tài khoản — và qua đó chiếm quyền kiểm soát tài khoản hoặc thực hiện giao dịch trái phép."
     },
     {
       "id": "mt2q05",
-      "tag": "Module 4 — Nhận diện hình ảnh/video",
-      "text": "Deepfake ảnh tĩnh khó phát hiện hơn deepfake video vì lý do gì?",
-      "options": ["Ảnh tĩnh có độ phân giải thấp hơn", "Không có chiều thời gian để phát hiện temporal inconsistency — chỉ có dấu hiệu không gian trong một frame", "Ảnh tĩnh ít được chia sẻ hơn", "Công nghệ ảnh tĩnh phức tạp hơn video"],
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "Trong kịch bản lừa đảo 'romance scam', kẻ gian thường thực hiện các bước nào theo trình tự?",
+      "options": [
+        "Ngay lập tức xin tiền sau khi liên lạc lần đầu",
+        "Xây dựng quan hệ tình cảm lâu dài (tuần/tháng), tạo lòng tin sâu, sau đó đặt ra tình huống khẩn cấp cần tiền giúp đỡ",
+        "Gửi link phishing ngay từ tin nhắn đầu tiên",
+        "Chỉ nhắm vào người cao tuổi và người độc thân"
+      ],
       "correct": 1,
-      "explanation": "Với video, bạn có thêm chiều thời gian (temporal). Với ảnh, chỉ có một frame: phải dựa vào ánh sáng nhất quán, texture tự nhiên, chi tiết đối xứng, và các dấu hiệu không gian khác."
+      "explanation": "Romance scam có chu kỳ điển hình: (1) Tạo profile hấp dẫn; (2) Xây dựng quan hệ tình cảm chân thật (love bombing); (3) Tạo cảm giác kết nối đặc biệt; (4) Tạo tình huống khẩn cấp (tai nạn, kẹt tiền ở nước ngoài, cơ hội đầu tư). Thời gian đầu tư dài làm nạn nhân khó nhận ra."
     },
     {
       "id": "mt2q06",
-      "tag": "Module 4 — Nhận diện hình ảnh/video",
-      "text": "Reverse image search (tìm kiếm ngược ảnh) hữu ích cho việc phát hiện deepfake/thao túng như thế nào?",
-      "options": ["Phân tích pixel để tìm dấu vết AI", "Tìm nguồn gốc ảnh — xem ảnh đã xuất hiện trước đó chưa, với bối cảnh nào", "Đo độ phân giải và kiểm tra màu sắc", "Trích xuất metadata EXIF tự động"],
-      "correct": 1,
-      "explanation": "Reverse search (Google Images, TinEye) có thể phát hiện: ảnh cũ được dùng lại với bối cảnh giả; ảnh từ nước này được mô tả là ảnh nước khác; khuôn mặt của người A được ghép vào cơ thể người B."
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "Bạn nhận SMS từ một số lạ giả mạo ngân hàng Vietcombank có chứa link 'vietcombank-secure.com'. Hành động đúng đắn nhất là gì?",
+      "options": [
+        "Nhấp vào link để kiểm tra xem có thật không",
+        "Trả lời SMS để yêu cầu giải thích thêm",
+        "Không nhấp vào link; gọi thẳng đến số hotline chính thức của Vietcombank đã lưu sẵn để xác minh",
+        "Chặn số và xóa tin nhắn ngay"
+      ],
+      "correct": 2,
+      "explanation": "Không bao giờ nhấp vào link trong SMS đáng ngờ. Luôn xác minh bằng cách gọi đến số hotline chính thức (in trên thẻ ngân hàng, trang web chính thức) để kiểm tra xem ngân hàng có thực sự gửi thông báo đó không. Đây là nguyên tắc then chốt để tránh smishing."
     },
     {
       "id": "mt2q07",
-      "tag": "Module 4 — Nhận diện hình ảnh/video",
-      "text": "\"Face drifting\" trong deepfake video là lỗi gì?",
-      "options": ["Khuôn mặt bị mờ khi chuyển động nhanh", "Khuôn mặt không bám chặt vào đầu — \"bơi\" hoặc \"trôi\" khỏi vị trí đúng", "Màu da thay đổi theo ánh sáng", "Biểu cảm không đồng bộ với giọng nói"],
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "Lừa đảo đầu tư tiền điện tử qua ứng dụng nhắn tin thường bắt đầu bằng cách nào?",
+      "options": [
+        "Gửi hợp đồng đầu tư chuyên nghiệp ngay từ đầu",
+        "Chào hỏi thân thiện (thường là 'nhắn nhầm số'), xây dựng quan hệ, sau đó giới thiệu 'cơ hội đầu tư sinh lời cao' và cho thấy 'lợi nhuận' ảo ban đầu",
+        "Yêu cầu chuyển tiền ngay lập tức để 'đặt chỗ'",
+        "Gửi link tải ứng dụng đầu tư giả mạo ngay từ tin nhắn đầu tiên"
+      ],
       "correct": 1,
-      "explanation": "Face drifting là lỗi tracking: model deepfake không căn chỉnh đúng khuôn mặt ghép với chuyển động của đầu trong video gốc — đặc biệt khi đầu quay nhanh hoặc ở các góc hiếm gặp trong dataset."
+      "explanation": "Pig butchering scam (lừa đảo vỗ béo lợn): kẻ gian đầu tư thời gian xây dựng quan hệ, thường bắt đầu bằng 'nhắn nhầm số' hoặc 'vô tình kết bạn'. Sau khi tạo được lòng tin, họ giới thiệu nền tảng đầu tư giả, cho thấy lợi nhuận ảo để thu hút đầu tư lớn hơn rồi biến mất."
     },
     {
       "id": "mt2q08",
-      "tag": "Module 5 — Nhận diện giọng nói",
-      "text": "Voice deepfake thế hệ cũ (trước 2022) thường thiếu đặc điểm âm thanh nào?",
-      "options": ["Tần số cao (high-frequency)", "Tiếng thở, âm thanh môi trường tự nhiên, và sự biến đổi prosody (nhịp điệu, cao độ) tự nhiên", "Âm lượng đủ to", "Phát âm rõ ràng"],
-      "correct": 1,
-      "explanation": "Giọng người thật có: tiếng thở giữa câu, âm thanh môi trường tự nhiên, và prosody (intonation, rhythm) biến đổi tự nhiên theo cảm xúc. Voice deepfake cũ thường có âm thanh \"sạch\" một cách bất thường và prosody đơn điệu."
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "Đơn vị nào tại Việt Nam tiếp nhận báo cáo lừa đảo trực tuyến và có đường dây hỗ trợ 1800.1566?",
+      "options": [
+        "Bộ Tài chính",
+        "Ngân hàng Nhà nước Việt Nam",
+        "Cục An toàn thông tin — Bộ Thông tin và Truyền thông",
+        "Bộ Công an — Cục An ninh mạng"
+      ],
+      "correct": 2,
+      "explanation": "Cục An toàn thông tin (Bộ TT&TT) vận hành đường dây hỗ trợ 1800.1566 (miễn phí) để tiếp nhận phản ánh về lừa đảo trực tuyến, website độc hại và nội dung vi phạm. Đây là kênh báo cáo chính thức được khuyến nghị khi gặp tin nhắn lừa đảo."
     },
     {
       "id": "mt2q09",
-      "tag": "Module 5 — Nhận diện giọng nói",
-      "text": "Kỹ thuật xác minh hiệu quả nhất khi nhận cuộc gọi khẩn cấp giả giọng người thân là?",
-      "options": ["Hỏi câu hỏi có/không về tình huống khẩn cấp", "Cúp máy và gọi lại qua số đã lưu sẵn; hỏi thông tin chỉ người thật biết", "Tin tưởng vì nhận ra giọng", "Chuyển một phần tiền để kiểm tra xem có vấn đề không"],
-      "correct": 1,
-      "explanation": "\"Cúp và gọi lại\" phá vỡ mọi cuộc tấn công voice phishing. Hỏi thông tin riêng tư (tên thú cưng, địa chỉ nhà thơ ấu) — AI clone giọng không thể biết. Tránh câu hỏi có/không vì có thể đã được nghiên cứu trước."
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "Tại sao không nên nhấp vào bất kỳ đường link nào trong SMS từ số lạ — kể cả khi tin nhắn trông hợp lệ?",
+      "options": [
+        "Vì tin nhắn SMS không thể chứa đường link thật",
+        "Vì nhà mạng tính phí bổ sung khi nhấp link qua SMS",
+        "Vì chỉ cần nhấp vào link cũng có thể kích hoạt tải mã độc, dẫn đến trang giả mạo đánh cắp thông tin, hoặc theo dõi thiết bị của bạn",
+        "Vì SMS không mã hóa nên link luôn bị lộ"
+      ],
+      "correct": 2,
+      "explanation": "Nhấp vào link trong SMS đáng ngờ có thể: (1) Dẫn đến trang phishing giả mạo để đánh cắp thông tin đăng nhập; (2) Tự động tải xuống mã độc (malware/spyware); (3) Ghi nhận thiết bị của bạn cho mục đích theo dõi. Ngay cả khi link trông vô hại, rủi ro thực sự ẩn sau rút ngắn URL hoặc chuyển hướng."
     },
     {
       "id": "mt2q10",
-      "tag": "Module 5 — Nhận diện giọng nói",
-      "text": "Cuộc gọi video có đảm bảo chắc chắn rằng người bạn đang nói chuyện là thật không?",
-      "options": ["Có, video call không thể bị giả mạo", "Không — real-time deepfake video đã khả thi và ngày càng phổ biến", "Có, nếu chất lượng video tốt", "Chỉ khi dùng ứng dụng mã hóa đầu-cuối"],
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "Lừa đảo giả danh người thân qua mạng xã hội (chiếm tài khoản Facebook rồi nhắn tiền) phòng tránh hiệu quả nhất bằng cách nào?",
+      "options": [
+        "Không kết bạn với người lạ trên mạng xã hội",
+        "Bật xác thực hai yếu tố (2FA) cho tài khoản mạng xã hội và luôn gọi điện xác nhận trực tiếp trước khi chuyển tiền theo yêu cầu qua chat",
+        "Chỉ dùng ứng dụng nhắn tin mã hóa",
+        "Không đăng ảnh cá nhân lên mạng xã hội"
+      ],
       "correct": 1,
-      "explanation": "Công nghệ real-time deepfake (DeepFaceLive và các tool tương tự) có thể hoạt động trong cuộc gọi video trực tiếp. Với giao dịch quan trọng, nên kết hợp: video call + xác minh thông tin riêng tư + xác nhận qua kênh độc lập."
+      "explanation": "Kết hợp hai lớp bảo vệ: (1) 2FA ngăn kẻ gian chiếm tài khoản của bạn để nhắn tiền người khác; (2) Gọi điện xác nhận trực tiếp trước khi chuyển tiền theo yêu cầu chat — vì dù tài khoản của người thân bị chiếm, giọng nói thật trên cuộc gọi sẽ lộ ra kẻ gian."
     },
     {
       "id": "mt2q11",
-      "tag": "Module 5 — Nhận diện giọng nói",
-      "text": "\"Codeword gia đình\" chống voice deepfake hiệu quả vì lý do nào?",
-      "options": ["Mã hóa cuộc gọi giúp kẻ tấn công không nghe được", "AI chỉ clone giọng nói — không thể biết thông tin riêng tư mà chỉ người thật mới biết", "Từ khóa bí mật làm nhiễu loạn hệ thống AI", "Giúp nhận ra giọng người thân tốt hơn"],
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "Tin nhắn lừa đảo thường sử dụng ngôn ngữ khẩn cấp như 'ngay bây giờ', 'trong 24 giờ', 'hoặc mất vĩnh viễn' vì lý do gì?",
+      "options": [
+        "Để tiết kiệm ký tự trong tin nhắn SMS",
+        "Để tạo áp lực tâm lý, kích hoạt phản ứng cảm xúc và ngăn nạn nhân dừng lại để suy nghĩ hoặc xác minh",
+        "Để tuân thủ quy định về thông báo dịch vụ khách hàng",
+        "Vì hệ thống ngân hàng thực sự hoạt động theo các thời hạn ngắn như vậy"
+      ],
       "correct": 1,
-      "explanation": "Voice cloning sao chép đặc điểm âm học của giọng, không sao chép ký ức và thông tin cá nhân. Codeword là thông tin ngoài băng tần (out-of-band): AI không thể biết dù giọng nói hoàn hảo đến đâu."
+      "explanation": "Áp lực thời gian giả tạo là vũ khí tâm lý chủ chốt của lừa đảo: nó kích hoạt hệ thần kinh giao cảm (fight-or-flight), làm giảm hoạt động vùng trán trước (frontal cortex) — khu vực điều phối tư duy phê phán. Khi cảm thấy bị thúc ép, bạn cần dừng lại và chậm lại thay vì hành động nhanh."
     },
     {
       "id": "mt2q12",
-      "tag": "Module 5 — Nhận diện giọng nói",
-      "text": "Tại sao não người phản ứng với giọng nói khác với văn bản khi đánh giá độ tin cậy?",
-      "options": ["Não xử lý âm thanh chậm hơn văn bản", "Giọng nói kích hoạt phản ứng cảm xúc và xã hội nhanh hơn — ít thời gian cho phân tích lý trí", "Không có sự khác biệt về mặt khoa học thần kinh", "Văn bản luôn được đọc kỹ hơn"],
+      "tag": "Module 3 — Tin nhắn lừa đảo",
+      "text": "Kẻ gian giả mạo Grab gửi SMS 'Đơn hàng của bạn đang giao, xác nhận địa chỉ tại [link]'. Dấu hiệu nào trong tin nhắn này là cờ đỏ rõ ràng nhất?",
+      "options": [
+        "Grab đề cập đến đơn hàng",
+        "Tin nhắn đến từ số điện thoại thông thường thay vì brandname SMS chính thức; link không phải domain grab.com chính thức",
+        "Nội dung đề cập đến địa chỉ giao hàng",
+        "Tin nhắn đến vào ban đêm"
+      ],
       "correct": 1,
-      "explanation": "Khoa học thần kinh: giọng nói (đặc biệt giọng quen thuộc) kích hoạt hệ limbic (cảm xúc) nhanh hơn so với văn bản. Điều này tạo ra phản ứng tin tưởng tức thì trước khi vỏ não trước trán (lý trí) kịp đánh giá."
+      "explanation": "Cờ đỏ kép: (1) Grab và các thương hiệu lớn gửi SMS qua brandname (hiện là 'Grab', 'GRAB') chứ không phải số điện thoại cá nhân; (2) Link trong tin nhắn không sử dụng domain chính thức grab.com. Hai yếu tố này đủ để xác định đây là smishing."
     },
     {
       "id": "mt2q13",
-      "tag": "Module 6 — Kiểm chứng nguồn",
-      "text": "\"Lateral reading\" khác với \"đọc sâu\" (deep reading) như thế nào trong kiểm chứng thông tin?",
-      "options": ["Lateral reading là đọc nhanh hơn", "Lateral reading: tra cứu nguồn qua tab mới độc lập; deep reading: đọc kỹ toàn bộ bài viết đó — lateral thường hiệu quả hơn", "Lateral reading chỉ dùng cho tin tức chính trị", "Không có sự khác biệt về hiệu quả"],
+      "tag": "Module 4 — Phishing và URL",
+      "text": "Phishing là gì?",
+      "options": [
+        "Hình thức tấn công mạng bằng cách gửi lượng lớn email spam vô nghĩa",
+        "Hành vi mạo danh tổ chức/cá nhân đáng tin cậy qua các kênh kỹ thuật số để lừa nạn nhân cung cấp thông tin nhạy cảm hoặc thực hiện hành động có hại",
+        "Phần mềm độc hại tự nhân bản và lây lan qua mạng",
+        "Kỹ thuật hack bằng cách đoán mật khẩu lặp đi lặp lại"
+      ],
       "correct": 1,
-      "explanation": "Nghiên cứu của Sam Wineburg (Stanford) chứng minh lateral reading hiệu quả hơn: fact-checker chuyên nghiệp rời khỏi trang web nhanh để tìm kiếm nguồn bên ngoài đánh giá về trang đó, thay vì đọc kỹ trang đó."
+      "explanation": "Phishing (câu cá) là tấn công dựa trên kỹ thuật xã hội: mạo danh thực thể đáng tin (ngân hàng, Google, công an, sếp) qua email, SMS, cuộc gọi hoặc website giả để đánh cắp thông tin đăng nhập, dữ liệu tài chính, hoặc thao túng nạn nhân thực hiện hành động có lợi cho kẻ tấn công."
     },
     {
       "id": "mt2q14",
-      "tag": "Module 6 — Kiểm chứng nguồn",
-      "text": "Framework SIFT trong kiểm chứng thông tin, chữ \"F\" đại diện cho điều gì?",
-      "options": ["Filter — lọc thông tin không liên quan", "Find better coverage — tìm nguồn đưa tin tốt hơn và đáng tin hơn", "Fact-check — kiểm tra sự thật ngay lập tức", "Forward — chuyển tiếp thông tin đã xác minh"],
+      "tag": "Module 4 — Phishing và URL",
+      "text": "Kỹ thuật giả mạo tên miền nào sử dụng tên miền phụ (subdomain) để đánh lừa người dùng?",
+      "options": [
+        "Đăng ký tên miền chính xác giống trang thật",
+        "Dùng địa chỉ như 'vietcombank.com.login-secure.net' — tên ngân hàng xuất hiện nhưng tên miền thật là 'login-secure.net'",
+        "Thay thế một chữ cái bằng ký tự Unicode trông giống hệt",
+        "Đánh sai chính tả tên miền một ký tự"
+      ],
       "correct": 1,
-      "explanation": "SIFT: S = Stop (dừng lại); I = Investigate the source (tra cứu nguồn); F = Find better coverage (tìm nguồn tốt hơn — đặc biệt khi nguồn gốc không rõ ràng); T = Trace claims to origin (truy về nguồn gốc tuyên bố)."
+      "explanation": "Subdomain trick: phần xuất hiện trước dấu chấm cuối cùng trước phần mở rộng (.com, .net) là tên miền thực sự. Trong 'vietcombank.com.login-secure.net', tên miền thật là 'login-secure.net' còn 'vietcombank.com' chỉ là subdomain do kẻ gian kiểm soát. Người dùng nhìn thấy tên ngân hàng nên tin."
     },
     {
       "id": "mt2q15",
-      "tag": "Module 6 — Kiểm chứng nguồn",
-      "text": "EXIF metadata của ảnh có thể bị xóa hoặc chỉnh sửa không? Điều này ảnh hưởng đến kiểm chứng như thế nào?",
-      "options": ["Không thể xóa — EXIF là vĩnh viễn", "Có thể bị xóa/chỉnh — thiếu EXIF hoặc EXIF không nhất quán với nội dung là dấu hiệu đáng ngờ", "Chỉ bị xóa khi tải lên Facebook", "Chỉnh sửa EXIF là bất hợp pháp nên không ai làm"],
+      "tag": "Module 4 — Phishing và URL",
+      "text": "Một website có biểu tượng ổ khóa HTTPS có nghĩa là trang web đó an toàn và đáng tin không?",
+      "options": [
+        "Có, HTTPS nghĩa là trang web đã được xác minh và an toàn",
+        "Không — HTTPS chỉ có nghĩa là kết nối được mã hóa; trang phishing hoàn toàn có thể có chứng chỉ SSL hợp lệ",
+        "Có, chỉ ngân hàng và tổ chức chính phủ mới có thể có HTTPS",
+        "Không, HTTPS chỉ áp dụng cho trang thương mại điện tử"
+      ],
       "correct": 1,
-      "explanation": "EXIF có thể bị strip hoàn toàn hoặc chỉnh sửa. Thiếu EXIF có thể là: ảnh đã qua chỉnh sửa, tải lên qua nền tảng tự xóa metadata (Facebook, WhatsApp), hoặc được chụp màn hình. Tất cả đều là thông tin cho việc đánh giá."
+      "explanation": "HTTPS và ổ khóa xanh chỉ xác nhận kết nối được mã hóa — không xác nhận danh tính hay độ tin cậy của trang web. Kẻ tấn công có thể dễ dàng lấy chứng chỉ SSL miễn phí (Let's Encrypt) cho trang phishing của mình. Cần kiểm tra tên miền (domain) chính xác, không phải ổ khóa."
     },
     {
       "id": "mt2q16",
-      "tag": "Module 6 — Kiểm chứng nguồn",
-      "text": "Khi thấy ảnh/video kèm caption gây phẫn nộ mạnh, phản ứng đầu tiên đúng đắn nhất là?",
-      "options": ["Chia sẻ ngay vì mọi người cần biết", "Nhận ra cảm xúc phẫn nộ là tín hiệu cảnh báo — dừng lại và kiểm chứng trước", "Bình luận phản bác ngay lập tức", "Báo cáo tài khoản đã đăng trước"],
+      "tag": "Module 4 — Phishing và URL",
+      "text": "URL shortener (rút gọn link như bit.ly, tinyurl.com) có thể bị kẻ gian lợi dụng như thế nào?",
+      "options": [
+        "Làm chậm tốc độ tải trang web",
+        "Che giấu tên miền đích thật sự — người dùng không thể biết link sẽ dẫn đến đâu trước khi nhấp vào",
+        "Làm cho link dễ bị chặn hơn bởi bộ lọc email",
+        "Tự động tải về mã độc khi được nhấp vào"
+      ],
       "correct": 1,
-      "explanation": "Cảm xúc mạnh (phẫn nộ, kinh ngạc, sợ hãi) là thiết kế cố ý của nội dung thao túng — kích hoạt chia sẻ nhanh trước khi suy nghĩ. Nhận ra \"tôi đang cảm thấy gì\" là bước đầu tiên của tư duy phê phán."
+      "explanation": "URL shortener che giấu tên miền đích — 'bit.ly/xYz123' không tiết lộ bất cứ thông tin gì về điểm đến. Kẻ gian dùng điều này để giả mạo link an toàn trong email/SMS phishing. Giải pháp: dùng công cụ preview link (thêm '+' vào cuối link bit.ly, hoặc dùng checkshorturl.com) trước khi nhấp."
     },
     {
       "id": "mt2q17",
-      "tag": "Module 6 — Kiểm chứng nguồn",
-      "text": "Công cụ InVID/WeVerify hỗ trợ kiểm chứng video như thế nào?",
-      "options": ["Tự động dịch video sang tiếng Việt", "Phân mảnh video thành keyframes để reverse search, trích xuất metadata, phân tích dấu hiệu chỉnh sửa", "Tải video từ YouTube và phân tích offline", "So sánh âm thanh với cơ sở dữ liệu giọng nói tiêu chuẩn"],
+      "tag": "Module 4 — Phishing và URL",
+      "text": "Kỹ thuật 'hover-to-preview' khi kiểm tra link trong email là gì?",
+      "options": [
+        "Nhấp chuột phải và chọn 'Mở trong tab mới'",
+        "Di chuột qua link (không nhấp) để xem URL đích hiển thị ở thanh trạng thái phía dưới trình duyệt/email client",
+        "Sao chép link và dán vào ô tìm kiếm Google",
+        "Mở link trong chế độ ẩn danh của trình duyệt"
+      ],
       "correct": 1,
-      "explanation": "InVID/WeVerify là browser extension miễn phí cho fact-checker: (1) Tách video thành frames → reverse search từng frame; (2) Trích xuất metadata; (3) Phân tích các đặc điểm có thể chỉ ra chỉnh sửa. Công cụ thiết thực nhất cho kiểm chứng video."
+      "explanation": "Hover (di chuột, không nhấp) lên link hiển thị URL thật ở thanh trạng thái (status bar) của trình duyệt hoặc email client. Đây là cách nhanh nhất để kiểm tra xem link hiển thị (ví dụ 'Đăng nhập tài khoản') có khớp với URL đích thật sự hay không trước khi nhấp."
     },
     {
       "id": "mt2q18",
-      "tag": "Module 6 — Kiểm chứng nguồn",
-      "text": "Tên miền website bị đăng ký gần đây (vài ngày/tuần trước) là dấu hiệu đáng ngờ vì lý do gì?",
-      "options": ["Website mới thường có lỗi kỹ thuật nhiều hơn", "Website lừa đảo và phát tán tin giả thường dùng domain mới để tránh bị đưa vào danh sách đen", "Tên miền mới đắt tiền hơn tên miền cũ", "Không phải dấu hiệu đáng ngờ — website mới là bình thường"],
-      "correct": 1,
-      "explanation": "Tên miền mới + ẩn danh trong WHOIS = cờ đỏ. Nguồn tin đáng tin cậy thường có lịch sử lâu dài và danh tính minh bạch. Tên miền mới thường được tạo đặc biệt cho chiến dịch thông tin sai."
+      "tag": "Module 4 — Phishing và URL",
+      "text": "Kỹ thuật homograph attack (tấn công đồng hình) trong giả mạo tên miền là gì?",
+      "options": [
+        "Sao chép toàn bộ giao diện trang web gốc",
+        "Đánh sai chính tả tên miền như 'gooogle.com' thay vì 'google.com'",
+        "Thay thế chữ cái Latin bằng ký tự Unicode trông giống hệt — ví dụ dùng 'а' (Cyrillic) thay vì 'a' (Latin)",
+        "Đăng ký tên miền với phần mở rộng khác như '.net' thay vì '.com'"
+      ],
+      "correct": 2,
+      "explanation": "Homograph attack khai thác sự tương đồng trực quan giữa ký tự từ các bảng mã khác nhau. 'а' Cyrillic và 'a' Latin trông giống hệt nhau trong hầu hết font chữ nhưng là hai ký tự khác nhau — cho phép đăng ký tên miền trông giống hệt trang thật. Khó nhận ra bằng mắt thường."
     },
     {
       "id": "mt2q19",
-      "tag": "Module 4 — Nhận diện hình ảnh/video",
-      "text": "Bóng đổ (shadow) không nhất quán trong deepfake hình ảnh là dấu hiệu của điều gì?",
-      "options": ["Camera có độ phân giải thấp", "Khuôn mặt được ghép từ ảnh/video có nguồn sáng khác với môi trường trong hình", "Người chụp ảnh thiếu kỹ năng", "Ảnh bị nén quá mạnh"],
+      "tag": "Module 4 — Phishing và URL",
+      "text": "Bạn vô tình nhập thông tin đăng nhập vào một trang web phishing. Hành động khẩn cấp đầu tiên cần làm ngay là gì?",
+      "options": [
+        "Tắt máy tính và chờ vài ngày",
+        "Đổi mật khẩu tài khoản bị ảnh hưởng ngay lập tức từ thiết bị khác và bật xác thực hai yếu tố (2FA)",
+        "Chỉ cần xóa lịch sử duyệt web là đủ",
+        "Báo cáo trang web phishing trước khi làm bất cứ điều gì khác"
+      ],
       "correct": 1,
-      "explanation": "Ánh sáng nhất quán là thách thức lớn của deepfake: khuôn mặt ghép cần nhận ánh sáng đúng hướng và góc độ của môi trường. Bóng đổ sai hướng hoặc cường độ không khớp với nguồn sáng là dấu hiệu rõ ràng."
+      "explanation": "Ưu tiên số một: đổi mật khẩu NGAY từ thiết bị khác (vì thiết bị hiện tại có thể đã bị cài mã độc), trước khi kẻ gian kịp sử dụng thông tin đăng cắp. Sau đó: bật 2FA, kiểm tra phiên đăng nhập đang hoạt động, báo cáo tài khoản nếu đã bị xâm phạm."
     },
     {
       "id": "mt2q20",
-      "tag": "Module 5 — Nhận diện giọng nói",
-      "text": "\"Liveness detection\" trong KYC (Know Your Customer) hoạt động như thế nào?",
-      "options": ["Kiểm tra xem tài khoản người dùng có online không", "Yêu cầu hành động ngẫu nhiên (nháy mắt, quay đầu, đọc số) để chứng minh người thật đang hiện diện — không phải ảnh/video/deepfake", "Đo nhịp tim qua camera điện thoại", "Quét mống mắt và vân tay đồng thời"],
+      "tag": "Module 4 — Phishing và URL",
+      "text": "Sau khi vô tình đăng nhập vào trang phishing, bước nào nên làm tiếp theo sau khi đã đổi mật khẩu?",
+      "options": [
+        "Không cần làm gì thêm sau khi đổi mật khẩu",
+        "Kiểm tra và đăng xuất tất cả phiên đăng nhập đang hoạt động trên tài khoản, bật xác thực hai yếu tố (2FA), và theo dõi các hoạt động bất thường",
+        "Xóa toàn bộ tài khoản và tạo mới",
+        "Chỉ cần thông báo cho bạn bè biết là xong"
+      ],
       "correct": 1,
-      "explanation": "Liveness detection là lớp phòng thủ chống deepfake trong xác minh danh tính: yêu cầu hành động ngẫu nhiên real-time không thể dự đoán trước — ảnh chụp, video phát lại, và ngay cả deepfake thời gian thực gặp khó khăn với yêu cầu này."
+      "explanation": "Quy trình xử lý sau phishing: (1) Đổi mật khẩu từ thiết bị sạch; (2) Kiểm tra 'Sessions' hoặc 'Devices' trong cài đặt tài khoản và đăng xuất tất cả; (3) Bật 2FA; (4) Kiểm tra xem kẻ gian có thay đổi email khôi phục hoặc số điện thoại không; (5) Theo dõi giao dịch và thông báo bất thường."
     },
     {
       "id": "mt2q21",
-      "tag": "Module 6 — Kiểm chứng nguồn",
-      "text": "Tại sao số lần chia sẻ hoặc người nổi tiếng chia sẻ không xác nhận tính xác thực của thông tin?",
-      "options": ["Vì người nổi tiếng không dùng mạng xã hội", "Vì popularity không phải truth — người nổi tiếng cũng có thể bị lừa và vô tình lan truyền deepfake", "Vì mạng xã hội đếm sai số lần chia sẻ", "Vì chỉ có chuyên gia mới xác minh được"],
+      "tag": "Module 4 — Phishing và URL",
+      "text": "Thanh địa chỉ trình duyệt (address bar) và nội dung hiển thị trên trang web có thể bị giả mạo như thế nào?",
+      "options": [
+        "Không thể giả mạo vì trình duyệt bảo vệ thanh địa chỉ",
+        "Nội dung trang (logo, giao diện, văn bản) có thể sao chép hoàn toàn từ trang thật; chỉ địa chỉ trên thanh URL mới là thật — nên cần kiểm tra URL chứ không phải giao diện",
+        "Kẻ gian có thể thay đổi URL hiển thị trong thanh địa chỉ qua JavaScript",
+        "Cả thanh địa chỉ lẫn nội dung đều có thể bị giả mạo hoàn toàn"
+      ],
       "correct": 1,
-      "explanation": "\"Argument from popularity\" là ngụy biện logic: một thứ không trở thành thật chỉ vì nhiều người tin. Deepfake lan truyền nhanh nhất khi khai thác tên tuổi người nổi tiếng làm \"mồi\" tăng tín nhiệm."
+      "explanation": "Kẻ gian có thể sao chép hoàn toàn giao diện (HTML, CSS, logo, hình ảnh) của bất kỳ trang web nào. Nội dung nhìn thấy trên trang KHÔNG thể xác nhận tính xác thực. Chỉ có thanh địa chỉ URL trong trình duyệt mới là nguồn thông tin đáng tin cậy để xác định bạn đang ở đâu."
     },
     {
       "id": "mt2q22",
-      "tag": "Module 4 — Nhận diện hình ảnh/video",
-      "text": "Khi xem video nghi ngờ, phương pháp frame-by-frame giúp phát hiện điều gì?",
-      "options": ["Phát hiện lỗi âm thanh ẩn trong video", "Temporal inconsistency — các lỗi thoáng qua giữa các frame mà mắt bỏ qua khi video chạy bình thường", "Kiểm tra metadata video", "Phát hiện watermark ẩn"],
+      "tag": "Module 4 — Phishing và URL",
+      "text": "Typosquatting là kỹ thuật gì trong tấn công phishing?",
+      "options": [
+        "Tấn công bằng cách gõ mật khẩu sai nhiều lần",
+        "Đăng ký tên miền gần giống tên miền thật với lỗi đánh máy phổ biến — như 'facebok.com' thay vì 'facebook.com'",
+        "Dùng phần mềm tự động gửi email phishing hàng loạt",
+        "Chiếm quyền kiểm soát DNS của trang web gốc"
+      ],
       "correct": 1,
-      "explanation": "Frame-by-frame (tua chậm / dừng từng frame) tiết lộ các lỗi temporal: texture da rung, đặc điểm xuất hiện/biến mất, hoặc khuôn mặt \"nhảy\" vị trí. Các phần mềm chuyên nghiệp thậm chí phân tích pixel-level differences."
+      "explanation": "Typosquatting khai thác lỗi gõ phím tự nhiên: đăng ký tên miền với lỗi đánh máy phổ biến. Người dùng gõ nhầm địa chỉ một ký tự và bị chuyển đến trang giả mạo trông giống hệt trang thật. Luôn kiểm tra URL cẩn thận, đặc biệt khi gõ địa chỉ ngân hàng hoặc email."
     },
     {
       "id": "mt2q23",
-      "tag": "Module 5 — Nhận diện giọng nói",
-      "text": "Phân tích phổ âm thanh (spectrogram analysis) có thể phát hiện voice deepfake bằng cách nào?",
-      "options": ["Đo âm lượng tổng thể của cuộc gọi", "Phát hiện các tần số bất thường, thiếu các thành phần âm tự nhiên, hoặc dấu hiệu tổng hợp nhân tạo", "Đếm số từ được nói trong một phút", "Kiểm tra xem giọng nói có nhất quán với ảnh không"],
+      "tag": "Module 4 — Phishing và URL",
+      "text": "Cách nào hiệu quả nhất để báo cáo trang web phishing cho cộng đồng toàn cầu?",
+      "options": [
+        "Đăng thông tin trang phishing lên mạng xã hội để cảnh báo bạn bè",
+        "Báo cáo trang web đến Google Safe Browsing (safebrowsing.google.com/safebrowsing/report_phish) để bảo vệ người dùng trên toàn thế giới",
+        "Gửi email trực tiếp đến trang web phishing để yêu cầu họ gỡ xuống",
+        "Nhờ công ty bảo mật tư nhân xử lý"
+      ],
       "correct": 1,
-      "explanation": "Spectrogram visualization giúp phân tích âm thanh ở chiều tần số-thời gian: giọng thật có formants (dải tần số đặc trưng của giọng người) tự nhiên; voice deepfake đôi khi thiếu hoặc có các formants bất thường."
+      "explanation": "Google Safe Browsing là cơ sở dữ liệu phishing/malware được nhúng vào Chrome, Firefox, Safari và nhiều trình duyệt khác. Báo cáo tại safebrowsing.google.com giúp Google cảnh báo hàng tỷ người dùng trước khi truy cập trang đó. Phishing Report của Microsoft (phishing.microsoft.com) cũng là kênh quan trọng."
     },
     {
       "id": "mt2q24",
-      "tag": "Module 6 — Kiểm chứng nguồn",
-      "text": "\"3-source rule\" trong kiểm chứng thông tin nghĩa là gì?",
-      "options": ["Chỉ tin khi 3 người bạn xác nhận", "Tìm ít nhất 3 nguồn ĐỘC LẬP (không cùng nguồn gốc) xác nhận thông tin trước khi chia sẻ", "Đọc 3 bài báo về cùng chủ đề trên một trang web", "Kiểm tra 3 mạng xã hội khác nhau"],
+      "tag": "Module 4 — Phishing và URL",
+      "text": "Spear phishing khác với phishing thông thường như thế nào?",
+      "options": [
+        "Spear phishing chỉ tấn công qua điện thoại, không qua email",
+        "Spear phishing nhắm vào cá nhân hoặc tổ chức cụ thể bằng thông tin cá nhân hóa — tên, chức vụ, mối quan hệ — để tăng độ tin cậy so với phishing hàng loạt chung chung",
+        "Spear phishing luôn sử dụng deepfake video",
+        "Spear phishing chỉ nhắm vào CEO và lãnh đạo cấp cao"
+      ],
       "correct": 1,
-      "explanation": "Độc lập là từ khóa: 3 nguồn cùng trích từ một bài báo gốc không phải 3 nguồn độc lập. Cần 3 tổ chức/cơ quan khác nhau, từ góc nhìn khác nhau, xác nhận cùng sự việc — đây là tiêu chuẩn báo chí chuyên nghiệp."
-    },
-    {
-      "id": "mt2q25",
-      "tag": "Module 5 — Nhận diện giọng nói",
-      "text": "Vì sao voice deepfake của robocall trước bầu cử nguy hiểm hơn email phishing?",
-      "options": ["Vì robocall rẻ hơn email", "Vì giọng nói quen thuộc tạo tin tưởng tức thì, có thể tiếp cận người cao tuổi ít dùng internet, và khó lọc hơn email", "Vì robocall gọi được nhiều người hơn email", "Vì email bị mã hóa còn robocall thì không"],
-      "correct": 1,
-      "explanation": "Robocall với AI voice cloning kết hợp: (1) Tính quen thuộc của giọng nói quen; (2) Khả năng tiếp cận người ít dùng internet; (3) Khó lọc tự động hơn email; (4) Tạo cảm giác khẩn cấp không có thời gian kiểm tra."
-    },
-    {
-      "id": "mt2q26",
-      "tag": "Module 4 — Nhận diện hình ảnh/video",
-      "text": "Hiện tượng \"uncanny valley\" trong deepfake giúp ích cho việc phát hiện như thế nào?",
-      "options": ["Cung cấp tọa độ chính xác của deepfake trong video", "Cảm giác \"điều gì đó không đúng\" là cơ chế nhận biết tự nhiên của não — đáng được tin và điều tra kỹ hơn", "Chỉ người có chuyên môn mới cảm nhận được uncanny valley", "Uncanny valley không liên quan đến phát hiện deepfake"],
-      "correct": 1,
-      "explanation": "Não người có hệ thống nhận diện khuôn mặt cực kỳ tinh tế. Khi deepfake \"gần như đúng nhưng không hoàn toàn\", não sẽ phát tín hiệu khó chịu trước cả khi bạn có thể nói cụ thể điều gì sai. Hãy tin vào cảm giác này."
-    },
-    {
-      "id": "mt2q27",
-      "tag": "Module 6 — Kiểm chứng nguồn",
-      "text": "Khi kiểm chứng thông tin về một sự kiện, tại sao cần kiểm tra ngày đăng của nguồn?",
-      "options": ["Vì các bài cũ thường có lỗi kỹ thuật", "Vì ảnh/video thật từ sự kiện cũ thường được tái sử dụng với caption sự kiện mới — out-of-context manipulation", "Vì luật bản quyền khác nhau theo thời gian", "Vì công nghệ deepfake chỉ tồn tại từ năm 2020"],
-      "correct": 1,
-      "explanation": "Out-of-context manipulation là hình thức thao túng phổ biến nhất: ảnh/video thật từ sự kiện này được đăng với caption sự kiện khác. Kiểm tra ngày và reverse search giúp phát hiện khi ảnh \"thật\" nhưng bối cảnh bị giả mạo."
-    },
-    {
-      "id": "mt2q28",
-      "tag": "Module 5 — Nhận diện giọng nói",
-      "text": "Trong bối cảnh an ninh tổ chức, \"voice authentication\" truyền thống có lỗ hổng nào trước AI voice cloning?",
-      "options": ["Giọng nói thay đổi theo tuổi tác nên không đáng tin", "Hệ thống chỉ so sánh mẫu âm học — AI clone tạo ra mẫu âm học tương tự nên có thể vượt qua xác thực giọng nói cơ bản", "Voice authentication quá đắt để sử dụng rộng rãi", "Chỉ hoạt động trong môi trường yên tĩnh"],
-      "correct": 1,
-      "explanation": "Voice authentication truyền thống so sánh đặc điểm âm học (formants, prosody) — AI clone tạo ra mẫu âm học tương tự đủ để vượt qua. Các hệ thống hiện đại phải bổ sung: liveness detection, câu hỏi ngẫu nhiên, và multi-factor authentication."
-    },
-    {
-      "id": "mt2q29",
-      "tag": "Module 4 — Nhận diện hình ảnh/video",
-      "text": "Điều nào KHÔNG phải là dấu hiệu nhận biết deepfake hình ảnh/video?",
-      "options": ["Viền khuôn mặt bị mờ/nhòe", "Ánh sáng không nhất quán giữa khuôn mặt và nền", "Nội dung có tính chất gây sốc hoặc khó tin", "Video có nhiều lượt xem và bình luận"],
-      "correct": 3,
-      "explanation": "Lượt xem và bình luận nhiều là dấu hiệu lan truyền, không phải dấu hiệu xác thực. Thực ra, nội dung deepfake được thiết kế để viral — nên lượt xem cao không chỉ không xác nhận tính thật mà còn có thể là dấu hiệu ngược lại."
-    },
-    {
-      "id": "mt2q30",
-      "tag": "Module 6 — Kiểm chứng nguồn",
-      "text": "Thực hành tốt nhất khi tham gia các cuộc thảo luận về sự kiện đang xảy ra trên mạng xã hội là?",
-      "options": ["Chia sẻ thông tin mình biết để giúp mọi người", "Chờ thông tin được xác minh từ nhiều nguồn đáng tin trước khi chia sẻ; đính chính ngay nếu đã chia sẻ sai", "Chỉ đọc, không bao giờ chia sẻ bất cứ thứ gì", "Chỉ tin nguồn chính phủ"],
-      "correct": 1,
-      "explanation": "Chia sẻ thông tin chưa xác minh trong \"information fog\" (sương mù thông tin) của sự kiện đang diễn ra có thể gây hại thực tế. Trách nhiệm: chờ xác minh; nếu đã chia sẻ sai — đính chính ngay và rõ ràng."
+      "explanation": "Phishing thông thường gửi đại trà, chung chung. Spear phishing nghiên cứu nạn nhân trước (từ LinkedIn, mạng xã hội, tin tức) và cá nhân hóa nội dung: 'Chào anh Nguyễn Văn A, tôi là đồng nghiệp của chị B tại phòng X...'. Sự cá nhân hóa khiến người nhận ít nghi ngờ hơn."
     }
   ]
 }

@@ -157,7 +157,7 @@ const isPartDone = (partId, allModules) =>
   allModules.filter((m) => m.part === partId).every((m) => isModuleDone(m.id));
 
 // Midterm config mapping: partId → midtermId
-const PART_MIDTERM = { foundation: 'midterm1', recognition: 'midterm2' };
+const PART_MIDTERM = { deepfake: 'midterm1', attacks: 'midterm2' };
 
 // Midterm mở được khi tất cả modules trong part đã xong
 const isMidtermUnlocked = (midtermId, course) => {
