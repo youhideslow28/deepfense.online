@@ -3,7 +3,7 @@
  * Final Exam engine: tổng hợp toàn bộ ngân hàng câu hỏi,
  * chọn 50 ngẫu nhiên, tối đa 3 lần thi, pass 70%.
  *
- * Bank: 8 file JSON (module quizzes + midterm banks) → ~132 câu → pick 50
+ * Bank: final-exam-bank.json → 150 câu (M1–M6, 25–30q/module) → pick 50
  * On pass: completedFinalExam = true → cert eligibility unlocked
  *
  * @copyright 2025 Ho Xuan Nguyen (25NS039)
@@ -23,14 +23,7 @@ const PASS_THRESHOLD    = 0.70;
 const MAX_ATTEMPTS      = 3;
 
 const BANK_SOURCES = [
-  '../content/quizzes/module-1-quiz.json',
-  '../content/quizzes/module-2-quiz.json',
-  '../content/quizzes/module-3-quiz.json',
-  '../content/quizzes/module-4-quiz.json',
-  '../content/quizzes/module-5-quiz.json',
-  '../content/quizzes/module-6-quiz.json',
-  '../content/midterms/midterm-1-bank.json',
-  '../content/midterms/midterm-2-bank.json',
+  '../content/final-exam-bank.json',
 ];
 
 // ── Exam state ─────────────────────────────────────────────────
