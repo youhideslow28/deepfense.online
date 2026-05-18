@@ -85,7 +85,8 @@
         "level": "Recognition",
         "sourceFile": "DEEPFENSE_BASIC_Module_6_Content_v1.md",
         "quiz": { "questions": 10, "passThreshold": 0.7, "countForFinalExam": true },
-        "sections": ["6.1 Kiểm chứng nguồn", "6.2 Kiểm chứng bối cảnh", "6.3 Metadata cơ bản"]
+        "sections": ["6.1 Kiểm chứng nguồn", "6.2 Kiểm chứng bối cảnh", "6.3 Metadata cơ bản"],
+        "minigame": { "id": "url-detective", "label": "🔍 URL Detective", "dpf": 20, "primary": false }
       },
     ],
     "assessments": [
