@@ -175,11 +175,10 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
     return (
       <div className="space-y-8 animate-in mt-8 fade-in duration-500 pb-16">
         <div className="border-l-4 border-purple-500 pl-4 mb-8">
-          <h1 className="text-4xl font-black text-white uppercase tracking-wider mb-2 flex items-center gap-3">
+          <h1 className="text-4xl font-black text-white uppercase tracking-wider flex items-center gap-3">
             <Target className="text-purple-500" size={36} />
             {t.simulator_title}
           </h1>
-          <p className="text-gray-400 max-w-2xl">{t.simulator_desc}</p>
         </div>
 
         <h2 className="text-xl font-bold text-white uppercase tracking-widest">
@@ -242,14 +241,11 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
 
   return (
     <div className="space-y-8 animate-in mt-8 fade-in duration-500 pb-16">
-      <div className="border-l-4 border-purple-500 pl-4 mb-8 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-4xl font-black text-white uppercase tracking-wider mb-2 flex items-center gap-3">
-            <Target className="text-purple-500" size={36} />
-            {t.simulator_title}
-          </h1>
-          <p className="text-gray-400 max-w-2xl">{t.simulator_desc}</p>
-        </div>
+      <div className="border-l-4 border-purple-500 pl-4 mb-8 flex items-center justify-between gap-4">
+        <h1 className="text-4xl font-black text-white uppercase tracking-wider flex items-center gap-3">
+          <Target className="text-purple-500" size={36} />
+          {t.simulator_title}
+        </h1>
         <button
           onClick={handleChangeScenario}
           className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-purple-400 uppercase font-bold tracking-wide border border-white/10 hover:border-purple-500/50 rounded-xl px-3 py-2 transition-colors shrink-0"
@@ -451,32 +447,37 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                   </button>
                 </div>
 
-                {messages.length >= 1 + scenario.minExchanges * 2 ? (
-                  <div className="flex gap-2 justify-end animate-in fade-in duration-300">
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2 justify-end">
+                    {/* Transfer button — always visible so user can fall for the trap */}
                     <button
                       onClick={handleTransfer}
                       className={`${scenario.actionColor} text-white px-6 py-2 rounded-xl text-sm font-bold uppercase transition-colors`}
                     >
                       {scenario.actionLabel[lang]}
                     </button>
-                    <button
-                      onClick={handleReport}
-                      className="bg-black border border-white/20 hover:border-green-500 text-gray-300 hover:text-green-500 px-6 py-2 rounded-xl text-sm font-bold uppercase transition-colors"
-                    >
-                      {t.reject_btn}
-                    </button>
+                    {/* Reject button — unlocks after enough exchanges */}
+                    {messages.length >= 1 + scenario.minExchanges * 2 && (
+                      <button
+                        onClick={handleReport}
+                        className="bg-black border border-white/20 hover:border-green-500 text-gray-300 hover:text-green-500 px-6 py-2 rounded-xl text-sm font-bold uppercase transition-colors animate-in fade-in duration-300"
+                      >
+                        {t.reject_btn}
+                      </button>
+                    )}
                   </div>
-                ) : (
-                  <p className="text-center text-gray-600 text-xs uppercase tracking-widest">
-                    {(() => {
-                      const exchangesDone = Math.floor((messages.length - 1) / 2);
-                      const remaining = scenario.minExchanges - exchangesDone;
-                      return lang === 'vi'
-                        ? `💬 Còn ${remaining} lượt trao đổi nữa để mở khoá quyết định...`
-                        : `💬 ${remaining} more exchange${remaining > 1 ? 's' : ''} before you can decide...`;
-                    })()}
-                  </p>
-                )}
+                  {messages.length < 1 + scenario.minExchanges * 2 && (
+                    <p className="text-right text-gray-600 text-xs uppercase tracking-widest">
+                      {(() => {
+                        const exchangesDone = Math.floor((messages.length - 1) / 2);
+                        const remaining = scenario.minExchanges - exchangesDone;
+                        return lang === 'vi'
+                          ? `💬 Còn ${remaining} lượt trao đổi nữa để mở khoá nút từ chối...`
+                          : `💬 ${remaining} more exchange${remaining > 1 ? 's' : ''} to unlock the reject button...`;
+                      })()}
+                    </p>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="text-center text-gray-500 text-sm p-2 uppercase font-mono tracking-wider">
