@@ -7,6 +7,13 @@ import NotesPanel, { hasNoteFor } from './components/NotesPanel.jsx';
 import SearchModal from './components/SearchModal.jsx';
 
 const STORAGE_KEY = 'dfb_progress_v2';
+const THEME_KEY   = 'dfb_theme_v1';
+
+function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY) || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  return saved;
+}
 
 function loadProgress() {
   try {
@@ -43,6 +50,16 @@ export default function App() {
   const [notesOpen,   setNotesOpen]   = useState(false);
   const [noteExists,  setNoteExists]  = useState(false);
   const [searchOpen,  setSearchOpen]  = useState(false);
+  const [theme,       setTheme]       = useState(initTheme);
+
+  function toggleTheme() {
+    setTheme(t => {
+      const next = t === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem(THEME_KEY, next); } catch {}
+      return next;
+    });
+  }
 
   const currentEntry = currentIdx !== null ? lessonIndex[currentIdx] : null;
 
@@ -200,6 +217,16 @@ export default function App() {
           >
             🔍 <span className="topbar-search-label">Tìm kiếm</span>
             <kbd className="topbar-search-kbd">/</kbd>
+          </button>
+
+          {/* Theme toggle */}
+          <button
+            className="topbar-theme-btn"
+            onClick={toggleTheme}
+            title={theme === 'dark' ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối'}
+            aria-label={theme === 'dark' ? 'Chế độ sáng' : 'Chế độ tối'}
+          >
+            {theme === 'dark' ? '☀️' : '🌙'}
           </button>
 
           {/* Notes toggle — only when viewing a lesson */}
