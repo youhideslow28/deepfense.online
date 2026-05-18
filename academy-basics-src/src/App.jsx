@@ -50,7 +50,32 @@ export default function App() {
   const [notesOpen,   setNotesOpen]   = useState(false);
   const [noteExists,  setNoteExists]  = useState(false);
   const [searchOpen,  setSearchOpen]  = useState(false);
-  const [theme,       setTheme]       = useState(initTheme);
+  const [theme,        setTheme]        = useState(initTheme);
+  const [installEvt,   setInstallEvt]   = useState(null);  // BeforeInstallPromptEvent
+  const [showInstall,  setShowInstall]  = useState(false);
+
+  // Capture PWA install prompt
+  useEffect(() => {
+    function onBeforeInstall(e) {
+      e.preventDefault();
+      setInstallEvt(e);
+      setShowInstall(true);
+    }
+    window.addEventListener('beforeinstallprompt', onBeforeInstall);
+    // Hide banner if app is already installed
+    window.addEventListener('appinstalled', () => setShowInstall(false));
+    return () => {
+      window.removeEventListener('beforeinstallprompt', onBeforeInstall);
+    };
+  }, []);
+
+  async function handleInstall() {
+    if (!installEvt) return;
+    installEvt.prompt();
+    const { outcome } = await installEvt.userChoice;
+    if (outcome === 'accepted') setShowInstall(false);
+    setInstallEvt(null);
+  }
 
   function toggleTheme() {
     setTheme(t => {
@@ -180,6 +205,18 @@ export default function App() {
           if (id === currentEntry?.lesson?.id) setNoteExists(hasContent);
         }}
       />
+
+      {/* PWA install banner */}
+      {showInstall && (
+        <div className="install-banner">
+          <span className="install-banner-icon">📲</span>
+          <span className="install-banner-text">
+            Cài <strong>DEEPFENSE BASICS</strong> lên thiết bị — học offline bất cứ lúc nào!
+          </span>
+          <button className="install-banner-btn" onClick={handleInstall}>Cài ngay</button>
+          <button className="install-banner-dismiss" onClick={() => setShowInstall(false)} aria-label="Đóng">✕</button>
+        </div>
+      )}
 
       {/* Main */}
       <main className="main">
