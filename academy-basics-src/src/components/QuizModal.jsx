@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Confetti from './Confetti.jsx';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 
@@ -48,6 +49,7 @@ export default function QuizModal({ quiz, label, onClose, onComplete }) {
     const pass = pct >= 70;
     return (
       <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+        {pass && <Confetti count={60} duration={3500} />}
         <div className="modal">
           <div className="modal-header">
             <div className="modal-header-left">
@@ -56,20 +58,21 @@ export default function QuizModal({ quiz, label, onClose, onComplete }) {
             </div>
           </div>
           <div className="modal-body">
-            <div className="quiz-result">
+            <div className={`quiz-result-card ${pass ? 'pass' : 'fail'}`}>
+              <div className="quiz-result-icon">{pass ? '🎉' : '📚'}</div>
               <div className={`quiz-result-score ${pass ? 'pass' : 'fail'}`}>{pct}%</div>
               <div className="quiz-result-label">
-                {pass ? '🎉 Bạn đã vượt qua checkpoint này!' : '📚 Hãy ôn lại và thử lại nhé.'}
+                {pass ? 'Vượt qua checkpoint!' : 'Hãy ôn lại và thử tiếp nhé.'}
               </div>
-              <div className="quiz-result-detail">
-                <div className="quiz-result-stat">
-                  <div className="quiz-result-stat-num" style={{ color: 'var(--green)' }}>{score}</div>
-                  <div className="quiz-result-stat-label">Câu đúng</div>
-                </div>
-                <div className="quiz-result-stat">
-                  <div className="quiz-result-stat-num" style={{ color: 'var(--red)' }}>{quiz.length - score}</div>
-                  <div className="quiz-result-stat-label">Câu sai</div>
-                </div>
+            </div>
+            <div className="quiz-result-detail">
+              <div className="quiz-result-stat">
+                <div className="quiz-result-stat-num" style={{ color: 'var(--green)' }}>{score}</div>
+                <div className="quiz-result-stat-label">Câu đúng</div>
+              </div>
+              <div className="quiz-result-stat">
+                <div className="quiz-result-stat-num" style={{ color: 'var(--red)' }}>{quiz.length - score}</div>
+                <div className="quiz-result-stat-label">Câu sai</div>
               </div>
             </div>
           </div>
