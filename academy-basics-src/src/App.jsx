@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar.jsx';
 import LessonView from './components/LessonView.jsx';
 import HomePage from './components/HomePage.jsx';
 import NotesPanel, { hasNoteFor } from './components/NotesPanel.jsx';
+import SearchModal from './components/SearchModal.jsx';
 
 const STORAGE_KEY = 'dfb_progress_v2';
 
@@ -41,6 +42,7 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notesOpen,   setNotesOpen]   = useState(false);
   const [noteExists,  setNoteExists]  = useState(false);
+  const [searchOpen,  setSearchOpen]  = useState(false);
 
   const currentEntry = currentIdx !== null ? lessonIndex[currentIdx] : null;
 
@@ -52,6 +54,20 @@ export default function App() {
   useEffect(() => {
     setNoteExists(hasNoteFor(currentEntry?.lesson?.id ?? null));
   }, [currentEntry]);
+
+  // Global '/' shortcut to open search
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key !== '/') return;
+      // Don't hijack if user is typing in an input/textarea
+      const tag = document.activeElement?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      e.preventDefault();
+      setSearchOpen(true);
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   function goToLesson(idx) {
     setCurrentIdx(idx);
@@ -125,6 +141,17 @@ export default function App() {
         <div className="sidebar-mob-overlay" onClick={() => setSidebarOpen(false)} aria-hidden="true" />
       )}
 
+      {/* Search modal */}
+      <SearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        lessonIndex={lessonIndex}
+        onSelectLesson={(moduleId, lessonId) => {
+          handleSelectLesson(moduleId, lessonId);
+          setSearchOpen(false);
+        }}
+      />
+
       {/* Notes panel */}
       <NotesPanel
         isOpen={notesOpen}
@@ -164,6 +191,17 @@ export default function App() {
               'DEEPFENSE BASICS'
             )}
           </div>
+          {/* Search button */}
+          <button
+            className="topbar-search-btn"
+            onClick={() => setSearchOpen(true)}
+            title="Tìm kiếm (phím /)"
+            aria-label="Mở tìm kiếm"
+          >
+            🔍 <span className="topbar-search-label">Tìm kiếm</span>
+            <kbd className="topbar-search-kbd">/</kbd>
+          </button>
+
           {/* Notes toggle — only when viewing a lesson */}
           {currentEntry && (
             <button
