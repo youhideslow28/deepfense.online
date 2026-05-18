@@ -24,6 +24,11 @@ export interface TranslationData {
   minigame_check: string; minigame_continue: string; minigame_score: string;
   minigame_reward: string; minigame_correct: string; minigame_incorrect: string;
   minigame_expert_says: string; minigame_your_rating: string; minigame_select_phrase: string;
+  block_compare_before: string; block_compare_after: string;
+  block_audio_play: string; block_audio_pause: string;
+  block_exercise_check: string; block_exercise_correct: string; block_exercise_wrong: string;
+  block_sandbox_choose: string;
+  block_annotate_hint: string; block_annotate_check: string;
   crisis_title: string; crisis_desc: string; btn_report_pdf: string; btn_first_aid: string;
   report_locked: string; latest_live: string; tbd: string;
   tools_scan_title: string; tools_protect_title: string; tools_knowledge_title: string;
@@ -100,6 +105,16 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     minigame_expert_says: "Chuyên gia đánh giá",
     minigame_your_rating: "Đánh giá của bạn",
     minigame_select_phrase: "Nhấn vào cụm từ đáng ngờ",
+    block_compare_before: "Trước",
+    block_compare_after: "Sau",
+    block_audio_play: "Phát",
+    block_audio_pause: "Dừng",
+    block_exercise_check: "Kiểm tra",
+    block_exercise_correct: "Chính xác!",
+    block_exercise_wrong: "Chưa đúng",
+    block_sandbox_choose: "Bạn chọn:",
+    block_annotate_hint: "Nhấn vào vùng nghi vấn",
+    block_annotate_check: "Phân tích",
     crisis_title: "TRUNG TÂM ỨNG CỨU",
     crisis_desc: "Cổng hỗ trợ khẩn cấp nạn nhân của tội phạm công nghệ cao và lừa đảo Deepfake.",
     btn_report_pdf: "Đơn Tố Giác (PDF)",
@@ -189,6 +204,16 @@ export const TRANSLATIONS: Record<Language, TranslationData> = {
     minigame_expert_says: "Expert says",
     minigame_your_rating: "Your rating",
     minigame_select_phrase: "Tap the suspicious phrases",
+    block_compare_before: "Before",
+    block_compare_after: "After",
+    block_audio_play: "Play",
+    block_audio_pause: "Pause",
+    block_exercise_check: "Check",
+    block_exercise_correct: "Correct!",
+    block_exercise_wrong: "Not quite",
+    block_sandbox_choose: "You choose:",
+    block_annotate_hint: "Tap suspicious areas",
+    block_annotate_check: "Analyse",
     crisis_title: "CRISIS HUB",
     crisis_desc: "Emergency support portal for victims of high-tech crimes and Deepfake fraud.",
     btn_report_pdf: "Report Form (PDF)",
