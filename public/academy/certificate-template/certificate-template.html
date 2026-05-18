@@ -23,11 +23,11 @@
         min-height: 100vh;
         display: grid;
         place-items: center;
-        padding: 92px 20px 32px;
+        padding: 80px 20px 32px;
         color: var(--ink);
         background:
-          radial-gradient(circle at top left, rgba(14, 165, 233, 0.2), transparent 34%),
-          radial-gradient(circle at bottom right, rgba(17, 116, 200, 0.16), transparent 32%),
+          radial-gradient(circle at top left, rgba(14,165,233,0.2), transparent 34%),
+          radial-gradient(circle at bottom right, rgba(17,116,200,0.16), transparent 32%),
           var(--bg);
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
@@ -37,42 +37,50 @@
         position: fixed;
         inset: 16px 16px auto;
         z-index: 10;
-        display: grid;
-        grid-template-columns: minmax(220px, 1fr) auto auto auto auto;
+        display: flex;
         gap: 10px;
         max-width: 1120px;
         margin: 0 auto;
+        justify-content: flex-end;
+        align-items: center;
       }
 
-      .toolbar input,
-      .toolbar button {
-        min-height: 42px;
+      .toolbar-notice {
+        flex: 1;
+        font-size: 12px;
+        color: rgba(255,255,255,0.55);
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.14);
         border-radius: 8px;
-        font: inherit;
+        padding: 8px 14px;
+        line-height: 1.4;
       }
+      .toolbar-notice strong { color: rgba(255,255,255,0.85); }
 
-      .toolbar input {
-        border: 1px solid rgba(255,255,255,0.22);
-        padding: 0 12px;
-        color: white;
-        background: rgba(255,255,255,0.1);
-        outline: none;
-      }
-      .toolbar input::placeholder { color: rgba(255,255,255,0.68); }
-
-      .toolbar button {
+      .toolbar a, .toolbar button {
+        display: flex;
+        align-items: center;
+        min-height: 42px;
+        padding: 0 16px;
+        border-radius: 8px;
         border: 1px solid rgba(255,255,255,0.24);
-        padding: 0 14px;
         color: white;
         background: rgba(255,255,255,0.1);
+        font: inherit;
         font-weight: 850;
+        text-decoration: none;
         cursor: pointer;
         white-space: nowrap;
+        gap: 6px;
       }
       .toolbar button.primary {
         border-color: transparent;
         color: #06121f;
-        background: linear-gradient(135deg, #38bdf8, #22d3ee);
+        background: linear-gradient(135deg,#38bdf8,#22d3ee);
+      }
+      .toolbar button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
       }
 
       /* ── Certificate ─────────────────────────────────────────── */
@@ -89,7 +97,6 @@
         border: 1px solid rgba(14,165,233,0.42);
         box-shadow: 0 30px 88px rgba(0,0,0,0.42);
       }
-
       .certificate::before {
         content: "";
         position: absolute;
@@ -212,7 +219,7 @@
         line-height: 48px;
       }
       .sig-line {
-        border-top: 1px solid #98a2b3;
+        /* no border — removed divider line */
         padding-top: 8px;
         color: var(--navy);
         font-weight: 900;
@@ -223,7 +230,7 @@
         font-size: 12px;
       }
 
-      /* ── Verified Stamp — overlaps signature block bottom-left ─ */
+      /* ── Verified Stamp ──────────────────────────────────────── */
       .verified-stamp {
         position: absolute;
         left: 30px;
@@ -276,11 +283,7 @@
         border: 1px solid #98a2b3;
         background: white;
       }
-      .qr {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
+      .qr { width: 100%; height: 100%; object-fit: contain; }
       .qr-label {
         position: absolute;
         inset: 50% auto auto 50%;
@@ -301,8 +304,8 @@
         overflow-wrap: anywhere;
       }
 
-      /* ── Lock overlay ────────────────────────────────────────── */
-      .locked {
+      /* ── Overlays ────────────────────────────────────────────── */
+      .overlay {
         position: fixed;
         inset: 0;
         z-index: 20;
@@ -313,24 +316,29 @@
         text-align: center;
         background: rgba(7,17,31,0.92);
       }
-      .locked.visible { display: grid; }
-      .locked div {
-        max-width: 460px;
-        padding: 28px;
+      .overlay.visible { display: grid; }
+      .overlay-box {
+        max-width: 480px;
+        padding: 32px;
         border: 1px solid rgba(255,255,255,0.16);
-        border-radius: 10px;
+        border-radius: 12px;
         background: rgba(255,255,255,0.08);
       }
-      .locked a {
+      .overlay-box h2 { margin: 0 0 12px; font-size: 22px; }
+      .overlay-box p  { margin: 0 0 8px; color: rgba(255,255,255,0.75); font-size: 14px; line-height: 1.6; }
+      .overlay-box a, .overlay-box button {
         display: inline-flex;
-        margin-top: 12px;
+        margin-top: 14px;
         border-radius: 8px;
-        padding: 11px 14px;
-        color: #06121f;
-        background: linear-gradient(135deg,#38bdf8,#22d3ee);
+        padding: 11px 18px;
+        font: inherit;
         font-weight: 850;
         text-decoration: none;
+        cursor: pointer;
+        border: none;
       }
+      .btn-cyan  { color: #06121f; background: linear-gradient(135deg,#38bdf8,#22d3ee); }
+      .btn-ghost { color: white; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2) !important; margin-left: 8px; }
 
       /* ── Print ───────────────────────────────────────────────── */
       @page { size: A4 landscape; margin: 0; }
@@ -347,7 +355,7 @@
           background: white !important;
         }
 
-        .toolbar, .locked { display: none !important; }
+        .toolbar, .overlay { display: none !important; }
 
         .certificate {
           width: 297mm !important;
@@ -369,7 +377,6 @@
           height: 100% !important;
         }
 
-        /* Keep signature + QR side-by-side */
         .signature-row {
           display: grid !important;
           grid-template-columns: 1fr auto !important;
@@ -385,23 +392,27 @@
       }
 
       @media (max-width: 760px) {
-        body { padding-top: 200px; }
-        .toolbar { grid-template-columns: 1fr 1fr; }
+        body { padding-top: 180px; }
+        .toolbar { flex-wrap: wrap; }
+        .toolbar-notice { min-width: 100%; }
         .certificate { padding: 34px; }
         .main { padding-inline: 10px; }
-        .signature-row { grid-template-columns: 1fr; display: grid; }
+        .signature-row { grid-template-columns: 1fr; }
       }
     </style>
   </head>
   <body>
 
-    <form class="toolbar" id="nameForm">
-      <input id="recipientInput" maxlength="72" placeholder="Enter the name to print on certificate" autocomplete="name" />
-      <button type="submit" class="primary">Update Name</button>
-      <button type="button" onclick="window.print()">🖨 Print / PDF</button>
-      <a href="/academy/" style="display:flex;align-items:center;padding:0 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.24);color:white;background:rgba(255,255,255,0.1);font-weight:850;text-decoration:none;font-size:inherit;white-space:nowrap">🎓 Academy</a>
-      <a href="/academy/basics/" style="display:flex;align-items:center;padding:0 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.24);color:white;background:rgba(255,255,255,0.1);font-weight:850;text-decoration:none;font-size:inherit;white-space:nowrap">📚 BASICS</a>
-    </form>
+    <!-- Toolbar: no name input, just print + nav -->
+    <div class="toolbar">
+      <div class="toolbar-notice">
+        📋 The name on this certificate is taken from your <strong>profile name</strong>.
+        Make sure your profile name is correct before printing — it cannot be changed here.
+      </div>
+      <button class="primary" id="btnPrint">🖨 Print / PDF</button>
+      <a href="/academy/">🎓 Academy</a>
+      <a href="/academy/basics/">📚 BASICS</a>
+    </div>
 
     <article class="certificate" aria-label="Course certificate">
       <div class="content">
@@ -419,8 +430,8 @@
             <div class="course" data-field="courseName">DEEPFENSE BASIC</div>
             <p class="subtitle" data-field="courseSubtitle">Foundations of Deepfake Awareness, Recognition and Prevention</p>
             <div class="meta-row">
-              <div class="meta-pill">Issued: <span data-field="issuedDate">13 May 2026</span></div>
-              <div class="meta-pill">ID: <span data-field="certificateId">DPF-BASIC-2026-0001</span></div>
+              <div class="meta-pill">Issued: <span data-field="issuedDate">—</span></div>
+              <div class="meta-pill">ID: <span data-field="certificateId">—</span></div>
               <div class="meta-pill">Reward: <span data-field="rewardAmount">500</span> <span data-field="rewardSymbol">DPF</span></div>
             </div>
           </div>
@@ -431,7 +442,6 @@
             <div class="signature-block">
               <div class="signature" data-field="signatureName">Deepfense.online</div>
 
-              <!-- Stamp overlaps entire signature block -->
               <div class="verified-stamp">
                 <div class="verified-stamp-inner">
                   <span class="star">★ ★ ★</span>
@@ -459,17 +469,30 @@
       </div>
     </article>
 
-    <div class="locked" id="lockedState">
-      <div>
+    <!-- Overlay: course not completed -->
+    <div class="overlay" id="overlayLocked">
+      <div class="overlay-box">
         <h2>🔒 Certificate Locked</h2>
         <p>Complete <strong>DEEPFENSE BASIC</strong> and pass the Final Exam to unlock your certificate.</p>
-        <a href="/academy/basics/">Go to DEEPFENSE BASICS →</a>
+        <a class="btn-cyan" href="/academy/basics/">Go to DEEPFENSE BASICS →</a>
+      </div>
+    </div>
+
+    <!-- Overlay: already claimed -->
+    <div class="overlay" id="overlayClaimed">
+      <div class="overlay-box">
+        <h2>📄 Certificate Already Issued</h2>
+        <p>Your certificate has already been downloaded once.</p>
+        <p>Each learner may only issue their certificate <strong>once</strong> to ensure authenticity. If you believe this is an error, please contact <strong>support@deepfense.online</strong>.</p>
+        <a class="btn-cyan" href="/academy/">← Back to Academy</a>
+        <button class="btn-ghost" id="btnViewAnyway">View only (no download)</button>
       </div>
     </div>
 
     <script>
-      const EXAM_KEY     = 'dfb_exam_v1';
-      const CERT_NAME_KEY = 'dfb_cert_name';
+      const EXAM_KEY    = 'dfb_exam_v1';
+      const CERT_NAME   = 'dfb_cert_name';
+      const CLAIMED_KEY = 'dfb_cert_claimed_v1';
 
       const defaults = {
         academyName:      'DEEPFENSE ACADEMY',
@@ -478,7 +501,7 @@
         courseName:       'DEEPFENSE BASIC',
         courseSubtitle:   'Foundations of Deepfake Awareness, Recognition and Prevention',
         issuedDate:       fmt(Date.now()),
-        certificateId:    'DPF-BASIC-2026-0001',
+        certificateId:    gen(),
         rewardAmount:     '500',
         rewardSymbol:     'DPF',
         issuerName:       'Deepfense.online Academic Board',
@@ -489,20 +512,19 @@
       function fmt(ts) {
         return new Date(ts).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
       }
-
+      function gen() {
+        return 'DPF-BASIC-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 9000) + 1000);
+      }
       function readJson(key) {
         try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch { return null; }
       }
 
-      function isUnlocked() {
-        return !!readJson(EXAM_KEY)?.passed;
-      }
-
       function buildData() {
-        const exam = readJson(EXAM_KEY) || {};
-        const name = localStorage.getItem(CERT_NAME_KEY) || 'Learner Name';
-        const id   = exam.examId || ('DPF-BASIC-' + new Date().getFullYear() + '-' +
-                       String(Math.floor(Math.random() * 9000) + 1000));
+        const exam  = readJson(EXAM_KEY) || {};
+        const name  = localStorage.getItem(CERT_NAME) || 'Learner Name';
+        // Stable cert ID: persist per user so QR doesn't change on reload
+        let id = localStorage.getItem('dfb_cert_id_v1');
+        if (!id) { id = exam.examId || gen(); localStorage.setItem('dfb_cert_id_v1', id); }
         return {
           ...defaults,
           recipientName:   name,
@@ -516,23 +538,32 @@
         document.querySelectorAll('[data-field]').forEach(el => {
           el.textContent = data[el.dataset.field] ?? '';
         });
-        document.getElementById('recipientInput').value = data.recipientName;
         document.getElementById('qrImage').src =
           'https://api.qrserver.com/v1/create-qr-code/?size=190x190&ecc=H&data=' +
           encodeURIComponent(data.verificationUrl || location.href);
       }
 
-      document.getElementById('nameForm').addEventListener('submit', e => {
-        e.preventDefault();
-        const v = document.getElementById('recipientInput').value.trim();
-        if (!v) return;
-        localStorage.setItem(CERT_NAME_KEY, v);
-        render(buildData());
-      });
+      // ── Gate logic ──────────────────────────────────────────────
+      const unlocked = !!readJson(EXAM_KEY)?.passed;
+      const claimed  = !!localStorage.getItem(CLAIMED_KEY);
 
-      if (!isUnlocked()) {
-        document.getElementById('lockedState').classList.add('visible');
+      if (!unlocked) {
+        document.getElementById('overlayLocked').classList.add('visible');
+      } else if (claimed) {
+        document.getElementById('overlayClaimed').classList.add('visible');
+        // "View only" — dismiss overlay but disable print button
+        document.getElementById('btnViewAnyway').addEventListener('click', () => {
+          document.getElementById('overlayClaimed').classList.remove('visible');
+          document.getElementById('btnPrint').disabled = true;
+          document.getElementById('btnPrint').title = 'Certificate already issued — printing disabled';
+        });
       }
+
+      // Print: mark as claimed then print
+      document.getElementById('btnPrint').addEventListener('click', () => {
+        localStorage.setItem(CLAIMED_KEY, '1');
+        window.print();
+      });
 
       render(buildData());
     </script>

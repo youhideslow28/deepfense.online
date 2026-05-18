@@ -611,6 +611,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                           'dfb_module_sync_v1',
                           'dfb_exam_v1',
                           'dfb_cert_name',
+                          'dfb_cert_claimed_v1',
+                          'dfb_cert_id_v1',
                         ].forEach(key => localStorage.removeItem(key));
                         window.location.reload();
                       }}
