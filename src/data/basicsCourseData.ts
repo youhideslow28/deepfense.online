@@ -532,6 +532,51 @@ export const basicsCourse = {
             ], [
               "Ngôn ngữ thao túng luôn hướng bạn đến hành động vội vàng.",
               "Nhận diện ngôn ngữ là bước quan trọng của Observe."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 3 ExerciseBlock ────────────────
+              {
+                type: 'exercise',
+                variant: 'single-choice',
+                question: {
+                  vi: 'Kẻ lừa đảo nhắn: "Chuyển tiền ngay, đừng nói với ai, chỉ còn 10 phút!" — Đây là kết hợp của những kỹ thuật nào?',
+                  en: 'The scammer messages: "Transfer now, don\'t tell anyone, only 10 minutes left!" — This combines which techniques?'
+                },
+                options: [
+                  { vi: 'Tạo lòng tin dài hạn + Hứa hẹn lợi nhuận', en: 'Building long-term trust + Profit promises' },
+                  { vi: 'Áp lực thời gian + Cô lập + Đe dọa ngầm', en: 'Time pressure + Isolation + Implicit threat' },
+                  { vi: 'Giả nhân nghĩa + Cam kết ảo', en: 'False goodwill + Fake commitment' },
+                  { vi: 'Dụ dỗ lợi ích + Khen ngợi', en: 'Benefit lure + Flattery' }
+                ],
+                correctIndex: 1,
+                explanation: {
+                  vi: '"Chuyển ngay" = áp lực thời gian. "Đừng nói với ai" = cô lập nạn nhân khỏi nguồn hỗ trợ. "Chỉ còn 10 phút" = deadline giả để bạn hành động trước khi kịp suy nghĩ. Cả 3 cùng lúc là dấu hiệu lừa đảo rõ ràng nhất.',
+                  en: '"Transfer now" = time pressure. "Don\'t tell anyone" = isolates victim from support. "Only 10 minutes" = fake deadline to force action before thinking. All 3 together is the clearest scam indicator.'
+                },
+                reward: 2
+              } as ExerciseBlock,
+              {
+                type: 'exercise',
+                variant: 'fill-blank',
+                question: {
+                  vi: 'Hoàn thành câu sau:',
+                  en: 'Complete the sentence:'
+                },
+                template: {
+                  vi: 'Khi ai đó yêu cầu bạn "đừng nói với ai", đây là kỹ thuật [[BLANK]] — nhằm ngăn bạn xác minh với người khác.',
+                  en: 'When someone asks you to "don\'t tell anyone", this is the [[BLANK]] technique — designed to prevent you from verifying with others.'
+                },
+                options: [
+                  { vi: 'cô lập', en: 'isolation' },
+                  { vi: 'áp lực thời gian', en: 'time pressure' },
+                  { vi: 'giả nhân nghĩa', en: 'false goodwill' }
+                ],
+                correctIndex: 0,
+                explanation: {
+                  vi: 'Cô lập là kỹ thuật tách nạn nhân ra khỏi mạng lưới hỗ trợ — gia đình, bạn bè, đồng nghiệp. Kẻ lừa đảo biết rằng nếu bạn hỏi thêm người khác, khả năng lừa thành công sẽ giảm mạnh.',
+                  en: 'Isolation separates the victim from their support network — family, friends, colleagues. Scammers know that if you consult others, the chance of success drops drastically.'
+                },
+                reward: 1
+              } as ExerciseBlock
             ])
           ],
           checkpoint: { label: "2.1", questions: [], miniGame: {
@@ -663,6 +708,66 @@ export const basicsCourse = {
             ], [
               "Quan sát sự nhất quán giữa người và cảnh.",
               "Logo và chữ viết thường là điểm yếu của các mô hình AI tạo hình."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 3 AnnotateBlock ────────────────
+              {
+                type: 'callout',
+                variant: 'info',
+                icon: '🔍',
+                title: { vi: 'Thực hành quan sát', en: 'Observation practice' },
+                content: {
+                  vi: 'Ảnh dưới đây mô phỏng một khuôn mặt deepfake điển hình. Nhấn vào các vùng bạn thấy bất thường, sau đó nhấn "Phân tích" để xem kết quả.',
+                  en: 'The image below simulates a typical deepfake face. Tap the areas you find suspicious, then press "Analyse" to see the results.'
+                }
+              } as CalloutBlock,
+              {
+                type: 'annotate',
+                src: 'https://picsum.photos/seed/deepface/600/400',
+                alt: {
+                  vi: 'Ảnh chân dung mô phỏng deepfake để luyện tập nhận diện',
+                  en: 'Portrait image simulating a deepfake for recognition training'
+                },
+                instruction: {
+                  vi: 'Nhấn vào các vùng bạn nghi là có lỗi deepfake (viền tóc, mắt, tai, cổ, nền...)',
+                  en: 'Tap the areas you suspect contain deepfake artifacts (hairline, eyes, ears, neck, background...)'
+                },
+                targets: [
+                  {
+                    id: 1,
+                    x: 50,
+                    y: 12,
+                    radius: 8,
+                    label: { vi: 'Viền tóc', en: 'Hairline' },
+                    explanation: {
+                      vi: 'Viền tóc thường bị nhòe hoặc có pixel lạ — AI khó xử lý vùng chuyển tiếp giữa tóc và da.',
+                      en: 'The hairline is often blurred or has strange pixels — AI struggles with the transition between hair and skin.'
+                    }
+                  },
+                  {
+                    id: 2,
+                    x: 38,
+                    y: 38,
+                    radius: 7,
+                    label: { vi: 'Mắt trái', en: 'Left eye' },
+                    explanation: {
+                      vi: 'Ánh sáng phản chiếu trong mắt (catchlight) bất thường hoặc không khớp giữa hai mắt là dấu hiệu deepfake phổ biến.',
+                      en: 'Abnormal or asymmetric catchlights (reflections in the eyes) are a common deepfake indicator.'
+                    }
+                  },
+                  {
+                    id: 3,
+                    x: 15,
+                    y: 50,
+                    radius: 6,
+                    label: { vi: 'Vùng tai', en: 'Ear area' },
+                    explanation: {
+                      vi: 'Tai và vùng cạnh mặt thường bị biến dạng khi người quay đầu — AI khó duy trì hình học 3D chính xác.',
+                      en: 'Ears and face edges often distort when the person turns their head — AI struggles to maintain accurate 3D geometry.'
+                    }
+                  }
+                ],
+                reward: 3
+              } as AnnotateBlock
             ])
           ]
         },
@@ -730,6 +835,76 @@ export const basicsCourse = {
             ], [
               "Kênh độc lập phải là kênh bạn đã biết và tin tưởng từ trước.",
               "Không dùng link hoặc số điện thoại mới được cung cấp trong chính tin nhắn nghi vấn."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 3 SandboxBlock ────────────────
+              {
+                type: 'sandbox',
+                title: { vi: '🎭 Thực hành: Nhận diện kịch bản ngân hàng giả', en: '🎭 Practice: Spot the Fake Bank Scenario' },
+                description: {
+                  vi: 'Bạn nhận được một tin nhắn. Hãy vận dụng bước Verify đã học để phản ứng đúng.',
+                  en: 'You receive a message. Apply the Verify step you just learned to respond correctly.'
+                },
+                turns: [
+                  {
+                    speaker: 'scammer',
+                    message: {
+                      vi: '🏦 [Ngân hàng VCB - Thông báo khẩn]\n\nTài khoản của bạn vừa bị đăng nhập từ thiết bị lạ tại Hà Nội. Để bảo vệ tài khoản, hãy xác minh ngay tại:\n\n🔗 bit.ly/vcb-secure-2024\n\nNếu không xác minh trong 30 phút, tài khoản sẽ bị khóa.',
+                      en: '🏦 [VCB Bank - Urgent Notice]\n\nYour account was just accessed from an unknown device in Hanoi. To protect your account, verify immediately at:\n\n🔗 bit.ly/vcb-secure-2024\n\nIf not verified within 30 minutes, your account will be locked.'
+                    },
+                    choices: [
+                      {
+                        label: { vi: 'A. Nhấp vào link để xác minh nhanh', en: 'A. Click the link to verify quickly' },
+                        outcome: 'bad',
+                        feedback: {
+                          vi: '❌ Nguy hiểm! Link rút gọn che giấu URL thật. Đây là kỹ thuật phishing cổ điển — trang giả sẽ thu thập thông tin đăng nhập của bạn. Ngân hàng thật KHÔNG BAO GIỜ gửi link rút gọn.',
+                          en: '❌ Dangerous! Short links hide the real URL. This is classic phishing — the fake page will steal your login credentials. Real banks NEVER send shortened links.'
+                        }
+                      },
+                      {
+                        label: { vi: 'B. Tự mở app VCB chính thức để kiểm tra', en: 'B. Open the official VCB app yourself to check' },
+                        outcome: 'good',
+                        feedback: {
+                          vi: '✅ Đúng! Đây là kênh độc lập an toàn nhất. Bạn tự điều hướng đến nguồn đã biết thay vì đi theo link người lạ cung cấp. Nếu tài khoản thật sự bị vấn đề, app sẽ thông báo.',
+                          en: '✅ Correct! This is the safest independent channel. You navigate to a known source instead of following a stranger\'s link. If there\'s a real issue, the app will notify you.'
+                        }
+                      },
+                      {
+                        label: { vi: 'C. Gọi số điện thoại ghi trong tin nhắn', en: 'C. Call the phone number listed in the message' },
+                        outcome: 'bad',
+                        feedback: {
+                          vi: '❌ Cẩn thận! Số điện thoại trong tin nhắn nghi vấn có thể là số của kẻ lừa đảo. Hãy tìm số hotline chính thức trên mặt sau thẻ ngân hàng hoặc website chính thống.',
+                          en: '❌ Careful! The phone number in a suspicious message may belong to the scammer. Find the official hotline on the back of your bank card or the official website.'
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    speaker: 'system',
+                    message: {
+                      vi: '📱 Bạn mở app VCB. Không có thông báo bất thường nào. Tài khoản hoàn toàn bình thường.',
+                      en: '📱 You open the VCB app. No unusual notifications. Account is completely normal.'
+                    },
+                    choices: [
+                      {
+                        label: { vi: 'Báo cáo tin nhắn lừa đảo cho ngân hàng', en: 'Report the scam message to the bank' },
+                        outcome: 'good',
+                        feedback: {
+                          vi: '✅ Xuất sắc! Báo cáo giúp ngân hàng cảnh báo những người dùng khác. Bạn đã hoàn thành đầy đủ quy trình: Verify → phát hiện giả → Decide → báo cáo.',
+                          en: '✅ Excellent! Reporting helps the bank warn other users. You completed the full process: Verify → detected fake → Decide → report.'
+                        }
+                      },
+                      {
+                        label: { vi: 'Xóa tin nhắn và bỏ qua', en: 'Delete the message and ignore it' },
+                        outcome: 'neutral',
+                        feedback: {
+                          vi: '⚠️ Ổn. Bạn đã tự bảo vệ được mình, nhưng bỏ lỡ cơ hội giúp người khác. Báo cáo tin nhắn lừa đảo giúp ngăn những nạn nhân tiếp theo.',
+                          en: '⚠️ Okay. You protected yourself, but missed a chance to help others. Reporting scam messages prevents future victims.'
+                        }
+                      }
+                    ]
+                  }
+                ]
+              } as SandboxBlock
             ]),
             lesson("4.1.3", "Decide", [
               "Decide: Ra quyết định. Có 3 hướng: 1. Tin và hành động (nếu đã xác minh 100%). 2. Không tin và bỏ qua. 3. Cảnh báo và báo cáo (nếu thấy dấu hiệu lừa đảo rõ ràng)."
