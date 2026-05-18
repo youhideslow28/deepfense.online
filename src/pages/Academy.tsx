@@ -544,7 +544,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     Hoàn thành nhanh 100% khóa học để kiểm tra chứng chỉ (Certificate).
                   </p>
                   <div className="flex flex-col gap-2">
-                    <button 
+                    <button
                       onClick={() => {
                         const allModuleIds = basicsCourse.modules.map(m => m.id);
                         const allLessonIds: string[] = [];
@@ -555,31 +555,62 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                             });
                           });
                         });
+
+                        // ── Legacy keys (Academy.tsx internal state) ──
                         setCompletedModules(allModuleIds);
                         setCompletedLessons(allLessonIds);
-                        localStorage.setItem('deepfense-basics-course-evaluation', 'true');
-                        localStorage.setItem('deepfense-basics-final-exam', JSON.stringify({
-                          score: 50,
-                          total: 50,
-                          passed: true,
-                          date: new Date().toISOString()
-                        }));
                         localStorage.setItem('df_completed_modules', JSON.stringify(allModuleIds));
                         localStorage.setItem('df_completed_lessons', JSON.stringify(allLessonIds));
-                        alert('Course Auto-Completed! Reloading dashboard...');
+
+                        // ── /academy/basics/ SPA keys ──
+                        // Lesson + module progress
+                        localStorage.setItem('dfb_progress_v2', JSON.stringify({
+                          completed: allLessonIds,
+                          currentLessonId: null,
+                        }));
+                        localStorage.setItem('dfb_module_sync_v1', JSON.stringify({
+                          completedModules: allModuleIds,
+                          updatedAt: Date.now(),
+                        }));
+                        // Final exam passed
+                        localStorage.setItem('dfb_exam_v1', JSON.stringify({
+                          passed: true,
+                          passedAt: Date.now(),
+                          bestScore: 50,
+                          attempts: 1,
+                        }));
+                        // Certificate name
+                        if (user?.displayName) {
+                          localStorage.setItem('dfb_cert_name', user.displayName);
+                        }
+                        // Session (đảm bảo auth gate cho qua)
+                        if (user) {
+                          localStorage.setItem('dfb_session_v1', JSON.stringify({
+                            uid: user.uid,
+                            loginAt: Date.now(),
+                          }));
+                        }
+
+                        alert('AUTO COMPLETE: Đã ghi xong tất cả keys. Đang reload...');
                         window.location.reload();
                       }}
                       className="w-full py-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest hover:bg-blue-500/20 transition-all"
                     >
                       AUTO COMPLETE 100%
                     </button>
-                    <button 
+                    <button
                       onClick={() => {
                         [
+                          // Legacy keys
                           'df_completed_lessons',
                           'df_completed_modules',
                           'deepfense-basics-course-evaluation',
                           'deepfense-basics-final-exam',
+                          // /academy/basics/ SPA keys
+                          'dfb_progress_v2',
+                          'dfb_module_sync_v1',
+                          'dfb_exam_v1',
+                          'dfb_cert_name',
                         ].forEach(key => localStorage.removeItem(key));
                         window.location.reload();
                       }}
