@@ -392,6 +392,21 @@ export const basicsCourse = {
               "Dữ liệu cá nhân của bạn là nguyên liệu của deepfake.",
               "Áp lực thời gian là đồng minh của kẻ lừa đảo.",
               "Trong thời đại deepfake, người an toàn không phải người đoán nhanh nhất. Người an toàn là người biết kiểm chứng trước khi hành động."
+            ], [
+              {
+                type: 'callout',
+                variant: 'danger',
+                icon: '🚨',
+                title: { vi: 'Dữ liệu của bạn là nguyên liệu deepfake', en: 'Your Data Is Deepfake Raw Material' },
+                content: { vi: 'Mỗi bức ảnh, đoạn video, clip giọng nói bạn đăng công khai lên mạng xã hội đều có thể được thu thập và dùng để huấn luyện AI giả mạo bạn. Ngay cả một bài đăng bình thường cũng đủ để kẻ xấu hiểu phong cách nói chuyện, mối quan hệ và thói quen hằng ngày của bạn.', en: 'Every photo, video, and voice clip you post publicly on social media can be harvested and used to train AI to impersonate you. Even a casual post gives bad actors enough to understand your speech patterns, relationships, and daily habits.' }
+              } as CalloutBlock,
+              {
+                type: 'callout',
+                variant: 'tip',
+                icon: '🛡️',
+                title: { vi: 'Kiểm soát dấu chân kỹ thuật số', en: 'Control Your Digital Footprint' },
+                content: { vi: 'Bước đơn giản nhất để giảm rủi ro:\n• Kiểm tra lại quyền riêng tư trên Facebook, TikTok, Zalo.\n• Hạn chế đăng ảnh/video chất lượng cao kèm tiêu đề đầy đủ tên, ngày sinh, địa chỉ.\n• Dùng tính năng Khiên AI (Fawkes) của DEEPFENSE để tiêm nhiễu tàng hình vào ảnh trước khi đăng.', en: 'Simplest steps to reduce risk:\n• Review your privacy settings on social media.\n• Avoid posting high-quality photos/videos with your full name, birthdate, and address.\n• Use the DEEPFENSE AI Shield (Fawkes) feature to inject invisible noise into photos before posting.' }
+              } as CalloutBlock
             ])
           ]
         },
@@ -466,6 +481,38 @@ export const basicsCourse = {
             ], [
               "Càng vội vàng, càng dễ mắc sai lầm.",
               "Niềm tin cá nhân là 'lỗ hổng' mà deepfake khai thác triệt để."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 2 audio sample ────────────────
+              {
+                type: 'callout',
+                variant: 'danger',
+                icon: '🎙️',
+                title: { vi: 'Nghe thử — giọng nói deepvoice thực tế', en: 'Listen — a real deepvoice sample' },
+                content: {
+                  vi: 'Đoạn âm thanh bên dưới mô phỏng kiểu giọng nói deepvoice thường dùng trong lừa đảo qua điện thoại. Hãy chú ý đến sự đều đều bất thường, thiếu nhịp thở và các âm thanh xung quanh.',
+                  en: 'The audio below simulates the type of deepvoice commonly used in phone scams. Notice the unusual uniformity, lack of natural breathing, and absence of background sounds.'
+                }
+              } as CalloutBlock,
+              {
+                type: 'audio',
+                src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+                title: { vi: '🔊 Mô phỏng cuộc gọi deepvoice — "sếp" yêu cầu chuyển tiền', en: '🔊 Simulated deepvoice call — "boss" requesting transfer' },
+                description: {
+                  vi: '"Anh ơi, chuyển gấp 200 triệu cho đối tác Hà Nội. Anh đang bận họp, xử lý trước đi, đừng hỏi kế toán..."',
+                  en: '"Hey, transfer 200M urgently to the Hanoi partner. I\'m in a meeting, handle it first, don\'t ask accounting..."'
+                },
+                duration: '0:28'
+              } as AudioBlock,
+              {
+                type: 'callout',
+                variant: 'tip',
+                icon: '💡',
+                title: { vi: '3 dấu hiệu âm thanh cần chú ý', en: '3 audio red flags to notice' },
+                content: {
+                  vi: '**1. Giọng quá đều:** Thiếu nhịp ngắt, hơi thở, âm điệu lên xuống tự nhiên. **2. Không có tạp âm nền:** Cuộc gọi thật từ cuộc họp luôn có tiếng môi trường. **3. Phát âm cứng:** Các từ địa phương hoặc tên riêng thường bị phát âm lạ.',
+                  en: '**1. Too uniform:** Missing natural pauses, breathing, and intonation variations. **2. No background noise:** A real call from a meeting always has ambient sounds. **3. Stiff pronunciation:** Local words or proper names are often mispronounced.'
+                }
+              } as CalloutBlock
             ]),
             lesson("2.1.2", "Quyền lực và Lợi ích", [
               "Quyền lực: Giả danh công an, bác sĩ, sếp, cán bộ ngân hàng... để đe dọa hoặc yêu cầu bạn làm điều sai quy trình.",
@@ -540,6 +587,75 @@ export const basicsCourse = {
             ], [
               "Tập trung vào những chi tiết AI khó xử lý: tóc, tai, kẽ răng và vùng biên.",
               "Lỗi kỹ thuật là tín hiệu, không phải kết luận duy nhất."
+            ], [
+              // ── CONTENT BLOCKS — Phiên 2 table sample ────────────────
+              {
+                type: 'callout',
+                variant: 'info',
+                icon: '🔬',
+                title: { vi: 'Bảng tham chiếu nhanh', en: 'Quick reference table' },
+                content: {
+                  vi: 'Bảng dưới tổng hợp các khu vực thường xuất hiện lỗi kỹ thuật trong deepfake, mức độ nguy hiểm và cách nhận biết. Dùng làm checklist khi xem nội dung nghi vấn.',
+                  en: 'The table below summarises common artefact zones in deepfakes, their risk level, and how to spot them. Use as a checklist when reviewing suspicious content.'
+                }
+              } as CalloutBlock,
+              {
+                type: 'table',
+                caption: { vi: 'Dấu hiệu kỹ thuật thường gặp trong deepfake video', en: 'Common technical artefacts in deepfake video' },
+                headers: [
+                  { vi: 'Khu vực', en: 'Zone' },
+                  { vi: 'Dấu hiệu nghi vấn', en: 'Suspicious artefact' },
+                  { vi: 'Mức rủi ro', en: 'Risk level' },
+                  { vi: 'Cách kiểm tra', en: 'How to check' }
+                ],
+                rows: [
+                  [
+                    { vi: '💇 Tóc / Viền đầu', en: '💇 Hair / Hairline' },
+                    { vi: 'Mờ, nhòe, pixel lạ ở rìa', en: 'Blur, smear, odd pixels at edge' },
+                    { vi: '🔴 Cao', en: '🔴 High' },
+                    { vi: 'Tua chậm đoạn người quay đầu', en: 'Slow-scrub head-turn moments' }
+                  ],
+                  [
+                    { vi: '👁️ Mắt', en: '👁️ Eyes' },
+                    { vi: 'Không chớp, phản chiếu ánh sáng bất thường', en: 'No blinking, odd light reflection' },
+                    { vi: '🔴 Cao', en: '🔴 High' },
+                    { vi: 'Đếm số lần chớp mắt trong 10 giây', en: 'Count blinks over 10 seconds' }
+                  ],
+                  [
+                    { vi: '👂 Tai / Cổ', en: '👂 Ears / Neck' },
+                    { vi: 'Biến dạng khi quay đầu', en: 'Distorts when head turns' },
+                    { vi: '🟡 Trung bình', en: '🟡 Medium' },
+                    { vi: 'Quan sát tai khi nhân vật quay sang bên', en: 'Watch ears during profile turns' }
+                  ],
+                  [
+                    { vi: '💡 Ánh sáng / Bóng đổ', en: '💡 Lighting / Shadow' },
+                    { vi: 'Bóng trên mặt không khớp nguồn sáng nền', en: 'Face shadow mismatches background light' },
+                    { vi: '🟡 Trung bình', en: '🟡 Medium' },
+                    { vi: 'So sánh hướng bóng đổ trên mặt vs. nền', en: 'Compare shadow direction on face vs. background' }
+                  ],
+                  [
+                    { vi: '🦷 Răng / Miệng', en: '🦷 Teeth / Mouth' },
+                    { vi: 'Răng mờ, méo khi nói nhanh', en: 'Teeth blur or warp during fast speech' },
+                    { vi: '🟡 Trung bình', en: '🟡 Medium' },
+                    { vi: 'Xem frame-by-frame đoạn nói nhanh', en: 'Step frame-by-frame through fast speech' }
+                  ],
+                  [
+                    { vi: '🖼️ Nền video', en: '🖼️ Background' },
+                    { vi: 'Nhòe, flicker, đường thẳng bị méo', en: 'Blur, flicker, warped straight lines' },
+                    { vi: '🟢 Thấp', en: '🟢 Low' },
+                    { vi: 'Nhìn vào cạnh tường, bảng hiệu, khung cửa', en: 'Look at wall edges, signs, door frames' }
+                  ]
+                ]
+              } as TableBlock,
+              {
+                type: 'callout',
+                variant: 'warning',
+                icon: '⚠️',
+                content: {
+                  vi: 'Không có lỗi kỹ thuật **không đồng nghĩa** với "video thật". Các mô hình deepfake thế hệ mới ngày càng ít lỗi hơn. Luôn kết hợp phân tích kỹ thuật với kiểm chứng nguồn gốc và bối cảnh.',
+                  en: 'No artefacts found does **not** mean "real video". Newer deepfake models produce fewer visible errors. Always combine technical analysis with source and context verification.'
+                }
+              } as CalloutBlock
             ]),
             lesson("3.1.2", "Ánh sáng và Nền", [
               "Ánh sáng: Bóng trên mặt không khớp với nguồn sáng trong nền. Da mặt có độ sáng khác hẳn với cổ.",
