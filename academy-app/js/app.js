@@ -13,6 +13,8 @@ import {
   ensureAcademyLearner,
   listenProgress,
   listenDpfBalance,
+  adminCompleteAll,
+  adminResetProgress,
 } from './firebase-init.js';
 
 import { startQuiz } from './quiz.js';
@@ -65,9 +67,10 @@ const dom = {
   viewCertificate:  $('view-certificate'),
   btnViewCert:      $('btn-view-cert'),
   // Dashboard
-  statCompleted:  $('stat-completed'),
-  statDpfEarned:  $('stat-dpf-earned'),
+  statCompleted:   $('stat-completed'),
+  statDpfEarned:   $('stat-dpf-earned'),
   dashboardModules: $('dashboard-modules'),
+  dashboardAdmin:  $('dashboard-admin'),
 };
 
 // ── Screens ────────────────────────────────────────────────────
@@ -290,9 +293,82 @@ const renderModuleNav = (course) => {
   navExamEl?.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') navExamEl.click(); });
 };
 
+// ── Admin panel (chỉ deepfense@gmail.com) ─────────────────────
+
+const renderAdminPanel = () => {
+  if (!dom.dashboardAdmin) return;
+
+  const isAdmin = state.user?.email === 'deepfense@gmail.com';
+  if (!isAdmin) { dom.dashboardAdmin.innerHTML = ''; return; }
+
+  dom.dashboardAdmin.innerHTML = `
+    <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);
+                border-radius:14px;padding:18px 20px;margin-bottom:18px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <span style="font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+                     color:#f87171">⚙ DEV TOOLS</span>
+        <span style="font-size:.65rem;font-weight:600;color:var(--clr-text-3);letter-spacing:.08em">
+          ADMIN ONLY
+        </span>
+      </div>
+      <p style="font-size:.8rem;color:var(--clr-text-3);margin-bottom:14px;line-height:1.5">
+        Hoàn thành toàn bộ khóa học trong Firestore để test luồng Certificate.
+      </p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="btn-admin-complete"
+                style="padding:8px 18px;border-radius:10px;font-size:.78rem;font-weight:700;
+                       letter-spacing:.06em;background:rgba(239,68,68,.15);
+                       border:1px solid rgba(239,68,68,.3);color:#f87171;cursor:pointer;
+                       transition:background .2s">
+          ✅ Hoàn thành tất cả
+        </button>
+        <button id="btn-admin-reset"
+                style="padding:8px 18px;border-radius:10px;font-size:.78rem;font-weight:700;
+                       letter-spacing:.06em;background:rgba(255,255,255,.04);
+                       border:1px solid rgba(255,255,255,.08);color:var(--clr-text-3);
+                       cursor:pointer;transition:background .2s">
+          🔄 Reset tiến độ
+        </button>
+      </div>
+    </div>`;
+
+  document.getElementById('btn-admin-complete')?.addEventListener('click', async (e) => {
+    e.currentTarget.disabled   = true;
+    e.currentTarget.textContent = '⏳ Đang ghi…';
+    try {
+      await adminCompleteAll(state.user.uid);
+      showToast('✅ Đã ghi dữ liệu hoàn thành vào Firestore!', 'success');
+    } catch (err) {
+      console.error('[Admin] adminCompleteAll failed:', err);
+      showToast('❌ Lỗi: ' + err.message, 'info');
+    } finally {
+      e.currentTarget.disabled   = false;
+      e.currentTarget.textContent = '✅ Hoàn thành tất cả';
+    }
+  });
+
+  document.getElementById('btn-admin-reset')?.addEventListener('click', async (e) => {
+    if (!confirm('Reset toàn bộ tiến độ trong Firestore?')) return;
+    e.currentTarget.disabled   = true;
+    e.currentTarget.textContent = '⏳ Đang reset…';
+    try {
+      await adminResetProgress(state.user.uid);
+      showToast('🔄 Đã reset tiến độ.', 'info');
+    } catch (err) {
+      console.error('[Admin] adminResetProgress failed:', err);
+      showToast('❌ Lỗi: ' + err.message, 'info');
+    } finally {
+      e.currentTarget.disabled   = false;
+      e.currentTarget.textContent = '🔄 Reset tiến độ';
+    }
+  });
+};
+
 // ── Render dashboard ───────────────────────────────────────────
 
 const renderDashboard = (course) => {
+  renderAdminPanel();
+
   const completed    = getCompletedModules();
   const feUnlocked   = isFinalExamUnlocked();
   const feDone       = isFinalExamDone();
