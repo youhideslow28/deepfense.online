@@ -37,6 +37,7 @@ export default function App() {
     }
     return null; // null = home page
   });
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const currentEntry = currentIdx !== null ? lessonIndex[currentIdx] : null;
 
@@ -46,6 +47,7 @@ export default function App() {
 
   function goToLesson(idx) {
     setCurrentIdx(idx);
+    setSidebarOpen(false); // auto-close on mobile after picking a lesson
     window.scrollTo(0, 0);
   }
 
@@ -101,19 +103,36 @@ export default function App() {
     <div className="layout">
       {/* Sidebar */}
       <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
         currentLesson={currentEntry}
         completedLessons={completed}
         onSelectLesson={handleSelectLesson}
         lessonIndex={lessonIndex}
-        onHome={() => setCurrentIdx(null)}
+        onHome={() => { setCurrentIdx(null); setSidebarOpen(false); }}
       />
+
+      {/* Mobile overlay behind sidebar */}
+      {sidebarOpen && (
+        <div className="sidebar-mob-overlay" onClick={() => setSidebarOpen(false)} aria-hidden="true" />
+      )}
 
       {/* Main */}
       <main className="main">
         {/* Top bar */}
         <header className="topbar">
+          {/* Hamburger — mobile only */}
+          <button
+            className="topbar-menu-btn"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Mở menu điều hướng"
+            title="Mở menu"
+          >
+            ☰
+          </button>
+
           <button className="topbar-home" onClick={() => setCurrentIdx(null)} title="Về trang chủ">
-            ⌂ Trang chủ
+            ⌂ <span className="topbar-home-label">Trang chủ</span>
           </button>
           <div className="topbar-breadcrumb">
             {currentEntry ? (

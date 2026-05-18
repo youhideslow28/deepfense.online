@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MODULES } from '../data/course.js';
 
-export default function Sidebar({ currentLesson, completedLessons, onSelectLesson, lessonIndex, onHome }) {
+export default function Sidebar({ isOpen, onClose, currentLesson, completedLessons, onSelectLesson, lessonIndex, onHome }) {
   const [openModules, setOpenModules] = useState(() => {
     const init = {};
     if (currentLesson) init[currentLesson.moduleId] = true;
@@ -29,7 +29,7 @@ export default function Sidebar({ currentLesson, completedLessons, onSelectLesso
   const pct = totalLessons > 0 ? Math.round((totalDone / totalLessons) * 100) : 0;
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar${isOpen ? ' is-open' : ''}`}>
       {/* Logo — clickable home */}
       <button className="sidebar-logo" onClick={onHome} title="Về trang chủ">
         <div className="sidebar-logo-icon">DF</div>
@@ -37,6 +37,8 @@ export default function Sidebar({ currentLesson, completedLessons, onSelectLesso
           Deepfense
           <span>BASICS</span>
         </div>
+        {/* Close button — visible only on mobile */}
+        <span className="sidebar-close-btn" onClick={e => { e.stopPropagation(); onClose?.(); }} aria-label="Đóng menu" role="button" tabIndex={0}>✕</span>
       </button>
 
       {/* Global progress */}
