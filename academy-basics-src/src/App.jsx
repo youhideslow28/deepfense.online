@@ -9,6 +9,17 @@ import SearchModal from './components/SearchModal.jsx';
 const STORAGE_KEY     = 'dfb_progress_v2';
 const THEME_KEY       = 'dfb_theme_v1';
 const MODULE_SYNC_KEY = 'dfb_module_sync_v1';
+const SESSION_KEY     = 'dfb_session_v1';
+const SESSION_TTL     = 30 * 24 * 60 * 60 * 1000; // 30 ngày
+
+function isSessionValid() {
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return false;
+    const { loginAt } = JSON.parse(raw);
+    return typeof loginAt === 'number' && Date.now() - loginAt < SESSION_TTL;
+  } catch { return false; }
+}
 
 function readModuleSync() {
   try { return JSON.parse(localStorage.getItem(MODULE_SYNC_KEY) || '{}'); } catch { return {}; }
@@ -52,6 +63,13 @@ function saveProgress(completed, currentLessonId) {
 }
 
 export default function App() {
+  // Auth gate — phải đăng nhập tại /academy/ trước
+  const [authed] = useState(() => isSessionValid());
+
+  useEffect(() => {
+    if (!authed) window.location.replace('/academy/');
+  }, [authed]);
+
   const lessonIndex = useMemo(() => buildLessonIndex(), []);
   const [completed, setCompleted] = useState(() => loadProgress().completed);
   const [currentIdx, setCurrentIdx] = useState(() => {
@@ -203,6 +221,9 @@ export default function App() {
   const totalLessons = lessonIndex.length;
   const totalDone = completed.size;
   const pct = totalLessons > 0 ? Math.round((totalDone / totalLessons) * 100) : 0;
+
+  // Chưa xác thực → không render gì, useEffect sẽ redirect
+  if (!authed) return null;
 
   return (
     <div className="layout">
