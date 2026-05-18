@@ -335,18 +335,30 @@
       /* ── Print ───────────────────────────────────────────────── */
       @page { size: A4 landscape; margin: 0; }
       @media print {
-        body { padding: 0; background: white; }
+        html, body {
+          width: 297mm;
+          height: 210mm;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background: white;
+          display: block;
+        }
         .toolbar, .locked { display: none !important; }
+        .certificate {
+          position: fixed;
+          inset: 0;
+          width: 297mm;
+          height: 210mm;
+          aspect-ratio: unset;
+          border: 0;
+          box-shadow: none;
+          padding: 48px;
+        }
         .verified-stamp {
           border-color: rgba(2,132,199,0.38);
           color: rgba(2,132,199,0.45);
           background: transparent;
-        }
-        .certificate {
-          width: 297mm;
-          height: 210mm;
-          border: 0;
-          box-shadow: none;
         }
       }
 
