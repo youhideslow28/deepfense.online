@@ -11,6 +11,18 @@ const THEME_KEY       = 'dfb_theme_v1';
 const MODULE_SYNC_KEY = 'dfb_module_sync_v1';
 const SESSION_KEY     = 'dfb_session_v1';
 const SESSION_TTL     = 30 * 24 * 60 * 60 * 1000; // 30 ngày
+const LEGACY_PROGRESS_KEYS = [
+  'df_completed_modules',
+  'df_completed_lessons',
+  'dfb_progress_v2',
+  'dfb_module_sync_v1',
+  'dfb_exam_v1',
+  'dfb_cert_name',
+  'dfb_cert_claimed_v1',
+  'dfb_cert_id_v1',
+  'deepfense-basics-course-evaluation',
+  'deepfense-basics-final-exam',
+];
 
 function readSession() {
   try {
@@ -25,6 +37,14 @@ function readSession() {
 
 function isSessionValid() {
   return !!readSession();
+}
+
+function cleanupLegacyProgressForNonAdmin() {
+  const session = readSession();
+  if (!session || session.email === 'deepfense@gmail.com' || session.isAdmin === true) return;
+  try {
+    LEGACY_PROGRESS_KEYS.forEach(key => localStorage.removeItem(key));
+  } catch {}
 }
 
 function scopedKey(baseKey) {
@@ -90,6 +110,7 @@ export default function App() {
 
   useEffect(() => {
     if (!authed) window.location.replace('/academy/');
+    cleanupLegacyProgressForNonAdmin();
   }, [authed]);
 
   const lessonIndex = useMemo(() => buildLessonIndex(), []);
