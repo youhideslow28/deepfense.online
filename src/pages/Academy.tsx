@@ -39,6 +39,49 @@ const readUserModuleSync = (uid?: string | null) => {
   return [];
 };
 
+const legacyProgressKeys = [
+  'df_completed_modules',
+  'df_completed_lessons',
+  'dfb_progress_v2',
+  'dfb_module_sync_v1',
+  'dfb_exam_v1',
+  'dfb_cert_name',
+  'dfb_cert_claimed_v1',
+  'dfb_cert_id_v1',
+  'deepfense-basics-course-evaluation',
+  'deepfense-basics-final-exam',
+];
+
+const readOwnedJson = <T extends { uid?: string }>(baseKey: string, uid?: string | null): T | null => {
+  if (!uid) return null;
+  const value = readJson<T | null>(storageKey(baseKey, uid), null);
+  if (!value) return null;
+  return !value.uid || value.uid === uid ? value : null;
+};
+
+const refreshAcademyBasicsCache = () => {
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.getRegistrations()
+    .then((registrations) => {
+      registrations
+        .filter((registration) => registration.scope.includes('/academy/basics/'))
+        .forEach((registration) => {
+          registration.update();
+          registration.waiting?.postMessage({ type: 'SKIP_WAITING' });
+        });
+    })
+    .catch(() => {});
+  if ('caches' in window) {
+    window.caches.keys()
+      .then((keys) => {
+        keys
+          .filter((key) => key.includes('workbox') || key.includes('academy') || key.includes('precache'))
+          .forEach((key) => window.caches.delete(key));
+      })
+      .catch(() => {});
+  }
+};
+
 const roadmapData = [
   {
     code: '01',
@@ -80,18 +123,11 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     return [...new Set([...saved, ...readUserModuleSync(user?.uid)])];
   });
 
-  // Check if passed via standalone HTML course reader (deepfense-basics-final-exam key)
-  const [htmlCoursePassed] = useState<boolean>(() => {
-    try {
-      const result = JSON.parse(localStorage.getItem('deepfense-basics-final-exam') || 'null');
-      return !!result?.passed;
-    } catch { return false; }
+  const [htmlCoursePassed, setHtmlCoursePassed] = useState<boolean>(() => {
+    return !!readOwnedJson<{ uid?: string; passed?: boolean }>('deepfense-basics-final-exam', user?.uid)?.passed;
   });
-  const [htmlCourseEvalDone] = useState<boolean>(() => {
-    try {
-      const ev = JSON.parse(localStorage.getItem('deepfense-basics-course-evaluation') || 'null');
-      return !!ev?.submittedAt;
-    } catch { return false; }
+  const [htmlCourseEvalDone, setHtmlCourseEvalDone] = useState<boolean>(() => {
+    return !!readOwnedJson<{ uid?: string; submittedAt?: number }>('deepfense-basics-course-evaluation', user?.uid)?.submittedAt;
   });
   const [lessonStep, setLessonStep] = useState<'content' | 'review' | 'checkpoint'>('content');
   const [miniGameDone, setMiniGameDone] = useState(false);
@@ -127,12 +163,20 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     if (!user?.uid) {
       setCompletedLessons([]);
       setCompletedModules([]);
+      setHtmlCoursePassed(false);
+      setHtmlCourseEvalDone(false);
       return;
     }
+    if (user.email !== 'deepfense@gmail.com') {
+      legacyProgressKeys.forEach(key => localStorage.removeItem(key));
+    }
+    refreshAcademyBasicsCache();
     setCompletedLessons(readJson<string[]>(storageKey('df_completed_lessons', user.uid), []));
     const savedModules = readJson<number[]>(storageKey('df_completed_modules', user.uid), []);
     setCompletedModules([...new Set([...savedModules, ...readUserModuleSync(user.uid)])]);
-  }, [user?.uid]);
+    setHtmlCoursePassed(!!readOwnedJson<{ uid?: string; passed?: boolean }>('deepfense-basics-final-exam', user.uid)?.passed);
+    setHtmlCourseEvalDone(!!readOwnedJson<{ uid?: string; submittedAt?: number }>('deepfense-basics-course-evaluation', user.uid)?.submittedAt);
+  }, [user?.uid, user?.email]);
   const [showAnswers, setShowAnswers] = useState<Record<string, boolean>>({});
   const [checkpointAnswers, setCheckpointAnswers] = useState<Record<number, number>>({});
   const [checkpointSubmitted, setCheckpointSubmitted] = useState(false);
@@ -596,16 +640,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                         });
 
                         // ── Legacy keys (Academy.tsx internal state) ──
-                        [
-                          'df_completed_modules',
-                          'df_completed_lessons',
-                          'dfb_progress_v2',
-                          'dfb_module_sync_v1',
-                          'dfb_exam_v1',
-                          'dfb_cert_name',
-                          'dfb_cert_claimed_v1',
-                          'dfb_cert_id_v1',
-                        ].forEach(key => localStorage.removeItem(key));
+                        legacyProgressKeys.forEach(key => localStorage.removeItem(key));
 
                         setCompletedModules(allModuleIds);
                         setCompletedLessons(allLessonIds);
@@ -656,21 +691,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     <button
                       onClick={() => {
                         if (!user?.uid || user.email !== 'deepfense@gmail.com') return;
-                        const keys = [
-                          // Legacy keys
-                          'df_completed_lessons',
-                          'df_completed_modules',
-                          'deepfense-basics-course-evaluation',
-                          'deepfense-basics-final-exam',
-                          // /academy/basics/ SPA keys
-                          'dfb_progress_v2',
-                          'dfb_module_sync_v1',
-                          'dfb_exam_v1',
-                          'dfb_cert_name',
-                          'dfb_cert_claimed_v1',
-                          'dfb_cert_id_v1',
-                        ];
-                        keys.forEach(key => {
+                        legacyProgressKeys.forEach(key => {
                           localStorage.removeItem(storageKey(key, user.uid));
                           localStorage.removeItem(key);
                         });
