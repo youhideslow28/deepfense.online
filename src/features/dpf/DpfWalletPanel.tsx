@@ -22,9 +22,9 @@ const DpfWalletPanel: React.FC<DpfWalletPanelProps> = ({ lang, compact = false }
             <Coins size={20} />
           </div>
           <div>
-            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-amber-300">DPF coin Wallet</div>
+            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-amber-300">Ví DPF coin</div>
             <p className="text-sm text-gray-400">
-              {isVi ? 'Dang nhap Gmail de nhan va dung DPF coin tren web.' : 'Sign in with Gmail to earn and spend DPF coin on the web.'}
+              {isVi ? 'Đăng nhập để nhận và dùng DPF coin trên web.' : 'Sign in to earn and spend DPF coin on the web.'}
             </p>
           </div>
         </div>
@@ -42,7 +42,7 @@ const DpfWalletPanel: React.FC<DpfWalletPanelProps> = ({ lang, compact = false }
             <Coins size={22} />
           </div>
           <div>
-            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">DPF coin Web Balance</div>
+            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">{isVi ? 'Số dư DPF trên web' : 'DPF web balance'}</div>
             <div className="text-2xl font-black text-white leading-tight">
               {loading ? '...' : formatAmount(balance)} <span className="text-sm text-primary">DPF coin</span>
             </div>
@@ -51,11 +51,11 @@ const DpfWalletPanel: React.FC<DpfWalletPanelProps> = ({ lang, compact = false }
 
         <div className="grid grid-cols-2 gap-2 md:w-[260px]">
           <div className="rounded-xl border border-white/10 bg-black/20 p-3">
-            <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase text-gray-500"><Sparkles size={12} /> Earned</div>
+            <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase text-gray-500"><Sparkles size={12} /> {isVi ? 'Đã nhận' : 'Earned'}</div>
             <div className="text-white font-black">{formatAmount(wallet?.earnedBalance ?? 0)}</div>
           </div>
           <div className="rounded-xl border border-white/10 bg-black/20 p-3">
-            <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase text-gray-500"><LockKeyhole size={12} /> Spent</div>
+            <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase text-gray-500"><LockKeyhole size={12} /> {isVi ? 'Đã dùng' : 'Spent'}</div>
             <div className="text-white font-black">{formatAmount(wallet?.spentBalance ?? 0)}</div>
           </div>
         </div>
@@ -64,7 +64,7 @@ const DpfWalletPanel: React.FC<DpfWalletPanelProps> = ({ lang, compact = false }
       {!compact && (
         <div className="mt-4 border-t border-white/10 pt-4">
           <div className="mb-3 flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-widest text-gray-500">
-            <History size={13} /> {isVi ? 'Lich su gan day' : 'Recent activity'}
+            <History size={13} /> {isVi ? 'Lịch sử gần đây' : 'Recent activity'}
           </div>
           {error ? (
             <div className="text-xs text-red-300">{error}</div>
@@ -81,7 +81,7 @@ const DpfWalletPanel: React.FC<DpfWalletPanelProps> = ({ lang, compact = false }
             </div>
           ) : (
             <div className="text-xs text-gray-500">
-              {isVi ? 'Chua co giao dich DPF coin. Hay thu mot thu thach.' : 'No DPF coin activity yet. Try a challenge.'}
+              {isVi ? 'Chưa có giao dịch DPF coin. Hãy thử một thử thách.' : 'No DPF coin activity yet. Try a challenge.'}
             </div>
           )}
         </div>

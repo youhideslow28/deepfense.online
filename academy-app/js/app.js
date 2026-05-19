@@ -608,9 +608,11 @@ window.navigateToCertificate = navigateToCertificate;
 dom.btnViewCert?.addEventListener('click', () => {
   // Ghi exam completion vào localStorage cho /academy/basics/
   try {
-    const existing = JSON.parse(localStorage.getItem('dfb_exam_v1') || 'null');
+    const scopedKey = (key) => state.user?.uid ? `${key}:${state.user.uid}` : key;
+    const existing = JSON.parse(localStorage.getItem(scopedKey('dfb_exam_v1')) || 'null');
     if (!existing?.passed) {
-      localStorage.setItem('dfb_exam_v1', JSON.stringify({
+      localStorage.setItem(scopedKey('dfb_exam_v1'), JSON.stringify({
+        uid:       state.user?.uid,
         passed:    true,
         passedAt:  Date.now(),
         bestScore: 50,
@@ -618,8 +620,8 @@ dom.btnViewCert?.addEventListener('click', () => {
       }));
     }
     // Ghi tên từ tài khoản Google vào dfb_cert_name nếu chưa có
-    if (!localStorage.getItem('dfb_cert_name') && state.user?.displayName) {
-      localStorage.setItem('dfb_cert_name', state.user.displayName);
+    if (!localStorage.getItem(scopedKey('dfb_cert_name')) && state.user?.displayName) {
+      localStorage.setItem(scopedKey('dfb_cert_name'), state.user.displayName);
     }
   } catch {}
 
@@ -998,14 +1000,21 @@ const cleanupSubscriptions = () => {
 // ── Shared localStorage bridge (syncs module progress with /academy/basics/) ──
 const MODULE_SYNC_KEY = 'dfb_module_sync_v1';
 
-function writeModuleSync(completedModuleNums) {
+function moduleSyncKey(uid = state.user?.uid) {
+  return uid ? `${MODULE_SYNC_KEY}:${uid}` : MODULE_SYNC_KEY;
+}
+
+function writeModuleSync(completedModuleNums, user = state.user) {
+  if (!user?.uid) return;
   try {
-    const prev = JSON.parse(localStorage.getItem(MODULE_SYNC_KEY) || '{}');
+    const key = moduleSyncKey(user.uid);
+    const prev = JSON.parse(localStorage.getItem(key) || '{}');
     const merged = {
+      uid: user.uid,
       completedModules: [...new Set([...(prev.completedModules || []), ...completedModuleNums])],
       updatedAt: Date.now(),
     };
-    localStorage.setItem(MODULE_SYNC_KEY, JSON.stringify(merged));
+    localStorage.setItem(key, JSON.stringify(merged));
   } catch {}
 }
 
@@ -1024,7 +1033,7 @@ const startSubscriptions = (user) => {
 
     // Sync completed modules → shared key (read by /academy/basics/ SPA)
     const completedMods = Array.isArray(data?.completedModules) ? data.completedModules : [];
-    if (completedMods.length > 0) writeModuleSync(completedMods);
+    if (completedMods.length > 0) writeModuleSync(completedMods, user);
 
     if (state.manifest) {
       updateProgressBar(state.manifest);
@@ -1053,6 +1062,8 @@ listenAuth(async (user) => {
     try {
       localStorage.setItem(SESSION_KEY, JSON.stringify({
         uid: user.uid,
+        email: user.email || '',
+        isAdmin: user.email === 'deepfense@gmail.com',
         loginAt: Date.now(),
       }));
     } catch {}

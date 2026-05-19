@@ -12,27 +12,46 @@ const MODULE_SYNC_KEY = 'dfb_module_sync_v1';
 const SESSION_KEY     = 'dfb_session_v1';
 const SESSION_TTL     = 30 * 24 * 60 * 60 * 1000; // 30 ngày
 
-function isSessionValid() {
+function readSession() {
   try {
     const raw = localStorage.getItem(SESSION_KEY);
-    if (!raw) return false;
-    const { loginAt } = JSON.parse(raw);
-    return typeof loginAt === 'number' && Date.now() - loginAt < SESSION_TTL;
-  } catch { return false; }
+    if (!raw) return null;
+    const session = JSON.parse(raw);
+    if (typeof session?.loginAt !== 'number' || Date.now() - session.loginAt >= SESSION_TTL) return null;
+    if (typeof session?.uid !== 'string' || !session.uid) return null;
+    return session;
+  } catch { return null; }
+}
+
+function isSessionValid() {
+  return !!readSession();
+}
+
+function scopedKey(baseKey) {
+  const uid = readSession()?.uid;
+  return uid ? `${baseKey}:${uid}` : baseKey;
 }
 
 function readModuleSync() {
-  try { return JSON.parse(localStorage.getItem(MODULE_SYNC_KEY) || '{}'); } catch { return {}; }
+  const session = readSession();
+  try {
+    const scoped = JSON.parse(localStorage.getItem(scopedKey(MODULE_SYNC_KEY)) || '{}');
+    if (!scoped.uid || scoped.uid === session?.uid) return scoped;
+  } catch {}
+  return {};
 }
 
 function writeModuleSync(completedModuleNums) {
+  const session = readSession();
+  if (!session?.uid) return;
   try {
     const prev = readModuleSync();
     const merged = {
+      uid: session.uid,
       completedModules: [...new Set([...(prev.completedModules || []), ...completedModuleNums])],
       updatedAt: Date.now(),
     };
-    localStorage.setItem(MODULE_SYNC_KEY, JSON.stringify(merged));
+    localStorage.setItem(scopedKey(MODULE_SYNC_KEY), JSON.stringify(merged));
   } catch {}
 }
 
@@ -44,7 +63,7 @@ function initTheme() {
 
 function loadProgress() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(scopedKey(STORAGE_KEY));
     if (raw) {
       const { completed, currentLessonId } = JSON.parse(raw);
       return { completed: new Set(completed || []), currentLessonId: currentLessonId || null };
@@ -54,8 +73,11 @@ function loadProgress() {
 }
 
 function saveProgress(completed, currentLessonId) {
+  const session = readSession();
+  if (!session?.uid) return;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    localStorage.setItem(scopedKey(STORAGE_KEY), JSON.stringify({
+      uid: session.uid,
       completed: [...completed],
       currentLessonId,
     }));
@@ -161,7 +183,7 @@ export default function App() {
     setCompleted(prev => applyModuleSync(prev));
     // Re-apply whenever Academy.tsx (same origin, other tab) writes the sync key
     const onStorage = (e) => {
-      if (e.key === MODULE_SYNC_KEY) setCompleted(prev => applyModuleSync(prev));
+      if (e.key === scopedKey(MODULE_SYNC_KEY)) setCompleted(prev => applyModuleSync(prev));
     };
     window.addEventListener('storage', onStorage);
     return () => window.removeEventListener('storage', onStorage);
