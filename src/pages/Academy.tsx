@@ -21,6 +21,24 @@ interface AcademyProps {
   onGoogleAuth: () => void;
 }
 
+const storageKey = (baseKey: string, uid?: string | null) => (uid ? `${baseKey}:${uid}` : baseKey);
+
+const readJson = <T,>(key: string, fallback: T): T => {
+  try {
+    const raw = window.localStorage.getItem(key);
+    return raw ? JSON.parse(raw) as T : fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const readUserModuleSync = (uid?: string | null) => {
+  if (!uid) return [] as number[];
+  const scoped = readJson<{ uid?: string; completedModules?: number[] }>(storageKey('dfb_module_sync_v1', uid), {});
+  if (!scoped.uid || scoped.uid === uid) return scoped.completedModules ?? [];
+  return [];
+};
+
 const roadmapData = [
   {
     code: '01',
@@ -55,14 +73,11 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   const [activeSectionIdx, setActiveSectionIdx] = useState(0);
   const [activeLessonIdx, setActiveLessonIdx] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<string[]>(() => {
-    const saved = localStorage.getItem('df_completed_lessons');
-    return saved ? JSON.parse(saved) : [];
+    return readJson<string[]>(storageKey('df_completed_lessons', user?.uid), []);
   });
   const [completedModules, setCompletedModules] = useState<number[]>(() => {
-    // Seed from df_completed_modules, merged with shared sync key (written by /academy/basics/ SPA)
-    const saved = (() => { try { return JSON.parse(localStorage.getItem('df_completed_modules') || '[]'); } catch { return []; } })() as number[];
-    const synced = (() => { try { return JSON.parse(localStorage.getItem('dfb_module_sync_v1') || '{}'); } catch { return {}; } })() as { completedModules?: number[] };
-    return [...new Set([...saved, ...(synced.completedModules ?? [])])];
+    const saved = readJson<number[]>(storageKey('df_completed_modules', user?.uid), []);
+    return [...new Set([...saved, ...readUserModuleSync(user?.uid)])];
   });
 
   // Check if passed via standalone HTML course reader (deepfense-basics-final-exam key)
@@ -92,18 +107,32 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   }, [user, authBusy]);
 
   useEffect(() => {
-    localStorage.setItem('df_completed_lessons', JSON.stringify(completedLessons));
-  }, [completedLessons]);
+    if (!user?.uid) return;
+    localStorage.setItem(storageKey('df_completed_lessons', user.uid), JSON.stringify(completedLessons));
+  }, [completedLessons, user?.uid]);
 
   useEffect(() => {
-    localStorage.setItem('df_completed_modules', JSON.stringify(completedModules));
-    // Keep shared sync key up-to-date so /academy/basics/ SPA can read it
+    if (!user?.uid) return;
+    localStorage.setItem(storageKey('df_completed_modules', user.uid), JSON.stringify(completedModules));
+    // Keep user-scoped sync key up-to-date so /academy/basics/ SPA can read it
     try {
-      const prev = JSON.parse(localStorage.getItem('dfb_module_sync_v1') || '{}') as { completedModules?: number[] };
+      const syncKey = storageKey('dfb_module_sync_v1', user.uid);
+      const prev = readJson<{ uid?: string; completedModules?: number[] }>(syncKey, {});
       const merged = [...new Set([...(prev.completedModules ?? []), ...completedModules])];
-      localStorage.setItem('dfb_module_sync_v1', JSON.stringify({ completedModules: merged, updatedAt: Date.now() }));
+      localStorage.setItem(syncKey, JSON.stringify({ uid: user.uid, completedModules: merged, updatedAt: Date.now() }));
     } catch {}
-  }, [completedModules]);
+  }, [completedModules, user?.uid]);
+
+  useEffect(() => {
+    if (!user?.uid) {
+      setCompletedLessons([]);
+      setCompletedModules([]);
+      return;
+    }
+    setCompletedLessons(readJson<string[]>(storageKey('df_completed_lessons', user.uid), []));
+    const savedModules = readJson<number[]>(storageKey('df_completed_modules', user.uid), []);
+    setCompletedModules([...new Set([...savedModules, ...readUserModuleSync(user.uid)])]);
+  }, [user?.uid]);
   const [showAnswers, setShowAnswers] = useState<Record<string, boolean>>({});
   const [checkpointAnswers, setCheckpointAnswers] = useState<Record<number, number>>({});
   const [checkpointSubmitted, setCheckpointSubmitted] = useState(false);
@@ -554,6 +583,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   <div className="flex flex-col gap-2">
                     <button
                       onClick={() => {
+                        if (!user?.uid || user.email !== 'deepfense@gmail.com') return;
+                        const uid = user.uid;
                         const allModuleIds = basicsCourse.modules.map(m => m.id);
                         const allLessonIds: string[] = [];
                         basicsCourse.modules.forEach(m => {
@@ -565,23 +596,37 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                         });
 
                         // ── Legacy keys (Academy.tsx internal state) ──
+                        [
+                          'df_completed_modules',
+                          'df_completed_lessons',
+                          'dfb_progress_v2',
+                          'dfb_module_sync_v1',
+                          'dfb_exam_v1',
+                          'dfb_cert_name',
+                          'dfb_cert_claimed_v1',
+                          'dfb_cert_id_v1',
+                        ].forEach(key => localStorage.removeItem(key));
+
                         setCompletedModules(allModuleIds);
                         setCompletedLessons(allLessonIds);
-                        localStorage.setItem('df_completed_modules', JSON.stringify(allModuleIds));
-                        localStorage.setItem('df_completed_lessons', JSON.stringify(allLessonIds));
+                        localStorage.setItem(storageKey('df_completed_modules', uid), JSON.stringify(allModuleIds));
+                        localStorage.setItem(storageKey('df_completed_lessons', uid), JSON.stringify(allLessonIds));
 
                         // ── /academy/basics/ SPA keys ──
                         // Lesson + module progress
-                        localStorage.setItem('dfb_progress_v2', JSON.stringify({
+                        localStorage.setItem(storageKey('dfb_progress_v2', uid), JSON.stringify({
+                          uid,
                           completed: allLessonIds,
                           currentLessonId: null,
                         }));
-                        localStorage.setItem('dfb_module_sync_v1', JSON.stringify({
+                        localStorage.setItem(storageKey('dfb_module_sync_v1', uid), JSON.stringify({
+                          uid,
                           completedModules: allModuleIds,
                           updatedAt: Date.now(),
                         }));
                         // Final exam passed
-                        localStorage.setItem('dfb_exam_v1', JSON.stringify({
+                        localStorage.setItem(storageKey('dfb_exam_v1', uid), JSON.stringify({
+                          uid,
                           passed: true,
                           passedAt: Date.now(),
                           bestScore: 50,
@@ -589,12 +634,14 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                         }));
                         // Certificate name
                         if (user?.displayName) {
-                          localStorage.setItem('dfb_cert_name', user.displayName);
+                          localStorage.setItem(storageKey('dfb_cert_name', uid), user.displayName);
                         }
                         // Session (đảm bảo auth gate cho qua)
                         if (user) {
                           localStorage.setItem('dfb_session_v1', JSON.stringify({
-                            uid: user.uid,
+                            uid,
+                            email: user.email || '',
+                            isAdmin: true,
                             loginAt: Date.now(),
                           }));
                         }
@@ -608,7 +655,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     </button>
                     <button
                       onClick={() => {
-                        [
+                        if (!user?.uid || user.email !== 'deepfense@gmail.com') return;
+                        const keys = [
                           // Legacy keys
                           'df_completed_lessons',
                           'df_completed_modules',
@@ -621,7 +669,11 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                           'dfb_cert_name',
                           'dfb_cert_claimed_v1',
                           'dfb_cert_id_v1',
-                        ].forEach(key => localStorage.removeItem(key));
+                        ];
+                        keys.forEach(key => {
+                          localStorage.removeItem(storageKey(key, user.uid));
+                          localStorage.removeItem(key);
+                        });
                         window.location.reload();
                       }}
                       className="w-full py-2 rounded-xl bg-red-500/5 border border-red-500/10 text-red-500/50 text-[10px] font-black uppercase tracking-widest hover:bg-red-500/10 transition-all"

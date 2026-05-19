@@ -493,6 +493,7 @@
       const EXAM_KEY    = 'dfb_exam_v1';
       const CERT_NAME   = 'dfb_cert_name';
       const CLAIMED_KEY = 'dfb_cert_claimed_v1';
+      const SESSION_KEY = 'dfb_session_v1';
 
       const defaults = {
         academyName:      'DEEPFENSE ACADEMY',
@@ -515,16 +516,31 @@
       function gen() {
         return 'DPF-BASIC-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 9000) + 1000);
       }
+      function readSession() {
+        try {
+          const session = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+          return typeof session?.uid === 'string' && session.uid ? session : null;
+        } catch { return null; }
+      }
+      function scopedKey(key) {
+        const uid = readSession()?.uid;
+        return uid ? key + ':' + uid : key;
+      }
       function readJson(key) {
-        try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch { return null; }
+        try {
+          const value = JSON.parse(localStorage.getItem(scopedKey(key)) || 'null');
+          const uid = readSession()?.uid;
+          if (!value?.uid || value.uid === uid) return value;
+        } catch {}
+        return null;
       }
 
       function buildData() {
         const exam  = readJson(EXAM_KEY) || {};
-        const name  = localStorage.getItem(CERT_NAME) || 'Learner Name';
+        const name  = localStorage.getItem(scopedKey(CERT_NAME)) || 'Learner Name';
         // Stable cert ID: persist per user so QR doesn't change on reload
-        let id = localStorage.getItem('dfb_cert_id_v1');
-        if (!id) { id = exam.examId || gen(); localStorage.setItem('dfb_cert_id_v1', id); }
+        let id = localStorage.getItem(scopedKey('dfb_cert_id_v1'));
+        if (!id) { id = exam.examId || gen(); localStorage.setItem(scopedKey('dfb_cert_id_v1'), id); }
         return {
           ...defaults,
           recipientName:   name,
@@ -545,7 +561,7 @@
 
       // ── Gate logic ──────────────────────────────────────────────
       const unlocked = !!readJson(EXAM_KEY)?.passed;
-      const claimed  = !!localStorage.getItem(CLAIMED_KEY);
+      const claimed  = !!localStorage.getItem(scopedKey(CLAIMED_KEY));
 
       if (!unlocked) {
         document.getElementById('overlayLocked').classList.add('visible');
@@ -561,7 +577,7 @@
 
       // Print: mark as claimed then print
       document.getElementById('btnPrint').addEventListener('click', () => {
-        localStorage.setItem(CLAIMED_KEY, '1');
+        localStorage.setItem(scopedKey(CLAIMED_KEY), '1');
         window.print();
       });
 

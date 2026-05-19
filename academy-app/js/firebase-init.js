@@ -154,6 +154,10 @@ export const listenDpfBalance = (uid, onChange) => {
  * Dùng để test certificate flow mà không cần học thật.
  */
 export const adminCompleteAll = async (uid) => {
+  const currentUser = auth.currentUser;
+  if (!currentUser || currentUser.email !== 'deepfense@gmail.com' || currentUser.uid !== uid) {
+    throw new Error('Admin test progress can only be written to the signed-in admin account.');
+  }
   const ref = doc(db, 'academy_learners', uid);
   const now = serverTimestamp();
   await setDoc(ref, {
@@ -191,6 +195,10 @@ export const adminCompleteAll = async (uid) => {
  * Xóa toàn bộ tiến độ về trạng thái ban đầu.
  */
 export const adminResetProgress = async (uid) => {
+  const currentUser = auth.currentUser;
+  if (!currentUser || currentUser.email !== 'deepfense@gmail.com' || currentUser.uid !== uid) {
+    throw new Error('Admin test progress can only be reset on the signed-in admin account.');
+  }
   const ref = doc(db, 'academy_learners', uid);
   await updateDoc(ref, {
     completedModules:   [],

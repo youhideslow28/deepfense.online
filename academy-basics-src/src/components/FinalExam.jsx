@@ -3,18 +3,40 @@ import { EXAM_CONFIG, drawExam } from '../data/exam-bank.js';
 import Confetti from './Confetti.jsx';
 
 const STORAGE_KEY  = 'dfb_exam_v1';
+const SESSION_KEY  = 'dfb_session_v1';
 const PAGE_SIZE    = 10;
+
+function readSession() {
+  try {
+    const session = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+    return typeof session?.uid === 'string' && session.uid ? session : null;
+  } catch {
+    return null;
+  }
+}
+
+function scopedKey(baseKey) {
+  const uid = readSession()?.uid;
+  return uid ? `${baseKey}:${uid}` : baseKey;
+}
 
 function loadStore() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    const raw = localStorage.getItem(scopedKey(STORAGE_KEY));
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      const uid = readSession()?.uid;
+      if (!parsed.uid || parsed.uid === uid) return parsed;
+    }
   } catch {}
   return { attempts: 0, passed: false, bestScore: 0 };
 }
 
 function saveStore(s) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch {}
+  try {
+    const uid = readSession()?.uid;
+    localStorage.setItem(scopedKey(STORAGE_KEY), JSON.stringify(uid ? { ...s, uid } : s));
+  } catch {}
 }
 
 // ── helpers ──────────────────────────────────────────────────────────────────
