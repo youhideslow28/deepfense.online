@@ -12,7 +12,7 @@ export default function LessonView({
   const [quizDone, setQuizDone] = useState(false);
   const [miniGameDone, setMiniGameDone] = useState(false);
 
-  const { lesson, moduleId, sectionTitle, checkpoint } = currentEntry;
+  const { lesson, module, moduleId, sectionTitle, checkpoint } = currentEntry;
 
   // ── Final exam special render ──────────────────────────────────────────────
   if (lesson.type === 'exam') {
@@ -26,6 +26,11 @@ export default function LessonView({
 
   const isFirst = currentIdx === 0;
   const isLast = currentIdx === lessonIndex.length - 1;
+  const isFirstInModule = (() => {
+    const prev = lessonIndex[currentIdx - 1];
+    return !prev || prev.moduleId !== moduleId;
+  })();
+  const introVideo = isFirstInModule ? module?.introVideo : null;
 
   // Last lesson in this section (regardless of checkpoint)
   const isLastInSection = (() => {
@@ -81,6 +86,25 @@ export default function LessonView({
         {/* Title */}
         <h1 className="lesson-title">{lesson.title}</h1>
         <div className="lesson-divider" />
+
+        {introVideo?.src && (
+          <figure className="module-intro-video">
+            <div className="module-intro-video-head">
+              <span className="module-intro-video-kicker">Module intro</span>
+              <strong>{introVideo.title || `Module ${moduleId}`}</strong>
+            </div>
+            <video
+              className="module-intro-video-player"
+              src={introVideo.src}
+              controls
+              preload="metadata"
+              playsInline
+            />
+            {introVideo.caption && (
+              <figcaption className="module-intro-video-caption">{introVideo.caption}</figcaption>
+            )}
+          </figure>
+        )}
 
         {/* Body */}
         <div className="lesson-body">
