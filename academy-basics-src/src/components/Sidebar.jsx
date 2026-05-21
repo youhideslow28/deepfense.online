@@ -32,7 +32,7 @@ export default function Sidebar({ isOpen, onClose, currentLesson, completedLesso
     <aside className={`sidebar${isOpen ? ' is-open' : ''}`}>
       {/* Logo — clickable home */}
       <button className="sidebar-logo" onClick={onHome} title="Về trang chủ">
-        <div className="sidebar-logo-icon">DF</div>
+        <img src="/logo/android-chrome-192x192.png" className="sidebar-logo-img" alt="DEEPFENSE" />
         <div className="sidebar-logo-text">
           Deepfense
           <span>BASICS</span>
