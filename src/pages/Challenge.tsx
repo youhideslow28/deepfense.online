@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { LEVELS, TRANSLATIONS, SURVEY_SCALE } from '@/data';
 import { GameState, Language, LevelData } from '@/types';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2, ShieldQuestion, Share2, Facebook, Twitter, Users } from 'lucide-react';
+import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2, ShieldQuestion, Share2, Facebook, Twitter, Users, Play } from 'lucide-react';
 import { db } from '@/config/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import Simulator from './Simulator';
@@ -13,6 +13,29 @@ import DpfRewardNotice from '@/features/dpf/DpfRewardNotice';
 interface ChallengeProps {
   lang: Language;
 }
+
+const shuffleLevels = <T,>(items: T[]) => {
+  const shuffled = [...items];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
+const getDetectionLevel = (level: LevelData) => {
+  const match = level.difficulty.match(/(?:Mức|Level)\s*(\d)/i);
+  return match ? Number(match[1]) : 0;
+};
+
+const selectBalancedChallenge = (levels: LevelData[]) => {
+  const selected = [1, 2, 3, 4, 5].flatMap((difficulty) => {
+    const pool = levels.filter((level) => getDetectionLevel(level) === difficulty);
+    return shuffleLevels(pool).slice(0, 2);
+  });
+
+  return shuffleLevels(selected);
+};
 
 const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
   const [gameState, setGameState] = useState<GameState | null>(null);
@@ -27,12 +50,18 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [sessionId, setSessionId] = useState('');
   const [rewardResult, setRewardResult] = useState<DpfClaimResult | null>(null);
+  const [videoStarted, setVideoStarted] = useState(false);
+  const [videoEnded, setVideoEnded] = useState(false);
+  const [challengeFeedback, setChallengeFeedback] = useState<Record<string, string>>({});
+  const [surveyDeclineCount, setSurveyDeclineCount] = useState(0);
+  const [surveyDismissed, setSurveyDismissed] = useState(false);
 
   // Anti-Bot States
   const [captchaObj, setCaptchaObj] = useState({ num1: 0, num2: 0 });
   const [captchaInput, setCaptchaInput] = useState('');
   const [captchaError, setCaptchaError] = useState(false);
   const navigate = useNavigate();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isMountedRef = useRef(true);
 
@@ -122,8 +151,9 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
 
   const startNewGame = () => {
     const nextSessionId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const challengeLevels = selectBalancedChallenge(LEVELS[lang]);
     const newState: GameState = { 
-      levels: [...LEVELS[lang]], 
+      levels: challengeLevels, 
       current: 0, 
       score: 0, 
       wrong_count: 0, 
@@ -145,11 +175,35 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
     setSurveyStep(0);
     setSurveyAnswers([]);
     setSurveySent(false);
+    setSurveyDeclineCount(0);
+    setSurveyDismissed(false);
     setDemoAge('');
     setShowDemo(true);
     setIsSubmitting(false);
     setRewardResult(null);
+    setVideoStarted(false);
+    setVideoEnded(false);
+    setChallengeFeedback({});
     setSessionId(nextSessionId);
+  };
+
+  useEffect(() => {
+    setVideoStarted(false);
+    setVideoEnded(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, [gameState?.current, gameState?.levels[gameState?.current ?? 0]?.video_url]);
+
+  const startChallengeVideo = async () => {
+    setVideoStarted(true);
+    setVideoEnded(false);
+    try {
+      await videoRef.current?.play();
+    } catch (error) {
+      console.error('Unable to start challenge video:', error);
+    }
   };
 
   const claimDetectiveReward = async (score: number, totalLevels: number) => {
@@ -173,7 +227,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
 
   const handleChoice = (choice: 1 | 2) => {
     // BẢO MẬT: Chặn Double-Click spam để hack vượt mốc điểm tuyệt đối
-    if (!gameState || gameState.show_result) return;
+    if (!gameState || gameState.show_result || !videoEnded) return;
     const currentLevel = gameState.levels[gameState.current];
     const isCorrect = currentLevel.fake_pos === choice;
     
@@ -196,7 +250,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
         const finalScore = gameState.score;
         const totalLevels = gameState.levels.length;
         setGameState(prev => prev ? ({ ...prev, finished: true }) : null);
-        setShowSurvey(true);
+        setShowSurvey(false);
 
         // --- FIREBASE: LƯU KẾT QUẢ GAME ---
           const gameResult = {
@@ -207,7 +261,13 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
             device_info: navigator.userAgent, // Lưu thông tin thiết bị cơ bản
             details: {
                wrong_levels: wrongLevels.map(l => l.id), // Lưu ID các câu sai
-               total_levels: gameState.levels.length
+               total_levels: gameState.levels.length,
+               challenge_feedback: Object.entries(challengeFeedback)
+                 .filter(([, note]) => note.trim().length > 0)
+                 .map(([levelId, note]) => ({
+                   level_id: levelId,
+                   note: note.trim(),
+                 }))
             }
           };
           addDoc(collection(db, "game_results"), gameResult)
@@ -273,23 +333,27 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
     }
   };
 
-  const getEmbedUrl = (url: string) => {
-    if (!url) return "";
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
-    const match = url.match(regExp);
-    const videoId = (match && match[2].length === 11) ? match[2] : null;
-    // Thêm controls=0 và modestbranding=1 để giấu thanh tiến trình và logo, tránh lộ nội dung video
-    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&controls=0&modestbranding=1` : url;
+  const declineSurvey = () => {
+    if (surveyDeclineCount === 0) {
+      setSurveyDeclineCount(1);
+      return;
+    }
+
+    setShowSurvey(false);
+    setSurveyDismissed(true);
   };
+
 
   if (gameState && gameState.finished) {
     const score = gameState.score;
+    const totalQuestions = gameState.levels.length;
+    const accuracyPercent = Math.round((score / totalQuestions) * 100);
     const scales = SURVEY_SCALE[lang];
 
     // Phân tích dữ liệu kết quả (Năng lực nhận diện chia theo nhóm)
-    const morphologicalIds = ["v1", "v2", "v4"]; // Tay, khuôn mặt, đôi cánh
-    const contextIds = ["v3", "v5", "v7"];       // Chuyển động hươu, thiên nga, mây
-    const physicsIds = ["v6", "v8", "v9", "v10"]; // Dòng nước, cát, áp lực
+    const morphologicalIds = ["v1", "v2", "v3", "v4", "v11", "v13", "v14", "v15", "v17", "v19", "v23", "v25", "v26", "v27", "v28", "v29", "v30"];
+    const contextIds = ["v5", "v7", "v12", "v16", "v18", "v21", "v24"];
+    const physicsIds = ["v6", "v8", "v9", "v10", "v20", "v22"];
 
     const getScoreForCategory = (ids: string[]) => {
        const total = ids.length;
@@ -307,12 +371,12 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
     let statusIcon = null;
     let statusColor = "";
 
-    if (score >= 8) {
+    if (accuracyPercent >= 80) {
         statusTitle = lang === 'vi' ? "BẬC THẦY GIÁM ĐỊNH" : "MASTER DETECTIVE";
         statusDesc = lang === 'vi' ? "Kỹ năng của bạn rất tuyệt vời. Hãy chia sẻ kiến thức này để bảo vệ người thân!" : "Excellent skills. Share this knowledge to protect your loved ones!";
         statusIcon = <ShieldCheck size={48} className="text-success" />;
         statusColor = "border-success bg-success/5";
-    } else if (score >= 5) {
+    } else if (accuracyPercent >= 50) {
         statusTitle = lang === 'vi' ? "HỌC VIÊN TIỀM NĂNG" : "POTENTIAL TRAINEE";
         statusDesc = lang === 'vi' ? "Bạn có khả năng nhận diện cơ bản, nhưng cần luyện tập thêm các chi tiết nhỏ." : "Good baseline awareness, but need more practice on micro-details.";
         statusIcon = <Eye size={48} className="text-warning" />;
@@ -326,8 +390,8 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
     
     const handleShare = async (platform: 'facebook' | 'twitter' | 'native') => {
         const text = lang === 'vi' 
-            ? `🎮 Tôi vừa đạt điểm tuyệt đối ${score}/10 trong Thử thách Thám tử Deepfake! 🛡️\nCông nghệ AI thật đáng sợ, mọi người vào kiểm tra trình độ nhận diện của mình nhé!` 
-            : `🎮 I just scored ${score}/10 in the Deepfake Detective Challenge! 🛡️\nAI is getting scary. Test your detection skills now!`;
+            ? `🎮 Tôi vừa đạt ${score}/${totalQuestions} điểm trong Thử thách Thám tử Deepfake! 🛡️\nCông nghệ AI thật đáng sợ, mọi người vào kiểm tra trình độ nhận diện của mình nhé!` 
+            : `🎮 I just scored ${score}/${totalQuestions} in the Deepfake Detective Challenge! 🛡️\nAI is getting scary. Test your detection skills now!`;
         const url = window.location.origin;
 
         if (platform === 'facebook') {
@@ -392,7 +456,20 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                             >
                                 {lang === 'vi' ? 'ĐỒNG Ý ĐÓNG GÓP Ý KIẾN' : 'AGREE TO CONTRIBUTE'}
                             </button>
+                            <button
+                                onClick={declineSurvey}
+                                className="bg-white/5 text-gray-400 border border-white/10 px-8 py-4 rounded-xl font-black text-xs uppercase transition-all hover:bg-white/10 hover:text-white w-full sm:w-auto"
+                            >
+                                {lang === 'vi' ? 'BO QUA KHAO SAT' : 'SKIP SURVEY'}
+                            </button>
                         </div>
+                        {surveyDeclineCount > 0 && (
+                            <p className="mt-5 text-gray-400 text-xs leading-relaxed">
+                                {lang === 'vi'
+                                  ? 'Neu co the, chung toi rat mong ban danh khoang mot phut de gop y an danh. Du lieu chi dung de cai thien thu thach va khong bat buoc.'
+                                  : 'If possible, we would really appreciate one minute of anonymous feedback. It is optional and only helps improve the challenge.'}
+                            </p>
+                        )}
                     </div>
                 ) : showDemo ? (
                     <div className="w-full max-w-xl animate-in slide-in-from-right-4 duration-300">
@@ -478,7 +555,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     
                     <div className="mb-8">
                        <h2 className="text-2xl md:text-4xl font-black text-white mb-2 uppercase tracking-tighter leading-tight">{statusTitle}</h2>
-                       <div className="text-white/40 font-mono text-sm tracking-[0.4em] uppercase">{score}/10 {lang === 'vi' ? 'ĐIỂM CHÍNH XÁC' : 'ACCURACY SCORE'}</div>
+                       <div className="text-white/40 font-mono text-sm tracking-[0.4em] uppercase">{score}/{totalQuestions} {lang === 'vi' ? 'ĐIỂM CHÍNH XÁC' : 'ACCURACY SCORE'}</div>
                     </div>
 
                     <p className="text-gray-300 max-w-xl mb-10 leading-relaxed text-base">{statusDesc}</p>
@@ -486,6 +563,50 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                       result={rewardResult}
                       successPrefix={lang === 'vi' ? 'Da nhan thuong' : 'Reward claimed'}
                     />
+
+                    {!surveySent && !surveyDismissed && (
+                      <div className="w-full max-w-xl mb-8 rounded-2xl border border-primary/20 bg-primary/5 p-6 text-left">
+                        <div className="text-primary text-[10px] font-black uppercase tracking-widest mb-3">
+                          {lang === 'vi' ? 'KHAO SAT TUY CHON' : 'OPTIONAL SURVEY'}
+                        </div>
+                        <p className="text-gray-300 text-sm leading-relaxed mb-5">
+                          {surveyDeclineCount > 0
+                            ? (lang === 'vi'
+                                ? 'Chung toi xin phep hoi lai mot lan nua: neu ban co the, hay danh khoang mot phut gop y an danh de giup DEEPFENSE cai thien bo thu thach. Ban co quyen bo qua va khong bi anh huong diem.'
+                                : 'One gentle last ask: if you can spare about a minute, anonymous feedback helps DEEPFENSE improve this challenge. You can skip it and your score is unaffected.')
+                            : (lang === 'vi'
+                                ? 'Cam on ban da hoan thanh thu thach. Khao sat ngan nay la tu nguyen, an danh, va chi dung de cai thien noi dung dao tao.'
+                                : 'Thank you for completing the challenge. This short survey is optional, anonymous, and only used to improve the training experience.')}
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-3">
+                          <button
+                            onClick={() => {
+                              setShowSurvey(true);
+                              setShowIntro(true);
+                            }}
+                            className="bg-primary text-black px-6 py-3 rounded-xl font-black text-xs uppercase transition-all hover:scale-105"
+                          >
+                            {lang === 'vi' ? 'LAM KHAO SAT' : 'TAKE SURVEY'}
+                          </button>
+                          <button
+                            onClick={declineSurvey}
+                            className="bg-white/5 text-gray-400 border border-white/10 px-6 py-3 rounded-xl font-black text-xs uppercase transition-all hover:bg-white/10 hover:text-white"
+                          >
+                            {surveyDeclineCount > 0
+                              ? (lang === 'vi' ? 'KHONG, CAM ON' : 'NO, THANKS')
+                              : (lang === 'vi' ? 'BO QUA' : 'SKIP')}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {surveyDismissed && (
+                      <div className="w-full max-w-xl mb-8 rounded-2xl border border-white/10 bg-white/5 p-5 text-gray-300 text-sm leading-relaxed">
+                        {lang === 'vi'
+                          ? 'Cam on ban da tham gia dung thu thach. Y kien cua ban trong phan choi da giup chung toi cai thien DEEPFENSE.'
+                          : 'Thank you for taking the challenge. Your participation already helps us improve DEEPFENSE.'}
+                      </div>
+                    )}
                     
                     <div className="flex flex-col sm:flex-row justify-center gap-4 w-full">
                         <button onClick={startNewGame} className="bg-primary text-black px-12 py-4 rounded-xl font-black text-xs uppercase shadow-lg hover:scale-105 transition-all flex items-center justify-center gap-2">
@@ -636,13 +757,39 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
 
       <div className="space-y-6">
           <div className="relative bg-black border border-white/10 rounded-3xl overflow-hidden aspect-video shadow-2xl">
-            <iframe 
-                title={`Deepfake Challenge Level ${gameState.current + 1}`}
-                src={getEmbedUrl(lvl.video_url)} 
-                className="w-full h-full" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-            ></iframe>
+            <video
+                ref={videoRef}
+                key={lvl.video_url}
+                src={lvl.video_url}
+                className="w-full h-full object-contain"
+                controls={gameState.show_result || videoEnded}
+                playsInline
+                preload="metadata"
+                onEnded={() => setVideoEnded(true)}
+                onPlay={() => setVideoStarted(true)}
+            />
+
+            {!videoStarted && !gameState.show_result && (
+                <div className="absolute inset-0 z-20 bg-black flex flex-col items-center justify-center text-center px-6">
+                    <button
+                        onClick={startChallengeVideo}
+                        className="bg-primary text-black px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-lg hover:scale-105 transition-all flex items-center gap-3"
+                    >
+                        <Play size={18} fill="currentColor" /> {lang === 'vi' ? 'Báº®T Äáº¦U XEM VIDEO' : 'START VIDEO'}
+                    </button>
+                    <p className="mt-4 text-gray-500 text-[10px] font-bold uppercase tracking-widest max-w-sm">
+                        {lang === 'vi' ? 'Xem háº¿t video rá»“i má»›i Ä‘Æ°a ra nháº­n Ä‘á»‹nh.' : 'Watch the full video before making a judgment.'}
+                    </p>
+                </div>
+            )}
+
+            {videoStarted && !videoEnded && !gameState.show_result && (
+                <div className="absolute bottom-4 inset-x-4 z-10 pointer-events-none flex justify-center">
+                    <div className="bg-black/80 backdrop-blur px-4 py-2 rounded-lg border border-white/10 text-gray-300 text-[10px] font-black uppercase tracking-widest">
+                        {lang === 'vi' ? 'Äang quan sÃ¡t...' : 'Observing...'}
+                    </div>
+                </div>
+            )}
             
             {!gameState.show_result && (
                 <div className="absolute top-4 inset-x-4 flex justify-between pointer-events-none">
@@ -654,10 +801,10 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
           
           {!gameState.show_result ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <button onClick={() => handleChoice(1)} className="py-6 border border-white/10 bg-surface text-white font-black rounded-2xl hover:border-primary hover:text-primary transition-all uppercase text-xs tracking-widest shadow-xl flex items-center justify-center gap-3 group active:scale-95">
+                  <button disabled={!videoEnded} onClick={() => handleChoice(1)} className={`py-6 border border-white/10 bg-surface font-black rounded-2xl transition-all uppercase text-xs tracking-widest shadow-xl flex items-center justify-center gap-3 group active:scale-95 ${videoEnded ? 'text-white hover:border-primary hover:text-primary' : 'text-gray-700 cursor-not-allowed opacity-60'}`}>
                     <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> {lang === 'vi' ? 'BÊN TRÁI LÀ GIẢ' : 'LEFT IS FAKE'}
                   </button>
-                  <button onClick={() => handleChoice(2)} className="py-6 border border-white/10 bg-surface text-white font-black rounded-2xl hover:border-secondary hover:text-secondary transition-all uppercase text-xs tracking-widest shadow-xl flex items-center justify-center gap-3 group active:scale-95">
+                  <button disabled={!videoEnded} onClick={() => handleChoice(2)} className={`py-6 border border-white/10 bg-surface font-black rounded-2xl transition-all uppercase text-xs tracking-widest shadow-xl flex items-center justify-center gap-3 group active:scale-95 ${videoEnded ? 'text-white hover:border-secondary hover:text-secondary' : 'text-gray-700 cursor-not-allowed opacity-60'}`}>
                     {lang === 'vi' ? 'BÊN PHẢI LÀ GIẢ' : 'RIGHT IS FAKE'} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                   </button>
               </div>
@@ -676,10 +823,33 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                         <p className="text-gray-400 text-sm italic">
                             {lang === 'vi' ? "Cảm quan của bạn đang ngày càng nhạy bén hơn." : "Your senses are becoming sharper."}
                         </p>
+                        {!gameState.last_correct && (
+                            <div className="mt-4 rounded-xl border border-secondary/20 bg-black/30 p-4 text-left">
+                                <div className="mb-2 text-[10px] font-black uppercase tracking-widest text-secondary">
+                                    {lang === 'vi' ? 'VI SAO DAP AN CHUA DUNG?' : 'WHY WAS THIS NOT CORRECT?'}
+                                </div>
+                                <p className="text-sm leading-relaxed text-gray-300">{lvl.advice}</p>
+                            </div>
+                        )}
                     </div>
                     <button onClick={nextLevel} className="shrink-0 bg-white text-black px-10 py-4 rounded-xl font-black hover:bg-primary transition-all text-xs uppercase shadow-xl flex items-center gap-2 w-full sm:w-auto justify-center">
                       {lang === 'vi' ? 'TIẾP THEO' : 'NEXT'} <ArrowRight size={14} />
                     </button>
+                </div>
+                <div className="mt-4 bg-surface border border-white/10 rounded-2xl p-5 shadow-xl">
+                    <label htmlFor={`challenge-feedback-${lvl.id}`} className="block text-primary text-[10px] font-black uppercase tracking-widest mb-3">
+                        {lang === 'vi' ? 'Ban co thay diem gi khac chung toi khong?' : 'Did you notice anything we missed?'}
+                    </label>
+                    <textarea
+                        id={`challenge-feedback-${lvl.id}`}
+                        value={challengeFeedback[lvl.id] ?? ''}
+                        onChange={(event) => setChallengeFeedback(prev => ({ ...prev, [lvl.id]: event.target.value }))}
+                        maxLength={500}
+                        rows={3}
+                        className="w-full resize-none rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-gray-600 focus:border-primary"
+                        placeholder={lang === 'vi' ? 'Hay gop y neu ban thay dau hieu khac, video bi loi, hoac dap an/giai thich can xem lai.' : 'Share any other clues you noticed, video issues, or answer/explanation concerns.'}
+                    />
+                    <div className="mt-2 text-right text-[10px] font-mono text-gray-600">{(challengeFeedback[lvl.id] ?? '').length}/500</div>
                 </div>
             </div>
           )}
