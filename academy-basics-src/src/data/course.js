@@ -19,8 +19,6 @@ export const MODULES = [
     duration: '25-30 phút', level: 'Intro',
     introVideo: {
       src: '/academy/media/module-intros/module-0/module%200.web.mp4',
-      title: 'Video mở đầu Module 0',
-      caption: 'Xem video ngắn này trước khi bắt đầu phần nhập môn.',
     },
     scenario: 'An trải qua một ngày bình thường: thấy video đầu tư của người nổi tiếng, nhận tin nhắn mượn tiền từ bạn cũ, thấy ảnh nhạy cảm trong nhóm chat, nhận cuộc gọi giống người thân, rồi thấy clip gây phẫn nộ trước khi ngủ. Nếu là An, bạn sẽ làm gì?',
     outcomes: [
