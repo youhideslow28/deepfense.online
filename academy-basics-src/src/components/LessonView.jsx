@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import QuizModal from './QuizModal.jsx';
 import FinalExam from './FinalExam.jsx';
 import MiniGame from './MiniGame.jsx';
+import LessonBlock from './LessonBlocks.jsx';
 
 export default function LessonView({
   lessonIndex, currentIdx, currentEntry,
@@ -83,9 +84,11 @@ export default function LessonView({
 
         {/* Body */}
         <div className="lesson-body">
-          {lesson.paragraphs.map((p, i) => (
-            <p key={i} className="lesson-para" dangerouslySetInnerHTML={{ __html: p }} />
-          ))}
+          {lesson.paragraphs.map((block, i) =>
+            typeof block === 'string'
+              ? <p key={i} className="lesson-para" dangerouslySetInnerHTML={{ __html: block }} />
+              : <LessonBlock key={i} block={block} />
+          )}
         </div>
 
         {/* Takeaways — only last lesson of section, module 1+ */}
