@@ -37,6 +37,71 @@ const selectBalancedChallenge = (levels: LevelData[]) => {
   return shuffleLevels(selected);
 };
 
+type ChecklistKey = 'motion' | 'body' | 'face' | 'interaction' | 'background' | 'light' | 'physics';
+
+const CHECKLIST_ITEMS: Record<Language, { id: ChecklistKey; label: string }[]> = {
+  vi: [
+    { id: 'motion', label: 'Chuyển động hoặc nhịp hành động bất thường' },
+    { id: 'body', label: 'Tay, chân, cơ thể hoặc hình dạng bị méo' },
+    { id: 'face', label: 'Mặt, mắt, miệng hoặc biểu cảm không tự nhiên' },
+    { id: 'interaction', label: 'Tương tác với đồ vật, người khác hoặc mặt đất bị sai' },
+    { id: 'background', label: 'Nền, cảnh xa hoặc vật cản bị rung/méo' },
+    { id: 'light', label: 'Ánh sáng, bóng đổ hoặc phản chiếu không khớp' },
+    { id: 'physics', label: 'Nước, lửa, chất liệu hoặc vật lý chuyển động lạ' },
+  ],
+  en: [
+    { id: 'motion', label: 'Unnatural motion or action rhythm' },
+    { id: 'body', label: 'Warped hands, legs, body, or shape' },
+    { id: 'face', label: 'Unnatural face, eyes, mouth, or expression' },
+    { id: 'interaction', label: 'Wrong contact with objects, people, or ground' },
+    { id: 'background', label: 'Shaking or warped background/occluders' },
+    { id: 'light', label: 'Mismatched lighting, shadows, or reflections' },
+    { id: 'physics', label: 'Odd water, fire, material, or physical behavior' },
+  ],
+};
+
+const EXPECTED_CHECKLIST: Record<string, ChecklistKey[]> = {
+  v1: ['body', 'face', 'motion'],
+  v2: ['body', 'interaction', 'light'],
+  v3: ['motion', 'body', 'interaction'],
+  v4: ['body', 'background', 'motion'],
+  v5: ['physics', 'light', 'motion'],
+  v6: ['physics', 'motion', 'background'],
+  v7: ['background', 'light', 'motion'],
+  v8: ['physics', 'interaction'],
+  v9: ['physics'],
+  v10: ['physics', 'interaction'],
+  v11: ['interaction', 'body', 'face', 'light'],
+  v12: ['interaction', 'light', 'background'],
+  v13: ['face', 'light'],
+  v14: ['face', 'motion'],
+  v15: ['motion', 'interaction', 'light'],
+  v16: ['motion', 'background'],
+  v17: ['face', 'light'],
+  v18: ['background', 'motion'],
+  v19: ['face', 'motion', 'light'],
+  v20: ['interaction', 'physics', 'light'],
+  v21: ['motion', 'background'],
+  v22: ['physics', 'interaction', 'light'],
+  v23: ['motion', 'body', 'light'],
+  v24: ['light', 'background', 'interaction'],
+  v25: ['body', 'interaction'],
+  v26: ['interaction', 'motion', 'light'],
+  v27: ['face', 'interaction', 'light'],
+  v28: ['motion', 'body', 'background'],
+  v29: ['body', 'motion', 'interaction', 'light'],
+  v30: ['body', 'motion', 'interaction'],
+};
+
+type ChecklistResult = {
+  selected: ChecklistKey[];
+  matched: ChecklistKey[];
+  missed: ChecklistKey[];
+  extra: ChecklistKey[];
+  score: number;
+  max: number;
+};
+
 const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [wrongLevels, setWrongLevels] = useState<LevelData[]>([]);
@@ -53,6 +118,8 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
   const [videoStarted, setVideoStarted] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
   const [challengeFeedback, setChallengeFeedback] = useState<Record<string, string>>({});
+  const [challengeChecklist, setChallengeChecklist] = useState<Record<string, ChecklistKey[]>>({});
+  const [checklistResults, setChecklistResults] = useState<Record<string, ChecklistResult>>({});
   const [surveyDeclineCount, setSurveyDeclineCount] = useState(0);
   const [surveyDismissed, setSurveyDismissed] = useState(false);
 
@@ -184,6 +251,8 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
     setVideoStarted(false);
     setVideoEnded(false);
     setChallengeFeedback({});
+    setChallengeChecklist({});
+    setChecklistResults({});
     setSessionId(nextSessionId);
   };
 
@@ -225,15 +294,52 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
     if (isMountedRef.current) setRewardResult(result);
   };
 
+  const getChecklistResult = (levelId: string, selected: ChecklistKey[]): ChecklistResult => {
+    const expected = EXPECTED_CHECKLIST[levelId] ?? [];
+    const matched = selected.filter(item => expected.includes(item));
+    const missed = expected.filter(item => !selected.includes(item));
+    const extra = selected.filter(item => !expected.includes(item));
+    return {
+      selected,
+      matched,
+      missed,
+      extra,
+      score: Math.max(0, matched.length - extra.length),
+      max: expected.length,
+    };
+  };
+
+  const getChecklistLabel = (key: ChecklistKey) => (
+    CHECKLIST_ITEMS[lang].find(item => item.id === key)?.label ?? key
+  );
+
+  const toggleChecklistItem = (levelId: string, itemId: ChecklistKey) => {
+    setChallengeChecklist(prev => {
+      const current = prev[levelId] ?? [];
+      const next = current.includes(itemId)
+        ? current.filter(item => item !== itemId)
+        : [...current, itemId];
+      return { ...prev, [levelId]: next };
+    });
+  };
+
   const handleChoice = (choice: 1 | 2) => {
     // BẢO MẬT: Chặn Double-Click spam để hack vượt mốc điểm tuyệt đối
     if (!gameState || gameState.show_result || !videoEnded) return;
     const currentLevel = gameState.levels[gameState.current];
+    const selectedChecklist = challengeChecklist[currentLevel.id] ?? [];
+    if (selectedChecklist.length === 0) return;
     const isCorrect = currentLevel.fake_pos === choice;
+    const checklistResult = getChecklistResult(currentLevel.id, selectedChecklist);
     
     if (!isCorrect) {
       setWrongLevels(prev => [...prev, currentLevel]);
     }
+
+    setChecklistResults(prev => ({
+      ...prev,
+      [currentLevel.id]: checklistResult,
+    }));
 
     setGameState(prev => prev ? ({
         ...prev,
@@ -262,6 +368,19 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
             details: {
                wrong_levels: wrongLevels.map(l => l.id), // Lưu ID các câu sai
                total_levels: gameState.levels.length,
+               challenge_checklist: Object.entries(checklistResults).map(([levelId, result]) => ({
+                 level_id: levelId,
+                 selected: result.selected,
+                 matched: result.matched,
+                 missed: result.missed,
+                 extra: result.extra,
+                 score: result.score,
+                 max: result.max,
+               })),
+               observation_score: {
+                 score: Object.values(checklistResults).reduce((sum, result) => sum + result.score, 0),
+                 max: Object.values(checklistResults).reduce((sum, result) => sum + result.max, 0),
+               },
                challenge_feedback: Object.entries(challengeFeedback)
                  .filter(([, note]) => note.trim().length > 0)
                  .map(([levelId, note]) => ({
@@ -279,7 +398,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
             setRewardResult({
               ok: false,
               code: 'not_eligible',
-              message: lang === 'vi' ? 'Can dat toi thieu 70 diem de nhan DPF coin.' : 'Score at least 70 to earn DPF coin.',
+              message: lang === 'vi' ? 'Cần đạt tối thiểu 70 điểm để nhận DPF coin.' : 'Score at least 70 to earn DPF coin.',
             });
           }
     } else {
@@ -348,6 +467,9 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
     const score = gameState.score;
     const totalQuestions = gameState.levels.length;
     const accuracyPercent = Math.round((score / totalQuestions) * 100);
+    const observationScore = Object.values(checklistResults).reduce((sum, result) => sum + result.score, 0);
+    const observationMax = Object.values(checklistResults).reduce((sum, result) => sum + result.max, 0);
+    const observationPercent = observationMax > 0 ? Math.round((observationScore / observationMax) * 100) : 0;
     const scales = SURVEY_SCALE[lang];
 
     // Phân tích dữ liệu kết quả (Năng lực nhận diện chia theo nhóm)
@@ -460,13 +582,13 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                                 onClick={declineSurvey}
                                 className="bg-white/5 text-gray-400 border border-white/10 px-8 py-4 rounded-xl font-black text-xs uppercase transition-all hover:bg-white/10 hover:text-white w-full sm:w-auto"
                             >
-                                {lang === 'vi' ? 'BO QUA KHAO SAT' : 'SKIP SURVEY'}
+                                {lang === 'vi' ? 'BỎ QUA KHẢO SÁT' : 'SKIP SURVEY'}
                             </button>
                         </div>
                         {surveyDeclineCount > 0 && (
                             <p className="mt-5 text-gray-400 text-xs leading-relaxed">
                                 {lang === 'vi'
-                                  ? 'Neu co the, chung toi rat mong ban danh khoang mot phut de gop y an danh. Du lieu chi dung de cai thien thu thach va khong bat buoc.'
+                                  ? 'Nếu có thể, chúng tôi rất mong bạn dành khoảng một phút để góp ý ẩn danh. Dữ liệu chỉ dùng để cải thiện thử thách và không bắt buộc.'
                                   : 'If possible, we would really appreciate one minute of anonymous feedback. It is optional and only helps improve the challenge.'}
                             </p>
                         )}
@@ -556,26 +678,29 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     <div className="mb-8">
                        <h2 className="text-2xl md:text-4xl font-black text-white mb-2 uppercase tracking-tighter leading-tight">{statusTitle}</h2>
                        <div className="text-white/40 font-mono text-sm tracking-[0.4em] uppercase">{score}/{totalQuestions} {lang === 'vi' ? 'ĐIỂM CHÍNH XÁC' : 'ACCURACY SCORE'}</div>
+                       <div className="mt-2 text-primary font-mono text-xs tracking-[0.25em] uppercase">
+                         {lang === 'vi' ? 'ĐIỂM QUAN SÁT' : 'OBSERVATION SCORE'}: {observationScore}/{observationMax} ({observationPercent}%)
+                       </div>
                     </div>
 
                     <p className="text-gray-300 max-w-xl mb-10 leading-relaxed text-base">{statusDesc}</p>
                     <DpfRewardNotice
                       result={rewardResult}
-                      successPrefix={lang === 'vi' ? 'Da nhan thuong' : 'Reward claimed'}
+                      successPrefix={lang === 'vi' ? 'Đã nhận thưởng' : 'Reward claimed'}
                     />
 
                     {!surveySent && !surveyDismissed && (
                       <div className="w-full max-w-xl mb-8 rounded-2xl border border-primary/20 bg-primary/5 p-6 text-left">
                         <div className="text-primary text-[10px] font-black uppercase tracking-widest mb-3">
-                          {lang === 'vi' ? 'KHAO SAT TUY CHON' : 'OPTIONAL SURVEY'}
+                          {lang === 'vi' ? 'KHẢO SÁT TÙY CHỌN' : 'OPTIONAL SURVEY'}
                         </div>
                         <p className="text-gray-300 text-sm leading-relaxed mb-5">
                           {surveyDeclineCount > 0
                             ? (lang === 'vi'
-                                ? 'Chung toi xin phep hoi lai mot lan nua: neu ban co the, hay danh khoang mot phut gop y an danh de giup DEEPFENSE cai thien bo thu thach. Ban co quyen bo qua va khong bi anh huong diem.'
+                                ? 'Chúng tôi xin phép hỏi lại một lần nữa: nếu bạn có thể, hãy dành khoảng một phút góp ý ẩn danh để giúp DEEPFENSE cải thiện bộ thử thách. Bạn có quyền bỏ qua và không bị ảnh hưởng điểm.'
                                 : 'One gentle last ask: if you can spare about a minute, anonymous feedback helps DEEPFENSE improve this challenge. You can skip it and your score is unaffected.')
                             : (lang === 'vi'
-                                ? 'Cam on ban da hoan thanh thu thach. Khao sat ngan nay la tu nguyen, an danh, va chi dung de cai thien noi dung dao tao.'
+                                ? 'Cảm ơn bạn đã hoàn thành thử thách. Khảo sát ngắn này là tự nguyện, ẩn danh, và chỉ dùng để cải thiện nội dung đào tạo.'
                                 : 'Thank you for completing the challenge. This short survey is optional, anonymous, and only used to improve the training experience.')}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3">
@@ -586,15 +711,15 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                             }}
                             className="bg-primary text-black px-6 py-3 rounded-xl font-black text-xs uppercase transition-all hover:scale-105"
                           >
-                            {lang === 'vi' ? 'LAM KHAO SAT' : 'TAKE SURVEY'}
+                          {lang === 'vi' ? 'LÀM KHẢO SÁT' : 'TAKE SURVEY'}
                           </button>
                           <button
                             onClick={declineSurvey}
                             className="bg-white/5 text-gray-400 border border-white/10 px-6 py-3 rounded-xl font-black text-xs uppercase transition-all hover:bg-white/10 hover:text-white"
                           >
                             {surveyDeclineCount > 0
-                              ? (lang === 'vi' ? 'KHONG, CAM ON' : 'NO, THANKS')
-                              : (lang === 'vi' ? 'BO QUA' : 'SKIP')}
+                              ? (lang === 'vi' ? 'KHÔNG, CẢM ƠN' : 'NO, THANKS')
+                              : (lang === 'vi' ? 'BỎ QUA' : 'SKIP')}
                           </button>
                         </div>
                       </div>
@@ -603,7 +728,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     {surveyDismissed && (
                       <div className="w-full max-w-xl mb-8 rounded-2xl border border-white/10 bg-white/5 p-5 text-gray-300 text-sm leading-relaxed">
                         {lang === 'vi'
-                          ? 'Cam on ban da tham gia dung thu thach. Y kien cua ban trong phan choi da giup chung toi cai thien DEEPFENSE.'
+                          ? 'Cảm ơn bạn đã tham gia dùng thử thách. Ý kiến của bạn trong phần chơi đã giúp chúng tôi cải thiện DEEPFENSE.'
                           : 'Thank you for taking the challenge. Your participation already helps us improve DEEPFENSE.'}
                       </div>
                     )}
@@ -735,6 +860,10 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
 
   const lvl = gameState.levels[gameState.current];
   const progress = ((gameState.current + 1) / gameState.levels.length) * 100;
+  const selectedChecklist = challengeChecklist[lvl.id] ?? [];
+  const checklistResult = checklistResults[lvl.id];
+  const checklistPerfect = checklistResult ? checklistResult.score === checklistResult.max && checklistResult.extra.length === 0 : false;
+  const canSubmitAnswer = videoEnded && selectedChecklist.length > 0;
 
   return (
     <div className="max-w-4xl mx-auto py-4 px-4 animate-in fade-in duration-500">
@@ -775,10 +904,10 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                         onClick={startChallengeVideo}
                         className="bg-primary text-black px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-lg hover:scale-105 transition-all flex items-center gap-3"
                     >
-                        <Play size={18} fill="currentColor" /> {lang === 'vi' ? 'BAT DAU XEM VIDEO' : 'START VIDEO'}
+                        <Play size={18} fill="currentColor" /> {lang === 'vi' ? 'BẮT ĐẦU XEM VIDEO' : 'START VIDEO'}
                     </button>
                     <p className="mt-4 text-gray-500 text-[10px] font-bold uppercase tracking-widest max-w-sm">
-                        {lang === 'vi' ? 'Xem het video roi moi dua ra nhan dinh.' : 'Watch the full video before making a judgment.'}
+                        {lang === 'vi' ? 'Xem hết video rồi mới đưa ra nhận định.' : 'Watch the full video before making a judgment.'}
                     </p>
                 </div>
             )}
@@ -786,7 +915,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
             {videoStarted && !videoEnded && !gameState.show_result && (
                 <div className="absolute bottom-4 inset-x-4 z-10 pointer-events-none flex justify-center">
                     <div className="bg-black/80 backdrop-blur px-4 py-2 rounded-lg border border-white/10 text-gray-300 text-[10px] font-black uppercase tracking-widest">
-                        {lang === 'vi' ? 'Dang quan sat...' : 'Observing...'}
+                        {lang === 'vi' ? 'Đang quan sát...' : 'Observing...'}
                     </div>
                 </div>
             )}
@@ -800,13 +929,47 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
           </div>
           
           {!gameState.show_result ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <button disabled={!videoEnded} onClick={() => handleChoice(1)} className={`py-6 border border-white/10 bg-surface font-black rounded-2xl transition-all uppercase text-xs tracking-widest shadow-xl flex items-center justify-center gap-3 group active:scale-95 ${videoEnded ? 'text-white hover:border-primary hover:text-primary' : 'text-gray-700 cursor-not-allowed opacity-60'}`}>
-                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> {lang === 'vi' ? 'BÊN TRÁI LÀ GIẢ' : 'LEFT IS FAKE'}
-                  </button>
-                  <button disabled={!videoEnded} onClick={() => handleChoice(2)} className={`py-6 border border-white/10 bg-surface font-black rounded-2xl transition-all uppercase text-xs tracking-widest shadow-xl flex items-center justify-center gap-3 group active:scale-95 ${videoEnded ? 'text-white hover:border-secondary hover:text-secondary' : 'text-gray-700 cursor-not-allowed opacity-60'}`}>
-                    {lang === 'vi' ? 'BÊN PHẢI LÀ GIẢ' : 'RIGHT IS FAKE'} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                  </button>
+              <div className="space-y-4">
+                  <div className={`rounded-2xl border border-white/10 bg-surface p-5 shadow-xl transition-opacity ${videoEnded ? 'opacity-100' : 'opacity-50'}`}>
+                      <div className="mb-2 flex items-center gap-2 text-primary text-[10px] font-black uppercase tracking-widest">
+                          <ClipboardList size={14} />
+                          {lang === 'vi' ? 'Bạn đã thấy dấu hiệu nào?' : 'Which clues did you notice?'}
+                      </div>
+                      <p className="mb-4 text-xs leading-relaxed text-gray-500">
+                          {lang === 'vi'
+                            ? 'Chọn ít nhất một dấu hiệu sau khi xem hết video, rồi mới nộp đáp án trái/phải.'
+                            : 'Select at least one clue after watching the full video, then submit your left/right answer.'}
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {CHECKLIST_ITEMS[lang].map(item => {
+                            const checked = selectedChecklist.includes(item.id);
+                            return (
+                              <label
+                                key={item.id}
+                                className={`flex min-h-[54px] items-center gap-3 rounded-xl border px-4 py-3 text-xs font-bold leading-snug transition-all ${checked ? 'border-primary bg-primary/10 text-white' : 'border-white/10 bg-black/30 text-gray-400'} ${videoEnded ? 'cursor-pointer hover:border-primary/50' : 'cursor-not-allowed'}`}
+                              >
+                                <input
+                                  type="checkbox"
+                                  disabled={!videoEnded}
+                                  checked={checked}
+                                  onChange={() => toggleChecklistItem(lvl.id, item.id)}
+                                  className="h-4 w-4 accent-cyan-400"
+                                />
+                                <span>{item.label}</span>
+                              </label>
+                            );
+                          })}
+                      </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <button disabled={!canSubmitAnswer} onClick={() => handleChoice(1)} className={`py-6 border border-white/10 bg-surface font-black rounded-2xl transition-all uppercase text-xs tracking-widest shadow-xl flex items-center justify-center gap-3 group active:scale-95 ${canSubmitAnswer ? 'text-white hover:border-primary hover:text-primary' : 'text-gray-700 cursor-not-allowed opacity-60'}`}>
+                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> {lang === 'vi' ? 'BÊN TRÁI LÀ GIẢ' : 'LEFT IS FAKE'}
+                      </button>
+                      <button disabled={!canSubmitAnswer} onClick={() => handleChoice(2)} className={`py-6 border border-white/10 bg-surface font-black rounded-2xl transition-all uppercase text-xs tracking-widest shadow-xl flex items-center justify-center gap-3 group active:scale-95 ${canSubmitAnswer ? 'text-white hover:border-secondary hover:text-secondary' : 'text-gray-700 cursor-not-allowed opacity-60'}`}>
+                        {lang === 'vi' ? 'BÊN PHẢI LÀ GIẢ' : 'RIGHT IS FAKE'} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                      </button>
+                  </div>
               </div>
           ) : (
             <div className="animate-in slide-in-from-bottom-6 duration-500">
@@ -826,9 +989,27 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                         {!gameState.last_correct && (
                             <div className="mt-4 rounded-xl border border-secondary/20 bg-black/30 p-4 text-left">
                                 <div className="mb-2 text-[10px] font-black uppercase tracking-widest text-secondary">
-                                    {lang === 'vi' ? 'VI SAO DAP AN CHUA DUNG?' : 'WHY WAS THIS NOT CORRECT?'}
+                                    {lang === 'vi' ? 'VÌ SAO ĐÁP ÁN CHƯA ĐÚNG?' : 'WHY WAS THIS NOT CORRECT?'}
                                 </div>
                                 <p className="text-sm leading-relaxed text-gray-300">{lvl.advice}</p>
+                            </div>
+                        )}
+                        {checklistResult && !checklistPerfect && (
+                            <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-4 text-left">
+                                <div className="mb-2 text-[10px] font-black uppercase tracking-widest text-primary">
+                                    {lang === 'vi' ? 'CHECKLIST QUAN SÁT' : 'OBSERVATION CHECKLIST'}
+                                </div>
+                                <p className="text-sm leading-relaxed text-gray-300">
+                                    {lang === 'vi'
+                                      ? `Bạn chọn đúng ${checklistResult.matched.length}/${checklistResult.max} nhóm dấu hiệu chính.`
+                                      : `You matched ${checklistResult.matched.length}/${checklistResult.max} key clue groups.`}
+                                </p>
+                                {checklistResult.missed.length > 0 && (
+                                  <p className="mt-2 text-xs leading-relaxed text-gray-500">
+                                    {lang === 'vi' ? 'Nên để ý thêm: ' : 'Also watch for: '}
+                                    {checklistResult.missed.map(getChecklistLabel).join(', ')}
+                                  </p>
+                                )}
                             </div>
                         )}
                     </div>
@@ -838,7 +1019,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                 </div>
                 <div className="mt-4 bg-surface border border-white/10 rounded-2xl p-5 shadow-xl">
                     <label htmlFor={`challenge-feedback-${lvl.id}`} className="block text-primary text-[10px] font-black uppercase tracking-widest mb-3">
-                        {lang === 'vi' ? 'Ban co thay diem gi khac chung toi khong?' : 'Did you notice anything we missed?'}
+                        {lang === 'vi' ? 'Bạn có thấy điểm gì khác chúng tôi không?' : 'Did you notice anything we missed?'}
                     </label>
                     <textarea
                         id={`challenge-feedback-${lvl.id}`}
@@ -847,7 +1028,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                         maxLength={500}
                         rows={3}
                         className="w-full resize-none rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-gray-600 focus:border-primary"
-                        placeholder={lang === 'vi' ? 'Hay gop y neu ban thay dau hieu khac, video bi loi, hoac dap an/giai thich can xem lai.' : 'Share any other clues you noticed, video issues, or answer/explanation concerns.'}
+                        placeholder={lang === 'vi' ? 'Hãy góp ý nếu bạn thấy dấu hiệu khác, video bị lỗi, hoặc đáp án/giải thích cần xem lại.' : 'Share any other clues you noticed, video issues, or answer/explanation concerns.'}
                     />
                     <div className="mt-2 text-right text-[10px] font-mono text-gray-600">{(challengeFeedback[lvl.id] ?? '').length}/500</div>
                 </div>
