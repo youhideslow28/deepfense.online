@@ -17,6 +17,11 @@ export const MODULES = [
     id: 0, part: 'intro',
     title: 'Một ngày bình thường trên không gian số',
     duration: '25-30 phút', level: 'Intro',
+    introVideo: {
+      src: '/academy/media/module-intros/module-0/module%200.web.mp4',
+      title: 'Video mở đầu Module 0',
+      caption: 'Xem video ngắn này trước khi bắt đầu phần nhập môn.',
+    },
     scenario: 'An trải qua một ngày bình thường: thấy video đầu tư của người nổi tiếng, nhận tin nhắn mượn tiền từ bạn cũ, thấy ảnh nhạy cảm trong nhóm chat, nhận cuộc gọi giống người thân, rồi thấy clip gây phẫn nộ trước khi ngủ. Nếu là An, bạn sẽ làm gì?',
     outcomes: [
       'Hiểu vì sao deepfake không còn là chuyện xa lạ của người nổi tiếng hay phim ảnh.',
@@ -169,6 +174,11 @@ export const MODULES = [
     id: 1, part: 'foundation',
     title: 'Deepfake là gì?',
     duration: '80-90 phút', level: 'Foundation',
+    introVideo: {
+      src: '/academy/media/module-intros/module-01/module%201.web.mp4',
+      title: 'Video mở đầu Module 1',
+      caption: 'Bắt đầu Module 1 bằng phần dẫn nhập trực quan trước khi đi vào khái niệm.',
+    },
     scenario: 'Buổi sáng An đang ăn sáng và lướt điện thoại. Một video hiện lên: người nổi tiếng đang giới thiệu kênh đầu tư "lợi nhuận cao, rủi ro thấp". Gương mặt giống, giọng nói giống, khẩu hình có vẻ khớp, bên dưới nhiều bình luận ủng hộ. Nhưng An phân vân — người này thường không quảng cáo kiểu đó...',
     outcomes: [
       'Giải thích được deepfake bằng ngôn ngữ đơn giản.',
@@ -1728,7 +1738,7 @@ export function buildLessonIndex() {
   for (const mod of MODULES) {
     for (const sec of mod.sections) {
       for (const les of sec.lessons) {
-        index.push({ moduleId: mod.id, sectionTitle: sec.title, lesson: les, checkpoint: sec.checkpoint });
+        index.push({ moduleId: mod.id, module: mod, sectionTitle: sec.title, lesson: les, checkpoint: sec.checkpoint });
       }
     }
   }
