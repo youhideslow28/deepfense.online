@@ -279,10 +279,71 @@ export const basicsCourse = {
               "Một khoảng dừng đúng lúc có thể ngăn một thiệt hại lớn."
             ])
           ],
-          checkpoint: checkpoint("0.3", [
-            q("Mục tiêu chính của DEEPFENSE BASIC là gì?", ["Học cách tạo deepfake", "Học cách nhận diện và phòng vệ an toàn", "Học mẹo vượt detector", "Tăng lượt xem nội dung"], 1),
-            q("Trong Deepfense Check, 'Verify' có nghĩa là gì?", ["Xác minh qua kênh độc lập", "Tin nếu video rõ nét", "Tải video về ngay", "Chia sẻ để hỏi cộng đồng"], 0)
-          ])
+          checkpoint: {
+            label: "0.3",
+            questions: [
+              q("Mục tiêu chính của DEEPFENSE BASIC là gì?", ["Học cách tạo deepfake", "Học cách nhận diện và phòng vệ an toàn", "Học mẹo vượt detector", "Tăng lượt xem nội dung"], 1),
+              q("Trong Deepfense Check, 'Verify' có nghĩa là gì?", ["Xác minh qua kênh độc lập", "Tin nếu video rõ nét", "Tải video về ngay", "Chia sẻ để hỏi cộng đồng"], 0),
+            ],
+            miniGame: {
+              type: 'order-steps' as MiniGameType,
+              title: { vi: '🔢 Sắp xếp quy trình Deepfense Check', en: '🔢 Order the Deepfense Check Steps' },
+              instruction: {
+                vi: 'Nhấn vào từng bước theo đúng thứ tự của quy trình Deepfense Check. Có 5 bước cần sắp xếp từ đầu tiên đến cuối cùng.',
+                en: 'Tap each step in the correct order of the Deepfense Check process. There are 5 steps to arrange from first to last.',
+              },
+              reward: 1,
+              data: {
+                steps: [
+                  {
+                    id: 1,
+                    icon: '⏸️',
+                    label: { vi: '⏸️ Pause', en: '⏸️ Pause' },
+                    description: {
+                      vi: 'Dừng lại trước khi phản ứng. Không chuyển tiền, không chia sẻ, không kết luận khi còn đang xúc động.',
+                      en: 'Stop before reacting. Don\'t transfer money, share, or conclude while still emotionally triggered.',
+                    },
+                  },
+                  {
+                    id: 2,
+                    icon: '👁️',
+                    label: { vi: '👁️ Observe', en: '👁️ Observe' },
+                    description: {
+                      vi: 'Quan sát dấu hiệu kỹ thuật (hình ảnh, âm thanh) và bối cảnh (ai gửi, yêu cầu gì, vì sao khẩn cấp).',
+                      en: 'Observe technical signals (image, audio) and context (who sent it, what they want, why so urgent).',
+                    },
+                  },
+                  {
+                    id: 3,
+                    icon: '✅',
+                    label: { vi: '✅ Verify', en: '✅ Verify' },
+                    description: {
+                      vi: 'Xác minh qua kênh độc lập: gọi lại số đã lưu, kiểm tra website chính thức, hỏi người thứ ba đáng tin.',
+                      en: 'Verify through an independent channel: call back a saved number, check the official website, ask a trusted third party.',
+                    },
+                  },
+                  {
+                    id: 4,
+                    icon: '🔍',
+                    label: { vi: '🔍 Trace', en: '🔍 Trace' },
+                    description: {
+                      vi: 'Truy nguồn nội dung: tìm bài gốc, kiểm tra lịch đăng, dùng công cụ tìm ảnh ngược hoặc kiểm tra URL.',
+                      en: 'Trace the content\'s origin: find the original post, check the upload date, use reverse image search or URL verification.',
+                    },
+                  },
+                  {
+                    id: 5,
+                    icon: '🎯',
+                    label: { vi: '🎯 Decide', en: '🎯 Decide' },
+                    description: {
+                      vi: 'Ra quyết định ít gây hại nhất: từ chối, báo cáo, hỗ trợ nạn nhân hoặc không hành động thêm.',
+                      en: 'Make the least-harmful decision: decline, report, support victims, or take no further action.',
+                    },
+                  },
+                ],
+              } as OrderStepsData,
+            },
+          }
         },
         {
           title: "0.4 Pre-check (Đánh giá ban đầu)",
@@ -295,16 +356,109 @@ export const basicsCourse = {
               "Kết quả này là điểm mốc để so sánh sau khi hoàn thành khóa học."
             ])
           ],
-          checkpoint: checkpoint("0.4", [
-            q("Bạn nhận video gọi trực tiếp từ người thân nói đang bị tai nạn và cần tiền gấp. Hình ảnh hơi mờ, tiếng bị giật. Bạn làm gì?", ["Chuyển tiền ngay", "Hỏi tài khoản rồi chuyển", "Dừng cuộc gọi, gọi lại số điện thoại đã lưu", "Bấm vào link 'vị trí' họ gửi"], 2),
-            q("Thấy video người nổi tiếng quảng cáo ứng dụng đầu tư 'chắc chắn sinh lời 100%', bạn nên làm gì?", ["Đăng ký ngay", "Nạp thử một ít", "Kiểm tra kênh chính thức của người đó", "Chia sẻ cho bạn bè"], 2),
-            q("Một hình ảnh nhạy cảm nghi là của một người quen bị lan truyền trong nhóm. Bạn làm gì?", ["Lưu lại để làm bằng chứng", "Gửi cho người khác hỏi thật giả", "Không lan truyền và báo cáo nội dung", "Bình luận trêu đùa"], 2),
-            q("Bạn nhận email từ 'Ngân hàng' yêu cầu đăng nhập qua link để 'xác minh tài khoản'. Bạn làm gì?", ["Bấm link đăng nhập ngay", "Tự mở ứng dụng ngân hàng hoặc gõ đúng địa chỉ web của ngân hàng", "Gửi mã OTP cho họ", "Cài ứng dụng đính kèm"], 1),
-            q("Ai có thể là nạn nhân của Deepfake?", ["Chỉ người nổi tiếng", "Chỉ người giàu", "Bất kỳ ai sử dụng Internet", "Chỉ người không biết công nghệ"], 2),
-            q("Deepfake có thể giả mạo những gì?", ["Hình ảnh và video", "Giọng nói", "Cả hình ảnh, video và giọng nói", "Chỉ văn bản"], 2),
-            q("Dấu hiệu nào ĐÁNG NGHI nhất trong một yêu cầu chuyển tiền?", ["Người đó nói đang rất gấp và bảo đừng nói với ai", "Video có màu sắc đẹp", "Tin nhắn có dấu câu đúng", "Gửi vào buổi sáng"], 0),
-            q("Khi một nội dung làm bạn rất giận hoặc rất sợ, bạn nên làm gì đầu tiên?", ["Chia sẻ để cảnh báo", "Bình luận phản đối", "Dừng lại 30 giây để kiểm chứng", "Tải video về máy"], 2)
-          ])
+          checkpoint: {
+            label: "0.4",
+            questions: [
+              q("Bạn nhận video gọi trực tiếp từ người thân nói đang bị tai nạn và cần tiền gấp. Hình ảnh hơi mờ, tiếng bị giật. Bạn làm gì?", ["Chuyển tiền ngay", "Hỏi tài khoản rồi chuyển", "Dừng cuộc gọi, gọi lại số điện thoại đã lưu", "Bấm vào link 'vị trí' họ gửi"], 2),
+              q("Thấy video người nổi tiếng quảng cáo ứng dụng đầu tư 'chắc chắn sinh lời 100%', bạn nên làm gì?", ["Đăng ký ngay", "Nạp thử một ít", "Kiểm tra kênh chính thức của người đó", "Chia sẻ cho bạn bè"], 2),
+              q("Một hình ảnh nhạy cảm nghi là của một người quen bị lan truyền trong nhóm. Bạn làm gì?", ["Lưu lại để làm bằng chứng", "Gửi cho người khác hỏi thật giả", "Không lan truyền và báo cáo nội dung", "Bình luận trêu đùa"], 2),
+              q("Bạn nhận email từ 'Ngân hàng' yêu cầu đăng nhập qua link để 'xác minh tài khoản'. Bạn làm gì?", ["Bấm link đăng nhập ngay", "Tự mở ứng dụng ngân hàng hoặc gõ đúng địa chỉ web của ngân hàng", "Gửi mã OTP cho họ", "Cài ứng dụng đính kèm"], 1),
+              q("Ai có thể là nạn nhân của Deepfake?", ["Chỉ người nổi tiếng", "Chỉ người giàu", "Bất kỳ ai sử dụng Internet", "Chỉ người không biết công nghệ"], 2),
+              q("Deepfake có thể giả mạo những gì?", ["Hình ảnh và video", "Giọng nói", "Cả hình ảnh, video và giọng nói", "Chỉ văn bản"], 2),
+              q("Dấu hiệu nào ĐÁNG NGHI nhất trong một yêu cầu chuyển tiền?", ["Người đó nói đang rất gấp và bảo đừng nói với ai", "Video có màu sắc đẹp", "Tin nhắn có dấu câu đúng", "Gửi vào buổi sáng"], 0),
+              q("Khi một nội dung làm bạn rất giận hoặc rất sợ, bạn nên làm gì đầu tiên?", ["Chia sẻ để cảnh báo", "Bình luận phản đối", "Dừng lại 30 giây để kiểm chứng", "Tải video về máy"], 2),
+            ],
+            miniGame: {
+              type: 'sort-cards' as MiniGameType,
+              title: { vi: '🗂️ Giúp An phân loại tình huống', en: '🗂️ Help An Sort the Situations' },
+              instruction: {
+                vi: 'An đã gặp 6 tình huống trong ngày hôm đó. Kéo hoặc nhấn từng thẻ vào đúng nhóm: Bình thường, Cần kiểm tra, hoặc Nguy hiểm.',
+                en: 'An encountered 6 situations today. Drag or tap each card into the right group: Normal, Check First, or Dangerous.',
+              },
+              reward: 1,
+              data: {
+                buckets: [
+                  { id: 'normal', icon: '🟢', label: { vi: '🟢 Bình thường', en: '🟢 Normal' } },
+                  { id: 'check',  icon: '🟡', label: { vi: '🟡 Cần kiểm tra', en: '🟡 Check First' } },
+                  { id: 'danger', icon: '🔴', label: { vi: '🔴 Nguy hiểm', en: '🔴 Dangerous' } },
+                ],
+                cards: [
+                  {
+                    id: 1,
+                    text: {
+                      vi: 'Buổi sáng, An thấy video người nổi tiếng giới thiệu kênh đầu tư lợi nhuận cao. Gương mặt và giọng đúng là người đó.',
+                      en: 'In the morning, An sees a video of a celebrity promoting a high-profit investment channel. The face and voice match perfectly.',
+                    },
+                    correctBucket: 'danger',
+                    explanation: {
+                      vi: 'Deepfake thường dùng khuôn mặt và giọng nói của người nổi tiếng để tạo độ tin cậy. Không đầu tư trước khi xác minh qua kênh chính thức.',
+                      en: 'Deepfakes often use celebrity faces and voices to appear credible. Never invest before verifying through official channels.',
+                    },
+                  },
+                  {
+                    id: 2,
+                    text: {
+                      vi: 'Chiều hôm đó, An nhận cuộc gọi video từ người thân. Hình hơi mờ, âm thanh không rõ dù sóng mạng đang tốt.',
+                      en: 'That afternoon, An receives a video call from a relative. The image is blurry and audio unclear despite a strong network signal.',
+                    },
+                    correctBucket: 'check',
+                    explanation: {
+                      vi: 'Chất lượng thấp bất thường trong điều kiện mạng tốt cần được xác minh — có thể là deepfake hoặc tài khoản bị chiếm quyền.',
+                      en: 'Unusually poor quality despite a good connection warrants verification — could be deepfake or an account takeover.',
+                    },
+                  },
+                  {
+                    id: 3,
+                    text: {
+                      vi: 'An nhận tin nhắn từ số lạ: "Chúc mừng! Bạn trúng iPhone 15. Nhấp vào link này để nhận thưởng!"',
+                      en: 'An receives a message from an unknown number: "Congratulations! You\'ve won an iPhone 15. Click this link to claim your prize!"',
+                    },
+                    correctBucket: 'danger',
+                    explanation: {
+                      vi: 'Thông báo trúng thưởng từ số lạ kèm link là lừa đảo cổ điển. Không bao giờ nhấp vào.',
+                      en: 'Prize notifications from unknown senders with links are a classic scam. Never click.',
+                    },
+                  },
+                  {
+                    id: 4,
+                    text: {
+                      vi: 'Đến trưa, tài khoản Facebook của bạn cũ An nhắn xin mượn tiền gấp. Ảnh đại diện đúng nhưng cách nhắn hơi lạ hơn bình thường.',
+                      en: 'At noon, a Facebook account that looks like An\'s old friend messages asking to borrow money urgently. Profile photo matches but the writing style is slightly off.',
+                    },
+                    correctBucket: 'check',
+                    explanation: {
+                      vi: 'Tài khoản mạng xã hội có thể bị chiếm quyền. Xác minh qua số điện thoại hoặc kênh liên lạc đã biết trước.',
+                      en: 'Social media accounts can be hijacked. Verify through a known phone number or other communication channel.',
+                    },
+                  },
+                  {
+                    id: 5,
+                    text: {
+                      vi: 'Trong nhóm chat xuất hiện clip viral: "Nghệ sĩ X thừa nhận scandal lớn" — không thấy báo chí hay trang tin chính thống nào đưa.',
+                      en: 'A viral clip appears in the group chat: "Celebrity X admits major scandal" — no mainstream news outlet is reporting it.',
+                    },
+                    correctBucket: 'danger',
+                    explanation: {
+                      vi: 'Nội dung chấn động không có nguồn báo chí chính thống thường là deepfake hoặc tin giả. Không chia sẻ trước khi kiểm chứng.',
+                      en: 'Shocking content with no mainstream source is typically deepfake or fake news. Don\'t share before verifying.',
+                    },
+                  },
+                  {
+                    id: 6,
+                    text: {
+                      vi: 'An nhận email từ trường đại học thông báo lịch thi cuối kỳ. Địa chỉ gửi đúng domain chính thức, không kèm link lạ.',
+                      en: 'An receives an email from university announcing the final exam schedule. Sent from the official domain, no suspicious links.',
+                    },
+                    correctBucket: 'normal',
+                    explanation: {
+                      vi: 'Email từ domain hợp lệ với nội dung thường lệ và không yêu cầu hành động nhạy cảm — đáng tin.',
+                      en: 'Email from a valid domain with routine content and no sensitive requests — trustworthy.',
+                    },
+                  },
+                ],
+              } as SortCardsData,
+            },
+          }
         }
       ],
       quiz: [
@@ -791,10 +945,74 @@ export const basicsCourse = {
               "Bạn không cần chứng minh deepfake mới có quyền từ chối yêu cầu đáng nghi."
             ])
           ],
-          checkpoint: checkpoint("3.1", [
-            q("Dấu hiệu nào thường thấy ở mắt trong video deepfake?", ["Mắt chớp quá nhiều", "Nhịp nháy mắt không tự nhiên hoặc ánh mắt không khớp hướng đầu", "Mắt luôn nhắm", "Mắt có màu lạ"], 1),
-            q("Điều gì ĐÁNG NGHI nhất trong một tin nhắn thoại?", ["Tiếng chim hót ở nền", "Giọng nói đều đều thiếu nhịp thở tự nhiên và yêu cầu tiền gấp", "Nói tiếng Việt chuẩn", "Nói nhanh"], 1)
-          ])
+          checkpoint: {
+            label: "3.1",
+            questions: [
+              q("Dấu hiệu nào thường thấy ở mắt trong video deepfake?", ["Mắt chớp quá nhiều", "Nhịp nháy mắt không tự nhiên hoặc ánh mắt không khớp hướng đầu", "Mắt luôn nhắm", "Mắt có màu lạ"], 1),
+              q("Điều gì ĐÁNG NGHI nhất trong một tin nhắn thoại?", ["Tiếng chim hót ở nền", "Giọng nói đều đều thiếu nhịp thở tự nhiên và yêu cầu tiền gấp", "Nói tiếng Việt chuẩn", "Nói nhanh"], 1),
+            ],
+            miniGame: {
+              type: 'risk-meter' as MiniGameType,
+              title: { vi: '🔬 Mắt Chuyên Gia', en: '🔬 Expert Eye Test' },
+              instruction: {
+                vi: 'Dựa trên những dấu hiệu kỹ thuật vừa học, hãy đánh giá mức độ đáng ngờ (1 = Bình thường, 5 = Cực kỳ đáng ngờ) cho từng mô tả dưới đây. Sau đó so sánh với nhận định của chuyên gia.',
+                en: 'Based on the technical signals you just learned, rate the suspiciousness (1 = Normal, 5 = Highly suspicious) of each description below. Then compare with the expert\'s assessment.',
+              },
+              reward: 2,
+              data: {
+                scenarios: [
+                  {
+                    id: 1,
+                    text: {
+                      vi: 'Video phỏng vấn: Gương mặt phát ngôn rõ nét, ánh mắt di chuyển tự nhiên, ánh sáng đồng đều từ một nguồn, khẩu hình miệng khớp hoàn toàn với âm thanh.',
+                      en: 'Interview video: Speaker\'s face is sharp, eyes move naturally, lighting is consistent from one source, and lip movement matches the audio perfectly.',
+                    },
+                    expertRating: 1,
+                    explanation: {
+                      vi: 'Không có dấu hiệu kỹ thuật nào đáng ngờ. Gương mặt rõ, mắt tự nhiên, ánh sáng đồng đều và khẩu hình khớp là các chỉ số của nội dung thật được quay đúng chuẩn.',
+                      en: 'No suspicious technical signals. Sharp face, natural eye movement, consistent lighting and perfect lip-sync are all indicators of authentic, properly recorded content.',
+                    },
+                  },
+                  {
+                    id: 2,
+                    text: {
+                      vi: 'Clip người nổi tiếng phát biểu: Viền tóc bị mờ và nhòa bất thường, da mặt quá mịn không tự nhiên, ánh mắt không di chuyển theo hướng ống kính khi đang nói.',
+                      en: 'Celebrity speech clip: Hairline is unusually blurry and soft, facial skin is unnaturally smooth, and eyes do not track the camera lens while speaking.',
+                    },
+                    expertRating: 5,
+                    explanation: {
+                      vi: 'Ba dấu hiệu deepfake cổ điển cùng xuất hiện: viền tóc nhòa, da mịn bất thường, mắt không khớp hướng nhìn. Bất kỳ một trong ba đã đáng ngờ — cả ba cùng lúc là mức nguy hiểm tối đa.',
+                      en: 'Three classic deepfake signs appear together: blurry hairline, unnaturally smooth skin, and misaligned gaze. Any one alone is suspicious — all three at once means maximum risk.',
+                    },
+                  },
+                  {
+                    id: 3,
+                    text: {
+                      vi: 'Tin nhắn thoại: Giọng nói đều đặn hoàn toàn không có ngắt nghỉ, thiếu âm tiếng thở tự nhiên giữa các câu, chất lượng âm thanh quá sạch như studio trong một cuộc trò chuyện thông thường.',
+                      en: 'Voice message: Perfectly even tone with absolutely no pauses, no natural breathing sounds between sentences, and studio-clean audio quality in what is supposed to be a casual conversation.',
+                    },
+                    expertRating: 4,
+                    explanation: {
+                      vi: 'Thiếu nhịp thở, giọng đều đặn bất thường và âm thanh quá sạch là ba dấu hiệu điển hình của deepvoice. Nội dung yêu cầu hành động tài chính sẽ đẩy mức rủi ro lên 5.',
+                      en: 'No breathing rhythm, abnormally flat tone, and studio-clean audio are three classic deepvoice signals. Any request for financial action would push this to a 5.',
+                    },
+                  },
+                  {
+                    id: 4,
+                    text: {
+                      vi: 'Ảnh chụp lãnh đạo công ty đang ký hợp đồng: Bàn tay hơi biến dạng với 6 ngón, nền phòng họp phía sau bị méo nhẹ ở góc ảnh.',
+                      en: 'Photo of a company executive signing a contract: Hands appear slightly deformed with 6 fingers, and the meeting room background is subtly warped at the corner of the image.',
+                    },
+                    expertRating: 5,
+                    explanation: {
+                      vi: 'Số ngón tay sai và nền bị méo là hai lỗi AI generation phổ biến nhất — AI vẫn gặp khó khăn với chi tiết bàn tay và đường thẳng. Đây gần như chắc chắn là ảnh AI-Generated.',
+                      en: 'Wrong finger count and a warped background are two of the most common AI generation errors — AI still struggles with hand details and straight lines. This is almost certainly an AI-generated image.',
+                    },
+                  },
+                ],
+              } as RiskMeterData,
+            },
+          }
         }
       ],
       quiz: [
