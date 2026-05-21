@@ -775,10 +775,10 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                         onClick={startChallengeVideo}
                         className="bg-primary text-black px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-lg hover:scale-105 transition-all flex items-center gap-3"
                     >
-                        <Play size={18} fill="currentColor" /> {lang === 'vi' ? 'Báº®T Äáº¦U XEM VIDEO' : 'START VIDEO'}
+                        <Play size={18} fill="currentColor" /> {lang === 'vi' ? 'BAT DAU XEM VIDEO' : 'START VIDEO'}
                     </button>
                     <p className="mt-4 text-gray-500 text-[10px] font-bold uppercase tracking-widest max-w-sm">
-                        {lang === 'vi' ? 'Xem háº¿t video rá»“i má»›i Ä‘Æ°a ra nháº­n Ä‘á»‹nh.' : 'Watch the full video before making a judgment.'}
+                        {lang === 'vi' ? 'Xem het video roi moi dua ra nhan dinh.' : 'Watch the full video before making a judgment.'}
                     </p>
                 </div>
             )}
@@ -786,7 +786,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
             {videoStarted && !videoEnded && !gameState.show_result && (
                 <div className="absolute bottom-4 inset-x-4 z-10 pointer-events-none flex justify-center">
                     <div className="bg-black/80 backdrop-blur px-4 py-2 rounded-lg border border-white/10 text-gray-300 text-[10px] font-black uppercase tracking-widest">
-                        {lang === 'vi' ? 'Äang quan sÃ¡t...' : 'Observing...'}
+                        {lang === 'vi' ? 'Dang quan sat...' : 'Observing...'}
                     </div>
                 </div>
             )}
