@@ -80,10 +80,10 @@ export const MODULES = [
           lesson('0.2.0', 'Tại sao và cách học DEEPFENSE BASIC', [
             'Deepfake nguy hiểm không phải chỉ vì nó giả. Nó nguy hiểm vì xuất hiện đúng lúc con người ít phòng bị nhất: khi ta lo cho người thân, sợ mất tiền, xấu hổ, giận dữ, muốn giúp ai đó, hoặc tin rằng mình đang nhìn thấy bằng chứng.',
             { type: 'cards', title: 'Deepfake không hoạt động một mình — thường đi kèm:', cols: 2, items: [
-              { icon: '📱', title: 'Tài khoản bị chiếm quyền', text: 'Kẻ xấu dùng tài khoản người quen để tạo tin tưởng ban đầu.', color: '#ef4444' },
-              { icon: '💬', title: 'Tin nhắn thúc ép', text: '"Chuyển ngay đi", "Đừng hỏi nhiều", "Gấp lắm" — tạo áp lực không để suy nghĩ.', color: '#f59e0b' },
-              { icon: '🔗', title: 'Link và trang web giả', text: 'Đi kèm link giả mạo ngân hàng, cơ quan nhà nước, sàn đầu tư.', color: '#ef4444' },
-              { icon: '👮', title: 'Giả danh quyền lực', text: 'Giả danh công an, ngân hàng, nhà trường, lãnh đạo, người nổi tiếng.', color: '#f59e0b' },
+              { title: 'Tài khoản bị chiếm quyền', text: 'Kẻ xấu dùng tài khoản người quen để tạo tin tưởng ban đầu.', color: '#ef4444' },
+              { title: 'Tin nhắn thúc ép', text: '"Chuyển ngay đi", "Đừng hỏi nhiều", "Gấp lắm" — tạo áp lực không để suy nghĩ.', color: '#f59e0b' },
+              { title: 'Link và trang web giả', text: 'Đi kèm link giả mạo ngân hàng, cơ quan nhà nước, sàn đầu tư.', color: '#ef4444' },
+              { title: 'Giả danh quyền lực', text: 'Giả danh công an, ngân hàng, nhà trường, lãnh đạo, người nổi tiếng.', color: '#f59e0b' },
             ]},
             'Vì vậy, học về deepfake là học cách tự hỏi: Ai đang gửi nội dung này? Họ muốn mình làm gì? Vì sao mình phải làm ngay? Nếu mình sai, ai sẽ bị hại? Có cách nào kiểm chứng độc lập không?',
             { type: 'process', title: 'Cách học trong mỗi phần của DEEPFENSE BASIC', direction: 'horizontal', steps: [
@@ -197,12 +197,12 @@ export const MODULES = [
         lessons: [
           lesson('1.1.0', 'Mục tiêu và tổng quan các khái niệm', [
             { type: 'cards', title: 'Sau phần 1.1, bạn sẽ:', cols: 2, items: [
-              { icon: '🤖', title: 'Hiểu khái niệm deepfake', text: 'Giải thích được deepfake bằng ngôn ngữ đơn giản cho người khác.', color: '#6366f1' },
-              { icon: '🗂️', title: 'Biết các dạng nội dung', text: 'Phân biệt deepfake, AI-generated, edited media và repurposed media.', color: '#f59e0b' },
-              { icon: '📖', title: 'Dùng đúng thuật ngữ', text: 'Hiểu chính xác các tên gọi — không nhầm lẫn khi đọc tin tức.', color: '#22c55e' },
-              { icon: '❌', title: 'Tránh nhầm lẫn phổ biến', text: 'Không đánh đồng "AI tạo ra" với "deepfake", hay "cắt ghép" với "đặt sai ngữ cảnh".', color: '#ef4444' },
+              { title: 'Hiểu khái niệm deepfake', text: 'Giải thích được deepfake bằng ngôn ngữ đơn giản cho người khác.', color: '#6366f1' },
+              { title: 'Biết các dạng nội dung', text: 'Phân biệt deepfake, AI-generated, edited media và repurposed media.', color: '#f59e0b' },
+              { title: 'Dùng đúng thuật ngữ', text: 'Hiểu chính xác các tên gọi — không nhầm lẫn khi đọc tin tức.', color: '#22c55e' },
+              { title: 'Tránh nhầm lẫn phổ biến', text: 'Không đánh đồng "AI tạo ra" với "deepfake", hay "cắt ghép" với "đặt sai ngữ cảnh".', color: '#ef4444' },
             ]},
-            { type: 'callout', variant: 'info', icon: '🗺️', title: 'Hệ sinh thái nội dung giả mạo', text: 'Có nhiều loại khác nhau — mỗi loại có <strong>đặc điểm, rủi ro và cách kiểm chứng riêng</strong>. Hiểu đúng tên gọi giúp bạn đặt câu hỏi đúng và chọn cách xử lý phù hợp.' },
+            { type: 'callout', variant: 'info', title: 'Hệ sinh thái nội dung giả mạo', text: 'Có nhiều loại khác nhau — mỗi loại có <strong>đặc điểm, rủi ro và cách kiểm chứng riêng</strong>. Hiểu đúng tên gọi giúp bạn đặt câu hỏi đúng và chọn cách xử lý phù hợp.' },
           ], [
             '4 mục tiêu phần 1.1: hiểu deepfake, biết các dạng nội dung giả mạo, dùng đúng thuật ngữ, tránh nhầm lẫn.',
             'Hiểu đúng tên → đặt câu hỏi đúng → xử lý phù hợp.',
@@ -211,10 +211,10 @@ export const MODULES = [
             { type: 'callout', variant: 'info', icon: '🤖', title: 'Deepfake là gì?', text: 'Deepfake là <strong>nội dung hình ảnh, video hoặc âm thanh</strong> được tạo ra hoặc chỉnh sửa bằng công nghệ số, thường có sử dụng AI, để khiến người xem tin rằng một người đã <strong>nói hoặc làm điều mà họ không thực sự nói hoặc làm</strong>.' },
             'Nói đơn giản: Deepfake là khi công nghệ làm cho một người "xuất hiện", "nói" hoặc "hành động" theo cách có thể không hề xảy ra trong đời thật.',
             { type: 'cards', title: 'Deepfake có thể là…', cols: 2, items: [
-              { icon: '🎥', title: 'Thay khuôn mặt', text: 'Video thay khuôn mặt người A vào cơ thể người B.', color: '#6366f1' },
-              { icon: '🎙️', title: 'Giả giọng người thân', text: 'Đoạn âm thanh giả giọng người thân để yêu cầu chuyển tiền.', color: '#ef4444' },
-              { icon: '💹', title: 'Video kêu gọi đầu tư', text: 'Video người nổi tiếng kêu gọi đầu tư dù họ chưa từng nói vậy.', color: '#f59e0b' },
-              { icon: '🔞', title: 'Hình ảnh nhạy cảm giả', text: 'Ghép khuôn mặt vào ảnh nhạy cảm để bôi nhọ hoặc tống tiền.', color: '#ef4444' },
+              { title: 'Thay khuôn mặt', text: 'Video thay khuôn mặt người A vào cơ thể người B.', color: '#6366f1' },
+              { title: 'Giả giọng người thân', text: 'Đoạn âm thanh giả giọng người thân để yêu cầu chuyển tiền.', color: '#ef4444' },
+              { title: 'Video kêu gọi đầu tư', text: 'Video người nổi tiếng kêu gọi đầu tư dù họ chưa từng nói vậy.', color: '#f59e0b' },
+              { title: 'Hình ảnh nhạy cảm giả', text: 'Ghép khuôn mặt vào ảnh nhạy cảm để bôi nhọ hoặc tống tiền.', color: '#ef4444' },
             ]},
             { type: 'callout', variant: 'warning', icon: '⚡', title: 'Không cần hoàn hảo mới nguy hiểm', text: 'Trong nhiều vụ lừa đảo, kẻ xấu không cần video hoàn hảo — chỉ cần <strong>đủ giống trong vài giây</strong>, kết hợp với sự khẩn cấp và tin tưởng, để nạn nhân hành động trước khi kịp suy nghĩ.' },
             { type: 'scenario', time: 'Ví dụ thực tế', icon: '📞', risk: 'high', title: 'Tin nhắn thoại giả giọng mẹ', description: 'Bạn nhận tin nhắn thoại nghe giống mẹ bạn: "Con ơi, mẹ đang cần tiền gấp, chuyển vào số này giúp mẹ." Bạn đang ở ngoài đường, nghe vội, thấy người gửi là tài khoản quen.', question: 'Trong giây đó, bạn có dừng lại để kiểm chứng không?' },
@@ -256,7 +256,7 @@ export const MODULES = [
               ['Biểu cảm khuôn mặt không phù hợp với nội dung', 'Người đang "nói điều vui" mà mặt không khớp'],
               ['Âm thanh quá sạch so với môi trường xung quanh', 'Âm thanh studio lẫn vào cảnh ngoài trời'],
             ]},
-            { type: 'callout', variant: 'tip', icon: '🔎', title: 'Không nên chỉ dựa vào các dấu hiệu này', text: 'Video bị nén, mạng yếu hoặc ánh sáng kém cũng có thể tạo cảm giác lạ. Cần kết hợp <strong>quan sát với kiểm chứng nguồn</strong>.' },
+            { type: 'callout', variant: 'tip', title: 'Không nên chỉ dựa vào các dấu hiệu này', text: 'Video bị nén, mạng yếu hoặc ánh sáng kém cũng có thể tạo cảm giác lạ. Cần kết hợp <strong>quan sát với kiểm chứng nguồn</strong>.' },
           ], [
             'Lip sync = chỉ thay chuyển động miệng để người thật "nói" điều giả.',
             'Các dấu hiệu kỹ thuật hữu ích nhưng không đủ — cần kết hợp kiểm chứng nguồn.',
@@ -279,7 +279,7 @@ export const MODULES = [
           ]),
           lesson('1.1.8', 'Khái niệm 8: AI-generated image và bảng phân biệt', [
             'AI-generated image là hình ảnh do AI tạo ra từ mô tả hoặc dữ liệu mẫu. Ví dụ: ảnh chân dung người không tồn tại; cảnh đường phố chưa từng được chụp; hình minh họa cho bài viết; ảnh sản phẩm giả.',
-            { type: 'callout', variant: 'warning', icon: '🖼️', title: 'Câu hỏi quan trọng hơn "Ảnh này có phải AI không?"', text: '<strong>Ảnh này đang được dùng để khiến mình tin điều gì?</strong><br><br>Rủi ro thực tế: tạo hồ sơ giả · giả ảnh hiện trường · minh họa sai cho tin tức · tạo bằng chứng giả · dàn dựng hình ảnh nhạy cảm.' },
+            { type: 'callout', variant: 'warning', title: 'Câu hỏi quan trọng hơn "Ảnh này có phải AI không?"', text: '<strong>Ảnh này đang được dùng để khiến mình tin điều gì?</strong><br><br>Rủi ro thực tế: tạo hồ sơ giả · giả ảnh hiện trường · minh họa sai cho tin tức · tạo bằng chứng giả · dàn dựng hình ảnh nhạy cảm.' },
             { type: 'table', caption: 'Bảng phân biệt nhanh các loại nội dung', headers: ['Loại', 'Đặc điểm chính', 'Ví dụ điển hình'], rows: [
               ['🤖 <strong>Deepfake</strong>', 'Làm người thật có vẻ nói/làm điều họ không làm', 'Video người nổi tiếng kêu gọi đầu tư'],
               ['🎙️ <strong>Deepvoice</strong>', 'Giả giọng nói người thật bằng AI', 'Ghi âm giả giống giọng người thân'],
@@ -289,11 +289,11 @@ export const MODULES = [
               ['🖼️ <strong>AI-generated image</strong>', 'Ảnh do AI tạo ra hoàn toàn', 'Chân dung người không tồn tại'],
             ]},
             { type: 'cards', title: 'Mini Check — Gọi đúng tên', cols: 1, items: [
-              { icon: '🎤', title: 'A — Video ca sĩ nổi tiếng nói mở lớp đầu tư, ca sĩ phủ nhận', text: '→ <strong>Deepfake</strong>: khuôn mặt và giọng nói được mạo phỏng.', color: '#6366f1' },
-              { icon: '🌊', title: 'B — Ảnh lũ lụt chia sẻ với chú thích "vừa xảy ra" nhưng ảnh 5 năm trước', text: '→ <strong>Repurposed media</strong>: nội dung thật, bối cảnh sai.', color: '#6366f1' },
-              { icon: '📞', title: 'C — Âm thanh giống giám đốc yêu cầu chuyển tiền trong 10 phút', text: '→ <strong>Deepvoice</strong>: giọng nói bị AI giả lập.', color: '#ef4444' },
-              { icon: '👤', title: 'D — Ảnh AI của chuyên gia không có thật để quảng cáo khóa đầu tư', text: '→ <strong>AI-generated image</strong>: người trong ảnh không tồn tại.', color: '#f59e0b' },
-              { icon: '🎬', title: 'E — Video bài phát biểu cắt còn 8 giây, đổi nghĩa câu nói', text: '→ <strong>Edited media</strong>: cắt ghép gây hiểu nhầm.', color: '#f59e0b' },
+              { title: 'A — Video ca sĩ nổi tiếng nói mở lớp đầu tư, ca sĩ phủ nhận', text: '→ <strong>Deepfake</strong>: khuôn mặt và giọng nói được mạo phỏng.', color: '#6366f1' },
+              { title: 'B — Ảnh lũ lụt chia sẻ với chú thích "vừa xảy ra" nhưng ảnh 5 năm trước', text: '→ <strong>Repurposed media</strong>: nội dung thật, bối cảnh sai.', color: '#6366f1' },
+              { title: 'C — Âm thanh giống giám đốc yêu cầu chuyển tiền trong 10 phút', text: '→ <strong>Deepvoice</strong>: giọng nói bị AI giả lập.', color: '#ef4444' },
+              { title: 'D — Ảnh AI của chuyên gia không có thật để quảng cáo khóa đầu tư', text: '→ <strong>AI-generated image</strong>: người trong ảnh không tồn tại.', color: '#f59e0b' },
+              { title: 'E — Video bài phát biểu cắt còn 8 giây, đổi nghĩa câu nói', text: '→ <strong>Edited media</strong>: cắt ghép gây hiểu nhầm.', color: '#f59e0b' },
             ]},
           ], [
             'AI-generated image: hỏi "Ảnh đang được dùng để khiến mình tin điều gì?" — không chỉ "có phải AI không?"',
@@ -349,7 +349,7 @@ export const MODULES = [
           lesson('1.1.1.1', 'Công nghệ tốt hơn, chi phí thấp hơn', [
             'Trước đây, để tạo một video giả thuyết phục, người ta cần nhiều kỹ năng, thiết bị và thời gian. Bây giờ, nhiều công cụ AI đã làm cho việc tạo ảnh, giọng nói và video trở nên dễ tiếp cận hơn.',
             { type: 'comparison', title: 'Hai mặt của công nghệ AI dễ tiếp cận', left: { icon: '✅', label: 'Mặt tích cực', color: '#22c55e', items: ['Người sáng tạo có thêm công cụ làm phim và giáo dục', 'Người khuyết tật giao tiếp dễ hơn nhờ công nghệ giọng nói', 'Dịch thuật và lồng tiếng trở nên dễ tiếp cận hơn', 'Mô phỏng và đào tạo chi phí thấp hơn'] }, right: { icon: '⚠️', label: 'Mặt rủi ro', color: '#ef4444', items: ['Kẻ xấu mạo danh người khác nhanh hơn và rẻ hơn', 'Nội dung lừa đảo có thể tạo hàng loạt tự động', 'Giọng nói, khuôn mặt cá nhân dễ bị lợi dụng', 'Người xem ngày càng khó phân biệt thật giả'] } },
-            { type: 'callout', variant: 'tip', icon: '🛡️', title: 'Kết luận', text: 'Khi công cụ mạnh hơn và rẻ hơn, <strong>kỹ năng phòng vệ của người dùng cũng cần tốt hơn</strong>.' },
+            { type: 'callout', variant: 'tip', title: 'Kết luận', text: 'Khi công cụ mạnh hơn và rẻ hơn, <strong>kỹ năng phòng vệ của người dùng cũng cần tốt hơn</strong>.' },
           ], [
             'Công nghệ tạo deepfake ngày càng dễ tiếp cận — rào cản kỹ thuật gần như biến mất.',
             'Hai mặt của coin: sáng tạo vs. lừa đảo hàng loạt.',
@@ -357,13 +357,13 @@ export const MODULES = [
           lesson('1.1.1.2', 'Dữ liệu cá nhân của chúng ta quá dễ tìm', [
             'AI cần dữ liệu để mô phỏng. Trong đời sống số, nhiều người vô tình để lại rất nhiều dữ liệu.',
             { type: 'cards', title: 'Những gì chúng ta để lại trên mạng mỗi ngày', cols: 2, items: [
-              { icon: '📸', title: 'Ảnh chân dung', text: 'Ảnh selfie, ảnh sự kiện, avatar — nguyên liệu cho face swap và AI-generated image.', color: '#f59e0b' },
-              { icon: '🎙️', title: 'Giọng nói', text: 'Clip chia sẻ, livestream, story — chỉ cần vài giây mẫu để tạo deepvoice.', color: '#ef4444' },
-              { icon: '🗂️', title: 'Thông tin cá nhân', text: 'Tên trường, tên người thân, sinh nhật, địa điểm, lịch trình — nguyên liệu dựng kịch bản.', color: '#f59e0b' },
-              { icon: '🔐', title: 'Câu trả lời bảo mật', text: 'Tên thú cưng, trường cũ, ngày kỷ niệm — những thứ bạn đăng có thể là đáp án bảo mật.', color: '#ef4444' },
+              { title: 'Ảnh chân dung', text: 'Ảnh selfie, ảnh sự kiện, avatar — nguyên liệu cho face swap và AI-generated image.', color: '#f59e0b' },
+              { title: 'Giọng nói', text: 'Clip chia sẻ, livestream, story — chỉ cần vài giây mẫu để tạo deepvoice.', color: '#ef4444' },
+              { title: 'Thông tin cá nhân', text: 'Tên trường, tên người thân, sinh nhật, địa điểm, lịch trình — nguyên liệu dựng kịch bản.', color: '#f59e0b' },
+              { title: 'Câu trả lời bảo mật', text: 'Tên thú cưng, trường cũ, ngày kỷ niệm — những thứ bạn đăng có thể là đáp án bảo mật.', color: '#ef4444' },
             ]},
             'Không phải cứ đăng ảnh hay video là nguy hiểm. Mạng xã hội là nơi con người kết nối. Nhưng khi dữ liệu cá nhân quá công khai, kẻ xấu có nhiều nguyên liệu hơn để tạo kịch bản lừa đảo có vẻ rất riêng tư.',
-            { type: 'callout', variant: 'warning', icon: '🧩', title: 'Takeaway', text: 'Deepfake không chỉ dùng <strong>hình ảnh</strong> của bạn. Nó có thể dùng cả <strong>thói quen, quan hệ và thông tin</strong> bạn để lộ trên mạng.' },
+            { type: 'callout', variant: 'warning', title: 'Takeaway', text: 'Deepfake không chỉ dùng <strong>hình ảnh</strong> của bạn. Nó có thể dùng cả <strong>thói quen, quan hệ và thông tin</strong> bạn để lộ trên mạng.' },
           ], [
             'Dữ liệu cá nhân công khai là nguyên liệu cho deepfake — không chỉ hình ảnh mà cả thói quen và quan hệ.',
             'Hạn chế thông tin nhạy cảm công khai = giảm nguyên liệu cho kẻ xấu.',
@@ -410,10 +410,10 @@ export const MODULES = [
           ]),
           lesson('1.1.1.8', 'Bài học lớn của phần 1.1.1', [
             { type: 'cards', title: '4 lý do deepfake ngày càng khó nhận ra', cols: 2, items: [
-              { icon: '⚙️', title: 'Công nghệ tốt hơn', text: 'Công cụ tạo giả ngày càng dễ tiếp cận — rào cản kỹ thuật gần như biến mất.', color: '#6366f1' },
-              { icon: '📊', title: 'Dữ liệu cá nhân sẵn', text: 'Ảnh, giọng nói, thói quen của mọi người đều có thể tìm thấy trên mạng xã hội.', color: '#f59e0b' },
-              { icon: '🚀', title: 'Lan nhanh hơn kiểm chứng', text: 'Nội dung giả lan đi trong vài phút — trong khi kiểm chứng cần thời gian.', color: '#ef4444' },
-              { icon: '👁️', title: 'Mắt thường có giới hạn', text: 'Video thật cũng có thể trông lạ, video giả cũng có thể trông mượt.', color: '#6366f1' },
+              { title: 'Công nghệ tốt hơn', text: 'Công cụ tạo giả ngày càng dễ tiếp cận — rào cản kỹ thuật gần như biến mất.', color: '#6366f1' },
+              { title: 'Dữ liệu cá nhân sẵn', text: 'Ảnh, giọng nói, thói quen của mọi người đều có thể tìm thấy trên mạng xã hội.', color: '#f59e0b' },
+              { title: 'Lan nhanh hơn kiểm chứng', text: 'Nội dung giả lan đi trong vài phút — trong khi kiểm chứng cần thời gian.', color: '#ef4444' },
+              { title: 'Mắt thường có giới hạn', text: 'Video thật cũng có thể trông lạ, video giả cũng có thể trông mượt.', color: '#6366f1' },
             ]},
             'Vì vậy, kỹ năng quan trọng nhất không phải là nhìn một video rồi đoán thật giả trong 3 giây. Kỹ năng quan trọng nhất là biết dừng lại, đặt câu hỏi đúng và kiểm chứng qua nhiều tín hiệu.',
             { type: 'callout', variant: 'tip', icon: '🏆', title: 'Takeaway', text: 'Trong thời đại deepfake, người an toàn không phải người <strong>đoán nhanh nhất</strong>. Người an toàn là người <strong>biết kiểm chứng trước khi hành động</strong>.' },
