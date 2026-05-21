@@ -1,7 +1,7 @@
 // ── HELPERS ────────────────────────────────────────────────────
 export const lesson = (id, title, paragraphs, takeaways) => ({ id, title, paragraphs, takeaways });
 export const q = (text, options, answer) => ({ text, options, answer });
-export const checkpoint = (label, questions) => ({ label, questions });
+export const checkpoint = (label, questions, miniGame) => ({ label, questions, ...(miniGame ? { miniGame } : {}) });
 
 // ── COURSE META ─────────────────────────────────────────────────
 export const COURSE = {
@@ -107,7 +107,26 @@ export const MODULES = [
             'Cần hành động nhanh, lưu bằng chứng và hạn chế gây thêm rủi ro.'),
           q('Bạn nghe bản ghi âm có giọng nói giống lãnh đạo nói một điều gây sốc. Bạn nên kết luận thế nào?', ['Giọng giống thì chắc là thật', 'Giọng nói có thể bị giả lập hoặc cắt ghép; cần kiểm chứng nguồn và bối cảnh', 'Nếu file âm thanh ngắn thì chắc thật', 'Nếu nghe trên điện thoại thì không thể giả'], 1,
             'Giọng nói ngày nay không còn là bằng chứng tuyệt đối.'),
-        ]),
+        ], {
+          type: 'sort-cards',
+          title: '🗂️ Giúp An phân loại tình huống',
+          instruction: 'An gặp 6 tình huống hôm đó. Kéo hoặc nhấn từng thẻ vào đúng nhóm: Bình thường, Cần kiểm tra, hoặc Nguy hiểm.',
+          data: {
+            buckets: [
+              { id: 'normal', icon: '🟢', label: 'Bình thường' },
+              { id: 'check',  icon: '🟡', label: 'Cần kiểm tra' },
+              { id: 'danger', icon: '🔴', label: 'Nguy hiểm' },
+            ],
+            cards: [
+              { id: 1, text: 'Video người nổi tiếng giới thiệu kênh đầu tư lợi nhuận cao — gương mặt và giọng hoàn toàn giống.', correctBucket: 'danger', explanation: 'Deepfake thường dùng khuôn mặt người nổi tiếng để tạo độ tin cậy. Không đầu tư trước khi xác minh qua kênh chính thức.' },
+              { id: 2, text: 'Cuộc gọi video từ người thân — hình hơi mờ, âm thanh không rõ dù sóng mạng đang tốt.', correctBucket: 'check', explanation: 'Chất lượng thấp bất thường trong điều kiện mạng tốt cần xác minh — có thể là deepfake hoặc tài khoản bị chiếm quyền.' },
+              { id: 3, text: 'Tin nhắn từ số lạ: "Chúc mừng! Bạn trúng iPhone 15. Nhấp link này để nhận thưởng!"', correctBucket: 'danger', explanation: 'Thông báo trúng thưởng từ số lạ kèm link là lừa đảo cổ điển. Không bao giờ nhấp vào.' },
+              { id: 4, text: 'Facebook của bạn cũ nhắn xin mượn tiền gấp — ảnh đại diện đúng nhưng cách nhắn hơi lạ hơn bình thường.', correctBucket: 'check', explanation: 'Tài khoản có thể bị chiếm quyền. Cần xác minh qua kênh độc lập — gọi điện trực tiếp.' },
+              { id: 5, text: 'Clip viral scandal không có nguồn báo chí nào xác nhận, chỉ lan qua nhóm chat.', correctBucket: 'danger', explanation: 'Nội dung không có nguồn xác minh độc lập là dấu hiệu đáng ngờ. Không chia sẻ khi chưa kiểm chứng.' },
+              { id: 6, text: 'Email từ trường thông báo lịch thi — địa chỉ gửi đúng domain trường, không có link lạ.', correctBucket: 'normal', explanation: 'Domain đúng và không có yêu cầu bất thường là dấu hiệu bình thường. Vẫn nên đọc kỹ nhưng không cần lo ngại.' },
+            ],
+          },
+        }),
       },
     ],
     quiz: [
@@ -247,7 +266,27 @@ export const MODULES = [
             'Trong lừa đảo, kẻ xấu thường kết hợp mạo danh với cảm xúc và thời gian gấp.'),
           q('Câu hỏi nào hữu ích nhất khi xem một hình ảnh nghi do AI tạo?', ['Ảnh này có nhiều màu không?', 'Ảnh này đang được dùng để khiến mình tin điều gì?', 'Ảnh này có kích thước bao nhiêu?', 'Ảnh này có được đăng buổi sáng không?'], 1,
             'Mục đích sử dụng và ngữ cảnh quyết định mức độ rủi ro của nội dung.'),
-        ]),
+        ], {
+          type: 'sort-cards',
+          title: '🗂️ Phân loại nội dung giả mạo',
+          instruction: 'Bạn thấy 6 nội dung dưới đây. Kéo hoặc nhấn từng thẻ vào đúng loại: Deepfake, Edited media, Repurposed media, hay AI-generated.',
+          data: {
+            buckets: [
+              { id: 'deepfake',   icon: '🤖', label: 'Deepfake' },
+              { id: 'edited',     icon: '✂️', label: 'Edited media' },
+              { id: 'repurposed', icon: '🔄', label: 'Repurposed media' },
+              { id: 'ai-gen',     icon: '✨', label: 'AI-generated' },
+            ],
+            cards: [
+              { id: 1, text: 'Video người nổi tiếng giới thiệu đầu tư — gương mặt và giọng nói được tạo bằng AI nhưng trông như thật.', correctBucket: 'deepfake', explanation: 'Deepfake: khuôn mặt và giọng nói mạo phỏng người thật bằng công nghệ AI.' },
+              { id: 2, text: 'Clip 7 giây cắt từ bài phát biểu dài, làm người nói có vẻ nói ngược ý ban đầu.', correctBucket: 'edited', explanation: 'Edited media: nội dung thật nhưng bị cắt ghép thay đổi ý nghĩa.' },
+              { id: 3, text: 'Video tai nạn từ năm trước được đăng lại với chú thích "vừa xảy ra ở thành phố bạn".', correctBucket: 'repurposed', explanation: 'Repurposed media: nội dung thật nhưng bối cảnh, thời gian, địa điểm bị sai lệch.' },
+              { id: 4, text: 'Ảnh chân dung một người không tồn tại được dùng làm avatar tài khoản lừa đảo.', correctBucket: 'ai-gen', explanation: 'AI-generated: hình ảnh do AI tạo ra hoàn toàn — người trong ảnh không có thật.' },
+              { id: 5, text: 'Ghi âm giọng nói giả giống người thân yêu cầu chuyển tiền khẩn cấp.', correctBucket: 'deepfake', explanation: 'Deepvoice là một dạng deepfake âm thanh — giọng nói được AI tổng hợp từ mẫu giọng thật.' },
+              { id: 6, text: 'Ảnh biểu tình ở nước khác được chia sẻ kèm chú thích về tình hình trong nước.', correctBucket: 'repurposed', explanation: 'Repurposed media: nội dung thật nhưng bị dùng sai bối cảnh địa lý hoặc thời gian.' },
+            ],
+          },
+        }),
       },
       {
         title: '1.1.1 Vì sao deepfake ngày càng khó nhận ra?',
@@ -669,7 +708,19 @@ export const MODULES = [
           q('Một dấu hiệu đơn lẻ như video mờ thường nên được hiểu như thế nào?', ['Chưa đủ để kết luận', 'Chắc chắn giả', 'Chắc chắn thật', 'Không cần quan tâm đến nguồn nữa'], 0),
           q('Khi tay đi qua mặt trong video và khuôn mặt bị biến dạng, đây có thể là dấu hiệu gì?', ['Dấu hiệu hình ảnh cần chú ý', 'Dấu hiệu chắc chắn tài khoản ngân hàng bị khóa', 'Dấu hiệu video luôn an toàn', 'Dấu hiệu không liên quan'], 0),
           q('Mục tiêu đúng của quan sát hình ảnh/video là gì?', ['Tìm tín hiệu ban đầu để quyết định có cần kiểm chứng thêm không', 'Kết luận thật giả trong 3 giây', 'Tin vào cảm giác đầu tiên', 'Thay thế hoàn toàn việc kiểm tra nguồn'], 0),
-        ]),
+        ], {
+          type: 'risk-meter',
+          title: '🔬 Mắt Chuyên Gia',
+          instruction: 'Đánh giá mức độ rủi ro của 4 tình huống sau theo thang 1–5. Sau đó xem chuyên gia đánh giá thế nào.',
+          data: {
+            scenarios: [
+              { text: 'Video người nổi tiếng xuất hiện trên kênh YouTube tạm thời không rõ nguồn gốc. Gương mặt và giọng đúng, nhưng khẩu hình lệch nhẹ khi nói nhanh. Nội dung kêu gọi đầu tư với lợi nhuận cam kết 30%/tháng.', expertRating: 5, explanation: 'Nhiều dấu hiệu cùng lúc: kênh không rõ nguồn, khẩu hình lệch, lời hứa lợi nhuận phi thực tế. Rủi ro rất cao.' },
+              { text: 'Bạn nhận cuộc gọi video từ số đã lưu là "Mẹ". Hình ảnh có độ phân giải thấp bất thường dù sóng WiFi đang mạnh. Người trong video yêu cầu chuyển tiền gấp vì "gặp tai nạn".', expertRating: 5, explanation: 'Chất lượng thấp bất thường khi mạng tốt là dấu hiệu tiêu cực. Kết hợp với yêu cầu tiền khẩn cấp — rủi ro rất cao.' },
+              { text: 'Video viral trên Facebook về một vụ cháy nghiêm trọng. Hình ảnh và âm thanh trông thật, nhưng tài khoản đăng chỉ mới tạo 3 ngày trước, không có liên kết báo chí nào.', expertRating: 4, explanation: 'Tài khoản mới và không có nguồn chính thức là tín hiệu đáng ngờ. Rủi ro cao — không chia sẻ trước khi kiểm chứng.' },
+              { text: 'Bạn xem clip ngắn một chính trị gia nói điều gây tranh cãi. Video trông bình thường, nhưng bạn nhớ bài phát biểu gốc dài hơn nhiều. Clip này chỉ có 15 giây.', expertRating: 3, explanation: 'Clip rất ngắn từ bài dài có thể là edited media — câu nói bị cắt khỏi bối cảnh. Cần tìm bản gốc để xác minh.' },
+            ],
+          },
+        }),
       },
       {
         title: '3.1.1 Giới hạn của quan sát',
@@ -888,7 +939,20 @@ export const MODULES = [
           q('Kênh nào KHÔNG phải kênh độc lập an toàn?', ['Link do người đang yêu cầu chuyển tiền vừa gửi', 'Số điện thoại đã lưu từ trước', 'Website chính thức tự tìm từ nguồn đáng tin', 'Người thân khác mà bạn đã biết'], 0),
           q('Một hình ảnh nhạy cảm nghi là của bạn học xuất hiện trong nhóm chat. Bạn nên làm gì?', ['Không lan truyền, báo cáo và tìm người có trách nhiệm hỗ trợ', 'Lưu lại và gửi cho nhiều người để hỏi thật giả', 'Bình luận đùa nếu có thể là ảnh AI', 'Phóng to phân tích công khai'], 0),
           q('Điều nào đúng nhất về Deepfense Check?', ['Là quy trình giúp giảm rủi ro khi gặp nội dung nghi vấn', 'Là công cụ đảm bảo phát hiện mọi deepfake', 'Chỉ dùng cho chuyên gia công nghệ', 'Chỉ dùng khi có video, không dùng cho âm thanh hoặc tin nhắn'], 0),
-        ]),
+        ], {
+          type: 'order-steps',
+          title: '🔢 Sắp xếp quy trình Deepfense Check',
+          instruction: 'Nhấn vào từng bước theo đúng thứ tự của quy trình Deepfense Check từ đầu đến cuối.',
+          data: {
+            steps: [
+              { id: 1, icon: '⏸️', label: '⏸️ Pause', description: 'Dừng lại trước khi phản ứng. Không chuyển tiền, không chia sẻ, không kết luận khi còn đang xúc động.' },
+              { id: 2, icon: '👁️', label: '👁️ Observe', description: 'Quan sát dấu hiệu kỹ thuật (hình ảnh, âm thanh) và bối cảnh (ai gửi, yêu cầu gì, vì sao khẩn cấp).' },
+              { id: 3, icon: '✅', label: '✅ Verify', description: 'Xác minh qua kênh độc lập: gọi lại số đã lưu, kiểm tra website chính thức, hỏi người thứ ba đáng tin.' },
+              { id: 4, icon: '🔍', label: '🔍 Trace', description: 'Truy nguồn nội dung: tìm bài gốc, kiểm tra lịch đăng, dùng công cụ tìm ảnh ngược hoặc kiểm tra URL.' },
+              { id: 5, icon: '🎯', label: '🎯 Decide', description: 'Ra quyết định ít gây hại nhất: từ chối, báo cáo, hỗ trợ nạn nhân hoặc không hành động thêm.' },
+            ],
+          },
+        }),
       },
       {
         title: '4.2 Kênh độc lập là gì?',

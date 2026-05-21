@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import QuizModal from './QuizModal.jsx';
 import FinalExam from './FinalExam.jsx';
+import MiniGame from './MiniGame.jsx';
 
 export default function LessonView({
   lessonIndex, currentIdx, currentEntry,
@@ -8,6 +9,7 @@ export default function LessonView({
 }) {
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizDone, setQuizDone] = useState(false);
+  const [miniGameDone, setMiniGameDone] = useState(false);
 
   const { lesson, moduleId, sectionTitle, checkpoint } = currentEntry;
 
@@ -37,10 +39,14 @@ export default function LessonView({
 
   const isDone = completedLessons.has(lesson.id);
 
+  const hasMiniGame = isLastInSection && !!(checkpoint?.miniGame);
+  const checkpointDone = hasMiniGame ? miniGameDone : quizDone;
+
   function handleNext() {
     onComplete(lesson.id);
-    if (isLastInSection && checkpoint && !quizDone) {
-      setShowQuiz(true);
+    if (isLastInSection && checkpoint && !checkpointDone) {
+      if (!hasMiniGame) setShowQuiz(true);
+      // mini game is already visible inline — do nothing
     } else {
       onNext();
     }
@@ -50,6 +56,16 @@ export default function LessonView({
     setQuizDone(true);
     setShowQuiz(false);
     onNext();
+  }
+
+  function handleMiniGameComplete(score) {
+    setMiniGameDone(true);
+    // If there are also quiz questions, show them after the mini game
+    if (checkpoint.questions && checkpoint.questions.length > 0) {
+      setShowQuiz(true);
+    } else {
+      onNext();
+    }
   }
 
   return (
@@ -82,8 +98,13 @@ export default function LessonView({
           </div>
         )}
 
-        {/* Checkpoint notice */}
-        {isLastInSection && checkpoint && !quizDone && (
+        {/* Mini game (inline) */}
+        {hasMiniGame && !miniGameDone && (
+          <MiniGame config={checkpoint.miniGame} onComplete={handleMiniGameComplete} />
+        )}
+
+        {/* Checkpoint notice (standard quiz, no mini game) */}
+        {isLastInSection && checkpoint && !hasMiniGame && !quizDone && (
           <div className="checkpoint-notice">
             <span className="checkpoint-icon">📝</span>
             <div className="checkpoint-info">
