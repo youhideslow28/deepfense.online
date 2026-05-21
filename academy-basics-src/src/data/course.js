@@ -174,8 +174,6 @@ export const MODULES = [
     duration: '80-90 phút', level: 'Foundation',
     introVideo: {
       src: '/academy/media/module-intros/module-01/module%201.web.mp4',
-      title: 'Video mở đầu Module 1',
-      caption: 'Bắt đầu Module 1 bằng phần dẫn nhập trực quan trước khi đi vào khái niệm.',
     },
     scenario: 'Buổi sáng An đang ăn sáng và lướt điện thoại. Một video hiện lên: người nổi tiếng đang giới thiệu kênh đầu tư "lợi nhuận cao, rủi ro thấp". Gương mặt giống, giọng nói giống, khẩu hình có vẻ khớp, bên dưới nhiều bình luận ủng hộ. Nhưng An phân vân — người này thường không quảng cáo kiểu đó...',
     outcomes: [
