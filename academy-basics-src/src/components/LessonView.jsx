@@ -89,10 +89,12 @@ export default function LessonView({
 
         {introVideo?.src && (
           <figure className="module-intro-video">
-            <div className="module-intro-video-head">
-              <span className="module-intro-video-kicker">Module intro</span>
-              <strong>{introVideo.title || `Module ${moduleId}`}</strong>
-            </div>
+            {introVideo.title && (
+              <div className="module-intro-video-head">
+                <span className="module-intro-video-kicker">Module intro</span>
+                <strong>{introVideo.title}</strong>
+              </div>
+            )}
             <video
               className="module-intro-video-player"
               src={introVideo.src}
