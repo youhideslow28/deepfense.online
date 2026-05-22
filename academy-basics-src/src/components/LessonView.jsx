@@ -3,6 +3,7 @@ import QuizModal from './QuizModal.jsx';
 import FinalExam from './FinalExam.jsx';
 import MiniGame from './MiniGame.jsx';
 import LessonBlock from './LessonBlocks.jsx';
+import CourseEvaluation, { isCourseEvaluationDone } from './CourseEvaluation.jsx';
 
 export default function LessonView({
   lessonIndex, currentIdx, currentEntry,
@@ -11,11 +12,15 @@ export default function LessonView({
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizDone, setQuizDone] = useState(false);
   const [miniGameDone, setMiniGameDone] = useState(false);
+  const [evaluationDone, setEvaluationDone] = useState(() => isCourseEvaluationDone());
 
   const { lesson, module, moduleId, sectionTitle, checkpoint } = currentEntry;
 
   // ── Final exam special render ──────────────────────────────────────────────
   if (lesson.type === 'exam') {
+    if (!evaluationDone) {
+      return <CourseEvaluation onComplete={() => setEvaluationDone(true)} />;
+    }
     return (
       <FinalExam
         onComplete={onComplete}

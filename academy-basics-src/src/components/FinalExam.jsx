@@ -3,6 +3,7 @@ import { EXAM_CONFIG, drawExam } from '../data/exam-bank.js';
 import Confetti from './Confetti.jsx';
 
 const STORAGE_KEY  = 'dfb_exam_v1';
+const ACADEMY_EXAM_KEY = 'deepfense-basics-final-exam';
 const SESSION_KEY  = 'dfb_session_v1';
 const PAGE_SIZE    = 10;
 
@@ -36,6 +37,23 @@ function saveStore(s) {
   try {
     const uid = readSession()?.uid;
     localStorage.setItem(scopedKey(STORAGE_KEY), JSON.stringify(uid ? { ...s, uid } : s));
+  } catch {}
+}
+
+function saveAcademyExamPass(s) {
+  if (!s.passed) return;
+  try {
+    const session = readSession();
+    const uid = session?.uid;
+    localStorage.setItem(scopedKey(ACADEMY_EXAM_KEY), JSON.stringify({
+      uid,
+      email: session?.email,
+      passed: true,
+      score: s.bestScore,
+      passedAt: s.passedAt || Date.now(),
+      attempts: s.attempts,
+      course: 'DEEPFENSE BASIC',
+    }));
   } catch {}
 }
 
@@ -83,6 +101,7 @@ export default function FinalExam({ onComplete, completedLessons }) {
       ...(store.passedAt ? { passedAt: store.passedAt } : {}),
     };
     saveStore(newStore);
+    saveAcademyExamPass(newStore);
     setStore(newStore);
     setResult({ score, passed });
     setPhase('result');
