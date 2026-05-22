@@ -58,8 +58,8 @@ export default function Sidebar({ isOpen, onClose, currentLesson, completedLesso
           const { total, done } = getModuleStats(mod);
           const isModActive = currentLesson?.moduleId === mod.id;
           const isOpen = openModules[mod.id];
-          const statusCls = done === total && total > 0 ? 'done' : 'empty';
-          const statusIcon = done === total && total > 0 ? '✓' : '';
+          const statusCls = done === total && total > 0 ? 'done' : done > 0 ? 'partial' : 'empty';
+          const statusIcon = done === total && total > 0 ? '✓' : done > 0 ? '•' : '';
 
           return (
             <div className="sidebar-module" key={mod.id}>

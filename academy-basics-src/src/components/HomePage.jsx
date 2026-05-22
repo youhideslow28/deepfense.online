@@ -7,7 +7,13 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
   const totalDone = completedLessons.size;
   const pct = totalLessons > 0 ? Math.round((totalDone / totalLessons) * 100) : 0;
 
-  const PART_LABELS = { intro: 'Khởi động', foundation: 'Nền tảng', recognition: 'Nhận diện', response: 'Ứng phó' };
+  const PART_LABELS = {
+    intro: 'Khởi động',
+    foundation: 'Nền tảng',
+    recognition: 'Nhận diện',
+    protection: 'Phòng vệ',
+    response: 'Ứng phó',
+  };
 
   return (
     <div className="content">
@@ -69,7 +75,7 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
             return (
               <div key={mod.id} className="home-module-card" onClick={() => onSelectModule(mod.id)}>
                 <div className="home-module-card-num">
-                  Module {mod.id} · {PART_LABELS[mod.part]}
+                  Module {mod.id} · {PART_LABELS[mod.part] || 'Bài học'}
                 </div>
                 <div className="home-module-card-title">{mod.title}</div>
                 <div className="home-module-card-meta">
