@@ -66,7 +66,8 @@
         "level": "Recognition",
         "sourceFile": "DEEPFENSE_BASIC_Module_4_Content_v1.md",
         "quiz": { "questions": 10, "passThreshold": 0.7, "countForFinalExam": true },
-        "sections": ["4.1 Dấu hiệu khuôn mặt", "4.2 Ánh sáng và chất lượng", "4.3 Chuyển động và bối cảnh"]
+        "sections": ["4.1 Dấu hiệu khuôn mặt", "4.2 Ánh sáng và chất lượng", "4.3 Chuyển động và bối cảnh"],
+        "minigame": { "id": "scam-chat-triage", "label": "💬 Scam Chat Triage", "dpf": 25, "primary": false }
       },
       {
         "id": 5,
