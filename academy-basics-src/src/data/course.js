@@ -1,4 +1,4 @@
-// ── HELPERS ────────────────────────────────────────────────────
+﻿// ── HELPERS ────────────────────────────────────────────────────
 export const lesson = (id, title, paragraphs, takeaways) => ({ id, title, paragraphs, takeaways });
 export const q = (text, options, answer) => ({ text, options, answer });
 export const checkpoint = (label, questions, miniGame, maxQuestions) => ({
@@ -127,6 +127,20 @@ export const MODULES = [
             ],
           },
         }, 3),
+      },
+      {
+        title: '0.4 Visual Asset Prompt Kit',
+        lessons: [
+          lesson('0.4.0', 'Bộ prompt hình ảnh cho DEEPFENSE BASIC', [
+            'Phiên này gom bộ prompt hình ảnh, GIF loop, sticker, checklist card và feedback visual dùng cho DEEPFENSE BASIC. Mục tiêu là giữ một phong cách thống nhất: nhân vật An nhất quán, không tạo chữ trong ảnh, không dùng logo giả, không mô tả nạn nhân theo cách gây hại.',
+            { type: 'callout', variant: 'info', title: 'Cách dùng nhanh', text: 'Dùng các prompt bên dưới để sinh asset nháp, duyệt 3-5 hình đầu tiên để khóa style, sau đó mới nhân rộng cho toàn bộ module. Chữ tiếng Việt nên thêm trong web/editor, không đưa trực tiếp vào ảnh AI.' },
+            { type: 'asset-kit', title: 'Visual Asset Prompt Kit', subtitle: 'Tài nguyên thiết kế cho course home, lesson header, quiz feedback, micro-interaction và màn hoàn thành khóa học.' },
+          ], [
+            'Bộ prompt đã được đặt vào Academy Basics dưới dạng một phiên tài nguyên riêng.',
+            'File markdown gốc được giữ nguyên để đội thiết kế có thể mở và copy đầy đủ prompt khi cần.',
+          ]),
+        ],
+        checkpoint: null,
       },
     ],
     quiz: [
@@ -1248,3 +1262,4 @@ export function buildLessonIndex() {
   }
   return index;
 }
+

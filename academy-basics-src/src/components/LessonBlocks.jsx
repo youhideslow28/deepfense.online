@@ -5,6 +5,11 @@
  *   callout | table | comparison | process | cards | scenario | image | stats
  */
 import React from 'react';
+import {
+  VISUAL_ASSET_GROUPS,
+  VISUAL_ASSET_KIT_RESOURCE,
+  VISUAL_ASSET_STYLE_GUIDE,
+} from '../data/visualAssetPromptKit.js';
 
 // ── CALLOUT ───────────────────────────────────────────────────────────────────
 // variant: 'info' | 'warning' | 'danger' | 'tip' | 'quote'
@@ -188,6 +193,73 @@ export function StatsRow({ title, stats }) {
 }
 
 // ── MAIN DISPATCHER ───────────────────────────────────────────────────────────
+export function VisualAssetKit({ title, subtitle }) {
+  const total = VISUAL_ASSET_GROUPS.reduce((sum, group) => sum + group.items.length, 0);
+
+  return (
+    <section className="lb-asset-kit">
+      <div className="lb-asset-kit-head">
+        <div>
+          <p className="lb-asset-kit-kicker">DEEPFENSE BASIC</p>
+          <h3>{title || 'Visual Asset Prompt Kit'}</h3>
+          {subtitle && <p>{subtitle}</p>}
+        </div>
+        <a className="lb-asset-kit-link" href={VISUAL_ASSET_KIT_RESOURCE} target="_blank" rel="noreferrer">
+          Mở file gốc
+        </a>
+      </div>
+
+      <div className="lb-asset-kit-rules">
+        <div>
+          <span>Style chung</span>
+          <p>{VISUAL_ASSET_STYLE_GUIDE.requiredStyle}</p>
+        </div>
+        <div>
+          <span>Nhân vật An</span>
+          <p>{VISUAL_ASSET_STYLE_GUIDE.anCharacter}</p>
+        </div>
+        <div>
+          <span>Negative prompt</span>
+          <p>{VISUAL_ASSET_STYLE_GUIDE.negativePrompt}</p>
+        </div>
+      </div>
+
+      <div className="lb-asset-kit-summary">
+        <span>{VISUAL_ASSET_GROUPS.length} nhóm asset</span>
+        <span>{total} prompt đã gom</span>
+        <span>Không tạo chữ trong ảnh</span>
+      </div>
+
+      <div className="lb-asset-kit-groups">
+        {VISUAL_ASSET_GROUPS.map((group) => (
+          <article className="lb-asset-kit-group" key={group.label}>
+            <div className="lb-asset-kit-group-head">
+              <h4>{group.label}</h4>
+              <span>{group.items.length} mục</span>
+            </div>
+            <p className="lb-asset-kit-purpose">{group.purpose}</p>
+            <div className="lb-asset-kit-items">
+              {group.items.map((item) => (
+                <details className="lb-asset-kit-item" key={item.id}>
+                  <summary>
+                    <span className="lb-asset-kit-id">{item.id}</span>
+                    <strong>{item.title}</strong>
+                    <small>{item.format}</small>
+                  </summary>
+                  <div className="lb-asset-kit-item-body">
+                    <p><b>Vị trí dùng:</b> {item.placement}</p>
+                    <pre>{item.prompt}</pre>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function LessonBlock({ block }) {
   if (typeof block === 'string') return null; // handled by caller
   switch (block.type) {
@@ -199,6 +271,7 @@ export default function LessonBlock({ block }) {
     case 'scenario':   return <ScenarioCard {...block} />;
     case 'image':      return <LessonImage {...block} />;
     case 'stats':      return <StatsRow {...block} />;
+    case 'asset-kit':  return <VisualAssetKit {...block} />;
     default:           return null;
   }
 }
