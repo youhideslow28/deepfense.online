@@ -51,3 +51,34 @@
     transition: background-color 5000s ease-in-out 0s;
   }
 }
+
+/* ── MOBILE PERFORMANCE OPTIMIZATIONS ───────────────────────────
+   Backdrop-filter (blur) là một trong những thứ tốn GPU nhất trên mobile.
+   Trên pointer:coarse (touch) hoặc viewport hẹp, giảm/tắt các hiệu ứng nặng. */
+@media (max-width: 768px), (pointer: coarse) {
+  /* Giảm backdrop-blur xuống mức tối thiểu — đỡ giật khi scroll */
+  .backdrop-blur-2xl { backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important; }
+  .backdrop-blur-xl  { backdrop-filter: blur(6px) !important; -webkit-backdrop-filter: blur(6px) !important; }
+  .backdrop-blur-lg  { backdrop-filter: blur(4px) !important; -webkit-backdrop-filter: blur(4px) !important; }
+  .backdrop-blur-md  { backdrop-filter: blur(3px) !important; -webkit-backdrop-filter: blur(3px) !important; }
+
+  /* Giảm các blur lớn (blur-3xl/2xl thường dùng cho glow background) */
+  .blur-3xl { filter: blur(28px) !important; }
+  .blur-2xl { filter: blur(20px) !important; }
+
+  /* Tắt animation đắt trên các element trang trí (giữ animation tương tác) */
+  .animate-pulse { animation-duration: 4s !important; }
+
+  /* Smooth scroll → native */
+  html { scroll-behavior: auto; }
+}
+
+/* Reduced-motion: tôn trọng setting hệ điều hành */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
