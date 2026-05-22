@@ -3,7 +3,16 @@
     "allow": [
       "mcp__Claude_in_Chrome__tabs_context_mcp",
       "Bash(gh pr *)",
-      "PowerShell(Get-Command gh -ErrorAction SilentlyContinue)"
+      "PowerShell(Get-Command gh -ErrorAction SilentlyContinue)",
+      "Bash(npx tsc *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh repo *)",
+      "Bash(ls public/)",
+      "Bash(dir public *)",
+      "Bash(dir public\\\\academy /b)",
+      "Bash(npm run *)"
     ]
   }
 }
