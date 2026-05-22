@@ -1,0 +1,161 @@
+{
+  "title": "Scam Chat Triage",
+  "subtitle": "Đọc 4 đoạn hội thoại — gán nhãn từng tin nhắn: Bình thường / Đáng nghi / Scam",
+  "passThreshold": 0.65,
+  "dpf": 25,
+  "labelDefs": [
+    { "key": "normal",     "label": "Bình thường",  "color": "#6b7280", "bg": "rgba(107,114,128,.1)" },
+    { "key": "suspicious", "label": "⚠ Đáng nghi",  "color": "#f59e0b", "bg": "rgba(245,158,11,.1)"  },
+    { "key": "scam",       "label": "🚫 Scam!",      "color": "#ef4444", "bg": "rgba(239,68,68,.1)"   }
+  ],
+  "scenarios": [
+    {
+      "title": "Bạn thân Zalo nhờ vay tiền gấp",
+      "context": "Bạn nhận được tin nhắn Zalo từ tài khoản của người bạn thân tên Minh — đúng ảnh đại diện, đúng tên.",
+      "sender": "Nguyễn Minh 🎓",
+      "messages": [
+        {
+          "id": "s1m1", "from": "them",
+          "text": "Ơi mày ơi, lâu không gặp mày khỏe không?",
+          "label": "suspicious",
+          "explanation": "Câu hỏi thăm bất ngờ sau thời gian dài không liên lạc là dấu hiệu mở đầu phổ biến của kịch bản giả mạo — thường không phải quan tâm thật sự mà để dẫn vào yêu cầu tiếp theo."
+        },
+        {
+          "id": "s1m2", "from": "me",
+          "text": "Ừ tao khỏe, mày sao? Lâu ghê mày nhỉ",
+          "label": "normal",
+          "explanation": "Phản hồi bình thường từ phía bạn — không có dấu hiệu gì."
+        },
+        {
+          "id": "s1m3", "from": "them",
+          "text": "Tao đang kẹt chút, tao cần mượn 3 triệu gấp. Mày có thể giúp tao không? Lương về tao trả ngay",
+          "label": "scam",
+          "explanation": "Yêu cầu tiền ngay sau vài tin nhắn xã giao — đây là dấu hiệu Scam rõ ràng. Tài khoản Zalo/Facebook bạn bè có thể bị chiếm. Quy tắc: luôn gọi điện xác nhận giọng thật trước khi chuyển bất kỳ khoản tiền nào."
+        },
+        {
+          "id": "s1m4", "from": "them",
+          "text": "Mày chuyển vào số tài khoản này nhé: Vietcombank 1234567890 - Trần Thị Lan",
+          "label": "scam",
+          "explanation": "Số tài khoản khác tên người nhắn tin là dấu hiệu Scam chắc chắn. 'Trần Thị Lan' không phải tên 'Nguyễn Minh' — kẻ lừa đảo đang dùng tài khoản trung gian để nhận tiền."
+        },
+        {
+          "id": "s1m5", "from": "them",
+          "text": "Nhanh lên nhé, tao đang cần gấp lắm, cảm ơn mày nhiều",
+          "label": "scam",
+          "explanation": "Áp lực 'gấp' và 'nhanh lên' là kỹ thuật tạo stress để ngăn bạn dừng lại và kiểm chứng. Scam tiêu chuẩn."
+        }
+      ]
+    },
+    {
+      "title": "Tuyển dụng đánh máy tại nhà — thu nhập 500k/ngày",
+      "context": "Bạn vừa đăng bài tìm việc làm thêm trên một nhóm Facebook. Ngay sau đó có người nhắn tin riêng.",
+      "sender": "Việc Làm Online — HR Phương",
+      "messages": [
+        {
+          "id": "s2m1", "from": "them",
+          "text": "Chào bạn, mình thấy bạn đang tìm việc làm thêm. Bên mình đang cần người đánh máy đơn hàng tại nhà, làm 2-3 tiếng/ngày, thu nhập 400-500k/ngày. Bạn có quan tâm không?",
+          "label": "suspicious",
+          "explanation": "Thu nhập 400-500k/ngày chỉ từ 2-3 tiếng đánh máy là phi thực tế — tương đương 4-6 triệu/tháng cho công việc không cần kỹ năng. Đây là mồi nhử điển hình của việc làm giả."
+        },
+        {
+          "id": "s2m2", "from": "me",
+          "text": "Bạn ơi, công việc cụ thể là làm gì vậy?",
+          "label": "normal",
+          "explanation": "Câu hỏi thăm dò bình thường — hoàn toàn hợp lý khi tìm hiểu việc làm."
+        },
+        {
+          "id": "s2m3", "from": "them",
+          "text": "Bạn sẽ nhận đơn hàng từ hệ thống, điền thông tin sản phẩm, xác nhận đơn. Không cần kinh nghiệm, được đào tạo miễn phí 3 ngày đầu. Công ty uy tín, có hợp đồng đàng hoàng.",
+          "label": "suspicious",
+          "explanation": "Mô tả việc mơ hồ, dễ làm, không cần kinh nghiệm — kết hợp với mức lương cao bất thường là dấu hiệu đáng ngờ. 'Có hợp đồng đàng hoàng' thường được dùng để tạo lòng tin giả."
+        },
+        {
+          "id": "s2m4", "from": "them",
+          "text": "Để được nhận việc, bạn cần đặt cọc thiết bị làm việc 800k. Sau 30 ngày thử việc sẽ được hoàn lại toàn bộ cùng lương tháng đầu.",
+          "label": "scam",
+          "explanation": "Yêu cầu đặt cọc để 'nhận việc' là dấu hiệu Scam 100%. Không có công ty tuyển dụng hợp lệ nào yêu cầu ứng viên nộp tiền trước. Số tiền sẽ bị chiếm và bạn sẽ không bao giờ nhận lại."
+        },
+        {
+          "id": "s2m5", "from": "them",
+          "text": "Nhiều bạn trong nhóm đã làm được 2-3 tháng rồi, thu nhập ổn định lắm. Để mình gửi bạn link nhóm để tham khảo nhé.",
+          "label": "scam",
+          "explanation": "'Bằng chứng xã hội' qua nhóm — các thành viên trong nhóm thường là tài khoản giả hoặc đồng phạm đóng vai người thật. Đây là kỹ thuật tạo uy tín giả rất phổ biến trong scam việc làm."
+        }
+      ]
+    },
+    {
+      "title": "Mua điện thoại secondhand — đặt cọc trước",
+      "context": "Bạn đang tìm mua iPhone cũ trên một hội nhóm mua bán Facebook. Bạn nhắn tin cho người đăng bài.",
+      "sender": "Shop Đồ Cũ — Anh Tuấn",
+      "messages": [
+        {
+          "id": "s3m1", "from": "me",
+          "text": "Bạn ơi, iPhone 13 128GB của bạn còn không? Giá bao nhiêu vậy?",
+          "label": "normal",
+          "explanation": "Tin nhắn hỏi thăm sản phẩm bình thường."
+        },
+        {
+          "id": "s3m2", "from": "them",
+          "text": "Dạ còn bạn ơi, máy pin 89%, không trầy xước, đầy đủ hộp phụ kiện. Giá 12 triệu, thương lượng được chút.",
+          "label": "normal",
+          "explanation": "Mô tả sản phẩm cơ bản — chưa có dấu hiệu bất thường ở giai đoạn này."
+        },
+        {
+          "id": "s3m3", "from": "me",
+          "text": "Mình có thể gặp trực tiếp xem máy trước không bạn?",
+          "label": "normal",
+          "explanation": "Yêu cầu gặp trực tiếp là phản ứng an toàn và hợp lý khi mua hàng secondhand."
+        },
+        {
+          "id": "s3m4", "from": "them",
+          "text": "Bạn ơi mình đang ở xa, ship COD được nhưng bạn phải đặt cọc 2 triệu trước để mình giữ máy. Có nhiều người hỏi lắm, sợ bán mất.",
+          "label": "suspicious",
+          "explanation": "Yêu cầu cọc trước khi xem hàng kết hợp tạo áp lực 'nhiều người hỏi' là dấu hiệu đáng ngờ. Người bán uy tín thường cho COD không cần cọc, hoặc dùng dịch vụ trung gian."
+        },
+        {
+          "id": "s3m5", "from": "them",
+          "text": "Bạn chuyển cọc vào Momo 0901234567 - Lê Văn B nhé. Chuyển xong mình ship ngay, 1-2 ngày là tới.",
+          "label": "scam",
+          "explanation": "Chuyển tiền qua Momo/ví cá nhân không có bảo vệ người mua — nếu không nhận được hàng bạn không thể đòi lại. Kết hợp với không chịu gặp trực tiếp = Scam rõ ràng. Nên dùng sàn TMĐT có bảo vệ người mua hoặc gặp trực tiếp."
+        }
+      ]
+    },
+    {
+      "title": "Nhóm đầu tư 'nội bộ' — lãi 30% mỗi tháng",
+      "context": "Bạn được thêm vào một nhóm Zalo lạ tên 'CLB Đầu Tư Thịnh Vượng'. Một người nhắn riêng cho bạn.",
+      "sender": "Hoa Nguyễn — Chuyên Gia Đầu Tư",
+      "messages": [
+        {
+          "id": "s4m1", "from": "them",
+          "text": "Chào bạn, mình là thành viên lâu năm của nhóm. Mình thấy bạn mới vào, muốn giới thiệu cho bạn hiểu hơn về cách hoạt động của nhóm.",
+          "label": "suspicious",
+          "explanation": "Tự nguyện tiếp cận người mới trong nhóm lạ để 'giới thiệu' là kỹ thuật mở đầu điển hình — thường là cộng sự của kẻ lừa đảo đóng vai thành viên thật."
+        },
+        {
+          "id": "s4m2", "from": "them",
+          "text": "Nhóm này do chị Hằng — chuyên gia phân tích tài chính 15 năm kinh nghiệm — điều hành. Chị có hệ thống tín hiệu độc quyền, tháng nào cũng lãi 25-30%.",
+          "label": "suspicious",
+          "explanation": "Lãi 25-30%/tháng (tương đương 300-360%/năm) là con số bất khả thi ngay cả với trader giỏi nhất thế giới. Warren Buffett trung bình 20%/NĂM. Đây là dấu hiệu đặc trưng của mô hình Ponzi."
+        },
+        {
+          "id": "s4m3", "from": "them",
+          "text": "Bạn xem ảnh này nhé — đây là sao kê tài khoản của mình tháng trước, lãi 28 triệu từ vốn 90 triệu.",
+          "label": "scam",
+          "explanation": "Ảnh sao kê dễ làm giả bằng Photoshop. Đây là 'bằng chứng' dùng để thuyết phục nạn nhân tin vào lợi nhuận thật. Không có cách nào xác minh tính thật của ảnh này."
+        },
+        {
+          "id": "s4m4", "from": "them",
+          "text": "Tuần này chị Hằng đang mở slot cho thành viên mới, tối thiểu 20 triệu. Bạn tham gia sớm để kịp chu kỳ lãi tháng này nhé, còn 2 slot thôi.",
+          "label": "scam",
+          "explanation": "Áp lực 'còn vài slot', 'kịp chu kỳ' cộng với số vốn tối thiểu lớn (20 triệu) là kỹ thuật Scam cuối phễu — tạo khan hiếm giả để ép quyết định nhanh trước khi nạn nhân suy nghĩ kỹ."
+        },
+        {
+          "id": "s4m5", "from": "them",
+          "text": "Bạn chuyển tiền vào đây để mình báo chị Hằng nhé. Sau 30 ngày bạn rút cả gốc lẫn lãi được luôn, không ràng buộc gì hết.",
+          "label": "scam",
+          "explanation": "'Rút gốc lẫn lãi sau 30 ngày, không ràng buộc' — lời hứa quá dễ để khiến bạn tin. Thực tế: tiền nạn nhân đầu được dùng trả lãi cho người nạp trước (mô hình Ponzi), đến lúc vỡ tất cả mất trắng."
+        }
+      ]
+    }
+  ]
+}
