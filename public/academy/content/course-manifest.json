@@ -55,7 +55,8 @@
         "level": "Foundation",
         "sourceFile": "DEEPFENSE_BASIC_Module_3_Content_v1.md",
         "quiz": { "questions": 10, "passThreshold": 0.7, "countForFinalExam": true },
-        "sections": ["3.1 Quyền riêng tư và sự đồng ý", "3.2 Đạo đức chia sẻ", "3.3 Pháp lý nhận thức"]
+        "sections": ["3.1 Quyền riêng tư và sự đồng ý", "3.2 Đạo đức chia sẻ", "3.3 Pháp lý nhận thức"],
+        "minigame": { "id": "pressure-meter", "label": "🎯 Pressure Meter", "dpf": 25, "primary": false }
       },
       {
         "id": 4,
