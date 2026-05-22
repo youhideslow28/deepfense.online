@@ -268,6 +268,9 @@ export const MODULES = [
   {
     id: 2, part: 'foundation',
     title: 'Vì sao con người dễ bị lừa?',
+    introVideo: {
+      src: '/academy/media/module-intros/module-02/module%202.web.mp4',
+    },
     duration: '85-95 phút', level: 'Foundation',
     scenario: 'An đã biết deepfake là gì. Nhưng tối đó điện thoại reo — giọng người thân, hơi run, yêu cầu chuyển tiền gấp. Trong vài giây đầu An không nghĩ đến deepfake nữa. Tại sao?',
     outcomes: [
@@ -451,6 +454,9 @@ export const MODULES = [
   {
     id: 3, part: 'foundation',
     title: 'Nhìn, nghe, đọc: dấu hiệu nghi vấn',
+    introVideo: {
+      src: '/academy/media/module-intros/module-03/module%203.web.mp4',
+    },
     duration: '75-90 phút', level: 'Foundation',
     scenario: 'Sau cuộc gọi lúc 22:47, An xem lại video đầu tư người nổi tiếng. Lần này An không hỏi ngay “thật hay giả?”, mà quan sát theo ba lớp: hình ảnh, âm thanh và ngữ cảnh.',
     outcomes: [
@@ -632,6 +638,9 @@ export const MODULES = [
   {
     id: 4, part: 'recognition',
     title: 'Quy trình Deepfense Check',
+    introVideo: {
+      src: '/academy/media/module-intros/module-04/module%204.web.mp4',
+    },
     duration: '80-95 phút', level: 'Intermediate',
     scenario: 'An đã biết deepfake là gì, hiểu cơ chế cảm xúc và biết quan sát ba lớp. Nhưng khi nội dung thật sự xuất hiện, An vẫn cần một quy trình rõ để không phải ứng biến trong hoảng loạn.',
     outcomes: [
@@ -815,6 +824,9 @@ export const MODULES = [
   {
     id: 5, part: 'recognition',
     title: 'Deepfake trong đời sống số',
+    introVideo: {
+      src: '/academy/media/module-intros/module-05/module%205.web.mp4',
+    },
     duration: '90-105 phút', level: 'Intermediate',
     scenario: 'Sau khi đã có quy trình Deepfense Check, An nhận ra rủi ro không chỉ nằm trong một video giả. Một lời nhờ chuyển tiền, một ảnh nhạy cảm trong nhóm lớp, một clip gây phẫn nộ hoặc một lời mời học bổng đều có thể bị phủ lên bởi lớp mạo danh. Module này giúp người học nhìn deepfake như một vấn đề xã hội, không chỉ là một thủ thuật công nghệ.',
     outcomes: [
