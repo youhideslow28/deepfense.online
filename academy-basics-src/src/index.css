@@ -191,7 +191,7 @@ a { color: inherit; text-decoration: none; }
 }
 .sidebar-module-title {
   font-size: 12.5px; font-weight: 600; color: var(--text-2);
-  flex: 1; line-height: 1.3;
+  flex: 1; min-width: 0; line-height: 1.3; overflow-wrap: anywhere;
 }
 .sidebar-module-header.active .sidebar-module-title { color: var(--text-1); }
 .sidebar-module-chevron {
@@ -232,7 +232,7 @@ a { color: inherit; text-decoration: none; }
 .sidebar-lesson.done .sidebar-lesson-dot { background: var(--green); }
 .sidebar-lesson-title {
   font-size: 12px; color: var(--text-3); line-height: 1.4;
-  transition: color var(--trans);
+  min-width: 0; overflow-wrap: anywhere; transition: color var(--trans);
 }
 .sidebar-lesson.active .sidebar-lesson-title { color: var(--accent-light); }
 .sidebar-lesson.done .sidebar-lesson-title { color: var(--text-2); }
@@ -274,7 +274,7 @@ a { color: inherit; text-decoration: none; }
 }
 .topbar-home:hover { background: var(--bg-hover); color: var(--text-1); border-color: var(--hover-border-tint); }
 .topbar-breadcrumb {
-  font-size: 13px; color: var(--text-2); flex: 1;
+  font-size: 13px; color: var(--text-2); flex: 1; min-width: 0;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .topbar-breadcrumb span { color: var(--text-3); }
@@ -383,6 +383,7 @@ a { color: inherit; text-decoration: none; }
 .home-module-card {
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 18px;
+  min-height: 124px; display: flex; flex-direction: column;
   cursor: pointer; transition: all var(--trans);
 }
 .home-module-card:hover {
@@ -392,15 +393,18 @@ a { color: inherit; text-decoration: none; }
 .home-module-card-num {
   font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--accent-light); margin-bottom: 6px;
+  overflow-wrap: anywhere;
 }
 .home-module-card-title {
   font-size: 13.5px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; line-height: 1.3;
+  flex: 1; overflow-wrap: anywhere;
 }
 .home-module-card-meta {
-  font-size: 11px; color: var(--text-3); display: flex; gap: 8px; flex-wrap: wrap;
+  font-size: 11px; color: var(--text-3); display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
 }
 .home-module-card-tag {
   background: var(--bg-hover); border-radius: 4px; padding: 2px 7px;
+  max-width: 100%; overflow-wrap: anywhere;
 }
 
 /* ── FINAL EXAM ──────────────────────────────────────────────── */
@@ -1924,10 +1928,10 @@ kbd {
 .lb-table-wrap { margin: 18px 0; }
 .lb-table-caption { font-size: 13px; color: var(--text-3); margin-bottom: 8px; font-style: italic; }
 .lb-table-scroll { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
-.lb-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.lb-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 14px; }
 .lb-table thead tr { background: rgba(124,58,237,0.1); }
 .lb-table th { padding: 10px 14px; text-align: left; font-weight: 700; color: var(--accent-light); font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; border-bottom: 1px solid var(--border); }
-.lb-table td { padding: 10px 14px; color: var(--text-2); line-height: 1.55; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+.lb-table td { padding: 10px 14px; color: var(--text-2); line-height: 1.55; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; overflow-wrap: anywhere; }
 .lb-table tr:last-child td { border-bottom: none; }
 .lb-table tr:hover td { background: rgba(255,255,255,0.02); }
 .lb-table td:first-child { color: var(--text-1); font-weight: 600; }
@@ -2031,6 +2035,7 @@ kbd {
   .lb-process-steps--horizontal .lb-process-step-icon-wrap { width: auto; margin-bottom: 0; }
   .lb-process-steps--horizontal .lb-process-arrow { display: none; }
   .lb-stats-row { gap: 8px; }
+  .lb-table { min-width: 480px; }
 }
 
 /* ── MINI GAME ─────────────────────────────────────────────────── */
