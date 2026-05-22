@@ -18,6 +18,54 @@ export const EXAM_CONFIG = {
   passingScore: 35,        // 35/50 = 70%
   passingPercent: 70,
   maxAttempts: 3,
+  sessionSize: 10,
+  sessions: [
+    {
+      id: 'foundation',
+      label: 'Phiên 1',
+      title: 'Nền tảng & phân loại',
+      description: 'Kiểm tra khả năng phân biệt deepfake, deepvoice, synthetic media và nội dung thật bị đặt sai bối cảnh.',
+      modules: [1, 2],
+      categories: ['concept', 'red_flags'],
+      difficulty: { easy: 4, medium: 5, hard: 1 },
+    },
+    {
+      id: 'signals',
+      label: 'Phiên 2',
+      title: 'Dấu hiệu & ngữ cảnh',
+      description: 'Tập trung vào bẫy cảm xúc, dấu hiệu hình ảnh/âm thanh và cách đọc ngữ cảnh trước khi kết luận.',
+      modules: [2, 3],
+      categories: ['red_flags', 'verification', 'concept'],
+      difficulty: { easy: 2, medium: 6, hard: 2 },
+    },
+    {
+      id: 'verification',
+      label: 'Phiên 3',
+      title: 'Quy trình kiểm chứng',
+      description: 'Đòi hỏi áp dụng Pause, Observe, Verify, Trace, Decide trong tình huống có nhiều tín hiệu lẫn lộn.',
+      modules: [3, 4],
+      categories: ['verification', 'response'],
+      difficulty: { easy: 1, medium: 6, hard: 3 },
+    },
+    {
+      id: 'response',
+      label: 'Phiên 4',
+      title: 'Ứng phó đời sống',
+      description: 'Đánh giá lựa chọn hành động khi gặp yêu cầu tiền, OTP, ảnh nhạy cảm, link lạ và mạo danh.',
+      modules: [4, 5],
+      categories: ['response', 'red_flags', 'ethics'],
+      difficulty: { easy: 1, medium: 5, hard: 4 },
+    },
+    {
+      id: 'capstone',
+      label: 'Phiên 5',
+      title: 'Tổng hợp & bẫy quyết định',
+      description: 'Các câu hỏi tổng hợp khó hơn: không chỉ nhớ kiến thức, mà phải chọn phản ứng ít gây hại nhất.',
+      modules: [5, 6, 4],
+      categories: ['response', 'verification', 'ethics', 'concept'],
+      difficulty: { easy: 0, medium: 5, hard: 5 },
+    },
+  ],
   // Target category distribution for each 50-question draw
   distribution: {
     concept:      10,  // 20% — khái niệm & phân loại
@@ -1102,60 +1150,93 @@ export const EXAM_BANK = [
 ];
 
 // ── DRAW 50 QUESTIONS ─────────────────────────────────────────────────────────
-// Returns a shuffled array of exactly 50 questions meeting the distribution
-// and module-minimum constraints defined in EXAM_CONFIG.
-export function drawExam() {
-  const { distribution, moduleMinimums, questionsPerAttempt } = EXAM_CONFIG;
-
-  // Shuffle source bank
-  const pool = [...EXAM_BANK].sort(() => Math.random() - 0.5);
-
-  // Build fast lookup: id → question
-  const byId = Object.fromEntries(pool.map(q => [q.id, q]));
-
-  // Group shuffled questions by module and category
-  const byModule   = {};
-  const byCategory = {};
-  for (const q of pool) {
-    (byModule[q.module]   = byModule[q.module]   || []).push(q);
-    (byCategory[q.category] = byCategory[q.category] || []).push(q);
+function shuffle(list) {
+  const arr = [...list];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
+  return arr;
+}
 
-  const selected = new Set();
+function getDifficulty(q) {
+  if (q.category === 'ethics') return 'hard';
+  if (q.category === 'response') return q.module >= 4 ? 'hard' : 'medium';
+  if (q.category === 'verification') return q.module >= 3 ? 'medium' : 'easy';
+  if (q.category === 'red_flags') return q.module >= 3 ? 'medium' : 'easy';
+  return q.module >= 5 ? 'medium' : 'easy';
+}
 
-  const pick = (list) => {
-    for (const q of list) {
-      if (!selected.has(q.id)) { selected.add(q.id); return; }
-    }
+function withShuffledOptions(q) {
+  const options = q.options.map((text, index) => ({ text, index }));
+  const shuffled = shuffle(options);
+  return {
+    ...q,
+    options: shuffled.map(opt => opt.text),
+    answer: shuffled.findIndex(opt => opt.index === q.answer),
   };
+}
 
-  // Phase 1 — meet module minimums (pick from each module's shuffled pool)
-  for (const [mod, min] of Object.entries(moduleMinimums)) {
-    const list = byModule[+mod] || [];
-    let picked = 0;
-    for (const q of list) {
-      if (picked >= min) break;
-      if (!selected.has(q.id)) { selected.add(q.id); picked++; }
-    }
-  }
-
-  // Phase 2 — meet category targets
-  for (const [cat, target] of Object.entries(distribution)) {
-    const list = byCategory[cat] || [];
-    // Count already selected in this category
-    let have = [...selected].filter(id => byId[id]?.category === cat).length;
-    for (const q of list) {
-      if (have >= target) break;
-      if (!selected.has(q.id)) { selected.add(q.id); have++; }
-    }
-  }
-
-  // Phase 3 — fill remaining slots randomly
+function pickFromPool(pool, selected, count) {
+  const picked = [];
   for (const q of pool) {
-    if (selected.size >= questionsPerAttempt) break;
-    if (!selected.has(q.id)) selected.add(q.id);
+    if (picked.length >= count) break;
+    if (selected.has(q.id)) continue;
+    selected.add(q.id);
+    picked.push(q);
+  }
+  return picked;
+}
+
+function sessionPool(session, selected, difficulty) {
+  return shuffle(EXAM_BANK.filter(q =>
+    !selected.has(q.id) &&
+    session.modules.includes(q.module) &&
+    session.categories.includes(q.category) &&
+    (!difficulty || getDifficulty(q) === difficulty)
+  ));
+}
+
+function drawSessionQuestions(session, selected, fallbackPool) {
+  const picked = [];
+
+  for (const [difficulty, count] of Object.entries(session.difficulty)) {
+    picked.push(...pickFromPool(sessionPool(session, selected, difficulty), selected, count));
   }
 
-  // Return in shuffled order, capped at questionsPerAttempt
-  return pool.filter(q => selected.has(q.id)).slice(0, questionsPerAttempt);
+  if (picked.length < EXAM_CONFIG.sessionSize) {
+    const exactPool = shuffle(EXAM_BANK.filter(q =>
+      !selected.has(q.id) &&
+      session.modules.includes(q.module) &&
+      session.categories.includes(q.category)
+    ));
+    picked.push(...pickFromPool(exactPool, selected, EXAM_CONFIG.sessionSize - picked.length));
+  }
+
+  if (picked.length < EXAM_CONFIG.sessionSize) {
+    picked.push(...pickFromPool(fallbackPool, selected, EXAM_CONFIG.sessionSize - picked.length));
+  }
+
+  return shuffle(picked).slice(0, EXAM_CONFIG.sessionSize);
+}
+
+// DRAW 50 QUESTIONS
+// Returns 5 structured sessions of 10 questions. Each session has a learning
+// objective, controlled difficulty, and shuffled answer positions.
+export function drawExam() {
+  const selected = new Set();
+  const fallbackPool = shuffle(EXAM_BANK);
+
+  return EXAM_CONFIG.sessions.flatMap((session, sessionIndex) =>
+    drawSessionQuestions(session, selected, fallbackPool).map((q, questionIndex) => ({
+      ...withShuffledOptions(q),
+      difficulty: getDifficulty(q),
+      sessionId: session.id,
+      sessionLabel: session.label,
+      sessionTitle: session.title,
+      sessionDescription: session.description,
+      sessionIndex,
+      sessionQuestionNumber: questionIndex + 1,
+    }))
+  ).slice(0, EXAM_CONFIG.questionsPerAttempt);
 }

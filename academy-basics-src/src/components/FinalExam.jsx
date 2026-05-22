@@ -74,6 +74,7 @@ export default function FinalExam({ onComplete, completedLessons }) {
   const answeredCnt = Object.keys(answers).length;
   const allAnswered = answeredCnt === questionsPerAttempt;
   const alreadyPassed = completedLessons?.has('final-exam') || store.passed;
+  const currentSession = questions[page * PAGE_SIZE];
 
   // ── actions ────────────────────────────────────────────────────────────────
   function handleStart() {
@@ -143,6 +144,7 @@ export default function FinalExam({ onComplete, completedLessons }) {
 
           <div className="exam-rules">
             <div className="exam-rule"><span className="exam-rule-icon">📋</span><span><strong>{questionsPerAttempt} câu hỏi</strong> chọn ngẫu nhiên từ ngân hàng 150 câu</span></div>
+            <div className="exam-rule"><span className="exam-rule-icon">5</span><span><strong>5 phiên thi</strong> theo mục tiêu: nền tảng, dấu hiệu, kiểm chứng, ứng phó và tổng hợp</span></div>
             <div className="exam-rule"><span className="exam-rule-icon">✅</span><span>Đạt khi trả lời đúng <strong>≥ {passingScore}/{questionsPerAttempt}</strong> câu ({passingPercent}%)</span></div>
             <div className="exam-rule"><span className="exam-rule-icon">🔄</span><span>Tối đa <strong>{maxAttempts} lần</strong> thử · đã thử <strong>{store.attempts}</strong> lần</span></div>
             <div className="exam-rule"><span className="exam-rule-icon">💡</span><span>Giải thích hiện sau khi nộp bài</span></div>
@@ -169,7 +171,14 @@ export default function FinalExam({ onComplete, completedLessons }) {
         <div className="exam-wrap">
           {/* Header */}
           <div className="exam-header">
-            <div className="exam-header-title">DEEPFENSE BASIC — Final Exam</div>
+            <div className="exam-header-title">
+              DEEPFENSE BASIC - Final Exam
+              {currentSession && (
+                <span className="exam-session-kicker">
+                  {currentSession.sessionLabel}: {currentSession.sessionTitle}
+                </span>
+              )}
+            </div>
             <div className="exam-header-progress">
               <span className="exam-header-count">{answeredCnt}/{questionsPerAttempt} đã trả lời</span>
               <div className="exam-progress-bar">
@@ -178,6 +187,16 @@ export default function FinalExam({ onComplete, completedLessons }) {
             </div>
           </div>
 
+          {currentSession && (
+            <div className="exam-session-card">
+              <div className="exam-session-label">{currentSession.sessionLabel}</div>
+              <div>
+                <h2>{currentSession.sessionTitle}</h2>
+                <p>{currentSession.sessionDescription}</p>
+              </div>
+            </div>
+          )}
+
           {/* Questions */}
           <div className="exam-questions">
             {pageQuestions.map((q, qi) => {
@@ -185,7 +204,10 @@ export default function FinalExam({ onComplete, completedLessons }) {
               const chosen    = answers[q.id];
               return (
                 <div key={q.id} className="exam-question">
-                  <div className="exam-q-num">Câu {globalIdx + 1}</div>
+                  <div className="exam-q-num">
+                    Câu {globalIdx + 1}
+                    <span>Phiên {q.sessionIndex + 1}.{q.sessionQuestionNumber}</span>
+                  </div>
                   <div className="exam-q-text">{q.text}</div>
                   <div className="exam-options">
                     {q.options.map((opt, oi) => (
@@ -215,7 +237,7 @@ export default function FinalExam({ onComplete, completedLessons }) {
               className="exam-page-btn"
               onClick={() => setPage(p => p - 1)}
               disabled={page === 0}
-            >← Trang trước</button>
+            >← Phiên trước</button>
 
             <div className="exam-page-dots">
               {Array.from({ length: totalPages }, (_, i) => {
@@ -237,7 +259,7 @@ export default function FinalExam({ onComplete, completedLessons }) {
 
             {page < totalPages - 1 ? (
               <button className="exam-page-btn" onClick={() => setPage(p => p + 1)}>
-                Trang sau →
+                Phiên sau →
               </button>
             ) : (
               <button
@@ -252,7 +274,7 @@ export default function FinalExam({ onComplete, completedLessons }) {
           </div>
 
           <div className="exam-page-info">
-            Trang {page + 1}/{totalPages} · {pageAnswered}/{pageQuestions.length} câu trên trang này đã trả lời
+            Phiên {page + 1}/{totalPages} · {pageAnswered}/{pageQuestions.length} câu trong phiên này đã trả lời
           </div>
         </div>
       </div>
