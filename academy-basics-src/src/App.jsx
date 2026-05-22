@@ -24,6 +24,18 @@ const LEGACY_PROGRESS_KEYS = [
   'deepfense-basics-final-exam',
 ];
 
+function scrollLessonToTop() {
+  const behavior = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  requestAnimationFrame(() => {
+    const content = document.querySelector('.content');
+    if (content) {
+      content.scrollTo({ top: 0, left: 0, behavior });
+      return;
+    }
+    window.scrollTo({ top: 0, left: 0, behavior });
+  });
+}
+
 function readSession() {
   try {
     const raw = localStorage.getItem(SESSION_KEY);
@@ -227,7 +239,7 @@ export default function App() {
   function goToLesson(idx) {
     setCurrentIdx(idx);
     setSidebarOpen(false); // auto-close on mobile after picking a lesson
-    window.scrollTo(0, 0);
+    scrollLessonToTop();
   }
 
   function handleSelectLesson(moduleId, lessonId) {
