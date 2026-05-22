@@ -1,7 +1,11 @@
 // ── HELPERS ────────────────────────────────────────────────────
 export const lesson = (id, title, paragraphs, takeaways) => ({ id, title, paragraphs, takeaways });
 export const q = (text, options, answer) => ({ text, options, answer });
-export const checkpoint = (label, questions, miniGame) => ({ label, questions, ...(miniGame ? { miniGame } : {}) });
+export const checkpoint = (label, questions, miniGame, maxQuestions) => ({
+  label,
+  questions: Number.isInteger(maxQuestions) ? questions.slice(0, maxQuestions) : questions,
+  ...(miniGame ? { miniGame } : {}),
+});
 
 // ── COURSE META ─────────────────────────────────────────────────
 export const COURSE = {
@@ -122,7 +126,7 @@ export const MODULES = [
               { id: 6, text: 'Email từ trường thông báo lịch thi — địa chỉ gửi đúng domain trường, không có link lạ.', correctBucket: 'normal', explanation: 'Domain đúng và không có yêu cầu bất thường là dấu hiệu bình thường. Vẫn nên đọc kỹ nhưng không cần lo ngại.' },
             ],
           },
-        }),
+        }, 3),
       },
     ],
     quiz: [
@@ -257,7 +261,7 @@ export const MODULES = [
               { id: 6, text: 'Ảnh biểu tình ở nước khác được chia sẻ kèm chú thích về tình hình trong nước.', correctBucket: 'repurposed', explanation: 'Repurposed media: nội dung thật nhưng bị dùng sai bối cảnh địa lý hoặc thời gian.' },
             ],
           },
-        }),
+        }, 4),
       },
       {
         title: '1.2 Thực hành phân loại nội dung',
@@ -558,7 +562,7 @@ export const MODULES = [
           q('Khẩu hình lệch trong video nên được hiểu thế nào?', ['Là tín hiệu cần kiểm chứng thêm, không phải kết luận chắc chắn', 'Chắc chắn là deepfake', 'Chắc chắn là video thật', 'Không bao giờ quan trọng'], 0),
           q('Kết quả detector deepfake nên được dùng ra sao?', ['Như một tín hiệu tham khảo trong quá trình đánh giá', 'Như phán quyết tuyệt đối', 'Để thay thế kiểm tra nguồn', 'Để quyết định chia sẻ ngay'], 0),
           q('Khi nào có thể xem một nội dung là rủi ro cao dù chưa chứng minh deepfake?', ['Khi nội dung yêu cầu tiền, OTP, link lạ, chia sẻ gấp hoặc gây hại danh dự', 'Khi video có độ phân giải thấp', 'Khi người nói nhìn nghiêm túc', 'Khi có ít bình luận'], 0),
-        ]),
+        ], null, 2),
       },
       {
         title: '3.2 Lớp âm thanh và giọng nói',
@@ -590,7 +594,7 @@ export const MODULES = [
           q('Vì sao deepvoice nguy hiểm trong cuộc gọi khẩn cấp?', ['Vì giọng quen có thể kích hoạt phản xạ tin và giúp ngay', 'Vì mọi deepvoice đều hoàn hảo', 'Vì chỉ chuyên gia mới nghe được', 'Vì không cần kiểm chứng nếu giọng giống'], 0),
           q('Dấu hiệu nào là rủi ro mạnh hơn việc giọng nghe hơi lạ?', ['Yêu cầu chuyển tiền, gửi OTP hoặc giữ bí mật', 'Âm lượng hơi nhỏ', 'Có tiếng ồn nền', 'Cuộc gọi ngắn'], 0),
           q('Kênh xác minh an toàn nhất khi nhận cuộc gọi giống người thân yêu cầu tiền là gì?', ['Gọi lại số đã lưu hoặc hỏi người thân khác', 'Hỏi tiếp trong cùng cuộc gọi', 'Gọi số mới người đó vừa gửi', 'Chuyển một khoản nhỏ trước'], 0),
-        ]),
+        ], null, 2),
       },
       {
         title: '3.3 Lớp ngữ cảnh và hành vi',
@@ -637,7 +641,7 @@ export const MODULES = [
               { id: 5, tag: '🔇 Cô lập', explanation: '"Đừng để người thân biết" là red flag tột độ — kẻ lừa muốn cô lập nạn nhân khỏi người có thể cảnh báo.' },
             ],
           },
-        }),
+        }, 2),
       },
       {
         title: '3.4 Thực hành checklist 3 lớp',
@@ -659,7 +663,7 @@ export const MODULES = [
           q('Trong tình huống video đầu tư, dấu hiệu ngữ cảnh nguy hiểm nhất là gì?', ['Tài khoản không chính thức kết hợp với link đăng ký và lời hứa lợi nhuận cao', 'Video hơi ngắn', 'Người nói mặc áo sáng màu', 'Bình luận có nhiều emoji'], 0),
           q('Với tin nhắn thoại giống người thân yêu cầu chuyển tiền, hành động an toàn nhất là gì?', ['Gọi lại số đã lưu hoặc xác minh qua người thân khác', 'Chuyển một khoản nhỏ trước', 'Hỏi tiếp trong cùng tài khoản', 'Tin vì giọng giống'], 0),
           q('Với hình ảnh nhạy cảm không rõ nguồn trong nhóm chat, hành động đúng là gì?', ['Không lưu, không chuyển tiếp, báo cáo và hỗ trợ người bị hại', 'Phân tích công khai để tìm thật giả', 'Chia sẻ để cảnh báo', 'Lưu lại để xem sau'], 0),
-        ]),
+        ], null, 3),
       },
     ],
     quiz: [
@@ -765,7 +769,7 @@ export const MODULES = [
           q('Pause có mục tiêu gì?', ['Tạo khoảng dừng trước hành động rủi ro', 'Bỏ qua vấn đề', 'Kết luận video là giả', 'Chờ người khác quyết định'], 0),
           q('Verify khác gì với hỏi lại trong cùng kênh nghi vấn?', ['Verify dùng kênh độc lập hoặc đáng tin hơn', 'Không khác gì', 'Verify chỉ dùng detector', 'Verify chỉ dùng bình luận'], 0),
           q('Decide cho phép điều gì khi chưa chắc 100%?', ['Chọn hành động an toàn nếu rủi ro cao và chưa đủ dữ liệu', 'Luôn phải chia sẻ để hỏi thêm', 'Luôn phải chứng minh deepfake trước', 'Luôn tin người gửi'], 0),
-        ]),
+        ], null, 3),
       },
       {
         title: '4.2 Công cụ và kênh kiểm chứng',
@@ -802,7 +806,7 @@ export const MODULES = [
           q('Công cụ kiểm chứng nên được hiểu thế nào?', ['Là tín hiệu hỗ trợ, không thay thế tư duy', 'Là phán quyết tuyệt đối', 'Không bao giờ hữu ích', 'Chỉ dùng để chứng minh video giả'], 0),
           q('Reverse image search không hiệu quả nhất với trường hợp nào?', ['Ảnh AI hoàn toàn mới chưa từng xuất hiện trên Internet', 'Ảnh cũ bị dùng sai bối cảnh', 'Ảnh đại diện lấy từ nơi khác', 'Ảnh từng đăng công khai'], 0),
           q('Kênh nào là kênh độc lập tốt khi người thân nhắn cần tiền?', ['Số điện thoại đã lưu từ trước hoặc người thân khác', 'Số mới người đó vừa gửi', 'Link trong tin nhắn', 'Hỏi lại trong cùng tài khoản đang nghi vấn'], 0),
-        ]),
+        ], null, 2),
       },
       {
         title: '4.3 Thực hành quy trình',
@@ -845,7 +849,7 @@ export const MODULES = [
               { id: 'c8', text: 'Viền hàm dưới mờ, hoà lẫn vào cổ khi quay đầu', bucket: 'deepfake' },
             ],
           },
-        }),
+        }, 2),
       },
     ],
     quiz: [
@@ -943,7 +947,7 @@ export const MODULES = [
               { id: 's5', text: 'Một app "kiểm tra thuế" được gửi qua Zalo, sau khi cài thấy app yêu cầu quyền truy cập SMS và Accessibility.', match: 'delete_app' },
             ],
           },
-        }),
+        }, 3),
       },
       {
         title: '5.2 Học đường, danh dự và nội dung nhạy cảm',
@@ -968,7 +972,7 @@ export const MODULES = [
           q('Khi thấy ảnh nhạy cảm nghi là ghép của bạn học trong nhóm, việc đầu tiên nên làm là gì?', ['Gửi tiếp để hỏi thật giả.', 'Không lưu, không gửi tiếp và báo người có trách nhiệm.', 'Bình luận đùa cho nhẹ chuyện.', 'Tải về để phân tích kỹ thuật.'], 1),
           q('Vì sao nội dung giả vẫn có thể gây hại thật?', ['Vì người bị nhắm đến vẫn có thể bị xấu hổ, bắt nạt hoặc tổn thương danh dự.', 'Vì mọi người sẽ quên ngay.', 'Vì ảnh giả luôn dễ nhận ra.', 'Vì chỉ người nổi tiếng mới bị ảnh hưởng.'], 0),
           q('Cách giữ bằng chứng nào phù hợp hơn?', ['Phát tán lại nội dung để nhiều người biết.', 'Lưu thông tin nguồn, thời điểm và đường dẫn ở mức cần thiết để báo cáo.', 'Đăng lên trang cá nhân.', 'Gửi cho càng nhiều bạn càng tốt.'], 1),
-        ]),
+        ], null, 2),
       },
       {
         title: '5.3 Tin giả xã hội và khủng hoảng niềm tin',
@@ -1041,7 +1045,7 @@ export const MODULES = [
           q('Trong quan hệ online, dấu hiệu nào cho thấy rủi ro cao?', ['Người kia tôn trọng việc xác minh.', 'Người kia quen chưa lâu nhưng xin tiền và yêu cầu giữ bí mật.', 'Người kia không hỏi thông tin cá nhân.', 'Người kia đồng ý gặp ở nơi công cộng.'], 1),
           q('Lời mời việc làm nào đáng nghi nhất?', ['Có thông tin công khai trên website chính thức.', 'Yêu cầu phí giữ chỗ và ảnh căn cước trước khi xác minh tổ chức.', 'Có quy trình phỏng vấn rõ ràng.', 'Dùng email tên miền chính thức của tổ chức.'], 1),
           q('Câu nào thể hiện tư duy Deepfense tốt nhất?', ['Không tin bất kỳ nội dung nào trên Internet.', 'Chỉ tin khi video có nhiều lượt xem.', 'Kiểm tra nguồn, bối cảnh và yêu cầu hành động trước khi quyết định.', 'Thấy nghi thì kết luận ngay là AI.'], 2),
-        ]),
+        ], null, 3),
       },
     ],
     quiz: [
@@ -1127,7 +1131,7 @@ export const MODULES = [
               { id: 'u6', text: 'https://shopee.vn.security-update.net/account', bucket: 'fake' },
             ],
           },
-        }),
+        }, 3),
       },
       {
         title: '6.2 Vệ sinh dữ liệu cá nhân',
@@ -1151,7 +1155,7 @@ export const MODULES = [
           q('Điều nào KHÔNG nên dùng làm Family Code?', ['Một cụm từ riêng gia đình tự đặt.', 'Một câu xác minh không công khai.', 'Ngày sinh đã đăng công khai trên mạng xã hội.', 'Một quy ước gọi lại số cũ.'], 2),
           q('Vì sao cần hạn chế đăng giấy tờ hoặc lịch trình công khai?', ['Vì dữ liệu đó có thể bị dùng để mạo danh hoặc dựng kịch bản lừa đảo.', 'Vì mọi bài đăng công khai đều sai.', 'Vì Internet không cho đăng ảnh.', 'Vì deepfake chỉ cần màu ảnh.'], 0),
           q('Nếu tài khoản bị chiếm quyền, việc nên làm sớm là gì?', ['Im lặng chờ tự hết.', 'Cảnh báo người thân qua kênh khác và khôi phục qua kênh chính thức.', 'Chuyển thêm tiền cho tài khoản đó.', 'Đăng mật khẩu mới lên trang cá nhân.'], 1),
-        ]),
+        ], null, 2),
       },
       {
         title: '6.3 Báo cáo, bằng chứng và hỗ trợ người bị hại',
@@ -1202,7 +1206,7 @@ export const MODULES = [
           q('Trong hồ sơ capstone, vì sao kết quả detector “không phát hiện rõ” chưa đủ để tin nội dung?', ['Vì detector chỉ là một tín hiệu tham khảo và ngữ cảnh vẫn có nhiều dấu hiệu lừa đảo.', 'Vì detector luôn sai.', 'Vì video ngắn luôn thật.', 'Vì bình luận tích cực đã đủ chứng minh.'], 0),
           q('Hành động phù hợp nhất với link đầu tư trong hồ sơ là gì?', ['Bấm link để kiểm tra nhanh.', 'Không bấm link, kiểm tra kênh chính thức và nguồn độc lập.', 'Nạp thử một khoản nhỏ.', 'Gửi link cho nhiều người cùng xem.'], 1),
           q('Điều gì thể hiện kết luận đúng của capstone?', ['Chắc chắn video thật vì không thấy lỗi kỹ thuật.', 'Không cần kết luận tuyệt đối về deepfake để chọn phương án an toàn.', 'Cứ tin nếu bạn cũ gửi.', 'Chỉ cần xem bình luận là đủ.'], 1),
-        ]),
+        ], null, 3),
       },
       {
         title: '6.5 Bài kiểm tra cuối khóa',
