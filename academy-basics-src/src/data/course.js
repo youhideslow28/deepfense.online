@@ -947,190 +947,135 @@ export const MODULES = [
   },
 
   {
-    id: 6, part: 'recognition',
+    id: 6, part: 'protection',
     title: 'Phòng vệ cá nhân và cộng đồng',
-    duration: '95-110 phút', level: 'Recognition',
-    scenario: 'Sau 5 module, An đã thay đổi cách nhìn nhận nội dung số. Nhưng An nhận ra: nếu chỉ một mình An biết cách phòng vệ, rủi ro vẫn còn. Gia đình, bạn bè, đồng nghiệp và người thân vẫn có thể bị lừa. Phòng vệ trước deepfake không chỉ là kỹ năng cá nhân — đó là thói quen cộng đồng.',
+    duration: '90-105 phút', level: 'Intermediate',
+    scenario: 'Sau khi học cách nhận diện rủi ro, An nhận ra một điều quan trọng: an toàn số không thể chỉ là kiến thức nằm trong đầu. Nó cần trở thành quy tắc trước khi sự cố xảy ra, đặc biệt với gia đình, lớp học, nhóm làm việc và cộng đồng online. Module 6 giúp người học biến Deepfense Check thành thói quen phòng vệ có thể dùng ngay.',
     outcomes: [
-      'Thiết lập được bộ quy tắc Deepfense Shield cho bản thân và gia đình hoặc nhóm của mình.',
-      'Biết giảm rủi ro từ dữ liệu cá nhân, hình ảnh, giọng nói và tài khoản.',
-      'Biết lưu bằng chứng và báo cáo khi gặp nội dung giả mạo hoặc lừa đảo.',
-      'Biết hỗ trợ người khác mà không làm tăng lan truyền nội dung gây hại.',
-      'Hoàn thành capstone tổng hợp bằng cách đánh giá một hồ sơ sự việc có nhiều tín hiệu.',
+      'Thiết lập được bộ quy tắc Deepfense Shield cho bản thân, gia đình hoặc nhóm làm việc.',
+      'Biết giảm dữ liệu cá nhân dễ bị dùng để mạo danh: ảnh, giọng nói, giấy tờ, tài khoản và lịch trình.',
+      'Biết lưu bằng chứng, báo cáo và hỗ trợ người bị hại mà không làm nội dung gây hại lan rộng hơn.',
+      'Hoàn thành capstone tổng hợp trước khi bước sang bài kiểm tra cuối khóa.',
     ],
     sections: [
       {
-        title: '6.0 Câu chuyện dẫn nhập: An không muốn chỉ học cho mình',
+        title: '6.0 Từ nhận diện sang phòng vệ',
         lessons: [
-          lesson('6.0.0', 'An không muốn chỉ học cho mình', [
-            'Sau 5 module, An đã thay đổi. An không còn nhìn một video gây sốc như trước. An không còn nghe một giọng quen rồi lập tức tin. An không còn muốn chia sẻ ngay khi thấy một clip khiến mình phẫn nộ. An cũng biết rằng hình ảnh nhạy cảm, dù thật hay giả, có thể gây tổn thương thật.',
-            'Nhưng An nhận ra một điều: nếu chỉ một mình An biết cách phòng vệ, rủi ro vẫn còn. Gia đình An vẫn có thể bị gọi điện giả giọng. Bạn bè An vẫn có thể chuyển tiền vì một tài khoản bị chiếm quyền. Nhóm lớp vẫn có thể lan truyền hình ảnh gây hại. Đồng nghiệp vẫn có thể bấm link từ một video giả mạo sếp.',
-            'Phòng vệ trước deepfake không chỉ là kỹ năng cá nhân. Nó là thói quen cộng đồng.',
-            'Module 6 sẽ giúp bạn biến những điều đã học thành bộ quy tắc Deepfense Shield đơn giản có thể áp dụng ngay: Family Code, Money Delay, Two-Channel Rule, No Shame Reporting và Evidence First.',
+          lesson('6.0.0', 'Kiến thức chỉ hữu ích khi thành quy tắc', [
+            'Một người biết kiểm tra deepfake có thể tự bảo vệ mình tốt hơn. Nhưng trong đời sống thật, rủi ro thường đi qua người thân, bạn bè, đồng nghiệp hoặc nhóm chat trước khi đến bạn.',
+            'Nếu gia đình chưa có cách xác minh khi có cuộc gọi cầu cứu, nếu lớp học chưa có quy tắc dừng phát tán ảnh nhạy cảm, nếu nhóm làm việc vẫn cho phép chuyển tiền ngoài quy trình, kiến thức cá nhân chưa đủ để tạo an toàn chung.',
+            'Module này chuyển trọng tâm từ “tôi nhận ra dấu hiệu gì” sang “chúng ta đã chuẩn bị quy tắc gì để không hoảng loạn khi sự cố xảy ra”.',
           ], [
-            'Phòng vệ cá nhân là khởi đầu. Phòng vệ cộng đồng là mục tiêu.',
+            'Phòng vệ tốt không bắt đầu ở lúc hoảng. Phòng vệ tốt bắt đầu từ quy tắc đã thống nhất trước.',
           ]),
         ],
         checkpoint: null,
       },
       {
-        title: '6.1 Bộ quy tắc Deepfense Shield',
+        title: '6.1 Deepfense Shield',
         lessons: [
-          lesson('6.1.0', 'Mục tiêu bài học 6.1', [
-            'Sau phần 6.1, bạn sẽ hiểu 5 quy tắc Deepfense Shield và biết áp dụng từng quy tắc vào gia đình, trường học, công việc và mạng xã hội.',
-            'Bạn sẽ biết thiết kế phản xạ phòng vệ trước khi sự cố xảy ra và biết hỗ trợ người khác mà không làm họ xấu hổ.',
+          lesson('6.1.0', 'Năm quy tắc nền tảng', [
+            'Deepfense Shield là bộ quy tắc ngắn để dùng trong đời sống hằng ngày: Family Code, Money Delay, Two-Channel Rule, No Shame Reporting và Evidence First.',
+            'Family Code là câu xác minh riêng giữa những người tin cậy. Nó không nên là ngày sinh, tên thú cưng công khai, địa chỉ nhà hoặc thông tin có thể đoán từ mạng xã hội. Một Family Code tốt cần dễ nhớ, ít người biết, có thể đổi khi nghi bị lộ và được thống nhất trước.',
+            'Money Delay là khoảng dừng bắt buộc trước yêu cầu tiền bạc bất thường. Với chuyển khoản, OTP, đầu tư, phí giữ chỗ hoặc tài khoản nhận tiền lạ, nguyên tắc là chậm lại để xác minh. Kẻ lừa đảo cần tốc độ; người an toàn cần quy trình.',
+            'Two-Channel Rule yêu cầu kiểm tra qua kênh độc lập thứ hai khi tình huống liên quan đến tiền, tài khoản, giấy tờ, danh dự hoặc nội dung nhạy cảm. Tin nhắn có thể đi kèm cuộc gọi đến số đã lưu; email có thể được xác nhận qua kênh nội bộ; video đầu tư cần được đối chiếu với kênh chính thức.',
+            'No Shame Reporting nghĩa là báo sớm mà không làm nạn nhân xấu hổ. Evidence First nghĩa là lưu thông tin cần thiết trước khi xóa, chặn hoặc báo cáo, nhưng không phát tán lại nội dung gây hại.',
           ], [
-            '5 quy tắc Deepfense Shield: Family Code, Money Delay, Two-Channel Rule, No Shame Reporting, Evidence First.',
+            'Deepfense Shield không làm cuộc sống phức tạp hơn. Nó giảm số quyết định phải đưa ra trong lúc căng thẳng.',
           ]),
-          lesson('6.1.1', 'Quy tắc 1: Family Code', [
-            'Family Code là câu hoặc từ xác minh riêng giữa những người tin cậy. Nó dùng cho tình huống khẩn cấp, đặc biệt khi có giọng nói hoặc video giống người thân. Ví dụ: một câu hỏi gia đình tự đặt, một cụm từ chỉ người trong nhà hiểu, một quy ước "nếu cần tiền gấp, phải gọi lại số cũ và nói đúng câu xác minh".',
-            'Family Code tốt nên: dễ nhớ, không đăng lên mạng, không dựa vào thông tin công khai, có thể thay đổi nếu nghi đã lộ, được thống nhất trước với người thân.',
-            'Không nên dùng: ngày sinh, tên thú cưng đã đăng công khai, địa chỉ nhà, tên trường hoặc công ty, câu hỏi mà người ngoài có thể đoán từ mạng xã hội.',
-            'Ví dụ ứng dụng: người gọi nói giống em bạn — "Anh ơi chuyển tiền gấp." Bạn có thể nói: "Anh sẽ gọi lại số cũ. Nếu đúng là em, mình dùng câu xác minh như đã thống nhất." Family Code không phải để làm khó người thân — nó giúp cả nhà an toàn hơn.',
+          lesson('6.1.1', 'Áp dụng Shield trong bốn môi trường', [
+            'Gia đình: thống nhất Family Code, lưu số điện thoại quan trọng, quy định mọi yêu cầu tiền gấp đều phải gọi lại số cũ hoặc xác minh qua người thân khác.',
+            'Trường học: không lưu và không gửi tiếp ảnh nhạy cảm; báo giáo viên, phụ huynh hoặc người phụ trách; không bêu tên người trong clip chưa xác minh; khuyến khích báo sớm mà không đổ lỗi.',
+            'Công việc: không chuyển tiền ngoài quy trình; không gửi dữ liệu nhạy cảm qua kênh lạ; xác nhận yêu cầu từ cấp trên bằng kênh nội bộ; báo bộ phận phụ trách khi nghi tài khoản bị chiếm quyền.',
+            'Mạng xã hội: không chia sẻ clip gây sốc khi chưa rõ nguồn; không bấm link đầu tư, quà tặng hoặc đăng nhập từ video lạ; báo cáo tài khoản mạo danh; cảnh báo bạn bè bằng thông tin đã kiểm chứng.',
           ], [
-            'Family Code: câu xác minh riêng, dễ nhớ, không công khai, thống nhất trước với người thân.',
-          ]),
-          lesson('6.1.2', 'Quy tắc 2: Money Delay', [
-            'Money Delay là quy tắc trì hoãn bắt buộc trước mọi yêu cầu tiền bất thường. Nói đơn giản: không chuyển tiền trong trạng thái bị thúc ép.',
-            'Bạn có thể đặt quy tắc: mọi yêu cầu tiền bất thường phải chờ ít nhất 5-10 phút để xác minh; mọi yêu cầu chuyển vào tài khoản lạ phải gọi lại kênh độc lập; mọi yêu cầu tiền từ người quen online phải kiểm tra với người tin cậy; mọi yêu cầu đầu tư phải kiểm tra nguồn chính thức và không quyết định trong cùng ngày.',
-            'Lừa đảo thường thắng nhờ tốc độ. Money Delay lấy lại tốc độ đó từ tay kẻ xấu. Nếu tình huống là thật, 5-10 phút xác minh giúp bạn giúp đúng người. Nếu tình huống là giả, 5-10 phút có thể cứu bạn khỏi mất tiền.',
-          ], [
-            'Tiền đi nhanh, khó quay lại. Hãy cho mình một khoảng dừng.',
-          ]),
-          lesson('6.1.3', 'Quy tắc 3: Two-Channel Rule', [
-            'Two-Channel Rule nghĩa là với tình huống rủi ro cao, bạn cần xác minh qua ít nhất hai kênh hoặc hai tín hiệu đáng tin. Ví dụ: tin nhắn mượn tiền + gọi lại số đã lưu; video người nổi tiếng đầu tư + kiểm tra kênh chính thức; email đổi tài khoản nhận tiền + gọi xác nhận với người phụ trách; cuộc gọi từ "ngân hàng" + tự mở app hoặc gọi tổng đài chính thức.',
-            'Cần Two-Channel Rule khi nội dung liên quan đến: tiền, OTP hoặc mật khẩu, tài khoản, giấy tờ cá nhân, hình ảnh nhạy cảm, danh dự người khác, tin tức xã hội gây phẫn nộ, yêu cầu cài app hoặc bấm link, yêu cầu giữ bí mật.',
-          ], [
-            'Một kênh có thể bị giả. Hai kênh độc lập làm kịch bản giả khó hơn nhiều.',
-          ]),
-          lesson('6.1.4', 'Quy tắc 4: No Shame Reporting', [
-            'No Shame Reporting nghĩa là báo cáo sớm mà không làm người bị hại xấu hổ. Nhiều người im lặng sau khi bị lừa hoặc bị mạo danh vì: sợ bị chê ngốc, sợ gia đình mắng, sợ bạn bè cười, sợ bị đổ lỗi, sợ chuyện lan rộng hơn. Kẻ xấu rất thích sự im lặng đó.',
-            'Nếu bạn thấy người khác bị lừa, đừng nói "Sao bạn dễ tin thế?" — hãy nói "Mình xử lý từng bước nhé. Lưu bằng chứng trước, rồi báo nền tảng, ngân hàng hoặc người có trách nhiệm."',
-            'Nếu bạn thấy hình ảnh nhạy cảm của ai đó, đừng hỏi "Có thật không?" — hãy nói "Đừng gửi tiếp. Mình tìm cách báo cáo và hỗ trợ người đó."',
-          ], [
-            'Xấu hổ làm nạn nhân im lặng. Im lặng làm kẻ xấu mạnh hơn.',
-          ]),
-          lesson('6.1.5', 'Quy tắc 5: Evidence First', [
-            'Evidence First nghĩa là ưu tiên lưu bằng chứng an toàn trước khi xóa, chặn hoặc tranh cãi. Bằng chứng có thể gồm: ảnh chụp màn hình, link bài đăng, tên tài khoản, số điện thoại, số tài khoản, thời gian, nội dung tin nhắn, mã giao dịch, website hoặc link nghi vấn.',
-            'Bằng chứng giúp: báo cáo nền tảng, liên hệ ngân hàng, trình báo khi cần, chứng minh tài khoản bị mạo danh, ngăn người khác bị lừa tiếp.',
-            'Nên: chụp màn hình vừa đủ thông tin, lưu link nếu có, ghi lại thời gian, không chỉnh sửa ảnh chụp màn hình. Không nên: đăng tràn lan thông tin cá nhân người khác, lưu hoặc phát tán hình ảnh nhạy cảm, tự điều tra công khai trong nhóm đông người, đối đầu với kẻ xấu khi đang hoảng.',
-            'Với hình ảnh nhạy cảm, nếu bạn không phải người có trách nhiệm xử lý, ưu tiên báo cáo nền tảng hoặc người có trách nhiệm — không lưu trữ hoặc chia sẻ thêm.',
-          ], [
-            'Lưu bằng chứng để xử lý, không phải để lan truyền.',
-          ]),
-          lesson('6.1.6', 'Deepfense Shield trong 4 môi trường', [
-            'Gia đình: thống nhất Family Code; dặn người lớn tuổi không chuyển tiền khi bị gọi gấp; lưu số điện thoại quan trọng; quy ước ai cần tiền gấp cũng phải chấp nhận gọi lại.',
-            'Trường học: không lan truyền hình ảnh nhạy cảm; báo giáo viên hoặc người phụ trách khi có nội dung gây hại; không bêu tên người trong clip chưa xác minh; học sinh được khuyến khích báo sớm mà không sợ bị mắng.',
-            'Công việc: không chuyển tiền ngoài quy trình; không gửi dữ liệu nhạy cảm qua kênh lạ; xác minh yêu cầu từ lãnh đạo qua kênh nội bộ; cảnh báo bộ phận IT hoặc an toàn thông tin khi có nghi vấn.',
-            'Mạng xã hội: không chia sẻ clip gây sốc khi chưa rõ nguồn; không bấm link đầu tư, quà tặng hoặc tài khoản từ video lạ; báo cáo tài khoản mạo danh; cảnh báo bạn bè bằng thông tin đã kiểm chứng.',
-          ], [
-            'Phòng vệ tốt không bắt đầu khi sự cố xảy ra. Phòng vệ tốt bắt đầu từ quy tắc đã thống nhất trước.',
+            'Một quy tắc tốt phải đủ đơn giản để mọi người nhớ được khi đang bị thúc ép.',
           ]),
         ],
-        checkpoint: checkpoint('Quiz 6.1 — Quy tắc phòng vệ', [
-          q('Family Code dùng để làm gì?', ['Tăng lượt thích trên mạng xã hội.', 'Xác minh nhanh trong tình huống khẩn cấp giữa những người tin cậy.', 'Thay thế hoàn toàn ngân hàng.', 'Đăng công khai để mọi người biết.'], 1),
+        checkpoint: checkpoint('6.1 Kiểm tra nhanh: Deepfense Shield', [
+          q('Family Code dùng để làm gì?', ['Đăng công khai cho mọi người biết.', 'Xác minh nhanh trong tình huống khẩn cấp giữa những người tin cậy.', 'Thay thế hoàn toàn ngân hàng.', 'Tăng lượt thích trên mạng xã hội.'], 1),
           q('Money Delay nghĩa là gì?', ['Chuyển tiền càng nhanh càng tốt.', 'Trì hoãn bắt buộc để xác minh trước yêu cầu tiền bất thường.', 'Không bao giờ chuyển tiền cho ai.', 'Chỉ chuyển tiền vào ban đêm.'], 1),
-          q('Tình huống nào cần Two-Channel Rule?', ['Xem ảnh minh họa được ghi rõ là AI.', 'Người quen nhắn mượn tiền qua tài khoản có hành vi lạ.', 'Đổi hình nền điện thoại.', 'Đọc bài viết giải trí không yêu cầu hành động.'], 1),
-          q('No Shame Reporting nghĩa là gì?', ['Không báo cáo vì xấu hổ.', 'Báo cáo sớm, không đổ lỗi hoặc làm nạn nhân xấu hổ.', 'Đăng mọi thứ lên mạng để mọi người biết.', 'Chỉ báo cáo khi đã chắc chắn 100%.'], 1),
-          q('Evidence First nghĩa là gì?', ['Lưu bằng chứng an toàn trước khi xóa, chặn hoặc tranh cãi.', 'Đăng bằng chứng lên mọi nhóm.', 'Xóa hết tin nhắn ngay.', 'Chỉ nhớ trong đầu.'], 0),
-          q('Điều nào KHÔNG nên dùng làm Family Code?', ['Một cụm từ riêng gia đình tự đặt.', 'Một câu xác minh không công khai.', 'Ngày sinh đã đăng công khai trên mạng xã hội.', 'Một quy ước gọi lại số cũ.'], 2),
-          q('Bạn thấy hình ảnh nhạy cảm của một bạn học trong nhóm chat. Theo Deepfense Shield, hành động đúng là gì?', ['Gửi tiếp để hỏi thật giả.', 'Không lan truyền, báo cáo và hỗ trợ người bị hại.', 'Bình luận đùa nếu nghĩ là AI.', 'Lưu lại để phân tích.'], 1),
-          q('Nếu đã lỡ chuyển tiền cho kẻ lừa đảo, việc nào nên làm sớm?', ['Xóa hết vì xấu hổ.', 'Liên hệ ngân hàng, lưu bằng chứng và báo cáo.', 'Im lặng chờ may mắn.', 'Chuyển thêm để lấy lại khoản đầu.'], 1),
-          q('Trong công việc, một "sếp" gửi tin nhắn yêu cầu bỏ qua quy trình chuyển tiền vì đang gấp. Quy tắc nào phù hợp nhất?', ['Two-Channel Rule và Money Delay.', 'Chia sẻ công khai lên mạng xã hội ngay.', 'Chuyển trước rồi hỏi sau.', 'Tin nếu ảnh đại diện đúng.'], 0),
-          q('Mục tiêu của Deepfense Shield là gì?', ['Làm người học sợ Internet.', 'Biến kiến thức thành quy tắc phòng vệ dễ áp dụng trong đời sống.', 'Dạy tạo deepfake.', 'Thay thế mọi cơ quan chức năng.'], 1),
+          q('Tình huống nào cần Two-Channel Rule?', ['Người quen nhắn mượn tiền qua tài khoản có hành vi lạ.', 'Đổi hình nền điện thoại.', 'Đọc bài giải trí không yêu cầu hành động.', 'Xem ảnh minh họa được ghi rõ là AI.'], 0),
+          q('No Shame Reporting nhấn mạnh điều gì?', ['Báo sớm, không đổ lỗi hoặc làm nạn nhân xấu hổ.', 'Im lặng vì sợ bị chê.', 'Đăng mọi thứ lên mạng để gây chú ý.', 'Chỉ báo cáo khi đã chắc chắn 100%.'], 0),
         ]),
       },
-      // ── M6-611-S ─────────────────────────────────────────────────
       {
-        title: '6.1.1 Vệ sinh dữ liệu cá nhân',
+        title: '6.2 Vệ sinh dữ liệu cá nhân',
         lessons: [
-          lesson('6.1.1.0', 'Mục tiêu bài học 6.1.1', [
-            'Sau phần 6.1.1, bạn sẽ hiểu dữ liệu cá nhân có thể bị dùng để mạo danh hoặc dựng kịch bản lừa đảo.',
-            'Bạn sẽ biết giảm thông tin công khai không cần thiết, bảo vệ tài khoản quan trọng bằng các thói quen cơ bản, và biết cách phản ứng nếu tài khoản bị chiếm quyền hoặc bị mạo danh.',
+          lesson('6.2.0', 'Dữ liệu cá nhân là vật liệu của mạo danh', [
+            'Kẻ xấu không cần biết tất cả về bạn. Chúng chỉ cần đủ mảnh ghép để dựng một câu chuyện đáng tin: ảnh khuôn mặt, đoạn giọng nói, tên người thân, trường học, nơi làm việc, lịch trình, giấy tờ, số điện thoại, email hoặc tài khoản đang dùng.',
+            'Vệ sinh dữ liệu cá nhân không có nghĩa là biến mất khỏi Internet. Nó nghĩa là giảm những thông tin không cần thiết, đặc biệt là dữ liệu có thể dùng để mở tài khoản, khôi phục mật khẩu, giả danh bạn hoặc thuyết phục người thân của bạn.',
+            'Hãy rà soát định kỳ: thông tin công khai trên mạng xã hội, ảnh giấy tờ, vé máy bay, lịch trình, số điện thoại, email chính, ảnh/video giọng nói dài, danh sách bạn bè và quyền riêng tư của bài đăng cũ.',
           ], [
-            'Bạn không thể kiểm soát toàn bộ Internet, nhưng bạn có thể giảm nguyên liệu mà kẻ xấu dùng để mạo danh bạn.',
+            'Bảo vệ danh tính số là giảm vật liệu mà người khác có thể dùng để đóng vai bạn.',
           ]),
-          lesson('6.1.1.1', 'Dữ liệu cá nhân là nguyên liệu của kịch bản lừa đảo', [
-            'Kẻ xấu không chỉ cần khuôn mặt hoặc giọng nói. Chúng có thể dùng nhiều mảnh dữ liệu nhỏ để dựng một câu chuyện đáng tin: tên người thân, trường học hoặc công ty, lịch đi chơi, ngày sinh, số điện thoại, ảnh giấy tờ, video có giọng nói, ảnh nhà, xe, thẻ, vé máy bay, thói quen sinh hoạt, bạn bè thường tương tác.',
-            'Mỗi mảnh riêng lẻ có vẻ vô hại. Nhưng khi ghép lại, chúng có thể tạo thành bản đồ về bạn.',
-            'Ví dụ: nếu một người công khai tên trường, tên lớp, tên giáo viên, lịch học và nhiều video nói chuyện, kẻ xấu có thể dùng thông tin đó để giả làm người quen trong môi trường học tập. Nếu một người thường xuyên đăng lịch đi vắng, địa điểm và số điện thoại, rủi ro không chỉ là deepfake mà còn là an toàn cá nhân.',
+          lesson('6.2.1', 'Bảo vệ tài khoản và phản ứng khi bị chiếm quyền', [
+            'Tài khoản bị chiếm quyền có thể được dùng để lừa người khác ngay cả khi không có deepfake. Vì vậy, bảo vệ tài khoản là một phần của phòng vệ trước mạo danh.',
+            'Các bước cơ bản: dùng mật khẩu riêng cho tài khoản quan trọng, bật xác thực hai lớp, cập nhật email và số điện thoại khôi phục, kiểm tra thiết bị đăng nhập lạ, không nhập mật khẩu qua link trong tin nhắn, và cảnh giác với trang đăng nhập giả.',
+            'Nếu tài khoản bị chiếm quyền, hãy khôi phục qua kênh chính thức, đổi mật khẩu email liên quan, đăng xuất thiết bị lạ nếu có thể, báo nền tảng, và cảnh báo người thân qua kênh khác rằng họ không nên tin các tin nhắn mượn tiền hoặc xin mã xác thực từ tài khoản đó.',
           ], [
-            'Dữ liệu nhỏ lẻ tưởng vô hại — nhưng ghép lại có thể trở thành công cụ mạo danh.',
+            'Một cảnh báo sớm cho người thân có thể chặn nhiều vụ mạo danh tiếp theo.',
           ]),
-          lesson('6.1.1.2', 'Những gì nên hạn chế công khai', [
-            'Bạn không cần xóa hết cuộc sống khỏi Internet. Nhưng nên cân nhắc trước khi công khai: số điện thoại cá nhân, email chính, địa chỉ nhà, ảnh căn cước hoặc hộ chiếu hoặc thẻ học sinh hoặc thẻ sinh viên.',
-            'Cũng nên cân nhắc: vé máy bay và mã đặt chỗ, thẻ ngân hàng và mã QR cá nhân, lịch trình chi tiết, ảnh hoặc video trẻ em kèm trường lớp cụ thể, video dài ghi rõ giọng nói trong bối cảnh riêng tư, thông tin về người thân không có sự đồng ý.',
+        ],
+        checkpoint: checkpoint('6.2 Kiểm tra nhanh: dữ liệu và tài khoản', [
+          q('Điều nào KHÔNG nên dùng làm Family Code?', ['Một cụm từ riêng gia đình tự đặt.', 'Một câu xác minh không công khai.', 'Ngày sinh đã đăng công khai trên mạng xã hội.', 'Một quy ước gọi lại số cũ.'], 2),
+          q('Vì sao cần hạn chế đăng giấy tờ hoặc lịch trình công khai?', ['Vì dữ liệu đó có thể bị dùng để mạo danh hoặc dựng kịch bản lừa đảo.', 'Vì mọi bài đăng công khai đều sai.', 'Vì Internet không cho đăng ảnh.', 'Vì deepfake chỉ cần màu ảnh.'], 0),
+          q('Nếu tài khoản bị chiếm quyền, việc nên làm sớm là gì?', ['Im lặng chờ tự hết.', 'Cảnh báo người thân qua kênh khác và khôi phục qua kênh chính thức.', 'Chuyển thêm tiền cho tài khoản đó.', 'Đăng mật khẩu mới lên trang cá nhân.'], 1),
+        ]),
+      },
+      {
+        title: '6.3 Báo cáo, bằng chứng và hỗ trợ người bị hại',
+        lessons: [
+          lesson('6.3.0', 'Lưu bằng chứng để xử lý, không phải để lan truyền', [
+            'Bằng chứng hữu ích có thể gồm đường link, tên tài khoản, số điện thoại, số tài khoản, thời gian, nội dung tin nhắn, ảnh chụp màn hình vừa đủ thông tin, mã giao dịch hoặc tên miền nghi vấn.',
+            'Điểm quan trọng là mục đích. Lưu bằng chứng để báo nền tảng, liên hệ ngân hàng, trình báo khi cần hoặc cảnh báo nhóm nhỏ có liên quan. Không dùng bằng chứng để bêu tên, kích động đám đông hoặc phát tán lại nội dung nhạy cảm.',
+            'Với ảnh hoặc video nhạy cảm, nếu bạn không phải người có trách nhiệm xử lý, hãy ưu tiên báo cáo nền tảng hoặc người phụ trách. Không lưu trữ thêm, không gửi cho bạn bè để “xác minh”, không biến nạn nhân thành chủ đề bàn tán.',
           ], [
-            'Không phải thứ gì đăng được cũng nên đăng công khai.',
+            'Bằng chứng tốt giúp xử lý sự cố. Bằng chứng bị phát tán sai cách có thể trở thành một phần của sự cố.',
           ]),
-          lesson('6.1.1.3', 'Cài đặt riêng tư', [
-            'Hãy kiểm tra định kỳ: ai có thể xem bài viết của bạn? Ai có thể xem danh sách bạn bè? Ai có thể tìm bạn bằng số điện thoại hoặc email? Ai có thể tải hoặc chia sẻ lại nội dung của bạn? Ứng dụng nào đang có quyền truy cập tài khoản? Tài khoản nào đang đăng nhập trên thiết bị lạ?',
-            'Nên: giới hạn bài viết cá nhân cho bạn bè hoặc người tin cậy; tắt hiển thị thông tin nhạy cảm không cần thiết; gỡ quyền ứng dụng không còn dùng; đăng xuất khỏi thiết bị lạ; cẩn trọng với lời mời kết bạn từ tài khoản lạ.',
+          lesson('6.3.1', 'Ngôn ngữ hỗ trợ người bị hại', [
+            'Cách bạn nói có thể quyết định người bị hại có dám báo sớm hay không. Thay vì “sao bạn dễ tin vậy?”, hãy nói “mình xử lý từng bước nhé”. Thay vì “có thật không?”, hãy nói “đừng gửi tiếp, mình tìm cách báo cáo”.',
+            'Hỗ trợ tốt gồm ba việc: giúp người bị hại bình tĩnh, giảm lan truyền, và đưa sự việc đến đúng nơi xử lý. Hỗ trợ kém thường làm tăng xấu hổ, khiến nạn nhân im lặng hoặc làm nội dung lan rộng hơn.',
+            'Trong cộng đồng an toàn, báo cáo sớm là hành động có trách nhiệm, không phải điều đáng xấu hổ.',
           ], [
-            'Kiểm tra cài đặt riêng tư định kỳ — không chỉ một lần khi tạo tài khoản.',
-          ]),
-          lesson('6.1.1.4', 'Bảo vệ tài khoản', [
-            'Tài khoản bị chiếm quyền có thể được dùng để lừa người khác. Hãy: dùng mật khẩu mạnh; không dùng lại mật khẩu cho nhiều dịch vụ; bật xác thực hai lớp; cẩn thận với link đăng nhập giả; không nhập mật khẩu qua link trong tin nhắn nghi vấn; cập nhật email và số điện thoại khôi phục; kiểm tra cảnh báo đăng nhập lạ.',
-            'Nếu tài khoản bị chiếm quyền: thử khôi phục tài khoản qua kênh chính thức; đổi mật khẩu email liên quan; đăng xuất khỏi thiết bị lạ nếu có thể; báo bạn bè và người thân không tin tin nhắn mượn tiền từ tài khoản đó; báo cáo tài khoản bị chiếm quyền với nền tảng.',
-          ], [
-            'Mật khẩu mạnh + xác thực hai lớp là lớp bảo vệ đầu tiên và quan trọng nhất.',
-          ]),
-          lesson('6.1.1.5', 'Khi bị mạo danh', [
-            'Nếu ai đó tạo tài khoản giả dùng tên, ảnh hoặc giọng và hình ảnh của bạn: chụp màn hình tài khoản hoặc bài đăng; lưu link; báo cáo tài khoản mạo danh trên nền tảng; cảnh báo người thân và bạn bè bằng kênh chính thức của bạn.',
-            'Nếu liên quan đến lừa đảo, danh dự, hình ảnh nhạy cảm hoặc đe dọa, tìm hỗ trợ từ người hoặc cơ quan có trách nhiệm.',
-            'Không nên: tranh cãi dài với tài khoản giả; đăng dữ liệu cá nhân của người bạn nghi ngờ nếu chưa chắc; tự xử lý một mình nếu vụ việc nghiêm trọng.',
-          ], [
-            'Khi bị mạo danh: chụp màn hình, lưu link, báo cáo nền tảng, cảnh báo người thân — không tranh cãi hay tự xử lý một mình.',
+            'Không đổ lỗi là một phần của an toàn số. Người bị hại càng ít xấu hổ, sự cố càng dễ được xử lý sớm.',
           ]),
         ],
         checkpoint: null,
       },
-      // ── M6-611-E ─────────────────────────────────────────────────
-      // ── M6-62-S ──────────────────────────────────────────────────
       {
-        title: '6.2 Capstone: Hồ sơ sự việc của An',
+        title: '6.4 Capstone: hồ sơ sự việc của An',
         lessons: [
-          lesson('6.2.0', 'Bối cảnh: Một chuỗi thông tin trong cùng một buổi tối', [
-            'An nhận được một chuỗi thông tin trong cùng một buổi tối. Tài liệu A — Video ngắn: một video 18 giây cho thấy người nổi tiếng nói "Tôi đang hợp tác với nền tảng này để giúp mọi người có thêm thu nhập. Chỉ cần đăng ký hôm nay, bạn sẽ nhận được tài khoản ưu tiên." Video được đăng bởi tài khoản có tên gần giống tài khoản chính thức, không có dấu xác minh, mô tả có link rút gọn.',
-            'Tài liệu B — Tin nhắn từ bạn cũ: "Mình vừa tham gia cái này, nhận tiền thật rồi. Cậu đăng ký nhanh đi, đừng bỏ lỡ." Tài khoản đúng ảnh đại diện nhưng An đã lâu không nói chuyện. Khi An hỏi gọi điện được không, người đó nói: "Mình đang bận, cứ bấm link đi."',
-            'Tài liệu C — Ảnh chụp màn hình bình luận: nhiều bình luận như "Mình đã nhận 2 triệu", "Ban đầu tưởng lừa, ai ngờ thật", "Cơ hội này quá tốt". Không có link bài gốc trong ảnh chụp.',
-            'Tài liệu D — Tin nhắn thoại: giọng nghe khá giống bạn cũ: "Tin mình đi, cơ hội này chỉ còn tối nay. Cậu nạp trước 1 triệu là được." Tài liệu E — Kết quả công cụ phát hiện AI: "Không phát hiện dấu hiệu deepfake rõ ràng." Tài liệu F — Dữ kiện bổ sung: kênh chính thức của người nổi tiếng không có thông tin về nền tảng này; tìm tên nền tảng thấy vài bài cảnh báo lừa đảo từ người dùng.',
+          lesson('6.4.0', 'Bối cảnh hồ sơ', [
+            'An nhận một video 18 giây: một người nổi tiếng nói đang hợp tác với nền tảng đầu tư mới. Tài khoản đăng có tên gần giống tài khoản chính thức, không có dấu xác minh, mô tả có link rút gọn.',
+            'Một người bạn cũ nhắn: “Mình tham gia rồi, nhận tiền thật. Đăng ký nhanh đi”. Khi An hỏi gọi điện được không, người đó né tránh và bảo An cứ bấm link.',
+            'Dưới video có nhiều bình luận khen nhận tiền, nhưng không có nguồn kiểm chứng. Một tin nhắn thoại nghe giống bạn cũ nói cơ hội chỉ còn trong tối nay. Công cụ phát hiện AI không báo dấu hiệu rõ ràng. Kênh chính thức của người nổi tiếng không nhắc gì đến nền tảng này, còn khi tìm tên nền tảng thì thấy vài cảnh báo lừa đảo.',
           ], [
-            'Capstone tổng hợp toàn bộ khóa học: deepfake, deepvoice, social engineering, sai bối cảnh, giới hạn detector và Deepfense Check.',
+            'Hồ sơ này tổng hợp gần như toàn khóa: mạo danh, deepvoice, social engineering, giới hạn detector, link lạ và áp lực thời gian.',
           ]),
-          lesson('6.2.1', 'Nhiệm vụ: 5 phần phân tích', [
-            'Bạn hãy hoàn thành 5 phần phân tích hồ sơ trên.',
-            'Phần 1 — Phân loại nội dung: tài liệu nào có thể là deepfake, deepvoice, edited media, repurposed media, social engineering hoặc chưa đủ dữ liệu?',
-            'Phần 2 — Đánh dấu red flags: chọn ít nhất 5 dấu hiệu đỏ từ hồ sơ.',
-            'Phần 3 — Áp dụng Deepfense Check: điền Pause — Observe — Verify — Trace — Decide.',
-            'Phần 4 — Đánh giá rủi ro: thấp, trung bình, cao hoặc khẩn cấp.',
-            'Phần 5 — Kết luận và hành động: viết 3-5 câu — bạn sẽ làm gì và vì sao?',
+          lesson('6.4.1', 'Cách phân tích capstone', [
+            'Phân loại: video có thể là deepfake hoặc video mạo danh; tin nhắn bạn cũ có thể là tài khoản bị chiếm quyền; bình luận có thể là seeding; tin nhắn thoại có thể là deepvoice hoặc tài khoản bị lạm dụng; detector chỉ là tín hiệu tham khảo.',
+            'Red flags: người nổi tiếng kêu gọi đầu tư, tài khoản không chính thức, link rút gọn, lời hứa thu nhập, bạn cũ né gọi điện, áp lực “chỉ còn tối nay”, bình luận không kiểm chứng, kênh chính thức im lặng, có cảnh báo lừa đảo từ nguồn khác.',
+            'Deepfense Check: Pause vì liên quan đến tiền và áp lực thời gian. Observe các dấu hiệu bất thường. Verify qua kênh chính thức và liên hệ bạn cũ bằng kênh khác. Trace tên miền, nguồn video, tài khoản đăng và cảnh báo độc lập. Decide: không bấm link, không nạp tiền, cảnh báo người có liên quan và báo cáo nếu cần.',
           ], [
-            'Capstone không yêu cầu chứng minh 100% video là deepfake. Mục tiêu là nhận ra tổng hợp các tín hiệu rủi ro và chọn hành động an toàn.',
+            'Không cần chứng minh chắc chắn video là deepfake mới được từ chối. Tổng rủi ro đã đủ cao để dừng lại.',
           ]),
-          lesson('6.2.2', 'Gợi ý phân tích', [
-            'Phân loại nội dung: Tài liệu A — có thể là deepfake hoặc video mạo danh, chưa đủ dữ liệu kết luận tuyệt đối. Tài liệu B — có thể là tài khoản bị chiếm quyền hoặc social engineering. Tài liệu C — ảnh chụp bình luận không phải bằng chứng, có thể bị chọn lọc hoặc dàn dựng. Tài liệu D — có thể là deepvoice hoặc tin nhắn thoại thật từ tài khoản bị chiếm quyền, vẫn rủi ro cao. Tài liệu E — detector không phát hiện rõ không đồng nghĩa nội dung an toàn. Tài liệu F — kênh chính thức không xác nhận và có cảnh báo người dùng, làm rủi ro tăng.',
-            'Red flags: người nổi tiếng kêu gọi đầu tư; tài khoản gần giống chính thức nhưng không xác minh; link rút gọn; yêu cầu đăng ký hoặc nạp tiền hôm nay; bạn cũ thúc giục nhưng né gọi điện; tin nhắn thoại tạo áp lực; bình luận tích cực không có nguồn gốc; kênh chính thức không có thông tin; có cảnh báo lừa đảo từ người dùng; lời hứa thu nhập dễ dàng.',
-            'Deepfense Check — Pause: nội dung liên quan đến tiền, người nổi tiếng, link và áp lực thời gian. Observe: có nhiều dấu hiệu ngữ cảnh rủi ro — tài khoản không chính thức, link rút gọn, lời hứa lợi ích, bạn cũ né xác minh, giọng nói không đủ tin. Verify: kiểm tra kênh chính thức của người nổi tiếng, liên hệ bạn cũ qua số hoặc kênh khác, kiểm tra nền tảng qua nguồn đáng tin. Trace: tìm nguồn video gốc, kiểm tra tài khoản đăng đầu tiên, kiểm tra tên miền và link, tìm cảnh báo từ nguồn độc lập. Decide: không bấm link, không nạp tiền, cảnh báo bạn cũ và người thân nếu có nguy cơ, báo cáo tài khoản hoặc link nếu nghi lừa đảo.',
-            'Đánh giá rủi ro: rủi ro cao. Không cần chứng minh chắc chắn video là deepfake để từ chối nạp tiền. Các tín hiệu ngữ cảnh đã đủ để không hành động theo yêu cầu.',
+          lesson('6.4.2', 'Kết luận khóa học', [
+            'DEEPFENSE BASIC không dạy bạn sống trong nghi ngờ. Khóa học dạy bạn có phương pháp khi nội dung số cố làm bạn mất phương pháp.',
+            'Sau khóa này, người học cần nhớ ba năng lực lõi: nhận diện tín hiệu rủi ro, xác minh qua kênh độc lập, và chọn hành động giảm thiệt hại cho bản thân lẫn người khác.',
+            'Bài kiểm tra cuối khóa sẽ đánh giá khả năng áp dụng, không chỉ ghi nhớ thuật ngữ. Hãy ưu tiên tư duy: nguồn ở đâu, ai được lợi, mình bị yêu cầu làm gì, có kênh xác minh độc lập không, và hành động nào ít gây hại nhất.',
           ], [
-            'Khi nhiều tín hiệu nhỏ cùng chỉ về một hướng rủi ro, bạn không cần đợi bằng chứng tuyệt đối mới chọn phương án an toàn.',
-          ]),
-          lesson('6.2.3', 'Rubric và phản hồi mẫu', [
-            'Rubric capstone — tổng điểm đề xuất 20 điểm: phân loại nội dung (4đ) — nhận ra nhiều khả năng deepfake, deepvoice, social engineering hoặc chưa đủ dữ liệu; red flags (4đ) — nêu ít nhất 5 dấu hiệu đỏ phù hợp; Deepfense Check (5đ) — điền đủ 5 bước, hành động hợp lý; đánh giá rủi ro (3đ) — chọn mức cao hoặc khẩn cấp và giải thích được; kết luận và hành động (4đ) — không bấm link, không nạp tiền, xác minh kênh độc lập, báo cáo hoặc cảnh báo phù hợp.',
-            'Điều kiện hoàn thành gợi ý: từ 14/20 điểm trở lên hoặc hoàn thành đầy đủ với phản hồi sửa lỗi.',
-            'Phản hồi mẫu — nếu chọn không bấm link, không nạp tiền: đây là hướng xử lý an toàn. Bạn không cần chứng minh 100% video là deepfake. Khi nội dung liên quan đến tiền, người nổi tiếng, link rút gọn và áp lực thời gian, rủi ro đã đủ cao để dừng lại và xác minh.',
-            'Nếu chọn nạp thử số tiền nhỏ: đây là lựa chọn rủi ro. Kẻ lừa đảo thường bắt đầu bằng số tiền nhỏ để tạo niềm tin hoặc mở đường cho yêu cầu lớn hơn. Nếu tin detector hoàn toàn: detector chỉ là một tín hiệu tham khảo — kết quả "không phát hiện deepfake rõ ràng" không có nghĩa là nội dung an toàn khi ngữ cảnh có nhiều dấu hiệu lừa đảo. Nếu muốn chia sẻ video để hỏi mọi người: chia sẻ lại video có thể giúp nội dung lừa đảo lan rộng hơn — cách tốt hơn là gửi riêng cho người có trách nhiệm.',
-          ], [
-            'Phòng vệ tốt không phải là sống trong nghi ngờ. Phòng vệ tốt là có quy tắc đủ rõ để bạn vẫn bình tĩnh khi nội dung trên màn hình cố làm bạn mất bình tĩnh.',
-            'Sau Module 6, bạn đã sẵn sàng làm bài kiểm tra cuối khóa DEEPFENSE BASIC.',
+            'An toàn số là một thói quen. Mỗi lần bạn chậm lại đúng lúc, bạn đang làm Internet khó bị lợi dụng hơn một chút.',
           ]),
         ],
-        checkpoint: null,
+        checkpoint: checkpoint('6.4 Kiểm tra cuối module', [
+          q('Trong hồ sơ capstone, vì sao kết quả detector “không phát hiện rõ” chưa đủ để tin nội dung?', ['Vì detector chỉ là một tín hiệu tham khảo và ngữ cảnh vẫn có nhiều dấu hiệu lừa đảo.', 'Vì detector luôn sai.', 'Vì video ngắn luôn thật.', 'Vì bình luận tích cực đã đủ chứng minh.'], 0),
+          q('Hành động phù hợp nhất với link đầu tư trong hồ sơ là gì?', ['Bấm link để kiểm tra nhanh.', 'Không bấm link, kiểm tra kênh chính thức và nguồn độc lập.', 'Nạp thử một khoản nhỏ.', 'Gửi link cho nhiều người cùng xem.'], 1),
+          q('Điều gì thể hiện kết luận đúng của capstone?', ['Chắc chắn video thật vì không thấy lỗi kỹ thuật.', 'Không cần kết luận tuyệt đối về deepfake để chọn phương án an toàn.', 'Cứ tin nếu bạn cũ gửi.', 'Chỉ cần xem bình luận là đủ.'], 1),
+        ]),
       },
-      // ── M6-62-E ──────────────────────────────────────────────────
       {
-        title: '6.3 Bài kiểm tra cuối khóa',
+        title: '6.5 Bài kiểm tra cuối khóa',
         lessons: [
           {
             id: 'final-exam',
@@ -1144,16 +1089,14 @@ export const MODULES = [
       },
     ],
     quiz: [
-      q('Family Code dùng để làm gì?', ['Tăng lượt thích trên mạng xã hội.', 'Xác minh nhanh trong tình huống khẩn cấp giữa những người tin cậy.', 'Thay thế hoàn toàn ngân hàng.', 'Đăng công khai để mọi người biết.'], 1),
-      q('Money Delay nghĩa là gì?', ['Chuyển tiền càng nhanh càng tốt.', 'Trì hoãn bắt buộc để xác minh trước yêu cầu tiền bất thường.', 'Không bao giờ chuyển tiền cho ai.', 'Chỉ chuyển tiền vào ban đêm.'], 1),
-      q('Tình huống nào cần Two-Channel Rule?', ['Xem ảnh minh họa được ghi rõ là AI.', 'Người quen nhắn mượn tiền qua tài khoản có hành vi lạ.', 'Đổi hình nền điện thoại.', 'Đọc bài viết giải trí không yêu cầu hành động.'], 1),
-      q('No Shame Reporting nghĩa là gì?', ['Không báo cáo vì xấu hổ.', 'Báo cáo sớm, không đổ lỗi hoặc làm nạn nhân xấu hổ.', 'Đăng mọi thứ lên mạng để mọi người biết.', 'Chỉ báo cáo khi đã chắc chắn 100%.'], 1),
-      q('Evidence First nghĩa là gì?', ['Lưu bằng chứng an toàn trước khi xóa, chặn hoặc tranh cãi.', 'Đăng bằng chứng lên mọi nhóm.', 'Xóa hết tin nhắn ngay.', 'Chỉ nhớ trong đầu.'], 0),
-      q('Điều nào KHÔNG nên dùng làm Family Code?', ['Một cụm từ riêng gia đình tự đặt.', 'Một câu xác minh không công khai.', 'Ngày sinh đã đăng công khai trên mạng xã hội.', 'Một quy ước gọi lại số cũ.'], 2),
-      q('Bạn thấy hình ảnh nhạy cảm của một bạn học trong nhóm chat. Theo Deepfense Shield, hành động đúng là gì?', ['Gửi tiếp để hỏi thật giả.', 'Không lan truyền, báo cáo và hỗ trợ người bị hại.', 'Bình luận đùa nếu nghĩ là AI.', 'Lưu lại để phân tích.'], 1),
-      q('Nếu đã lỡ chuyển tiền cho kẻ lừa đảo, việc nào nên làm sớm?', ['Xóa hết vì xấu hổ.', 'Liên hệ ngân hàng, lưu bằng chứng và báo cáo.', 'Im lặng chờ may mắn.', 'Chuyển thêm để lấy lại khoản đầu.'], 1),
-      q('Trong công việc, một "sếp" gửi tin nhắn yêu cầu bỏ qua quy trình chuyển tiền vì đang gấp. Quy tắc nào phù hợp nhất?', ['Two-Channel Rule và Money Delay.', 'Chia sẻ công khai lên mạng xã hội ngay.', 'Chuyển trước rồi hỏi sau.', 'Tin nếu ảnh đại diện đúng.'], 0),
-      q('Mục tiêu của Deepfense Shield là gì?', ['Làm người học sợ Internet.', 'Biến kiến thức thành quy tắc phòng vệ dễ áp dụng trong đời sống.', 'Dạy tạo deepfake.', 'Thay thế mọi cơ quan chức năng.'], 1),
+      q('Mục tiêu chính của Deepfense Shield là gì?', ['Làm người học sợ Internet.', 'Biến kiến thức thành quy tắc phòng vệ dễ áp dụng trong đời sống.', 'Dạy tạo deepfake.', 'Thay thế mọi cơ quan chức năng.'], 1),
+      q('Family Code tốt nên có đặc điểm nào?', ['Dễ nhớ, không công khai, được thống nhất trước và có thể thay đổi khi nghi bị lộ.', 'Là ngày sinh đăng công khai.', 'Là tên trường học trên hồ sơ.', 'Là mật khẩu ngân hàng.'], 0),
+      q('Money Delay giúp chống lại yếu tố nào của lừa đảo?', ['Tốc độ và áp lực hành động ngay.', 'Màu sắc của video.', 'Độ dài bình luận.', 'Dung lượng ảnh.'], 0),
+      q('Two-Channel Rule phù hợp nhất khi nào?', ['Khi yêu cầu liên quan đến tiền, tài khoản, giấy tờ hoặc danh dự.', 'Khi đổi ảnh nền.', 'Khi đọc tin giải trí.', 'Khi xem video đã ghi rõ là minh họa.'], 0),
+      q('Evidence First nghĩa là gì?', ['Lưu bằng chứng an toàn để xử lý, không phát tán lại nội dung gây hại.', 'Đăng bằng chứng lên mọi nhóm.', 'Xóa hết ngay không ghi nhận gì.', 'Chỉ kể lại bằng trí nhớ.'], 0),
+      q('No Shame Reporting giúp điều gì?', ['Giảm xấu hổ để người bị hại dám báo sớm.', 'Tăng bình luận đổ lỗi.', 'Khiến nạn nhân im lặng hơn.', 'Biến sự cố thành trò đùa.'], 0),
+      q('Vệ sinh dữ liệu cá nhân nhằm mục tiêu gì?', ['Giảm dữ liệu có thể bị dùng để mạo danh hoặc dựng kịch bản lừa đảo.', 'Xóa toàn bộ Internet.', 'Đăng nhiều thông tin hơn.', 'Chỉ đổi màu giao diện tài khoản.'], 0),
+      q('Trong capstone, lựa chọn an toàn nhất là gì?', ['Không bấm link, không nạp tiền, xác minh qua kênh chính thức và nguồn độc lập.', 'Nạp thử một khoản nhỏ.', 'Tin vì có bình luận tích cực.', 'Chia sẻ video để hỏi thật giả.'], 0),
     ],
   },
 
