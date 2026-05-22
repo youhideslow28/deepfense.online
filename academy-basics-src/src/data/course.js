@@ -575,7 +575,22 @@ export const MODULES = [
           q('Câu hỏi ngữ cảnh quan trọng nhất là gì?', ['Nội dung này đang muốn mình làm gì?', 'Video có dài không?', 'Có bao nhiêu bình luận?', 'Màu sắc có đẹp không?'], 0),
           q('Bình luận tích cực dưới video đầu tư có phải bằng chứng tin cậy không?', ['Không, có thể là seeding hoặc người chưa kiểm chứng', 'Có, vì nhiều người không thể sai', 'Có nếu bình luận dài', 'Có nếu có nhiều emoji'], 0),
           q('Vì sao cần hỏi ai có thể bị hại nếu nội dung sai?', ['Để chọn hành động có trách nhiệm và không làm tăng thiệt hại', 'Để biết có nên xem tiếp không', 'Để tranh luận thắng hơn', 'Để tăng lượt chia sẻ'], 0),
-        ]),
+        ], {
+          type: 'tag-the-trick',
+          title: 'Tìm bẫy tâm lý trong tin nhắn',
+          instruction: 'Nhấn vào các đoạn chứa kỹ thuật thao túng — có thể có nhiều hơn một',
+          reward: 10,
+          data: {
+            message: 'Anh/chị ơi, [[đây là cơ hội CUỐI CÙNG|1]] để tham gia đầu tư với lãi 40%/tháng. [[Chỉ còn 2 suất|2]], [[hết hôm nay là đóng|3]]. [[Bạn bè anh/chị đã kiếm được hàng chục triệu rồi|4]] — anh/chị còn chần chừ gì nữa? [[Đừng để người thân biết vội|5]], mình sẽ chia sẻ sau khi đã có lợi nhuận nhé.',
+            targets: [
+              { id: 1, tag: '🔚 Khan hiếm giả', explanation: '"Cơ hội cuối cùng" là mồi FOMO — không có dự án đầu tư uy tín nào lại "hết hạn cuối cùng" với người lạ.' },
+              { id: 2, tag: '🎯 Áp lực khan hiếm', explanation: '"Chỉ còn 2 suất" tạo cảm giác phải quyết định ngay — kỹ thuật scarcity cổ điển.' },
+              { id: 3, tag: '⏰ Áp lực thời gian', explanation: 'Deadline "hết hôm nay" ép quyết định nhanh, không cho thời gian kiểm chứng.' },
+              { id: 4, tag: '👥 Bằng chứng xã hội giả', explanation: '"bạn bè đã kiếm được hàng chục triệu" — không có nguồn xác minh, đây là social proof bịa.' },
+              { id: 5, tag: '🔇 Cô lập', explanation: '"Đừng để người thân biết" là red flag tột độ — kẻ lừa muốn cô lập nạn nhân khỏi người có thể cảnh báo.' },
+            ],
+          },
+        }),
       },
       {
         title: '3.4 Thực hành checklist 3 lớp',
@@ -759,7 +774,28 @@ export const MODULES = [
           q('Trong hồ sơ video đầu tư, bước Decide an toàn là gì?', ['Không bấm link, không nạp tiền, kiểm tra kênh chính thức', 'Bấm link để xem thử', 'Nạp ít tiền trước', 'Chia sẻ để hỏi bình luận'], 0),
           q('Trong hồ sơ người thân cần tiền, bước nào thường quan trọng nhất?', ['Verify qua kênh độc lập', 'Trace video gốc', 'Đọc bình luận', 'Dùng detector ngay'], 0),
           q('Với hình ảnh nhạy cảm, quyết định an toàn là gì?', ['Không lan truyền, báo cáo và hỗ trợ người bị hại', 'Lưu lại để phân tích', 'Gửi cho nhiều người kiểm tra', 'Đăng lên nhóm lớn để hỏi'], 0),
-        ]),
+        ], {
+          type: 'sort-cards',
+          title: 'Dấu hiệu thật hay giả?',
+          instruction: 'Kéo hoặc nhấn từng quan sát vào đúng nhóm',
+          reward: 10,
+          data: {
+            buckets: [
+              { id: 'deepfake', label: 'Dấu hiệu deepfake', icon: '⚠️' },
+              { id: 'normal', label: 'Bình thường', icon: '✅' },
+            ],
+            cards: [
+              { id: 'c1', text: 'Mí mắt không nháy trong suốt 30 giây', bucket: 'deepfake' },
+              { id: 'c2', text: 'Răng dính liền thành một khối, mất viền răng cửa', bucket: 'deepfake' },
+              { id: 'c3', text: 'Ánh sáng trên mặt khác với ánh sáng cảnh nền', bucket: 'deepfake' },
+              { id: 'c4', text: 'Tai trái và tai phải có hình dạng khác nhau', bucket: 'deepfake' },
+              { id: 'c5', text: 'Khuôn mặt có nốt ruồi, vết tàn nhang tự nhiên', bucket: 'normal' },
+              { id: 'c6', text: 'Tóc bay theo gió, có vài sợi rối ngẫu nhiên', bucket: 'normal' },
+              { id: 'c7', text: 'Bóng đổ trên mặt khớp với nguồn sáng phòng', bucket: 'normal' },
+              { id: 'c8', text: 'Viền hàm dưới mờ, hoà lẫn vào cổ khi quay đầu', bucket: 'deepfake' },
+            ],
+          },
+        }),
       },
     ],
     quiz: [
@@ -833,7 +869,28 @@ export const MODULES = [
           q('Dấu hiệu nào đáng nghi nhất trong yêu cầu từ cấp trên?', ['Yêu cầu bỏ qua quy trình chuyển tiền vì đang gấp.', 'Tin nhắn ngắn gọn.', 'Giọng nói nghiêm túc.', 'Gửi vào giờ làm việc.'], 0),
           q('Người tự xưng ngân hàng yêu cầu đọc OTP để khóa giao dịch lạ. Bạn nên làm gì?', ['Đọc OTP nếu họ biết tên bạn.', 'Không đọc OTP, tự liên hệ kênh chính thức của ngân hàng.', 'Đọc một nửa mã.', 'Gửi OTP qua tin nhắn cho chắc.'], 1),
           q('Vì sao không nên bấm link đầu tư trong video người nổi tiếng từ tài khoản lạ?', ['Vì mọi video người nổi tiếng đều giả.', 'Vì video, bình luận và link có thể là một kịch bản mạo danh phối hợp.', 'Vì chỉ video dài mới đáng tin.', 'Vì tài khoản lạ luôn vô hại.'], 1),
-        ]),
+        ], {
+          type: 'shield-match',
+          title: 'Ghép tình huống với hành động đúng',
+          instruction: 'Nhấn một tình huống, rồi nhấn hành động phòng vệ phù hợp nhất',
+          reward: 10,
+          data: {
+            rules: [
+              { id: 'hangup', label: 'Cúp máy, gọi lại số chính thức', icon: '📵' },
+              { id: 'verify', label: 'Gọi xác minh qua kênh khác', icon: '📞' },
+              { id: 'change_pw', label: 'Đổi mật khẩu ngay lập tức', icon: '🔑' },
+              { id: 'goto_store', label: 'Đến cửa hàng nhà mạng với CMND', icon: '🏪' },
+              { id: 'delete_app', label: 'Gỡ app, cài lại từ CH Play', icon: '🗑️' },
+            ],
+            scenarios: [
+              { id: 's1', text: 'Người tự xưng nhân viên ngân hàng gọi báo "phát hiện giao dịch lạ" và yêu cầu đọc OTP để khoá.', match: 'hangup' },
+              { id: 's2', text: 'Sếp nhắn Telegram giọng giống thật, yêu cầu chuyển 50 triệu gấp vào tài khoản lạ.', match: 'verify' },
+              { id: 's3', text: 'Bạn vừa lỡ đọc OTP rút tiền cho người gọi. Ngân hàng chưa khoá tài khoản.', match: 'change_pw' },
+              { id: 's4', text: 'Điện thoại đột nhiên mất sóng và bạn không nhận được SMS — nghi bị tráo SIM.', match: 'goto_store' },
+              { id: 's5', text: 'Một app "kiểm tra thuế" được gửi qua Zalo, sau khi cài thấy app yêu cầu quyền truy cập SMS và Accessibility.', match: 'delete_app' },
+            ],
+          },
+        }),
       },
       {
         title: '5.2 Học đường, danh dự và nội dung nhạy cảm',
@@ -997,7 +1054,27 @@ export const MODULES = [
           q('Money Delay nghĩa là gì?', ['Chuyển tiền càng nhanh càng tốt.', 'Trì hoãn bắt buộc để xác minh trước yêu cầu tiền bất thường.', 'Không bao giờ chuyển tiền cho ai.', 'Chỉ chuyển tiền vào ban đêm.'], 1),
           q('Tình huống nào cần Two-Channel Rule?', ['Người quen nhắn mượn tiền qua tài khoản có hành vi lạ.', 'Đổi hình nền điện thoại.', 'Đọc bài giải trí không yêu cầu hành động.', 'Xem ảnh minh họa được ghi rõ là AI.'], 0),
           q('No Shame Reporting nhấn mạnh điều gì?', ['Báo sớm, không đổ lỗi hoặc làm nạn nhân xấu hổ.', 'Im lặng vì sợ bị chê.', 'Đăng mọi thứ lên mạng để gây chú ý.', 'Chỉ báo cáo khi đã chắc chắn 100%.'], 0),
-        ]),
+        ], {
+          type: 'sort-cards',
+          title: 'Phân loại đường link',
+          instruction: 'Kéo hoặc nhấn từng URL vào đúng nhóm',
+          reward: 10,
+          data: {
+            buckets: [
+              { id: 'real', label: 'Thật', icon: '🔒' },
+              { id: 'suspicious', label: 'Đáng nghi', icon: '🤔' },
+              { id: 'fake', label: 'Giả mạo', icon: '🚫' },
+            ],
+            cards: [
+              { id: 'u1', text: 'https://vietcombank.com.vn/login', bucket: 'real' },
+              { id: 'u2', text: 'https://vietc0mbank-secure.com/login', bucket: 'fake' },
+              { id: 'u3', text: 'https://momo.vn/khuyen-mai', bucket: 'real' },
+              { id: 'u4', text: 'http://momo-uudai.tk/nhan-thuong', bucket: 'fake' },
+              { id: 'u5', text: 'https://bit.ly/3xK9aZq (rút gọn — không rõ đích)', bucket: 'suspicious' },
+              { id: 'u6', text: 'https://shopee.vn.security-update.net/account', bucket: 'fake' },
+            ],
+          },
+        }),
       },
       {
         title: '6.2 Vệ sinh dữ liệu cá nhân',
