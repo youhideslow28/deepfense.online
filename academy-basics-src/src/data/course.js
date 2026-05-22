@@ -451,214 +451,164 @@ export const MODULES = [
   {
     id: 3, part: 'foundation',
     title: 'Nhìn, nghe, đọc: dấu hiệu nghi vấn',
-    duration: '100-110 phút', level: 'Foundation',
-    scenario: 'Sau cuộc gọi lúc 22:47, An bắt đầu cẩn thận hơn. Sáng hôm sau, An mở lại video người nổi tiếng kêu gọi đầu tư. Lần này, An không vội tin — An nhìn kỹ hơn và đặt câu hỏi: khuôn mặt có gì lạ không? Khẩu hình có khớp với giọng nói không? Video được đăng từ tài khoản chính thức hay tài khoản lạ? An nhận ra: quan sát không chỉ là nhìn mặt — quan sát là xem toàn bộ tình huống.',
+    duration: '75-90 phút', level: 'Foundation',
+    scenario: 'Sau cuộc gọi lúc 22:47, An xem lại video đầu tư người nổi tiếng. Lần này An không hỏi ngay “thật hay giả?”, mà quan sát theo ba lớp: hình ảnh, âm thanh và ngữ cảnh.',
     outcomes: [
-      'Biết quan sát các dấu hiệu nghi vấn trong hình ảnh và video.',
-      'Nhận diện một số dấu hiệu thường gặp của deepvoice hoặc âm thanh bị chỉnh sửa.',
-      'Hiểu giới hạn của việc nhìn và nghe bằng cảm giác.',
-      'Sử dụng được checklist 3 lớp: hình ảnh — âm thanh — ngữ cảnh.',
+      'Biết quan sát nội dung nghi vấn theo ba lớp: hình ảnh/video, âm thanh/giọng nói và ngữ cảnh/hành vi.',
+      'Hiểu vì sao một dấu hiệu kỹ thuật đơn lẻ không đủ để kết luận deepfake.',
+      'Nhận diện các dấu hiệu rủi ro trong video đầu tư, cuộc gọi deepvoice và hình ảnh nhạy cảm.',
+      'Biết dùng kết luận tạm thời: tin được, chưa đủ dữ liệu, hoặc rủi ro cao cần dừng lại.',
     ],
     sections: [
       {
         title: '3.0 Câu chuyện dẫn nhập',
         lessons: [
           lesson('3.0.0', 'An xem lại video đầu tư', [
-            'Sau cuộc gọi lúc 22:47, An bắt đầu cẩn thận hơn. Sáng hôm sau, An mở lại video người nổi tiếng kêu gọi đầu tư đã thấy ở Module 1. Lần này, An không vội tin. An bật video chậm hơn, nhìn kỹ hơn và tự hỏi: Khuôn mặt có gì lạ không? Khẩu hình có khớp với giọng nói không? Ánh sáng trên mặt có hợp với bối cảnh không? Giọng nói có tự nhiên không? Nội dung có hứa lợi nhuận quá cao không? Video được đăng từ tài khoản chính thức hay tài khoản lạ? Có nguồn nào khác xác nhận không?',
-            'An nhận ra một điều: quan sát không chỉ là nhìn mặt. Quan sát là xem toàn bộ tình huống. Một video có thể trông mượt nhưng ngữ cảnh rất đáng ngờ. Một video có thể hơi mờ nhưng lại hoàn toàn thật. Một giọng nói có thể giống nhưng yêu cầu đi kèm lại nguy hiểm.',
-            'Module 3 sẽ giúp bạn học cách quan sát theo ba lớp: (1) Lớp hình ảnh/video — mắt nhìn thấy gì? (2) Lớp âm thanh/giọng nói — tai nghe thấy gì? (3) Lớp ngữ cảnh/hành vi — nội dung đang yêu cầu bạn tin hoặc làm gì?',
-          ], null),
+            'Sau Module 2, An hiểu rằng cảm xúc có thể làm mình phản ứng vội. Sáng hôm sau, An mở lại video người nổi tiếng kêu gọi đầu tư. Gương mặt giống, giọng nói giống, bình luận rất tích cực. Nhưng lần này An không vội tin.',
+            'An tự hỏi: video đến từ tài khoản nào? Người nổi tiếng này có đăng nội dung tương tự trên kênh chính thức không? Video có yêu cầu bấm link, nạp tiền hoặc hành động ngay không? Nếu video sai, ai có thể bị hại?',
+            { type: 'callout', variant: 'info', title: 'Mục tiêu của Module 3', text: 'Không học để đoán thật giả trong vài giây. Học để biết khi nào một nội dung đủ rủi ro để dừng lại, kiểm chứng và không hành động vội.' },
+            'Quan sát tốt không chỉ là nhìn mặt. Quan sát tốt là nhìn, nghe và đọc toàn bộ tình huống. Một video có thể rất mượt nhưng ngữ cảnh lừa đảo rõ ràng. Một video có thể hơi mờ nhưng vẫn là thật. Vì vậy, Module 3 dùng cách tiếp cận ba lớp.',
+          ], [
+            'Quan sát không chỉ là tìm lỗi trên khuôn mặt; cần nhìn cả nguồn, yêu cầu và hậu quả.',
+            'Câu hỏi đúng: nội dung này có đủ đáng tin để mình hành động không?',
+          ]),
         ],
         checkpoint: null,
       },
       {
-        title: '3.1 Dấu hiệu hình ảnh và video',
+        title: '3.1 Lớp hình ảnh và video',
         lessons: [
-          lesson('3.1.0', 'Nguyên tắc đầu tiên: quan sát chậm lại', [
-            'Khi một video gây sốc, con người thường phản ứng trước khi quan sát. Ta nhìn thấy gương mặt quen, nghe một câu gây choáng, đọc bình luận bên dưới và lập tức cảm thấy tin, giận, sợ hoặc muốn chia sẻ. Vì vậy, bước quan sát đầu tiên không phải là tìm lỗi kỹ thuật — bước đầu tiên là chậm lại.',
-            'Bạn có thể tự nhắc: <em>Mình đang xem một nội dung trên màn hình. Mình chưa cần kết luận ngay.</em> Sau đó, hãy quan sát theo vòng: (1) Nhìn tổng thể. (2) Nhìn khuôn mặt. (3) Nhìn miệng và âm thanh. (4) Nhìn ánh sáng và bóng. (5) Nhìn tay, tóc, tai, phụ kiện. (6) Nhìn nền và vật thể xung quanh. (7) Nhìn nguồn đăng và chú thích.',
-            'Trong phần 3.1, chúng ta tập trung vào hình ảnh và video. Ngữ cảnh sẽ được học kỹ hơn ở phần 3.3.',
-          ], null),
-          lesson('3.1.1', 'Quan sát khuôn mặt và mắt', [
-            'Deepfake thường tập trung vào khuôn mặt, vì khuôn mặt là nơi con người nhận diện danh tính và cảm xúc. Khi quan sát khuôn mặt, bạn có thể chú ý: da mặt có quá mịn, quá bóng hoặc khác chất lượng với cổ/tay không? Rìa khuôn mặt có bị nhòe, rung hoặc méo khi người đó quay đầu không? Hai bên mặt có ánh sáng hợp lý không? Biểu cảm có khớp với nội dung lời nói không? Kính, tóc, tai hoặc vật che mặt có bị biến dạng không?',
-            'Về mắt: nhiều hướng dẫn cũ nói rằng deepfake thường chớp mắt bất thường. Điều này từng hữu ích hơn trong giai đoạn đầu của công nghệ. Hiện nay, dấu hiệu này không còn đủ tin cậy. Bạn vẫn có thể quan sát: ánh mắt có khớp với hướng đầu không? Mắt có phản chiếu ánh sáng hợp lý không? Cảm xúc trong mắt có khớp với giọng nói và nội dung không?',
-            'Điểm cần nhớ: một người thật cũng có thể chớp mắt ít khi đang đọc kịch bản hoặc căng thẳng. Một deepfake tốt cũng có thể chớp mắt rất tự nhiên. Vì vậy: <em>mắt là nơi để quan sát, không phải nơi để phán quyết.</em>',
-          ], null),
-          lesson('3.1.2', 'Quan sát miệng, ánh sáng và chi tiết nhỏ', [
-            'Miệng là vùng quan trọng khi video có lời nói. Bạn có thể quan sát: khẩu hình có khớp với âm thanh không? Có độ trễ lạ giữa môi và tiếng không? Răng có bị méo, biến dạng hoặc thay đổi bất thường không? Khi người nói quay đầu, miệng có bị nhòe hoặc lệch không? Lưu ý: video thật cũng có thể bị lệch tiếng do đường truyền kém, file bị nén hoặc ứng dụng phát video lỗi. Vì vậy, khẩu hình lệch là tín hiệu, không phải kết luận.',
-            'Ánh sáng giúp phát hiện sự không nhất quán. Hãy hỏi: nguồn sáng chính đến từ đâu? Bóng trên mặt có hợp với bóng trong nền không? Mặt có sáng hơn hoặc tối hơn bất thường so với cổ/tay không? Kính, mắt, trang sức có phản chiếu hợp lý không? Có vùng nào trông như được dán lên không?',
-            'Chi tiết nhỏ thường khó xử lý hơn khuôn mặt chính diện: tóc có bị nhòe, dính vào nền không? Tai có biến mất hoặc méo không? Gọng kính có bị cong hoặc phản chiếu sai không? Tay khi đưa lên mặt có làm khuôn mặt bị méo không? Ngón tay có số lượng hoặc hình dạng lạ không? Lưu ý: video nén trên mạng xã hội cũng có thể làm chi tiết nhỏ bị vỡ.',
-          ], null),
-          lesson('3.1.3', 'Chuyển động, nền và dấu hiệu tổng hợp', [
-            'Con người chuyển động bằng cả cơ thể, không chỉ bằng khuôn mặt. Khi quan sát video, hãy để ý: đầu, cổ và vai có chuyển động tự nhiên cùng nhau không? Biểu cảm mặt có khớp với cử chỉ không? Người nói có quá cứng, ít chớp mắt, ít thay đổi tư thế không? Deepfake kém chất lượng có thể lộ lỗi khi nhân vật quay đầu nhanh, cúi xuống, che mặt hoặc cười lớn.',
-            'Nhiều người chỉ nhìn mặt mà quên nhìn nền. Nền có thể cho bạn biết nhiều điều: có chữ nào bị méo, sai chính tả không? Logo có đúng không? Đồng hồ, biển số, màn hình có bất thường không? Vật thể trong nền có thay đổi hình dạng giữa các khung hình không? Có chi tiết nào không hợp với địa điểm được nói đến không?',
-            'Quan trọng nhất: một dấu hiệu đơn lẻ hiếm khi đủ. Nhưng khi bạn thấy nhiều dấu hiệu cùng lúc — video từ tài khoản lạ, người nổi tiếng kêu gọi chuyển tiền, khẩu hình hơi lệch, không có trên kênh chính thức, bình luận giống seeding, link dẫn đến trang lạ — thì mức rủi ro tăng lên rất nhiều. Bạn không cần kết luận "100% deepfake" để hành động an toàn. Bạn chỉ cần kết luận: <em>Rủi ro đủ cao để không tin, không chuyển tiền, không chia sẻ và cần kiểm chứng thêm.</em>',
+          lesson('3.1.0', 'Quan sát kỹ thuật nhưng không phán quyết vội', [
+            'Lớp hình ảnh/video giúp người học phát hiện tín hiệu bất thường. Nhưng tín hiệu kỹ thuật chỉ là điểm bắt đầu, không phải bản án. Video thật vẫn có thể mờ, lệch tiếng hoặc ánh sáng xấu vì mạng yếu, nén file, quay lại màn hình hoặc điều kiện ghi hình kém.',
+            { type: 'table', caption: 'Những điểm nên quan sát', headers: ['Khu vực', 'Câu hỏi quan sát'], rows: [
+              ['Khuôn mặt', 'Rìa mặt có nhòe, rung hoặc biến dạng khi quay đầu không? Da mặt có khác bất thường so với cổ/tay không?'],
+              ['Mắt', 'Ánh mắt và phản chiếu ánh sáng có hợp lý không? Biểu cảm mắt có khớp nội dung không?'],
+              ['Miệng', 'Khẩu hình có khớp âm thanh không? Răng, môi có bị méo hoặc trễ bất thường không?'],
+              ['Ánh sáng', 'Bóng trên mặt có hợp với nguồn sáng và nền không?'],
+              ['Chi tiết nhỏ', 'Tóc, tai, kính, tay hoặc phụ kiện có biến dạng khi chuyển động không?'],
+              ['Nền', 'Chữ, logo, đồ vật, địa điểm có khớp với câu chuyện được kể không?'],
+            ] },
+            'Một dấu hiệu đơn lẻ hiếm khi đủ. Nhưng nhiều dấu hiệu xuất hiện cùng lúc, nhất là khi đi kèm yêu cầu tiền, link lạ hoặc tài khoản không chính thức, sẽ làm mức rủi ro tăng lên rõ rệt.',
           ], [
-            'Bước đầu tiên khi xem video đáng ngờ là chậm lại — không kết luận ngay.',
-            'Quan sát theo vòng: khuôn mặt → miệng → ánh sáng → chi tiết nhỏ → chuyển động → nền → nguồn đăng.',
-            'Nhiều dấu hiệu cùng lúc tăng mức rủi ro — không cần chứng minh deepfake mới được hành động an toàn.',
+            'Dấu hiệu kỹ thuật là tín hiệu để kiểm chứng thêm, không phải kết luận cuối cùng.',
+            'Nhiều dấu hiệu cùng xuất hiện làm rủi ro tăng mạnh hơn một lỗi đơn lẻ.',
+          ]),
+          lesson('3.1.1', 'Giới hạn của mắt thường và detector', [
+            'Mắt thường không được thiết kế để phát hiện nội dung AI hiện đại. Con người giỏi nhận diện khuôn mặt quen, nhưng không giỏi đánh giá một video đã bị nén, cắt ghép, tái đăng hoặc tạo bằng mô hình mới.',
+            'Detector deepfake có thể hỗ trợ, nhưng cũng có giới hạn. Công cụ phụ thuộc vào dữ liệu huấn luyện, loại deepfake từng thấy, chất lượng file đầu vào và việc video có bị nén hay quay lại màn hình hay không. Kết quả “90% nghi vấn” là tín hiệu tham khảo. Kết quả “không phát hiện” cũng không chứng minh nội dung thật.',
+            { type: 'table', caption: 'Ba mức kết luận an toàn', headers: ['Mức', 'Cách hiểu'], rows: [
+              ['Có bằng chứng tốt', 'Có nguồn chính thức hoặc nhiều nguồn độc lập xác nhận.'],
+              ['Chưa đủ dữ liệu', 'Có tín hiệu nghi vấn nhưng chưa đủ cơ sở kết luận. Không chia sẻ hoặc hành động vội.'],
+              ['Rủi ro cao', 'Nội dung yêu cầu tiền, OTP, link, chia sẻ gấp hoặc gây hại danh dự. Cần dừng lại dù chưa chứng minh deepfake.'],
+            ] },
+            'Mục tiêu của người học không phải là thắng cuộc thi đoán video. Mục tiêu là tránh hành động nguy hiểm khi bằng chứng chưa đủ chắc.',
+          ], [
+            'Mắt thường và detector đều có giới hạn.',
+            '“Chưa đủ dữ liệu” là một kết luận hợp lệ trong môi trường số.',
           ]),
         ],
         checkpoint: checkpoint('3.1', [
-          q('Bước đầu tiên khi xem một video gây sốc là gì?', ['Dừng lại và quan sát chậm hơn', 'Chia sẻ ngay để hỏi mọi người', 'Kết luận ngay là deepfake', 'Tin nếu video có nhiều lượt thích'], 0),
-          q('Khẩu hình lệch trong video có nghĩa là gì?', ['Là một tín hiệu cần chú ý, nhưng cần thêm kiểm chứng', 'Chắc chắn deepfake', 'Chắc chắn video thật', 'Không bao giờ quan trọng'], 0),
-          q('Dấu hiệu nào sau đây thuộc lớp hình ảnh/video?', ['Rìa khuôn mặt bị nhòe khi quay đầu', 'Yêu cầu chuyển tiền trong 5 phút', 'Người gửi bảo đừng nói với ai', 'Link dẫn đến trang lạ'], 0),
-          q('Điều nào đúng nhất về dấu hiệu chớp mắt?', ['Mắt là vùng nên quan sát, nhưng không đủ để kết luận một mình', 'Chớp mắt lạ luôn chứng minh video là deepfake', 'Không chớp mắt luôn chứng minh video là giả', 'Không cần quan sát mắt'], 0),
-          q('Khi thấy khuôn mặt sáng khác hẳn cổ và nền, bạn nên làm gì?', ['Ghi nhận là dấu hiệu cần kiểm tra thêm', 'Kết luận ngay là giả', 'Bỏ qua hoàn toàn', 'Chia sẻ để người khác tự kiểm tra'], 0),
-          q('Vì sao cần quan sát nền và vật thể xung quanh?', ['Nền có thể tiết lộ sai bối cảnh, chữ méo, logo sai hoặc địa điểm không khớp', 'Vì deepfake chỉ lỗi ở nền', 'Vì khuôn mặt luôn đáng tin', 'Vì vật thể trong nền không bao giờ bị chỉnh sửa'], 0),
-          q('Một video người nổi tiếng kêu gọi đầu tư xuất hiện từ tài khoản lạ, không có trên kênh chính thức, có link đăng ký lạ. Dù video trông khá thật, bạn nên đánh giá thế nào?', ['Rủi ro cao, cần kiểm chứng và không bấm link/chuyển tiền', 'An toàn vì video trông thật', 'An toàn nếu có nhiều bình luận tích cực', 'Chỉ cần xem mắt người đó chớp có đều không'], 0),
-          q('Một dấu hiệu đơn lẻ như video mờ thường nên được hiểu như thế nào?', ['Chưa đủ để kết luận', 'Chắc chắn giả', 'Chắc chắn thật', 'Không cần quan tâm đến nguồn nữa'], 0),
-          q('Khi tay đi qua mặt trong video và khuôn mặt bị biến dạng, đây có thể là dấu hiệu gì?', ['Dấu hiệu hình ảnh cần chú ý', 'Dấu hiệu chắc chắn tài khoản ngân hàng bị khóa', 'Dấu hiệu video luôn an toàn', 'Dấu hiệu không liên quan'], 0),
-          q('Mục tiêu đúng của quan sát hình ảnh/video là gì?', ['Tìm tín hiệu ban đầu để quyết định có cần kiểm chứng thêm không', 'Kết luận thật giả trong 3 giây', 'Tin vào cảm giác đầu tiên', 'Thay thế hoàn toàn việc kiểm tra nguồn'], 0),
-        ], {
-          type: 'risk-meter',
-          title: '🔬 Mắt Chuyên Gia',
-          instruction: 'Đánh giá mức độ rủi ro của 4 tình huống sau theo thang 1–5. Sau đó xem chuyên gia đánh giá thế nào.',
-          data: {
-            scenarios: [
-              { text: 'Video người nổi tiếng xuất hiện trên kênh YouTube tạm thời không rõ nguồn gốc. Gương mặt và giọng đúng, nhưng khẩu hình lệch nhẹ khi nói nhanh. Nội dung kêu gọi đầu tư với lợi nhuận cam kết 30%/tháng.', expertRating: 5, explanation: 'Nhiều dấu hiệu cùng lúc: kênh không rõ nguồn, khẩu hình lệch, lời hứa lợi nhuận phi thực tế. Rủi ro rất cao.' },
-              { text: 'Bạn nhận cuộc gọi video từ số đã lưu là "Mẹ". Hình ảnh có độ phân giải thấp bất thường dù sóng WiFi đang mạnh. Người trong video yêu cầu chuyển tiền gấp vì "gặp tai nạn".', expertRating: 5, explanation: 'Chất lượng thấp bất thường khi mạng tốt là dấu hiệu tiêu cực. Kết hợp với yêu cầu tiền khẩn cấp — rủi ro rất cao.' },
-              { text: 'Video viral trên Facebook về một vụ cháy nghiêm trọng. Hình ảnh và âm thanh trông thật, nhưng tài khoản đăng chỉ mới tạo 3 ngày trước, không có liên kết báo chí nào.', expertRating: 4, explanation: 'Tài khoản mới và không có nguồn chính thức là tín hiệu đáng ngờ. Rủi ro cao — không chia sẻ trước khi kiểm chứng.' },
-              { text: 'Bạn xem clip ngắn một chính trị gia nói điều gây tranh cãi. Video trông bình thường, nhưng bạn nhớ bài phát biểu gốc dài hơn nhiều. Clip này chỉ có 15 giây.', expertRating: 3, explanation: 'Clip rất ngắn từ bài dài có thể là edited media — câu nói bị cắt khỏi bối cảnh. Cần tìm bản gốc để xác minh.' },
-            ],
-          },
-        }),
+          q('Khẩu hình lệch trong video nên được hiểu thế nào?', ['Là tín hiệu cần kiểm chứng thêm, không phải kết luận chắc chắn', 'Chắc chắn là deepfake', 'Chắc chắn là video thật', 'Không bao giờ quan trọng'], 0),
+          q('Kết quả detector deepfake nên được dùng ra sao?', ['Như một tín hiệu tham khảo trong quá trình đánh giá', 'Như phán quyết tuyệt đối', 'Để thay thế kiểm tra nguồn', 'Để quyết định chia sẻ ngay'], 0),
+          q('Khi nào có thể xem một nội dung là rủi ro cao dù chưa chứng minh deepfake?', ['Khi nội dung yêu cầu tiền, OTP, link lạ, chia sẻ gấp hoặc gây hại danh dự', 'Khi video có độ phân giải thấp', 'Khi người nói nhìn nghiêm túc', 'Khi có ít bình luận'], 0),
+        ]),
       },
       {
-        title: '3.1.1 Giới hạn của quan sát',
-        lessons: [
-          lesson('3.1.1.0', 'Video thật có thể trông lạ', [
-            'Không phải mọi thứ trông lạ đều là giả. Một video thật có thể có: ánh sáng xấu, camera kém, mạng yếu, âm thanh trễ, hình ảnh bị nén, người nói mệt hoặc ngại camera, góc quay kỳ lạ, bộ lọc làm đẹp, ứng dụng gọi video làm mịn da, hoặc video bị quay lại từ màn hình khác.',
-            'Những yếu tố này có thể tạo ra cảm giác "sai sai". Nếu bạn thấy một dấu hiệu lạ, hãy ghi nhận nó. Nhưng đừng biến nó thành kết luận duy nhất.',
-            'Ví dụ: Một giáo viên trong buổi học online có giọng bị lệch so với hình — có thể do mạng yếu, không nhất thiết là deepfake. Một người trong video có mặt quá mịn — có thể do bộ lọc làm đẹp, không nhất thiết là mạo danh. Một video bị vỡ nét khi chuyển động — có thể do nền tảng nén video, không nhất thiết là chỉnh sửa.',
-          ], null),
-          lesson('3.1.1.1', 'Video giả có thể trông rất thật', [
-            'Ngược lại, không thấy lỗi không có nghĩa là thật. Công nghệ tạo hình ảnh, video và giọng nói đang tiến nhanh. Một số nội dung giả có thể: khẩu hình khá khớp, giọng nói khá tự nhiên, gương mặt ít lỗi, ánh sáng hợp lý, chất lượng sản xuất tốt, được đăng kèm bình luận tạo niềm tin.',
-            'Nếu bạn chỉ hỏi: <em>Tôi có thấy lỗi kỹ thuật không?</em> — bạn có thể bỏ qua rủi ro lớn hơn. Hãy hỏi thêm: Ai đăng? Đăng ở đâu? Đăng lúc nào? Có nguồn chính thức không? Nội dung muốn mình làm gì? Có yêu cầu tiền, OTP, thông tin cá nhân hoặc chia sẻ gấp không?',
-          ], null),
-          lesson('3.1.1.2', 'Detector không thay thế được phán đoán', [
-            'Một công cụ phát hiện deepfake có thể hỗ trợ bạn, nhưng không thay thế được quy trình kiểm chứng. Công cụ có thể sai theo hai hướng: báo giả với nội dung thật, hoặc báo thật với nội dung giả. Nguyên nhân có thể đến từ chất lượng file thấp, video đã bị nén nhiều lần, công nghệ giả mạo mới, hoặc dữ liệu huấn luyện của công cụ còn hạn chế.',
-            'Vì vậy, nếu detector báo nghi ngờ, bạn không nên xem đó là bản án cuối cùng. Nếu detector báo không nghi ngờ, bạn cũng không nên xem đó là giấy chứng nhận an toàn.',
-            'Cách nghĩ đúng: Detector là một chiếc đèn pin — nó giúp bạn soi thêm một góc, nhưng không phải toàn bộ căn phòng.',
-          ], null),
-          lesson('3.1.1.3', 'Ba mức kết luận an toàn', [
-            'Khi quan sát nội dung, thay vì chỉ chọn thật hoặc giả, bạn có thể dùng 3 mức kết luận. Mức 1 — Chưa thấy dấu hiệu rõ, nhưng vẫn cần nguồn: video trông bình thường, nhưng mình cần xem nó có từ nguồn chính thức không. Mức 2 — Có dấu hiệu nghi vấn, cần kiểm chứng thêm: khẩu hình hơi lệch và tài khoản đăng khá lạ — mình chưa kết luận, nhưng không nên chia sẻ ngay.',
-            'Mức 3 — Rủi ro cao, không hành động theo yêu cầu: dù video thật hay giả, yêu cầu chuyển tiền qua tài khoản lạ là rủi ro cao — mình sẽ xác minh qua kênh khác. Điểm mấu chốt: bạn không cần chứng minh deepfake mới được quyền từ chối chuyển tiền, bấm link hoặc chia sẻ.',
-          ], [
-            'Video thật có thể trông lạ vì nhiều lý do kỹ thuật — đừng kết luận vội.',
-            'Video giả có thể trông rất thật — không thấy lỗi không có nghĩa là an toàn.',
-            'Dùng 3 mức kết luận thay vì chỉ thật/giả: chưa đủ dữ liệu → nghi vấn → rủi ro cao.',
-          ]),
-        ],
-        checkpoint: null,
-      },
-      {
-        title: '3.2 Dấu hiệu âm thanh và deepvoice',
+        title: '3.2 Lớp âm thanh và giọng nói',
         lessons: [
           lesson('3.2.0', 'Giọng nói là tín hiệu mạnh nhưng không tuyệt đối', [
-            'Ta thường nhận ra người quen qua giọng. Chỉ cần nghe vài từ, nhiều người đã biết đó là mẹ, bạn thân, giáo viên hoặc sếp. Vì vậy, khi nghe một giọng nói quen thuộc yêu cầu giúp đỡ, ta dễ tin. Nhưng trong thời đại deepvoice, giọng nói không còn là bằng chứng tuyệt đối.',
-            'Điều này không có nghĩa là bạn phải nghi ngờ mọi cuộc gọi của người thân. Nó có nghĩa là: nếu cuộc gọi yêu cầu điều rủi ro, bạn cần xác minh. Điều rủi ro bao gồm: chuyển tiền, gửi OTP, cung cấp mật khẩu, gửi ảnh giấy tờ, cài app, bấm link, giữ bí mật với người khác, gửi hình ảnh nhạy cảm.',
-          ], null),
-          lesson('3.2.1', 'Dấu hiệu âm thanh cần chú ý', [
-            'Bạn có thể để ý: giọng nói đều đều, thiếu nhịp thở tự nhiên; cảm xúc không khớp với tình huống; ngắt nghỉ kỳ lạ; phát âm sai tên riêng, biệt danh hoặc địa danh quen thuộc; trả lời vòng vo khi bị hỏi câu bất ngờ; né gọi lại; có tiếng nền không khớp với câu chuyện; âm thanh quá sạch so với môi trường được mô tả; câu trả lời lặp lại hoặc giống kịch bản.',
-            'Ví dụ: người gọi nói đang ở hiện trường tai nạn, nhưng âm thanh nền lại rất yên tĩnh. Hoặc người gọi nói đang ở bệnh viện nhưng không trả lời được bệnh viện nào. Đây là dấu hiệu cần chú ý.',
-            'Nhưng giống như video, âm thanh cũng có thể bị ảnh hưởng bởi mạng, micro, tiếng ồn, tâm trạng và môi trường. Vì vậy, dấu hiệu âm thanh cần đi cùng xác minh.',
-          ], null),
-          lesson('3.2.2', 'Câu hỏi bất ngờ và kịch bản deepvoice thường gặp', [
-            'Một số người khuyên hãy hỏi câu riêng tư để xác minh, ví dụ: tên con chó nhà mình là gì? Hôm qua mình ăn ở đâu? Cách này có thể hữu ích trong một số tình huống. Nhưng không nên phụ thuộc hoàn toàn, vì kẻ xấu có thể biết thông tin từ mạng xã hội, tài khoản của người quen có thể đã bị chiếm quyền, hoặc người thật trong lúc hoảng loạn có thể trả lời không rõ. Với yêu cầu rủi ro cao, cách tốt nhất vẫn là: dừng cuộc gọi nghi vấn và xác minh qua kênh độc lập.',
-            'Bốn kịch bản deepvoice thường gặp: (1) Người thân gặp nạn — giọng giống, nói nhanh hoảng, cần tiền gấp, không muốn bạn gọi người khác. Phản ứng: gọi lại số đã lưu, không chuyển tiền khi chưa xác minh. (2) Sếp yêu cầu xử lý gấp — yêu cầu chuyển khoản hoặc gửi dữ liệu, bảo bỏ qua quy trình. Phản ứng: tuân thủ quy trình xác nhận nội bộ.',
-            '(3) Ngân hàng/cơ quan chức năng — tự xưng có thẩm quyền, đe dọa khóa tài khoản, yêu cầu đọc OTP. Phản ứng: không đọc OTP, tự tìm số tổng đài chính thức. (4) Tống tiền bằng giọng nói/hình ảnh — nói có hình ảnh nhạy cảm của bạn, yêu cầu tiền. Phản ứng: không thương lượng một mình trong hoảng loạn, lưu bằng chứng, báo cơ quan có trách nhiệm.',
-          ], null),
-          lesson('3.2.3', 'Checklist nghe an toàn', [
-            'Khi nghe một giọng nói quen nhưng yêu cầu bất thường, hãy hỏi: (1) Người này có yêu cầu tiền, OTP, mật khẩu, giấy tờ hoặc ảnh nhạy cảm không? (2) Có yêu cầu hành động ngay không? (3) Có yêu cầu giữ bí mật không? (4) Có né gọi lại hoặc né kênh chính thức không? (5) Có dùng số/tài khoản/link mới không? (6) Có trả lời được các câu hỏi bất ngờ không? (7) Có thể xác minh qua số đã lưu hoặc người thứ ba đáng tin không?',
-            'Nếu nhiều câu trả lời đều đáng lo, đây là dấu hiệu mạnh cần dừng lại và xác minh qua kênh độc lập.',
+            'Giọng nói quen thuộc tạo cảm giác tin cậy rất nhanh. Đó là lý do deepvoice nguy hiểm trong cuộc gọi khẩn cấp: người nghe có thể phản ứng theo quan hệ gia đình, bạn bè hoặc công việc trước khi nghĩ đến kiểm chứng.',
+            'Dấu hiệu âm thanh cần chú ý gồm: nhịp nói đều bất thường, cảm xúc không khớp nội dung, âm thanh như đọc kịch bản, câu trả lời né tránh, tiếng nền thiếu tự nhiên hoặc chất lượng âm thanh thay đổi bất thường giữa các đoạn.',
+            { type: 'callout', variant: 'warning', title: 'Nguyên tắc xác minh giọng nói', text: 'Nghe giống không đủ. Nếu cuộc gọi yêu cầu tiền, OTP, mật khẩu, cài app hoặc giữ bí mật, hãy xác minh qua kênh độc lập.' },
+            'Một câu hỏi bất ngờ đôi khi giúp phát hiện kịch bản, nhưng không nên xem là biện pháp chắc chắn. Thông tin cá nhân có thể bị lấy từ mạng xã hội hoặc lịch sử tin nhắn. Kênh độc lập vẫn quan trọng hơn câu đố riêng tư.',
           ], [
-            'Giọng quen không đủ để xác minh danh tính — chỉ giọng kèm yêu cầu rủi ro mới cần xác minh.',
-            'Bốn kịch bản phổ biến: người thân gặp nạn, sếp gấp, ngân hàng/cơ quan, tống tiền.',
-            'Dấu hiệu mạnh nhất: yêu cầu không gọi lại và hành động ngay.',
+            'Giọng quen tạo niềm tin nhanh, nhưng không đủ để hành động trong tình huống rủi ro cao.',
+            'Kênh độc lập quan trọng hơn việc hỏi vài câu riêng tư trong cùng cuộc gọi.',
+          ]),
+          lesson('3.2.1', 'Checklist nghe an toàn', [
+            'Khi gặp tin nhắn thoại hoặc cuộc gọi nghi vấn, hãy ghi nhận ba nhóm thông tin: âm thanh nghe như thế nào, nội dung yêu cầu gì và kênh xác minh nào an toàn.',
+            { type: 'table', caption: 'Checklist nghe an toàn', headers: ['Câu hỏi', 'Ý nghĩa'], rows: [
+              ['Giọng có giống nhưng nội dung có bất thường không?', 'Giọng quen không loại bỏ rủi ro nếu yêu cầu lạ.'],
+              ['Người gọi có yêu cầu tiền, OTP, mật khẩu hoặc cài app không?', 'Đây là nhóm hành động rủi ro cao.'],
+              ['Người gọi có bảo đừng gọi lại hoặc đừng nói với ai không?', 'Đây là dấu hiệu cô lập nạn nhân.'],
+              ['Có thể gọi lại số đã lưu hoặc hỏi người thân/đồng nghiệp khác không?', 'Đó là kênh xác minh độc lập.'],
+            ] },
+            'Trong tình huống khẩn cấp thật, xác minh đúng cách giúp hỗ trợ đúng người. Trong tình huống giả, xác minh giúp ngăn thiệt hại. Vì vậy, xác minh không phải là thiếu tin tưởng; đó là trách nhiệm.',
+          ], [
+            'Âm thanh cần được đánh giá cùng nội dung yêu cầu và kênh xác minh.',
+            'Xác minh là trách nhiệm, không phải thái độ nghi ngờ vô lý.',
           ]),
         ],
         checkpoint: checkpoint('3.2', [
-          q('Trong thời đại deepvoice, khi nào cần xác minh dù giọng nghe quen thuộc?', ['Khi cuộc gọi yêu cầu điều rủi ro như chuyển tiền, OTP, mật khẩu hoặc cài app', 'Luôn luôn, mọi cuộc gọi đều cần xác minh', 'Chỉ khi giọng nghe khác hơn bình thường', 'Chỉ khi gọi từ số lạ'], 0),
-          q('Dấu hiệu nào trong cuộc gọi đáng lo ngại nhất?', ['Yêu cầu không gọi lại kết hợp với yêu cầu chuyển tiền gấp', 'Giọng nói hơi nhỏ do mạng yếu', 'Người gọi hỏi thăm sức khỏe', 'Cuộc gọi vào buổi tối'], 0),
-          q('Câu hỏi bất ngờ để xác minh danh tính có giới hạn nào?', ['Kẻ xấu có thể biết thông tin từ mạng xã hội hoặc tài khoản bị chiếm', 'Không có giới hạn, luôn hiệu quả 100%', 'Chỉ hiệu quả với người lạ', 'Chỉ dùng được qua cuộc gọi thoại, không dùng được qua video'], 0),
+          q('Vì sao deepvoice nguy hiểm trong cuộc gọi khẩn cấp?', ['Vì giọng quen có thể kích hoạt phản xạ tin và giúp ngay', 'Vì mọi deepvoice đều hoàn hảo', 'Vì chỉ chuyên gia mới nghe được', 'Vì không cần kiểm chứng nếu giọng giống'], 0),
+          q('Dấu hiệu nào là rủi ro mạnh hơn việc giọng nghe hơi lạ?', ['Yêu cầu chuyển tiền, gửi OTP hoặc giữ bí mật', 'Âm lượng hơi nhỏ', 'Có tiếng ồn nền', 'Cuộc gọi ngắn'], 0),
+          q('Kênh xác minh an toàn nhất khi nhận cuộc gọi giống người thân yêu cầu tiền là gì?', ['Gọi lại số đã lưu hoặc hỏi người thân khác', 'Hỏi tiếp trong cùng cuộc gọi', 'Gọi số mới người đó vừa gửi', 'Chuyển một khoản nhỏ trước'], 0),
         ]),
       },
       {
-        title: '3.3 Dấu hiệu ngữ cảnh',
+        title: '3.3 Lớp ngữ cảnh và hành vi',
         lessons: [
-          lesson('3.3.0', 'Ngữ cảnh là gì và tại sao quan trọng?', [
-            'Ngữ cảnh là mọi thứ xung quanh nội dung: ai gửi? Gửi qua kênh nào? Gửi khi nào? Nội dung muốn bạn tin điều gì? Nội dung muốn bạn làm gì? Có nguồn gốc rõ không? Có ai được lợi nếu bạn tin không? Ai có thể bị hại nếu bạn chia sẻ sai?',
-            'Trong nhiều trường hợp, ngữ cảnh cho thấy rủi ro rõ hơn lỗi kỹ thuật. Ví dụ: một video người nổi tiếng kêu gọi đầu tư có thể trông rất thật. Nhưng nếu nó được đăng từ tài khoản mới lập, dẫn đến website lạ, hứa lợi nhuận cao và không xuất hiện trên kênh chính thức, thì rủi ro đã rất cao.',
-            'Bạn không cần chứng minh video là deepfake mới có quyền từ chối bấm link.',
-          ], null),
-          lesson('3.3.1', 'Ai là người gửi? Nguồn ở đâu?', [
-            'Hãy kiểm tra người gửi: tài khoản có phải chính thức không? Tên tài khoản có bị nhái không? Tài khoản có lịch sử hoạt động đáng tin không? Dấu hiệu tài khoản đáng nghi: mới tạo, ít lịch sử, tên gần giống tài khoản thật, dùng ký tự lạ để bắt chước tên, đột nhiên nhắn mượn tiền hoặc gửi link, né cuộc gọi xác minh.',
-            'Về nguồn nội dung: nếu bạn chỉ thấy nội dung qua ảnh chụp màn hình, video tải lại hoặc tin nhắn chuyển tiếp, hãy cẩn thận. Nội dung càng xa nguồn gốc, càng dễ bị cắt, ghép, đổi chú thích, đăng sai thời gian hoặc thêm bình luận dẫn dắt. Hãy kiểm tra: có link bài gốc không? Bài gốc từ tài khoản nào? Có nguồn chính thức không? Có bản đầy đủ thay vì đoạn cắt ngắn không?',
-          ], null),
-          lesson('3.3.2', 'Nội dung muốn bạn làm gì? Bình luận có phải bằng chứng không?', [
-            'Đây là câu hỏi rất mạnh: nội dung này đang muốn mình làm gì? Nếu nội dung chỉ muốn bạn xem một trò đùa rõ ràng, rủi ro có thể thấp. Nếu nội dung muốn bạn chuyển tiền, bấm link, cài app, gửi OTP, gửi mật khẩu, chia sẻ gấp, hay tấn công/bôi nhọ ai đó — thì rủi ro cao hơn nhiều. Nội dung càng thúc đẩy hành động mạnh, bạn càng cần kiểm chứng kỹ.',
-            'Về bình luận: bình luận có thể giúp bạn tham khảo phản ứng của người khác, nhưng không phải bằng chứng chắc chắn. Một phần bình luận có thể là tài khoản giả, bình luận seeding, người bị cuốn theo cảm xúc, hoặc người cố tình dẫn dắt. Các câu như "Mình nhận tiền rồi" hay "Bạn mình cũng làm được" không đủ để xác minh.',
-          ], null),
-          lesson('3.3.3', 'Ai có thể bị hại? Checklist ngữ cảnh', [
-            'Trước khi chia sẻ một nội dung nghi vấn, hãy hỏi: nếu nội dung này sai, ai có thể bị hại? Có thể là người bị mạo danh, nạn nhân trong hình ảnh nhạy cảm, người bị vu khống, gia đình của người liên quan, người chuyển tiền theo lời kêu gọi, hoặc chính bạn nếu chia sẻ nội dung vi phạm. Câu hỏi này giúp bạn chuyển từ tâm lý "xem cho biết" sang trách nhiệm số.',
-            'Đặc biệt với hình ảnh nhạy cảm: không biết thật giả không phải lý do để lưu, gửi tiếp hoặc bình luận.',
-            'Checklist ngữ cảnh — trước khi tin, chia sẻ hoặc hành động, hãy hỏi: (1) Ai gửi và có đáng tin không? (2) Nội dung có nguồn gốc rõ không? (3) Có nguồn chính thức xác nhận không? (4) Nội dung có yêu cầu tiền, OTP, cài app hoặc bấm link không? (5) Nội dung có tạo áp lực khẩn cấp, sợ hãi hoặc phẫn nộ không? (6) Ai có thể bị hại nếu nội dung sai? (7) Hành động an toàn nhất bây giờ là gì?',
+          lesson('3.3.0', 'Ngữ cảnh thường lộ rủi ro sớm hơn kỹ thuật', [
+            'Nhiều nội dung giả mạo hiện nay đủ mượt để người xem không thấy lỗi rõ ràng. Nhưng kịch bản xung quanh nội dung thường để lộ rủi ro sớm: tài khoản không chính thức, link rút gọn, lời hứa lợi nhuận cao, yêu cầu giữ bí mật, bình luận giống seeding hoặc lời kêu gọi chia sẻ ngay.',
+            { type: 'table', caption: 'Câu hỏi ngữ cảnh', headers: ['Câu hỏi', 'Tại sao quan trọng'], rows: [
+              ['Ai đăng hoặc gửi nội dung?', 'Nguồn không rõ làm rủi ro tăng.'],
+              ['Nội dung muốn mình làm gì?', 'Yêu cầu hành động là trọng tâm của lừa đảo.'],
+              ['Có kênh chính thức hoặc nguồn độc lập xác nhận không?', 'Nguồn độc lập mạnh hơn cảm giác thật.'],
+              ['Có áp lực thời gian, sợ hãi, xấu hổ hoặc lợi ích quá tốt không?', 'Đó là dấu hiệu thao túng cảm xúc.'],
+              ['Ai có thể bị hại nếu nội dung sai?', 'Giúp chuyển từ tò mò sang trách nhiệm số.'],
+            ] },
+            'Câu hỏi mạnh nhất là: nội dung này đang muốn mình làm gì? Nếu câu trả lời là chuyển tiền, đọc mã, bấm link, chia sẻ gấp hoặc bêu tên ai đó, bạn cần dừng lại.',
           ], [
-            'Ngữ cảnh thường quan trọng hơn lỗi kỹ thuật — không cần chứng minh deepfake để từ chối hành động.',
-            'Câu hỏi mạnh nhất: nội dung này đang muốn mình làm gì?',
-            'Bình luận tích cực không phải bằng chứng — có thể là seeding hoặc tài khoản giả.',
+            'Ngữ cảnh thường quan trọng hơn lỗi kỹ thuật rõ ràng.',
+            'Câu hỏi trọng tâm: nội dung này đang muốn mình làm gì?',
+          ]),
+          lesson('3.3.1', 'Bình luận, lượt xem và cảm giác số đông', [
+            'Lượt xem cao, bình luận tích cực và nhiều người chia sẻ không chứng minh nội dung là thật. Chúng chỉ chứng minh nội dung đang lan truyền. Trong lừa đảo, bình luận có thể đến từ seeding, tài khoản giả hoặc người thật nhưng chưa kiểm chứng.',
+            'Với video đầu tư, bình luận kiểu “tôi đã nhận tiền”, “uy tín lắm”, “cơ hội cuối” không phải bằng chứng tài chính. Với clip gây phẫn nộ, nhiều bình luận tức giận không chứng minh clip đúng bối cảnh. Với hình ảnh nhạy cảm, nhiều người bàn tán càng làm hại người liên quan hơn.',
+            { type: 'callout', variant: 'quote', title: 'Câu cần nhớ', text: 'Đám đông có thể làm nội dung lan xa, nhưng không tự động làm nội dung đúng hơn.' },
+          ], [
+            'Tương tác cao không phải bằng chứng xác thực.',
+            'Đám đông lan truyền nội dung; nguồn độc lập mới giúp xác minh nội dung.',
           ]),
         ],
         checkpoint: checkpoint('3.3', [
-          q('Tại sao ngữ cảnh thường quan trọng hơn lỗi kỹ thuật?', ['Nhiều nội dung giả không có lỗi kỹ thuật rõ ràng — ngữ cảnh tiết lộ rủi ro sớm hơn', 'Lỗi kỹ thuật luôn dễ thấy bằng mắt thường', 'Ngữ cảnh không liên quan đến deepfake', 'Chỉ chuyên gia mới phân tích được lỗi kỹ thuật'], 0),
-          q('Bình luận tích cực dưới video đầu tư có phải bằng chứng tin cậy không?', ['Không — có thể là seeding hoặc tài khoản giả', 'Có — nhiều người tin là đáng tin', 'Có nếu trên 500 bình luận', 'Tùy thuộc vào nền tảng đăng'], 0),
-          q('Câu hỏi quan trọng nhất khi gặp nội dung nghi vấn là gì?', ['Nội dung này đang muốn mình làm gì?', 'Video có độ phân giải cao không?', 'Người đăng có nhiều follower không?', 'Bao nhiêu người đã chia sẻ?'], 0),
+          q('Câu hỏi ngữ cảnh quan trọng nhất là gì?', ['Nội dung này đang muốn mình làm gì?', 'Video có dài không?', 'Có bao nhiêu bình luận?', 'Màu sắc có đẹp không?'], 0),
+          q('Bình luận tích cực dưới video đầu tư có phải bằng chứng tin cậy không?', ['Không, có thể là seeding hoặc người chưa kiểm chứng', 'Có, vì nhiều người không thể sai', 'Có nếu bình luận dài', 'Có nếu có nhiều emoji'], 0),
+          q('Vì sao cần hỏi ai có thể bị hại nếu nội dung sai?', ['Để chọn hành động có trách nhiệm và không làm tăng thiệt hại', 'Để biết có nên xem tiếp không', 'Để tranh luận thắng hơn', 'Để tăng lượt chia sẻ'], 0),
         ]),
       },
       {
-        title: '3.4 Thực hành: Checklist 3 lớp',
+        title: '3.4 Thực hành checklist 3 lớp',
         lessons: [
-          lesson('3.4.0', 'Hướng dẫn thực hành', [
-            'Trong phần thực hành này, bạn sẽ áp dụng checklist 3 lớp vào 3 tình huống mô phỏng. Với mỗi tình huống, hãy điền: (1) Hình ảnh/video — có dấu hiệu gì cần chú ý? (2) Âm thanh/giọng nói — có dấu hiệu gì cần chú ý? (3) Ngữ cảnh/hành vi — nội dung đang yêu cầu gì? ai gửi? rủi ro là gì? (4) Kết luận tạm thời — tin, không tin, hay chưa đủ dữ liệu? (5) Hành động an toàn — bạn sẽ làm gì tiếp?',
-            'Câu cần nhớ: <em>Quan sát tốt là quan sát đủ ba lớp: nhìn gì, nghe gì, và tình huống đang đẩy mình làm gì.</em>',
-          ], null),
-          lesson('3.4.1', 'Tình huống 1: Video đầu tư người nổi tiếng', [
-            'Tình huống: Bạn thấy một video người nổi tiếng nói về một ứng dụng đầu tư. Video trông khá thật. Tài khoản đăng không có dấu xác minh, tên gần giống tài khoản chính thức. Mô tả có link đăng ký. Bình luận có nhiều người nói đã nhận lợi nhuận.',
-            'Hình ảnh/video: Chưa đủ dữ liệu; cần quan sát khẩu hình, ánh sáng, dấu hiệu chỉnh sửa nếu có. Âm thanh: Giọng giống chưa đủ để xác minh. Ngữ cảnh: Rủi ro cao vì đầu tư, link lạ, tài khoản không chính thức, bình luận có thể seeding.',
-            'Kết luận tạm thời: Chưa đủ dữ liệu để tin; rủi ro cao. Hành động an toàn: Không bấm link, kiểm tra kênh chính thức của người nổi tiếng, tìm cảnh báo lừa đảo nếu có.',
-          ], null),
-          lesson('3.4.2', 'Tình huống 2: Tin nhắn thoại từ người thân', [
-            'Tình huống: Bạn nhận tin nhắn thoại từ tài khoản của người thân. Giọng nói nghe giống, nhưng nội dung yêu cầu chuyển tiền ngay vào tài khoản tên người lạ. Người đó nhắn thêm: đừng gọi lại, đang rất rối.',
-            'Hình ảnh/video: Không có. Âm thanh: Giọng giống nhưng là yêu cầu rủi ro cao. Ngữ cảnh: Chuyển tiền gấp, tài khoản lạ, yêu cầu không gọi lại — đây là kịch bản lừa đảo deepvoice điển hình.',
-            'Kết luận tạm thời: Rủi ro cao. Hành động an toàn: Gọi số đã lưu, hỏi người thân khác, không chuyển tiền khi chưa xác minh qua kênh độc lập.',
-          ], null),
-          lesson('3.4.3', 'Tình huống 3: Hình ảnh trong nhóm lớp', [
-            'Tình huống: Một hình ảnh nhạy cảm được chia sẻ trong nhóm lớp, kèm chú thích là của một bạn học. Một số người nói ảnh bị AI tạo, một số người nói thật. Không có nguồn rõ ràng.',
-            'Hình ảnh/video: Không nên phân tích công khai hay phóng to lan truyền thêm. Âm thanh: Không có. Ngữ cảnh: Hình ảnh nhạy cảm, có nguy cơ xâm hại danh dự và bắt nạt — dù thật hay giả, rủi ro gây hại rất cao.',
-            'Kết luận tạm thời: Rủi ro cao, không đủ dữ liệu để kết luận thật/giả. Hành động an toàn: Không lưu, không chuyển tiếp, báo cáo nền tảng hoặc nhà trường, hỗ trợ người bị hại. Lưu ý: không biết thật giả không phải lý do để lan truyền.',
+          lesson('3.4.0', 'Áp dụng vào ba tình huống', [
+            'Checklist 3 lớp gồm: hình ảnh/video, âm thanh/giọng nói, ngữ cảnh/hành vi. Với mỗi tình huống, người học không cần chứng minh tuyệt đối. Người học cần xác định mức rủi ro và hành động an toàn tiếp theo.',
+            { type: 'table', caption: 'Ba tình huống thực hành', headers: ['Tình huống', 'Đánh giá an toàn'], rows: [
+              ['Video người nổi tiếng mời đầu tư từ tài khoản không chính thức, có link đăng ký', 'Rủi ro cao. Không bấm link, kiểm tra kênh chính thức và nguồn độc lập.'],
+              ['Tin nhắn thoại giống người thân yêu cầu chuyển tiền vào tài khoản người lạ', 'Rủi ro cao. Gọi lại số đã lưu hoặc xác minh qua người thân khác.'],
+              ['Hình ảnh nhạy cảm trong nhóm lớp, không rõ nguồn', 'Rủi ro gây hại cao. Không lưu, không chuyển tiếp, báo cáo và hỗ trợ người bị hại.'],
+            ] },
+            'Kết luận Module 3: đừng chỉ hỏi “nó có giả không?”. Hãy hỏi: “nó có đủ đáng tin để mình hành động không?”. Nếu câu trả lời là chưa, hành động đúng là dừng lại, kiểm chứng và giảm hại.',
           ], [
-            'Tình huống 1: Ngữ cảnh đầu tư + tài khoản không chính thức = rủi ro cao dù video trông thật.',
-            'Tình huống 2: Yêu cầu không gọi lại là dấu hiệu mạnh nhất của lừa đảo deepvoice.',
-            'Tình huống 3: Hình ảnh nhạy cảm không rõ nguồn — không lan truyền, không phân tích công khai.',
+            'Checklist 3 lớp giúp quan sát đủ: nhìn gì, nghe gì, tình huống yêu cầu gì.',
+            'Không cần chứng minh 100% deepfake để từ chối hành động rủi ro.',
           ]),
         ],
         checkpoint: checkpoint('3.4', [
-          q('Trong tình huống video đầu tư, dấu hiệu ngữ cảnh nguy hiểm nhất là gì?', ['Tài khoản không chính thức kết hợp với link đăng ký và lời hứa lợi nhuận cao', 'Video có độ phân giải thấp', 'Người nổi tiếng nói chậm hơn bình thường', 'Bình luận dùng nhiều emoji'], 0),
-          q('Với tình huống tin nhắn thoại yêu cầu chuyển tiền và đừng gọi lại, bước đầu tiên nên là gì?', ['Gọi lại số đã lưu hoặc liên hệ người thân khác để xác minh', 'Chuyển số tiền nhỏ trước để thử', 'Hỏi lại qua tin nhắn trong cùng tài khoản', 'Phân tích giọng nói bằng detector'], 0),
-          q('Với hình ảnh nhạy cảm không rõ nguồn trong nhóm chat, hành động nào đúng nhất?', ['Không lưu, không chuyển tiếp, báo cáo và hỗ trợ người bị hại', 'Phân tích công khai để xác định thật giả', 'Chia sẻ rộng để cảnh báo mọi người', 'Chờ xác nhận thật giả trước khi hành động'], 0),
+          q('Trong tình huống video đầu tư, dấu hiệu ngữ cảnh nguy hiểm nhất là gì?', ['Tài khoản không chính thức kết hợp với link đăng ký và lời hứa lợi nhuận cao', 'Video hơi ngắn', 'Người nói mặc áo sáng màu', 'Bình luận có nhiều emoji'], 0),
+          q('Với tin nhắn thoại giống người thân yêu cầu chuyển tiền, hành động an toàn nhất là gì?', ['Gọi lại số đã lưu hoặc xác minh qua người thân khác', 'Chuyển một khoản nhỏ trước', 'Hỏi tiếp trong cùng tài khoản', 'Tin vì giọng giống'], 0),
+          q('Với hình ảnh nhạy cảm không rõ nguồn trong nhóm chat, hành động đúng là gì?', ['Không lưu, không chuyển tiếp, báo cáo và hỗ trợ người bị hại', 'Phân tích công khai để tìm thật giả', 'Chia sẻ để cảnh báo', 'Lưu lại để xem sau'], 0),
         ]),
       },
     ],
     quiz: [
-      q('Module 3 dạy quan sát theo mấy lớp?', ['3 lớp: hình ảnh/video, âm thanh/giọng nói, ngữ cảnh/hành vi', '2 lớp: hình ảnh và âm thanh', '5 lớp: khuôn mặt, mắt, miệng, tay, nền', '1 lớp: kỹ thuật hình ảnh'], 0),
-      q('Mục tiêu của quan sát hình ảnh là gì?', ['Tìm tín hiệu để quyết định có cần kiểm chứng thêm không', 'Kết luận ngay video là deepfake', 'Thay thế hoàn toàn việc kiểm tra nguồn', 'Xác nhận video thật bằng mắt thường'], 0),
-      q('Tại sao video thật có thể trông lạ?', ['Vì nhiều yếu tố kỹ thuật như ánh sáng, mạng, nén video và bộ lọc', 'Vì người quay không biết làm video', 'Vì chỉ deepfake mới trông tự nhiên', 'Vì camera điện thoại luôn kém chất lượng'], 0),
-      q('Khi nào cần xác minh dù giọng nghe giống người quen?', ['Khi cuộc gọi yêu cầu điều rủi ro như tiền, OTP hoặc giữ bí mật', 'Luôn luôn, mọi cuộc gọi đều cần xác minh', 'Chỉ khi gọi từ số lạ hoàn toàn', 'Chỉ khi cuộc gọi vào ban đêm'], 0),
-      q('Câu hỏi mạnh nhất khi đánh giá ngữ cảnh là gì?', ['Nội dung này đang muốn mình làm gì?', 'Video có độ phân giải cao không?', 'Có bao nhiêu lượt xem?', 'Người đăng có nổi tiếng không?'], 0),
-      q('Bình luận tích cực dưới video có phải bằng chứng đáng tin không?', ['Không — có thể là seeding, tài khoản giả hoặc người bị cuốn theo cảm xúc', 'Có — số đông không thể sai', 'Có nếu bình luận bằng tiếng Việt', 'Tùy thuộc vào số lượng bình luận'], 0),
-      q('Khi thấy hình ảnh nhạy cảm không rõ nguồn trong nhóm chat, nên làm gì?', ['Không lưu, không chuyển tiếp, báo cáo và hỗ trợ người bị hại', 'Phân tích công khai để xác định thật giả', 'Chia sẻ để cảnh báo thêm nhiều người', 'Chờ xác nhận từ ban quản trị nhóm'], 0),
-      q('Điều quan trọng nhất của Module 3 là gì?', ['Đừng chỉ hỏi nó có giả không — hãy hỏi nó có đủ đáng tin để mình hành động không', 'Luôn dùng detector deepfake trước khi tin bất kỳ video nào', 'Chỉ tin video từ nguồn chính thức 100%', 'Không bao giờ chia sẻ bất kỳ nội dung nào'], 0),
+      q('Module 3 dạy quan sát theo mấy lớp?', ['3 lớp: hình ảnh/video, âm thanh/giọng nói, ngữ cảnh/hành vi', '2 lớp: hình ảnh và âm thanh', '1 lớp: kỹ thuật hình ảnh', '5 lớp độc lập không liên quan'], 0),
+      q('Dấu hiệu kỹ thuật đơn lẻ nên được hiểu thế nào?', ['Là tín hiệu cần kiểm chứng thêm', 'Là kết luận chắc chắn', 'Là bằng chứng không cần nguồn', 'Không có giá trị nào'], 0),
+      q('Khi detector không phát hiện deepfake, điều đó có nghĩa gì?', ['Không chứng minh nội dung thật; vẫn cần kiểm tra nguồn và ngữ cảnh', 'Nội dung chắc chắn thật', 'Có thể chia sẻ ngay', 'Không cần kiểm chứng nữa'], 0),
+      q('Khi nào giọng nói giống người quen vẫn cần xác minh?', ['Khi yêu cầu tiền, OTP, mật khẩu, cài app hoặc giữ bí mật', 'Chỉ khi gọi lúc nửa đêm', 'Chỉ khi có tiếng ồn nền', 'Không bao giờ cần nếu giọng giống'], 0),
+      q('Câu hỏi ngữ cảnh mạnh nhất là gì?', ['Nội dung này đang muốn mình làm gì?', 'Video có đẹp không?', 'Người đăng có ảnh đại diện không?', 'Bình luận có vui không?'], 0),
+      q('Tương tác cao dưới video chứng minh điều gì?', ['Nội dung đang lan truyền, không chứng minh nội dung đúng', 'Nội dung chắc chắn đúng', 'Nội dung được chuyên gia xác minh', 'Nội dung không thể là lừa đảo'], 0),
+      q('Với hình ảnh nhạy cảm không rõ nguồn, ưu tiên là gì?', ['Giảm hại: không lưu, không chuyển tiếp, báo cáo và hỗ trợ người bị hại', 'Phân tích thật giả công khai', 'Chia sẻ để hỏi thêm', 'Đợi nhiều người bình luận hơn'], 0),
+      q('Kết luận quan trọng nhất của Module 3 là gì?', ['Không chỉ hỏi có giả không; hãy hỏi có đủ đáng tin để hành động không', 'Luôn tin detector', 'Luôn tin video từ tài khoản nhiều follower', 'Chỉ quan sát khuôn mặt là đủ'], 0),
     ],
   },
 
