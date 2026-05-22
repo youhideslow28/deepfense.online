@@ -889,7 +889,22 @@ export const MODULES = [
           q('Tại sao ngữ cảnh thường quan trọng hơn lỗi kỹ thuật?', ['Nhiều nội dung giả không có lỗi kỹ thuật rõ ràng — ngữ cảnh tiết lộ rủi ro sớm hơn', 'Lỗi kỹ thuật luôn dễ thấy bằng mắt thường', 'Ngữ cảnh không liên quan đến deepfake', 'Chỉ chuyên gia mới phân tích được lỗi kỹ thuật'], 0),
           q('Bình luận tích cực dưới video đầu tư có phải bằng chứng tin cậy không?', ['Không — có thể là seeding hoặc tài khoản giả', 'Có — nhiều người tin là đáng tin', 'Có nếu trên 500 bình luận', 'Tùy thuộc vào nền tảng đăng'], 0),
           q('Câu hỏi quan trọng nhất khi gặp nội dung nghi vấn là gì?', ['Nội dung này đang muốn mình làm gì?', 'Video có độ phân giải cao không?', 'Người đăng có nhiều follower không?', 'Bao nhiêu người đã chia sẻ?'], 0),
-        ]),
+        ], {
+          type: 'tag-the-trick',
+          title: 'Tìm bẫy tâm lý trong tin nhắn',
+          instruction: 'Nhấn vào các đoạn chứa kỹ thuật thao túng — có thể có nhiều hơn một',
+          reward: 10,
+          data: {
+            message: 'Anh/chị ơi, [[đây là cơ hội CUỐI CÙNG|1]] để tham gia đầu tư với lãi 40%/tháng. [[Chỉ còn 2 suất|2]], [[hết hôm nay là đóng|3]]. [[Bạn bè anh/chị đã kiếm được hàng chục triệu rồi|4]] — anh/chị còn chần chừ gì nữa? [[Đừng để người thân biết vội|5]], mình sẽ chia sẻ sau khi đã có lợi nhuận nhé.',
+            targets: [
+              { id: 1, tag: '🔚 Khan hiếm giả', explanation: '"Cơ hội cuối cùng" là mồi FOMO — thực ra không có giới hạn thật nào.' },
+              { id: 2, tag: '🎯 Áp lực khan hiếm', explanation: '"Chỉ còn 2 suất" tạo cảm giác cạnh tranh để bạn quyết định nhanh hơn.' },
+              { id: 3, tag: '⏰ Áp lực thời gian', explanation: 'Deadline "hết hôm nay" ngăn bạn suy nghĩ kỹ hoặc tham khảo ý kiến.' },
+              { id: 4, tag: '👥 Bằng chứng xã hội giả', explanation: 'Nêu "bạn bè đã kiếm được" mà không có bằng chứng — thường là tài khoản giả.' },
+              { id: 5, tag: '🔇 Cô lập', explanation: '"Đừng để người thân biết" cắt đứt bạn khỏi mọi nguồn kiểm chứng độc lập.' },
+            ],
+          },
+        }),
       },
       {
         title: '3.4 Thực hành: Checklist 3 lớp',
@@ -1107,7 +1122,28 @@ export const MODULES = [
           q('Reverse image search không thể phát hiện điều gì?', ['Ảnh AI hoàn toàn mới chưa từng xuất hiện trước đó', 'Ảnh bị lấy từ sự kiện cũ', 'Ảnh bị gán sai địa điểm', 'Ảnh đại diện bị lấy từ nơi khác'], 0),
           q('Khi nghi ngờ một tài khoản mạo danh người nổi tiếng, bước kiểm tra đầu tiên nên là gì?', ['Tìm kênh chính thức của người đó và xem có cùng nội dung không', 'Bấm vào link trong video để xem sản phẩm', 'Hỏi bình luận trong video', 'Dùng detector deepfake ngay'], 0),
           q('Điều nào đúng về detector deepfake?', ['Kết quả là tín hiệu hỗ trợ, không phải phán quyết cuối cùng', 'Kết quả AI 90% chứng minh chắc chắn nội dung là giả', 'Không phát hiện AI nghĩa là nội dung thật 100%', 'Nên dùng để phân tích hình ảnh nhạy cảm trong nhóm chat'], 0),
-        ]),
+        ], {
+          type: 'sort-cards',
+          title: 'Dấu hiệu thật hay giả?',
+          instruction: 'Kéo hoặc nhấn từng quan sát vào đúng nhóm',
+          reward: 10,
+          data: {
+            buckets: [
+              { id: 'deepfake', label: 'Dấu hiệu deepfake', icon: '⚠️' },
+              { id: 'normal',   label: 'Bình thường',       icon: '✅' },
+            ],
+            cards: [
+              { id: 1, text: 'Đường viền khuôn mặt nhòe ở vùng tóc và cằm',          correctBucket: 'deepfake', explanation: 'AI ghép mặt xử lý kém vùng chuyển tiếp giữa mặt và tóc.' },
+              { id: 2, text: 'Người nói thỉnh thoảng chớp mắt tự nhiên',               correctBucket: 'normal',   explanation: 'Chớp mắt là phản xạ bình thường, không phải dấu hiệu bất thường.' },
+              { id: 3, text: 'Màu da mặt khác biệt rõ so với cổ và tai',              correctBucket: 'deepfake', explanation: 'AI ghép mặt thường không match màu da với phần còn lại của cơ thể.' },
+              { id: 4, text: 'Môi chuyển động không khớp với âm thanh',                correctBucket: 'deepfake', explanation: 'Lip sync lệch là dấu hiệu phổ biến nhất của deepfake video.' },
+              { id: 5, text: 'Răng trông mờ, thiếu chi tiết khi nhân vật cười rộng',  correctBucket: 'deepfake', explanation: 'AI gặp khó khăn render chi tiết răng — thường mờ hoặc không tự nhiên.' },
+              { id: 6, text: 'Video hơi rung nhẹ như quay tay',                        correctBucket: 'normal',   explanation: 'Rung tay nhẹ là đặc điểm tự nhiên khi quay trực tiếp.' },
+              { id: 7, text: 'Bông tai hoặc kính có viền nhòe, đôi khi biến mất',     correctBucket: 'deepfake', explanation: 'Phụ kiện nhỏ và vùng biên thường bị AI xử lý thiếu nhất quán.' },
+              { id: 8, text: 'Ánh sáng nhất quán với hướng chiếu trong toàn cảnh',    correctBucket: 'normal',   explanation: 'Ánh sáng nhất quán là đặc điểm của video quay thật.' },
+            ],
+          },
+        }),
       },
       {
         title: '4.4 Thực hành: Deepfense Check',
@@ -1249,7 +1285,28 @@ export const MODULES = [
           q('Tại sao bình luận tích cực dưới video đầu tư không đủ đáng tin?', ['Vì bình luận có thể đến từ seeding, tài khoản giả hoặc người chưa kiểm chứng.', 'Vì mọi bình luận đều sai.', 'Vì bình luận không có dấu câu.', 'Vì chỉ video dài mới đáng tin.'], 0),
           q('Trong tình huống tài chính, bước nào thường quan trọng nhất khi có người quen yêu cầu tiền?', ['Verify qua kênh độc lập.', 'Chọn ảnh đại diện đẹp.', 'Xem bình luận.', 'Đổi nhạc chuông.'], 0),
           q('Bạn có cần chứng minh 100% một video là deepfake mới được từ chối bấm link đầu tư không?', ['Có.', 'Không. Nếu rủi ro cao và chưa xác minh, bạn có thể từ chối.', 'Có, nếu video nhiều lượt xem.', 'Không, nhưng nên bấm thử để biết.'], 1),
-        ]),
+        ], {
+          type: 'shield-match',
+          title: 'Ghép tình huống với hành động đúng',
+          instruction: 'Nhấn một tình huống, rồi nhấn hành động phòng vệ phù hợp nhất',
+          reward: 10,
+          data: {
+            rules: [
+              { id: 'hangup',       label: 'Cúp máy, gọi lại số chính thức',    icon: '📵' },
+              { id: 'verify',       label: 'Gọi xác minh qua kênh khác',         icon: '📞' },
+              { id: 'change_pw',    label: 'Đổi mật khẩu ngay lập tức',          icon: '🔑' },
+              { id: 'goto_store',   label: 'Đến cửa hàng nhà mạng với CMND',     icon: '🏪' },
+              { id: 'delete_app',   label: 'Gỡ app, cài lại từ CH Play',         icon: '🗑️' },
+            ],
+            scenarios: [
+              { id: 1, text: 'Nhân viên "ngân hàng" gọi yêu cầu đọc OTP để khóa giao dịch lạ',         correctRule: 'hangup',     explanation: 'Ngân hàng không bao giờ gọi yêu cầu OTP. Cúp máy và tự gọi hotline chính thức.' },
+              { id: 2, text: 'Giọng giống mẹ nhắn qua Zalo nhờ chuyển tiền gấp vào tài khoản lạ',      correctRule: 'verify',     explanation: 'Giọng nói có thể bị deepfake. Gọi lại số điện thoại thật của người thân để xác minh.' },
+              { id: 3, text: 'Nhận OTP ngân hàng bất ngờ mà bạn không hề đăng nhập hay giao dịch',     correctRule: 'change_pw',  explanation: 'Ai đó đang dùng thông tin của bạn để đăng nhập. Đổi mật khẩu ngay.' },
+              { id: 4, text: 'SIM mất sóng hoàn toàn giữa ngày, tắt bật máy nhiều lần vẫn không có',   correctRule: 'goto_store', explanation: 'Dấu hiệu SIM Swap. Đến cửa hàng nhà mạng với CMND để khóa và cấp lại SIM.' },
+              { id: 5, text: 'App lạ tải ngoài CH Play xin quyền đọc toàn bộ tin nhắn SMS',             correctRule: 'delete_app', explanation: 'App đọc SMS ngoài store chính thức = malware thu thập OTP. Gỡ ngay.' },
+            ],
+          },
+        }),
       },
       // ── M5-511-S ─────────────────────────────────────────────────
       {
@@ -1607,7 +1664,27 @@ export const MODULES = [
           q('Nếu đã lỡ chuyển tiền cho kẻ lừa đảo, việc nào nên làm sớm?', ['Xóa hết vì xấu hổ.', 'Liên hệ ngân hàng, lưu bằng chứng và báo cáo.', 'Im lặng chờ may mắn.', 'Chuyển thêm để lấy lại khoản đầu.'], 1),
           q('Trong công việc, một "sếp" gửi tin nhắn yêu cầu bỏ qua quy trình chuyển tiền vì đang gấp. Quy tắc nào phù hợp nhất?', ['Two-Channel Rule và Money Delay.', 'Chia sẻ công khai lên mạng xã hội ngay.', 'Chuyển trước rồi hỏi sau.', 'Tin nếu ảnh đại diện đúng.'], 0),
           q('Mục tiêu của Deepfense Shield là gì?', ['Làm người học sợ Internet.', 'Biến kiến thức thành quy tắc phòng vệ dễ áp dụng trong đời sống.', 'Dạy tạo deepfake.', 'Thay thế mọi cơ quan chức năng.'], 1),
-        ]),
+        ], {
+          type: 'sort-cards',
+          title: 'Phân loại đường link',
+          instruction: 'Kéo hoặc nhấn từng URL vào đúng nhóm',
+          reward: 10,
+          data: {
+            buckets: [
+              { id: 'real',       label: 'Thật',      icon: '🔒' },
+              { id: 'suspicious', label: 'Đáng nghi', icon: '🤔' },
+              { id: 'fake',       label: 'Giả mạo',   icon: '🚫' },
+            ],
+            cards: [
+              { id: 1, text: 'vietcombank.com.vn/dang-nhap',                           correctBucket: 'real',       explanation: 'Domain chính thức, đuôi .com.vn hợp lệ của Vietcombank.' },
+              { id: 2, text: 'vietc0mbank.com/xac-minh',                               correctBucket: 'fake',       explanation: 'Chữ "o" bị thay bằng số "0" — kỹ thuật typosquatting.' },
+              { id: 3, text: 'momo.vn/chuyen-tien',                                    correctBucket: 'real',       explanation: 'Domain chính thức của ví MoMo Việt Nam.' },
+              { id: 4, text: 'vietinbank.vn.user-auth.com/login',                      correctBucket: 'fake',       explanation: 'Root domain là user-auth.com — vietinbank.vn chỉ là subdomain giả.' },
+              { id: 5, text: 'dichvucong.gov.vn — nhận qua link trong nhóm Zalo',      correctBucket: 'suspicious', explanation: 'Domain .gov.vn hợp lệ nhưng link qua chat không đảm bảo toàn vẹn — tự gõ địa chỉ.' },
+              { id: 6, text: 'sh0pee-flashsale.com/giam-80-phan-tram',                 correctBucket: 'fake',       explanation: '"o" thành "0", đuôi .com, giảm 80% — ba dấu hiệu scam cùng lúc.' },
+            ],
+          },
+        }),
       },
       // ── M6-611-S ─────────────────────────────────────────────────
       {
