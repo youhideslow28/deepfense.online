@@ -2,7 +2,7 @@
  * DEEPFENSE.ONLINE - Navbar v3.0
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Bot, Coins, Cpu, GraduationCap, Home, Info, LogIn, Menu, Smartphone, Sparkles, Swords, UserCircle, X } from 'lucide-react';
 import type { User } from 'firebase/auth';
@@ -45,8 +45,75 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
 
   const isLite = perfMode === 'lite';
   const perfLabel = isLite
-    ? (lang === 'vi' ? 'Cấu hình thấp · Bật' : 'Lite mode · ON')
-    : (lang === 'vi' ? 'Cấu hình thấp · Tắt' : 'Lite mode · OFF');
+    ? (lang === 'vi' ? 'Cấu hình thấp · Bật (giữ 4s để tắt)' : 'Lite mode · ON (hold 4s to disable)')
+    : (lang === 'vi' ? 'Cấu hình thấp · Tắt (giữ 4s để bật)' : 'Lite mode · OFF (hold 4s to enable)');
+
+  // === Long-press 4s để chuyển perf mode + popup chỉ trên mobile ===
+  const HOLD_MS = 4000;
+  const [holdProgress, setHoldProgress] = useState(0); // 0..1
+  const [perfToast, setPerfToast] = useState<{ msg: string; lite: boolean } | null>(null);
+  const holdTimerRef = useRef<number | null>(null);
+  const holdRafRef = useRef<number | null>(null);
+  const holdStartRef = useRef<number>(0);
+
+  const clearHold = () => {
+    if (holdTimerRef.current !== null) {
+      window.clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = null;
+    }
+    if (holdRafRef.current !== null) {
+      cancelAnimationFrame(holdRafRef.current);
+      holdRafRef.current = null;
+    }
+    setHoldProgress(0);
+  };
+
+  const isMobileDevice = () => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia?.('(pointer: coarse)').matches || window.innerWidth < 768;
+  };
+
+  const startHold = () => {
+    if (holdTimerRef.current !== null) return; // đang giữ
+    holdStartRef.current = performance.now();
+    const tick = () => {
+      const elapsed = performance.now() - holdStartRef.current;
+      setHoldProgress(Math.min(1, elapsed / HOLD_MS));
+      if (elapsed < HOLD_MS) {
+        holdRafRef.current = requestAnimationFrame(tick);
+      }
+    };
+    holdRafRef.current = requestAnimationFrame(tick);
+    holdTimerRef.current = window.setTimeout(() => {
+      togglePerfMode();
+      const willBeLite = !isLite;
+      if (isMobileDevice()) {
+        setPerfToast({
+          msg: willBeLite
+            ? (lang === 'vi'
+                ? 'Đã bật chế độ cấu hình thấp — tắt hiệu ứng 3D, hoa rơi và smooth scroll để web mượt hơn trên điện thoại.'
+                : 'Lite mode enabled — disabled 3D effects, falling petals and smooth scroll for a smoother mobile experience.')
+            : (lang === 'vi'
+                ? 'Đã tắt chế độ cấu hình thấp — bật lại đầy đủ hiệu ứng.'
+                : 'Lite mode disabled — all effects restored.'),
+          lite: willBeLite,
+        });
+      }
+      // Haptic feedback nếu thiết bị hỗ trợ
+      try { (navigator as any).vibrate?.(40); } catch { /* ignore */ }
+      clearHold();
+    }, HOLD_MS);
+  };
+
+  // Auto-dismiss toast sau 5s
+  useEffect(() => {
+    if (!perfToast) return;
+    const id = window.setTimeout(() => setPerfToast(null), 5000);
+    return () => window.clearTimeout(id);
+  }, [perfToast]);
+
+  // Dọn timer khi unmount
+  useEffect(() => () => clearHold(), []);
 
   const handleNavClick = (path: string) => {
     navigate(path);
@@ -151,18 +218,36 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
               </div>
 
               <button
-                onClick={togglePerfMode}
+                onPointerDown={startHold}
+                onPointerUp={clearHold}
+                onPointerLeave={clearHold}
+                onPointerCancel={clearHold}
+                onContextMenu={(e) => e.preventDefault()}
                 className="group relative z-50 select-none outline-none touch-manipulation"
                 title={perfLabel}
                 aria-label={perfLabel}
                 aria-pressed={isLite}
               >
                 <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-300 ${isLite ? 'bg-emerald-500/40 opacity-100' : 'bg-primary/30 opacity-0 group-hover:opacity-60'}`} />
+                {/* Progress ring trong khi giữ */}
+                {holdProgress > 0 && (
+                  <svg className="absolute inset-0 z-20 h-full w-full -rotate-90" viewBox="0 0 36 36" aria-hidden="true">
+                    <circle cx="18" cy="18" r="16" fill="none" stroke="rgba(16,185,129,0.18)" strokeWidth="2.5" />
+                    <circle
+                      cx="18" cy="18" r="16" fill="none"
+                      stroke={isLite ? '#fbbf24' : '#10b981'}
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeDasharray={`${holdProgress * 100.53} 100.53`}
+                      className="drop-shadow-[0_0_4px_rgba(16,185,129,0.7)]"
+                    />
+                  </svg>
+                )}
                 <div className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border shadow-xl transition-all duration-300 md:h-9 md:w-9 ${
                   isLite
                     ? 'border-emerald-400/70 bg-gradient-to-br from-emerald-500 to-teal-600'
                     : 'border-white/10 bg-zinc-900 hover:border-white/30 hover:bg-zinc-800'
-                }`}
+                } ${holdProgress > 0 ? 'scale-95' : ''}`}
                 >
                   {isLite
                     ? <Smartphone size={15} className="text-white drop-shadow-md" />
@@ -235,6 +320,34 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
           </div>
         )}
       </div>
+
+      {/* Lite-mode toast — chỉ hiện trên mobile sau khi giữ đủ 4s */}
+      {perfToast && (
+        <div className="pointer-events-none fixed inset-x-0 bottom-24 z-[200] flex justify-center px-4 lg:hidden">
+          <div className={`pointer-events-auto flex max-w-md items-start gap-3 rounded-2xl border px-4 py-3 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-4 duration-300 ${
+            perfToast.lite
+              ? 'border-emerald-400/40 bg-emerald-950/90 text-emerald-50'
+              : 'border-primary/30 bg-zinc-900/95 text-gray-100'
+          }`}>
+            <div className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${perfToast.lite ? 'bg-emerald-500/30' : 'bg-primary/20'}`}>
+              {perfToast.lite
+                ? <Smartphone size={14} className="text-emerald-200" />
+                : <Sparkles size={14} className="text-primary" />}
+            </div>
+            <div className="flex-1 font-mono text-[11px] leading-relaxed">
+              {perfToast.msg}
+            </div>
+            <button
+              type="button"
+              onClick={() => setPerfToast(null)}
+              className="ml-1 -mr-1 -mt-1 shrink-0 rounded-full p-1 text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
+              aria-label={lang === 'vi' ? 'Đóng' : 'Close'}
+            >
+              <X size={14} />
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
