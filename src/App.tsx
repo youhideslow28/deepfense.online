@@ -16,7 +16,7 @@ import SummerEffects from '@/components/effects/SummerEffects';
 import AiChat from '@/features/chat/AiChat';
 import { auth, db } from '@/config/firebase';
 import { PROJECT_METADATA } from '@/data';
-import { Language } from '@/types';
+import { Language, Season } from '@/types';
 import { usePerfMode } from '@/hooks/usePerfMode';
 
 const CyberField = lazy(() => import('@/components/effects/CyberField'));
@@ -44,6 +44,7 @@ const ScrollToTop = () => {
 
 const AppContent: React.FC = () => {
   const [lang, setLang] = useState<Language>('vi');
+  const [season, setSeason] = useState<Season>('SUMMER');
   const { mode: perfMode, toggle: togglePerfMode, isLite } = usePerfMode();
   const [user, setUser] = useState<User | null>(null);
   const [authBusy, setAuthBusy] = useState(true);
@@ -194,11 +195,13 @@ const AppContent: React.FC = () => {
         ) : (
           <Suspense fallback={null}><CyberField /></Suspense>
         )}
-        {!isLite && location.pathname === '/' && <SummerEffects />}
+        {!isLite && location.pathname === '/' && season === 'SUMMER' && <SummerEffects />}
 
         <Navbar
           lang={lang}
           setLang={setLang}
+          season={season}
+          setSeason={setSeason}
           perfMode={perfMode}
           togglePerfMode={togglePerfMode}
           user={user}
@@ -211,7 +214,7 @@ const AppContent: React.FC = () => {
           <ErrorBoundary>
             <Suspense fallback={<LoadingFallback />}>
               <Routes>
-                <Route path="/" element={<Home lang={lang} season={isLite ? 'NORMAL' : 'SUMMER'} />} />
+                <Route path="/" element={<Home lang={lang} season={isLite ? 'NORMAL' : season} />} />
                 <Route path="/login" element={<Login lang={lang} user={user} />} />
                 <Route path="/profile" element={<Profile lang={lang} user={user} authBusy={authBusy || roleBusy} />} />
                 <Route path="/academy" element={<Academy lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} />} />
