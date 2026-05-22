@@ -4,15 +4,17 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Bot, Coins, Cpu, GraduationCap, Home, Info, LogIn, Menu, Smartphone, Sparkles, Swords, UserCircle, X } from 'lucide-react';
+import { Bot, Coins, Cpu, GraduationCap, Home, Info, LogIn, Menu, Power, Smartphone, Sun, Swords, UserCircle, X } from 'lucide-react';
 import type { User } from 'firebase/auth';
-import { Language } from '@/types';
+import { Language, Season } from '@/types';
 import type { PerfMode } from '@/hooks/usePerfMode';
 import { useDpfBalance } from '@/features/dpf/useDpfWallet';
 
 interface NavbarProps {
   lang: Language;
   setLang: (l: Language) => void;
+  season: Season;
+  setSeason: (s: Season) => void;
   perfMode: PerfMode;
   togglePerfMode: () => void;
   user: User | null;
@@ -21,7 +23,7 @@ interface NavbarProps {
   onGoogleAuth: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode, user, authBusy, authError, onGoogleAuth }) => {
+const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfMode, togglePerfMode, user, authBusy, authError, onGoogleAuth }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -44,18 +46,21 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
   ];
 
   const isLite = perfMode === 'lite';
-  const perfLabel = isLite
-    ? (lang === 'vi' ? 'Cấu hình thấp · Bật (giữ 4s để tắt)' : 'Lite mode · ON (hold 4s to disable)')
-    : (lang === 'vi' ? 'Cấu hình thấp · Tắt (giữ 4s để bật)' : 'Lite mode · OFF (hold 4s to enable)');
+  const isSummer = season === 'SUMMER';
+  const perfLabel = lang === 'vi'
+    ? `${isSummer ? 'Mùa hè · Bật' : 'Mùa hè · Tắt'} (chạm để đổi · giữ 4s để ${isLite ? 'tắt' : 'bật'} chế độ cấu hình thấp)`
+    : `${isSummer ? 'Summer · ON' : 'Summer · OFF'} (tap to toggle · hold 4s for Lite mode)`;
 
-  // === Long-press 4s để chuyển perf mode + popup chỉ trên mobile ===
+  // === Tap = đổi mùa hè · Giữ 4s = đổi chế độ cấu hình thấp ===
   const HOLD_MS = 4000;
+  const TAP_MAX_MS = 350; // chạm dưới 350ms được coi là tap
   const [holdProgress, setHoldProgress] = useState(0); // 0..1
   const [perfToast, setPerfToast] = useState<{ msg: string; lite: boolean } | null>(null);
   const [showPerfHint, setShowPerfHint] = useState(false);
   const holdTimerRef = useRef<number | null>(null);
   const holdRafRef = useRef<number | null>(null);
   const holdStartRef = useRef<number>(0);
+  const holdFiredRef = useRef<boolean>(false); // đã đạt 4s và đổi perf mode chưa
 
   // Hint "Giữ 4s..." auto-hiện lần đầu trên mobile
   useEffect(() => {
@@ -104,6 +109,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
   const startHold = () => {
     if (holdTimerRef.current !== null) return; // đang giữ
     dismissPerfHint();
+    holdFiredRef.current = false;
     holdStartRef.current = performance.now();
     const tick = () => {
       const elapsed = performance.now() - holdStartRef.current;
@@ -114,6 +120,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
     };
     holdRafRef.current = requestAnimationFrame(tick);
     holdTimerRef.current = window.setTimeout(() => {
+      holdFiredRef.current = true;
       togglePerfMode();
       const willBeLite = !isLite;
       if (isMobileDevice()) {
@@ -132,6 +139,31 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
       try { (navigator as any).vibrate?.(40); } catch { /* ignore */ }
       clearHold();
     }, HOLD_MS);
+  };
+
+  // Pointer up: nếu chưa đạt 4s thì coi là tap → toggle Season
+  const endHold = () => {
+    if (holdTimerRef.current === null && holdRafRef.current === null) {
+      // Không có hold đang chạy
+      if (holdFiredRef.current) {
+        holdFiredRef.current = false;
+        return;
+      }
+    }
+    const elapsed = holdStartRef.current ? performance.now() - holdStartRef.current : 0;
+    const wasHoldFired = holdFiredRef.current;
+    clearHold();
+    if (!wasHoldFired && elapsed > 0 && elapsed < TAP_MAX_MS) {
+      // Tap nhanh → toggle mùa hè
+      setSeason(season === 'SUMMER' ? 'NORMAL' : 'SUMMER');
+    }
+    holdFiredRef.current = false;
+  };
+
+  // Cancel (rời nút khi đang giữ giữa chừng): không tap, không toggle perf
+  const cancelHold = () => {
+    holdFiredRef.current = false;
+    clearHold();
   };
 
   // Auto-dismiss toast sau 5s
@@ -249,16 +281,20 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
               <div className="relative">
               <button
                 onPointerDown={startHold}
-                onPointerUp={clearHold}
-                onPointerLeave={clearHold}
-                onPointerCancel={clearHold}
+                onPointerUp={endHold}
+                onPointerLeave={cancelHold}
+                onPointerCancel={cancelHold}
                 onContextMenu={(e) => e.preventDefault()}
                 className="group relative z-50 select-none outline-none touch-manipulation"
                 title={perfLabel}
                 aria-label={perfLabel}
                 aria-pressed={isLite}
               >
-                <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-300 ${isLite ? 'bg-emerald-500/40 opacity-100' : 'bg-primary/30 opacity-0 group-hover:opacity-60'}`} />
+                <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-500 ${
+                  isLite ? 'bg-emerald-500/40 opacity-100'
+                  : isSummer ? 'bg-orange-500/50 opacity-100'
+                  : 'bg-primary/30 opacity-0 group-hover:opacity-60'
+                }`} />
                 {/* Progress ring trong khi giữ */}
                 {holdProgress > 0 && (
                   <svg className="absolute inset-0 z-20 h-full w-full -rotate-90" viewBox="0 0 36 36" aria-hidden="true">
@@ -273,15 +309,19 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
                     />
                   </svg>
                 )}
-                <div className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border shadow-xl transition-all duration-300 md:h-9 md:w-9 ${
+                <div className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border shadow-xl transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] md:h-9 md:w-9 ${
                   isLite
                     ? 'border-emerald-400/70 bg-gradient-to-br from-emerald-500 to-teal-600'
-                    : 'border-white/10 bg-zinc-900 hover:border-white/30 hover:bg-zinc-800'
+                    : isSummer
+                      ? 'rotate-[360deg] border-orange-500 bg-gradient-to-br from-orange-400 to-red-500'
+                      : 'rotate-0 border-white/10 bg-zinc-900 hover:border-white/30 hover:bg-zinc-800'
                 } ${holdProgress > 0 ? 'scale-95' : ''}`}
                 >
                   {isLite
                     ? <Smartphone size={15} className="text-white drop-shadow-md" />
-                    : <Sparkles size={15} className="text-gray-400 transition-colors group-hover:text-primary" />}
+                    : isSummer
+                      ? <Sun size={15} className="animate-[spin_10s_linear_infinite] text-yellow-200 drop-shadow-md" />
+                      : <Power size={15} className="text-gray-500 transition-colors group-hover:text-gray-300" />}
                 </div>
               </button>
 
@@ -320,7 +360,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
                   }`}>
                     {perfToast.lite
                       ? <Smartphone size={14} className="mt-0.5 shrink-0 text-emerald-300" />
-                      : <Sparkles size={14} className="mt-0.5 shrink-0 text-primary" />}
+                      : <Power size={14} className="mt-0.5 shrink-0 text-primary" />}
                     <div className="flex-1 font-mono text-[10.5px] leading-snug">{perfToast.msg}</div>
                     <button
                       type="button"
