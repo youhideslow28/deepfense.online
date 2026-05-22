@@ -102,7 +102,27 @@ export const MODULES = [
           q('Bạn thấy video người nổi tiếng kêu gọi đầu tư, cam kết lợi nhuận cao mỗi ngày. Cách đánh giá an toàn nhất là gì?', ['Tin vì video nhìn thật', 'Kiểm tra kênh chính thức và không bấm link lạ', 'Đọc bình luận để quyết định', 'Chia sẻ cho nhiều người cùng xem'], 1),
           q('Trong nhóm chat xuất hiện hình ảnh nhạy cảm của một người khác. Bạn nên làm gì?', ['Không lan truyền, báo cáo và tìm người có trách nhiệm hỗ trợ', 'Lưu lại để phân tích', 'Gửi cho bạn thân để hỏi thật giả', 'Bình luận đùa nếu nghĩ là ảnh AI'], 0),
           q('Một clip gây phẫn nộ kêu gọi chia sẻ ngay. Bước an toàn là gì?', ['Chia sẻ ngay để cảnh báo', 'Tìm nguồn gốc, bối cảnh và nguồn độc lập trước khi chia sẻ', 'Tải về đăng lại', 'Bình luận mạnh để tăng cảnh báo'], 1),
-        ]),
+        ], {
+          type: 'sort-cards',
+          title: '🗂️ Giúp An phân loại tình huống',
+          instruction: 'An gặp 6 tình huống hôm đó. Kéo hoặc nhấn từng thẻ vào đúng nhóm: Bình thường, Cần kiểm tra, hoặc Nguy hiểm.',
+          reward: 10,
+          data: {
+            buckets: [
+              { id: 'normal', icon: '🟢', label: 'Bình thường' },
+              { id: 'check',  icon: '🟡', label: 'Cần kiểm tra' },
+              { id: 'danger', icon: '🔴', label: 'Nguy hiểm' },
+            ],
+            cards: [
+              { id: 1, text: 'Video người nổi tiếng giới thiệu kênh đầu tư lợi nhuận cao — gương mặt và giọng hoàn toàn giống.', correctBucket: 'danger', explanation: 'Deepfake thường dùng khuôn mặt người nổi tiếng để tạo độ tin cậy. Không đầu tư trước khi xác minh qua kênh chính thức.' },
+              { id: 2, text: 'Cuộc gọi video từ người thân — hình hơi mờ, âm thanh không rõ dù sóng mạng đang tốt.', correctBucket: 'check', explanation: 'Chất lượng thấp bất thường trong điều kiện mạng tốt cần xác minh — có thể là deepfake hoặc tài khoản bị chiếm quyền.' },
+              { id: 3, text: 'Tin nhắn từ số lạ: "Chúc mừng! Bạn trúng iPhone 15. Nhấp link này để nhận thưởng!"', correctBucket: 'danger', explanation: 'Thông báo trúng thưởng từ số lạ kèm link là lừa đảo cổ điển. Không bao giờ nhấp vào.' },
+              { id: 4, text: 'Facebook của bạn cũ nhắn xin mượn tiền gấp — ảnh đại diện đúng nhưng cách nhắn hơi lạ hơn bình thường.', correctBucket: 'check', explanation: 'Tài khoản có thể bị chiếm quyền. Cần xác minh qua kênh độc lập — gọi điện trực tiếp.' },
+              { id: 5, text: 'Clip viral scandal không có nguồn báo chí nào xác nhận, chỉ lan qua nhóm chat.', correctBucket: 'danger', explanation: 'Nội dung không có nguồn xác minh độc lập là dấu hiệu đáng ngờ. Không chia sẻ khi chưa kiểm chứng.' },
+              { id: 6, text: 'Email từ trường thông báo lịch thi — địa chỉ gửi đúng domain trường, không có link lạ.', correctBucket: 'normal', explanation: 'Domain đúng và không có yêu cầu bất thường là dấu hiệu bình thường. Vẫn nên đọc kỹ nhưng không cần lo ngại.' },
+            ],
+          },
+        }),
       },
     ],
     quiz: [
@@ -216,7 +236,28 @@ export const MODULES = [
           q('Deepvoice nguy hiểm ở điểm nào?', ['Có thể khiến người nghe tin vì giọng nói quen thuộc', 'Chỉ hoạt động với ảnh', 'Luôn dễ nhận ra', 'Không liên quan đến lừa đảo'], 0),
           q('Repurposed media là gì?', ['Nội dung thật nhưng bị đặt sai bối cảnh', 'Video AI tạo hoàn toàn', 'Ảnh phong cảnh', 'Mã độc'], 0),
           q('Kết quả từ công cụ phát hiện nên được hiểu thế nào?', ['Là tín hiệu tham khảo, không phải phán quyết cuối cùng', 'Là kết luận tuyệt đối', 'Không có giá trị nào', 'Chỉ dùng để chia sẻ công khai'], 0),
-        ]),
+        ], {
+          type: 'sort-cards',
+          title: '🗂️ Phân loại nội dung giả mạo',
+          instruction: 'Bạn thấy 6 nội dung dưới đây. Kéo hoặc nhấn từng thẻ vào đúng loại: Deepfake, Edited media, Repurposed media, hay AI-generated.',
+          reward: 10,
+          data: {
+            buckets: [
+              { id: 'deepfake',   icon: '🤖', label: 'Deepfake' },
+              { id: 'edited',     icon: '✂️', label: 'Edited media' },
+              { id: 'repurposed', icon: '🔄', label: 'Repurposed media' },
+              { id: 'ai-gen',     icon: '✨', label: 'AI-generated' },
+            ],
+            cards: [
+              { id: 1, text: 'Video người nổi tiếng giới thiệu đầu tư — gương mặt và giọng nói được tạo bằng AI nhưng trông như thật.', correctBucket: 'deepfake', explanation: 'Deepfake: khuôn mặt và giọng nói mạo phỏng người thật bằng công nghệ AI.' },
+              { id: 2, text: 'Clip 7 giây cắt từ bài phát biểu dài, làm người nói có vẻ nói ngược ý ban đầu.', correctBucket: 'edited', explanation: 'Edited media: nội dung thật nhưng bị cắt ghép thay đổi ý nghĩa.' },
+              { id: 3, text: 'Video tai nạn từ năm trước được đăng lại với chú thích "vừa xảy ra ở thành phố bạn".', correctBucket: 'repurposed', explanation: 'Repurposed media: nội dung thật nhưng bối cảnh, thời gian, địa điểm bị sai lệch.' },
+              { id: 4, text: 'Ảnh chân dung một người không tồn tại được dùng làm avatar tài khoản lừa đảo.', correctBucket: 'ai-gen', explanation: 'AI-generated: hình ảnh do AI tạo ra hoàn toàn — người trong ảnh không có thật.' },
+              { id: 5, text: 'Ghi âm giọng nói giả giống người thân yêu cầu chuyển tiền khẩn cấp.', correctBucket: 'deepfake', explanation: 'Deepvoice là một dạng deepfake âm thanh — giọng nói được AI tổng hợp từ mẫu giọng thật.' },
+              { id: 6, text: 'Ảnh biểu tình ở nước khác được chia sẻ kèm chú thích về tình hình trong nước.', correctBucket: 'repurposed', explanation: 'Repurposed media: nội dung thật nhưng bị dùng sai bối cảnh địa lý hoặc thời gian.' },
+            ],
+          },
+        }),
       },
       {
         title: '1.2 Thực hành phân loại nội dung',
