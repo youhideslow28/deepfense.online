@@ -4,23 +4,24 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Bot, Coins, Cpu, GraduationCap, Home, Info, LogIn, Menu, Power, Sun, Swords, UserCircle, X } from 'lucide-react';
+import { Bot, Coins, Cpu, GraduationCap, Home, Info, LogIn, Menu, Smartphone, Sparkles, Swords, UserCircle, X } from 'lucide-react';
 import type { User } from 'firebase/auth';
-import { Language, Season } from '@/types';
+import { Language } from '@/types';
+import type { PerfMode } from '@/hooks/usePerfMode';
 import { useDpfBalance } from '@/features/dpf/useDpfWallet';
 
 interface NavbarProps {
   lang: Language;
   setLang: (l: Language) => void;
-  season: Season;
-  setSeason: (s: Season) => void;
+  perfMode: PerfMode;
+  togglePerfMode: () => void;
   user: User | null;
   authBusy: boolean;
   authError: string;
   onGoogleAuth: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user, authBusy, authError, onGoogleAuth }) => {
+const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode, user, authBusy, authError, onGoogleAuth }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -42,7 +43,10 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
     { path: '/contact', label: lang === 'vi' ? 'VỀ CHÚNG TÔI' : 'ABOUT', icon: <Info size={13} /> },
   ];
 
-  const toggleSeason = () => setSeason(season === 'SUMMER' ? 'NORMAL' : 'SUMMER');
+  const isLite = perfMode === 'lite';
+  const perfLabel = isLite
+    ? (lang === 'vi' ? 'Cấu hình thấp · Bật' : 'Lite mode · ON')
+    : (lang === 'vi' ? 'Cấu hình thấp · Tắt' : 'Lite mode · OFF');
 
   const handleNavClick = (path: string) => {
     navigate(path);
@@ -147,20 +151,22 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, user,
               </div>
 
               <button
-                onClick={toggleSeason}
+                onClick={togglePerfMode}
                 className="group relative z-50 select-none outline-none touch-manipulation"
-                title={season === 'SUMMER' ? 'Summer Off' : 'Summer On'}
+                title={perfLabel}
+                aria-label={perfLabel}
+                aria-pressed={isLite}
               >
-                <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-500 ${season === 'SUMMER' ? 'bg-orange-500/50 opacity-100' : 'opacity-0'}`} />
-                <div className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border shadow-xl transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] md:h-9 md:w-9 ${
-                  season === 'SUMMER'
-                    ? 'rotate-[360deg] border-orange-500 bg-gradient-to-br from-orange-400 to-red-500'
-                    : 'rotate-0 border-white/10 bg-zinc-900 hover:border-white/30 hover:bg-zinc-800'
+                <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-300 ${isLite ? 'bg-emerald-500/40 opacity-100' : 'bg-primary/30 opacity-0 group-hover:opacity-60'}`} />
+                <div className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border shadow-xl transition-all duration-300 md:h-9 md:w-9 ${
+                  isLite
+                    ? 'border-emerald-400/70 bg-gradient-to-br from-emerald-500 to-teal-600'
+                    : 'border-white/10 bg-zinc-900 hover:border-white/30 hover:bg-zinc-800'
                 }`}
                 >
-                  {season === 'SUMMER'
-                    ? <Sun size={15} className="animate-[spin_10s_linear_infinite] text-yellow-200 drop-shadow-md" />
-                    : <Power size={15} className="text-gray-500 transition-colors group-hover:text-gray-300" />}
+                  {isLite
+                    ? <Smartphone size={15} className="text-white drop-shadow-md" />
+                    : <Sparkles size={15} className="text-gray-400 transition-colors group-hover:text-primary" />}
                 </div>
               </button>
 

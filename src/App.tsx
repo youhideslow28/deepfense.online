@@ -16,7 +16,8 @@ import SummerEffects from '@/components/effects/SummerEffects';
 import AiChat from '@/features/chat/AiChat';
 import { auth, db } from '@/config/firebase';
 import { PROJECT_METADATA } from '@/data';
-import { Language, Season } from '@/types';
+import { Language } from '@/types';
+import { usePerfMode } from '@/hooks/usePerfMode';
 
 const CyberField = lazy(() => import('@/components/effects/CyberField'));
 const CookieConsent = lazy(() => import('@/components/common/CookieConsent'));
@@ -43,7 +44,7 @@ const ScrollToTop = () => {
 
 const AppContent: React.FC = () => {
   const [lang, setLang] = useState<Language>('vi');
-  const [season, setSeason] = useState<Season>('SUMMER');
+  const { mode: perfMode, toggle: togglePerfMode, isLite } = usePerfMode();
   const [user, setUser] = useState<User | null>(null);
   const [authBusy, setAuthBusy] = useState(true);
   const [authError, setAuthError] = useState('');
@@ -181,19 +182,25 @@ const AppContent: React.FC = () => {
     return <Admin />;
   };
 
-  return (
-    <SmoothScroll>
-      <div className="relative flex min-h-screen flex-col font-sans selection:bg-primary/30 selection:text-white">
+  const appContent = (
+    <div className="relative flex min-h-screen flex-col font-sans selection:bg-primary/30 selection:text-white">
         <SEO title={getPageTitle()} lang={lang} />
         <ScrollToTop />
-        <Suspense fallback={null}><CyberField /></Suspense>
-        {location.pathname === '/' && season === 'SUMMER' && <SummerEffects />}
+        {isLite ? (
+          // Fallback gradient tĩnh — cực nhẹ cho mobile / máy yếu
+          <div className="fixed inset-0 z-0 pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#1D6FE8]/5 via-transparent to-[#A855F7]/5" />
+          </div>
+        ) : (
+          <Suspense fallback={null}><CyberField /></Suspense>
+        )}
+        {!isLite && location.pathname === '/' && <SummerEffects />}
 
         <Navbar
           lang={lang}
           setLang={setLang}
-          season={season}
-          setSeason={setSeason}
+          perfMode={perfMode}
+          togglePerfMode={togglePerfMode}
           user={user}
           authBusy={authBusy}
           authError={authError}
@@ -204,7 +211,7 @@ const AppContent: React.FC = () => {
           <ErrorBoundary>
             <Suspense fallback={<LoadingFallback />}>
               <Routes>
-                <Route path="/" element={<Home lang={lang} season={season} />} />
+                <Route path="/" element={<Home lang={lang} season={isLite ? 'NORMAL' : 'SUMMER'} />} />
                 <Route path="/login" element={<Login lang={lang} user={user} />} />
                 <Route path="/profile" element={<Profile lang={lang} user={user} authBusy={authBusy || roleBusy} />} />
                 <Route path="/academy" element={<Academy lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} />} />
@@ -228,8 +235,9 @@ const AppContent: React.FC = () => {
         <CookieConsent lang={lang} />
         <Footer lang={lang} />
       </div>
-    </SmoothScroll>
   );
+
+  return isLite ? appContent : <SmoothScroll>{appContent}</SmoothScroll>;
 };
 
 const App: React.FC = () => (
