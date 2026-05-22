@@ -778,361 +778,174 @@ export const MODULES = [
   // ── MODULE 5 ─────────────────────────────────────────────────────
   {
     id: 5, part: 'recognition',
-    title: 'Deepfake len lỏi vào mọi vấn đề số',
-    duration: '125-135 phút', level: 'Recognition',
-    scenario: 'An đã có quy trình Deepfense Check, nhưng Internet không chỉ có một kiểu rủi ro. Từ video đầu tư của người nổi tiếng, tin nhắn mượn tiền từ bạn cũ, ảnh nhạy cảm trong nhóm lớp, đến clip gây phẫn nộ trong nhóm gia đình và tin nhắn từ tài khoản hẹn hò mới quen — mỗi tình huống trông khác nhau nhưng đều có chung một điểm: có người muốn An tin nhanh, hành động nhanh, và không kiểm chứng.',
+    title: 'Deepfake trong đời sống số',
+    duration: '90-105 phút', level: 'Intermediate',
+    scenario: 'Sau khi đã có quy trình Deepfense Check, An nhận ra rủi ro không chỉ nằm trong một video giả. Một lời nhờ chuyển tiền, một ảnh nhạy cảm trong nhóm lớp, một clip gây phẫn nộ hoặc một lời mời học bổng đều có thể bị phủ lên bởi lớp mạo danh. Module này giúp người học nhìn deepfake như một vấn đề xã hội, không chỉ là một thủ thuật công nghệ.',
     outcomes: [
-      'Nhận diện được các kịch bản lừa đảo tài chính có sử dụng deepfake, deepvoice hoặc nội dung giả mạo.',
-      'Biết áp dụng quy tắc an toàn khi gặp yêu cầu chuyển tiền, OTP, mật khẩu, giấy tờ hoặc cài ứng dụng.',
-      'Hiểu rủi ro của deepfake trong học đường, danh dự cá nhân và hình ảnh nhạy cảm.',
-      'Biết cách phản ứng có trách nhiệm khi gặp nội dung nhạy cảm hoặc nội dung có thể làm hại người khác.',
-      'Hiểu vai trò của deepfake trong tin giả xã hội và hiện tượng "nội dung thật bị gọi là giả".',
-      'Nhận diện rủi ro trong tình cảm, việc làm, học bổng, đầu tư và danh tính số.',
+      'Nhận diện các kịch bản mạo danh thường gặp trong tài chính, học đường, truyền thông xã hội và quan hệ cá nhân.',
+      'Biết phân biệt dấu hiệu kỹ thuật với dấu hiệu hành vi: gấp gáp, cô lập, đe dọa, hứa hẹn hoặc ép giữ bí mật.',
+      'Áp dụng Deepfense Check để ra quyết định an toàn ngay cả khi chưa thể chứng minh nội dung là giả.',
+      'Biết cách phản ứng có trách nhiệm với nội dung nhạy cảm, tin gây phẫn nộ và yêu cầu liên quan đến tiền hoặc dữ liệu cá nhân.',
     ],
     sections: [
       {
-        title: '5.0 Câu chuyện dẫn nhập: Một ngày của An chưa kết thúc',
+        title: '5.0 Khi deepfake đi vào đời sống',
         lessons: [
-          lesson('5.0.0', 'Một ngày của An chưa kết thúc', [
-            'An đã có quy trình Deepfense Check. Nhưng Internet không chỉ có một kiểu rủi ro.',
-            'Một buổi sáng, An thấy video người nổi tiếng quảng cáo đầu tư. Buổi trưa, một người bạn cũ nhắn mượn tiền. Buổi chiều, nhóm lớp lan truyền hình ảnh nhạy cảm của một bạn học. Buổi tối, một clip xã hội gây phẫn nộ xuất hiện trong nhóm gia đình. Đêm muộn, An nhận tin nhắn từ một tài khoản hẹn hò mới quen.',
-            'Mỗi tình huống trông khác nhau. Nhưng chúng có điểm chung: có người muốn An tin nhanh, có người muốn An hành động nhanh, có người được lợi nếu An không kiểm chứng, và có người có thể bị hại nếu An chia sẻ sai.',
-            'Module 5 sẽ giúp bạn nhìn thấy deepfake không phải như một thủ thuật công nghệ, mà như một lớp rủi ro có thể len vào nhiều vấn đề số hằng ngày.',
+          lesson('5.0.0', 'Từ công nghệ sang hành vi', [
+            'Deepfake nguy hiểm không chỉ vì hình ảnh hoặc giọng nói có thể bị làm giả. Nó nguy hiểm vì được đặt vào đúng hoàn cảnh khiến con người dễ phản ứng nhanh: lo cho người thân, sợ mất tiền, sợ bị bêu xấu, muốn có cơ hội tốt hoặc muốn bảo vệ quan điểm của mình.',
+            'Trong thực tế, người học hiếm khi gặp một nội dung có nhãn “deepfake”. Thứ họ gặp là một yêu cầu: chuyển tiền, bấm link, gửi giấy tờ, chia sẻ clip, im lặng, giữ bí mật hoặc hành động ngay.',
+            'Vì vậy, mục tiêu của Module 5 không phải là biến bạn thành chuyên gia giám định hình ảnh. Mục tiêu là giúp bạn nhận ra bối cảnh rủi ro và chọn hành động ít gây hại nhất.',
           ], [
-            'Deepfake không phải chỉ là một loại rủi ro. Nó có thể xuất hiện trong tiền bạc, danh dự, tình cảm, việc làm, tin tức và xã hội.',
-            'Câu hỏi không phải là "tôi có gặp deepfake không?" mà là "tôi sẽ phản ứng thế nào khi gặp?"',
+            'Đừng chỉ hỏi “nội dung này có giả không?”. Hãy hỏi thêm: “Ai đang muốn mình làm gì, trong bao lâu, và hậu quả nếu mình làm sai là gì?”.',
+          ]),
+          lesson('5.0.1', 'Bốn tín hiệu hành vi cần nhớ', [
+            'Gấp gáp: yêu cầu xử lý ngay, không cho thời gian kiểm tra, tạo cảm giác nếu chậm sẽ mất cơ hội hoặc gặp nguy hiểm.',
+            'Cô lập: bảo bạn không nói với ai, không gọi lại, không hỏi người khác, chỉ làm theo một kênh duy nhất.',
+            'Áp lực cảm xúc: đánh vào tình thân, nỗi sợ, lòng tham, sự xấu hổ hoặc cảm giác phải chứng minh mình tốt.',
+            'Chuyển hướng kiểm soát: kéo bạn sang link, app, tài khoản nhận tiền, nhóm chat hoặc kênh liên lạc do họ kiểm soát.',
+          ], [
+            'Khi bốn tín hiệu này xuất hiện cùng nhau, rủi ro thường cao hơn bản thân chất lượng video hay giọng nói.',
           ]),
         ],
         checkpoint: null,
       },
       {
-        title: '5.1 Lừa đảo tài chính và mạo danh',
+        title: '5.1 Tiền bạc và mạo danh',
         lessons: [
-          lesson('5.1.0', 'Mục tiêu bài học 5.1', [
-            'Sau phần 5.1, bạn sẽ nhận diện được các kịch bản lừa đảo tài chính có dùng mạo danh bằng hình ảnh, giọng nói hoặc video.',
-            'Bạn sẽ hiểu vì sao deepfake làm lừa đảo tài chính thuyết phục hơn, biết các dấu hiệu đỏ trong yêu cầu tiền, OTP, tài khoản và ứng dụng, và biết phản ứng an toàn trước khi thiệt hại xảy ra.',
+          lesson('5.1.0', 'Mạo danh người thân, cấp trên và cơ quan', [
+            'Các vụ lừa đảo tài chính thường bắt đầu bằng một danh tính đáng tin: người thân, sếp, giáo viên, ngân hàng, cơ quan chức năng hoặc người nổi tiếng. Deepfake và deepvoice làm lớp danh tính này thuyết phục hơn, nhưng phần nguy hiểm nhất vẫn là yêu cầu đi kèm.',
+            'Hãy đặc biệt thận trọng với yêu cầu chuyển tiền vào tài khoản lạ, đọc OTP, gửi mật khẩu, cài ứng dụng ngoài kho chính thức, quét QR thanh toán hoặc cung cấp giấy tờ cá nhân trong lúc bị thúc ép.',
+            'Một nguyên tắc học thuật nhưng rất thực dụng: danh tính càng có vẻ đáng tin thì quy trình xác minh càng không được bỏ qua. Người thật sẽ hiểu vì sao bạn cần xác minh; kẻ lừa đảo thường muốn bạn bỏ qua bước đó.',
           ], [
-            'Mỗi kịch bản lừa đảo tài chính đều có dấu hiệu đỏ riêng. Nhận ra chúng là bước đầu tiên để không bị lừa.',
+            'Giọng giống, mặt giống hoặc tài khoản quen không đủ để hợp thức hóa yêu cầu tiền bạc. Tiền và mã xác thực luôn cần kênh xác minh độc lập.',
           ]),
-          lesson('5.1.1', 'Kịch bản 1: Người thân cần tiền gấp', [
-            'Đây là kịch bản rất phổ biến vì nó đánh vào tình cảm. Bạn có thể nhận cuộc gọi giống người thân, tin nhắn thoại giống người thân, cuộc gọi video ngắn hình mờ âm thanh vỡ, hoặc tin nhắn từ tài khoản thật của người thân nhưng đã bị chiếm quyền.',
-            'Nội dung thường là: "Con đang gặp tai nạn.", "Mẹ đang cần tiền gấp.", "Em bị mất ví, chuyển giúp em.", "Đừng gọi cho ai khác.", "Chuyển vào tài khoản này trước."',
-            'Dấu hiệu đỏ: yêu cầu chuyển tiền ngay, không cho gọi lại, không nói rõ địa điểm, tài khoản nhận tiền là tên người lạ, bảo giữ bí mật, dùng số mới hoặc tài khoản mới.',
-            'Deepfense Check — Pause: dừng trước khi chuyển tiền. Observe: có khẩn cấp, thân quen, cô lập, tài khoản lạ không? Verify: gọi số đã lưu, gọi người thân khác, dùng family code nếu có. Decide: không chuyển tiền khi chưa xác minh.',
+          lesson('5.1.1', 'Quy trình xử lý yêu cầu tài chính', [
+            'Pause: dừng lại trước khi chuyển tiền, đọc OTP hoặc bấm link. Cảm giác gấp là tín hiệu cần kiểm tra, không phải lý do để bỏ kiểm tra.',
+            'Observe: ghi lại các dấu hiệu bất thường: tài khoản nhận tiền lạ, lý do mơ hồ, cấm gọi lại, yêu cầu giữ bí mật, thay đổi kênh liên lạc hoặc nói chuyện rất ngắn.',
+            'Verify: tự gọi số đã lưu, liên hệ người thân khác, dùng kênh nội bộ chính thức, hoặc tự mở app/ngân hàng/trang web chính thức. Không dùng số điện thoại hoặc link do người đang yêu cầu cung cấp.',
+            'Decide: nếu chưa xác minh được, không chuyển tiền, không đọc OTP, không cài app và không gửi giấy tờ. Từ chối trong rủi ro cao là một quyết định hợp lý.',
           ], [
-            'Với yêu cầu tiền khẩn cấp từ người thân: gọi lại số đã lưu hoặc xác minh qua người thân khác trước khi chuyển.',
-          ]),
-          lesson('5.1.2', 'Kịch bản 2: Sếp, giáo viên hoặc người phụ trách yêu cầu xử lý gấp', [
-            'Trong công việc hoặc trường học, kẻ xấu có thể giả danh người có thẩm quyền. Ví dụ: "Anh là sếp đây, chuyển khoản này trước 3 giờ.", "Cô cần em gửi danh sách thông tin cá nhân ngay.", "Phòng tài chính cần đổi tài khoản nhận tiền.", "Việc này gấp, bỏ qua quy trình hôm nay."',
-            'Deepfake hoặc deepvoice làm kịch bản này nguy hiểm hơn vì giọng nói hoặc video có thể khiến người nghe tin đó đúng là sếp, giáo viên hoặc người phụ trách.',
-            'Dấu hiệu đỏ: yêu cầu bỏ qua quy trình, dùng kênh lạ, chuyển tiền hoặc gửi dữ liệu nhạy cảm, không cho xác nhận với người khác, đổi tài khoản nhận tiền đột ngột, câu chữ tạo áp lực như "chịu trách nhiệm", "làm ngay", "đừng hỏi nhiều".',
-            'Deepfense Check — Pause: việc gấp không tự động hợp lệ. Verify: xác minh qua kênh nội bộ chính thức. Trace: kiểm tra lịch sử yêu cầu, email gốc, tài khoản nhận tiền. Decide: không chuyển tiền hoặc gửi dữ liệu nếu chưa qua quy trình xác nhận.',
-          ], [
-            'Việc gấp không có nghĩa là được bỏ qua quy trình. Xác minh qua kênh nội bộ chính thức trước khi hành động.',
-          ]),
-          lesson('5.1.3', 'Kịch bản 3: Giả danh ngân hàng, công an, cơ quan chức năng', [
-            'Kịch bản này đánh vào nỗi sợ và quyền lực. Người gọi có thể nói: "Tài khoản của bạn có giao dịch bất thường.", "Bạn liên quan đến một vụ án.", "Bạn cần chứng minh mình trong sạch.", "Cài ứng dụng này để làm việc với cơ quan chức năng.", "Đọc mã OTP để chúng tôi khóa giao dịch."',
-            'Nếu có giọng nói, hình ảnh hoặc video trông đáng tin, nạn nhân càng dễ hoảng và làm theo yêu cầu.',
-            'Dấu hiệu đỏ: yêu cầu OTP, mật khẩu hoặc mã xác minh; yêu cầu cài app qua link; yêu cầu chuyển tiền vào "tài khoản an toàn"; đe dọa pháp lý qua cuộc gọi; không cho tự gọi tổng đài chính thức; giữ cuộc gọi lâu không cho hỏi người khác.',
-            'Deepfense Check — Pause: không xử lý tài khoản, pháp lý, OTP trong hoảng loạn. Verify: tự gọi tổng đài chính thức hoặc liên hệ trực tiếp cơ quan qua kênh công khai đáng tin. Decide: không đọc OTP, không cài app lạ, không chuyển tiền theo hướng dẫn cuộc gọi.',
-          ], [
-            'Ngân hàng, công an và cơ quan chức năng không yêu cầu OTP, mật khẩu hoặc cài app qua cuộc gọi.',
-            'Nếu nghi ngờ, hãy tự gọi tổng đài chính thức — không dùng số họ cung cấp trong cuộc gọi.',
-          ]),
-          lesson('5.1.4', 'Kịch bản 4: Người nổi tiếng kêu gọi đầu tư', [
-            'Đây là kịch bản dùng niềm tin vào danh tiếng. Video có thể cho thấy người nổi tiếng nói: "Tôi đang dùng nền tảng này.", "Tôi muốn chia sẻ cơ hội cho người theo dõi.", "Đầu tư ít, lợi nhuận ổn định.", "Số lượng có hạn."',
-            'Kẻ xấu có thể kết hợp: video deepfake, giọng nói giả, trang web giả, bình luận seeding, ảnh chụp chuyển khoản giả và tài khoản nhái.',
-            'Dấu hiệu đỏ: lợi nhuận cao rủi ro thấp hoặc chắc chắn, link đăng ký ngoài kênh chính thức, tài khoản đăng không xác minh, bình luận quá giống nhau, không có thông tin pháp lý rõ, thúc giục nạp tiền nhanh.',
-            'Deepfense Check — Pause: lời hứa tài chính càng hấp dẫn càng cần chậm lại. Verify: kiểm tra kênh chính thức của người nổi tiếng hoặc tổ chức. Trace: tìm video gốc, tên miền, cảnh báo lừa đảo, lịch sử tài khoản. Decide: không nạp tiền, không gửi giấy tờ, không bấm link nếu chưa xác minh.',
-          ], [
-            'Video, giọng nói và bình luận không đủ để xác minh lời kêu gọi tài chính. Kiểm tra kênh chính thức trước khi hành động.',
-          ]),
-          lesson('5.1.5', 'Kịch bản 5: QR, link và app giả', [
-            'Không phải deepfake nào cũng đứng một mình trong video. Nhiều nội dung giả chỉ là mồi nhử để kéo bạn đến: link đăng nhập giả, mã QR thanh toán, app cài ngoài, form thu thập thông tin, nhóm chat đầu tư, tài khoản hỗ trợ giả.',
-            'Dấu hiệu đỏ: link rút gọn không rõ đích, tên miền gần giống thương hiệu thật, yêu cầu đăng nhập lại, yêu cầu cấp quyền lạ cho app, yêu cầu quét QR để nhận tiền hoặc quà, yêu cầu gửi ảnh căn cước hoặc khuôn mặt.',
-            'Deepfense Check — Pause: không bấm, quét hoặc cài khi đang bị thúc ép. Verify: tự mở app chính thức hoặc website chính thức. Trace: kiểm tra nguồn link, tài khoản gửi, lịch sử cảnh báo. Decide: không nhập thông tin nhạy cảm qua link nghi vấn.',
-          ], [
-            'Link, QR và app từ nguồn nghi vấn có thể là bước đầu của một kịch bản lừa đảo phức tạp hơn.',
-            'Luôn truy cập app và website chính thức qua kênh bạn tự tìm, không qua link được gửi trong chat.',
+            'Bạn không cần chứng minh chắc chắn đó là deepfake mới được quyền từ chối. Chưa xác minh được là đủ lý do để dừng.',
           ]),
         ],
-        checkpoint: checkpoint('Quiz 5.1 — Lừa đảo tài chính và mạo danh', [
-          q('Một giọng nói giống người thân yêu cầu bạn chuyển tiền ngay vào tài khoản tên người lạ. Hành động an toàn nhất là gì?', ['Chuyển ngay vì giọng giống.', 'Gọi lại số đã lưu hoặc xác minh qua người thân khác.', 'Gửi trước một khoản nhỏ.', 'Hỏi lại trong cùng cuộc gọi rồi chuyển.'], 1),
-          q('Dấu hiệu nào đáng nghi nhất trong một yêu cầu từ "sếp"?', ['Sếp nói giọng nghiêm túc.', 'Yêu cầu bỏ qua quy trình chuyển tiền vì đang gấp.', 'Tin nhắn được gửi vào buổi sáng.', 'Câu chữ ngắn gọn.'], 1),
+        checkpoint: checkpoint('5.1 Kiểm tra nhanh: tiền bạc và mạo danh', [
+          q('Một giọng nói giống người thân yêu cầu chuyển tiền ngay vào tài khoản tên người lạ. Hành động an toàn nhất là gì?', ['Chuyển ngay vì giọng giống.', 'Gọi lại số đã lưu hoặc xác minh qua người thân khác.', 'Gửi trước một khoản nhỏ để thử.', 'Hỏi thêm trong cùng cuộc gọi rồi chuyển.'], 1),
+          q('Dấu hiệu nào đáng nghi nhất trong yêu cầu từ cấp trên?', ['Yêu cầu bỏ qua quy trình chuyển tiền vì đang gấp.', 'Tin nhắn ngắn gọn.', 'Giọng nói nghiêm túc.', 'Gửi vào giờ làm việc.'], 0),
           q('Người tự xưng ngân hàng yêu cầu đọc OTP để khóa giao dịch lạ. Bạn nên làm gì?', ['Đọc OTP nếu họ biết tên bạn.', 'Không đọc OTP, tự liên hệ kênh chính thức của ngân hàng.', 'Đọc một nửa mã.', 'Gửi OTP qua tin nhắn cho chắc.'], 1),
-          q('Một video người nổi tiếng kêu gọi đầu tư xuất hiện ở tài khoản lạ, có link đăng ký. Bạn nên đánh giá thế nào?', ['An toàn nếu video trông thật.', 'Rủi ro cao, cần kiểm tra kênh chính thức và không bấm link.', 'An toàn nếu nhiều bình luận khen.', 'Chỉ cần xem video đủ lâu.'], 1),
-          q('Điều nào sau đây là dấu hiệu đỏ của app/link giả?', ['Yêu cầu tải app qua link chat và cấp quyền lạ.', 'Website chính thức do bạn tự nhập địa chỉ.', 'App ngân hàng đã cài từ store chính thức.', 'Tổng đài lấy từ mặt sau thẻ ngân hàng.'], 0),
-          q('Câu nào đúng nhất?', ['Deepfake chỉ gây hại khi nạn nhân là người nổi tiếng.', 'Người bình thường cũng có thể bị mạo danh hoặc bị dùng giọng/hình ảnh để lừa người thân.', 'Nếu không đăng video công khai thì không bao giờ gặp rủi ro.', 'Lừa đảo tài chính không liên quan đến deepfake.'], 1),
-          q('Một người tự xưng cơ quan chức năng yêu cầu bạn chuyển tiền vào "tài khoản an toàn". Bạn nên làm gì?', ['Chuyển để chứng minh trong sạch.', 'Không chuyển, dừng cuộc gọi và xác minh qua kênh chính thức.', 'Chuyển một nửa.', 'Làm theo vì họ có quyền lực.'], 1),
-          q('Tại sao bình luận tích cực dưới video đầu tư không đủ đáng tin?', ['Vì bình luận có thể đến từ seeding, tài khoản giả hoặc người chưa kiểm chứng.', 'Vì mọi bình luận đều sai.', 'Vì bình luận không có dấu câu.', 'Vì chỉ video dài mới đáng tin.'], 0),
-          q('Trong tình huống tài chính, bước nào thường quan trọng nhất khi có người quen yêu cầu tiền?', ['Verify qua kênh độc lập.', 'Chọn ảnh đại diện đẹp.', 'Xem bình luận.', 'Đổi nhạc chuông.'], 0),
-          q('Bạn có cần chứng minh 100% một video là deepfake mới được từ chối bấm link đầu tư không?', ['Có.', 'Không. Nếu rủi ro cao và chưa xác minh, bạn có thể từ chối.', 'Có, nếu video nhiều lượt xem.', 'Không, nhưng nên bấm thử để biết.'], 1),
+          q('Vì sao không nên bấm link đầu tư trong video người nổi tiếng từ tài khoản lạ?', ['Vì mọi video người nổi tiếng đều giả.', 'Vì video, bình luận và link có thể là một kịch bản mạo danh phối hợp.', 'Vì chỉ video dài mới đáng tin.', 'Vì tài khoản lạ luôn vô hại.'], 1),
         ]),
       },
-      // ── M5-511-S ─────────────────────────────────────────────────
       {
-        title: '5.1.1 Quy tắc vàng về tiền',
+        title: '5.2 Học đường, danh dự và nội dung nhạy cảm',
         lessons: [
-          lesson('5.1.1.0', 'Mục tiêu bài học 5.1.1', [
-            'Sau phần 5.1.1, bạn sẽ ghi nhớ các quy tắc an toàn khi gặp yêu cầu tiền.',
-            'Bạn sẽ biết cách xử lý yêu cầu chuyển khoản gấp, và biết làm gì nếu đã lỡ chuyển tiền hoặc lộ thông tin.',
+          lesson('5.2.0', 'Tác hại không dừng ở màn hình', [
+            'Trong môi trường học đường, deepfake có thể xuất hiện dưới dạng ảnh nhạy cảm, clip ghép mặt, tin đồn bằng giọng nói hoặc tài khoản giả. Ngay cả khi nội dung là giả, người bị nhắm đến vẫn có thể chịu tổn thương thật: xấu hổ, bị cô lập, bị bắt nạt hoặc mất cảm giác an toàn.',
+            'Người xem thường nghĩ mình chỉ “xem cho biết” hoặc “gửi cho một người”. Nhưng mỗi lượt lưu, gửi lại, bình luận hoặc trêu đùa đều làm thiệt hại lan rộng hơn.',
+            'Với nội dung nhạy cảm, câu hỏi đạo đức quan trọng hơn câu hỏi kỹ thuật: hành động của mình có làm người trong ảnh/clip bị hại thêm không?',
           ], [
-            'Năm quy tắc vàng: không chuyển khi bị ép thời gian, không gửi OTP, gọi lại số đã lưu, không xử lý một mình khi hoảng, hành động nhanh nếu đã lỡ.',
+            'Không lưu, không gửi tiếp, không bình luận chế giễu. Đó là phản ứng an toàn và có trách nhiệm nhất với nội dung nhạy cảm nghi vấn.',
           ]),
-          lesson('5.1.1.1', 'Quy tắc 1: Không chuyển tiền khi đang bị ép thời gian', [
-            'Nếu ai đó nói "Chỉ còn 5 phút.", "Chuyển ngay.", "Không kịp giải thích.", "Nếu không chuyển bây giờ sẽ có chuyện." — hãy xem đó là tín hiệu cần dừng.',
-            'Tình huống khẩn cấp thật vẫn có thể được xác minh. Nếu bạn cần giúp người thân, xác minh giúp bạn giúp đúng người.',
+          lesson('5.2.1', 'Cách phản ứng khi thấy nội dung gây hại', [
+            'Dừng lan truyền: không tải xuống, không chuyển tiếp, không đăng lại và không yêu cầu người khác gửi.',
+            'Giữ bằng chứng phù hợp: nếu cần báo cáo, lưu thông tin nguồn phát tán, thời điểm, đường dẫn hoặc ảnh chụp màn hình ở mức cần thiết. Tránh lưu hoặc phát tán lại chính nội dung nhạy cảm.',
+            'Báo người có trách nhiệm: giáo viên, phụ huynh, quản trị viên nhóm, bộ phận an toàn nền tảng hoặc cơ quan chức năng khi tình huống nghiêm trọng.',
+            'Hỗ trợ nạn nhân: tránh đổ lỗi, tránh chất vấn gây xấu hổ, khuyến khích họ tìm hỗ trợ. Một phản ứng bình tĩnh có thể giảm thiệt hại rất nhiều.',
           ], [
-            'Gấp không có nghĩa là bỏ kiểm chứng.',
+            'Trong nhóm lớp, im lặng đôi khi chưa đủ. Hành động đúng là dừng lan truyền và đưa vấn đề đến người có trách nhiệm.',
           ]),
-          lesson('5.1.1.2', 'Quy tắc 2: Không gửi OTP, mật khẩu, mã xác minh', [
-            'OTP, mật khẩu, mã xác minh và mã khôi phục tài khoản là chìa khóa vào tài khoản của bạn.',
-            'Không gửi các thông tin này qua cuộc gọi, tin nhắn, link lạ, form lạ, người tự xưng hỗ trợ, hoặc người quen đang nhắn từ tài khoản bất thường.',
-            'Kể cả khi người yêu cầu nghe giống người quen, vẫn không gửi.',
+        ],
+        checkpoint: checkpoint('5.2 Kiểm tra nhanh: danh dự và nội dung nhạy cảm', [
+          q('Khi thấy ảnh nhạy cảm nghi là ghép của bạn học trong nhóm, việc đầu tiên nên làm là gì?', ['Gửi tiếp để hỏi thật giả.', 'Không lưu, không gửi tiếp và báo người có trách nhiệm.', 'Bình luận đùa cho nhẹ chuyện.', 'Tải về để phân tích kỹ thuật.'], 1),
+          q('Vì sao nội dung giả vẫn có thể gây hại thật?', ['Vì người bị nhắm đến vẫn có thể bị xấu hổ, bắt nạt hoặc tổn thương danh dự.', 'Vì mọi người sẽ quên ngay.', 'Vì ảnh giả luôn dễ nhận ra.', 'Vì chỉ người nổi tiếng mới bị ảnh hưởng.'], 0),
+          q('Cách giữ bằng chứng nào phù hợp hơn?', ['Phát tán lại nội dung để nhiều người biết.', 'Lưu thông tin nguồn, thời điểm và đường dẫn ở mức cần thiết để báo cáo.', 'Đăng lên trang cá nhân.', 'Gửi cho càng nhiều bạn càng tốt.'], 1),
+        ]),
+      },
+      {
+        title: '5.3 Tin giả xã hội và khủng hoảng niềm tin',
+        lessons: [
+          lesson('5.3.0', 'Khi nội dung đánh vào phẫn nộ', [
+            'Một clip ngắn, một câu chú thích mạnh và vài bình luận kích động có thể đủ để khiến đám đông phản ứng trước khi kiểm chứng. Deepfake làm tình huống này khó hơn, nhưng clip thật bị cắt ngữ cảnh cũng nguy hiểm không kém.',
+            'Tin giả xã hội thường không yêu cầu bạn chuyển tiền ngay. Nó yêu cầu bạn chia sẻ, lên án, bêu tên, tấn công hoặc đứng về một phía thật nhanh.',
+            'Trong bối cảnh này, Deepfense Check giúp bạn chậm lại: tìm nguồn gốc, tìm bản đầy đủ, kiểm tra thời gian, địa điểm, người đăng và động cơ lan truyền.',
           ], [
-            'Người thật không cần OTP của bạn qua chat.',
+            'Nội dung càng làm bạn tức giận, càng cần kiểm tra trước khi chia sẻ. Cảm xúc mạnh là nhiên liệu của lan truyền sai lệch.',
           ]),
-          lesson('5.1.1.3', 'Quy tắc 3: Gọi lại bằng số đã lưu', [
-            'Nếu người thân, bạn bè, sếp, giáo viên hoặc đồng nghiệp yêu cầu tiền hoặc dữ liệu gấp, hãy thoát khỏi kênh nghi vấn.',
-            'Nên: gọi số đã lưu từ trước, gọi người thân khác, dùng kênh nội bộ chính thức, gặp trực tiếp nếu có thể.',
-            'Không nên: gọi số mới họ vừa gửi, bấm link xác minh họ vừa gửi, chuyển tiền chỉ vì ảnh đại diện đúng.',
+          lesson('5.3.1', 'Nội dung giả và nội dung thật bị gọi là giả', [
+            'Một rủi ro mới là “khủng hoảng niềm tin”: khi deepfake trở nên phổ biến, người ta có thể phủ nhận cả nội dung thật bằng câu “chắc là AI”. Điều này làm nạn nhân thật khó được tin, còn kẻ sai trái có thêm cách né trách nhiệm.',
+            'Vì vậy, mục tiêu không phải là hoài nghi mọi thứ. Mục tiêu là hoài nghi có phương pháp: kiểm tra nguồn, bối cảnh, bằng chứng độc lập và mức độ rủi ro trước khi kết luận.',
+            'Khi chưa đủ thông tin, cách nói tốt hơn là: “Tôi chưa xác minh được” thay vì “chắc chắn giả” hoặc “chắc chắn thật”.',
           ], [
-            'Xác minh danh tính qua kênh độc lập — không qua kênh mà người nghi vấn vừa cung cấp.',
-          ]),
-          lesson('5.1.1.4', 'Quy tắc 4: Không tự xử lý một mình khi hoảng', [
-            'Kẻ xấu thường muốn bạn cô lập: "Đừng nói với ai.", "Đừng gọi người khác.", "Chuyện này xấu hổ lắm.", "Nếu nói ra sẽ rắc rối."',
-            'Khi thấy các câu này, hãy tìm người tin cậy: người thân, giáo viên, bạn bè đáng tin, quản lý, bộ phận IT, ngân hàng, hoặc cơ quan có trách nhiệm.',
-            'Không phải vì bạn yếu, mà vì kiểm chứng tốt thường cần người thứ hai.',
-          ], [
-            'Khi bị yêu cầu giữ bí mật trong tình huống tài chính, đó là dấu hiệu đỏ cần tìm người hỗ trợ.',
-          ]),
-          lesson('5.1.1.5', 'Quy tắc 5: Nếu đã lỡ chuyển tiền, hành động nhanh', [
-            'Nếu bạn nghi mình vừa bị lừa: liên hệ ngân hàng càng sớm càng tốt; lưu bằng chứng gồm số tài khoản, nội dung chat, số điện thoại, link, thời gian, ảnh chụp màn hình.',
-            'Báo người thân hoặc bạn bè nếu tài khoản của bạn hay người quen có thể bị lợi dụng tiếp. Đổi mật khẩu và bật xác thực hai lớp nếu tài khoản bị nghi lộ.',
-            'Báo cáo tài khoản, bài đăng hoặc website giả mạo trên nền tảng. Trình báo hoặc liên hệ cơ quan có trách nhiệm khi cần.',
-            'Không nên: xóa bằng chứng vì xấu hổ, im lặng nếu kẻ xấu có thể lừa thêm người khác, đăng thông tin cá nhân chưa kiểm chứng của nghi phạm lên mạng.',
-          ], [
-            'Tiền có thể chuyển trong vài giây, nhưng hậu quả có thể kéo dài rất lâu. Hãy xác minh trước khi chuyển.',
-            'Nếu đã lỡ: hành động nhanh — ngân hàng, bằng chứng, báo cáo.',
+            'Tư duy phòng vệ tốt không biến bạn thành người phủ nhận mọi thứ. Nó giúp bạn kết luận chậm hơn và có trách nhiệm hơn.',
           ]),
         ],
         checkpoint: null,
       },
-      // ── M5-511-E ─────────────────────────────────────────────────
-      // ── M5-52-S ──────────────────────────────────────────────────
       {
-        title: '5.2 Học đường, danh dự và hình ảnh nhạy cảm',
+        title: '5.4 Quan hệ, việc làm và danh tính số',
         lessons: [
-          lesson('5.2.0', 'Mục tiêu bài học 5.2', [
-            'Sau phần 5.2, bạn sẽ hiểu vì sao deepfake nhạy cảm có thể gây hại nghiêm trọng dù "không phải ảnh thật".',
-            'Bạn sẽ biết cách phản ứng khi thấy hình ảnh hoặc video nhạy cảm trong nhóm chat hoặc mạng xã hội, biết ưu tiên giảm lan truyền và bảo vệ người bị hại.',
-            'Bạn cũng sẽ hiểu trách nhiệm của người xem, người chia sẻ và người quản trị nhóm.',
+          lesson('5.4.0', 'Khi niềm tin được xây quá nhanh', [
+            'Trong quan hệ online, lừa đảo thường bắt đầu bằng sự thân thiết bất thường: trò chuyện liên tục, tỏ ra thấu hiểu, hứa hẹn tương lai, nhưng né gặp trực tiếp hoặc chỉ gọi video rất ngắn.',
+            'Sau giai đoạn tạo niềm tin, yêu cầu bắt đầu xuất hiện: gửi tiền vì sự cố, nhận hộ tiền, bấm link nhận quà, gửi ảnh nhạy cảm, gửi giấy tờ hoặc giữ bí mật với gia đình và bạn bè.',
+            'Dấu hiệu cần chú ý không chỉ nằm ở khuôn mặt có thật hay không, mà ở nhịp quan hệ: quá nhanh, quá kín, quá nhiều lý do khẩn cấp và quá nhiều yêu cầu khiến bạn mất kiểm soát.',
           ], [
-            'Mục tiêu chính: giảm lan truyền, bảo vệ người bị hại, không đứng xem.',
+            'Người chỉ quen online nhưng yêu cầu tiền, ảnh nhạy cảm hoặc giấy tờ cá nhân là tình huống rủi ro cao.',
           ]),
-          lesson('5.2.1', '"Ảnh giả" vẫn có thể gây đau thật', [
-            'Trong học đường hoặc cộng đồng trẻ, một hình ảnh nhạy cảm giả mạo có thể bị dùng để bắt nạt, bôi nhọ, trêu chọc, tống tiền, ép im lặng, làm người khác xấu hổ, hoặc phá hoại quan hệ bạn bè, gia đình, trường học.',
-            'Một câu rất nguy hiểm là: "Có phải ảnh thật đâu mà nghiêm trọng." — Sai. Nếu hình ảnh khiến người khác bị xấu hổ, bị đe dọa, bị xa lánh hoặc bị tổn thương, hậu quả là thật.',
-            'Người bị hại có thể: lo sợ, mất ngủ, không dám đến lớp, bị trêu chọc, bị gia đình hiểu lầm, bị ảnh hưởng danh dự, bị áp lực tâm lý nặng.',
+          lesson('5.4.1', 'Việc làm, học bổng và cơ hội giả', [
+            'AI có thể làm lời mời việc làm hoặc học bổng trông rất chuyên nghiệp: website đẹp, ảnh đại diện đáng tin, email giống tổ chức thật, giấy mời có logo và video giới thiệu được dựng kỹ.',
+            'Dấu hiệu đỏ thường là việc nhẹ lương cao, học bổng quá dễ, phí giữ chỗ, phí xử lý hồ sơ, yêu cầu giấy tờ cá nhân quá sớm, email tên miền lạ hoặc chỉ liên hệ qua nhóm chat riêng.',
+            'Cách kiểm chứng: tự tìm website chính thức của tổ chức, kiểm tra thông báo tuyển dụng/học bổng từ nguồn gốc, liên hệ qua email hoặc số điện thoại công khai, và không đóng phí vào tài khoản cá nhân lạ.',
           ], [
-            'Không lan truyền nội dung nhạy cảm, dù bạn nghĩ nó thật hay giả.',
+            'Cơ hội thật có thể cần hồ sơ. Nhưng cơ hội thật không ép bạn nộp phí hoặc gửi giấy tờ nhạy cảm trước khi tổ chức được xác minh.',
           ]),
-          lesson('5.2.2', 'Nếu thấy hình ảnh nhạy cảm trong nhóm chat', [
-            'Việc cần làm: không lưu về nếu không có lý do báo cáo an toàn; không chuyển tiếp; không bình luận đùa, chấm điểm, suy đoán hoặc bêu tên; báo cáo nội dung trên nền tảng nếu có thể.',
-            'Báo cho người có trách nhiệm: giáo viên, phụ huynh, quản trị viên, cố vấn, người lớn đáng tin. Nếu bạn biết người bị hại, hãy hỗ trợ bằng cách bình tĩnh, không tra hỏi gây áp lực. Nếu bạn là quản trị nhóm, hãy xóa nội dung và nhắc quy tắc không lan truyền.',
-            'Việc không nên làm: "Gửi mình xem với.", "Ai có bản gốc không?", "Không biết thật giả, lưu lại đã.", "Phóng to xem có lỗi AI không.", "Tag người đó vào cho vui.", "Đăng lên nhóm khác để cảnh báo." — những hành động này có thể làm tổn hại lan rộng hơn.',
+          lesson('5.4.2', 'Bảo vệ danh tính số cá nhân', [
+            'Danh tính số gồm ảnh, giọng nói, tên, số điện thoại, email, giấy tờ, lịch trình, mối quan hệ và thói quen công khai. Càng nhiều dữ liệu lộ ra, kẻ xấu càng dễ dựng một phiên bản thuyết phục của bạn.',
+            'Bạn không cần biến mình thành vô hình. Bạn cần giảm dữ liệu dễ bị lạm dụng: hạn chế đăng giấy tờ, vé máy bay, lịch trình, số điện thoại, email chính; kiểm tra quyền riêng tư; bật xác thực hai lớp; dùng mật khẩu riêng cho tài khoản quan trọng.',
+            'Nếu tài khoản bị chiếm quyền, hãy cảnh báo người thân và bạn bè qua kênh khác càng sớm càng tốt. Một lời cảnh báo sớm có thể chặn nhiều yêu cầu mạo danh tiếp theo.',
           ], [
-            'Khi thấy nội dung nhạy cảm trong nhóm: không lưu, không gửi, không bình luận — báo người có trách nhiệm.',
-          ]),
-          lesson('5.2.3', 'Deepfense Check trong hình ảnh nhạy cảm', [
-            'Với hình ảnh nhạy cảm, thứ tự ưu tiên khác với video đầu tư. Bạn không cần phân tích công khai xem ảnh có phải deepfake không. Bạn cần giảm hại trước.',
-            'Pause: dừng trước khi lưu, gửi, bình luận. Observe: đây là nội dung nhạy cảm, có thể làm hại người trong ảnh. Verify: không xác minh bằng cách lan truyền — nếu cần, báo người có trách nhiệm xử lý riêng tư.',
-            'Trace: chỉ truy nguồn nếu bạn có vai trò phù hợp và làm theo quy trình an toàn. Decide: không lan truyền, báo cáo, hỗ trợ người bị hại.',
-          ], [
-            'Với nội dung nhạy cảm, giảm lan truyền quan trọng hơn thỏa mãn tò mò.',
-          ]),
-          lesson('5.2.4', 'Nếu bạn là người bị hại', [
-            'Nếu hình ảnh hoặc video giả mạo hoặc nhạy cảm liên quan đến bạn bị lan truyền — bạn không đáng bị đổ lỗi.',
-            'Bạn nên: tìm một người lớn hoặc người tin cậy để nói chuyện; không thương lượng một mình nếu bị tống tiền; lưu bằng chứng an toàn gồm ảnh chụp màn hình, link, tài khoản, thời gian; báo cáo nội dung trên nền tảng; yêu cầu quản trị viên nhóm xóa nội dung.',
-            'Báo nhà trường, gia đình hoặc cơ quan có trách nhiệm khi cần. Chăm sóc sức khỏe tinh thần của mình — chuyện này không nên được xử lý một mình.',
-            'Nếu bạn thấy quá căng thẳng, hãy tìm người ở cạnh mình ngay. Không cần đợi đến khi "có đủ bằng chứng" mới được tìm hỗ trợ.',
-          ], [
-            'Bạn không đáng bị đổ lỗi. Tìm người tin cậy, lưu bằng chứng, báo cáo — không xử lý một mình.',
-          ]),
-          lesson('5.2.5', 'Nếu bạn là bạn bè hoặc người chứng kiến', [
-            'Bạn có thể giúp bằng cách: không xin xem, không gửi tiếp, không đùa, nhắc người khác dừng lan truyền, báo cáo nội dung, hỏi người bị hại cần hỗ trợ gì, báo người có trách nhiệm nếu người bị hại đang bị tấn công.',
-            'Một câu đơn giản có thể rất có ích: "Đừng gửi tiếp nữa. Dù thật hay giả thì cũng đang làm hại người khác." — Đó là hành động bảo vệ cộng đồng.',
-          ], [
-            'Người tử tế không đứng xem. Người tử tế giúp giảm lan truyền.',
-          ]),
-          lesson('5.2.6', 'Nếu bạn là giáo viên, phụ huynh hoặc quản trị viên nhóm', [
-            'Ưu tiên đầu tiên là an toàn và giảm lan truyền. Nên: gỡ nội dung khỏi nhóm hoặc kênh nếu có quyền; nhắc rõ quy tắc không chia sẻ tiếp; lưu bằng chứng ở mức cần thiết và an toàn; hỗ trợ người bị hại riêng tư; tránh chất vấn công khai; không biến nạn nhân thành người phải tự chứng minh.',
-            'Không nên: chiếu nội dung cho nhiều người xem để "xác minh"; hỏi trước lớp; đổ lỗi người bị hại; yêu cầu người bị hại tự đi tìm từng người đã chia sẻ.',
-            'Chuyển vụ việc đến người hoặc cơ quan phù hợp nếu nghiêm trọng.',
-          ], [
-            'Vai trò của người có trách nhiệm: gỡ nội dung, hỗ trợ riêng tư, không chất vấn công khai, không đổ lỗi nạn nhân.',
+            'Bảo vệ danh tính số là giảm vật liệu mà người khác có thể dùng để giả làm bạn.',
           ]),
         ],
         checkpoint: null,
       },
-      // ── M5-52-E ──────────────────────────────────────────────────
-      // ── M5-53-S ──────────────────────────────────────────────────
       {
-        title: '5.3 Tin giả xã hội và "nội dung thật bị gọi là giả"',
+        title: '5.5 Thực hành: bản đồ rủi ro đời sống số',
         lessons: [
-          lesson('5.3.0', 'Mục tiêu bài học 5.3', [
-            'Sau phần 5.3, bạn sẽ hiểu cách deepfake và nội dung sai bối cảnh có thể tác động đến xã hội.',
-            'Bạn sẽ biết vì sao clip ngắn gây phẫn nộ cần được kiểm chứng kỹ, hiểu hiện tượng "liar\'s dividend" — nội dung thật bị phủ nhận là giả — và biết cách chia sẻ có trách nhiệm trong các vấn đề xã hội.',
+          lesson('5.5.0', 'Cách làm bài thực hành', [
+            'Với mỗi tình huống, hãy xác định bốn thành phần: vùng rủi ro chính, dấu hiệu đỏ, bước Deepfense Check quan trọng nhất và hành động an toàn.',
+            'Bài thực hành này không yêu cầu bạn chứng minh nội dung là thật hay giả. Nó yêu cầu bạn chọn phản ứng làm giảm thiệt hại cho bản thân và người khác.',
           ], [
-            'Tin giả có thể dùng deepfake để thuyết phục hơn. Chia sẻ nhanh có thể làm sai lan nhanh hơn đúng.',
+            'Trong đời sống số, phản ứng đúng thường bắt đầu bằng một câu rất ngắn: dừng lại trước đã.',
           ]),
-          lesson('5.3.1', 'Tin giả không chỉ là thông tin sai', [
-            'Tin giả có thể gây hậu quả thật: làm người vô tội bị tấn công, kích động đám đông, gây hoang mang trong thiên tai hoặc dịch bệnh, làm người dân mất tiền, làm giảm niềm tin vào nguồn tin chính thống, khiến cộng đồng chia rẽ.',
-            'Deepfake có thể làm tin giả thuyết phục hơn vì người xem nghĩ: "Tôi thấy người đó nói mà." Nhưng như bạn đã học, thấy một đoạn clip không có nghĩa là hiểu toàn bộ sự việc.',
+          lesson('5.5.1', 'Năm tình huống luyện tập', [
+            'Tình huống 1: Video người nổi tiếng kêu gọi đầu tư, đăng bởi tài khoản không chính thức, có link trong mô tả. Vùng rủi ro: tài chính. Hành động an toàn: không bấm link, kiểm tra kênh chính thức và thông tin pháp lý.',
+            'Tình huống 2: Ảnh nhạy cảm được nói là của bạn học lan trong nhóm lớp. Vùng rủi ro: danh dự và an toàn cá nhân. Hành động an toàn: không lưu, không gửi tiếp, báo người có trách nhiệm.',
+            'Tình huống 3: Clip 10 giây gây phẫn nộ, không có nguồn gốc, kêu gọi bêu tên. Vùng rủi ro: tin giả xã hội. Hành động an toàn: không chia sẻ, truy nguồn, không tham gia tấn công cá nhân.',
+            'Tình huống 4: Người quen online hai tuần xin tiền vì sự cố và yêu cầu giữ bí mật. Vùng rủi ro: quan hệ và danh tính giả. Hành động an toàn: không chuyển tiền, trao đổi với người tin cậy, xác minh qua kênh độc lập.',
+            'Tình huống 5: Lời mời việc nhẹ lương cao yêu cầu phí giữ chỗ và ảnh căn cước. Vùng rủi ro: việc làm giả và thu thập dữ liệu. Hành động an toàn: kiểm tra tổ chức chính thức, không nộp phí hoặc gửi giấy tờ khi chưa xác minh.',
           ], [
-            'Deepfake không chỉ lừa cá nhân — nó có thể ảnh hưởng đến cả cộng đồng và xã hội.',
-          ]),
-          lesson('5.3.2', 'Clip ngắn gây phẫn nộ', [
-            'Clip ngắn là định dạng rất dễ lan truyền. Nó có thể: cắt mất phần trước và sau, thiếu bối cảnh, dùng phụ đề dẫn dắt, gắn chú thích sai, ghép âm thanh khác, được đăng lại từ sự kiện cũ.',
-            'Khi clip làm bạn giận ngay lập tức, hãy Pause. Hãy hỏi: clip dài bao nhiêu? Có bản đầy đủ không? Ai đăng đầu tiên? Sự việc xảy ra ở đâu, khi nào? Có nguồn độc lập xác nhận không? Có ai đang kêu gọi tấn công hoặc bêu tên không?',
-          ], [
-            'Phẫn nộ là cảm xúc thật, nhưng chưa chắc dựa trên bối cảnh thật.',
-          ]),
-          lesson('5.3.3', 'Sai bối cảnh có thể nguy hiểm như giả', [
-            'Một video thật đặt sai bối cảnh có thể gây hiểu nhầm rất mạnh. Ví dụ: video cũ được đăng như sự kiện mới, video ở quốc gia khác được nói là ở Việt Nam, clip hậu trường được nói là vụ việc thật, ảnh thiên tai cũ được dùng để kêu gọi quyên góp giả, video xung đột cũ được dùng để kích động nhóm người hiện tại.',
-            'Trong các tình huống này, câu hỏi "có phải deepfake không?" chưa đủ. Câu hỏi đúng hơn là: nội dung này có đang kể đúng câu chuyện về thời gian, địa điểm và người liên quan không?',
-          ], [
-            'Video thật bị dùng sai bối cảnh có thể gây hại không kém video giả.',
-          ]),
-          lesson('5.3.4', 'Liar\'s dividend: khi sự thật bị gọi là deepfake', [
-            'Deepfake còn tạo ra một rủi ro ngược. Khi mọi người biết rằng video và giọng nói có thể bị giả, một người có thể phủ nhận nội dung thật bằng cách nói: "Đó là deepfake." Hiện tượng này được gọi là liar\'s dividend.',
-            'Điều này làm việc tìm sự thật khó hơn. Vì vậy, chúng ta không nên dùng từ "deepfake" như một cách phủ nhận mọi nội dung mình không thích.',
-            'Nếu muốn nói có trách nhiệm, hãy dùng các câu: "Tôi chưa thấy nguồn gốc rõ.", "Cần kiểm chứng thêm.", "Chưa có đủ bằng chứng để kết luận.", "Cần xem bản đầy đủ.", "Cần nguồn độc lập xác nhận." — thay vì "Giả hết." hoặc "Thật 100%."',
-          ], [
-            'Liar\'s dividend: deepfake khiến người ta dễ phủ nhận cả nội dung thật. Không dùng "deepfake" như một cách phủ nhận mọi thứ mình không thích.',
-          ]),
-          lesson('5.3.5', 'Quy tắc chia sẻ có trách nhiệm', [
-            'Trước khi chia sẻ một nội dung xã hội gây sốc, hãy hỏi: Mình có biết nguồn gốc không? Có nguồn độc lập xác nhận không? Nội dung có thể làm hại ai không? Có đang bêu tên, lộ mặt, lộ địa chỉ người chưa được xác minh không?',
-            'Có lời kêu gọi tấn công, trả thù, xúc phạm không? Nếu nội dung sai, hậu quả là gì? Mình chia sẻ để giúp kiểm chứng hay để xả cảm xúc?',
-            'Nếu chưa chắc, bạn có thể: không chia sẻ; chỉ gửi riêng cho người có chuyên môn hoặc người có trách nhiệm để hỏi; chia sẻ nguồn kiểm chứng thay vì clip gốc; viết rõ "chưa xác minh" nếu cần thảo luận — nhưng tốt nhất vẫn không lan truyền nội dung gây hại.',
-          ], [
-            'Trong vấn đề xã hội, chia sẻ nhanh có thể làm sai lan nhanh hơn đúng.',
-            'Bảy câu hỏi trước khi chia sẻ: nguồn gốc, xác nhận độc lập, có gây hại không, có bêu tên không, có kêu gọi tấn công không, hậu quả nếu sai, chia sẻ để làm gì.',
+            'Điểm chung của năm tình huống là có người muốn bạn hành động nhanh trước khi kiểm tra đủ.',
           ]),
         ],
-        checkpoint: null,
+        checkpoint: checkpoint('5.5 Kiểm tra cuối module', [
+          q('Một clip ngắn gây phẫn nộ không có nguồn gốc rõ ràng. Phản ứng phù hợp nhất là gì?', ['Chia sẻ ngay để cảnh báo mọi người.', 'Không chia sẻ, truy nguồn và tránh bêu tên.', 'Bình luận thật mạnh để gây chú ý.', 'Tải về rồi gửi vào nhiều nhóm.'], 1),
+          q('Trong quan hệ online, dấu hiệu nào cho thấy rủi ro cao?', ['Người kia tôn trọng việc xác minh.', 'Người kia quen chưa lâu nhưng xin tiền và yêu cầu giữ bí mật.', 'Người kia không hỏi thông tin cá nhân.', 'Người kia đồng ý gặp ở nơi công cộng.'], 1),
+          q('Lời mời việc làm nào đáng nghi nhất?', ['Có thông tin công khai trên website chính thức.', 'Yêu cầu phí giữ chỗ và ảnh căn cước trước khi xác minh tổ chức.', 'Có quy trình phỏng vấn rõ ràng.', 'Dùng email tên miền chính thức của tổ chức.'], 1),
+          q('Câu nào thể hiện tư duy Deepfense tốt nhất?', ['Không tin bất kỳ nội dung nào trên Internet.', 'Chỉ tin khi video có nhiều lượt xem.', 'Kiểm tra nguồn, bối cảnh và yêu cầu hành động trước khi quyết định.', 'Thấy nghi thì kết luận ngay là AI.'], 2),
+        ]),
       },
-      // ── M5-53-E ──────────────────────────────────────────────────
-      // ── M5-54-S ──────────────────────────────────────────────────
-      {
-        title: '5.4 Tình cảm, việc làm, học bổng, đầu tư và danh tính số',
-        lessons: [
-          lesson('5.4.0', 'Mục tiêu bài học 5.4', [
-            'Sau phần 5.4, bạn sẽ nhận diện rủi ro deepfake và AI trong tình cảm và danh tính giả.',
-            'Bạn sẽ biết cảnh giác với hồ sơ việc làm, học bổng, tuyển dụng và đầu tư giả; biết kiểm tra danh tính số ở mức cơ bản; và biết bảo vệ dữ liệu cá nhân khi tương tác với người hoặc tổ chức mới trên mạng.',
-          ], [
-            'Rủi ro deepfake không dừng ở tiền bạc và tin tức — nó còn len vào tình cảm, việc làm và danh tính số.',
-          ]),
-          lesson('5.4.1', 'Tình cảm và danh tính giả', [
-            'Không phải mọi người bạn gặp online đều là người họ nói. Kẻ xấu có thể dùng ảnh AI, video ngắn dựng sẵn, giọng nói giả, hồ sơ mạng xã hội giả, câu chuyện đời tư cảm động, hoặc tài khoản có vẻ hoạt động lâu nhưng thực ra được xây dựng để lừa.',
-            'Kịch bản thường gặp: làm quen → tạo cảm giác thân thiết nhanh → tâm sự chuyện khó khăn → hứa hẹn tình cảm hoặc cơ hội → xin tiền, nhờ nhận hộ tiền, gửi link, yêu cầu ảnh nhạy cảm hoặc giấy tờ.',
-            'Dấu hiệu đỏ: quá hoàn hảo, quá nhanh, quá bí mật; né gọi video thật hoặc chỉ gọi rất ngắn; có nhiều lý do không gặp trực tiếp; xin tiền vì sự cố liên tục; yêu cầu giữ bí mật; yêu cầu ảnh nhạy cảm; gửi link nhận quà hoặc phí hải quan.',
-            'Phản ứng an toàn: không gửi tiền cho người chỉ quen online; không gửi ảnh nhạy cảm hoặc giấy tờ cá nhân; không bấm link nhận quà; nói chuyện với người tin cậy nếu bị gây áp lực; nếu bị tống tiền, lưu bằng chứng và tìm hỗ trợ — không tự xử lý một mình.',
-          ], [
-            'Mối quan hệ online phát triển quá nhanh, quá bí mật và kết thúc bằng yêu cầu tiền — là dấu hiệu đỏ rõ ràng.',
-          ]),
-          lesson('5.4.2', 'Việc làm và học bổng giả', [
-            'AI có thể làm các lời mời việc làm hoặc học bổng trông chuyên nghiệp hơn: website đẹp, người tư vấn có ảnh đại diện AI, video giới thiệu giả, email trông giống tổ chức thật, giấy mời và logo bị làm giả.',
-            'Kịch bản thường gặp: việc nhẹ lương cao, học bổng dễ nhận, phí giữ chỗ, phí xử lý hồ sơ, yêu cầu gửi giấy tờ cá nhân trước khi xác minh tổ chức, yêu cầu tải app hoặc tham gia nhóm riêng.',
-            'Dấu hiệu đỏ: cam kết quá dễ; không có website hoặc tổ chức rõ ràng; email dùng tên miền lạ; không có địa chỉ, người phụ trách hoặc điều khoản minh bạch; yêu cầu phí trước; yêu cầu giấy tờ nhạy cảm quá sớm; gây áp lực "chỉ còn hôm nay".',
-            'Phản ứng an toàn: kiểm tra website chính thức của tổ chức; tìm thông tin tuyển dụng từ nguồn chính thức; gọi hoặc email theo thông tin tự tìm được — không chỉ dùng thông tin trong tin nhắn; không gửi giấy tờ cá nhân khi chưa xác minh; không đóng phí qua tài khoản cá nhân lạ.',
-          ], [
-            'Việc nhẹ lương cao cộng với phí trước và giấy tờ cá nhân sớm — là bộ ba dấu hiệu đỏ của việc làm hoặc học bổng giả.',
-          ]),
-          lesson('5.4.3', 'Đầu tư, khóa học và "chuyên gia" AI', [
-            'Deepfake có thể làm "chuyên gia" giả trông rất thật. Một người có thể xuất hiện trong video với gương mặt đáng tin, giọng nói tự tin, biểu đồ lợi nhuận, ảnh chụp tài khoản, học viên và bình luận khen ngợi, hoặc video người nổi tiếng "ủng hộ".',
-            'Nhưng các dấu hiệu đỏ vẫn quen thuộc: lợi nhuận chắc chắn, không rủi ro, bảo mật công thức, không cho hỏi nhiều, ép nạp tiền, khoe kết quả quá tốt, tạo nhóm kín để thúc ép, dùng người nổi tiếng làm mồi.',
-          ], [
-            'Một video chuyên nghiệp không biến một lời hứa tài chính thành đáng tin.',
-          ]),
-          lesson('5.4.4', 'Bảo vệ danh tính số của bạn', [
-            'Bạn không thể biến mình thành vô hình trên Internet. Nhưng bạn có thể giảm dữ liệu mà kẻ xấu dùng để mạo danh hoặc lừa người khác.',
-            'Hãy cân nhắc: không công khai số điện thoại, email chính hoặc địa chỉ nhà; hạn chế đăng giấy tờ, thẻ học sinh hoặc sinh viên, vé máy bay, lịch trình; cẩn thận với video giọng nói dài công khai; kiểm tra quyền riêng tư của tài khoản mạng xã hội.',
-            'Không chấp nhận kết bạn bừa bãi nếu tài khoản chứa nhiều thông tin cá nhân. Bật xác thực hai lớp cho tài khoản quan trọng. Dùng mật khẩu mạnh, không dùng lại mật khẩu. Cảnh báo người thân nếu tài khoản của bạn bị chiếm quyền.',
-          ], [
-            'Danh tính số của bạn là tài sản. Bảo vệ nó không phải vì sợ Internet, mà vì bạn muốn Internet khó bị dùng để chống lại mình.',
-          ]),
-        ],
-        checkpoint: null,
-      },
-      // ── M5-54-E ──────────────────────────────────────────────────
-      // ── M5-55-S ──────────────────────────────────────────────────
-      {
-        title: '5.5 Thực hành: Bản đồ rủi ro đời sống số',
-        lessons: [
-          lesson('5.5.0', 'Hướng dẫn thực hành', [
-            'Bạn sẽ nhận 5 tình huống. Với mỗi tình huống, hãy xác định: vùng rủi ro chính, dấu hiệu đỏ, bước Deepfense Check quan trọng nhất, và hành động an toàn.',
-            'Mục tiêu: giúp người học áp dụng Deepfense Check vào nhiều bối cảnh đời sống thực tế.',
-          ], [
-            'Deepfake không phải một vấn đề riêng lẻ. Nó là lớp mạo danh có thể phủ lên tiền bạc, danh dự, tình cảm, học tập, việc làm và niềm tin xã hội.',
-          ]),
-          lesson('5.5.1', 'Tình huống 1: Video đầu tư của người nổi tiếng', [
-            'Tình huống: Một video người nổi tiếng kêu gọi tham gia ứng dụng đầu tư. Link đăng ký nằm trong mô tả. Tài khoản đăng không phải tài khoản chính thức.',
-            'Vùng rủi ro: lừa đảo tài chính/đầu tư. Dấu hiệu đỏ: người nổi tiếng, link lạ, tài khoản không chính thức, lời hứa tài chính.',
-            'Bước quan trọng nhất: Verify và Trace. Hành động an toàn: không bấm link, kiểm tra kênh chính thức, cảnh báo người thân nếu cần.',
-          ], [
-            'Video đầu tư từ tài khoản không chính thức: không bấm link, kiểm tra kênh chính thức trước.',
-          ]),
-          lesson('5.5.2', 'Tình huống 2: Ảnh nhạy cảm trong nhóm lớp', [
-            'Tình huống: Một ảnh nhạy cảm được nói là của bạn học. Nhiều người đang xin ảnh và gửi tiếp.',
-            'Vùng rủi ro: học đường/danh dự/hình ảnh nhạy cảm. Dấu hiệu đỏ: nội dung nhạy cảm, lan truyền trong nhóm, có thể gây hại người trong ảnh.',
-            'Bước quan trọng nhất: Pause và Decide. Hành động an toàn: không lưu, không gửi tiếp, báo cáo, nhắc dừng lan truyền, tìm người có trách nhiệm.',
-          ], [
-            'Ảnh nhạy cảm trong nhóm: dừng ngay, không gửi tiếp, báo người có trách nhiệm.',
-          ]),
-          lesson('5.5.3', 'Tình huống 3: Clip gây phẫn nộ', [
-            'Tình huống: Một clip 10 giây được chia sẻ với chú thích "vừa xảy ra ở thành phố mình". Không có nguồn gốc, nhưng nhiều người kêu gọi bêu tên người trong clip.',
-            'Vùng rủi ro: tin giả xã hội/sai bối cảnh. Dấu hiệu đỏ: clip ngắn, không nguồn, gây phẫn nộ, kêu gọi bêu tên.',
-            'Bước quan trọng nhất: Trace và Decide. Hành động an toàn: không chia sẻ, tìm nguồn và bản đầy đủ nếu cần, không bêu tên.',
-          ], [
-            'Clip ngắn gây phẫn nộ không rõ nguồn: không chia sẻ, không bêu tên — truy nguồn trước.',
-          ]),
-          lesson('5.5.4', 'Tình huống 4: Người quen online xin tiền', [
-            'Tình huống: Một người quen qua mạng được 2 tuần nói đang gặp sự cố và cần bạn chuyển tiền. Hồ sơ của họ có ảnh đẹp, ít bạn bè thật và thường né gặp mặt.',
-            'Vùng rủi ro: tình cảm/danh tính giả. Dấu hiệu đỏ: tạo thân thiết nhanh, xin tiền, né gặp, hồ sơ đáng nghi.',
-            'Bước quan trọng nhất: Verify. Hành động an toàn: không chuyển tiền, không gửi thông tin nhạy cảm, trao đổi với người tin cậy.',
-          ], [
-            'Người quen online 2 tuần xin tiền: dừng lại, xác minh danh tính qua kênh độc lập trước khi làm bất cứ điều gì.',
-          ]),
-          lesson('5.5.5', 'Tình huống 5: Việc làm lương cao + Chấm điểm gợi ý', [
-            'Tình huống: Một tài khoản tuyển dụng gửi lời mời việc nhẹ lương cao, yêu cầu nộp phí giữ chỗ và gửi ảnh căn cước.',
-            'Vùng rủi ro: việc làm/hồ sơ giả/thu thập dữ liệu. Dấu hiệu đỏ: việc nhẹ lương cao, phí trước, giấy tờ cá nhân, tài khoản không rõ.',
-            'Bước quan trọng nhất: Verify và Decide. Hành động an toàn: kiểm tra tổ chức chính thức, không nộp phí hoặc gửi giấy tờ khi chưa xác minh.',
-            'Chấm điểm gợi ý — mỗi tình huống tối đa 4 điểm: xác định đúng vùng rủi ro (1đ), chọn được ít nhất 2 dấu hiệu đỏ (1đ), chọn bước Deepfense Check phù hợp (1đ), chọn hành động an toàn (1đ). Tổng điểm tối đa: 20.',
-          ], [
-            'Deepfake nguy hiểm không chỉ vì nó giả. Nó nguy hiểm vì nó xuất hiện trong những việc rất thật: tiền thật, danh dự thật, nỗi sợ thật, tình cảm thật và hậu quả thật.',
-            'Module 6 tiếp theo: Deepfense Shield, family code, money delay, two-channel rule, no shame reporting, evidence first và capstone cuối khóa.',
-          ]),
-        ],
-        checkpoint: null,
-      },
-      // ── M5-55-E ──────────────────────────────────────────────────
     ],
     quiz: [
-      q('Một giọng nói giống người thân yêu cầu bạn chuyển tiền ngay vào tài khoản tên người lạ. Hành động an toàn nhất là gì?', ['Chuyển ngay vì giọng giống.', 'Gọi lại số đã lưu hoặc xác minh qua người thân khác.', 'Gửi trước một khoản nhỏ.', 'Hỏi lại trong cùng cuộc gọi rồi chuyển.'], 1),
-      q('Dấu hiệu nào đáng nghi nhất trong một yêu cầu từ "sếp"?', ['Sếp nói giọng nghiêm túc.', 'Yêu cầu bỏ qua quy trình chuyển tiền vì đang gấp.', 'Tin nhắn được gửi vào buổi sáng.', 'Câu chữ ngắn gọn.'], 1),
-      q('Người tự xưng ngân hàng yêu cầu đọc OTP để khóa giao dịch lạ. Bạn nên làm gì?', ['Đọc OTP nếu họ biết tên bạn.', 'Không đọc OTP, tự liên hệ kênh chính thức của ngân hàng.', 'Đọc một nửa mã.', 'Gửi OTP qua tin nhắn cho chắc.'], 1),
-      q('Một video người nổi tiếng kêu gọi đầu tư xuất hiện ở tài khoản lạ, có link đăng ký. Bạn nên đánh giá thế nào?', ['An toàn nếu video trông thật.', 'Rủi ro cao, cần kiểm tra kênh chính thức và không bấm link.', 'An toàn nếu nhiều bình luận khen.', 'Chỉ cần xem video đủ lâu.'], 1),
-      q('Điều nào sau đây là dấu hiệu đỏ của app/link giả?', ['Yêu cầu tải app qua link chat và cấp quyền lạ.', 'Website chính thức do bạn tự nhập địa chỉ.', 'App ngân hàng đã cài từ store chính thức.', 'Tổng đài lấy từ mặt sau thẻ ngân hàng.'], 0),
-      q('Câu nào đúng nhất?', ['Deepfake chỉ gây hại khi nạn nhân là người nổi tiếng.', 'Người bình thường cũng có thể bị mạo danh hoặc bị dùng giọng/hình ảnh để lừa người thân.', 'Nếu không đăng video công khai thì không bao giờ gặp rủi ro.', 'Lừa đảo tài chính không liên quan đến deepfake.'], 1),
-      q('Một người tự xưng cơ quan chức năng yêu cầu bạn chuyển tiền vào "tài khoản an toàn". Bạn nên làm gì?', ['Chuyển để chứng minh trong sạch.', 'Không chuyển, dừng cuộc gọi và xác minh qua kênh chính thức.', 'Chuyển một nửa.', 'Làm theo vì họ có quyền lực.'], 1),
-      q('Tại sao bình luận tích cực dưới video đầu tư không đủ đáng tin?', ['Vì bình luận có thể đến từ seeding, tài khoản giả hoặc người chưa kiểm chứng.', 'Vì mọi bình luận đều sai.', 'Vì bình luận không có dấu câu.', 'Vì chỉ video dài mới đáng tin.'], 0),
-      q('Trong tình huống tài chính, bước nào thường quan trọng nhất khi có người quen yêu cầu tiền?', ['Verify qua kênh độc lập.', 'Chọn ảnh đại diện đẹp.', 'Xem bình luận.', 'Đổi nhạc chuông.'], 0),
-      q('Bạn có cần chứng minh 100% một video là deepfake mới được từ chối bấm link đầu tư không?', ['Có.', 'Không. Nếu rủi ro cao và chưa xác minh, bạn có thể từ chối.', 'Có, nếu video nhiều lượt xem.', 'Không, nhưng nên bấm thử để biết.'], 1),
+      q('Trong Module 5, vì sao deepfake được xem là một rủi ro đời sống số?', ['Vì nó chỉ xuất hiện trong phim.', 'Vì nó có thể gắn với tiền bạc, danh dự, quan hệ, tin tức và danh tính cá nhân.', 'Vì nó luôn dễ nhận ra.', 'Vì nó không liên quan đến hành vi con người.'], 1),
+      q('Bốn tín hiệu hành vi quan trọng cần chú ý là gì?', ['Màu sắc, âm lượng, độ dài, độ phân giải.', 'Gấp gáp, cô lập, áp lực cảm xúc, chuyển hướng kiểm soát.', 'Like, share, comment, follow.', 'Tên file, dung lượng, thiết bị, trình duyệt.'], 1),
+      q('Khi có yêu cầu chuyển tiền từ người quen qua giọng nói hoặc video, bước quan trọng nhất là gì?', ['Verify qua kênh độc lập.', 'Tin vào cảm giác thân quen.', 'Hỏi thêm trong cùng cuộc gọi.', 'Chuyển khoản thử một ít.'], 0),
+      q('Với nội dung nhạy cảm nghi là ghép của người khác, hành động nào đúng nhất?', ['Không lưu, không gửi tiếp, báo người có trách nhiệm.', 'Gửi cho bạn thân kiểm tra.', 'Đăng lại để hỏi cộng đồng.', 'Bình luận đùa để giảm căng thẳng.'], 0),
+      q('Một nội dung gây phẫn nộ thường cần được xử lý thế nào?', ['Chia sẻ trước, kiểm tra sau.', 'Kiểm tra nguồn và bối cảnh trước khi chia sẻ.', 'Tin nếu nhiều người đang tức giận.', 'Bêu tên người trong clip ngay.'], 1),
+      q('“Nội dung thật bị gọi là giả” nguy hiểm vì điều gì?', ['Vì nó làm suy yếu niềm tin và có thể giúp người sai né trách nhiệm.', 'Vì mọi nội dung thật đều vô hại.', 'Vì không ai cần bằng chứng.', 'Vì AI không thể tạo nội dung giả.'], 0),
+      q('Trong lời mời học bổng hoặc việc làm, dấu hiệu đỏ là gì?', ['Thông tin minh bạch trên website chính thức.', 'Phí giữ chỗ, yêu cầu giấy tờ quá sớm và tên miền liên hệ lạ.', 'Quy trình xét duyệt rõ ràng.', 'Có người phụ trách công khai.'], 1),
+      q('Bảo vệ danh tính số nghĩa là gì?', ['Xóa toàn bộ Internet.', 'Giảm dữ liệu dễ bị lạm dụng để mạo danh bạn.', 'Đăng càng nhiều càng tốt.', 'Chỉ đổi ảnh đại diện.'], 1),
     ],
   },
 
-  // ── MODULE 6 ─────────────────────────────────────────────────────
   {
     id: 6, part: 'recognition',
     title: 'Phòng vệ cá nhân và cộng đồng',
