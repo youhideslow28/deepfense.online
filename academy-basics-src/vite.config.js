@@ -21,8 +21,8 @@ export default defineConfig({
         background_color: '#0a0a0a',
         display: 'standalone',
         orientation: 'any',
-        start_url: '/academy/basics/',
-        scope: '/academy/basics/',
+        start_url: '/',
+        scope: '/',
         lang: 'vi',
         categories: ['education'],
         icons: [
@@ -82,12 +82,8 @@ export default defineConfig({
             },
           },
         ],
-        // SPA fallback — any navigation within scope returns index.html
-        navigateFallback: '/academy/basics/index.html',
-        navigateFallbackDenylist: [
-          // Don't intercept routes outside this app's scope
-          /^\/(?!academy\/basics)/,
-        ],
+        // SPA fallback
+        navigateFallback: '/index.html',
         // Skip waiting — activate new SW immediately
         skipWaiting: true,
         clientsClaim: true,
@@ -99,9 +95,9 @@ export default defineConfig({
     }),
   ],
 
-  base: '/academy/basics/',
+  base: '/',
   build: {
-    outDir: path.resolve(__dirname, '../public/academy/basics'),
+    outDir: path.resolve(__dirname, 'dist'),
     emptyOutDir: true,
     target: 'esnext',
     minify: 'esbuild',
