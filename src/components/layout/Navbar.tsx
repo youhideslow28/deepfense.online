@@ -4,11 +4,10 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Bot, Coins, Cpu, GraduationCap, Home, Info, LogIn, Menu, Power, Smartphone, Sun, Swords, UserCircle, X } from 'lucide-react';
+import { Bot, Cpu, GraduationCap, Home, Info, Menu, Power, Smartphone, Sun, Swords, X } from 'lucide-react';
 import type { User } from 'firebase/auth';
 import { Language, Season } from '@/types';
 import type { PerfMode } from '@/hooks/usePerfMode';
-import { useDpfBalance } from '@/features/dpf/useDpfWallet';
 
 interface NavbarProps {
   lang: Language;
@@ -23,13 +22,11 @@ interface NavbarProps {
   onGoogleAuth: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfMode, togglePerfMode, user, authBusy, authError, onGoogleAuth }) => {
+const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfMode, togglePerfMode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { balance: dpfBalance, loading: dpfLoading } = useDpfBalance(user);
-
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -184,11 +181,6 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
   const welcomeText = lang === 'vi'
     ? 'Chào mừng bạn đến với DEEPFENSE 3.0 - nền tảng huấn luyện nhận diện deepfake và tự vệ trước lừa đảo AI'
     : 'Welcome to DEEPFENSE 3.0 - a gamified training platform for deepfake awareness and AI scam defense';
-
-  const authLabel = user
-    ? (user.displayName?.split(' ')[0] || user.email?.split('@')[0] || 'Profile')
-    : (lang === 'vi' ? 'Đăng nhập' : 'Sign in');
-  const dpfBalanceLabel = dpfLoading ? '...' : dpfBalance.toLocaleString('en-US');
 
   const isActivePath = (path: string) => (
     location.pathname === path
@@ -375,27 +367,6 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
               )}
               </div>
 
-              <button
-                onClick={onGoogleAuth}
-                disabled={authBusy}
-                title={user?.email || (lang === 'vi' ? 'Đăng nhập hoặc tạo tài khoản' : 'Sign in or create account')}
-                className="hidden max-w-[250px] items-center gap-1.5 rounded-lg border border-primary/20 bg-primary/10 px-3 py-2 font-mono text-[10px] font-black uppercase tracking-widest text-primary transition-all duration-300 hover:border-primary/40 hover:bg-primary/20 disabled:cursor-wait disabled:opacity-60 lg:flex"
-              >
-                {user ? <UserCircle size={12} /> : <LogIn size={12} />}
-                <span className="truncate">{authBusy ? (lang === 'vi' ? 'ĐANG XỬ LÝ' : 'WORKING') : authLabel}</span>
-                {user && (
-                  <span className="ml-1 inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[9px] text-amber-200">
-                    <Coins size={10} /> {dpfBalanceLabel}
-                  </span>
-                )}
-              </button>
-
-              {authError && (
-                <div className="absolute right-10 top-[calc(100%+10px)] w-56 rounded-lg border border-red-500/20 bg-red-950/90 px-3 py-2 font-mono text-[10px] font-bold text-red-200 shadow-xl lg:right-0">
-                  {authError}
-                </div>
-              )}
-
               <button className="p-2 text-gray-400 transition-colors hover:text-white lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
@@ -421,21 +392,6 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                   </button>
                 );
               })}
-              <div className="mt-2 border-t border-white/5 pt-2">
-                <button
-                  onClick={onGoogleAuth}
-                  disabled={authBusy}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/10 px-4 py-3 font-mono text-[11px] font-black uppercase tracking-widest text-primary disabled:opacity-60"
-                >
-                  {user ? <UserCircle size={13} /> : <LogIn size={13} />}
-                  <span className="truncate">{authBusy ? (lang === 'vi' ? 'ĐANG XỬ LÝ' : 'WORKING') : authLabel}</span>
-                  {user && (
-                    <span className="inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[9px] text-amber-200">
-                      <Coins size={10} /> {dpfBalanceLabel} DPF
-                    </span>
-                  )}
-                </button>
-              </div>
             </div>
           </div>
         )}
