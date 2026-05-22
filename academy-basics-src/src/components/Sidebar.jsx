@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MODULES } from '../data/course.js';
 
 export default function Sidebar({ isOpen, onClose, currentLesson, completedLessons, onSelectLesson, lessonIndex, onHome }) {
+  const activeLessonRef = useRef(null);
   const [openModules, setOpenModules] = useState(() => {
     const init = {};
     if (currentLesson) init[currentLesson.moduleId] = true;
     else init[0] = true;
     return init;
   });
+
+  useEffect(() => {
+    if (!currentLesson) return;
+    setOpenModules(prev => ({ ...prev, [currentLesson.moduleId]: true }));
+  }, [currentLesson?.moduleId]);
+
+  useEffect(() => {
+    if (!currentLesson) return;
+    requestAnimationFrame(() => {
+      activeLessonRef.current?.scrollIntoView({
+        block: 'center',
+        inline: 'nearest',
+        behavior: 'smooth',
+      });
+    });
+  }, [currentLesson?.lesson?.id]);
 
   function toggleModule(id) {
     setOpenModules(prev => ({ ...prev, [id]: !prev[id] }));
@@ -85,6 +102,7 @@ export default function Sidebar({ isOpen, onClose, currentLesson, completedLesso
                         return (
                           <button
                             key={les.id}
+                            ref={isActive ? activeLessonRef : null}
                             className={`sidebar-lesson ${isActive ? 'active' : ''} ${isDone ? 'done' : ''}`}
                             onClick={() => onSelectLesson(mod.id, les.id)}
                           >
