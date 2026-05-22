@@ -52,9 +52,37 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
   const HOLD_MS = 4000;
   const [holdProgress, setHoldProgress] = useState(0); // 0..1
   const [perfToast, setPerfToast] = useState<{ msg: string; lite: boolean } | null>(null);
+  const [showPerfHint, setShowPerfHint] = useState(false);
   const holdTimerRef = useRef<number | null>(null);
   const holdRafRef = useRef<number | null>(null);
   const holdStartRef = useRef<number>(0);
+
+  // Hint "Giữ 4s..." auto-hiện lần đầu trên mobile
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const isMobile = window.matchMedia?.('(pointer: coarse)').matches || window.innerWidth < 768;
+    if (!isMobile) return;
+    try {
+      if (window.localStorage.getItem('df_perf_hint_seen') === '1') return;
+    } catch { /* ignore */ }
+    const id = window.setTimeout(() => setShowPerfHint(true), 1200);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  // Auto-dismiss hint sau 8s, ghi localStorage
+  useEffect(() => {
+    if (!showPerfHint) return;
+    const id = window.setTimeout(() => {
+      setShowPerfHint(false);
+      try { window.localStorage.setItem('df_perf_hint_seen', '1'); } catch { /* ignore */ }
+    }, 8000);
+    return () => window.clearTimeout(id);
+  }, [showPerfHint]);
+
+  const dismissPerfHint = () => {
+    setShowPerfHint(false);
+    try { window.localStorage.setItem('df_perf_hint_seen', '1'); } catch { /* ignore */ }
+  };
 
   const clearHold = () => {
     if (holdTimerRef.current !== null) {
@@ -75,6 +103,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
 
   const startHold = () => {
     if (holdTimerRef.current !== null) return; // đang giữ
+    dismissPerfHint();
     holdStartRef.current = performance.now();
     const tick = () => {
       const elapsed = performance.now() - holdStartRef.current;
@@ -217,6 +246,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
                 ))}
               </div>
 
+              <div className="relative">
               <button
                 onPointerDown={startHold}
                 onPointerUp={clearHold}
@@ -254,6 +284,56 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
                     : <Sparkles size={15} className="text-gray-400 transition-colors group-hover:text-primary" />}
                 </div>
               </button>
+
+              {/* Tooltip hướng dẫn — chỉ trên mobile, lần đầu */}
+              {showPerfHint && !perfToast && (
+                <div className="pointer-events-none absolute right-0 top-full z-[110] mt-3 w-64 origin-top-right animate-in fade-in slide-in-from-top-2 duration-300 lg:hidden">
+                  {/* Mũi tên trỏ lên nút */}
+                  <div className="absolute -top-1.5 right-3 h-3 w-3 rotate-45 border-l border-t border-emerald-400/40 bg-emerald-950/95" />
+                  <div className="pointer-events-auto relative flex items-start gap-2 rounded-xl border border-emerald-400/40 bg-emerald-950/95 px-3 py-2.5 shadow-2xl">
+                    <Smartphone size={14} className="mt-0.5 shrink-0 text-emerald-300" />
+                    <div className="flex-1 font-mono text-[10.5px] leading-snug text-emerald-50">
+                      {lang === 'vi'
+                        ? 'Giữ nút này 4 giây để bật chế độ cấu hình thấp — web sẽ mượt hơn trên điện thoại.'
+                        : 'Hold this button for 4s to enable Lite mode — smoother on mobile.'}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={dismissPerfHint}
+                      className="ml-1 -mr-1 -mt-1 shrink-0 rounded-full p-1 text-emerald-300/70 transition-colors hover:bg-white/10 hover:text-white"
+                      aria-label={lang === 'vi' ? 'Đóng' : 'Close'}
+                    >
+                      <X size={12} />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Toast kết quả — chỉ trên mobile, neo cạnh nút */}
+              {perfToast && (
+                <div className="pointer-events-none absolute right-0 top-full z-[110] mt-3 w-64 origin-top-right animate-in fade-in slide-in-from-top-2 duration-300 lg:hidden">
+                  <div className={`absolute -top-1.5 right-3 h-3 w-3 rotate-45 border-l border-t ${perfToast.lite ? 'border-emerald-400/40 bg-emerald-950/95' : 'border-primary/30 bg-zinc-900/95'}`} />
+                  <div className={`pointer-events-auto relative flex items-start gap-2 rounded-xl border px-3 py-2.5 shadow-2xl ${
+                    perfToast.lite
+                      ? 'border-emerald-400/40 bg-emerald-950/95 text-emerald-50'
+                      : 'border-primary/30 bg-zinc-900/95 text-gray-100'
+                  }`}>
+                    {perfToast.lite
+                      ? <Smartphone size={14} className="mt-0.5 shrink-0 text-emerald-300" />
+                      : <Sparkles size={14} className="mt-0.5 shrink-0 text-primary" />}
+                    <div className="flex-1 font-mono text-[10.5px] leading-snug">{perfToast.msg}</div>
+                    <button
+                      type="button"
+                      onClick={() => setPerfToast(null)}
+                      className="ml-1 -mr-1 -mt-1 shrink-0 rounded-full p-1 text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
+                      aria-label={lang === 'vi' ? 'Đóng' : 'Close'}
+                    >
+                      <X size={12} />
+                    </button>
+                  </div>
+                </div>
+              )}
+              </div>
 
               <button
                 onClick={onGoogleAuth}
@@ -321,33 +401,6 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, perfMode, togglePerfMode
         )}
       </div>
 
-      {/* Lite-mode toast — chỉ hiện trên mobile sau khi giữ đủ 4s */}
-      {perfToast && (
-        <div className="pointer-events-none fixed inset-x-0 bottom-24 z-[200] flex justify-center px-4 lg:hidden">
-          <div className={`pointer-events-auto flex max-w-md items-start gap-3 rounded-2xl border px-4 py-3 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-4 duration-300 ${
-            perfToast.lite
-              ? 'border-emerald-400/40 bg-emerald-950/90 text-emerald-50'
-              : 'border-primary/30 bg-zinc-900/95 text-gray-100'
-          }`}>
-            <div className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${perfToast.lite ? 'bg-emerald-500/30' : 'bg-primary/20'}`}>
-              {perfToast.lite
-                ? <Smartphone size={14} className="text-emerald-200" />
-                : <Sparkles size={14} className="text-primary" />}
-            </div>
-            <div className="flex-1 font-mono text-[11px] leading-relaxed">
-              {perfToast.msg}
-            </div>
-            <button
-              type="button"
-              onClick={() => setPerfToast(null)}
-              className="ml-1 -mr-1 -mt-1 shrink-0 rounded-full p-1 text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
-              aria-label={lang === 'vi' ? 'Đóng' : 'Close'}
-            >
-              <X size={14} />
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 };
