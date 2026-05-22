@@ -7,6 +7,7 @@ const DPF_SEASON = 'genesis-2026';
 const MAX_REWARD_AMOUNT = 250;
 const MAX_UNLOCK_COST = 2_000;
 const MAX_ADMIN_GRANT_AMOUNT = 1_000_000;
+const MAX_ADMIN_REVOKE_AMOUNT = 1_000_000;
 
 function getFirebaseAdmin() {
   if (admin.apps.length) return admin.app();
@@ -207,6 +208,108 @@ async function adminGrant(uid, adminUser, payload) {
   });
 }
 
+async function adminRevoke(uid, adminUser, payload) {
+  await requireAdmin(adminUser);
+
+  const amount = Number(payload.amount);
+  if (!Number.isFinite(amount) || amount <= 0 || amount > MAX_ADMIN_REVOKE_AMOUNT) {
+    return { ok: false, code: 'invalid_amount', message: 'Invalid admin DPF coin revoke amount.' };
+  }
+
+  const targetUser = await resolveTargetUser(payload.target);
+  const reason = String(payload.reason || 'Admin revoked DPF coin').trim() || 'Admin revoked DPF coin';
+  const revokeId = String(payload.revokeId || `${targetUser.uid}:admin_revoke:${amount}:${Date.now()}`);
+  const ledgerId = toSafeId(revokeId);
+  const db = admin.firestore();
+  const now = admin.firestore.FieldValue.serverTimestamp();
+  const userRef = db.collection('users').doc(targetUser.uid);
+  const ledgerRef = db.collection('dpf_ledger').doc(ledgerId);
+  const activityRef = db.collection('activity_logs').doc();
+
+  return db.runTransaction(async (transaction) => {
+    const [userSnap, ledgerSnap] = await Promise.all([
+      transaction.get(userRef),
+      transaction.get(ledgerRef),
+    ]);
+
+    if (ledgerSnap.exists) {
+      const data = ledgerSnap.data() || {};
+      return {
+        ok: true,
+        amount: numberOrZero(data.amount),
+        balanceAfter: numberOrZero(data.balanceAfter),
+        ledgerId,
+        alreadyRevoked: true,
+      };
+    }
+
+    const userData = userSnap.exists ? userSnap.data() : {};
+    const balanceBefore = numberOrZero(userData.webBalance);
+    if (balanceBefore < amount) {
+      return {
+        ok: false,
+        code: 'insufficient_balance',
+        message: `Cannot revoke ${amount} DPF coin because this user only has ${balanceBefore}.`,
+      };
+    }
+
+    const balanceAfter = balanceBefore - amount;
+    const bonusBefore = numberOrZero(userData.bonusBalance);
+    const revokedBefore = numberOrZero(userData.revokedBalance);
+
+    transaction.set(userRef, {
+      uid: targetUser.uid,
+      email: targetUser.email || String(payload.target || '').toLowerCase(),
+      displayName: targetUser.displayName || userData.displayName || targetUser.email || targetUser.uid,
+      photoURL: targetUser.photoURL || userData.photoURL || '',
+      role: userData.role || 'user',
+      status: userData.status || 'active',
+      webBalance: balanceAfter,
+      bonusBalance: Math.max(0, bonusBefore - amount),
+      revokedBalance: revokedBefore + amount,
+      updatedAt: now,
+      createdAt: userSnap.exists && userData.createdAt ? userData.createdAt : now,
+    }, { merge: true });
+
+    transaction.set(ledgerRef, {
+      uid: targetUser.uid,
+      direction: 'debit',
+      source: 'admin_revoke',
+      amount,
+      balanceBefore,
+      balanceAfter,
+      status: 'confirmed',
+      reason,
+      metadata: withoutUndefined({
+        targetEmail: targetUser.email || '',
+        revokedBy: adminUser.email || adminUser.uid,
+      }),
+      idempotencyKey: revokeId,
+      createdAt: now,
+      confirmedAt: now,
+    });
+
+    transaction.set(activityRef, {
+      actorId: adminUser.uid,
+      actorEmail: adminUser.email || '',
+      actorRole: 'admin',
+      action: 'admin.dpf_coin_revoked',
+      targetType: 'users',
+      targetId: targetUser.uid,
+      severity: amount >= 1000 ? 'warning' : 'notice',
+      metadata: withoutUndefined({
+        amount,
+        reason,
+        target: targetUser.email || targetUser.uid,
+        ledgerId,
+      }),
+      createdAt: now,
+    });
+
+    return { ok: true, amount, balanceAfter, ledgerId, alreadyRevoked: false };
+  });
+}
+
 async function claimReward(uid, userProfile, payload) {
   const { source, activityId, amount, reason, dailyLimit, minScore, score, metadata = {} } = payload;
   const allowedSources = new Set(['challenge', 'simulator', 'course', 'certificate']);
@@ -400,6 +503,11 @@ export default async function handler(req, res) {
 
     if (action === 'adminGrant') {
       const result = await adminGrant(user.uid, user, req.body?.payload || {});
+      return res.status(result.ok ? 200 : 400).json(result);
+    }
+
+    if (action === 'adminRevoke') {
+      const result = await adminRevoke(user.uid, user, req.body?.payload || {});
       return res.status(result.ok ? 200 : 400).json(result);
     }
 

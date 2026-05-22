@@ -22,6 +22,7 @@ export type DpfLedgerSource =
   | 'course'
   | 'certificate'
   | 'admin_bonus'
+  | 'admin_revoke'
   | 'unlock'
   | 'withdrawal'
   | 'sync';

@@ -298,7 +298,7 @@ export const basicsCourse = {
                   {
                     id: 1,
                     icon: '⏸️',
-                    label: { vi: '⏸️ Pause', en: '⏸️ Pause' },
+                    label: { vi: 'Pause', en: 'Pause' },
                     description: {
                       vi: 'Dừng lại trước khi phản ứng. Không chuyển tiền, không chia sẻ, không kết luận khi còn đang xúc động.',
                       en: 'Stop before reacting. Don\'t transfer money, share, or conclude while still emotionally triggered.',
@@ -307,7 +307,7 @@ export const basicsCourse = {
                   {
                     id: 2,
                     icon: '👁️',
-                    label: { vi: '👁️ Observe', en: '👁️ Observe' },
+                    label: { vi: 'Observe', en: 'Observe' },
                     description: {
                       vi: 'Quan sát dấu hiệu kỹ thuật (hình ảnh, âm thanh) và bối cảnh (ai gửi, yêu cầu gì, vì sao khẩn cấp).',
                       en: 'Observe technical signals (image, audio) and context (who sent it, what they want, why so urgent).',
@@ -316,7 +316,7 @@ export const basicsCourse = {
                   {
                     id: 3,
                     icon: '✅',
-                    label: { vi: '✅ Verify', en: '✅ Verify' },
+                    label: { vi: 'Verify', en: 'Verify' },
                     description: {
                       vi: 'Xác minh qua kênh độc lập: gọi lại số đã lưu, kiểm tra website chính thức, hỏi người thứ ba đáng tin.',
                       en: 'Verify through an independent channel: call back a saved number, check the official website, ask a trusted third party.',
@@ -325,7 +325,7 @@ export const basicsCourse = {
                   {
                     id: 4,
                     icon: '🔍',
-                    label: { vi: '🔍 Trace', en: '🔍 Trace' },
+                    label: { vi: 'Trace', en: 'Trace' },
                     description: {
                       vi: 'Truy nguồn nội dung: tìm bài gốc, kiểm tra lịch đăng, dùng công cụ tìm ảnh ngược hoặc kiểm tra URL.',
                       en: 'Trace the content\'s origin: find the original post, check the upload date, use reverse image search or URL verification.',
@@ -334,7 +334,7 @@ export const basicsCourse = {
                   {
                     id: 5,
                     icon: '🎯',
-                    label: { vi: '🎯 Decide', en: '🎯 Decide' },
+                    label: { vi: 'Decide', en: 'Decide' },
                     description: {
                       vi: 'Ra quyết định ít gây hại nhất: từ chối, báo cáo, hỗ trợ nạn nhân hoặc không hành động thêm.',
                       en: 'Make the least-harmful decision: decline, report, support victims, or take no further action.',
@@ -378,9 +378,9 @@ export const basicsCourse = {
               reward: 1,
               data: {
                 buckets: [
-                  { id: 'normal', icon: '🟢', label: { vi: '🟢 Bình thường', en: '🟢 Normal' } },
-                  { id: 'check',  icon: '🟡', label: { vi: '🟡 Cần kiểm tra', en: '🟡 Check First' } },
-                  { id: 'danger', icon: '🔴', label: { vi: '🔴 Nguy hiểm', en: '🔴 Dangerous' } },
+                  { id: 'normal', icon: '🟢', label: { vi: 'Bình thường', en: 'Normal' } },
+                  { id: 'check',  icon: '🟡', label: { vi: 'Cần kiểm tra', en: 'Check First' } },
+                  { id: 'danger', icon: '🔴', label: { vi: 'Nguy hiểm', en: 'Dangerous' } },
                 ],
                 cards: [
                   {
@@ -585,10 +585,10 @@ export const basicsCourse = {
             reward: 2,
             data: {
               buckets: [
-                { id: 'deepfake', label: { vi: '🎭 Deepfake / Face Swap', en: '🎭 Deepfake / Face Swap' }, icon: '🎭' },
-                { id: 'deepvoice', label: { vi: '🔊 Deepvoice', en: '🔊 Deepvoice' }, icon: '🔊' },
-                { id: 'edited', label: { vi: '✂️ Edited / Repurposed', en: '✂️ Edited / Repurposed' }, icon: '✂️' },
-                { id: 'aigenerated', label: { vi: '🤖 AI-Generated', en: '🤖 AI-Generated' }, icon: '🤖' },
+                { id: 'deepfake', label: { vi: 'Deepfake / Face Swap', en: 'Deepfake / Face Swap' }, icon: '🎭' },
+                { id: 'deepvoice', label: { vi: 'Deepvoice', en: 'Deepvoice' }, icon: '🔊' },
+                { id: 'edited', label: { vi: 'Edited / Repurposed', en: 'Edited / Repurposed' }, icon: '✂️' },
+                { id: 'aigenerated', label: { vi: 'AI-Generated', en: 'AI-Generated' }, icon: '🤖' },
               ],
               cards: [
                 { id: 1, text: { vi: 'Video người nổi tiếng kêu gọi đầu tư crypto — gương mặt và giọng đúng nhưng họ chưa từng phát biểu điều này.', en: 'A celebrity appears to promote a crypto investment — face and voice match but they never said this.' }, correctBucket: 'deepfake', explanation: { vi: 'Mạo danh gương mặt và lời nói người thật → Deepfake.', en: 'Face and speech impersonation of a real person → Deepfake.' } },
@@ -748,7 +748,7 @@ export const basicsCourse = {
                 { id: 2, tag: { vi: '⏰ Áp lực thời gian', en: '⏰ Time Pressure' }, explanation: { vi: '"NGAY" (viết hoa) — chữ hoa tạo cảm giác khẩn cấp giả tạo, kích hoạt hành động vội vàng.', en: '"IMMEDIATELY" (caps) — capitalisation creates artificial urgency, triggering hasty action.' } },
                 { id: 3, tag: { vi: '🔇 Cô lập', en: '🔇 Isolation' }, explanation: { vi: '"Đừng nói cho ai biết" — ngăn bạn xác minh với người khác, cô lập nạn nhân với nguồn trợ giúp.', en: '"Don\'t tell anyone" — prevents you from verifying with others, isolating the victim from help.' } },
                 { id: 4, tag: { vi: '💔 Thao túng cảm xúc', en: '💔 Emotional Manipulation' }, explanation: { vi: '"Xấu hổ lắm" — khai thác cảm xúc xấu hổ để bạn không muốn thảo luận với ai khác.', en: '"I\'m so ashamed" — exploits shame so you won\'t discuss the situation with others.' } },
-                { id: 5, tag: { vi: '⏰ Áp lực thời gian', en: '⏰ Time Pressure' }, explanation: { vi: '"Chỉ còn 30 phút" — deadline giả tạo để bạn hành động trước khi kịp suy nghĩ.', en: '"Only 30 minutes left" — fake deadline to force action before you can think clearly.' } }
+                { id: 5, tag: { vi: '⏰ Đếm ngược giả', en: '⏰ Fake Countdown' }, explanation: { vi: '"Chỉ còn 30 phút" — deadline đếm ngược bịa đặt để ép bạn hành động trước khi kịp suy nghĩ.', en: '"Only 30 minutes left" — fabricated countdown deadline to force action before you can think clearly.' } }
               ]
             } as TagTheTrickData
           } }
@@ -1151,11 +1151,11 @@ export const basicsCourse = {
             reward: 3,
             data: {
               steps: [
-                { id: 1, label: { vi: '⏸️ Pause', en: '⏸️ Pause' }, icon: '⏸️', description: { vi: 'Dừng lại 30 giây. Không làm gì ngay — kể cả không chia sẻ, không chuyển tiền, không trả lời.', en: 'Stop for 30 seconds. Do nothing immediately — no sharing, no transfers, no replies.' } },
-                { id: 2, label: { vi: '👁️ Observe', en: '👁️ Observe' }, icon: '👁️', description: { vi: 'Quan sát kỹ nội dung: dấu hiệu kỹ thuật, ngôn ngữ thao túng, bối cảnh bất thường.', en: 'Examine carefully: technical artifacts, manipulation language, unusual context.' } },
-                { id: 3, label: { vi: '✅ Verify', en: '✅ Verify' }, icon: '✅', description: { vi: 'Xác minh danh tính qua kênh độc lập bạn đã biết từ trước — không dùng link hay số trong tin nhắn.', en: 'Verify identity via an independent channel you already know — not links or numbers from the message.' } },
-                { id: 4, label: { vi: '🔍 Trace', en: '🔍 Trace' }, icon: '🔍', description: { vi: 'Truy tìm nguồn gốc đầu tiên của nội dung — ai đăng đầu tiên, khi nào, ở đâu.', en: 'Trace the original source — who posted first, when, and where.' } },
-                { id: 5, label: { vi: '🎯 Decide', en: '🎯 Decide' }, icon: '🎯', description: { vi: 'Đưa ra quyết định dựa trên thông tin đã kiểm chứng, không dựa trên cảm xúc vội vàng.', en: 'Make a decision based on verified information, not rushed emotions.' } }
+                { id: 1, label: { vi: 'Pause', en: 'Pause' }, icon: '⏸️', description: { vi: 'Dừng lại 30 giây. Không làm gì ngay — kể cả không chia sẻ, không chuyển tiền, không trả lời.', en: 'Stop for 30 seconds. Do nothing immediately — no sharing, no transfers, no replies.' } },
+                { id: 2, label: { vi: 'Observe', en: 'Observe' }, icon: '👁️', description: { vi: 'Quan sát kỹ nội dung: dấu hiệu kỹ thuật, ngôn ngữ thao túng, bối cảnh bất thường.', en: 'Examine carefully: technical artifacts, manipulation language, unusual context.' } },
+                { id: 3, label: { vi: 'Verify', en: 'Verify' }, icon: '✅', description: { vi: 'Xác minh danh tính qua kênh độc lập bạn đã biết từ trước — không dùng link hay số trong tin nhắn.', en: 'Verify identity via an independent channel you already know — not links or numbers from the message.' } },
+                { id: 4, label: { vi: 'Trace', en: 'Trace' }, icon: '🔍', description: { vi: 'Truy tìm nguồn gốc đầu tiên của nội dung — ai đăng đầu tiên, khi nào, ở đâu.', en: 'Trace the original source — who posted first, when, and where.' } },
+                { id: 5, label: { vi: 'Decide', en: 'Decide' }, icon: '🎯', description: { vi: 'Đưa ra quyết định dựa trên thông tin đã kiểm chứng, không dựa trên cảm xúc vội vàng.', en: 'Make a decision based on verified information, not rushed emotions.' } }
               ]
             } as OrderStepsData
           } }
@@ -1310,11 +1310,11 @@ export const basicsCourse = {
             reward: 3,
             data: {
               rules: [
-                { id: 'family-code', label: { vi: '🔑 Mật mã gia đình', en: '🔑 Family Code' }, icon: '🔑' },
-                { id: 'money-delay', label: { vi: '⏳ Trì hoãn 24h', en: '⏳ Money Delay' }, icon: '⏳' },
-                { id: 'dual-channel', label: { vi: '📱 Hai kênh xác minh', en: '📱 Dual Channel' }, icon: '📱' },
-                { id: 'no-shame', label: { vi: '🗣️ Báo cáo không xấu hổ', en: '🗣️ No Shame Reporting' }, icon: '🗣️' },
-                { id: 'evidence-first', label: { vi: '📸 Lưu bằng chứng trước', en: '📸 Evidence First' }, icon: '📸' }
+                { id: 'family-code', label: { vi: 'Mật mã gia đình', en: 'Family Code' }, icon: '🔑' },
+                { id: 'money-delay', label: { vi: 'Trì hoãn 24h', en: 'Money Delay' }, icon: '⏳' },
+                { id: 'dual-channel', label: { vi: 'Hai kênh xác minh', en: 'Dual Channel' }, icon: '📱' },
+                { id: 'no-shame', label: { vi: 'Báo cáo không xấu hổ', en: 'No Shame Reporting' }, icon: '🗣️' },
+                { id: 'evidence-first', label: { vi: 'Lưu bằng chứng trước', en: 'Evidence First' }, icon: '📸' }
               ],
               scenarios: [
                 { id: 1, text: { vi: '"Con" gọi video báo bị tai nạn, yêu cầu chuyển tiền gấp mà không để hỏi thêm.', en: 'Your "child" video calls about an accident and demands urgent money before you can ask questions.' }, correctRule: 'family-code', explanation: { vi: 'Hỏi mật mã gia đình đã thỏa thuận trước — kẻ giả mạo không biết đáp án và sẽ bị lộ.', en: 'Ask for the pre-agreed family code — the impostor won\'t know the answer and will be exposed.' } },

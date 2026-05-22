@@ -238,7 +238,11 @@ const CalloutRenderer: React.FC<{ block: CalloutBlock; lang: Language }> = ({ bl
       )}
       <div>
         {title && <p className={`text-sm font-bold ${s.text} mb-1`}>{title}</p>}
-        <p className="text-sm text-zinc-300 leading-relaxed">{parseInline(content)}</p>
+        <div className="text-sm text-zinc-300 leading-relaxed space-y-1">
+          {content.split('\n').map((line, i) =>
+            line.trim() ? <p key={i}>{parseInline(line)}</p> : null
+          )}
+        </div>
       </div>
     </div>
   );
@@ -364,7 +368,7 @@ const TableRenderer: React.FC<{ block: TableBlock; lang: Language }> = ({ block,
               <tr key={ri} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                 {row.map((cell, ci) => (
                   <td key={ci} className="px-4 py-3 text-zinc-300 text-sm">
-                    {lang === 'vi' ? cell.vi : cell.en}
+                    {parseInline(lang === 'vi' ? cell.vi : cell.en)}
                   </td>
                 ))}
               </tr>
@@ -521,7 +525,9 @@ const SandboxRenderer: React.FC<{ block: SandboxBlock; lang: Language }> = ({ bl
                     : 'bg-zinc-800 border border-zinc-700 text-zinc-400 text-center text-xs'
                 }`}>
                   {turn.speaker === 'scammer' && <span className="text-red-400 text-xs font-bold block mb-0.5">⚠️ {lang === 'vi' ? 'Tin nhắn đáng ngờ' : 'Suspicious message'}</span>}
-                  {msg}
+                  {msg.split('\n').map((line, i, arr) => (
+                    <React.Fragment key={i}>{line}{i < arr.length - 1 && <br />}</React.Fragment>
+                  ))}
                 </div>
               </div>
 

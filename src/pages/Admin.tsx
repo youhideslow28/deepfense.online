@@ -95,6 +95,7 @@ interface UserRecord {
   earnedBalance?: number;
   bonusBalance?: number;
   spentBalance?: number;
+  revokedBalance?: number;
   lastActiveAt?: Timestamp;
   createdAt?: Timestamp;
 }
@@ -153,7 +154,7 @@ interface DpfLedgerRecord {
 }
 
 type AdminDpfGrantResult =
-  | { ok: true; amount: number; balanceAfter: number; ledgerId: string; alreadyGranted?: boolean }
+  | { ok: true; amount: number; balanceAfter: number; ledgerId: string; alreadyGranted?: boolean; alreadyRevoked?: boolean }
   | { ok: false; code?: string; message?: string };
 
 interface TrainingStats {
@@ -616,6 +617,37 @@ const Admin: React.FC = () => {
     return data;
   };
 
+  const revokeDpfCoinOnServer = async (payload: { target: string; amount: number; reason: string }) => {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('Ban can dang nhap admin truoc khi thu hoi DPF coin.');
+    }
+
+    const token = await user.getIdToken();
+    const response = await fetch('/api/dpf', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        action: 'adminRevoke',
+        payload: {
+          ...payload,
+          revokeId: `${payload.target.toLowerCase()}:admin_revoke:${payload.amount}:${Date.now()}`,
+        },
+      }),
+    });
+
+    const data = await response.json().catch(() => null) as AdminDpfGrantResult | null;
+    if (!response.ok || !data || data.ok !== true) {
+      const message = data && 'message' in data ? data.message : '';
+      throw new Error(message || `DPF admin revoke API failed with ${response.status}.`);
+    }
+
+    return data;
+  };
+
   const grantDpfCoin = async (event: React.FormEvent) => {
     event.preventDefault();
     if (dpfBusy) return;
@@ -732,6 +764,44 @@ const Admin: React.FC = () => {
       console.error('DPF coin grant failed:', error);
       const message = error instanceof Error ? error.message : '';
       showActionMessage(message || 'Khong the cong DPF coin. Hay kiem tra cau hinh Firebase Admin.');
+    } finally {
+      setDpfBusy(false);
+    }
+  };
+
+  const revokeDpfCoin = async () => {
+    if (dpfBusy) return;
+
+    const target = dpfForm.target.trim();
+    const amount = Number(dpfForm.amount);
+
+    if (!target) {
+      showActionMessage('Cần nhập email hoặc UID người bị thu hồi DPF coin.');
+      return;
+    }
+
+    if (!Number.isFinite(amount) || amount <= 0 || amount > 1_000_000) {
+      showActionMessage('Số DPF coin thu hồi phải nằm trong khoảng 1 đến 1.000.000.');
+      return;
+    }
+
+    if (!window.confirm(`Thu hồi ${amount.toLocaleString('vi-VN')} DPF coin từ ${target}? Thao tác này sẽ ghi ledger debit và không cho số dư âm.`)) {
+      return;
+    }
+
+    setDpfBusy(true);
+    try {
+      const serverResult = await revokeDpfCoinOnServer({
+        target,
+        amount,
+        reason: dpfForm.reason.trim() || 'Admin revoked DPF coin',
+      });
+
+      showActionMessage(`Đã thu hồi ${amount.toLocaleString('vi-VN')} DPF coin từ ${target}. Số dư mới: ${serverResult.balanceAfter.toLocaleString('vi-VN')}.`);
+    } catch (error) {
+      console.error('DPF coin revoke failed:', error);
+      const message = error instanceof Error ? error.message : '';
+      showActionMessage(message || 'Không thể thu hồi DPF coin. Hãy kiểm tra quyền admin hoặc số dư người dùng.');
     } finally {
       setDpfBusy(false);
     }
@@ -1299,6 +1369,15 @@ const Admin: React.FC = () => {
               >
                 <Coins size={14} /> Cấp DPF
               </button>
+              <button
+                onClick={() => {
+                  setDpfForm((current) => ({ ...current, target: selectedUser.email || selectedUser.uid || selectedUser.id, amount: current.amount || '100' }));
+                  setActiveTab('dpf');
+                }}
+                className="inline-flex items-center gap-2 rounded-lg border border-red-400/30 px-3 py-2 text-xs font-bold text-red-300 hover:bg-red-400/10"
+              >
+                <Trash2 size={14} /> Thu hồi DPF
+              </button>
             </div>
           )}
         </div>
@@ -1432,10 +1511,11 @@ const Admin: React.FC = () => {
   const renderDpfCoin = () => {
     const totalWebBalance = dashboardUsers.reduce((sum, user) => sum + (user.webBalance || 0), 0);
     const totalBonusBalance = dashboardUsers.reduce((sum, user) => sum + (user.bonusBalance || 0), 0);
+    const totalRevokedBalance = dashboardUsers.reduce((sum, user) => sum + (user.revokedBalance || 0), 0);
 
     return (
       <div className="space-y-5">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <StatCard
             label="Số dư DPF trên web"
             value={totalWebBalance.toLocaleString('vi-VN')}
@@ -1449,6 +1529,13 @@ const Admin: React.FC = () => {
             sub="Tổng DPF coin đã cấp thủ công qua dashboard."
             icon={Sparkles}
             tone="green"
+          />
+          <StatCard
+            label="Đã thu hồi"
+            value={totalRevokedBalance.toLocaleString('vi-VN')}
+            sub="Tổng DPF coin đã bị admin thu hồi khỏi ví web."
+            icon={Trash2}
+            tone="red"
           />
           <StatCard
             label="Sổ giao dịch gần đây"
@@ -1467,13 +1554,23 @@ const Admin: React.FC = () => {
                 Nhập email hoặc UID. Coin sẽ được cộng vào webBalance và ghi lại trong dpf_ledger để kiểm tra.
               </p>
             </div>
-            <button
-              type="submit"
-              disabled={dpfBusy}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-400 px-4 py-2 text-xs font-black uppercase tracking-wide text-black hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              <Coins size={15} /> {dpfBusy ? 'Đang cấp...' : 'Cấp DPF coin'}
-            </button>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="submit"
+                disabled={dpfBusy}
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-400 px-4 py-2 text-xs font-black uppercase tracking-wide text-black hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <Coins size={15} /> {dpfBusy ? 'Đang xử lý...' : 'Cấp DPF coin'}
+              </button>
+              <button
+                type="button"
+                onClick={revokeDpfCoin}
+                disabled={dpfBusy}
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-xs font-black uppercase tracking-wide text-red-300 hover:bg-red-500/20 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <Trash2 size={15} /> Thu hồi coin
+              </button>
+            </div>
           </div>
           <div className="grid gap-3 lg:grid-cols-[1.2fr_0.55fr_1.4fr]">
             <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
@@ -1506,17 +1603,17 @@ const Admin: React.FC = () => {
             </label>
           </div>
           <p className="mt-4 text-xs leading-relaxed text-gray-500">
-            Bạn có thể dùng form này để cấp 1.000 DPF coin cho admin deepfense@gmail.com. Ban đầu đây là coin ảo trong database web;
-            khi cần rút ra ví Amoy thì sẽ đi qua luồng withdraw/duyệt riêng.
+            Nút cấp sẽ cộng vào webBalance. Nút thu hồi sẽ trừ khỏi webBalance, ghi debit ledger `admin_revoke` và không cho số dư âm.
           </p>
         </form>
 
         <section className="overflow-x-auto rounded-lg border border-white/10 bg-[#07111f]/90">
-          <div className="grid min-w-[1020px] grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr_1fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-500">
+          <div className="grid min-w-[1120px] grid-cols-[1.2fr_0.75fr_0.75fr_0.75fr_0.75fr_0.75fr_1.15fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-500">
             <span>Người dùng</span>
             <span>Web balance</span>
             <span>Đã kiếm</span>
             <span>Admin bonus</span>
+            <span>Đã thu hồi</span>
             <span>Đã dùng</span>
             <span>Điều khiển</span>
           </div>
@@ -1527,7 +1624,7 @@ const Admin: React.FC = () => {
               </div>
             ) : (
               dashboardUsers.map((user) => (
-                <div key={user.id} className="grid min-w-[1020px] grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr_1fr] gap-3 px-4 py-4 text-sm">
+                <div key={user.id} className="grid min-w-[1120px] grid-cols-[1.2fr_0.75fr_0.75fr_0.75fr_0.75fr_0.75fr_1.15fr] gap-3 px-4 py-4 text-sm">
                   <div className="min-w-0">
                     <p className="truncate font-bold text-white">{user.displayName || user.email || user.uid || user.id}</p>
                     <p className="truncate text-xs text-gray-500">{user.email || user.uid || user.id}</p>
@@ -1535,6 +1632,7 @@ const Admin: React.FC = () => {
                   <span className="font-black text-amber-200">{(user.webBalance || 0).toLocaleString('vi-VN')}</span>
                   <span className="text-gray-300">{(user.earnedBalance || 0).toLocaleString('vi-VN')}</span>
                   <span className="text-gray-300">{(user.bonusBalance || 0).toLocaleString('vi-VN')}</span>
+                  <span className="text-red-300">{(user.revokedBalance || 0).toLocaleString('vi-VN')}</span>
                   <span className="text-gray-300">{(user.spentBalance || 0).toLocaleString('vi-VN')}</span>
                   <div className="flex flex-wrap gap-2">
                     <button onClick={() => { setSelectedUserId(user.uid || user.id); setActiveTab('users'); }} className="rounded border border-primary/30 px-2 py-1 text-xs font-bold text-blue-200 hover:bg-primary/10">
@@ -1542,6 +1640,9 @@ const Admin: React.FC = () => {
                     </button>
                     <button onClick={() => setDpfForm((current) => ({ ...current, target: user.email || user.uid || user.id }))} className="rounded border border-amber-400/30 px-2 py-1 text-xs font-bold text-amber-200 hover:bg-amber-400/10">
                       Chọn cấp coin
+                    </button>
+                    <button onClick={() => setDpfForm((current) => ({ ...current, target: user.email || user.uid || user.id, amount: current.amount || '100', reason: 'Admin revoked DPF coin' }))} className="rounded border border-red-400/30 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-400/10">
+                      Chọn thu hồi
                     </button>
                   </div>
                 </div>
