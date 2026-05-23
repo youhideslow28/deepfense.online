@@ -190,8 +190,8 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-gray-400">
               {isVi
-                ? 'Quản lý tài khoản, xác minh email, liên kết Gmail và theo dõi DPF coin của bạn.'
-                : 'Manage your account, verify email, link Gmail, and track your DPF coin.'}
+                ? 'Quản lý tài khoản, xác minh email và theo dõi DPF coin của bạn.'
+                : 'Manage your account, verify email, and track your DPF coin.'}
             </p>
 
             <div className="mt-6 grid grid-cols-2 gap-3">
@@ -213,8 +213,8 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
 
             <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.035] p-4 text-xs leading-relaxed text-gray-400">
               {isVi
-                ? 'Mẹo: hãy xác minh email để khôi phục tài khoản dễ hơn và liên kết Gmail nếu bạn muốn đăng nhập bằng hệ sinh thái Google sau này.'
-                : 'Tip: verify your email for easier recovery and link Gmail if you want Google-based access later.'}
+                ? 'Mẹo: hãy xác minh email để khôi phục tài khoản dễ dàng hơn.'
+                : 'Tip: verify your email for easier account recovery.'}
             </div>
           </div>
 
@@ -241,9 +241,6 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
                 </button>
                 <button onClick={handleRefreshVerification} disabled={busy} className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-xs font-black uppercase tracking-widest text-gray-300 hover:bg-white/[0.08] disabled:opacity-60">
                   <RefreshCw size={14} /> {isVi ? 'Kiểm tra lại' : 'Refresh'}
-                </button>
-                <button onClick={handleLinkGoogle} disabled={busy || hasGoogle} className="inline-flex items-center justify-center gap-2 rounded-lg border border-cyan-400/20 bg-cyan-400/10 px-4 py-3 text-xs font-black uppercase tracking-widest text-cyan-200 hover:bg-cyan-400/15 disabled:opacity-40 md:col-span-2">
-                  <LinkIcon size={14} /> {hasGoogle ? (isVi ? 'Đã liên kết Gmail' : 'Gmail linked') : (isVi ? 'Liên kết Gmail' : 'Link Gmail')}
                 </button>
                 <button onClick={handleSignOut} className="inline-flex items-center justify-center gap-2 rounded-lg border border-red-400/20 bg-red-500/10 px-4 py-3 text-xs font-black uppercase tracking-widest text-red-100 hover:bg-red-500/15 md:col-span-2">
                   <LogOut size={14} /> {isVi ? 'Đăng xuất' : 'Sign out'}
