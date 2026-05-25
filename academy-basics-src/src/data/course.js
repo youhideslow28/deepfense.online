@@ -39,6 +39,7 @@ export const MODULES = [
             'DEEPFENSE BASIC là khóa học nhập môn về deepfake, nội dung giả mạo và phản xạ an toàn trên không gian số. Khóa học không yêu cầu người học biết lập trình, không yêu cầu nền tảng trí tuệ nhân tạo và không biến người học thành chuyên gia pháp chứng số.',
             'Mục tiêu thực tế hơn: giúp người học nhận ra khi nào một nội dung có thể gây rủi ro, biết dừng lại trước khi hành động, biết kiểm chứng qua kênh độc lập và biết chọn phản ứng ít gây hại nhất.',
             { type: 'callout', variant: 'info', title: 'Phạm vi học tập', text: 'Chúng ta không học cách tạo deepfake. Chúng ta học cách nhận diện rủi ro, kiểm chứng thông tin và bảo vệ con người trước nội dung giả mạo.' },
+            { type: 'image', alt: 'DFB_ILL_M0_01', placeholderHint: 'Placeholder hình minh họa: một ngày số bình thường của An với điện thoại, mạng xã hội, nhóm chat, cuộc gọi video và các tín hiệu rủi ro nhẹ.' },
             'Trong đời sống số, nguy cơ không chỉ đến từ video giả hoàn hảo. Nguy cơ thường đến từ một tình huống có vẻ quen thuộc: người thân cần tiền gấp, tài khoản bạn bè nhắn tin lạ, một video gây phẫn nộ lan rất nhanh, hoặc một hình ảnh nhạy cảm bị chia sẻ trong nhóm chat.',
           ], [
             'DEEPFENSE BASIC tập trung vào phản xạ phòng vệ, không dạy tạo deepfake.',
@@ -128,20 +129,6 @@ export const MODULES = [
           },
         }, 3),
       },
-      {
-        title: '0.4 Visual Asset Prompt Kit',
-        lessons: [
-          lesson('0.4.0', 'Bộ prompt hình ảnh cho DEEPFENSE BASIC', [
-            'Phiên này gom bộ prompt hình ảnh, GIF loop, sticker, checklist card và feedback visual dùng cho DEEPFENSE BASIC. Mục tiêu là giữ một phong cách thống nhất: nhân vật An nhất quán, không tạo chữ trong ảnh, không dùng logo giả, không mô tả nạn nhân theo cách gây hại.',
-            { type: 'callout', variant: 'info', title: 'Cách dùng nhanh', text: 'Dùng các prompt bên dưới để sinh asset nháp, duyệt 3-5 hình đầu tiên để khóa style, sau đó mới nhân rộng cho toàn bộ module. Chữ tiếng Việt nên thêm trong web/editor, không đưa trực tiếp vào ảnh AI.' },
-            { type: 'asset-kit', title: 'Visual Asset Prompt Kit', subtitle: 'Tài nguyên thiết kế cho course home, lesson header, quiz feedback, micro-interaction và màn hoàn thành khóa học.' },
-          ], [
-            'Bộ prompt đã được đặt vào Academy Basics dưới dạng một phiên tài nguyên riêng.',
-            'File markdown gốc được giữ nguyên để đội thiết kế có thể mở và copy đầy đủ prompt khi cần.',
-          ]),
-        ],
-        checkpoint: null,
-      },
     ],
     quiz: [
       q('Câu cần nhớ từ Module 0 là gì?', ['Khi nội dung khiến bạn sợ, giận, muốn hành động ngay — đó là lúc cần chậm lại', 'Hình ảnh và video luôn là bằng chứng đáng tin', 'Chỉ người nổi tiếng mới bị deepfake nhắm đến', 'Cần học lập trình mới hiểu được deepfake'], 0),
@@ -174,6 +161,7 @@ export const MODULES = [
             'Module 1 bắt đầu từ một tình huống quen thuộc: An nhìn thấy video một người nổi tiếng giới thiệu nền tảng đầu tư. Gương mặt giống, giọng nói giống, khẩu hình có vẻ khớp và bên dưới có nhiều bình luận tích cực.',
             'Nếu đây là mười năm trước, nhiều người có thể nghĩ: “Có video thì chắc là thật”. Nhưng trong môi trường số hiện nay, hình ảnh, giọng nói và ngữ cảnh đều có thể bị tạo mới, chỉnh sửa hoặc đặt sai bối cảnh.',
             { type: 'callout', variant: 'info', title: 'Mục tiêu của Module 1', text: 'Hiểu các loại nội dung giả mạo cơ bản để biết nên kiểm chứng theo hướng nào, thay vì chỉ dựa vào cảm giác.' },
+            { type: 'image', alt: 'DFB_ILL_M1_01', placeholderHint: 'Placeholder infographic: các lớp của một nội dung số gồm hình ảnh, video, âm thanh, chú thích, nguồn đăng và yêu cầu hành động.' },
             'Module này không yêu cầu người học phân tích kỹ thuật sâu. Điều cần nắm là ngôn ngữ cơ bản: deepfake, deepvoice, synthetic media, face swap, lip sync, edited media và repurposed media.',
           ], [
             'Hình ảnh và giọng nói không còn là bằng chứng tuyệt đối.',
@@ -347,6 +335,7 @@ export const MODULES = [
             'Sau Module 1, An hiểu rằng hình ảnh, video và giọng nói trên mạng có thể bị làm giả. An biết khái niệm deepfake, deepvoice, synthetic media và cũng hiểu rằng “nhìn thấy” chưa đủ để kết luận.',
             'Nhưng kiến thức không tự động biến thành phản xạ. Khi điện thoại reo lúc tối muộn, màn hình hiện tên người thân, giọng nói ở đầu dây run lên và yêu cầu chuyển tiền gấp, não người không bắt đầu bằng phân tích kỹ thuật. Nó bắt đầu bằng lo lắng.',
             { type: 'callout', variant: 'info', title: 'Ý chính của Module 2', text: 'Deepfake nguy hiểm không chỉ vì công nghệ giống thật, mà vì nó xuất hiện đúng lúc cảm xúc của con người bị đẩy lên cao.' },
+            { type: 'image', alt: 'DFB_ILL_M2_01', placeholderHint: 'Placeholder visual: bốn nút bấm cảm xúc quanh điện thoại của An gồm khẩn cấp, thân quen, quyền lực và lợi ích.' },
             'Kẻ xấu không cần nạn nhân “kém hiểu biết”. Chúng chỉ cần tạo một tình huống khiến nạn nhân vội, sợ, tin, thương, xấu hổ hoặc kỳ vọng quá mức. Khi cảm xúc tăng nhanh, khả năng kiểm chứng thường giảm xuống.',
             'Vì vậy, Module 2 không tập trung vào việc nhìn lỗi kỹ thuật trên khuôn mặt hay âm thanh. Phần này tập trung vào cơ chế tâm lý: vì sao một người bình thường, có hiểu biết, vẫn có thể ra quyết định sai trong vài phút căng thẳng.',
           ], [
@@ -532,6 +521,7 @@ export const MODULES = [
             'Sau Module 2, An hiểu rằng cảm xúc có thể làm mình phản ứng vội. Sáng hôm sau, An mở lại video người nổi tiếng kêu gọi đầu tư. Gương mặt giống, giọng nói giống, bình luận rất tích cực. Nhưng lần này An không vội tin.',
             'An tự hỏi: video đến từ tài khoản nào? Người nổi tiếng này có đăng nội dung tương tự trên kênh chính thức không? Video có yêu cầu bấm link, nạp tiền hoặc hành động ngay không? Nếu video sai, ai có thể bị hại?',
             { type: 'callout', variant: 'info', title: 'Mục tiêu của Module 3', text: 'Không học để đoán thật giả trong vài giây. Học để biết khi nào một nội dung đủ rủi ro để dừng lại, kiểm chứng và không hành động vội.' },
+            { type: 'image', alt: 'DFB_ILL_M3_01', placeholderHint: 'Placeholder visual: ba lớp quan sát nội dung nghi vấn gồm hình ảnh/video, âm thanh/giọng nói và ngữ cảnh/hành vi.' },
             'Quan sát tốt không chỉ là nhìn mặt. Quan sát tốt là nhìn, nghe và đọc toàn bộ tình huống. Một video có thể rất mượt nhưng ngữ cảnh lừa đảo rõ ràng. Một video có thể hơi mờ nhưng vẫn là thật. Vì vậy, Module 3 dùng cách tiếp cận ba lớp.',
           ], [
             'Quan sát không chỉ là tìm lỗi trên khuôn mặt; cần nhìn cả nguồn, yêu cầu và hậu quả.',
@@ -716,6 +706,7 @@ export const MODULES = [
             'Đến Module 4, An đã có nhiều mảnh kiến thức: deepfake có thể mạo danh người thật, cảm xúc có thể làm mình phản ứng vội, giọng nói quen không đủ để tin, và dấu hiệu kỹ thuật chỉ là tín hiệu tham khảo.',
             'Nhưng trong đời thật, nội dung nghi vấn không xuất hiện dưới dạng câu hỏi trắc nghiệm. Nó xuất hiện khi bạn đang bận, đang lo, đang giận, đang muốn giúp ai đó hoặc đang bị thúc ép phải quyết định nhanh.',
             { type: 'callout', variant: 'info', title: 'Vai trò của quy trình', text: 'Quy trình giúp người học không phải nghĩ lại từ đầu trong từng tình huống. Nó tạo một đường ray an toàn khi cảm xúc đang kéo mình đi nhanh.' },
+            { type: 'image', alt: 'DFB_ILL_M4_01', placeholderHint: 'Placeholder sơ đồ: đường đi Deepfense Check gồm Pause, Observe, Verify, Trace và Decide bằng biểu tượng đơn giản.' },
             'Deepfense Check là quy trình cốt lõi của khóa học. Nó không biến người học thành chuyên gia pháp chứng số, nhưng giúp người học trở thành người dùng Internet khó bị kéo vào hành động vội.',
           ], [
             'Kiến thức chỉ hữu ích khi được chuyển thành quy trình có thể lặp lại.',
@@ -901,6 +892,7 @@ export const MODULES = [
           lesson('5.0.0', 'Từ công nghệ sang hành vi', [
             'Deepfake nguy hiểm không chỉ vì hình ảnh hoặc giọng nói có thể bị làm giả. Nó nguy hiểm vì được đặt vào đúng hoàn cảnh khiến con người dễ phản ứng nhanh: lo cho người thân, sợ mất tiền, sợ bị bêu xấu, muốn có cơ hội tốt hoặc muốn bảo vệ quan điểm của mình.',
             'Trong thực tế, người học hiếm khi gặp một nội dung có nhãn “deepfake”. Thứ họ gặp là một yêu cầu: chuyển tiền, bấm link, gửi giấy tờ, chia sẻ clip, im lặng, giữ bí mật hoặc hành động ngay.',
+            { type: 'image', alt: 'DFB_ILL_M5_01', placeholderHint: 'Placeholder bản đồ rủi ro đời sống số: gia đình, tiền bạc, học đường, mạng xã hội, việc làm và quan hệ cá nhân.' },
             'Vì vậy, mục tiêu của Module 5 không phải là biến bạn thành chuyên gia giám định hình ảnh. Mục tiêu là giúp bạn nhận ra bối cảnh rủi ro và chọn hành động ít gây hại nhất.',
           ], [
             'Đừng chỉ hỏi “nội dung này có giả không?”. Hãy hỏi thêm: “Ai đang muốn mình làm gì, trong bao lâu, và hậu quả nếu mình làm sai là gì?”.',
@@ -1092,6 +1084,7 @@ export const MODULES = [
           lesson('6.0.0', 'Kiến thức chỉ hữu ích khi thành quy tắc', [
             'Một người biết kiểm tra deepfake có thể tự bảo vệ mình tốt hơn. Nhưng trong đời sống thật, rủi ro thường đi qua người thân, bạn bè, đồng nghiệp hoặc nhóm chat trước khi đến bạn.',
             'Nếu gia đình chưa có cách xác minh khi có cuộc gọi cầu cứu, nếu lớp học chưa có quy tắc dừng phát tán ảnh nhạy cảm, nếu nhóm làm việc vẫn cho phép chuyển tiền ngoài quy trình, kiến thức cá nhân chưa đủ để tạo an toàn chung.',
+            { type: 'image', alt: 'DFB_ILL_M6_01', placeholderHint: 'Placeholder visual: Deepfense Shield như một bộ quy tắc bảo vệ cá nhân và cộng đồng trước mạo danh số.' },
             'Module này chuyển trọng tâm từ “tôi nhận ra dấu hiệu gì” sang “chúng ta đã chuẩn bị quy tắc gì để không hoảng loạn khi sự cố xảy ra”.',
           ], [
             'Phòng vệ tốt không bắt đầu ở lúc hoảng. Phòng vệ tốt bắt đầu từ quy tắc đã thống nhất trước.',
