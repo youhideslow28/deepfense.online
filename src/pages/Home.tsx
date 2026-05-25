@@ -27,8 +27,10 @@ import ThreatPulse from '@/components/effects/ThreatPulse';
 import AnimatedCounter from '@/components/ui/AnimatedCounter';
 import GlowButton from '@/components/ui/GlowButton';
 import MagneticWrapper from '@/components/ui/MagneticWrapper';
+import OptionalVisualAsset from '@/components/ui/OptionalVisualAsset';
 import RadarPing from '@/components/ui/RadarPing';
 import TypewriterText from '@/components/ui/TypewriterText';
+import { visualAssetManifest } from '@/data/visualAssetManifest';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 interface HomeProps {
@@ -230,6 +232,12 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
           <div className="relative z-10 lg:col-span-5">
             <div data-reveal className="relative h-[300px] overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-[0_0_40px_rgba(29,111,232,0.15)] backdrop-blur-xl transition-all duration-500 hover:border-blue-500/50 md:h-[360px]">
+              <OptionalVisualAsset
+                src={visualAssetManifest.website.hero}
+                alt=""
+                className="pointer-events-none absolute inset-0 opacity-35 mix-blend-screen"
+                imgClassName="h-full w-full object-cover"
+              />
               <AnalyticsChart lang={lang} />
               <ThreatPulse />
             </div>
@@ -250,6 +258,12 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
           <div className="grid grid-cols-1 gap-6 p-5 md:p-7 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-6">
+              <OptionalVisualAsset
+                src={visualAssetManifest.website.academy}
+                alt=""
+                className="mb-5 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]"
+                imgClassName="aspect-[16/9] w-full object-cover"
+              />
               <h2 className="text-left text-2xl font-black leading-tight text-white md:text-3xl" style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}>
                 {isVi ? 'Học cách bình tĩnh trước một nội dung quá giống thật.' : 'Learn to stay calm when fake looks real.'}
               </h2>
@@ -269,6 +283,12 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             </div>
 
             <div className="grid gap-3 lg:col-span-6">
+              <OptionalVisualAsset
+                src={visualAssetManifest.moduleHeaders.deepfenseCheck}
+                alt={isVi ? 'Minh họa quy trình Deepfense Check' : 'Deepfense Check path illustration'}
+                className="overflow-hidden rounded-2xl border border-blue-400/20 bg-blue-500/10"
+                imgClassName="aspect-[16/9] w-full object-cover"
+              />
               {journeyItems.map((item) => (
                 <div key={item.step} className="grid grid-cols-[42px_1fr] gap-3 rounded-2xl border border-white/10 bg-white/[0.035] p-4 text-left transition-all duration-300 hover:border-blue-400/25 hover:bg-white/[0.055]">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-400/10 text-xs font-black text-blue-200">{item.step}</div>
