@@ -9,10 +9,8 @@ import {
 import { Language } from '@/types';
 import type { User } from 'firebase/auth';
 import GlowButton from '@/components/ui/GlowButton';
-import OptionalVisualAsset from '@/components/ui/OptionalVisualAsset';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { basicsCourse, Module, Section, Lesson } from '@/data/basicsCourseData';
-import { visualAssetManifest } from '@/data/visualAssetManifest';
 import LessonMiniGame from '@/features/academy/LessonMiniGame';
 import LessonContentBlock from '@/features/academy/LessonContentBlock';
 
@@ -337,12 +335,6 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 ? 'Certificate chỉ mở khi bạn học xong, gửi đánh giá khóa học và đạt bài thi cuối khóa.'
                 : 'Certificate unlocks only after lessons, course evaluation, and Final Exam are completed.'}
             </div>
-            <OptionalVisualAsset
-              src={visualAssetManifest.courseHome.hero}
-              alt={isVi ? 'Minh họa nhân vật An chào mừng học viên' : 'An welcomes the learner'}
-              className="mt-5 overflow-hidden rounded-xl border border-white/10 bg-black/20"
-              imgClassName="aspect-[16/9] w-full object-cover"
-            />
           </div>
         </div>
       </section>
