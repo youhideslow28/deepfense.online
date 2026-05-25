@@ -4,6 +4,7 @@ import FinalExam from './FinalExam.jsx';
 import MiniGame from './MiniGame.jsx';
 import LessonBlock from './LessonBlocks.jsx';
 import CourseEvaluation, { isCourseEvaluationDone } from './CourseEvaluation.jsx';
+import { MODULE_HEADER_ASSETS } from '../data/visualAssets.js';
 
 export default function LessonView({
   lessonIndex, currentIdx, currentEntry,
@@ -36,6 +37,7 @@ export default function LessonView({
     return !prev || prev.moduleId !== moduleId;
   })();
   const introVideo = isFirstInModule ? module?.introVideo : null;
+  const moduleHeaderImage = isFirstInModule ? MODULE_HEADER_ASSETS[moduleId] : null;
 
   // Last lesson in this section (regardless of checkpoint)
   const isLastInSection = (() => {
@@ -91,6 +93,12 @@ export default function LessonView({
         {/* Title */}
         <h1 className="lesson-title">{lesson.title}</h1>
         <div className="lesson-divider" />
+
+        {moduleHeaderImage && (
+          <figure className="module-header-visual">
+            <img src={moduleHeaderImage} alt="" loading="lazy" />
+          </figure>
+        )}
 
         {introVideo?.src && (
           <figure className="module-intro-video">

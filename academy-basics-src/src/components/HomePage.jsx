@@ -1,5 +1,6 @@
 import React from 'react';
 import { MODULES } from '../data/course.js';
+import { COURSE_HOME_ASSETS, MODULE_HEADER_ASSETS } from '../data/visualAssets.js';
 
 export default function HomePage({ onStart, onSelectModule, completedLessons }) {
   const totalLessons = MODULES.reduce((sum, m) =>
@@ -33,6 +34,10 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
           Khoá học {MODULES.length} module giúp bạn hiểu deepfake là gì, nhận diện các dấu hiệu nghi vấn
           trong hình ảnh, video và âm thanh, và bảo vệ bản thân trước các kịch bản lừa đảo phổ biến.
         </p>
+
+        <figure className="home-visual">
+          <img src={COURSE_HOME_ASSETS.hero} alt="DEEPFENSE BASIC course visual" loading="lazy" />
+        </figure>
 
         {/* Stats */}
         <div className="home-stats">
@@ -74,6 +79,14 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
 
             return (
               <div key={mod.id} className="home-module-card" onClick={() => onSelectModule(mod.id)}>
+                {MODULE_HEADER_ASSETS[mod.id] && (
+                  <img
+                    src={MODULE_HEADER_ASSETS[mod.id]}
+                    alt=""
+                    className="home-module-card-visual"
+                    loading="lazy"
+                  />
+                )}
                 <div className="home-module-card-num">
                   Module {mod.id} · {PART_LABELS[mod.part] || 'Bài học'}
                 </div>
