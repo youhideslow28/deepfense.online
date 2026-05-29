@@ -87,8 +87,6 @@ function SortCards({ data, onDone }) {
     if (id) assign(id, bucketId);
   }
 
-  const bucketCount = id => data.cards.filter(c => assignments[c.id] === id).length;
-
   return (
     <div className="mg-sort-cards">
       {!submitted && (
@@ -100,20 +98,44 @@ function SortCards({ data, onDone }) {
         {data.buckets.map(bucket => {
           const isOver = dragOver === bucket.id;
           const isActive = selected !== null && !submitted;
-          const count = bucketCount(bucket.id);
+          const assignedCards = data.cards.filter(c => assignments[c.id] === bucket.id);
+          const count = assignedCards.length;
           return (
-            <button
+            <div
               key={bucket.id}
               className={`mg-bucket${isOver ? ' drag-over' : isActive ? ' active' : ''}`}
               onClick={() => onBucketClick(bucket.id)}
               onDragOver={e => onDragOver(e, bucket.id)}
               onDragLeave={onDragLeave}
               onDrop={e => onDrop(e, bucket.id)}
+              role="button"
+              tabIndex={0}
             >
-              <span className="mg-bucket-icon">{bucket.icon}</span>
-              <span className="mg-bucket-label">{bucket.label}</span>
-              {count > 0 && <span className="mg-bucket-count">{count}</span>}
-            </button>
+              <div className="mg-bucket-head">
+                <span className="mg-bucket-icon">{bucket.icon}</span>
+                <span className="mg-bucket-label">{bucket.label}</span>
+                {count > 0 && <span className="mg-bucket-count">{count}</span>}
+              </div>
+              {!submitted && assignedCards.length > 0 && (
+                <div className="mg-bucket-cards">
+                  {assignedCards.map(card => (
+                    <button
+                      key={card.id}
+                      type="button"
+                      className="mg-bucket-card"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        unassign(card.id);
+                      }}
+                      title="Nhan de bo phan loai"
+                    >
+                      <span>{card.text}</span>
+                      <span className="mg-bucket-card-remove">x</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           );
         })}
       </div>
@@ -137,7 +159,7 @@ function SortCards({ data, onDone }) {
       )}
 
       {/* Assigned cards (pre-submit) */}
-      {!submitted && Object.keys(assignments).length > 0 && (
+      {submitted && false && Object.keys(assignments).length > 0 && (
         <div className="mg-assigned-list">
           {data.cards.filter(c => assignments[c.id]).map(card => {
             const bucket = data.buckets.find(b => b.id === assignments[card.id]);
@@ -423,16 +445,35 @@ function ShieldMatch({ data, onDone }) {
         {data.rules.map(rule => {
           const isUsed = usedRules.has(rule.id);
           const isAvailable = selectedScenario !== null && !isUsed && !submitted;
+          const pairedScenario = data.scenarios.find(s => pairs[s.id] === rule.id);
           return (
-            <button
+            <div
               key={rule.id}
-              className={`mg-rule${isAvailable ? ' available' : isUsed && !submitted ? ' used' : ''}`}
-              onClick={() => onRuleClick(rule.id)}
-              disabled={isUsed && !submitted || !selectedScenario && !submitted}
+              className={`mg-rule${isAvailable ? ' available' : isUsed && !submitted ? ' used' : ''}${pairedScenario ? ' filled' : ''}`}
+              onClick={() => isAvailable && onRuleClick(rule.id)}
+              role="button"
+              tabIndex={0}
             >
-              <span>{rule.icon}</span>
-              <span>{rule.label}</span>
-            </button>
+              <div className="mg-rule-head">
+                <span>{rule.icon}</span>
+                <span>{rule.label}</span>
+              </div>
+              {!submitted && pairedScenario && (
+                <button
+                  type="button"
+                  className={`mg-rule-card${justPaired === pairedScenario.id ? ' just-paired' : ''}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setPairs(p => { const n = {...p}; delete n[pairedScenario.id]; return n; });
+                    setSelectedScenario(pairedScenario.id);
+                  }}
+                  title="Nhan de doi"
+                >
+                  <span>{pairedScenario.text}</span>
+                  <span className="mg-rule-card-remove">x</span>
+                </button>
+              )}
+            </div>
           );
         })}
       </div>
@@ -453,7 +494,7 @@ function ShieldMatch({ data, onDone }) {
       )}
 
       {/* Paired (pre-submit) */}
-      {!submitted && Object.keys(pairs).length > 0 && (
+      {submitted && false && Object.keys(pairs).length > 0 && (
         <div className="mg-assigned-list">
           {data.scenarios.filter(s => pairs[s.id]).map(scenario => {
             const rule = data.rules.find(r => r.id === pairs[scenario.id]);

@@ -1070,6 +1070,9 @@ export const MODULES = [
     id: 6, part: 'protection',
     title: 'Phòng vệ cá nhân và cộng đồng',
     duration: '90-105 phút', level: 'Intermediate',
+    introVideo: {
+      src: '/academy/media/module-intros/module-06/module%206.web.mp4',
+    },
     scenario: 'Sau khi học cách nhận diện rủi ro, An nhận ra một điều quan trọng: an toàn số không thể chỉ là kiến thức nằm trong đầu. Nó cần trở thành quy tắc trước khi sự cố xảy ra, đặc biệt với gia đình, lớp học, nhóm làm việc và cộng đồng online. Module 6 giúp người học biến Deepfense Check thành thói quen phòng vệ có thể dùng ngay.',
     outcomes: [
       'Thiết lập được bộ quy tắc Deepfense Shield cho bản thân, gia đình hoặc nhóm làm việc.',
