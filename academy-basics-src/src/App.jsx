@@ -7,6 +7,7 @@ import NotesPanel, { hasNoteFor } from './components/NotesPanel.jsx';
 import SearchModal from './components/SearchModal.jsx';
 
 const STORAGE_KEY     = 'dfb_progress_v2';
+const ACADEMY_LESSONS_KEY = 'df_completed_lessons';
 const THEME_KEY       = 'dfb_theme_v1';
 const MODULE_SYNC_KEY = 'dfb_module_sync_v1';
 const SESSION_KEY     = 'dfb_session_v1';
@@ -108,11 +109,13 @@ function saveProgress(completed, currentLessonId) {
   const session = readSession();
   if (!session?.uid) return;
   try {
+    const completedList = [...completed];
     localStorage.setItem(scopedKey(STORAGE_KEY), JSON.stringify({
       uid: session.uid,
-      completed: [...completed],
+      completed: completedList,
       currentLessonId,
     }));
+    localStorage.setItem(scopedKey(ACADEMY_LESSONS_KEY), JSON.stringify(completedList));
   } catch {}
 }
 

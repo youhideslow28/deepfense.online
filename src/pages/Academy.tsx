@@ -39,6 +39,19 @@ const readUserModuleSync = (uid?: string | null) => {
   return [];
 };
 
+const readUserBasicsProgress = (uid?: string | null) => {
+  if (!uid) return [] as string[];
+  const scoped = readJson<{ uid?: string; completed?: string[] }>(storageKey('dfb_progress_v2', uid), {});
+  if (!scoped.uid || scoped.uid === uid) return scoped.completed ?? [];
+  return [];
+};
+
+const readUserCompletedLessons = (uid?: string | null) => {
+  if (!uid) return [] as string[];
+  const academyLessons = readJson<string[]>(storageKey('df_completed_lessons', uid), []);
+  return [...new Set([...academyLessons, ...readUserBasicsProgress(uid)])];
+};
+
 const legacyProgressKeys = [
   'df_completed_modules',
   'df_completed_lessons',
@@ -116,7 +129,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   const [activeSectionIdx, setActiveSectionIdx] = useState(0);
   const [activeLessonIdx, setActiveLessonIdx] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<string[]>(() => {
-    return readJson<string[]>(storageKey('df_completed_lessons', user?.uid), []);
+    return readUserCompletedLessons(user?.uid);
   });
   const [completedModules, setCompletedModules] = useState<number[]>(() => {
     const saved = readJson<number[]>(storageKey('df_completed_modules', user?.uid), []);
@@ -145,6 +158,16 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   useEffect(() => {
     if (!user?.uid) return;
     localStorage.setItem(storageKey('df_completed_lessons', user.uid), JSON.stringify(completedLessons));
+    try {
+      const progressKey = storageKey('dfb_progress_v2', user.uid);
+      const prev = readJson<{ uid?: string; completed?: string[]; currentLessonId?: string | null }>(progressKey, {});
+      const merged = [...new Set([...(prev.completed ?? []), ...completedLessons])];
+      localStorage.setItem(progressKey, JSON.stringify({
+        uid: user.uid,
+        completed: merged,
+        currentLessonId: prev.currentLessonId ?? null,
+      }));
+    } catch {}
   }, [completedLessons, user?.uid]);
 
   useEffect(() => {
@@ -171,12 +194,47 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       legacyProgressKeys.forEach(key => localStorage.removeItem(key));
     }
     refreshAcademyBasicsCache();
-    setCompletedLessons(readJson<string[]>(storageKey('df_completed_lessons', user.uid), []));
+    setCompletedLessons(readUserCompletedLessons(user.uid));
     const savedModules = readJson<number[]>(storageKey('df_completed_modules', user.uid), []);
     setCompletedModules([...new Set([...savedModules, ...readUserModuleSync(user.uid)])]);
     setHtmlCoursePassed(!!readOwnedJson<{ uid?: string; passed?: boolean }>('deepfense-basics-final-exam', user.uid)?.passed);
     setHtmlCourseEvalDone(!!readOwnedJson<{ uid?: string; submittedAt?: number }>('deepfense-basics-course-evaluation', user.uid)?.submittedAt);
   }, [user?.uid, user?.email]);
+
+  useEffect(() => {
+    if (!user?.uid) return;
+    const syncFromBasics = () => {
+      setCompletedLessons(prev => [...new Set([...prev, ...readUserCompletedLessons(user.uid)])]);
+      const savedModules = readJson<number[]>(storageKey('df_completed_modules', user.uid), []);
+      setCompletedModules([...new Set([...savedModules, ...readUserModuleSync(user.uid)])]);
+      setHtmlCoursePassed(!!readOwnedJson<{ uid?: string; passed?: boolean }>('deepfense-basics-final-exam', user.uid)?.passed);
+      setHtmlCourseEvalDone(!!readOwnedJson<{ uid?: string; submittedAt?: number }>('deepfense-basics-course-evaluation', user.uid)?.submittedAt);
+    };
+    const onStorage = (event: StorageEvent) => {
+      if (!event.key) return;
+      if (
+        event.key === storageKey('dfb_progress_v2', user.uid) ||
+        event.key === storageKey('df_completed_lessons', user.uid) ||
+        event.key === storageKey('dfb_module_sync_v1', user.uid) ||
+        event.key === storageKey('deepfense-basics-final-exam', user.uid) ||
+        event.key === storageKey('deepfense-basics-course-evaluation', user.uid)
+      ) {
+        syncFromBasics();
+      }
+    };
+    const onFocus = () => syncFromBasics();
+    const onVisibility = () => {
+      if (!document.hidden) syncFromBasics();
+    };
+    window.addEventListener('storage', onStorage);
+    window.addEventListener('focus', onFocus);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener('focus', onFocus);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [user?.uid]);
   const [showAnswers, setShowAnswers] = useState<Record<string, boolean>>({});
   const [checkpointAnswers, setCheckpointAnswers] = useState<Record<number, number>>({});
   const [checkpointSubmitted, setCheckpointSubmitted] = useState(false);
