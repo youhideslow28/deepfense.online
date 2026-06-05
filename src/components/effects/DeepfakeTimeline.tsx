@@ -135,7 +135,47 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
         }
       },
     });
-    // Era cards stay visible by default so the home page never renders as a blank scroll area.
+
+    const cards = gsap.utils.toArray<HTMLElement>('.era-card');
+    cards.forEach((card, index) => {
+      const isIntro = index === 0;
+
+      gsap.set(card, {
+        scale: isIntro ? 1 : 0.7,
+        opacity: isIntro ? 1 : 0,
+        filter: isIntro ? 'blur(0px)' : 'blur(12px)',
+      });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: card,
+          start: isIntro ? 'top top' : 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      });
+
+      if (isIntro) {
+        tl.to(card, {
+          opacity: 0,
+          scale: 0.8,
+          filter: 'blur(10px)',
+          ease: 'power2.in',
+        });
+      } else {
+        tl.to(card, {
+          scale: 1.15,
+          opacity: 1,
+          filter: 'blur(0px)',
+          ease: 'power2.inOut',
+        }).to(card, {
+          scale: 0.7,
+          opacity: 0,
+          filter: 'blur(12px)',
+          ease: 'power2.inOut',
+        });
+      }
+    });
   }, { scope: containerRef });
 
   return (
@@ -158,7 +198,7 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
       <div className="relative z-20 -mt-[100vh] w-full pointer-events-none">
         
         {/* Intro Section */}
-        <div className="flex min-h-[440px] items-start justify-center pt-[18vh] md:min-h-[620px] md:pt-[22vh]">
+        <div className="flex h-screen items-start justify-center pt-[25vh]">
           <div className="text-center era-card px-4">
             <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tight mix-blend-difference leading-[1.6]" style={{ fontFamily: "var(--font-display)" }}>
               {lang === 'vi' ? (
@@ -183,7 +223,7 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
         {ERAS.map((era, index) => (
           <div 
             key={index} 
-            className="flex min-h-[360px] items-center justify-center px-4 md:min-h-[520px]"
+            className="flex h-screen items-center justify-center px-4"
           >
             <div className={`era-card relative bg-black/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-3xl max-w-2xl w-full text-center ${era.shadow}`}>
               <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-black rounded-full border border-white/10 flex items-center justify-center">
@@ -202,7 +242,7 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
           </div>
         ))}
 
-        <div className="h-[8vh]" /> {/* Spacer at bottom */}
+        <div className="h-[20vh]" /> {/* Spacer at bottom */}
       </div>
 
     </div>
