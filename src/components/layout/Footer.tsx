@@ -53,11 +53,11 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
   ];
 
   const renderLink = (item: typeof trainingLinks[number] | typeof supportLinks[number] | typeof legalLinks[number]) => {
-    const className = 'group flex items-center justify-between gap-3 rounded-md px-2 py-2 text-sm text-slate-400 transition-colors hover:bg-white/[0.035] hover:text-blue-200';
+    const className = 'group flex items-center justify-between gap-3 rounded-md px-2 py-2 text-sm text-slate-300/85 transition-colors hover:bg-white/[0.045] hover:text-blue-100';
     const content = (
       <>
         <span className="flex items-center gap-2">
-          <span className="text-slate-600 transition-colors group-hover:text-blue-300">{item.icon}</span>
+          <span className="text-blue-400/55 transition-colors group-hover:text-blue-200">{item.icon}</span>
           {item.label}
         </span>
         {'external' in item && item.external ? (
@@ -93,7 +93,7 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
                 <div className="font-display text-2xl font-black tracking-tight text-white">
                   DEEPFENSE
                 </div>
-                <div className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-blue-300/65">
+                <div className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-blue-300/75">
                   DEEPFAKE - DEFENSE
                 </div>
               </div>
@@ -109,19 +109,19 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
               <div className="grid gap-4 md:grid-cols-3">
                 <div>
                   <div className="font-mono text-[10px] font-black uppercase tracking-[0.12em] text-blue-300">Core</div>
-                  <div className="mt-1 text-xs leading-relaxed text-slate-400">
+                  <div className="mt-1 text-xs leading-relaxed text-slate-300/82">
                     {isVi ? 'Gamification và huấn luyện người dùng.' : 'Gamification and user training.'}
                   </div>
                 </div>
                 <div>
                   <div className="font-mono text-[10px] font-black uppercase tracking-[0.12em] text-blue-300">Academy</div>
-                  <div className="mt-1 text-xs leading-relaxed text-slate-400">
+                  <div className="mt-1 text-xs leading-relaxed text-slate-300/82">
                     {isVi ? 'Lộ trình học, quiz, chứng nhận.' : 'Learning path, quizzes, certificates.'}
                   </div>
                 </div>
                 <div>
                   <div className="font-mono text-[10px] font-black uppercase tracking-[0.12em] text-blue-300">Trust</div>
-                  <div className="mt-1 text-xs leading-relaxed text-slate-400">
+                  <div className="mt-1 text-xs leading-relaxed text-slate-300/82">
                     {isVi ? 'Minh bạch dữ liệu và hỗ trợ ứng cứu.' : 'Transparent data and response support.'}
                   </div>
                 </div>
@@ -131,21 +131,21 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
 
           <div className="grid gap-8 md:grid-cols-2 lg:col-span-4">
             <div>
-              <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-blue-300/85">
+              <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-blue-300">
                 {isVi ? 'Luyện tập' : 'Train'}
               </h3>
               <div className="flex flex-col gap-3">{trainingLinks.map(renderLink)}</div>
             </div>
 
             <div>
-              <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-blue-300/85">
+              <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-blue-300">
                 {isVi ? 'Hỗ trợ' : 'Support'}
               </h3>
               <div className="flex flex-col gap-3">{supportLinks.map(renderLink)}</div>
             </div>
 
             <div className="md:col-span-2">
-              <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-blue-300/85">
+              <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-blue-300">
                 {isVi ? 'Pháp lý & tin cậy' : 'Legal & Trust'}
               </h3>
               <div className="grid grid-cols-1 gap-x-8 gap-y-3 md:grid-cols-2">
@@ -155,23 +155,23 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
           </div>
 
           <div className="lg:col-span-3">
-            <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-blue-300/85">
+            <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-blue-300">
               {isVi ? 'Dự án' : 'Project'}
             </h3>
             <div className="space-y-3">
-              <div className="flex items-start gap-3 text-sm leading-relaxed text-slate-400">
+              <div className="flex items-start gap-3 text-sm leading-relaxed text-slate-300/85">
                 <GraduationCap className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
                 <span>25NS - VKU, Da Nang, Viet Nam</span>
               </div>
-              <div className="flex items-start gap-3 text-sm leading-relaxed text-slate-400">
+              <div className="flex items-start gap-3 text-sm leading-relaxed text-slate-300/85">
                 <MapPin className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
                 <span>{PROJECT_METADATA.university}</span>
               </div>
-              <a href={`mailto:${PROJECT_METADATA.email}`} className="flex items-start gap-3 text-sm leading-relaxed text-slate-400 transition-colors hover:text-blue-200">
+              <a href={`mailto:${PROJECT_METADATA.email}`} className="flex items-start gap-3 text-sm leading-relaxed text-slate-300/85 transition-colors hover:text-blue-100">
                 <Mail className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
                 <span>{PROJECT_METADATA.email}</span>
               </a>
-              <div className="flex items-start gap-3 text-sm leading-relaxed text-slate-400">
+              <div className="flex items-start gap-3 text-sm leading-relaxed text-slate-300/85">
                 <Scale className="mt-0.5 shrink-0 text-[#60A5FA]" size={15} />
                 <span>{isVi ? 'Phục vụ học tập, nghiên cứu và nâng cao nhận thức cộng đồng.' : 'Built for learning, research, and public awareness.'}</span>
               </div>
@@ -181,15 +181,15 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
 
         <div className="mt-10 border-t border-[#1E3A5F]/30 pt-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="font-mono text-[10px] leading-relaxed text-slate-500">
+            <div className="font-mono text-[10px] leading-relaxed text-slate-400">
               © 2025 DEEPFENSE · {isVi ? 'Nhóm 2HAND (VKU)' : 'Team 2HAND (VKU)'}. {isVi ? 'Bảo lưu mọi quyền.' : 'All rights reserved.'}
             </div>
             <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full border border-green-500/15 bg-green-500/5 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-green-400/70">
+              <span className="inline-flex items-center gap-2 rounded-full border border-green-500/25 bg-green-500/8 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-green-300">
                 <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
                 System Online
               </span>
-              <Link to="/admin" className="font-mono text-[9px] uppercase tracking-[0.14em] text-slate-600 transition-colors hover:text-blue-300">
+              <Link to="/admin" className="font-mono text-[9px] uppercase tracking-[0.14em] text-slate-400 transition-colors hover:text-blue-300">
                 System Admin
               </Link>
             </div>
