@@ -1,21 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
 /* ── DESIGN TOKENS ───────────────────────────────────────────── */
 :root {
-  --bg:           #0a0a0a;
-  --bg-sidebar:   #111111;
-  --bg-card:      #161616;
-  --bg-hover:     #1c1c1c;
-  --bg-active:    #1e1830;
-  --border:       rgba(255,255,255,0.08);
-  --border-active:rgba(124,58,237,0.4);
+  --bg:           #060b13;
+  --bg-sidebar:   #0b1220;
+  --bg-card:      #111827;
+  --bg-hover:     #172033;
+  --bg-active:    #0f2440;
+  --border:       rgba(226,232,240,0.09);
+  --border-active:rgba(96,165,250,0.42);
 
-  --accent:       #7c3aed;
-  --accent-2:     #6d28d9;
-  --accent-light: #a78bfa;
-  --accent-glow:  rgba(124,58,237,0.15);
+  --accent:       #1d6fe8;
+  --accent-2:     #1e5fc4;
+  --accent-light: #60a5fa;
+  --accent-glow:  rgba(29,111,232,0.16);
 
-  --text-1: #f2f2f2;
-  --text-2: #8a8a9a;
-  --text-3: #555566;
+  --text-1: #f8fafc;
+  --text-2: #b7c3d4;
+  --text-3: #7b8798;
 
   --green:  #22c55e;
   --red:    #ef4444;
@@ -74,7 +76,7 @@ html[data-theme="light"] {
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; -webkit-text-size-adjust: 100%; }
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', 'Be Vietnam Pro', system-ui, sans-serif;
   background: var(--bg);
   color: var(--text-1);
   line-height: 1.6;

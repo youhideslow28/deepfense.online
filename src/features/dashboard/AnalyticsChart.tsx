@@ -151,13 +151,13 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
         <div className="flex items-center gap-2">
           <BarChart3 className="text-primary" size={16} />
           <div className="flex flex-col">
-            <span className="text-[9px] font-black text-white uppercase tracking-widest leading-none">{metricsLabels.title}</span>
+            <span className="text-[9px] font-black uppercase leading-none tracking-[0.12em] text-white">{metricsLabels.title}</span>
             <span className="text-[7px] text-primary/60 font-mono uppercase mt-0.5">{metricsLabels.status}</span>
           </div>
         </div>
         <div className="flex gap-1.5 p-1 bg-white/5 rounded-xl border border-white/10">
-          <button onClick={() => setActiveTab('METRICS')} className={`p-1.5 rounded-lg transition-all ${activeTab === 'METRICS' ? 'bg-primary text-black' : 'text-gray-500'}`}><Users size={12} /></button>
-          <button onClick={() => setActiveTab('PSYCHOLOGY')} className={`p-1.5 rounded-lg transition-all ${activeTab === 'PSYCHOLOGY' ? 'bg-primary text-black' : 'text-gray-500'}`}><Brain size={12} /></button>
+          <button onClick={() => setActiveTab('METRICS')} className={`rounded-lg p-1.5 transition-all ${activeTab === 'METRICS' ? 'bg-primary text-white' : 'text-slate-500 hover:text-slate-300'}`}><Users size={12} /></button>
+          <button onClick={() => setActiveTab('PSYCHOLOGY')} className={`rounded-lg p-1.5 transition-all ${activeTab === 'PSYCHOLOGY' ? 'bg-primary text-white' : 'text-slate-500 hover:text-slate-300'}`}><Brain size={12} /></button>
         </div>
       </div>
 
@@ -188,7 +188,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
                   { label: metricsLabels.blocked, val: stats.blocked.toLocaleString(), color: '#FF2A6D' }
               ].map((s, i) => (
                 <div key={i} className="bg-white/5 border border-white/5 rounded-2xl p-4 relative overflow-hidden text-center">
-                  <div className="text-[8px] text-gray-500 font-black mb-2 uppercase tracking-widest">{s.label}</div>
+                  <div className="mb-2 text-[8px] font-black uppercase tracking-[0.12em] text-slate-500">{s.label}</div>
                   <div className="text-xl font-black text-white" style={{ color: s.color }}>{s.val}</div>
                 </div>
               ))}
@@ -197,7 +197,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
         ) : (
           <div className="w-full flex flex-col items-center justify-center animate-in fade-in duration-500">
             <div className="text-center mb-2">
-                <div className="text-[10px] text-primary/80 font-bold uppercase tracking-widest">{lang === 'vi' ? 'CHỈ SỐ TÂM LÝ' : 'BEHAVIORAL INDEX'}</div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-primary/85">{lang === 'vi' ? 'CHỈ SỐ TÂM LÝ' : 'BEHAVIORAL INDEX'}</div>
             </div>
             <div className="w-full max-w-[240px] flex items-center justify-center">
                 <RadarChart data={psychoStats} lang={lang} />
@@ -287,7 +287,7 @@ const RadarChart = ({ data, lang }: { data: Record<string, number>, lang: Langua
                 {labels.map((label, i) => {
                     const { x, y } = getPoint(120, i); // Bring labels slightly closer to chart
                     return (
-                        <text key={i} x={x} y={y} fill="#aaa" fontSize="9" fontWeight="bold" textAnchor="middle" dominantBaseline="middle" className="font-mono tracking-widest">
+                        <text key={i} x={x} y={y} fill="#b8c2d6" fontSize="9" fontWeight="bold" textAnchor="middle" dominantBaseline="middle" className="font-sans tracking-[0.08em]">
                             {label}
                         </text>
                     );

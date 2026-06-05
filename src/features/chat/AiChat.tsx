@@ -205,9 +205,9 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
         >
             <div className="bg-primary/10 border-b border-primary/20 p-3 md:p-4 flex justify-between items-center relative overflow-hidden">
                 <div className="flex items-center gap-2 relative z-10">
-                    <div className="bg-primary text-black p-1 md:p-1.5 rounded-full"><Bot size={16} className="md:w-[18px] md:h-[18px]" /></div>
+                    <div className="bg-primary text-white p-1 md:p-1.5 rounded-full"><Bot size={16} className="md:w-[18px] md:h-[18px]" /></div>
                     <div>
-                        <h3 className="text-white font-bold text-xs md:text-sm font-mono tracking-widest">DEEPFENSE AGENT</h3>
+                        <h3 className="font-mono text-xs font-bold tracking-[0.12em] text-white md:text-sm">DEEPFENSE AGENT</h3>
                         <div className="flex items-center gap-1 text-[9px] md:text-[10px] text-success">
                             <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"></span> ONLINE
                         </div>
@@ -218,12 +218,12 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                     <button
                       onClick={clearHistory}
                       title={lang === 'vi' ? 'Xóa lịch sử' : 'Clear history'}
-                      className="text-gray-600 hover:text-red-400 transition-colors text-[9px] font-mono tracking-wider uppercase"
+                      className="font-mono text-[9px] uppercase tracking-[0.12em] text-slate-500 transition-colors hover:text-red-400"
                     >
                       {lang === 'vi' ? 'Xóa' : 'Clear'}
                     </button>
                   )}
-                  <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white"><X size={18} className="md:w-5 md:h-5" /></button>
+                  <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-white"><X size={18} className="md:w-5 md:h-5" /></button>
                 </div>
             </div>
 
@@ -239,12 +239,12 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                                       {/* Reactions */}
                                       <button
                                         onClick={() => reactToMessage(idx, 'up')}
-                                        className={`text-[11px] px-1 py-0.5 rounded transition-all ${reactions[idx] === 'up' ? 'bg-green-500/20 text-green-400' : 'text-gray-600 hover:text-green-400'}`}
+                                        className={`text-[11px] px-1 py-0.5 rounded transition-all ${reactions[idx] === 'up' ? 'bg-green-500/20 text-green-400' : 'text-slate-500 hover:text-green-400'}`}
                                         title="Hữu ích"
                                       >👍</button>
                                       <button
                                         onClick={() => reactToMessage(idx, 'down')}
-                                        className={`text-[11px] px-1 py-0.5 rounded transition-all ${reactions[idx] === 'down' ? 'bg-red-500/20 text-red-400' : 'text-gray-600 hover:text-red-400'}`}
+                                        className={`text-[11px] px-1 py-0.5 rounded transition-all ${reactions[idx] === 'down' ? 'bg-red-500/20 text-red-400' : 'text-slate-500 hover:text-red-400'}`}
                                         title="Không hữu ích"
                                       >👎</button>
                                       {/* Copy */}
@@ -294,7 +294,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                       className="flex-1 bg-black/50 border border-gray-700 rounded px-2 py-1.5 md:px-3 md:py-2 text-xs md:text-sm text-white outline-none focus:border-primary resize-none overflow-hidden leading-relaxed"
                       style={{ minHeight: '34px', maxHeight: '96px' }}
                     />
-                    <button onClick={handleSend} disabled={loading || !input.trim()} className="bg-primary text-black p-1.5 md:p-2 rounded hover:bg-white disabled:opacity-50 flex-shrink-0 mb-0.5"><Send size={16} className="md:w-[18px] md:h-[18px]" /></button>
+                    <button onClick={handleSend} disabled={loading || !input.trim()} className="bg-primary text-white p-1.5 md:p-2 rounded hover:bg-blue-500 disabled:opacity-50 flex-shrink-0 mb-0.5"><Send size={16} className="md:w-[18px] md:h-[18px]" /></button>
                 </div>
             </div>
         </div>
@@ -311,7 +311,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
         </div>
       )}
 
-      <button onClick={() => setIsOpen(!isOpen)} className="pointer-events-auto bg-primary text-black p-3 md:p-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:scale-110 transition-all relative group">
+      <button onClick={() => setIsOpen(!isOpen)} className="pointer-events-auto bg-primary text-white p-3 md:p-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:scale-110 transition-all relative group">
         <span className="absolute inset-0 rounded-full bg-primary opacity-50 animate-ping group-hover:opacity-75"></span>
         <span className="relative">{isOpen ? <X className="w-5 h-5 md:w-6 md:h-6" /> : <MessageSquare className="w-5 h-5 md:w-6 md:h-6" />}</span>
       </button>

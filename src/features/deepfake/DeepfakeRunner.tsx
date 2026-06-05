@@ -414,7 +414,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
 
   return (
     <div className="bg-surface border-2 border-white/10 rounded-3xl p-4 md:p-6 shadow-[0_0_40px_rgba(0,240,255,0.1)] relative overflow-hidden mb-16 animate-in slide-in-from-bottom-8 duration-500">
-      <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-white bg-white/5 p-2 rounded-full transition-colors z-20">
+      <button onClick={onClose} className="absolute right-4 top-4 z-20 rounded-full bg-white/5 p-2 text-slate-400 transition-colors hover:text-white">
           <X size={16} />
       </button>
 
@@ -423,11 +423,11 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
          {/* --- CỘT TRÁI: KHU VỰC CHƠI GAME --- */}
          <div className="lg:col-span-2 flex flex-col">
              <div className="flex justify-between items-center mb-4 font-mono text-sm relative z-10 px-2">
-                <div className="flex items-center gap-2 font-black text-primary uppercase tracking-widest"><Crosshair size={18}/> {lang === 'vi' ? 'NEURAL DEFENDER' : 'NEURAL DEFENDER'}</div>
+                <div className="flex items-center gap-2 font-black uppercase tracking-[0.12em] text-blue-300"><Crosshair size={18}/> {lang === 'vi' ? 'NEURAL DEFENDER' : 'NEURAL DEFENDER'}</div>
                 <div className="flex items-center gap-6">
                     <div className="flex gap-1">
                         {[...Array(3)].map((_, i) => (
-                            <Heart key={i} size={16} className={i < health ? "fill-secondary text-secondary" : "text-gray-700"} />
+                            <Heart key={i} size={16} className={i < health ? "fill-secondary text-secondary" : "text-slate-700"} />
                         ))}
                     </div>
                     <div className="text-primary font-bold">SCORE: <span ref={scoreDisplayRef} className="text-2xl text-white">0</span></div>
@@ -440,13 +440,13 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                 {gameState === 'START' && (
                   <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center p-4 z-50">
                      <div className="text-5xl mb-6 drop-shadow-[0_0_15px_rgba(0,240,255,0.8)]">🚀</div>
-                     <h3 className="text-white font-black text-2xl md:text-3xl uppercase tracking-widest mb-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">
+                     <h3 className="mb-2 bg-gradient-to-r from-primary to-blue-300 bg-clip-text text-center text-2xl font-black uppercase tracking-[0.12em] text-transparent md:text-3xl">
                        {lang === 'vi' ? 'TIÊU DIỆT VIRUS DEEPFAKE' : 'DESTROY DEEPFAKE VIRUS'}
                      </h3>
-                     <p className="text-gray-400 text-xs md:text-sm mb-8 text-center max-w-md">
+                     <p className="text-slate-300/85 text-xs md:text-sm mb-8 text-center max-w-md">
                        {lang === 'vi' ? 'Vuốt hoặc di chuyển chuột để điều khiển Tường Lửa. Nhịp độ sẽ chậm rãi ban đầu và tăng tốc dần!' : 'Swipe or move mouse to control Firewall. Starts slow, speeds up later!'}
                      </p>
-                     <button onClick={startMatch} className="bg-primary text-black px-10 py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:scale-105 transition-transform flex items-center gap-3 shadow-[0_0_30px_rgba(0,240,255,0.4)]">
+                     <button onClick={startMatch} className="flex items-center gap-3 rounded-xl bg-primary px-10 py-4 text-xs font-black uppercase tracking-[0.12em] text-white shadow-[0_0_30px_rgba(29,111,232,0.34)] transition-transform hover:scale-105">
                        <Play size={18}/> {lang === 'vi' ? 'KHỞI ĐỘNG HỆ THỐNG' : 'SYSTEM START'}
                      </button>
                   </div>
@@ -464,7 +464,7 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
 
                      {isEligibleForLeaderboard ? (
                         <div className="bg-black/60 p-5 rounded-2xl border-2 border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.3)] flex flex-col items-center animate-in slide-in-from-bottom-4">
-                           <div className="text-yellow-400 font-black mb-4 text-sm flex items-center gap-2 tracking-widest"><Trophy size={18}/> TOP 3 ACHIEVED!</div>
+                           <div className="text-yellow-400 font-black mb-4 text-sm flex items-center gap-2 tracking-[0.12em]"><Trophy size={18}/> TOP 3 ACHIEVED!</div>
                            <div className="flex gap-2">
                               <input 
                                 type="text" 
@@ -476,13 +476,13 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                                 onChange={e => setPlayerName(e.target.value.toUpperCase())}
                                 onKeyDown={e => e.key === 'Enter' && handleSubmitScore()}
                               />
-                              <button onClick={handleSubmitScore} disabled={isSubmittingScore} className="bg-yellow-500 text-black px-5 py-2 font-black rounded-xl hover:bg-white transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                              <button onClick={handleSubmitScore} disabled={isSubmittingScore} className="bg-yellow-500 text-white px-5 py-2 font-black rounded-xl hover:bg-yellow-400 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
                                 {isSubmittingScore ? '...' : 'SAVE'}
                               </button>
                            </div>
                         </div>
                      ) : (
-                        <button onClick={startMatch} className="bg-white text-black px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary hover:text-black transition-colors flex items-center gap-2 shadow-2xl mt-2">
+                        <button onClick={startMatch} className="mt-2 flex items-center gap-2 rounded-xl bg-primary px-8 py-3 text-xs font-black uppercase tracking-[0.12em] text-white shadow-2xl transition-colors hover:bg-blue-500">
                            <RotateCcw size={16}/> {lang === 'vi' ? 'PHỤC HỒI HỆ THỐNG' : 'RESTORE SYSTEM'}
                         </button>
                      )}
@@ -494,9 +494,9 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
          {/* --- CỘT PHẢI: BẢNG XẾP HẠNG (LEADERBOARD) --- */}
          <div className="lg:col-span-1 bg-black/60 border border-primary/20 rounded-2xl p-5 flex flex-col shadow-[0_0_30px_rgba(0,240,255,0.05)] relative overflow-hidden">
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 blur-[50px] rounded-full"></div>
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-purple-500"></div>
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-cyan-400"></div>
             
-            <h3 className="text-white font-black text-center mb-6 tracking-widest uppercase flex items-center justify-center gap-2 relative z-10">
+            <h3 className="text-white font-black text-center mb-6 tracking-[0.12em] uppercase flex items-center justify-center gap-2 relative z-10">
                 <Trophy size={20} className="text-yellow-400"/> {lang === 'vi' ? 'BẢNG PHONG THẦN' : 'LEADERBOARD'}
             </h3>
             
@@ -516,10 +516,10 @@ const DeepfakeRunner: React.FC<DeepfakeRunnerProps> = ({ lang, onClose }) => {
                 {[...Array(Math.max(0, 3 - leaderboard.length))].map((_, i) => (
                     <div key={`empty-${i}`} className="p-4 rounded-xl border border-white/5 bg-white/5 flex items-center justify-between opacity-50">
                         <div className="flex items-center gap-3">
-                            <span className="text-2xl font-black italic text-gray-700">#{leaderboard.length + i + 1}</span>
-                            <span className="text-gray-600 font-bold tracking-wider">---</span>
+                            <span className="text-2xl font-black italic text-slate-700">#{leaderboard.length + i + 1}</span>
+                            <span className="font-bold tracking-wide text-slate-600">---</span>
                         </div>
-                        <span className="font-mono font-black text-lg text-gray-700">0</span>
+                        <span className="font-mono text-lg font-black text-slate-700">0</span>
                     </div>
                 ))}
             </div>

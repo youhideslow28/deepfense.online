@@ -63,7 +63,7 @@ const ResultBanner: React.FC<{ score: number; total: number; label: string }> = 
         ? <Sparkles className="w-5 h-5 text-amber-400 shrink-0 animate-pulse" />
         : <Trophy className="w-5 h-5 text-amber-400 shrink-0" />}
       <div className="flex-1">
-        <p className="text-xs text-zinc-400">{label}</p>
+        <p className="text-xs text-slate-300">{label}</p>
         {perfect && <p className="text-xs text-green-400 font-semibold">
           {label.includes('Score') ? '🎉 Great job!' : '🎉 Xuất sắc!'}
         </p>}
@@ -129,7 +129,7 @@ const TagTheTrick: React.FC<{ data: TagTheTrickData; lang: Language; onDone: (sc
     <div>
       {/* Live counter */}
       {!submitted && (
-        <div className="flex items-center gap-2 mb-3 text-xs text-zinc-400">
+        <div className="flex items-center gap-2 mb-3 text-xs text-slate-300">
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
           <span>{lang === 'vi' ? `Đã chọn: ${foundCount} / ${totalTargets} thủ thuật` : `Selected: ${foundCount} / ${totalTargets} tricks`}</span>
         </div>
@@ -166,7 +166,7 @@ const TagTheTrick: React.FC<{ data: TagTheTrickData; lang: Language; onDone: (sc
                     : <XCircle className="w-4 h-4 text-red-400 shrink-0" />}
                   <span className="font-semibold text-amber-300">{lang === 'vi' ? target.tag.vi : target.tag.en}</span>
                 </div>
-                <p className="text-zinc-400 text-xs pl-6 leading-relaxed">{lang === 'vi' ? target.explanation.vi : target.explanation.en}</p>
+                <p className="text-slate-300 text-xs pl-6 leading-relaxed">{lang === 'vi' ? target.explanation.vi : target.explanation.en}</p>
               </div>
             ))}
           </div>
@@ -178,7 +178,7 @@ const TagTheTrick: React.FC<{ data: TagTheTrickData; lang: Language; onDone: (sc
           <button
             onClick={() => setSubmitted(true)}
             disabled={selected.size === 0}
-            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed text-black font-bold text-sm transition-all"
+            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm transition-all"
           >
             {t.minigame_check}
           </button>
@@ -265,7 +265,7 @@ const SortCards: React.FC<{ data: SortCardsData; lang: Language; onDone: (score:
     <div>
       {/* Hint */}
       {!submitted && (
-        <p className="text-[11px] text-zinc-500 mb-3 flex items-center gap-1.5">
+        <p className="text-[11px] text-slate-400 mb-3 flex items-center gap-1.5">
           <span>🖱️</span>
           <span>{lang === 'vi' ? 'Kéo thẻ vào nhóm hoặc nhấn thẻ rồi nhấn nhóm' : 'Drag cards to groups, or tap a card then tap a group'}</span>
         </p>
@@ -289,7 +289,7 @@ const SortCards: React.FC<{ data: SortCardsData; lang: Language; onDone: (score:
                   ? 'border-amber-400 bg-amber-500/20 scale-105 shadow-lg shadow-amber-500/20'
                   : isActive
                     ? 'border-amber-500/60 bg-amber-500/8 text-amber-300 cursor-pointer hover:bg-amber-500/15'
-                    : 'border-zinc-700 bg-zinc-800/60 text-zinc-400 cursor-default'
+                    : 'border-zinc-700 bg-zinc-800/60 text-slate-300 cursor-default'
               }`}
             >
               <div className="text-xl mb-1">{bucket.icon}</div>
@@ -338,7 +338,7 @@ const SortCards: React.FC<{ data: SortCardsData; lang: Language; onDone: (score:
               <div
                 key={card.id}
                 onClick={() => handleUnassign(card.id)}
-                className="flex items-center gap-2 p-2.5 rounded-lg bg-zinc-800/50 border border-zinc-700/60 text-xs text-zinc-400 cursor-pointer hover:border-red-700/60 hover:text-red-400 transition-all group"
+                className="flex items-center gap-2 p-2.5 rounded-lg bg-zinc-800/50 border border-zinc-700/60 text-xs text-slate-300 cursor-pointer hover:border-red-700/60 hover:text-red-400 transition-all group"
               >
                 <span className="text-base shrink-0">{bucket?.icon}</span>
                 <span className="flex-1 truncate text-zinc-300">{lang === 'vi' ? card.text.vi : card.text.en}</span>
@@ -372,7 +372,7 @@ const SortCards: React.FC<{ data: SortCardsData; lang: Language; onDone: (score:
                         <p className="text-red-400 mb-0.5">✗ {assignedBucket ? (lang === 'vi' ? assignedBucket.label.vi : assignedBucket.label.en) : '—'}</p>
                       )}
                       <p className="text-green-400 mb-0.5">✓ {lang === 'vi' ? correctBucket?.label.vi : correctBucket?.label.en}</p>
-                      <p className="text-zinc-500 mt-1 leading-relaxed">{lang === 'vi' ? card.explanation.vi : card.explanation.en}</p>
+                      <p className="text-slate-400 mt-1 leading-relaxed">{lang === 'vi' ? card.explanation.vi : card.explanation.en}</p>
                     </div>
                   </div>
                 </div>
@@ -387,7 +387,7 @@ const SortCards: React.FC<{ data: SortCardsData; lang: Language; onDone: (score:
           <button
             onClick={() => setSubmitted(true)}
             disabled={Object.keys(assignments).length < data.cards.length}
-            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed text-black font-bold text-sm transition-all"
+            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm transition-all"
           >
             {t.minigame_check}
           </button>
@@ -497,7 +497,7 @@ const OrderSteps: React.FC<{ data: OrderStepsData; lang: Language; onDone: (scor
 
       {/* Pool empty hint */}
       {!submitted && pool.length === 0 && !submitted && (
-        <p className="text-xs text-zinc-500 mb-4 text-center">
+        <p className="text-xs text-slate-400 mb-4 text-center">
           {lang === 'vi' ? '✓ Đã sắp xếp hết — nhấn "Kiểm tra" để xem kết quả' : '✓ All placed — click "Check" to see results'}
         </p>
       )}
@@ -519,7 +519,7 @@ const OrderSteps: React.FC<{ data: OrderStepsData; lang: Language; onDone: (scor
                   <span className="text-xl shrink-0">{step.icon}</span>
                   <div className="flex-1">
                     <p className="font-bold text-zinc-200">{i + 1}. {lang === 'vi' ? step.label.vi : step.label.en}</p>
-                    <p className="text-xs text-zinc-400 mt-0.5 leading-relaxed">{lang === 'vi' ? step.description.vi : step.description.en}</p>
+                    <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">{lang === 'vi' ? step.description.vi : step.description.en}</p>
                   </div>
                   {correct
                     ? <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
@@ -536,7 +536,7 @@ const OrderSteps: React.FC<{ data: OrderStepsData; lang: Language; onDone: (scor
           <button
             onClick={() => setSubmitted(true)}
             disabled={ordered.length < data.steps.length}
-            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed text-black font-bold text-sm transition-all"
+            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm transition-all"
           >
             {t.minigame_check}
           </button>
@@ -588,7 +588,7 @@ const ShieldMatch: React.FC<{ data: ShieldMatchData; lang: Language; onDone: (sc
     <div>
       {/* Instruction hint */}
       {!submitted && (
-        <p className="text-[11px] text-zinc-500 mb-3 flex items-center gap-1.5">
+        <p className="text-[11px] text-slate-400 mb-3 flex items-center gap-1.5">
           <span>💡</span>
           <span>{lang === 'vi' ? 'Nhấn một tình huống, rồi nhấn lá chắn phòng vệ phù hợp nhất' : 'Tap a scenario, then tap the best matching defence rule'}</span>
         </p>
@@ -609,7 +609,7 @@ const ShieldMatch: React.FC<{ data: ShieldMatchData; lang: Language; onDone: (sc
                   ? 'border-amber-400 bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 hover:scale-105 cursor-pointer shadow-sm shadow-amber-500/20 animate-pulse'
                   : isUsed && !submitted
                     ? 'border-zinc-700/50 bg-zinc-800/40 text-zinc-600 cursor-not-allowed opacity-40'
-                    : 'border-zinc-700 bg-zinc-800/60 text-zinc-400'
+                    : 'border-zinc-700 bg-zinc-800/60 text-slate-300'
               }`}
             >
               <span className="text-sm">{rule.icon}</span>
@@ -653,7 +653,7 @@ const ShieldMatch: React.FC<{ data: ShieldMatchData; lang: Language; onDone: (sc
                   setSelectedScenario(scenario.id);
                 }}
                 className={`flex items-center gap-2 p-2.5 rounded-lg border text-xs cursor-pointer hover:border-red-700/60 transition-all group ${
-                  isNew ? 'border-green-500/60 bg-green-900/20 scale-[1.02]' : 'bg-zinc-800/40 border-zinc-700/60 text-zinc-400'
+                  isNew ? 'border-green-500/60 bg-green-900/20 scale-[1.02]' : 'bg-zinc-800/40 border-zinc-700/60 text-slate-300'
                 }`}
               >
                 <span className="text-base shrink-0">{rule?.icon}</span>
@@ -688,7 +688,7 @@ const ShieldMatch: React.FC<{ data: ShieldMatchData; lang: Language; onDone: (sc
                         <p className="text-red-400 mb-0.5">✗ {lang === 'vi' ? assignedRule.label.vi : assignedRule.label.en}</p>
                       )}
                       <p className="text-green-400 mb-0.5">✓ {lang === 'vi' ? correctRule?.label.vi : correctRule?.label.en}</p>
-                      <p className="text-zinc-500 mt-1 leading-relaxed">{lang === 'vi' ? scenario.explanation.vi : scenario.explanation.en}</p>
+                      <p className="text-slate-400 mt-1 leading-relaxed">{lang === 'vi' ? scenario.explanation.vi : scenario.explanation.en}</p>
                     </div>
                   </div>
                 </div>
@@ -703,7 +703,7 @@ const ShieldMatch: React.FC<{ data: ShieldMatchData; lang: Language; onDone: (sc
           <button
             onClick={() => setSubmitted(true)}
             disabled={Object.keys(pairs).length < data.scenarios.length}
-            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed text-black font-bold text-sm transition-all"
+            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm transition-all"
           >
             {t.minigame_check}
           </button>
@@ -772,7 +772,7 @@ const RiskMeter: React.FC<{ data: RiskMeterData; lang: Language; onDone: (score:
       </div>
 
       {/* Scenario number */}
-      <p className="text-[11px] text-zinc-500 mb-2 font-mono uppercase tracking-widest">
+      <p className="text-[11px] text-slate-400 mb-2 font-bold uppercase tracking-[0.12em]">
         {lang === 'vi' ? `Kịch bản ${currentIdx + 1} / ${data.scenarios.length}` : `Scenario ${currentIdx + 1} / ${data.scenarios.length}`}
       </p>
 
@@ -785,14 +785,14 @@ const RiskMeter: React.FC<{ data: RiskMeterData; lang: Language; onDone: (score:
       <div className="mb-5">
         {/* Emoji + label display */}
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs text-zinc-500">{riskLabel(1)}</span>
+          <span className="text-xs text-slate-400">{riskLabel(1)}</span>
           <div className="flex items-center gap-2">
             <span className="text-2xl transition-all">{RISK_EMOJIS[currentRating]}</span>
             <span className="text-sm font-bold" style={{ color: sliderColor }}>
               {currentRating}/5 — {riskLabel(currentRating)}
             </span>
           </div>
-          <span className="text-xs text-zinc-500">{riskLabel(5)}</span>
+          <span className="text-xs text-slate-400">{riskLabel(5)}</span>
         </div>
 
         {/* Gradient track background */}
@@ -818,7 +818,7 @@ const RiskMeter: React.FC<{ data: RiskMeterData; lang: Language; onDone: (score:
         {/* Tick marks */}
         <div className="flex justify-between text-[10px] text-zinc-600 px-1">
           {[1, 2, 3, 4, 5].map(n => (
-            <span key={n} className={n === currentRating ? 'font-bold text-zinc-400' : ''}>{n}</span>
+            <span key={n} className={n === currentRating ? 'font-bold text-slate-300' : ''}>{n}</span>
           ))}
         </div>
       </div>
@@ -831,7 +831,7 @@ const RiskMeter: React.FC<{ data: RiskMeterData; lang: Language; onDone: (score:
               {RISK_EMOJIS[scenario.expertRating]}
             </div>
             <div className="flex-1">
-              <div className="text-xs text-zinc-400 mb-0.5">{t.minigame_expert_says}</div>
+              <div className="text-xs text-slate-300 mb-0.5">{t.minigame_expert_says}</div>
               <div className="font-bold" style={{ color: RISK_COLORS[scenario.expertRating] }}>
                 {scenario.expertRating}/5 — {riskLabel(scenario.expertRating)}
               </div>
@@ -840,7 +840,7 @@ const RiskMeter: React.FC<{ data: RiskMeterData; lang: Language; onDone: (score:
               {diffLabel(Math.abs(ratings[currentIdx] - scenario.expertRating)).text}
             </span>
           </div>
-          <p className="text-xs text-zinc-400 leading-relaxed">{lang === 'vi' ? scenario.explanation.vi : scenario.explanation.en}</p>
+          <p className="text-xs text-slate-300 leading-relaxed">{lang === 'vi' ? scenario.explanation.vi : scenario.explanation.en}</p>
         </div>
       )}
 
@@ -849,7 +849,7 @@ const RiskMeter: React.FC<{ data: RiskMeterData; lang: Language; onDone: (score:
         {!revealed[currentIdx] ? (
           <button
             onClick={() => setRevealed(r => r.map((v, i) => i === currentIdx ? true : v))}
-            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 active:scale-95 text-black font-bold text-sm transition-all"
+            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 active:scale-95 text-white font-bold text-sm transition-all"
           >
             {t.minigame_check}
           </button>
@@ -923,12 +923,12 @@ const LessonMiniGame: React.FC<LessonMiniGameProps> = ({ config, lang, onComplet
           <h3 className="font-black text-amber-400 leading-tight text-base">
             {lang === 'vi' ? config.title.vi : config.title.en}
           </h3>
-          <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+          <p className="text-xs text-slate-300 mt-1 leading-relaxed">
             {lang === 'vi' ? config.instruction.vi : config.instruction.en}
           </p>
         </div>
         <div className="shrink-0 text-right">
-          <div className="text-[10px] text-zinc-500 uppercase tracking-wide">{t.minigame_reward}</div>
+          <div className="text-[10px] text-slate-400 uppercase tracking-wide">{t.minigame_reward}</div>
           <div className="text-sm font-black text-amber-400">+{config.reward} DPF</div>
         </div>
       </div>

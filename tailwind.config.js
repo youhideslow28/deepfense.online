@@ -13,9 +13,10 @@ export default {
         border:    '#1E3A5F',   // Blue-tinted border
       },
       fontFamily: {
-        sans:  ['Inter', 'Arial', 'Helvetica Neue', 'sans-serif'],
+        sans:  ['Inter', 'Be Vietnam Pro', 'Arial', 'Helvetica Neue', 'sans-serif'],
+        display: ['Be Vietnam Pro', 'Inter', 'Arial', 'Helvetica Neue', 'sans-serif'],
         mono:  ['JetBrains Mono', 'Consolas', 'Liberation Mono', 'monospace'],
-        serif: ['Outfit', 'Inter', 'Arial', 'Helvetica Neue', 'sans-serif'],
+        serif: ['Be Vietnam Pro', 'Inter', 'Arial', 'Helvetica Neue', 'sans-serif'],
       },
       animation: {
         'float':       'float 4s ease-in-out infinite',

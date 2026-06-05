@@ -341,12 +341,12 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
 
   return (
     <div className="max-w-7xl mx-auto animate-in fade-in duration-500 py-6 px-4">
-      <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4 flex items-center justify-center gap-3">
+      <div className="mb-10 text-center">
+        <h2 className="font-display flex items-center justify-center gap-3 text-3xl font-black uppercase tracking-tight text-white md:text-5xl">
           {activeTab === 'SCAN' ? <ScanLine className="text-primary" size={40} /> : activeTab === 'PROTECT' ? <ShieldCheck className="text-green-500" size={40} /> : activeTab === 'CRISIS' ? <AlertTriangle className="text-red-500" size={40} /> : <BookOpen className="text-primary" size={40} />}
           {activeTab === 'SCAN' ? t.tools_scan_title : activeTab === 'PROTECT' ? t.tools_protect_title : activeTab === 'CRISIS' ? t.crisis_title : t.tools_knowledge_title}
         </h2>
-        <p className="text-gray-400 text-sm max-w-3xl mx-auto leading-relaxed">
+        <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-slate-300/85">
           {activeTab === 'SCAN' 
             ? t.tools_scan_desc
             : activeTab === 'PROTECT'
@@ -358,28 +358,28 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
       </div>
 
       {/* TABS CONTROLLER */}
-      <div className="transparent-panel-soft flex flex-wrap justify-center p-2 rounded-2xl border border-white/10 mb-12 w-fit mx-auto shadow-xl gap-2">
+      <div className="transparent-panel-soft mx-auto mb-12 flex w-fit flex-wrap justify-center gap-2 rounded-2xl border border-white/10 p-2 shadow-xl">
         <button 
           onClick={() => handleTabChange('SCAN')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'SCAN' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${activeTab === 'SCAN' ? 'bg-primary text-white shadow-[0_0_18px_rgba(29,111,232,0.24)]' : 'text-slate-400 hover:bg-white/[0.06] hover:text-white'}`}
         >
           <ScanLine size={16} /> {t.btn_scan}
         </button>
         <button 
           onClick={() => handleTabChange('PROTECT')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'PROTECT' ? 'bg-green-500 text-black shadow-[0_0_20px_rgba(34,197,94,0.3)]' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${activeTab === 'PROTECT' ? 'bg-green-500 text-white shadow-[0_0_20px_rgba(34,197,94,0.22)]' : 'text-slate-400 hover:bg-white/[0.06] hover:text-white'}`}
         >
           <ShieldCheck size={16} /> {t.tools_protect_btn}
         </button>
         <button 
           onClick={() => handleTabChange('KNOWLEDGE')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'KNOWLEDGE' ? 'bg-primary text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${activeTab === 'KNOWLEDGE' ? 'bg-primary text-white shadow-[0_0_18px_rgba(29,111,232,0.24)]' : 'text-slate-400 hover:bg-white/[0.06] hover:text-white'}`}
         >
           <Scale size={16} /> {t.tools_knowledge_title}
         </button>
         <button 
           onClick={() => handleTabChange('CRISIS')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${activeTab === 'CRISIS' ? 'bg-red-500 text-black shadow-[0_0_20px_rgba(239,68,68,0.3)]' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${activeTab === 'CRISIS' ? 'bg-red-500 text-white shadow-[0_0_20px_rgba(239,68,68,0.22)]' : 'text-slate-400 hover:bg-white/[0.06] hover:text-white'}`}
         >
           <AlertTriangle size={16} /> {t.crisis_hub}
         </button>
@@ -391,7 +391,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
         <div className="space-y-8 animate-in slide-in-from-bottom-6 duration-500">
           {/* PRIMARY: BEHAVIORAL SCANNER */}
           <div className="transparent-panel border border-primary/20 rounded-3xl p-6 md:p-10 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col lg:min-h-[520px]">
-            <h3 className="text-primary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-center gap-3 border-b border-primary/10 pb-4">
+            <h3 className="mb-8 flex items-center gap-3 border-b border-primary/15 pb-4 text-sm font-black uppercase tracking-[0.12em] text-blue-300 md:text-base">
                <BrainCircuit size={20} /> {lang === 'vi' ? '1. QUÉT NGỮ CẢNH HÀNH VI' : '1. BEHAVIORAL CONTEXT SCAN'}
             </h3>
             
@@ -399,10 +399,10 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
            {!analysisComplete ? (
              <div className="w-full">
                <div className="flex justify-between items-center mb-6">
-                  <span className="text-primary font-mono text-xs uppercase font-bold tracking-widest flex items-center gap-2">
+                  <span className="text-primary font-mono text-xs uppercase font-bold tracking-[0.12em] flex items-center gap-2">
                     <Activity size={14}/> {lang === 'vi' ? 'THU THẬP DỮ LIỆU LOGIC' : 'GATHERING LOGIC DATA'}
                   </span>
-                  <span className="text-gray-500 font-mono text-xs font-bold">{step + 1} / {questions.length}</span>
+                  <span className="font-mono text-xs font-bold text-slate-400">{step + 1} / {questions.length}</span>
                </div>
                
                <div className="h-1.5 bg-black/50 rounded-full mb-8 overflow-hidden border border-white/10 backdrop-blur-xl">
@@ -414,10 +414,10 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                </h3>
 
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <button onClick={() => handleAnswer(true)} className="bg-red-500/10 border border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active:scale-95">
+                  <button onClick={() => handleAnswer(true)} className="bg-red-500/10 border border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.12em] transition-all active:scale-95">
                     {lang === 'vi' ? 'CÓ (ĐÁNG NGỜ)' : 'YES (SUSPICIOUS)'}
                   </button>
-                  <button onClick={() => handleAnswer(false)} className="bg-green-500/10 border border-green-500/30 text-green-500 hover:bg-green-500 hover:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active:scale-95">
+                  <button onClick={() => handleAnswer(false)} className="bg-green-500/10 border border-green-500/30 text-green-500 hover:bg-green-500 hover:text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.12em] transition-all active:scale-95">
                     {lang === 'vi' ? 'KHÔNG (BÌNH THƯỜNG)' : 'NO (NORMAL)'}
                   </button>
                </div>
@@ -434,7 +434,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                    <ShieldCheck size={48} className="text-green-500" />}
                </div>
                
-               <div className="text-gray-400 font-mono text-xs mb-2 uppercase tracking-widest">
+               <div className="mb-2 font-mono text-xs uppercase tracking-[0.12em] text-slate-400">
                   {lang === 'vi' ? 'CHỈ SỐ RỦI RO THAO TÚNG:' : 'MANIPULATION RISK INDEX:'}
                </div>
                <h3 className="text-4xl font-black text-white mb-6 tracking-tighter"
@@ -442,7 +442,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                  {Math.min(riskScore, 100)}%
                </h3>
                
-               <p className="transparent-panel-soft text-gray-300 mb-8 text-sm leading-relaxed p-5 rounded-2xl border border-white/10">
+               <p className="transparent-panel-soft mb-8 rounded-2xl border border-white/10 p-5 text-sm leading-relaxed text-slate-300">
                   {riskScore >= 60 
                     ? (lang === 'vi' ? 'CẢNH BÁO ĐỎ: Kịch bản trùng khớp cao với các chiến dịch lừa đảo Deepfake tinh vi. Đối tượng đang dùng các biện pháp tâm lý để bẻ gãy phòng vệ của bạn. TUYỆT ĐỐI KHÔNG CHUYỂN TIỀN. Hãy dập máy và gọi lại qua mạng viễn thông di động gốc (GSM).' : 'RED ALERT: High match with sophisticated Deepfake scam campaigns. Psychological manipulation detected. DO NOT TRANSFER MONEY. Hang up and callback via standard cellular network.')
                     : riskScore >= 30 
@@ -451,7 +451,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                   }
                </p>
 
-               <button onClick={resetBehaviorScan} className="w-full bg-white/5 text-white hover:bg-white hover:text-black border border-white/10 py-4 rounded-xl font-bold text-xs uppercase tracking-widest transition-all">
+               <button onClick={resetBehaviorScan} className="w-full bg-white/5 text-white hover:bg-primary hover:text-white border border-white/10 py-4 rounded-xl font-bold text-xs uppercase tracking-[0.12em] transition-all">
                   {lang === 'vi' ? 'TIẾN HÀNH QUÉT TRƯỜNG HỢP MỚI' : 'SCAN ANOTHER CASE'}
                </button>
              </div>
@@ -462,11 +462,11 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           {/* DEMO 1: FORENSICS SCANNER */}
           <div className="transparent-panel border border-secondary/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(255,42,109,0.05)] relative overflow-hidden flex flex-col h-full">
-            <h3 className="text-secondary font-black text-sm md:text-base uppercase tracking-widest mb-8 flex items-start sm:items-center gap-3 border-b border-secondary/10 pb-4">
+            <h3 className="mb-8 flex items-start gap-3 border-b border-secondary/15 pb-4 text-sm font-black uppercase tracking-[0.12em] text-red-300 md:text-base sm:items-center">
                <FileSearch size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
                <div className="flex items-center gap-2 flex-wrap w-full">
                  <span>{lang === 'vi' ? '2. MÔ PHỎNG PHÁP Y (DEMO)' : '2. FORENSICS SIMULATION (DEMO)'}</span>
-                 <span className="bg-red-500/20 text-red-500 text-[9px] px-2 py-0.5 rounded-full animate-pulse border border-red-500/30 tracking-widest ml-auto sm:ml-0 mt-0.5">{lang === 'vi' ? 'SIMULATION ONLY' : 'SIMULATION ONLY'}</span>
+                 <span className="bg-red-500/20 text-red-500 text-[9px] px-2 py-0.5 rounded-full animate-pulse border border-red-500/30 tracking-[0.12em] ml-auto sm:ml-0 mt-0.5">{lang === 'vi' ? 'SIMULATION ONLY' : 'SIMULATION ONLY'}</span>
                </div>
             </h3>
             
@@ -486,10 +486,10 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                 <h3 className="text-white font-bold text-lg mb-2">
                   {lang === 'vi' ? 'Tải tệp đa phương tiện lên để giám định vi mô' : 'Upload media file for micro-forensics'}
                 </h3>
-                <p className="text-gray-500 text-sm mb-8">
+                <p className="mb-8 text-sm leading-7 text-slate-400">
                   {lang === 'vi' ? 'Hỗ trợ: JPG, PNG, MP4, MP3, WAV (Tối đa 50MB)' : 'Supports: JPG, PNG, MP4, MP3, WAV (Max 50MB)'}
                 </p>
-                <div className="inline-flex bg-secondary text-black px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest items-center gap-2 group-hover:bg-white transition-colors shadow-lg shadow-secondary/20">
+                <div className="inline-flex bg-secondary text-white px-6 py-3 rounded-xl text-xs font-black uppercase tracking-[0.12em] items-center gap-2 group-hover:bg-rose-500 transition-colors shadow-lg shadow-secondary/20">
                   <FileSearch size={16} /> {lang === 'vi' ? 'CHỌN TỆP PHÂN TÍCH' : 'SELECT FILE TO ANALYZE'}
                 </div>
              </div>
@@ -499,7 +499,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                  <FileSearch size={24} className="text-secondary shrink-0" />
                  <div className="flex-1 min-w-0">
                    <div className="text-white font-bold text-sm truncate mb-1">{file.name}</div>
-                   <div className="text-gray-400 font-mono text-xs">{(file.size / (1024 * 1024)).toFixed(2)} MB • {file.type || 'Unknown Format'}</div>
+                   <div className="text-slate-300/85 font-mono text-xs">{(file.size / (1024 * 1024)).toFixed(2)} MB • {file.type || 'Unknown Format'}</div>
                  </div>
                  <button 
                     onClick={() => { 
@@ -507,7 +507,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                         if (fileInputRef.current) fileInputRef.current.value = '';
                         if (intervalRef.current) clearInterval(intervalRef.current); 
                     }} 
-                    className="text-gray-500 hover:text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-colors">
+                    className="text-slate-400 hover:text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-colors">
                     {lang === 'vi' ? 'ĐÓNG' : 'CLOSE'}
                  </button>
                </div>
@@ -534,7 +534,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                     {isScanning && <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-secondary/10 via-secondary to-secondary/10 animate-[pulse_1s_ease-in-out_infinite]"></div>}
                     
                     <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
-                      <span className="text-secondary font-bold text-xs flex items-center gap-2 tracking-widest">
+                      <span className="text-secondary font-bold text-xs flex items-center gap-2 tracking-[0.12em]">
                         {isScanning ? <Activity size={14} className="animate-spin" /> : <CheckCircle2 size={14} />} 
                         {lang === 'vi' ? 'FORENSICS_TERMINAL_V2' : 'FORENSICS_TERMINAL_V2'}
                       </span>
@@ -543,13 +543,13 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                     
                     <div className="space-y-3 min-h-[120px] max-h-[200px] overflow-y-auto">
                       {scanLogs.map((log, idx) => (
-                        <div key={idx} className="text-gray-400 text-[11px] flex items-start gap-2 animate-in slide-in-from-bottom-2 duration-300">
+                      <div key={idx} className="animate-in flex items-start gap-2 text-[11px] text-slate-400 duration-300 slide-in-from-bottom-2">
                           <span className="text-secondary mt-0.5">root@deepfense:~#</span> 
                           <span className="leading-relaxed">{log}</span>
                         </div>
                       ))}
                       {isScanning && (
-                         <div className="text-gray-500 text-[11px] flex items-start gap-2 animate-pulse">
+                         <div className="flex animate-pulse items-start gap-2 text-[11px] text-slate-500">
                             <span className="text-secondary mt-0.5">root@deepfense:~#</span> _
                          </div>
                       )}
@@ -561,7 +561,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                             <AlertTriangle size={14} /> 
                             {lang === 'vi' ? 'PHÁT HIỆN DẤU VẾT BẤT THƯỜNG (CẦN XÁC MINH)' : 'ANOMALIES DETECTED (VERIFICATION NEEDED)'}
                          </div>
-                         <p className="text-gray-400 text-[11px] mb-6 leading-relaxed">
+                         <p className="mb-6 text-[11px] leading-relaxed text-slate-400">
                            {lang === 'vi' 
                                ? '[ĐÂY LÀ TÍNH NĂNG MÔ PHỎNG] - Trên thực tế, hệ thống sẽ phân tích quang phổ và pixel. Tệp quá lớn hoặc API thất bại nên hệ thống hiển thị kết quả mô phỏng.'
                                : '[SIMULATION MODE] - File too large or API failed, falling back to simulated results.'}
@@ -572,7 +572,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                                 setScanResult(null);
                                 if (fileInputRef.current) fileInputRef.current.value = '';
                             }} 
-                            className="w-full text-white border border-white/20 hover:bg-white hover:text-black py-3 rounded-xl text-xs font-bold transition-all">
+                            className="w-full text-white border border-white/20 hover:bg-primary hover:text-white py-3 rounded-xl text-xs font-bold transition-all">
                            {lang === 'vi' ? 'QUÉT TỆP KHÁC' : 'SCAN ANOTHER FILE'}
                          </button>
                       </div>
@@ -619,15 +619,15 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
         {/* DEMO 2: RPPG LIVENESS SCANNER */}
         <div className="transparent-panel border border-[#00f0ff]/20 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(0,240,255,0.05)] relative overflow-hidden flex flex-col items-center h-full">
           <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00f0ff] to-transparent opacity-50"></div>
-          <h3 className="text-[#00f0ff] font-black text-sm md:text-base uppercase tracking-widest mb-4 flex items-center justify-start gap-3 w-full border-b border-[#00f0ff]/10 pb-4">
+          <h3 className="mb-4 flex w-full items-center justify-start gap-3 border-b border-primary/15 pb-4 text-sm font-black uppercase tracking-[0.12em] text-blue-300 md:text-base">
             <ScanLine size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
             <span>{lang === 'vi' ? '3. MÁY QUÉT SỨC SỐNG (rPPG LIVENESS DETECTOR)' : '3. rPPG LIVENESS DETECTOR'}</span>
-            <span className="bg-[#00f0ff]/20 text-[#00f0ff] text-[9px] px-2 py-0.5 rounded-full border border-[#00f0ff]/30 tracking-widest uppercase ml-2 animate-pulse">
+            <span className="bg-[#00f0ff]/20 text-[#00f0ff] text-[9px] px-2 py-0.5 rounded-full border border-[#00f0ff]/30 tracking-[0.12em] uppercase ml-2 animate-pulse">
               LIVE DEMO
             </span>
           </h3>
           
-          <p className="text-gray-400 text-sm md:text-sm text-center max-w-4xl mb-8 leading-relaxed mx-auto w-full">
+          <p className="mx-auto mb-8 w-full max-w-4xl text-center text-sm leading-7 text-slate-300/85 md:text-sm">
             {lang === 'vi' 
               ? 'Dựa trên nguyên lý của Intel FakeCatcher. Công nghệ rPPG phân tích sự thay đổi quang phổ máu đỏ đập theo nhịp tim dưới da mặt. Deepfake không có dòng máu bên trong nên không thể vượt qua hàng rào phòng thủ này.'
               : 'Based on Intel FakeCatcher. Analyzes photoplethysmography (rPPG) sub-surface blood flow. Deepfakes lack a circulatory system and cannot spoof this biological signal.'}
@@ -657,7 +657,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
               
               <div className="transparent-panel-terminal w-full lg:w-[350px] border border-white/10 rounded-2xl p-6 flex flex-col justify-between shadow-2xl">
                 <div>
-                    <div className="text-[#00f0ff] font-mono text-xs uppercase font-bold tracking-widest mb-4 flex items-center justify-between">
+                    <div className="text-[#00f0ff] font-mono text-xs uppercase font-bold tracking-[0.12em] mb-4 flex items-center justify-between">
                       <span>{lang === 'vi' ? 'LƯU LƯỢNG MÁU (rPPG)' : 'BLOOD FLOW (rPPG)'}</span>
                       <span className="text-green-500 animate-pulse bg-green-500/10 px-2 py-1 rounded">72 BPM</span>
                     </div>
@@ -672,21 +672,21 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
 
                 <div className="space-y-4 font-mono mb-8">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-gray-400">{lang === 'vi' ? 'Hấp thụ sáng sinh học:' : 'Bio-light absorption:'}</span>
+                      <span className="text-slate-400">{lang === 'vi' ? 'Hấp thụ sáng sinh học:' : 'Bio-light absorption:'}</span>
                       <span className="text-green-500 font-bold">PASS <span className="inline-block w-2 h-2 bg-green-500 rounded-full ml-1 animate-pulse"></span></span>
                     </div>
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-gray-400">{lang === 'vi' ? 'Nhiễu không gian tĩnh:' : 'Static spatial noise:'}</span>
+                      <span className="text-slate-400">{lang === 'vi' ? 'Nhiễu không gian tĩnh:' : 'Static spatial noise:'}</span>
                       <span className="text-green-500 font-bold">NONE <span className="inline-block w-2 h-2 bg-green-500 rounded-full ml-1 animate-[pulse_1.5s_infinite]"></span></span>
                     </div>
                     <div className="mt-6 pt-4 border-t border-white/10">
-                      <div className="bg-green-500/10 border border-green-500/30 text-green-500 p-4 rounded-xl text-center font-black text-sm tracking-widest transform transition-transform hover:scale-105 cursor-default">
+                      <div className="bg-green-500/10 border border-green-500/30 text-green-500 p-4 rounded-xl text-center font-black text-sm tracking-[0.12em] transform transition-transform hover:scale-105 cursor-default">
                           {lang === 'vi' ? 'KẾT LUẬN: NGƯỜI THẬT' : 'RESULT: REAL HUMAN'}
                       </div>
                     </div>
                 </div>
 
-                <button onClick={toggleLiveness} className="w-full text-gray-500 hover:text-white hover:bg-white/10 py-3 rounded-xl text-[10px] uppercase font-bold tracking-widest transition-all border border-transparent hover:border-white/10">
+                <button onClick={toggleLiveness} className="w-full rounded-xl border border-transparent py-3 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400 transition-all hover:border-white/10 hover:bg-white/10 hover:text-white">
                     {lang === 'vi' ? 'TẮT MÁY QUÉT' : 'SHUTDOWN SCANNER'}
                 </button>
               </div>
@@ -704,11 +704,11 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
              <div className="flex flex-col gap-6">
                 <div>
-                  <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-3">
+                  <h3 className="font-display mb-4 flex items-center gap-3 text-2xl font-black uppercase tracking-tight text-white">
                      <ShieldCheck size={28} className="text-green-500" />
                      {lang === 'vi' ? 'KHIÊN CHỐNG AI (FAWKES)' : 'ANTI-AI FAWKES SHIELD'}
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                  <p className="mb-6 text-sm leading-7 text-slate-300/85">
                      {t.tools_protect_desc}
                   </p>
                 </div>
@@ -725,10 +725,10 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                       <div className="bg-green-500/20 w-16 h-16 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                           <UploadCloud size={28} className="text-green-500" />
                       </div>
-                      <span className="text-green-500 font-bold text-sm tracking-widest uppercase mb-2">
+                      <span className="text-green-500 font-bold text-sm tracking-[0.12em] uppercase mb-2">
                           {lang === 'vi' ? 'CHỌN ẢNH CẦN BẢO VỆ' : 'SELECT PHOTO TO PROTECT'}
                       </span>
-                      <span className="text-gray-500 text-xs">
+                      <span className="text-xs text-slate-400">
                           {shieldFile ? shieldFile.name : (lang === 'vi' ? 'Hỗ trợ JPG, PNG (Tối đa 10MB)' : 'Supports JPG, PNG (Max 10MB)')}
                       </span>
                    </div>
@@ -752,9 +752,9 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
 
              <div className="transparent-panel-strong border border-white/10 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center min-h-[400px]">
                 {!shieldImage ? (
-                   <div className="text-gray-600 flex flex-col items-center max-w-[200px] text-center p-8">
-                     <ShieldCheck size={48} className="text-gray-800 mb-4 opacity-50" />
-                     <span className="text-xs uppercase tracking-widest font-bold">
+                   <div className="flex max-w-[200px] flex-col items-center p-8 text-center text-slate-500">
+                     <ShieldCheck size={48} className="mb-4 text-slate-700 opacity-60" />
+                     <span className="text-xs uppercase tracking-[0.12em] font-bold">
                        {lang === 'vi' ? 'KHUNG XEM TRƯỚC AN TOÀN' : 'SECURE PREVIEW PANEL'}
                      </span>
                    </div>
@@ -770,7 +770,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                             <a 
                                href={protectedDataUrl} 
                                download={"deepfense_shielded_" + shieldFile?.name}
-                               className="bg-green-500 text-black px-6 py-3 rounded-full font-black text-xs uppercase tracking-widest shadow-[0_10px_30px_rgba(34,197,94,0.4)] hover:scale-105 transition-transform flex items-center gap-2 border-2 border-green-400"
+                               className="bg-green-500 text-white px-6 py-3 rounded-full font-black text-xs uppercase tracking-[0.12em] shadow-[0_10px_30px_rgba(34,197,94,0.4)] hover:scale-105 transition-transform flex items-center gap-2 border-2 border-green-400"
                             >
                                <Download size={16} /> {lang === 'vi' ? 'TẢI ẢNH AN TOÀN' : 'DOWNLOAD SAFE IMAGE'}
                             </a>
@@ -792,9 +792,9 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                   <button 
                     key={idx}
                     onClick={() => setActiveKnowledgeCat(idx)}
-                    className={`text-left p-4 rounded-xl font-bold text-[10px] md:text-xs tracking-widest transition-all border shadow-lg flex items-center gap-3 ${activeKnowledgeCat === idx ? 'bg-primary text-black border-primary' : 'transparent-panel-soft border-white/10 text-gray-400 hover:border-white/20 hover:text-white'}`}
+                    className={`flex items-center gap-3 rounded-xl border p-4 text-left text-[10px] font-bold tracking-[0.12em] shadow-lg transition-all md:text-xs ${activeKnowledgeCat === idx ? 'border-primary bg-primary text-white' : 'transparent-panel-soft border-white/10 text-slate-400 hover:border-white/20 hover:text-white'}`}
                   >
-                    <span className={activeKnowledgeCat === idx ? 'text-black' : 'text-primary'}>
+                    <span className={activeKnowledgeCat === idx ? 'text-white' : 'text-blue-300'}>
                        {getKnowledgeIcon(idx)}
                     </span>
                     <span className="leading-snug uppercase">{cat.category}</span>
@@ -803,10 +803,10 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
            </div>
            
            {/* Content Box */}
-           <div className="transparent-panel lg:col-span-8 border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden h-fit">
+           <div className="transparent-panel relative h-fit overflow-hidden rounded-3xl border border-white/10 p-6 shadow-2xl lg:col-span-8 md:p-10">
                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
                <div key={activeKnowledgeCat} className="animate-in fade-in slide-in-from-right-8 duration-500">
-                  <h3 className="text-xl md:text-2xl font-black text-white mb-6 text-primary border-b border-white/10 pb-6 flex items-center gap-4">
+                  <h3 className="mb-6 flex items-center gap-4 border-b border-white/10 pb-6 text-xl font-black text-blue-100 md:text-2xl">
                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                         {getKnowledgeIcon(activeKnowledgeCat)}
                      </div>
@@ -818,7 +818,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                            <h4 className="text-base md:text-lg font-bold text-white mb-4 flex items-start gap-3">
                               <span className="leading-tight">{item.title}</span>
                            </h4>
-                           <p className="text-gray-400 text-sm md:text-base leading-relaxed text-justify">
+                           <p className="text-justify text-sm leading-7 text-slate-300/85 md:text-base">
                               {item.content}
                            </p>
                         </div>

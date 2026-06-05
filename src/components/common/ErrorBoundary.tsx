@@ -49,14 +49,14 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
           <div className="text-red-500 text-xl font-bold mb-4">
             {this.state.isChunkError ? "⚠️ LỖI ĐỒNG BỘ PHIÊN BẢN" : "⚠️ ĐÃ XẢY RA LỖI HỆ THỐNG (CRASH)"}
           </div>
-          <p className="text-gray-400 text-sm mb-8 max-w-md">
+          <p className="text-slate-300/85 text-sm mb-8 max-w-md">
             {this.state.isChunkError 
               ? "Hệ thống vừa nhận được một bản cập nhật mới hoặc kết nối mạng của bạn bị gián đoạn. Vui lòng tải lại trang để tiếp tục." 
               : `Chi tiết lỗi: ${this.state.errorMsg}`}
           </p>
           <button 
             onClick={() => { sessionStorage.removeItem('chunk_reload_count'); window.location.reload(); }}
-            className="bg-primary text-black px-8 py-3 rounded-xl font-bold uppercase tracking-widest hover:bg-white transition-colors"
+            className="bg-primary text-white px-8 py-3 rounded-xl font-bold uppercase tracking-[0.12em] hover:bg-blue-500 transition-colors"
           >
             TẢI LẠI TRANG
           </button>

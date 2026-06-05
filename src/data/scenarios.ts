@@ -114,7 +114,7 @@ export const SCENARIOS: ScenarioDefinition[] = [
     senderName: { vi: 'Trần Thị Lan — TechViet HR', en: 'Lan Tran — TechViet HR' },
     senderRole: { vi: 'Trưởng phòng Tuyển dụng — TechViet Solutions', en: 'Recruitment Manager — TechViet Solutions' },
     senderInitials: 'TTL',
-    avatarColor: 'from-violet-500 to-purple-600',
+    avatarColor: 'from-blue-500 to-cyan-500',
     icon: '💼',
     initialMessage: {
       vi: 'Chào bạn! Mình là Lan, HR của TechViet Solutions. Mình thấy profile LinkedIn của bạn rất phù hợp với vị trí Data Entry Remote đang tuyển gấp. Thu nhập 800k–1.2tr/ngày, làm tại nhà hoàn toàn, không cần kinh nghiệm. Chỉ cần đặt cọc thiết bị 2 triệu — sẽ hoàn lại ngay trong tuần lương đầu tiên. Bạn có muốn tham gia không?',

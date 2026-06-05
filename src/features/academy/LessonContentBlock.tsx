@@ -58,7 +58,7 @@ const TextRenderer: React.FC<{ block: TextBlock; lang: Language }> = ({ block, l
   return (
     <p className={
       variant === 'lead'    ? 'text-gray-200 text-lg leading-relaxed font-medium' :
-      variant === 'caption' ? 'text-gray-500 text-xs leading-relaxed italic' :
+      variant === 'caption' ? 'text-slate-400 text-xs leading-relaxed italic' :
                               'text-gray-300 text-base leading-relaxed'
     }>
       {parseInline(text)}
@@ -98,7 +98,7 @@ const ImageRenderer: React.FC<{ block: ImageBlock; lang: Language }> = ({ block,
         </div>
       </div>
       {caption && (
-        <figcaption className="mt-2 text-center text-xs text-zinc-500 leading-relaxed px-2">
+        <figcaption className="mt-2 text-center text-xs text-slate-400 leading-relaxed px-2">
           {caption}
         </figcaption>
       )}
@@ -420,10 +420,10 @@ const ExerciseRenderer: React.FC<{ block: ExerciseBlock; lang: Language }> = ({ 
           {after}
         </p>
         {!submitted
-          ? <button disabled={blankValue === null} onClick={() => setSubmitted(true)} className="text-xs px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-black font-bold transition-colors">{t.block_exercise_check}</button>
+          ? <button disabled={blankValue === null} onClick={() => setSubmitted(true)} className="text-xs px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-white font-bold transition-colors">{t.block_exercise_check}</button>
           : <div className={`text-sm font-semibold mt-2 ${correct ? 'text-green-400' : 'text-red-400'}`}>
               {correct ? `✅ ${t.block_exercise_correct}` : `❌ ${t.block_exercise_wrong}`}
-              <p className="text-zinc-400 text-xs mt-1 font-normal">{explanation}</p>
+              <p className="text-slate-400 text-xs mt-1 font-normal">{explanation}</p>
             </div>}
       </div>
     );
@@ -451,9 +451,9 @@ const ExerciseRenderer: React.FC<{ block: ExerciseBlock; lang: Language }> = ({ 
                 showResult
                   ? isCorrect(i) ? 'border-green-500/50 bg-green-500/10 text-green-300'
                   : selected === i ? 'border-red-500/50 bg-red-500/10 text-red-300'
-                  : 'border-white/5 text-zinc-500 opacity-50'
+                  : 'border-white/5 text-slate-500 opacity-50'
                   : selected === i ? 'border-amber-500/50 bg-amber-500/10 text-amber-300'
-                  : 'border-white/10 text-zinc-400 hover:border-white/20'
+                  : 'border-white/10 text-slate-300 hover:border-white/20'
               }`}
             >
               <span>{label}</span>
@@ -464,10 +464,10 @@ const ExerciseRenderer: React.FC<{ block: ExerciseBlock; lang: Language }> = ({ 
         })}
       </div>
       {!submitted
-        ? <button disabled={selected === null} onClick={() => setSubmitted(true)} className="text-xs px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-black font-bold transition-colors">{t.block_exercise_check}</button>
+        ? <button disabled={selected === null} onClick={() => setSubmitted(true)} className="text-xs px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-white font-bold transition-colors">{t.block_exercise_check}</button>
         : <div className={`text-sm font-semibold ${correct ? 'text-green-400' : 'text-red-400'}`}>
             {correct ? `✅ ${t.block_exercise_correct}` : `❌ ${t.block_exercise_wrong}`}
-            <p className="text-zinc-400 text-xs mt-1 font-normal">{explanation}</p>
+            <p className="text-slate-400 text-xs mt-1 font-normal">{explanation}</p>
           </div>}
     </div>
   );
@@ -501,12 +501,12 @@ const SandboxRenderer: React.FC<{ block: SandboxBlock; lang: Language }> = ({ bl
   };
 
   return (
-    <div className="border border-purple-500/30 bg-purple-500/5 rounded-xl p-4">
+    <div className="border border-blue-500/30 bg-blue-500/5 rounded-xl p-4">
       <div className="flex items-center gap-2 mb-3">
         <span className="text-base">🎭</span>
         <div>
-          <p className="text-sm font-bold text-purple-400">{title}</p>
-          {desc && <p className="text-xs text-zinc-500">{desc}</p>}
+          <p className="text-sm font-bold text-blue-300">{title}</p>
+          {desc && <p className="text-xs text-slate-400">{desc}</p>}
         </div>
       </div>
 
@@ -522,7 +522,7 @@ const SandboxRenderer: React.FC<{ block: SandboxBlock; lang: Language }> = ({ bl
                 <div className={`max-w-[85%] px-3 py-2 rounded-xl text-sm ${
                   turn.speaker === 'scammer'
                     ? 'bg-red-900/30 border border-red-700/30 text-zinc-200'
-                    : 'bg-zinc-800 border border-zinc-700 text-zinc-400 text-center text-xs'
+                    : 'bg-zinc-800 border border-zinc-700 text-slate-400 text-center text-xs'
                 }`}>
                   {turn.speaker === 'scammer' && <span className="text-red-400 text-xs font-bold block mb-0.5">⚠️ {lang === 'vi' ? 'Tin nhắn đáng ngờ' : 'Suspicious message'}</span>}
                   {msg.split('\n').map((line, i, arr) => (
@@ -551,8 +551,8 @@ const SandboxRenderer: React.FC<{ block: SandboxBlock; lang: Language }> = ({ bl
                                 ? choice.outcome === 'good'
                                   ? 'border-green-500/50 bg-green-900/20 text-green-300'
                                   : 'border-red-500/50 bg-red-900/20 text-red-300'
-                                : 'border-white/5 text-zinc-600 opacity-40'
-                              : 'border-white/10 text-zinc-400 hover:border-purple-500/40 hover:text-purple-300 cursor-pointer'
+                                : 'border-white/5 text-slate-600 opacity-40'
+                              : 'border-white/10 text-slate-300 hover:border-blue-500/40 hover:text-blue-300 cursor-pointer'
                           }`}
                         >
                           {label}
@@ -573,7 +573,7 @@ const SandboxRenderer: React.FC<{ block: SandboxBlock; lang: Language }> = ({ bl
       </div>
 
       {done && (
-        <div className="mt-3 p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 text-xs text-purple-300 text-center font-semibold">
+        <div className="mt-3 p-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-xs text-blue-300 text-center font-semibold">
           {lang === 'vi' ? '✅ Bài thực hành hoàn thành!' : '✅ Practice complete!'}
         </div>
       )}

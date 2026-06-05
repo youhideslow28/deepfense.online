@@ -20,10 +20,10 @@ const NotFound: React.FC<NotFoundProps> = ({ lang = 'vi' }) => {
       <div className="text-6xl md:text-8xl font-black text-white mb-2 tracking-tighter">
         404
       </div>
-      <div className="text-lg md:text-xl font-bold text-primary mb-2 font-mono tracking-widest uppercase">
+      <div className="text-lg md:text-xl font-bold text-primary mb-2 font-mono tracking-[0.12em] uppercase">
         {isVi ? 'Trang không tồn tại' : 'Page Not Found'}
       </div>
-      <p className="text-gray-400 max-w-md mb-10 text-sm md:text-base">
+      <p className="text-slate-300/85 max-w-md mb-10 text-sm md:text-base">
         {isVi
           ? 'Địa chỉ bạn truy cập không tồn tại hoặc đã bị di chuyển. Hãy quay lại và tiếp tục huấn luyện.'
           : 'The page you requested does not exist or has been moved. Head back and keep training.'}
@@ -32,7 +32,7 @@ const NotFound: React.FC<NotFoundProps> = ({ lang = 'vi' }) => {
       <div className="flex flex-wrap gap-3 justify-center">
         <Link
           to="/"
-          className="flex items-center gap-2 bg-primary text-black font-bold px-5 py-2.5 rounded-lg text-sm hover:bg-primary/90 transition-colors"
+          className="flex items-center gap-2 bg-primary text-white font-bold px-5 py-2.5 rounded-lg text-sm hover:bg-blue-500 transition-colors"
         >
           <Home size={15} />
           {isVi ? 'Trang chủ' : 'Home'}
@@ -46,7 +46,7 @@ const NotFound: React.FC<NotFoundProps> = ({ lang = 'vi' }) => {
         </Link>
         <Link
           to="/academy"
-          className="flex items-center gap-2 border border-gray-700 text-gray-300 font-bold px-5 py-2.5 rounded-lg text-sm hover:border-gray-500 transition-colors"
+          className="flex items-center gap-2 border border-white/15 text-slate-200 font-bold px-5 py-2.5 rounded-lg text-sm hover:border-primary/60 hover:text-white transition-colors"
         >
           <GraduationCap size={15} />
           Academy

@@ -110,7 +110,7 @@ const Particles: React.FC<{ mouse: React.MutableRefObject<{ x: number; y: number
 
           // Gradient color: Blue → Purple
           colors[li] = alpha*0.11; colors[li+1] = alpha*0.44; colors[li+2] = alpha*0.91; // blue
-          colors[li+3] = alpha*0.66; colors[li+4] = alpha*0.33; colors[li+5] = alpha*0.97; // purple
+          colors[li+3] = alpha*0.66; colors[li+4] = alpha*0.33; colors[li+5] = alpha*0.97; // cool accent
 
           lineIndex++;
         }

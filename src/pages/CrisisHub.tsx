@@ -48,7 +48,7 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
           <ShieldAlert className="text-red-500" size={36} />
           {t.crisis_title}
         </h1>
-        <p className="text-gray-400 max-w-2xl">
+        <p className="text-slate-300/85 max-w-2xl">
           {t.crisis_desc}
         </p>
       </div>
@@ -57,14 +57,14 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
       <div className="print:hidden flex flex-wrap gap-4 border-b border-white/10 pb-4">
         <button
           onClick={() => setActiveTab('first-aid')}
-          className={`px-6 py-3 rounded-xl font-bold uppercase tracking-widest text-sm transition-all focus:outline-none flex items-center gap-2 ${activeTab === 'first-aid' ? 'bg-blue-500/20 text-blue-500 border border-blue-500/50' : 'bg-black/40 text-gray-400 border border-white/10 hover:border-white/30'}`}
+          className={`px-6 py-3 rounded-xl font-bold uppercase tracking-[0.12em] text-sm transition-all focus:outline-none flex items-center gap-2 ${activeTab === 'first-aid' ? 'bg-blue-500/20 text-blue-200 border border-blue-500/50' : 'bg-black/40 text-slate-300 border border-white/10 hover:border-white/30 hover:text-white'}`}
         >
           <HeartHandshake size={18} />
           {t.btn_first_aid}
         </button>
         <button
           onClick={() => setActiveTab('report')}
-          className={`px-6 py-3 rounded-xl font-bold uppercase tracking-widest text-sm transition-all focus:outline-none flex items-center gap-2 ${activeTab === 'report' ? 'bg-red-500/20 text-red-500 border border-red-500/50' : 'bg-black/40 text-gray-400 border border-white/10 hover:border-white/30'}`}
+          className={`px-6 py-3 rounded-xl font-bold uppercase tracking-[0.12em] text-sm transition-all focus:outline-none flex items-center gap-2 ${activeTab === 'report' ? 'bg-red-500/20 text-red-200 border border-red-500/50' : 'bg-black/40 text-slate-300 border border-white/10 hover:border-white/30 hover:text-white'}`}
         >
           <FileText size={18} />
           {t.btn_report_pdf}
@@ -90,19 +90,19 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                 <div className="space-y-4">
                    <div className="bg-black/50 p-4 rounded-xl border-l-4 border-blue-500">
                      <h3 className="font-bold text-blue-400 mb-1">{lang === 'vi' ? '1. Dừng mọi liên lạc' : '1. Stop all contact'}</h3>
-                     <p className="text-sm text-gray-400">
+                     <p className="text-sm text-slate-300/85">
                         {lang === 'vi' ? 'Không cố gắng tranh cãi hay đáp ứng yêu cầu chuyển thêm tiền. Block thủ phạm ngay lập tức.' : 'Do not try to argue or meet requests for more money. Block the perpetrator immediately.'}
                      </p>
                    </div>
                    <div className="bg-black/50 p-4 rounded-xl border-l-4 border-emerald-500">
                      <h3 className="font-bold text-emerald-400 mb-1">{lang === 'vi' ? '2. Bảo vệ tài sản còn lại' : '2. Protect remaining assets'}</h3>
-                     <p className="text-sm text-gray-400">
+                     <p className="text-sm text-slate-300/85">
                         {lang === 'vi' ? 'Khoá thẻ ngân hàng, đổi mật khẩu email và tài khoản MXH quan trọng từ thiết bị khác.' : 'Lock bank cards, change passwords for email and important social accounts from another device.'}
                      </p>
                    </div>
-                   <div className="bg-black/50 p-4 rounded-xl border-l-4 border-purple-500">
-                     <h3 className="font-bold text-purple-400 mb-1">{lang === 'vi' ? '3. Tìm điểm tựa an toàn' : '3. Find a safe support'}</h3>
-                     <p className="text-sm text-gray-400">
+                   <div className="bg-black/50 p-4 rounded-xl border-l-4 border-blue-500">
+                     <h3 className="font-bold text-blue-300 mb-1">{lang === 'vi' ? '3. Tìm điểm tựa an toàn' : '3. Find a safe support'}</h3>
+                     <p className="text-sm text-slate-300/85">
                         {lang === 'vi' ? 'Hãy nói chuyện với người mà bạn tin tưởng nhất. Chia sẻ để giảm bớt gánh nặng cảm giác tội lỗi.' : 'Talk to the person you trust the most. Share to reduce the burden of guilt.'}
                      </p>
                    </div>
@@ -111,7 +111,7 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
               
 
                <div className="space-y-6">
-                 <h3 className="text-xl font-bold text-white uppercase tracking-widest flex items-center gap-2">
+                 <h3 className="text-xl font-bold text-white uppercase tracking-[0.12em] flex items-center gap-2">
                    <ShieldCheck className="text-primary" size={24} />
                    {t.contact_support}
                  </h3>
@@ -126,9 +126,9 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                             </div>
                             <h4 className="font-bold text-blue-400 text-sm uppercase">{t.btn_ncsc_report}</h4>
                          </div>
-                         <ExternalLink size={14} className="text-gray-600 group-hover:text-blue-500" />
+                         <ExternalLink size={14} className="text-slate-500 group-hover:text-blue-500" />
                       </div>
-                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'Cổng cảnh báo an toàn thông tin Việt Nam (NCSC Việt Nam).' : 'Vietnam Information Security Warning Portal (NCSC Vietnam).'}</p>
+                      <p className="text-xs text-slate-300/85">{lang === 'vi' ? 'Cổng cảnh báo an toàn thông tin Việt Nam (NCSC Việt Nam).' : 'Vietnam Information Security Warning Portal (NCSC Vietnam).'}</p>
                    </a>
 
                    {/* ChongLuaDao */}
@@ -140,9 +140,9 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                             </div>
                             <h4 className="font-bold text-green-400 text-sm uppercase">{t.btn_chongluadao_report}</h4>
                          </div>
-                         <ExternalLink size={14} className="text-gray-600 group-hover:text-green-500" />
+                         <ExternalLink size={14} className="text-slate-500 group-hover:text-green-500" />
                       </div>
-                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'Dự án cộng đồng bảo vệ người dùng khỏi website độc hại và lừa đảo.' : 'Community project protecting users from malicious and scam websites.'}</p>
+                      <p className="text-xs text-slate-300/85">{lang === 'vi' ? 'Dự án cộng đồng bảo vệ người dùng khỏi website độc hại và lừa đảo.' : 'Community project protecting users from malicious and scam websites.'}</p>
                    </a>
 
                    {/* A05 Hotline */}
@@ -153,8 +153,8 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                          </div>
                          <h4 className="font-bold text-red-500 text-sm uppercase">{t.btn_a05_hotline}</h4>
                       </div>
-                      <p className="text-xs text-gray-400 mb-4">{lang === 'vi' ? 'Đường dây nóng Cục An ninh mạng & Phòng chống tội phạm công nghệ cao.' : 'Hotline of the Cyber Security and High-Tech Crime Prevention Department.'}</p>
-                      <a href="tel:0692194053" className="text-white font-black text-lg tracking-widest hover:text-red-500 transition-colors">069.219.4053</a>
+                      <p className="text-xs text-slate-300/85 mb-4">{lang === 'vi' ? 'Đường dây nóng Cục An ninh mạng & Phòng chống tội phạm công nghệ cao.' : 'Hotline of the Cyber Security and High-Tech Crime Prevention Department.'}</p>
+                      <a href="tel:0692194053" className="text-white font-black text-lg tracking-[0.12em] hover:text-red-500 transition-colors">069.219.4053</a>
                    </div>
 
                    {/* Safe Browsing */}
@@ -166,9 +166,9 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                             </div>
                             <h4 className="font-bold text-gray-200 text-sm uppercase">{t.btn_safebrowsing_report}</h4>
                          </div>
-                         <ExternalLink size={14} className="text-gray-400 group-hover:text-white" />
+                         <ExternalLink size={14} className="text-slate-300/85 group-hover:text-white" />
                       </div>
-                      <p className="text-xs text-gray-400">{lang === 'vi' ? 'Báo cáo website lừa đảo trực tiếp cho Google để bảo vệ người dùng toàn cầu.' : 'Report phishing sites directly to Google to protect global users.'}</p>
+                      <p className="text-xs text-slate-300/85">{lang === 'vi' ? 'Báo cáo website lừa đảo trực tiếp cho Google để bảo vệ người dùng toàn cầu.' : 'Report phishing sites directly to Google to protect global users.'}</p>
                    </a>
 
                    {/* VNeID (Now with Link) */}
@@ -180,9 +180,9 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                             </div>
                             <h4 className="font-bold text-yellow-400 text-sm uppercase">VNeID PORTAL</h4>
                          </div>
-                         <ExternalLink size={14} className="text-gray-600 group-hover:text-yellow-500" />
+                         <ExternalLink size={14} className="text-slate-500 group-hover:text-yellow-500" />
                       </div>
-                      <p className="text-xs text-gray-500 italic">{t.vneid_desc}</p>
+                      <p className="text-xs text-slate-400 italic">{t.vneid_desc}</p>
                    </a>
 
                    {/* Zalo OA (Now with Link) */}
@@ -194,9 +194,9 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                             </div>
                             <h4 className="font-bold text-cyan-400 text-sm uppercase">ZALO OA NCSC</h4>
                          </div>
-                         <ExternalLink size={14} className="text-gray-600 group-hover:text-cyan-500" />
+                         <ExternalLink size={14} className="text-slate-500 group-hover:text-cyan-500" />
                       </div>
-                      <p className="text-xs text-gray-500 italic">{t.zalo_oa_desc}</p>
+                      <p className="text-xs text-slate-400 italic">{t.zalo_oa_desc}</p>
                    </a>
 
                    {/* FBI IC3 */}
@@ -240,29 +240,29 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Họ và tên người tố giác</label>
+                    <label className="block text-slate-400 text-sm mb-2 font-bold uppercase tracking-[0.08em]">Họ và tên người tố giác</label>
                     <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="Nguyễn Văn A" />
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Tên nạn nhân (nếu làm thay)</label>
+                    <label className="block text-slate-400 text-sm mb-2 font-bold uppercase tracking-[0.08em]">Tên nạn nhân (nếu làm thay)</label>
                     <input type="text" name="victimName" value={formData.victimName} onChange={handleInputChange} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="Trần Thị B" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Ngày xảy ra sự việc</label>
+                      <label className="block text-slate-400 text-sm mb-2 font-bold uppercase tracking-[0.08em]">Ngày xảy ra sự việc</label>
                       <input type="date" name="incidentDate" value={formData.incidentDate} onChange={handleInputChange} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors [color-scheme:dark]" />
                     </div>
                     <div>
-                      <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Số tiền thiệt hại</label>
+                      <label className="block text-slate-400 text-sm mb-2 font-bold uppercase tracking-[0.08em]">Số tiền thiệt hại</label>
                       <input type="text" name="lossAmount" value={formData.lossAmount} onChange={handleInputChange} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="Ví dụ: 50.000.000 VNĐ" />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Thông tin kẻ lừa đảo</label>
+                    <label className="block text-slate-400 text-sm mb-2 font-bold uppercase tracking-[0.08em]">Thông tin kẻ lừa đảo</label>
                     <textarea name="scammerInfo" value={formData.scammerInfo} onChange={handleInputChange} rows={2} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors resize-none" placeholder="Tài khoản ngân hàng, UID mạng xã hội, số điện thoại..."></textarea>
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2 font-mono uppercase">Tóm tắt sự việc</label>
+                    <label className="block text-slate-400 text-sm mb-2 font-bold uppercase tracking-[0.08em]">Tóm tắt sự việc</label>
                     <textarea name="description" value={formData.description} onChange={handleInputChange} rows={4} className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-red-500 transition-colors resize-none" placeholder="Trình bày ngắn gọn quá trình bị lừa đảo..."></textarea>
                   </div>
                 </div>
@@ -270,7 +270,7 @@ const CrisisHub: React.FC<CrisisHubProps> = ({ lang }) => {
                 <div className="mt-8 flex gap-4">
                   <button 
                     onClick={handlePrintPdf}
-                    className="flex-1 bg-red-600 hover:bg-red-500 text-white p-4 rounded-xl font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 bg-red-600 hover:bg-red-500 text-white p-4 rounded-xl font-bold uppercase tracking-[0.12em] transition-colors flex items-center justify-center gap-2"
                   >
                     <Download size={20} />
                     {lang === 'vi' ? 'TẢI PDF / IN BẢN CỨNG' : 'DOWNLOAD PDF / PRINT'}
