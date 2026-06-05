@@ -25,7 +25,20 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Check Firebase credentials
+        id: firebase-credentials
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -n "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::FIREBASE_SERVICE_ACCOUNT secret is not configured. Skipping Firebase Hosting deploy."
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Deploy to Firebase Hosting
+        if: steps.firebase-credentials.outputs.available == 'true'
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
