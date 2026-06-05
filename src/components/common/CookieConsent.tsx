@@ -27,21 +27,21 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ lang }) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] max-w-sm w-full animate-in slide-in-from-right-10 duration-500">
-      <div className="glass-dark group relative overflow-hidden rounded-2xl border border-blue-500/30 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+    <div className="fixed inset-x-3 bottom-3 z-[9999] w-auto animate-in slide-in-from-bottom-6 duration-500 md:left-auto md:right-6 md:bottom-6 md:max-w-sm md:animate-in md:slide-in-from-right-10">
+      <div className="glass-dark group relative overflow-hidden rounded-2xl border border-blue-500/30 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] md:p-6">
         {/* Animated background glow */}
         <div className="absolute -right-10 -top-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-colors" />
         
         <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
-              <Shield size={20} />
+          <div className="mb-3 flex items-center gap-3 md:mb-4">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-blue-500/20 bg-blue-500/10 text-blue-400 md:h-10 md:w-10">
+              <Shield size={18} />
             </div>
             <div>
-              <h3 className="text-sm font-black uppercase tracking-[0.12em] text-white">
+              <h3 className="text-xs font-black uppercase tracking-[0.12em] text-white md:text-sm">
                 {isVi ? 'QUYỀN RIÊNG TƯ' : 'PRIVACY PREFERENCE'}
               </h3>
-              <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-blue-300">
+              <p className="font-mono text-[9px] uppercase tracking-[0.08em] text-blue-300 md:text-[10px]">
                 {isVi ? 'BẢO VỆ DỮ LIỆU CỦA BẠN' : 'PROTECTING YOUR DATA'}
               </p>
             </div>
@@ -53,7 +53,7 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ lang }) => {
             </button>
           </div>
 
-          <p className="mb-6 text-xs leading-relaxed text-slate-300/85">
+          <p className="mb-4 text-[11px] leading-relaxed text-slate-300/85 md:mb-6 md:text-xs">
             {isVi 
               ? 'Deepfense sử dụng cookie để tối ưu hóa trải nghiệm học tập, lưu tiến độ và bảo mật tài khoản. Bạn có đồng ý cho phép chúng tôi sử dụng cookie không?' 
               : 'Deepfense uses cookies to optimize your learning experience, save progress, and secure your account. Do you agree to allow us to use cookies?'}
