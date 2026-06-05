@@ -37,12 +37,12 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
   }, []);
 
   const navItems: { path: string; label: string; icon: React.ReactNode }[] = [
-    { path: '/', label: lang === 'vi' ? 'TRANG CHỦ' : 'HOME', icon: <Home size={13} /> },
-    { path: '/academy', label: 'ACADEMY', icon: <GraduationCap size={13} /> },
-    { path: '/tools', label: lang === 'vi' ? 'CÔNG CỤ' : 'TOOLS', icon: <Cpu size={13} /> },
-    { path: '/challenge', label: lang === 'vi' ? 'THỬ THÁCH' : 'CHALLENGE', icon: <Swords size={13} /> },
-    { path: '/ai-project', label: lang === 'vi' ? 'DỰ ÁN AI' : 'AI PROJECT', icon: <Bot size={13} /> },
-    { path: '/contact', label: lang === 'vi' ? 'VỀ CHÚNG TÔI' : 'ABOUT', icon: <Info size={13} /> },
+    { path: '/', label: lang === 'vi' ? 'Trang chủ' : 'Home', icon: <Home size={14} /> },
+    { path: '/academy', label: 'Academy', icon: <GraduationCap size={14} /> },
+    { path: '/tools', label: lang === 'vi' ? 'Công cụ' : 'Tools', icon: <Cpu size={14} /> },
+    { path: '/challenge', label: lang === 'vi' ? 'Thử thách' : 'Challenge', icon: <Swords size={14} /> },
+    { path: '/ai-project', label: lang === 'vi' ? 'Dự án AI' : 'AI Project', icon: <Bot size={14} /> },
+    { path: '/contact', label: lang === 'vi' ? 'Về chúng tôi' : 'About', icon: <Info size={14} /> },
   ];
 
   const isLite = perfMode === 'lite';
@@ -198,13 +198,13 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
 
   return (
     <>
-      <div className="relative z-[101] flex h-8 w-full items-center overflow-hidden border-b border-primary/10 bg-gradient-to-r from-black via-[#07111f] to-black">
+      <div className="relative z-[101] flex h-8 w-full items-center overflow-hidden border-b border-primary/15 bg-gradient-to-r from-[#020710] via-[#071426] to-[#020710]">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
         <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-black to-transparent" />
         <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-black to-transparent" />
         <div className="announcement-ticker">
           {[0, 1].map((item) => (
-            <span key={item} className="pr-10 font-mono text-[10px] uppercase tracking-[0.18em] text-primary/70 md:text-[11px]">
+            <span key={item} className="pr-10 font-sans text-[11px] font-semibold tracking-[0.02em] text-blue-200/75 md:text-[12px]">
               {welcomeText} &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; {welcomeText} &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
             </span>
           ))}
@@ -214,8 +214,8 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
       <div
         className={`sticky top-0 z-[100] w-full border-b transition-all duration-500 ${
           isScrolled
-            ? 'border-white/[0.08] bg-black/95 shadow-[0_4px_40px_rgba(0,0,0,0.6)] backdrop-blur-2xl'
-            : 'border-white/[0.04] bg-black/70 backdrop-blur-xl'
+            ? 'border-white/[0.10] bg-[#020710]/95 shadow-[0_4px_34px_rgba(0,0,0,0.52)] backdrop-blur-2xl'
+            : 'border-white/[0.06] bg-[#020710]/82 backdrop-blur-xl'
         }`}
       >
         <div className="mx-auto max-w-7xl px-4 md:px-6">
@@ -230,12 +230,12 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                 />
               </div>
               <div className="flex flex-col leading-none">
-                <span className="text-xl font-black tracking-tight text-white md:text-2xl" style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}>
+                <span className="font-display text-xl font-black tracking-tight text-white md:text-2xl">
                   DEEPFENSE
                 </span>
                 <div className="mt-1 hidden items-center gap-1.5 md:flex">
                   <div className="h-1 w-1 animate-pulse rounded-full bg-primary" />
-                  <span className="font-mono text-[0.55rem] font-bold uppercase tracking-[0.35em] text-primary/45">
+                  <span className="font-mono text-[0.55rem] font-bold uppercase tracking-[0.24em] text-blue-300/55">
                     DEEPFAKE - DEFENSE
                   </span>
                 </div>
@@ -249,14 +249,14 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`relative flex items-center gap-1.5 rounded-lg px-3 py-2 font-mono text-[10px] font-black uppercase tracking-[0.12em] transition-all duration-300 ${
-                      isActive ? 'bg-primary/8 text-primary' : 'text-gray-500 hover:bg-white/[0.04] hover:text-gray-200'
+                    className={`group relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-[13px] font-semibold tracking-normal transition-all duration-300 ${
+                      isActive ? 'bg-primary/15 text-blue-100 shadow-[inset_0_0_0_1px_rgba(96,165,250,0.18)]' : 'text-slate-300/85 hover:bg-white/[0.06] hover:text-white'
                     }`}
                   >
-                    <span className={`transition-colors ${isActive ? 'text-primary' : 'text-gray-600'}`}>{item.icon}</span>
+                    <span className={`transition-colors ${isActive ? 'text-blue-300' : 'text-slate-500 group-hover:text-slate-300'}`}>{item.icon}</span>
                     <span>{item.label}</span>
                     {isActive && (
-                      <span className="absolute bottom-0 left-1/2 h-[2px] w-6 -translate-x-1/2 rounded-full bg-primary shadow-[0_0_6px_rgba(0,240,255,0.8)]" />
+                      <span className="absolute bottom-0 left-1/2 h-[2px] w-7 -translate-x-1/2 rounded-full bg-blue-300 shadow-[0_0_8px_rgba(96,165,250,0.72)]" />
                     )}
                   </Link>
                 );
@@ -264,13 +264,13 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
             </nav>
 
             <div className="relative flex items-center gap-2 md:gap-3">
-              <div className="flex h-8 items-center rounded-full border border-white/8 bg-zinc-900/80 p-1">
+              <div className="flex h-8 items-center rounded-full border border-white/10 bg-white/[0.045] p-1">
                 {(['vi', 'en'] as const).map((l) => (
                   <button
                     key={l}
                     onClick={() => setLang(l)}
-                    className={`flex h-full items-center justify-center rounded-full px-2.5 text-[9px] font-black transition-all duration-300 ${
-                      lang === l ? 'bg-primary text-black shadow-[0_0_8px_rgba(0,240,255,0.5)]' : 'text-gray-500 hover:text-gray-300'
+                    className={`flex h-full items-center justify-center rounded-full px-2.5 text-[10px] font-bold transition-all duration-300 ${
+                      lang === l ? 'bg-primary text-white shadow-[0_0_8px_rgba(29,111,232,0.42)]' : 'text-slate-400 hover:text-slate-100'
                     }`}
                   >
                     {l.toUpperCase()}
@@ -321,7 +321,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                     ? <Smartphone size={15} className="text-white drop-shadow-md" />
                     : isSummer
                       ? <Sun size={15} className="animate-[spin_10s_linear_infinite] text-yellow-200 drop-shadow-md" />
-                      : <Power size={15} className="text-gray-500 transition-colors group-hover:text-gray-300" />}
+                      : <Power size={15} className="text-slate-400 transition-colors group-hover:text-gray-300" />}
                 </div>
               </button>
 
@@ -365,7 +365,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                     <button
                       type="button"
                       onClick={() => setPerfToast(null)}
-                      className="ml-1 -mr-1 -mt-1 shrink-0 rounded-full p-1 text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
+                      className="ml-1 -mr-1 -mt-1 shrink-0 rounded-full p-1 text-slate-300/85 transition-colors hover:bg-white/10 hover:text-white"
                       aria-label={lang === 'vi' ? 'Đóng' : 'Close'}
                     >
                       <X size={12} />
@@ -379,10 +379,10 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                 onClick={onGoogleAuth}
                 disabled={authBusy}
                 title={user?.email || (lang === 'vi' ? 'Đăng nhập hoặc tạo tài khoản' : 'Sign in or create account')}
-                className="hidden max-w-[250px] items-center gap-1.5 rounded-lg border border-primary/20 bg-primary/10 px-3 py-2 font-mono text-[10px] font-black uppercase tracking-widest text-primary transition-all duration-300 hover:border-primary/40 hover:bg-primary/20 disabled:cursor-wait disabled:opacity-60 lg:flex"
+                className="hidden max-w-[250px] items-center gap-1.5 rounded-lg border border-primary/25 bg-primary/12 px-3 py-2 text-[12px] font-bold text-blue-100 transition-all duration-300 hover:border-primary/45 hover:bg-primary/20 disabled:cursor-wait disabled:opacity-60 lg:flex"
               >
                 {user ? <UserCircle size={12} /> : <LogIn size={12} />}
-                <span className="truncate">{authBusy ? (lang === 'vi' ? 'ĐANG XỬ LÝ' : 'WORKING') : authLabel}</span>
+                <span className="truncate">{authBusy ? (lang === 'vi' ? 'Đang xử lý' : 'Working') : authLabel}</span>
                 {user && (
                   <span className="ml-1 inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[9px] text-amber-200">
                     <Coins size={10} /> {dpfBalanceLabel}
@@ -396,7 +396,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                 </div>
               )}
 
-              <button className="p-2 text-gray-400 transition-colors hover:text-white lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              <button className="rounded-lg p-2 text-slate-300 transition-colors hover:bg-white/[0.06] hover:text-white lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
             </div>
@@ -404,7 +404,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
         </div>
 
         {isMenuOpen && (
-          <div className="animate-in slide-in-from-top-3 border-t border-white/5 bg-black/98 backdrop-blur-2xl duration-200 lg:hidden">
+          <div className="animate-in slide-in-from-top-3 border-t border-white/8 bg-[#020710]/98 backdrop-blur-2xl duration-200 lg:hidden">
             <div className="flex flex-col gap-1 p-3">
               {navItems.map((item) => {
                 const isActive = isActivePath(item.path);
@@ -412,11 +412,11 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                   <button
                     key={item.path}
                     onClick={() => handleNavClick(item.path)}
-                    className={`flex items-center gap-3 rounded-xl px-4 py-3.5 font-mono text-[11px] font-black uppercase tracking-widest transition-all ${
-                      isActive ? 'border border-primary/20 bg-primary/10 text-primary' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                    className={`flex items-center gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold tracking-normal transition-all ${
+                      isActive ? 'border border-primary/25 bg-primary/14 text-blue-100' : 'text-slate-300 hover:bg-white/[0.06] hover:text-white'
                     }`}
                   >
-                    <span className={isActive ? 'text-primary' : 'text-gray-600'}>{item.icon}</span>
+                    <span className={isActive ? 'text-blue-300' : 'text-slate-500'}>{item.icon}</span>
                     {item.label}
                   </button>
                 );
@@ -425,10 +425,10 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                 <button
                   onClick={onGoogleAuth}
                   disabled={authBusy}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/10 px-4 py-3 font-mono text-[11px] font-black uppercase tracking-widest text-primary disabled:opacity-60"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-primary/25 bg-primary/12 px-4 py-3 text-[13px] font-bold text-blue-100 disabled:opacity-60"
                 >
                   {user ? <UserCircle size={13} /> : <LogIn size={13} />}
-                  <span className="truncate">{authBusy ? (lang === 'vi' ? 'ĐANG XỬ LÝ' : 'WORKING') : authLabel}</span>
+                  <span className="truncate">{authBusy ? (lang === 'vi' ? 'Đang xử lý' : 'Working') : authLabel}</span>
                   {user && (
                     <span className="inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[9px] text-amber-200">
                       <Coins size={10} /> {dpfBalanceLabel} DPF

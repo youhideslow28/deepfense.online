@@ -6,7 +6,7 @@
 
 import React, { useRef, useCallback } from 'react';
 
-type ButtonColor = 'primary' | 'secondary' | 'success' | 'purple' | 'ghost';
+type ButtonColor = 'primary' | 'secondary' | 'success' | 'accent' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface GlowButtonProps {
@@ -26,16 +26,16 @@ const COLOR_MAP: Record<ButtonColor, { base: string; glow: string }> = {
     glow: 'shadow-[0_0_20px_rgba(29,111,232,0.35)] hover:shadow-[0_0_40px_rgba(29,111,232,0.6)]',
   },
   secondary: {
-    base: 'bg-secondary text-white hover:bg-white hover:text-black',
+    base: 'bg-secondary text-white hover:bg-rose-500',
     glow: 'shadow-[0_0_20px_rgba(255,42,109,0.3)] hover:shadow-[0_0_35px_rgba(255,42,109,0.5)]',
   },
   success: {
-    base: 'bg-green-500 text-black hover:bg-green-400',
+    base: 'bg-green-500 text-white hover:bg-green-400',
     glow: 'shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:shadow-[0_0_35px_rgba(34,197,94,0.5)]',
   },
-  purple: {
-    base: 'bg-purple-600 text-white hover:bg-purple-500',
-    glow: 'shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_35px_rgba(168,85,247,0.5)]',
+  accent: {
+    base: 'bg-blue-600 text-white hover:bg-blue-500',
+    glow: 'shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_35px_rgba(37,99,235,0.5)]',
   },
   ghost: {
     base: 'bg-transparent text-white border border-white/15 hover:bg-white/10 hover:border-white/30',
@@ -92,7 +92,7 @@ const GlowButton: React.FC<GlowButtonProps> = ({
       disabled={disabled}
       className={`
         relative overflow-hidden inline-flex items-center justify-center
-        font-black uppercase tracking-widest
+        font-black uppercase tracking-[0.12em]
         transition-all duration-300 active:scale-95
         disabled:opacity-40 disabled:pointer-events-none
         ${base} ${glow} ${sizeClass} ${className}

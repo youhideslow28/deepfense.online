@@ -298,14 +298,14 @@ const StatCard = ({
     <div className="rounded-lg border border-white/10 bg-[#07111f]/90 p-4 shadow-xl shadow-black/20">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500">{label}</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">{label}</p>
           <div className="mt-3 text-3xl font-black text-white">{value}</div>
         </div>
         <div className={`rounded-lg border p-2 ${tones[tone]}`}>
           <Icon size={20} />
         </div>
       </div>
-      <p className="mt-4 text-xs text-gray-400">{sub}</p>
+      <p className="mt-4 text-xs text-slate-300/85">{sub}</p>
     </div>
   );
 };
@@ -1210,7 +1210,7 @@ const Admin: React.FC = () => {
             <LogIn size={18} /> Đăng nhập bằng Google
           </button>
 
-          <div className="mb-6 flex items-center gap-4 text-xs text-gray-500 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
+          <div className="mb-6 flex items-center gap-4 text-xs font-bold text-slate-400 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
             HOẶC DÙNG EMAIL
           </div>
 
@@ -1256,7 +1256,7 @@ const Admin: React.FC = () => {
           <div className="mb-5 flex items-center justify-between">
             <div>
               <h3 className="font-bold text-white">Tín hiệu gần đây</h3>
-              <p className="text-xs text-gray-500">Dòng thời gian hoạt động và thao tác quản trị mới nhất</p>
+              <p className="text-xs text-slate-400">Dòng thời gian hoạt động và thao tác quản trị mới nhất</p>
             </div>
             <Activity className="text-primary" size={20} />
           </div>
@@ -1269,7 +1269,7 @@ const Admin: React.FC = () => {
                     <span className="font-mono text-sm text-white">{item.action || 'activity.event'}</span>
                     <Pill className={severityClass(item.severity)}>{item.severity || 'info'}</Pill>
                   </div>
-                  <p className="mt-1 text-xs text-gray-500">{item.actorRole || 'user'} / {item.targetType || 'system'} / {formatDate(item.createdAt)}</p>
+                  <p className="mt-1 text-xs text-slate-400">{item.actorRole || 'user'} / {item.targetType || 'system'} / {formatDate(item.createdAt)}</p>
                 </div>
               </div>
             ))}
@@ -1280,7 +1280,7 @@ const Admin: React.FC = () => {
           <div className="mb-5 flex items-center justify-between">
             <div>
               <h3 className="font-bold text-white">Kỹ năng còn yếu</h3>
-              <p className="text-xs text-gray-500">Gợi ý ưu tiên nội dung đào tạo tiếp theo</p>
+              <p className="text-xs text-slate-400">Gợi ý ưu tiên nội dung đào tạo tiếp theo</p>
             </div>
             <Sparkles className="text-amber-300" size={20} />
           </div>
@@ -1288,7 +1288,7 @@ const Admin: React.FC = () => {
             <div key={skill} className="mb-4">
               <div className="mb-1 flex justify-between text-xs">
                 <span className="font-bold uppercase tracking-wide text-gray-300">{skill}</span>
-                <span className="text-gray-500">{68 - index * 7}% rủi ro</span>
+                <span className="text-slate-400">{68 - index * 7}% rủi ro</span>
               </div>
               <div className="h-2 rounded-full bg-white/10">
                 <div className="h-2 rounded-full bg-gradient-to-r from-red-500 via-amber-400 to-primary" style={{ width: `${68 - index * 7}%` }} />
@@ -1306,7 +1306,7 @@ const Admin: React.FC = () => {
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
             <h3 className="font-black text-white">Tạo hồ sơ người dùng</h3>
-            <p className="mt-1 text-xs text-gray-500">Dùng để tạo hồ sơ quản trị trong Firestore khi tài khoản chưa tự đồng bộ.</p>
+            <p className="mt-1 text-xs text-slate-400">Dùng để tạo hồ sơ quản trị trong Firestore khi tài khoản chưa tự đồng bộ.</p>
           </div>
           <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-blue-500">
             <Plus size={15} /> Tạo hồ sơ
@@ -1335,7 +1335,7 @@ const Admin: React.FC = () => {
             <h3 className="flex items-center gap-2 font-black text-red-300">
               <ShieldAlert size={18} /> Danger Zone: Reset toàn bộ tiến độ
             </h3>
-            <p className="mt-1 text-xs text-gray-500">Đặt lại điểm số, coin và tiến độ học về 0 cho tất cả người dùng (Trừ Admin).</p>
+            <p className="mt-1 text-xs text-slate-400">Đặt lại điểm số, coin và tiến độ học về 0 cho tất cả người dùng (Trừ Admin).</p>
           </div>
           <button onClick={resetAllUserProgress} disabled={loading} className="inline-flex items-center gap-2 rounded-lg bg-red-600/20 px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-red-300 border border-red-500/30 hover:bg-red-600/30 transition-colors">
             <RefreshCw size={14} className={loading ? 'animate-spin' : ''} /> Reset All Users
@@ -1347,7 +1347,7 @@ const Admin: React.FC = () => {
         <div className="mb-5 flex flex-col justify-between gap-3 lg:flex-row lg:items-center">
           <div>
             <h3 className="font-black text-white">Profile người dùng</h3>
-            <p className="mt-1 text-xs text-gray-500">Chọn một dòng trong bảng để xem hồ sơ, DPF coin, case liên quan và nhật ký thao tác.</p>
+            <p className="mt-1 text-xs text-slate-400">Chọn một dòng trong bảng để xem hồ sơ, DPF coin, case liên quan và nhật ký thao tác.</p>
           </div>
           {selectedUser && (
             <div className="flex flex-wrap gap-2">
@@ -1383,7 +1383,7 @@ const Admin: React.FC = () => {
         </div>
 
         {!selectedUser ? (
-          <div className="rounded-lg border border-white/10 bg-black/25 p-5 text-sm text-gray-500">
+          <div className="rounded-lg border border-white/10 bg-black/25 p-5 text-sm text-slate-400">
             Chưa có user thật trong Firestore. Hãy tạo hồ sơ hoặc để người dùng đăng nhập để dashboard đồng bộ.
           </div>
         ) : (
@@ -1392,33 +1392,33 @@ const Admin: React.FC = () => {
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="truncate text-xl font-black text-white">{selectedUser.displayName || 'Chưa đặt tên'}</p>
-                  <p className="truncate text-sm text-gray-400">{selectedUser.email || selectedUser.uid || selectedUser.id}</p>
+                  <p className="truncate text-sm text-slate-300/85">{selectedUser.email || selectedUser.uid || selectedUser.id}</p>
                 </div>
                 <Pill className={statusClass(selectedUser.status)}>{userStatusLabels[selectedUser.status || 'active']}</Pill>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-gray-500">Vai trò</p>
+                  <p className="text-xs text-slate-400">Vai trò</p>
                   <p className="mt-1 font-bold text-white">{roleLabels[selectedUser.role || 'user']}</p>
                 </div>
                 <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-gray-500">DPF webBalance</p>
+                  <p className="text-xs text-slate-400">DPF webBalance</p>
                   <p className="mt-1 font-bold text-amber-200">{(selectedUser.webBalance || 0).toLocaleString('vi-VN')}</p>
                 </div>
                 <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-gray-500">Challenge</p>
+                  <p className="text-xs text-slate-400">Challenge</p>
                   <p className="mt-1 font-bold text-white">{selectedUser.totalChallenges || 0}</p>
                 </div>
                 <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-gray-500">Độ đúng</p>
+                  <p className="text-xs text-slate-400">Độ đúng</p>
                   <p className="mt-1 font-bold text-white">{selectedUser.accuracy || 0}%</p>
                 </div>
                 <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-gray-500">Tạo hồ sơ</p>
+                  <p className="text-xs text-slate-400">Tạo hồ sơ</p>
                   <p className="mt-1 text-xs text-gray-300">{formatDate(selectedUser.createdAt)}</p>
                 </div>
                 <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-gray-500">Hoạt động cuối</p>
+                  <p className="text-xs text-slate-400">Hoạt động cuối</p>
                   <p className="mt-1 text-xs text-gray-300">{formatDate(selectedUser.lastActiveAt)}</p>
                 </div>
               </div>
@@ -1426,7 +1426,7 @@ const Admin: React.FC = () => {
 
             <div className="grid gap-3 md:grid-cols-3">
               <div className="rounded-lg border border-white/10 bg-black/25 p-4">
-                <p className="text-xs font-bold uppercase tracking-wide text-gray-500">Case liên quan</p>
+                <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Case liên quan</p>
                 <p className="mt-2 text-2xl font-black text-white">{selectedUserCases.length}</p>
                 <div className="mt-3 space-y-2">
                   {selectedUserCases.slice(0, 3).map((item) => (
@@ -1437,7 +1437,7 @@ const Admin: React.FC = () => {
                 </div>
               </div>
               <div className="rounded-lg border border-white/10 bg-black/25 p-4">
-                <p className="text-xs font-bold uppercase tracking-wide text-gray-500">Nhật ký</p>
+                <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Nhật ký</p>
                 <p className="mt-2 text-2xl font-black text-white">{selectedUserActivity.length}</p>
                 <div className="mt-3 space-y-2">
                   {selectedUserActivity.slice(0, 3).map((item) => (
@@ -1448,7 +1448,7 @@ const Admin: React.FC = () => {
                 </div>
               </div>
               <div className="rounded-lg border border-white/10 bg-black/25 p-4">
-                <p className="text-xs font-bold uppercase tracking-wide text-gray-500">DPF ledger</p>
+                <p className="text-xs font-bold uppercase tracking-wide text-slate-400">DPF ledger</p>
                 <p className="mt-2 text-2xl font-black text-white">{selectedUserLedger.length}</p>
                 <div className="mt-3 space-y-2">
                   {selectedUserLedger.slice(0, 3).map((entry) => (
@@ -1464,24 +1464,24 @@ const Admin: React.FC = () => {
       </section>
 
       <section className="overflow-x-auto rounded-lg border border-white/10 bg-[#07111f]/90">
-        <div className="grid min-w-[1050px] grid-cols-[1.4fr_0.7fr_0.8fr_0.6fr_0.6fr_0.6fr_0.8fr_1.1fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-500">
+        <div className="grid min-w-[1050px] grid-cols-[1.4fr_0.7fr_0.8fr_0.6fr_0.6fr_0.6fr_0.8fr_1.1fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">
           <span>Người dùng</span><span>Vai trò</span><span>Trạng thái</span><span>Challenge</span><span>Độ đúng</span><span>Điểm</span><span>Lần cuối</span><span>Điều khiển</span>
         </div>
         <div className="divide-y divide-white/5">
           {filteredUsers.length === 0 ? (
-            <div className="px-4 py-6 text-sm text-gray-500">Không có user thật phù hợp bộ lọc hiện tại.</div>
+            <div className="px-4 py-6 text-sm text-slate-400">Không có user thật phù hợp bộ lọc hiện tại.</div>
           ) : filteredUsers.map((user) => (
             <div key={user.id} className="grid min-w-[1050px] grid-cols-[1.4fr_0.7fr_0.8fr_0.6fr_0.6fr_0.6fr_0.8fr_1.1fr] gap-3 px-4 py-4 text-sm">
               <div className="min-w-0">
                 <p className="truncate font-bold text-white">{user.displayName || 'Chưa đặt tên'}</p>
-                <p className="truncate text-xs text-gray-500">{user.email || user.uid || user.id}</p>
+                <p className="truncate text-xs text-slate-400">{user.email || user.uid || user.id}</p>
               </div>
               <Pill className="border-primary/30 bg-primary/10 text-blue-200">{roleLabels[user.role || 'user']}</Pill>
               <Pill className={statusClass(user.status)}>{userStatusLabels[user.status || 'active']}</Pill>
               <span className="text-gray-300">{user.totalChallenges || 0}</span>
               <span className="text-gray-300">{user.accuracy || 0}%</span>
               <span className="text-gray-300">{user.score || 0}</span>
-              <span className="text-xs text-gray-500">{formatDate(user.lastActiveAt)}</span>
+              <span className="text-xs text-slate-400">{formatDate(user.lastActiveAt)}</span>
               <div className="flex flex-wrap gap-2">
                 <button onClick={() => setSelectedUserId(user.uid || user.id)} className="rounded border border-primary/30 px-2 py-1 text-xs font-bold text-blue-200 hover:bg-primary/10">
                   Profile
@@ -1550,7 +1550,7 @@ const Admin: React.FC = () => {
           <div className="mb-4 flex flex-col justify-between gap-3 lg:flex-row lg:items-center">
             <div>
               <h3 className="font-black text-white">Cấp DPF coin cho người dùng</h3>
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-slate-400">
                 Nhập email hoặc UID. Coin sẽ được cộng vào webBalance và ghi lại trong dpf_ledger để kiểm tra.
               </p>
             </div>
@@ -1558,7 +1558,7 @@ const Admin: React.FC = () => {
               <button
                 type="submit"
                 disabled={dpfBusy}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-400 px-4 py-2 text-xs font-black uppercase tracking-wide text-black hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-white hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Coins size={15} /> {dpfBusy ? 'Đang xử lý...' : 'Cấp DPF coin'}
               </button>
@@ -1573,7 +1573,7 @@ const Admin: React.FC = () => {
             </div>
           </div>
           <div className="grid gap-3 lg:grid-cols-[1.2fr_0.55fr_1.4fr]">
-            <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-400">
               Email hoặc UID
               <input
                 value={dpfForm.target}
@@ -1582,7 +1582,7 @@ const Admin: React.FC = () => {
                 className="mt-2 w-full rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-amber-400"
               />
             </label>
-            <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-400">
               Số DPF coin
               <input
                 value={dpfForm.amount}
@@ -1592,7 +1592,7 @@ const Admin: React.FC = () => {
                 className="mt-2 w-full rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-amber-400"
               />
             </label>
-            <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-400">
               Lý do
               <input
                 value={dpfForm.reason}
@@ -1602,13 +1602,13 @@ const Admin: React.FC = () => {
               />
             </label>
           </div>
-          <p className="mt-4 text-xs leading-relaxed text-gray-500">
+          <p className="mt-4 text-xs leading-relaxed text-slate-400">
             Nút cấp sẽ cộng vào webBalance. Nút thu hồi sẽ trừ khỏi webBalance, ghi debit ledger `admin_revoke` và không cho số dư âm.
           </p>
         </form>
 
         <section className="overflow-x-auto rounded-lg border border-white/10 bg-[#07111f]/90">
-          <div className="grid min-w-[1120px] grid-cols-[1.2fr_0.75fr_0.75fr_0.75fr_0.75fr_0.75fr_1.15fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-500">
+          <div className="grid min-w-[1120px] grid-cols-[1.2fr_0.75fr_0.75fr_0.75fr_0.75fr_0.75fr_1.15fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">
             <span>Người dùng</span>
             <span>Web balance</span>
             <span>Đã kiếm</span>
@@ -1619,7 +1619,7 @@ const Admin: React.FC = () => {
           </div>
           <div className="divide-y divide-white/5">
             {dashboardUsers.length === 0 ? (
-              <div className="px-4 py-6 text-sm text-gray-500">
+              <div className="px-4 py-6 text-sm text-slate-400">
                 Chưa có user thật trong collection users. Khi người dùng đăng nhập hoặc bạn tạo hồ sơ ở tab User, số dư DPF sẽ hiện tại đây.
               </div>
             ) : (
@@ -1627,7 +1627,7 @@ const Admin: React.FC = () => {
                 <div key={user.id} className="grid min-w-[1120px] grid-cols-[1.2fr_0.75fr_0.75fr_0.75fr_0.75fr_0.75fr_1.15fr] gap-3 px-4 py-4 text-sm">
                   <div className="min-w-0">
                     <p className="truncate font-bold text-white">{user.displayName || user.email || user.uid || user.id}</p>
-                    <p className="truncate text-xs text-gray-500">{user.email || user.uid || user.id}</p>
+                    <p className="truncate text-xs text-slate-400">{user.email || user.uid || user.id}</p>
                   </div>
                   <span className="font-black text-amber-200">{(user.webBalance || 0).toLocaleString('vi-VN')}</span>
                   <span className="text-gray-300">{(user.earnedBalance || 0).toLocaleString('vi-VN')}</span>
@@ -1652,7 +1652,7 @@ const Admin: React.FC = () => {
         </section>
 
         <section className="overflow-x-auto rounded-lg border border-white/10 bg-[#07111f]/90">
-          <div className="grid min-w-[1080px] grid-cols-[0.9fr_0.7fr_0.8fr_0.9fr_1.2fr_0.9fr_0.6fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-500">
+          <div className="grid min-w-[1080px] grid-cols-[0.9fr_0.7fr_0.8fr_0.9fr_1.2fr_0.9fr_0.6fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">
             <span>Thời gian</span>
             <span>Loại</span>
             <span>Số lượng</span>
@@ -1663,20 +1663,20 @@ const Admin: React.FC = () => {
           </div>
           <div className="divide-y divide-white/5">
             {dpfLedger.length === 0 ? (
-              <div className="px-4 py-6 text-sm text-gray-500">Chưa có giao dịch DPF coin nào trong dpf_ledger.</div>
+              <div className="px-4 py-6 text-sm text-slate-400">Chưa có giao dịch DPF coin nào trong dpf_ledger.</div>
             ) : (
               dpfLedger.map((entry) => {
                 const targetEmail = typeof entry.metadata?.targetEmail === 'string' ? entry.metadata.targetEmail : '';
                 return (
                   <div key={entry.id} className="grid min-w-[1080px] grid-cols-[0.9fr_0.7fr_0.8fr_0.9fr_1.2fr_0.9fr_0.6fr] gap-3 px-4 py-4 text-sm">
-                    <span className="text-xs text-gray-500">{formatDate(entry.createdAt)}</span>
+                    <span className="text-xs text-slate-400">{formatDate(entry.createdAt)}</span>
                     <Pill className={entry.direction === 'debit' ? 'border-red-500/30 bg-red-500/10 text-red-300' : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200'}>
                       {entry.direction || 'credit'}
                     </Pill>
                     <span className="font-black text-white">{(entry.amount || 0).toLocaleString('en-US')}</span>
                     <span className="text-gray-300">{(entry.balanceAfter || 0).toLocaleString('en-US')}</span>
                     <span className="truncate text-gray-300">{targetEmail || entry.uid || 'unknown'}</span>
-                    <span className="truncate text-xs text-gray-500">{entry.source || entry.reason || 'admin_bonus'}</span>
+                    <span className="truncate text-xs text-slate-400">{entry.source || entry.reason || 'admin_bonus'}</span>
                     <button onClick={() => deleteDpfLedgerEntry(entry)} className="inline-flex w-fit items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
                       <Trash2 size={12} /> Xóa
                     </button>
@@ -1693,7 +1693,7 @@ const Admin: React.FC = () => {
   const renderCases = () => (
     <div className="grid gap-4">
       {filteredCases.length === 0 ? (
-        <section className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5 text-sm text-gray-500">
+        <section className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5 text-sm text-slate-400">
           Không có hồ sơ trợ giúp thật phù hợp bộ lọc hiện tại.
         </section>
       ) : filteredCases.map((item) => {
@@ -1711,10 +1711,10 @@ const Admin: React.FC = () => {
                   <Pill className={statusClass(item.status)}>{caseStatusLabels[item.status || 'new']}</Pill>
                   <Pill className={severityClass(item.severity)}>{severityLabels[item.severity || 'medium']}</Pill>
                   <Pill className="border-white/10 bg-white/5 text-gray-300">{item.caseType || 'other'}</Pill>
-                  <span className="text-xs text-gray-500">{formatDate(item.submittedAt)}</span>
+                  <span className="text-xs text-slate-400">{formatDate(item.submittedAt)}</span>
                 </div>
                 <h3 className="text-lg font-black text-white">{item.title || item.name || 'Hồ sơ trợ giúp'}</h3>
-                <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-gray-400">
+                <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-slate-300/85">
                   <span>{item.name || 'Ẩn danh'}</span>
                   {item.email && <a href={`mailto:${item.email}`} className="inline-flex items-center gap-1 text-primary hover:underline"><Mail size={14} />{item.email}</a>}
                 </div>
@@ -1722,7 +1722,7 @@ const Admin: React.FC = () => {
                   {item.description || item.desc || 'Chưa có mô tả chi tiết.'}
                 </p>
                 <div className="mt-4 grid gap-3 md:grid-cols-2">
-                  <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
+                  <label className="text-xs font-bold uppercase tracking-wide text-slate-400">
                     Trạng thái hồ sơ
                     <select value={draft.status} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, status: event.target.value as CaseStatus } }))} className="mt-2 w-full rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-sm text-white">
                       <option value="new">Mới nhận</option>
@@ -1732,7 +1732,7 @@ const Admin: React.FC = () => {
                       <option value="archived">Lưu trữ</option>
                     </select>
                   </label>
-                  <label className="text-xs font-bold uppercase tracking-wide text-gray-500">
+                  <label className="text-xs font-bold uppercase tracking-wide text-slate-400">
                     Mức độ ưu tiên
                     <select value={draft.severity} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, severity: event.target.value as Severity } }))} className="mt-2 w-full rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-sm text-white">
                       <option value="low">Thấp</option>
@@ -1741,7 +1741,7 @@ const Admin: React.FC = () => {
                     </select>
                   </label>
                 </div>
-                <label className="mt-3 block text-xs font-bold uppercase tracking-wide text-gray-500">
+                <label className="mt-3 block text-xs font-bold uppercase tracking-wide text-slate-400">
                   Ghi chú phản hồi
                   <textarea value={draft.responseNote} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, responseNote: event.target.value } }))} rows={3} placeholder="Nội dung có dấu hiệu cần xác minh thêm..." className="mt-2 w-full rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
                 </label>
@@ -1782,7 +1782,7 @@ const Admin: React.FC = () => {
         <div className="mb-5 flex items-center justify-between gap-3">
           <div>
             <h3 className="font-black text-white">Tạo challenge mới</h3>
-            <p className="mt-1 text-xs text-gray-500">Tạo nội dung huấn luyện mới cho academy và challenge.</p>
+            <p className="mt-1 text-xs text-slate-400">Tạo nội dung huấn luyện mới cho academy và challenge.</p>
           </div>
           <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-blue-500">
             <Plus size={15} /> Tạo mới
@@ -1823,7 +1823,7 @@ const Admin: React.FC = () => {
             </div>
             <h3 className="text-lg font-black text-white">{challenge.title || 'Challenge chưa đặt tên'}</h3>
             <p className="mt-2 font-mono text-xs text-primary">{challengeTypeLabels[challenge.type || 'single_video_detect'] || challenge.type}</p>
-            <p className="mt-3 line-clamp-3 text-sm text-gray-400">{challenge.description || 'Chưa có mô tả.'}</p>
+            <p className="mt-3 line-clamp-3 text-sm text-slate-300/85">{challenge.description || 'Chưa có mô tả.'}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               {(challenge.skillTags || ['verification']).map((tag) => (
                 <span key={tag} className="rounded bg-white/10 px-2 py-1 text-[11px] font-bold text-gray-300">{tag}</span>
@@ -1831,11 +1831,11 @@ const Admin: React.FC = () => {
             </div>
             <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
               <div className="rounded border border-white/5 bg-black/25 p-3">
-                <p className="text-xs text-gray-500">Lượt chơi</p>
+                <p className="text-xs text-slate-400">Lượt chơi</p>
                 <p className="mt-1 font-black text-white">{challenge.totalPlays || 0}</p>
               </div>
               <div className="rounded border border-white/5 bg-black/25 p-3">
-                <p className="text-xs text-gray-500">Tỷ lệ đúng</p>
+                <p className="text-xs text-slate-400">Tỷ lệ đúng</p>
                 <p className="mt-1 font-black text-white">{challenge.correctRate || 0}%</p>
               </div>
             </div>
@@ -1858,16 +1858,16 @@ const Admin: React.FC = () => {
   const renderActivity = () => (
     <section className="rounded-lg border border-white/10 bg-[#07111f]/90">
       {dashboardActivity.length === 0 ? (
-        <div className="px-5 py-6 text-sm text-gray-500">Chưa có activity log nào trong Firestore.</div>
+        <div className="px-5 py-6 text-sm text-slate-400">Chưa có activity log nào trong Firestore.</div>
       ) : dashboardActivity.map((item) => (
         <div key={item.id} className="grid gap-3 border-b border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.8fr_0.8fr_0.35fr]">
           <div>
             <p className="font-mono font-bold text-white">{item.action || 'activity.event'}</p>
-            <p className="text-xs text-gray-500">Tác nhân: {item.actorId || 'hệ thống'}</p>
+            <p className="text-xs text-slate-400">Tác nhân: {item.actorId || 'hệ thống'}</p>
           </div>
           <Pill className={severityClass(item.severity)}>{severityLabels[item.severity || 'info']}</Pill>
-          <span className="text-gray-400">{item.targetType || 'system'} / {item.targetId || '-'}</span>
-          <span className="text-xs text-gray-500">{formatDate(item.createdAt)}</span>
+          <span className="text-slate-300/85">{item.targetType || 'system'} / {item.targetId || '-'}</span>
+          <span className="text-xs text-slate-400">{formatDate(item.createdAt)}</span>
           <button onClick={() => deleteActivityLog(item)} className="inline-flex w-fit items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
             <Trash2 size={12} /> Xóa
           </button>
@@ -1882,9 +1882,9 @@ const Admin: React.FC = () => {
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
             <h3 className="font-black text-white">Tạo sự kiện bảo mật</h3>
-            <p className="mt-1 text-xs text-gray-500">Ghi nhận truy cập bị từ chối, link đáng ngờ, đổi vai trò hoặc gửi biểu mẫu bất thường.</p>
+            <p className="mt-1 text-xs text-slate-400">Ghi nhận truy cập bị từ chối, link đáng ngờ, đổi vai trò hoặc gửi biểu mẫu bất thường.</p>
           </div>
-          <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-xs font-bold uppercase tracking-wide text-black hover:bg-amber-300">
+          <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-white hover:bg-amber-400">
             <Plus size={15} /> Ghi sự kiện
           </button>
         </div>
@@ -1911,16 +1911,16 @@ const Admin: React.FC = () => {
 
       <section className="rounded-lg border border-white/10 bg-[#07111f]/90">
         {dashboardSecurity.length === 0 ? (
-          <div className="px-5 py-6 text-sm text-gray-500">Chưa có security event nào trong Firestore.</div>
+          <div className="px-5 py-6 text-sm text-slate-400">Chưa có security event nào trong Firestore.</div>
         ) : dashboardSecurity.map((item) => (
           <div key={item.id} className="grid gap-3 border-b border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.6fr_0.8fr_0.35fr]">
             <div>
               <p className="font-mono font-bold text-white">{item.eventType || 'security.event'}</p>
-              <p className="text-xs text-gray-500">Tác nhân: {item.actorId || 'không rõ'} / IP: {item.sourceIp || 'ẩn'}</p>
+              <p className="text-xs text-slate-400">Tác nhân: {item.actorId || 'không rõ'} / IP: {item.sourceIp || 'ẩn'}</p>
             </div>
             <Pill className={severityClass(item.severity)}>{severityLabels[item.severity || 'notice']}</Pill>
-            <span className="text-gray-400">{roleLabels[item.actorRole || 'user']}</span>
-            <span className="text-xs text-gray-500">{formatDate(item.createdAt)}</span>
+            <span className="text-slate-300/85">{roleLabels[item.actorRole || 'user']}</span>
+            <span className="text-xs text-slate-400">{formatDate(item.createdAt)}</span>
             <button onClick={() => deleteSecurityEvent(item)} className="inline-flex w-fit items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
               <Trash2 size={12} /> Xóa
             </button>
@@ -1946,7 +1946,7 @@ const Admin: React.FC = () => {
       ].map(([collectionName, fields]) => (
         <section key={collectionName} className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
           <p className="font-mono text-sm font-black text-primary">{collectionName}</p>
-          <p className="mt-3 text-sm leading-relaxed text-gray-400">{fields}</p>
+          <p className="mt-3 text-sm leading-relaxed text-slate-300/85">{fields}</p>
         </section>
       ))}
     </div>
@@ -1983,7 +1983,7 @@ const Admin: React.FC = () => {
               <p className="text-xs font-bold uppercase tracking-[0.26em] text-primary">Trung tâm điều khiển Deepfense</p>
             </div>
             <h1 className="text-2xl font-black text-white md:text-3xl">Bảng quản trị Academy kiểu SOC</h1>
-            <p className="mt-2 max-w-3xl text-sm text-gray-400">
+            <p className="mt-2 max-w-3xl text-sm text-slate-300/85">
               Quản trị người dùng, biên tập viên, quản trị viên, hồ sơ trợ giúp, xưởng nội dung, nhật ký hoạt động và sự kiện bảo mật.
             </p>
           </div>
@@ -2020,7 +2020,7 @@ const Admin: React.FC = () => {
                       setRoleFilter('all');
                       setSearch('');
                     }}
-                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-bold transition-colors ${isActive ? 'bg-primary text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-bold transition-colors ${isActive ? 'bg-primary text-white' : 'text-slate-300/85 hover:bg-white/5 hover:text-white'}`}
                   >
                     <Icon size={17} />
                     {tab.label}
@@ -2034,11 +2034,11 @@ const Admin: React.FC = () => {
             <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex flex-wrap gap-2">
                 {timeRangeOptions.map((option) => (
-                  <button key={option} onClick={() => setTimeRange(option)} className={`rounded-lg border px-3 py-2 text-xs font-bold ${timeRange === option ? 'border-primary bg-primary/15 text-blue-200' : 'border-white/10 text-gray-400 hover:text-white'}`}>
+                  <button key={option} onClick={() => setTimeRange(option)} className={`rounded-lg border px-3 py-2 text-xs font-bold ${timeRange === option ? 'border-primary bg-primary/15 text-blue-200' : 'border-white/10 text-slate-300/85 hover:text-white'}`}>
                     {option}
                   </button>
                 ))}
-                <button onClick={resetControls} className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-bold text-gray-400 hover:text-white">
+                <button onClick={resetControls} className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-bold text-slate-300/85 hover:text-white">
                   <RefreshCw size={14} /> Đặt lại
                 </button>
               </div>
@@ -2046,8 +2046,8 @@ const Admin: React.FC = () => {
               {activeTab !== 'overview' && activeTab !== 'data' && (
                 <div className="flex flex-col gap-2 sm:flex-row">
                   <label className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/30 px-3 py-2">
-                    <Search size={16} className="text-gray-500" />
-                    <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Tìm kiếm..." className="w-full bg-transparent text-sm text-white outline-none placeholder:text-gray-600" />
+                    <Search size={16} className="text-slate-400" />
+                    <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Tìm kiếm..." className="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-600" />
                   </label>
                   {activeTab === 'users' && (
                     <select value={roleFilter} onChange={(event) => setRoleFilter(event.target.value as 'all' | Role)} className="rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-sm text-white">
@@ -2059,7 +2059,7 @@ const Admin: React.FC = () => {
                   )}
                   {(activeTab === 'users' || activeTab === 'cases') && (
                     <label className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-sm text-white">
-                      <Filter size={15} className="text-gray-500" />
+                      <Filter size={15} className="text-slate-400" />
                       <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} className="bg-transparent outline-none">
                         <option value="all">Tất cả trạng thái</option>
                         {activeTab === 'users' ? (

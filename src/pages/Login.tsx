@@ -217,13 +217,13 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
 
         <div className="relative z-10 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-6">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-4 py-1.5 text-[10px] font-mono uppercase tracking-widest text-blue-300">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-blue-200">
               <ShieldCheck size={13} /> DEEPFENSE AUTH
             </div>
-            <h1 className="text-3xl font-black uppercase leading-tight text-white md:text-5xl" style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}>
+            <h1 className="text-3xl font-black uppercase leading-tight text-white md:text-5xl" style={{ fontFamily: "var(--font-display)" }}>
               {isVi ? 'Đăng nhập để lưu tiến độ học.' : 'Sign in to save your learning progress.'}
             </h1>
-            <p className="mt-5 max-w-xl text-sm leading-relaxed text-gray-400 md:text-base">
+            <p className="mt-5 max-w-xl text-sm leading-7 text-slate-300/85 md:text-base">
               {isVi
                 ? 'Tạo tài khoản bằng email và mật khẩu để lưu bài học, thử thách, chứng nhận và DPF coin. Tài khoản admin được phân quyền riêng, người dùng thường không thể vào dashboard quản trị.'
                 : 'Create an email/password account to save lessons, challenges, certificates, and DPF coin. Admin accounts use a separate role, so regular users cannot access the admin dashboard.'}
@@ -236,7 +236,7 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
               ].map(([title, text]) => (
                 <div key={title} className="rounded-2xl border border-white/10 bg-white/[0.035] p-3">
                   <div className="text-xs font-black uppercase tracking-wide text-white">{title}</div>
-                  <div className="mt-1 text-[11px] leading-relaxed text-gray-500">{text}</div>
+                  <div className="mt-1 text-[11px] leading-relaxed text-slate-400">{text}</div>
                 </div>
               ))}
             </div>
@@ -254,7 +254,7 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
                     <GlowButton color="primary" size="md" icon={<ShieldCheck size={16} />} onClick={() => navigate('/profile')}>
                       {isVi ? 'MỞ HỒ SƠ' : 'OPEN PROFILE'}
                     </GlowButton>
-                    <button onClick={handleSignOut} disabled={busy} className="rounded-lg border border-white/10 px-4 py-3 text-xs font-black uppercase tracking-widest text-gray-300 hover:border-red-400/30 hover:text-red-200">
+                    <button onClick={handleSignOut} disabled={busy} className="rounded-lg border border-white/10 px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-slate-300 hover:border-red-400/30 hover:text-red-200">
                       {isVi ? 'Đăng xuất' : 'Sign out'}
                     </button>
                   </div>
@@ -262,49 +262,49 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
               ) : (
                 <div className="space-y-5">
                   <div className="grid grid-cols-2 gap-2 rounded-xl border border-white/10 bg-black/25 p-1">
-                    <button type="button" onClick={() => { setMode('login'); setMessage(''); }} className={`rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-widest transition-colors ${mode === 'login' ? 'bg-blue-500 text-black' : 'text-gray-500 hover:text-white'}`}>
+                    <button type="button" onClick={() => { setMode('login'); setMessage(''); }} className={`rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-[0.12em] transition-colors ${mode === 'login' ? 'bg-blue-500 text-white' : 'text-slate-400 hover:text-white'}`}>
                       {isVi ? 'Đăng nhập' : 'Sign in'}
                     </button>
-                    <button type="button" onClick={() => { setMode('register'); setMessage(''); }} className={`rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-widest transition-colors ${mode === 'register' ? 'bg-emerald-400 text-black' : 'text-gray-500 hover:text-white'}`}>
+                    <button type="button" onClick={() => { setMode('register'); setMessage(''); }} className={`rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-[0.12em] transition-colors ${mode === 'register' ? 'bg-emerald-500 text-white' : 'text-slate-400 hover:text-white'}`}>
                       {isVi ? 'Tạo tài khoản' : 'Create account'}
                     </button>
                   </div>
 
                   <div className="pt-2">
-                    <div className="mb-3 flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-widest text-gray-500">
+                    <div className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
                       {mode === 'login' ? <KeyRound size={13} /> : <UserPlus size={13} />}
                       {mode === 'login' ? (isVi ? 'Đăng nhập email' : 'Email sign in') : (isVi ? 'Tạo tài khoản mới' : 'Create a new account')}
                     </div>
                     <form onSubmit={mode === 'login' ? handleEmailPassword : handleCreateAccount} className="space-y-3">
                       {mode === 'register' && (
                         <label className="block">
-                          <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Tên hiển thị' : 'Display name'}</span>
-                          <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} type="text" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10" placeholder={isVi ? 'Nguyễn Văn A' : 'Your name'} />
+                          <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{isVi ? 'Tên hiển thị' : 'Display name'}</span>
+                          <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} type="text" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-white/10" placeholder={isVi ? 'Nguyễn Văn A' : 'Your name'} />
                         </label>
                       )}
                       <label className="block">
-                        <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">Email</span>
+                        <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Email</span>
                         <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 transition-all focus-within:border-blue-500/50 focus-within:bg-white/10">
-                          <Mail size={14} className="text-gray-500" />
-                          <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" className="w-full bg-transparent py-3 text-sm text-white outline-none" placeholder="you@example.com" />
+                          <Mail size={14} className="text-slate-500" />
+                          <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" className="w-full bg-transparent py-3 text-sm text-white outline-none placeholder:text-slate-600" placeholder="you@example.com" />
                         </div>
                       </label>
                       <label className="block">
-                        <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Mật khẩu' : 'Password'}</span>
-                        <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10" placeholder="••••••••" />
+                        <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{isVi ? 'Mật khẩu' : 'Password'}</span>
+                        <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-white/10" placeholder="••••••••" />
                       </label>
                       {mode === 'register' && (
                         <label className="block">
-                          <span className="mb-1 block text-[10px] font-mono uppercase tracking-widest text-gray-500">{isVi ? 'Xác nhận mật khẩu' : 'Confirm password'}</span>
-                          <input value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10" placeholder="••••••••" />
+                          <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{isVi ? 'Xác nhận mật khẩu' : 'Confirm password'}</span>
+                          <input value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-white/10" placeholder="••••••••" />
                         </label>
                       )}
                       {mode === 'login' && (
-                        <button type="button" onClick={handleForgotPassword} disabled={busy} className="text-[10px] font-mono font-black uppercase tracking-widest text-blue-400 transition-colors hover:text-blue-200 disabled:opacity-60">
+                        <button type="button" onClick={handleForgotPassword} disabled={busy} className="text-[10px] font-black uppercase tracking-[0.12em] text-blue-300 transition-colors hover:text-blue-100 disabled:opacity-60">
                           {isVi ? 'Quên mật khẩu?' : 'Forgot password?'}
                         </button>
                       )}
-                      <button disabled={busy} className={`w-full rounded-lg border px-4 py-3 text-xs font-black uppercase tracking-widest disabled:opacity-60 ${mode === 'login' ? 'border-amber-400/20 bg-amber-400/10 text-amber-200 hover:bg-amber-400/15' : 'border-emerald-400/20 bg-emerald-400/10 text-emerald-200 hover:bg-emerald-400/15'}`}>
+                      <button disabled={busy} className={`w-full rounded-lg border px-4 py-3 text-xs font-black uppercase tracking-[0.12em] disabled:opacity-60 ${mode === 'login' ? 'border-amber-400/20 bg-amber-400/10 text-amber-200 hover:bg-amber-400/15' : 'border-emerald-400/20 bg-emerald-400/10 text-emerald-200 hover:bg-emerald-400/15'}`}>
                         {busy
                           ? (isVi ? 'Đang xử lý...' : 'Processing...')
                           : mode === 'login'

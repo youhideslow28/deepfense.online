@@ -110,18 +110,18 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
 
   return (
     <div className="animate-in fade-in duration-500 max-w-7xl mx-auto py-4">
-       <div className="text-center mb-12">
-          <h2 className="text-4xl font-black text-white uppercase tracking-tighter mb-2">{t.about_us}</h2>
-          <div className="h-1.5 w-24 bg-primary mx-auto"></div>
+       <div className="mb-12 text-center">
+          <h2 className="font-display mb-2 text-4xl font-black uppercase tracking-tight text-white">{t.about_us}</h2>
+          <div className="mx-auto h-1.5 w-24 rounded-full bg-primary"></div>
        </div>
 
        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-7xl mx-auto">
           {/* Main Info */}
           <div className="lg:col-span-7 space-y-8">
-              <div className="bg-surface border border-white/5 rounded-3xl p-10 shadow-xl relative overflow-hidden group hover:border-primary/40 hover:shadow-[0_0_40px_rgba(0,240,255,0.1)] transition-all duration-500">
+              <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-surface p-10 shadow-xl transition-all duration-500 hover:border-primary/40 hover:shadow-[0_0_40px_rgba(29,111,232,0.1)]">
                   <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500"><Target size={120}/></div>
-                  <h3 className="text-primary font-black text-sm uppercase tracking-widest mb-4 flex items-center gap-2 group-hover:translate-x-1 transition-transform duration-300"><Target size={18}/> {t.mission}</h3>
-                  <p className="text-gray-300 text-base leading-relaxed">
+                  <h3 className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-[0.12em] text-blue-300 transition-transform duration-300 group-hover:translate-x-1"><Target size={18}/> {t.mission}</h3>
+                  <p className="text-base leading-7 text-slate-300">
                     {lang === 'vi' 
                       ? "Phổ cập kiến thức phòng chống Deepfake cho 100% cộng đồng người dùng số tại Việt Nam, xây dựng mạng lưới lá chắn niềm tin vững chắc trước sự bùng nổ của trí tuệ nhân tạo."
                       : "Popularizing Deepfake prevention knowledge for 100% of digital users in Vietnam, building a strong shield of trust in the AI era."}
@@ -130,22 +130,22 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Box 1: Tầm nhìn */}
-                  <div className="bg-surface border border-white/5 rounded-3xl p-8 shadow-xl hover:border-primary/40 hover:shadow-[0_0_40px_rgba(0,240,255,0.1)] transition-all duration-500 group/box">
-                      <h3 className="font-black text-xs uppercase tracking-widest mb-4 flex items-center gap-2 text-primary group-hover/box:translate-x-1 transition-transform duration-300">
+                  <div className="group/box rounded-3xl border border-white/10 bg-surface p-8 shadow-xl transition-all duration-500 hover:border-primary/40 hover:shadow-[0_0_40px_rgba(29,111,232,0.1)]">
+                      <h3 className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.12em] text-blue-300 transition-transform duration-300 group-hover/box:translate-x-1">
                         <Globe size={16}/> {lang === 'vi' ? 'TẦM NHÌN 2030' : 'VISION 2030'}
                       </h3>
-                      <p className="text-gray-400 text-sm leading-relaxed">
+                      <p className="text-sm leading-7 text-slate-400">
                         {lang === 'vi' 
                           ? "Trở thành trung tâm dữ liệu và nhận diện Deepfake hàng đầu khu vực, hỗ trợ đắc lực cho các cơ quan chức năng trong việc xử lý tội phạm công nghệ cao."
                           : "Becoming the region's leading data and identification center for Deepfakes, effectively supporting authorities in high-tech crime processing."}
                       </p>
                   </div>
                   {/* Box 2: Bảo mật */}
-                  <div className="bg-surface border border-white/5 rounded-3xl p-8 shadow-xl hover:border-success/40 transition-all group/box">
-                      <h3 className="font-black text-xs uppercase tracking-widest mb-4 flex items-center gap-2 text-success group-hover/box:translate-x-1 transition-transform">
+                  <div className="group/box rounded-3xl border border-white/10 bg-surface p-8 shadow-xl transition-all hover:border-success/40">
+                      <h3 className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.12em] text-success transition-transform group-hover/box:translate-x-1">
                         <ShieldCheck size={16}/> {lang === 'vi' ? 'BẢO MẬT TUYỆT ĐỐI' : 'ABSOLUTE PRIVACY'}
                       </h3>
-                      <p className="text-gray-400 text-sm leading-relaxed">
+                      <p className="text-sm leading-7 text-slate-400">
                         {lang === 'vi' 
                           ? "Mọi thông tin báo cáo sự cố đều được mã hóa và bảo vệ nghiêm ngặt. Chúng tôi cam kết không tiết lộ danh tính người báo cáo trong mọi trường hợp."
                           : "All incident report information is encrypted and strictly protected. We commit to not disclosing reporters' identities under any circumstances."}
@@ -154,62 +154,62 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               </div>
 
               {/* SOLO AUTHOR SECTION */}
-              <div className="bg-gradient-to-br from-purple-900/10 to-black border border-purple-500/30 rounded-3xl p-8 shadow-xl hover:border-purple-500 transition-all group/box relative overflow-hidden">
+              <div className="group/box relative overflow-hidden rounded-3xl border border-blue-400/20 bg-gradient-to-br from-blue-950/18 to-black p-8 shadow-xl transition-all hover:border-blue-400/45">
                   <div className="absolute -right-10 -bottom-10 opacity-10 rotate-12"><User size={200} /></div>
                   
-                  <h3 className="font-black text-xs uppercase tracking-widest mb-6 flex items-center gap-2 text-purple-400 group-hover/box:translate-x-1 transition-transform">
+                  <h3 className="mb-6 flex items-center gap-2 text-xs font-black uppercase tracking-[0.12em] text-blue-300 transition-transform group-hover/box:translate-x-1">
                     <Code size={16}/> {t.team}
                   </h3>
                   
                   <div className="flex flex-col gap-4 relative z-10">
                       {PROJECT_METADATA.authors.map((author, index) => (
                           <div key={index} className="flex gap-4 items-start">
-                              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center text-white shadow-lg shrink-0">
+                              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-blue-500 text-white shadow-lg">
                                   <span className="font-black text-xl">{author.name.charAt(0)}</span>
                               </div>
                               <div>
                                   <div className="text-white font-black text-xl uppercase tracking-tight mb-1">
                                       {author.name}
                                   </div>
-                                  <div className="inline-block bg-purple-500/20 text-purple-300 text-[10px] font-mono px-2 py-1 rounded mb-2 border border-purple-500/30">
+                                  <div className="mb-2 inline-block rounded border border-blue-400/25 bg-blue-400/10 px-2 py-1 font-mono text-[10px] text-blue-200">
                                       ID: {author.id}
                                   </div>
-                                  <div className="text-gray-400 text-sm">
+                                  <div className="text-sm text-slate-400">
                                       {author.role}
                                   </div>
-                                  <div className="mt-3 h-0.5 w-12 bg-purple-500/50"></div>
+                                  <div className="mt-3 h-0.5 w-12 bg-primary/55"></div>
                               </div>
                           </div>
                       ))}
                   </div>
                   
-                  <div className="mt-8 pt-4 border-t border-white/5 flex flex-col sm:flex-row sm:items-center justify-between text-[10px] text-gray-500 font-mono gap-2">
+                  <div className="mt-8 flex flex-col justify-between gap-2 border-t border-white/10 pt-4 font-mono text-[10px] text-slate-500 sm:flex-row sm:items-center">
                       <span>{PROJECT_METADATA.university}</span>
                       <span className="flex items-center gap-1 text-success"><Fingerprint size={10}/> VERIFIED AUTHOR</span>
                   </div>
               </div>
 
-              <div className="bg-surface border border-white/5 rounded-3xl p-8 shadow-xl">
-                  <h3 className="text-secondary font-black text-xs uppercase tracking-widest mb-6">{t.contact_support}</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-400 font-mono">
-                      <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors cursor-pointer"><Mail size={20} className="text-primary shrink-0"/> deepfense@gmail.com</div>
-                      <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors cursor-pointer"><Phone size={20} className="text-primary shrink-0"/> 0828250475</div>
-                      <div className="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5 md:col-span-2"><MapPin size={20} className="text-primary shrink-0"/> 25NS, VKU, DA NANG, VIET NAM</div>
+              <div className="rounded-3xl border border-white/10 bg-surface p-8 shadow-xl">
+                  <h3 className="mb-6 text-xs font-black uppercase tracking-[0.12em] text-red-300">{t.contact_support}</h3>
+                  <div className="grid grid-cols-1 gap-6 text-sm text-slate-400 md:grid-cols-2">
+                      <div className="flex cursor-pointer items-center gap-4 rounded-xl border border-white/10 bg-black/35 p-4 transition-colors hover:border-primary/25 hover:text-white"><Mail size={20} className="shrink-0 text-primary"/> deepfense@gmail.com</div>
+                      <div className="flex cursor-pointer items-center gap-4 rounded-xl border border-white/10 bg-black/35 p-4 transition-colors hover:border-primary/25 hover:text-white"><Phone size={20} className="shrink-0 text-primary"/> 0828250475</div>
+                      <div className="flex items-center gap-4 rounded-xl border border-white/10 bg-black/35 p-4 md:col-span-2"><MapPin size={20} className="shrink-0 text-primary"/> 25NS, VKU, DA NANG, VIET NAM</div>
                   </div>
               </div>
           </div>
 
           {/* Form */}
-          <div className="lg:col-span-5 bg-surface border border-white/5 rounded-[40px] p-10 relative overflow-hidden shadow-2xl h-fit">
+          <div className="relative h-fit overflow-hidden rounded-3xl border border-white/10 bg-surface p-10 shadow-2xl lg:col-span-5">
               <div className="absolute top-0 left-0 w-full h-1.5 bg-primary"></div>
               {submitted && (
                   <div className="absolute inset-0 bg-surface/95 backdrop-blur flex flex-col items-center justify-center z-10 animate-in fade-in">
                       <div className="text-6xl mb-6 animate-bounce">✅</div>
-                      <h3 className="text-success font-black text-2xl uppercase tracking-widest">{t.success_msg}</h3>
-                      <p className="text-gray-500 text-xs mt-4 font-mono">ENCRYPTING_REPORT_DATA...</p>
+                      <h3 className="text-success font-black text-2xl uppercase tracking-[0.12em]">{t.success_msg}</h3>
+                      <p className="text-slate-400 text-xs mt-4 font-bold tracking-[0.08em]">ENCRYPTING_REPORT_DATA...</p>
                   </div>
               )}
-              <h3 className="text-white text-2xl font-black mb-8 uppercase tracking-tighter flex items-center gap-3">
+              <h3 className="font-display mb-8 flex items-center gap-3 text-2xl font-black uppercase tracking-tight text-white">
                 <Send className="text-primary" size={24}/> {t.report_form}
               </h3>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -219,19 +219,19 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                       </div>
                   )}
                   <div className="space-y-1">
-                      <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_name}</label>
-                      <input type="text" disabled={isSubmitting} placeholder={lang === 'vi' ? 'VD: Anna' : 'Ex: Anna'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                      <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{t.label_name}</label>
+                      <input type="text" disabled={isSubmitting} placeholder={lang === 'vi' ? 'VD: Anna' : 'Ex: Anna'} className="w-full rounded-2xl border border-white/10 bg-black/55 p-4 text-white outline-none transition-all placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                   </div>
                   <div className="space-y-1">
-                      <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_email}</label>
-                      <input type="email" disabled={isSubmitting} placeholder="email@example.com" className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                      <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{t.label_email}</label>
+                      <input type="email" disabled={isSubmitting} placeholder="email@example.com" className="w-full rounded-2xl border border-white/10 bg-black/55 p-4 text-white outline-none transition-all placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
                   </div>
                   <div className="space-y-1">
-                      <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_desc}</label>
-                      <textarea disabled={isSubmitting} placeholder={lang === 'vi' ? 'Vui lòng mô tả chi tiết sự việc (đối tượng giả danh ai, qua nền tảng nào...)' : 'Please describe the incident in detail...'} className="w-full bg-black border border-white/10 rounded-2xl p-4 text-white focus:border-primary outline-none h-32 resize-none transition-all disabled:opacity-50 disabled:cursor-not-allowed" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
+                      <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{t.label_desc}</label>
+                      <textarea disabled={isSubmitting} placeholder={lang === 'vi' ? 'Vui lòng mô tả chi tiết sự việc (đối tượng giả danh ai, qua nền tảng nào...)' : 'Please describe the incident in detail...'} className="h-32 w-full resize-none rounded-2xl border border-white/10 bg-black/55 p-4 text-white outline-none transition-all placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
                   </div>
                   <div className="space-y-1">
-                      <label className="text-xs text-gray-400 font-mono uppercase tracking-widest ml-2 mb-1 block">{t.label_attachment}</label>
+                      <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{t.label_attachment}</label>
                       <div className="relative">
                           <input 
                               ref={fileInputRef} 
@@ -242,13 +242,13 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                               className="hidden" 
                               onChange={e => setFile(e.target.files?.[0] || null)} 
                           />
-                          <label htmlFor="file-upload" className={`w-full bg-black border border-white/10 border-dashed rounded-2xl p-4 flex flex-col items-center justify-center gap-2 transition-colors text-gray-500 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary/50 hover:text-primary'}`}>
+                          <label htmlFor="file-upload" className={`flex w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-white/10 bg-black/55 p-4 text-slate-400 transition-colors ${isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:border-primary/50 hover:text-blue-300'}`}>
                               <Paperclip size={20} />
                               <span className="text-xs font-mono">{file ? file.name : (lang === 'vi' ? 'Nhấp để chọn tệp' : 'Click to select file')}</span>
                           </label>
                       </div>
                   </div>
-                  <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-black font-black py-5 rounded-2xl hover:bg-white transition-all uppercase text-xs tracking-[0.3em] shadow-lg shadow-primary/20 mt-4 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                  <button type="submit" disabled={isSubmitting} className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-5 text-xs font-black uppercase tracking-[0.16em] text-white shadow-lg shadow-primary/20 transition-all hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-70">
                     {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
                     {isSubmitting ? (lang === 'vi' ? 'ĐANG XỬ LÝ...' : 'SENDING...') : t.send_report}
                   </button>

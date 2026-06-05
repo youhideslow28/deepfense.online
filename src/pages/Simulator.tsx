@@ -173,15 +173,15 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
   // ── SCENARIO SELECTOR VIEW ──────────────────────────────────────────
   if (!selectedScenario) {
     return (
-      <div className="space-y-8 animate-in mt-8 fade-in duration-500 pb-16">
-        <div className="border-l-4 border-purple-500 pl-4 mb-8">
-          <h1 className="text-4xl font-black text-white uppercase tracking-wider flex items-center gap-3">
-            <Target className="text-purple-500" size={36} />
+      <div className="animate-in mt-8 space-y-8 pb-16 duration-500 fade-in">
+        <div className="mb-8 border-l-4 border-primary pl-4">
+          <h1 className="font-display flex items-center gap-3 text-4xl font-black uppercase tracking-tight text-white">
+            <Target className="text-primary" size={36} />
             {t.simulator_title}
           </h1>
         </div>
 
-        <h2 className="text-xl font-bold text-white uppercase tracking-widest">
+        <h2 className="text-xl font-bold uppercase tracking-[0.12em] text-white">
           {t.scenario_select_title}
         </h2>
 
@@ -194,7 +194,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                 setSelectedScenario(scenario);
                 startSimulation(scenario);
               }}
-              className="group cursor-pointer bg-black/40 border border-white/10 hover:border-purple-500/60 rounded-2xl p-5 backdrop-blur-xl transition-all duration-200 hover:bg-purple-900/10 flex flex-col gap-3"
+              className="group flex cursor-pointer flex-col gap-3 rounded-2xl border border-white/10 bg-black/40 p-5 backdrop-blur-xl transition-all duration-200 hover:border-primary/55 hover:bg-primary/8"
             >
               <div className="flex items-start justify-between">
                 <span className="text-3xl">{scenario.icon}</span>
@@ -211,21 +211,21 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                 <h3 className="font-bold text-white text-sm leading-tight">
                   {scenario.senderName[lang]}
                 </h3>
-                <p className="text-xs text-gray-400 mt-0.5">{scenario.senderRole[lang]}</p>
+                <p className="mt-0.5 text-xs text-slate-400">{scenario.senderRole[lang]}</p>
               </div>
 
-              <p className="text-xs text-gray-500 line-clamp-2 flex-grow">
+              <p className="line-clamp-2 flex-grow text-xs leading-relaxed text-slate-400">
                 {scenario.initialMessage[lang]}
               </p>
 
               <div className="flex items-center justify-between pt-1 border-t border-white/5">
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-slate-400">
                   {t.reward_preview}:{' '}
-                  <span className="text-purple-400 font-bold">
+                  <span className="font-bold text-blue-300">
                     {scenario.reward.slow}–{scenario.reward.fast} DPF
                   </span>
                 </span>
-                <span className="text-xs text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity font-bold uppercase">
+                <span className="text-xs font-bold uppercase text-blue-300 opacity-0 transition-opacity group-hover:opacity-100">
                   {t.start_sim} →
                 </span>
               </div>
@@ -240,15 +240,15 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
   const scenario = selectedScenario;
 
   return (
-    <div className="space-y-8 animate-in mt-8 fade-in duration-500 pb-16">
-      <div className="border-l-4 border-purple-500 pl-4 mb-8 flex items-center justify-between gap-4">
-        <h1 className="text-4xl font-black text-white uppercase tracking-wider flex items-center gap-3">
-          <Target className="text-purple-500" size={36} />
+      <div className="animate-in mt-8 space-y-8 pb-16 duration-500 fade-in">
+      <div className="mb-8 flex items-center justify-between gap-4 border-l-4 border-primary pl-4">
+        <h1 className="font-display flex items-center gap-3 text-4xl font-black uppercase tracking-tight text-white">
+          <Target className="text-primary" size={36} />
           {t.simulator_title}
         </h1>
         <button
           onClick={handleChangeScenario}
-          className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-purple-400 uppercase font-bold tracking-wide border border-white/10 hover:border-purple-500/50 rounded-xl px-3 py-2 transition-colors shrink-0"
+          className="flex shrink-0 items-center gap-1.5 rounded-xl border border-white/10 px-3 py-2 text-xs font-bold uppercase tracking-wide text-slate-400 transition-colors hover:border-primary/50 hover:text-blue-300"
         >
           <ArrowLeft size={14} />
           {t.change_scenario}
@@ -266,7 +266,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
             <span className="text-2xl">{scenario.icon}</span>
             <div className="flex-grow min-w-0">
               <p className="text-white text-sm font-bold truncate">{scenario.senderName[lang]}</p>
-              <p className="text-gray-500 text-xs truncate">{scenario.senderRole[lang]}</p>
+              <p className="truncate text-xs text-slate-400">{scenario.senderRole[lang]}</p>
             </div>
             <span
               className={`text-xs font-bold uppercase px-2 py-0.5 rounded-full border shrink-0 ${
@@ -278,18 +278,18 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
           </div>
 
           {status === 'idle' && (
-            <div className="bg-purple-900/20 border border-purple-500/30 rounded-2xl p-6 text-center">
+            <div className="rounded-2xl border border-primary/25 bg-primary/10 p-6 text-center">
               <h3 className="font-bold text-white mb-2">
                 {lang === 'vi' ? 'Sẵn sàng thử thách?' : 'Ready for the challenge?'}
               </h3>
-              <p className="text-sm text-gray-300 mb-6">
+              <p className="mb-6 text-sm leading-6 text-slate-300">
                 {lang === 'vi'
                   ? 'Bạn sẽ nhận được tin nhắn từ kẻ giả mạo. Hãy tỉnh táo quyết định bước tiếp theo.'
                   : 'You will receive a message from an impersonator. Stay sharp and decide your next move.'}
               </p>
               <button
                 onClick={() => startSimulation(scenario)}
-                className="w-full bg-purple-600 hover:bg-purple-500 text-white p-4 rounded-xl font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary p-4 font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-blue-500"
               >
                 <Play size={20} />
                 {t.start_sim}
@@ -301,21 +301,20 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
             <div className="bg-red-900/20 border border-red-500/30 rounded-2xl p-6 text-center animate-in zoom-in fade-in">
               <XCircle size={48} className="text-red-500 mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-white mb-2">{t.trap_msg}</h3>
-              <p className="text-gray-300 mb-4">
+              <p className="mb-4 text-slate-300">
                 {lang === 'vi' ? 'Bạn mất' : 'It took you'}{' '}
                 <strong className="text-red-400">
                   {timer} {lang === 'vi' ? 'giây' : 'seconds'}
                 </strong>{' '}
                 {lang === 'vi' ? 'để quy hàng trước kịch bản tâm lý.' : 'to fall for the script.'}
               </p>
-              <div className="bg-black/50 p-4 rounded-xl text-left border border-white/10 text-sm text-gray-400">
-                ⚠️{' '}
+              <div className="rounded-xl border border-white/10 bg-black/50 p-4 text-left text-sm text-slate-400">
                 <strong>{lang === 'vi' ? 'Bài học:' : 'Lesson:'}</strong>{' '}
                 {scenario.failLesson[lang]}
               </div>
               <button
                 onClick={handleRestart}
-                className="mt-4 text-purple-400 hover:text-white underline underline-offset-4 text-sm font-bold uppercase"
+                className="mt-4 text-sm font-bold uppercase text-blue-300 underline underline-offset-4 hover:text-white"
               >
                 {t.retest}
               </button>
@@ -326,7 +325,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
             <div className="bg-green-900/20 border border-green-500/30 rounded-2xl p-6 text-center animate-in zoom-in fade-in">
               <ShieldCheck size={48} className="text-green-500 mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-white mb-2">{t.verify_msg}</h3>
-              <p className="text-gray-300 mb-4">
+              <p className="mb-4 text-slate-300">
                 {lang === 'vi' ? 'Bạn chỉ mất' : 'It only took you'}{' '}
                 <strong className="text-green-400">
                   {timer} {lang === 'vi' ? 'giây' : 'seconds'}
@@ -335,7 +334,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                   ? 'để nhận diện ra đây là lừa đảo.'
                   : 'to recognize this scam script.'}
               </p>
-              <div className="bg-black/50 p-4 rounded-xl text-left border border-white/10 text-sm text-gray-400">
+              <div className="rounded-xl border border-white/10 bg-black/50 p-4 text-left text-sm text-slate-400">
                 ✅{' '}
                 <strong>{lang === 'vi' ? 'Lý do đúng:' : 'Reason:'}</strong>{' '}
                 {scenario.successLesson[lang]}
@@ -346,7 +345,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
               />
               <button
                 onClick={handleRestart}
-                className="mt-4 text-purple-400 hover:text-white underline underline-offset-4 text-sm font-bold uppercase"
+                className="mt-4 text-sm font-bold uppercase text-blue-300 underline underline-offset-4 hover:text-white"
               >
                 {t.replay}
               </button>
@@ -355,7 +354,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
         </div>
 
         {/* RIGHT PANEL: CHAT */}
-        <div className="lg:col-span-2 flex flex-col bg-black/40 border border-white/10 rounded-2xl backdrop-blur-xl h-[600px] overflow-hidden">
+        <div className="flex h-[600px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl lg:col-span-2">
 
           {/* Chat header */}
           <div className="bg-black/80 p-4 border-b border-white/10 flex items-center justify-between">
@@ -397,8 +396,8 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                 <div
                   className={`max-w-[75%] p-3 rounded-2xl ${
                     m.sender === 'user'
-                      ? 'bg-purple-600 text-white rounded-br-none'
-                      : 'bg-gray-800 text-gray-200 rounded-bl-none'
+                      ? 'rounded-br-none bg-primary text-white'
+                      : 'rounded-bl-none bg-slate-800 text-slate-200'
                   }`}
                 >
                   {m.text}
@@ -407,7 +406,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
             ))}
             {isTyping && (
               <div className="flex justify-start">
-                <div className="bg-gray-800 text-gray-400 text-xs p-2 rounded-2xl">
+                <div className="rounded-2xl bg-slate-800 p-2 text-xs text-slate-400">
                   {lang === 'vi' ? '...đang gõ' : '...typing'}
                 </div>
               </div>
@@ -427,12 +426,12 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                     disabled={isTyping}
                     placeholder={t.chat_placeholder}
-                    className="flex-grow bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 transition-colors"
+                    className="flex-grow rounded-xl border border-white/10 bg-[#101827] px-4 py-3 text-white transition-colors placeholder:text-slate-600 focus:border-primary focus:outline-none"
                   />
                   <button
                     onClick={handleSend}
                     disabled={isTyping}
-                    className="absolute right-4 text-purple-500 hover:text-purple-400 uppercase text-xs font-bold"
+                    className="absolute right-4 text-xs font-bold uppercase text-blue-300 hover:text-blue-100"
                   >
                     {lang === 'vi' ? 'GỬI' : 'SEND'}
                   </button>
@@ -451,14 +450,14 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                     {messages.length >= 1 + scenario.minExchanges * 2 && (
                       <button
                         onClick={handleReport}
-                        className="bg-black border border-white/20 hover:border-green-500 text-gray-300 hover:text-green-500 px-6 py-2 rounded-xl text-sm font-bold uppercase transition-colors animate-in fade-in duration-300"
+                        className="animate-in rounded-xl border border-white/20 bg-black px-6 py-2 text-sm font-bold uppercase text-slate-300 transition-colors duration-300 fade-in hover:border-green-500 hover:text-green-400"
                       >
                         {t.reject_btn}
                       </button>
                     )}
                   </div>
                   {messages.length < 1 + scenario.minExchanges * 2 && (
-                    <p className="text-right text-gray-600 text-xs uppercase tracking-widest">
+                    <p className="text-right text-xs uppercase tracking-[0.12em] text-slate-500">
                       {(() => {
                         const exchangesDone = Math.floor((messages.length - 1) / 2);
                         const remaining = scenario.minExchanges - exchangesDone;
@@ -471,7 +470,7 @@ const Simulator: React.FC<SimulatorProps> = ({ lang }) => {
                 </div>
               </div>
             ) : (
-              <div className="text-center text-gray-500 text-sm p-2 uppercase font-mono tracking-wider">
+              <div className="p-2 text-center font-mono text-sm uppercase tracking-[0.12em] text-slate-500">
                 {status === 'idle' ? t.chat_inactive : t.session_ended}
               </div>
             )}

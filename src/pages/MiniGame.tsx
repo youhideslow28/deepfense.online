@@ -239,13 +239,13 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
           <Gamepad2 className="text-primary" size={36} />
           {lang === 'vi' ? 'CHẠY TRỐN DEEPFAKE' : 'DEEPFAKE RUNNER'}
         </h2>
-        <p className="text-gray-400 font-mono text-xs uppercase tracking-widest">{lang === 'vi' ? 'SUMMER EDITION' : 'SUMMER EDITION'}</p>
+        <p className="font-mono text-xs uppercase tracking-[0.12em] text-slate-400">{lang === 'vi' ? 'SUMMER EDITION' : 'SUMMER EDITION'}</p>
       </div>
 
       <div className="bg-surface border-2 border-white/10 rounded-3xl p-4 md:p-8 shadow-2xl relative overflow-hidden">
         <div className="flex justify-between items-center mb-4 font-mono text-sm">
            <div className="text-primary font-bold">SCORE: <span ref={scoreDisplayRef} className="text-2xl text-white">0</span></div>
-           <div className="text-gray-500 font-bold">HI-SCORE: <span className="text-xl text-white">{highScore}</span></div>
+           <div className="font-bold text-slate-400">HI-SCORE: <span className="text-xl text-white">{highScore}</span></div>
         </div>
 
         {/* GAME CANVAS */}
@@ -256,13 +256,13 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
            {gameState === 'START' && (
              <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center">
                 <div className="text-5xl mb-4">🌴 🛡️ ☀️</div>
-                <h3 className="text-white font-black text-xl md:text-2xl uppercase tracking-widest mb-6 text-center px-4">
+                <h3 className="mb-6 px-4 text-center text-xl font-black uppercase tracking-[0.12em] text-white md:text-2xl">
                   {lang === 'vi' ? 'Nhảy qua các cạm bẫy AI để sinh tồn!' : 'Jump over AI traps to survive!'}
                 </h3>
-                <button onClick={startMatch} className="bg-primary text-black px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform flex items-center gap-2 shadow-[0_0_20px_rgba(0,240,255,0.4)]">
+                <button onClick={startMatch} className="flex items-center gap-2 rounded-xl bg-primary px-8 py-4 text-xs font-black uppercase tracking-[0.12em] text-white shadow-[0_0_20px_rgba(29,111,232,0.34)] transition-transform hover:scale-105">
                   <Play size={16}/> {lang === 'vi' ? 'BẮT ĐẦU CHẠY' : 'START RUNNING'}
                 </button>
-                <p className="text-gray-400 text-[10px] mt-6 font-mono">
+                <p className="text-slate-300/85 text-[10px] mt-6 font-mono">
                   {lang === 'vi' ? '[ BẤM SPACE HOẶC CHẠM MÀN HÌNH ĐỂ NHẢY ]' : '[ PRESS SPACE OR TAP SCREEN TO JUMP ]'}
                 </p>
              </div>
@@ -279,14 +279,14 @@ const MiniGame: React.FC<MiniGameProps> = ({ lang }) => {
                     ? 'Chỉ một phút lơ là, bạn đã trở thành nạn nhân của Deepfake. Hãy luôn giữ khiên bảo vệ (Sự cảnh giác) thật chắc nhé!' 
                     : 'Just one moment of carelessness, and you became a victim of Deepfake. Keep your shield (Vigilance) up!'}
                 </p>
-                <button onClick={startMatch} className="bg-white text-black px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary transition-colors flex items-center gap-2 shadow-2xl">
+                <button onClick={startMatch} className="flex items-center gap-2 rounded-xl bg-primary px-8 py-4 text-xs font-black uppercase tracking-[0.12em] text-white shadow-2xl transition-colors hover:bg-blue-500">
                   <RotateCcw size={16}/> {lang === 'vi' ? 'CHƠI LẠI TỪ ĐẦU' : 'TRY AGAIN'}
                 </button>
              </div>
            )}
         </div>
         
-        <div className="mt-6 flex flex-wrap justify-center gap-6 text-[10px] font-mono text-gray-500">
+        <div className="mt-6 flex flex-wrap justify-center gap-6 font-mono text-[10px] text-slate-400">
             <div className="flex items-center gap-2">🛡️ = {lang === 'vi' ? 'Bạn (Cảnh giác)' : 'You (Vigilance)'}</div>
             <div className="flex items-center gap-2">🎭 = {lang === 'vi' ? 'Cuộc gọi giả mạo' : 'Fake Call'}</div>
             <div className="flex items-center gap-2">🎙️ = {lang === 'vi' ? 'Giọng nói AI' : 'AI Voice'}</div>

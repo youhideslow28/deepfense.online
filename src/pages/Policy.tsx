@@ -121,26 +121,26 @@ const Policy: React.FC<PolicyProps> = ({ lang }) => {
 
   return (
     <div className="mx-auto max-w-6xl animate-in fade-in">
-      <section className="rounded-lg border border-white/10 bg-[#07111f]/90 p-6 shadow-2xl shadow-black/30 md:p-8">
+      <section className="rounded-lg border border-white/10 bg-[#07111f]/95 p-6 shadow-2xl shadow-black/30 md:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-blue-200">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-blue-200">
               <FileText size={14} />
               Trung Tâm Chính Sách & Niềm Tin
             </div>
-            <h1 className="text-3xl font-black text-white md:text-5xl">
+            <h1 className="font-display text-3xl font-black text-white md:text-5xl">
               {isVi ? 'Chính Sách Deepfense' : 'Deepfense Policies'}
             </h1>
-            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-gray-400 md:text-base">
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300/85 md:text-base">
               {isVi
                 ? 'Deepfense công bố các chính sách này để người dùng hiểu rõ cách nền tảng thu thập dữ liệu, bảo vệ quyền riêng tư, xử lý yêu cầu hỗ trợ, quản trị nội dung và vận hành hệ thống một cách có trách nhiệm.'
                 : 'Deepfense publishes these policies so users can understand how the platform handles privacy, data, support cases, content governance, and responsible operations.'}
             </p>
           </div>
-          <div className="rounded-lg border border-white/10 bg-black/25 p-4 text-xs leading-relaxed text-gray-500">
-            <p className="font-mono font-bold uppercase tracking-widest text-gray-300">{isVi ? 'Cập nhật' : 'Updated'}</p>
+          <div className="rounded-lg border border-white/10 bg-black/30 p-4 text-xs leading-relaxed text-slate-400">
+            <p className="font-mono font-bold uppercase tracking-[0.12em] text-slate-200">{isVi ? 'Cập nhật' : 'Updated'}</p>
             <p className="mt-1">Tháng 5, 2026</p>
-            <p className="mt-3">{PROJECT_METADATA.university}</p>
+            <p className="mt-3 text-slate-300">{PROJECT_METADATA.university}</p>
           </div>
         </div>
       </section>
@@ -149,7 +149,7 @@ const Policy: React.FC<PolicyProps> = ({ lang }) => {
         <h2 className="font-black text-white">Cam Kết Tin Cậy</h2>
         <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {trustHighlights.map((item) => (
-            <div key={item} className="flex items-center gap-3 rounded-lg border border-white/10 bg-black/25 p-3 text-sm font-bold text-gray-200">
+            <div key={item} className="flex items-center gap-3 rounded-lg border border-white/10 bg-black/30 p-3 text-sm font-bold text-slate-200">
               <ShieldCheck className="shrink-0 text-emerald-300" size={17} />
               {item}
             </div>
@@ -161,7 +161,7 @@ const Policy: React.FC<PolicyProps> = ({ lang }) => {
         {policySections.map((section) => {
           const Icon = section.icon;
           return (
-            <a key={section.id} href={`#${section.id}`} className="rounded-lg border border-white/10 bg-white/[0.03] p-4 text-sm font-bold text-gray-300 transition-colors hover:border-primary/40 hover:text-white">
+            <a key={section.id} href={`#${section.id}`} className="rounded-lg border border-white/10 bg-white/[0.035] p-4 text-sm font-bold text-slate-300 transition-colors hover:border-primary/40 hover:bg-white/[0.055] hover:text-white">
               <Icon className="mb-3 text-primary" size={20} />
               {section.title}
             </a>
@@ -173,14 +173,14 @@ const Policy: React.FC<PolicyProps> = ({ lang }) => {
         {policySections.map((section) => {
           const Icon = section.icon;
           return (
-            <section id={section.id} key={section.id} className="scroll-mt-28 rounded-lg border border-white/10 bg-[#07111f]/90 p-6">
+            <section id={section.id} key={section.id} className="scroll-mt-28 rounded-lg border border-white/10 bg-[#07111f]/95 p-6">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
                   <Icon size={20} />
                 </div>
                 <h2 className="text-xl font-black text-white">{section.title}</h2>
               </div>
-              <div className="space-y-3 text-sm leading-relaxed text-gray-400">
+              <div className="space-y-3 text-sm leading-7 text-slate-300/85">
                 {section.body.map((item) => <p key={item}>{item}</p>)}
               </div>
             </section>
@@ -190,14 +190,14 @@ const Policy: React.FC<PolicyProps> = ({ lang }) => {
 
       <section className="mt-6 rounded-lg border border-primary/20 bg-primary/10 p-6">
         <h2 className="font-black text-white">Liên Hệ Về Chính Sách</h2>
-        <p className="mt-2 text-sm leading-relaxed text-gray-300">
+        <p className="mt-2 text-sm leading-7 text-slate-300">
           Mọi câu hỏi về dữ liệu cá nhân, bảo mật, quyền người dùng, Trung tâm trợ giúp hoặc yêu cầu xem/sửa/xóa dữ liệu có thể gửi qua kênh liên hệ chính thức của Deepfense. Khi gửi yêu cầu, người dùng nên cung cấp email tài khoản, nội dung yêu cầu và thông tin cần thiết để nhóm vận hành xác minh hợp lý.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <a href={`mailto:${PROJECT_METADATA.email}`} className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-bold text-white hover:bg-blue-500">
             <Mail size={16} /> {PROJECT_METADATA.email}
           </a>
-          <Link to="/contact" className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-3 text-sm font-bold text-gray-300 hover:border-primary hover:text-white">
+          <Link to="/contact" className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-3 text-sm font-bold text-slate-300 hover:border-primary hover:text-white">
             Mở trang liên hệ
           </Link>
         </div>

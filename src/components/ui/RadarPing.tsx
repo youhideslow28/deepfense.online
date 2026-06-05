@@ -52,7 +52,7 @@ const RadarPing: React.FC<RadarPingProps> = ({
         />
       </span>
       {label && (
-        <span className="text-[10px] font-mono tracking-wider uppercase text-gray-400">
+        <span className="text-[10px] font-mono tracking-wider uppercase text-slate-300/85">
           {label}
         </span>
       )}

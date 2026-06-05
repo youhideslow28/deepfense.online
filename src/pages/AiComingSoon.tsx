@@ -13,16 +13,16 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
       
       {/* Header */}
       <div className="text-center mb-16 px-4">
-        <div className="inline-flex items-center gap-2 bg-purple-500/10 text-purple-400 border border-purple-500/30 px-4 py-1 rounded-full text-xs font-bold mb-4 animate-pulse">
+        <div className="mb-4 inline-flex animate-pulse items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-4 py-1 text-xs font-bold text-blue-200">
             <Cpu size={14} /> {lang === 'vi' ? 'DỰ ÁN ĐANG PHÁT TRIỂN' : 'PROJECT UNDER DEVELOPMENT'}
         </div>
         <h1 className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tight">
-          DEEPFENSE<span className="text-purple-500"> AI</span>
+          DEEPFENSE<span className="text-blue-400"> AI</span>
         </h1>
-        <p className="text-lg md:text-xl text-white font-mono mb-6 bg-surface inline-block px-4 py-2 rounded border border-gray-800">
+        <p className="mb-6 inline-block rounded border border-white/10 bg-surface px-4 py-2 font-mono text-lg text-white md:text-xl">
              {lang === 'vi' ? '"Khi AI tấn công, hãy dùng AI để phòng thủ."' : '"When AI attacks, use AI to defend."'}
         </p>
-        <p className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg">
+        <p className="mx-auto max-w-2xl text-base leading-7 text-slate-300/85 md:text-lg">
           {lang === 'vi' 
             ? 'Hệ thống phòng thủ chủ động sử dụng trí tuệ nhân tạo để quét, phân tích và ngăn chặn các cuộc tấn công Deepfake theo thời gian thực.'
             : 'Active defense system using artificial intelligence to scan, analyze and prevent Deepfake attacks in real-time.'}
@@ -31,7 +31,7 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
 
       {/* Logic Flowchart Diagram (Responsive: Vertical on Mobile, Horizontal on Desktop) */}
       <div className="mb-24 px-4">
-        <h3 className="text-center font-bold text-gray-500 mb-10 font-mono tracking-widest uppercase flex items-center justify-center gap-2">
+        <h3 className="mb-10 flex items-center justify-center gap-2 text-center font-mono font-bold uppercase tracking-[0.12em] text-slate-400">
              <BrainCircuit /> {lang === 'vi' ? 'CƠ CHẾ HOẠT ĐỘNG TỔNG THỂ' : 'OVERALL OPERATING MECHANISM'}
         </h3>
         
@@ -40,29 +40,29 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
             
             {/* STEP 1: INPUTS */}
             <div className="flex flex-col gap-4 w-full md:w-auto">
-                <div className="text-xs font-bold text-gray-500 text-center mb-2 tracking-widest uppercase">{lang === 'vi' ? 'NGUỒN DỮ LIỆU' : 'DATA SOURCES'}</div>
+                <div className="mb-2 text-center text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{lang === 'vi' ? 'NGUỒN DỮ LIỆU' : 'DATA SOURCES'}</div>
                 
-                <div className="bg-surface p-4 rounded-xl border border-gray-700 w-full md:w-56 hover:border-blue-500 transition-colors flex items-center gap-4 shadow-lg group">
+                <div className="group flex w-full items-center gap-4 rounded-xl border border-white/10 bg-surface p-4 shadow-lg transition-colors hover:border-blue-500 md:w-56">
                     <div className="bg-blue-500/20 p-3 rounded-lg text-blue-400 group-hover:scale-110 transition-transform"><Smartphone size={24}/></div>
                     <div className="flex flex-col">
                         <span className="text-sm font-bold text-white">VIDEO CALL</span>
-                        <span className="text-[10px] text-gray-500">Zalo/Messenger/Tele</span>
+                        <span className="text-[10px] text-slate-400">Zalo/Messenger/Tele</span>
                     </div>
                 </div>
 
-                <div className="bg-surface p-4 rounded-xl border border-gray-700 w-full md:w-56 hover:border-green-500 transition-colors flex items-center gap-4 shadow-lg group">
+                <div className="group flex w-full items-center gap-4 rounded-xl border border-white/10 bg-surface p-4 shadow-lg transition-colors hover:border-green-500 md:w-56">
                     <div className="bg-green-500/20 p-3 rounded-lg text-green-400 group-hover:scale-110 transition-transform"><UploadCloud size={24}/></div>
                     <div className="flex flex-col">
                         <span className="text-sm font-bold text-white">VIDEO FILE</span>
-                        <span className="text-[10px] text-gray-500">Upload MP4/MOV</span>
+                        <span className="text-[10px] text-slate-400">Upload MP4/MOV</span>
                     </div>
                 </div>
 
-                <div className="bg-surface p-4 rounded-xl border border-gray-700 w-full md:w-56 hover:border-yellow-500 transition-colors flex items-center gap-4 shadow-lg group">
+                <div className="group flex w-full items-center gap-4 rounded-xl border border-white/10 bg-surface p-4 shadow-lg transition-colors hover:border-yellow-500 md:w-56">
                     <div className="bg-yellow-500/20 p-3 rounded-lg text-yellow-400 group-hover:scale-110 transition-transform"><Mic size={24}/></div>
                     <div className="flex flex-col">
                         <span className="text-sm font-bold text-white">{lang === 'vi' ? 'ÂM THANH' : 'AUDIO'}</span>
-                        <span className="text-[10px] text-gray-500">Voice Chat/Ghi âm</span>
+                        <span className="text-[10px] text-slate-400">Voice Chat/Ghi âm</span>
                     </div>
                 </div>
             </div>
@@ -70,28 +70,28 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
             {/* Connector 1 */}
             <div className="flex flex-col items-center justify-center">
                  {/* Show arrow right on Desktop, arrow down on Mobile */}
-                 <div className="hidden lg:block w-12 h-1 bg-gradient-to-r from-gray-700 to-purple-500 rounded-full relative">
-                    <div className="absolute -right-2 top-1/2 -translate-y-1/2 text-purple-500 animate-pulse"><ArrowRight /></div>
+                 <div className="relative hidden h-1 w-12 rounded-full bg-gradient-to-r from-slate-700 to-primary lg:block">
+                    <div className="absolute -right-2 top-1/2 -translate-y-1/2 animate-pulse text-primary"><ArrowRight /></div>
                  </div>
-                 <div className="block lg:hidden h-12 w-1 bg-gradient-to-b from-gray-700 to-purple-500 rounded-full relative">
-                    <div className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 text-purple-500 animate-pulse"><ArrowDown /></div>
+                 <div className="relative block h-12 w-1 rounded-full bg-gradient-to-b from-slate-700 to-primary lg:hidden">
+                    <div className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 animate-pulse text-primary"><ArrowDown /></div>
                  </div>
             </div>
 
             {/* STEP 2: AI PROCESSING CORE */}
             <div className="relative flex flex-col items-center w-full md:w-auto">
-                <div className="text-xs font-bold text-purple-500 text-center mb-4 tracking-widest uppercase">DEEPFENSE CORE ENGINE</div>
+                <div className="mb-4 text-center text-xs font-bold uppercase tracking-[0.12em] text-blue-300">DEEPFENSE CORE ENGINE</div>
                 
-                <div className="bg-black/80 backdrop-blur-xl p-1 rounded-2xl border-2 border-purple-500 shadow-[0_0_50px_rgba(168,85,247,0.2)] w-full md:w-auto">
+                <div className="w-full rounded-2xl border-2 border-primary/70 bg-black/80 p-1 shadow-[0_0_50px_rgba(29,111,232,0.18)] backdrop-blur-xl md:w-auto">
                     <div className="bg-gray-900 rounded-xl p-6 w-full md:w-80 flex flex-col gap-4 relative overflow-hidden">
                         {/* Scan effect inside */}
-                        <div className="absolute top-0 left-0 w-full h-1 bg-purple-500 shadow-[0_0_10px_#a855f7] animate-[scan_2s_ease-in-out_infinite]"></div>
+                        <div className="absolute left-0 top-0 h-1 w-full animate-[scan_2s_ease-in-out_infinite] bg-primary shadow-[0_0_10px_#1d6fe8]"></div>
                         
-                        <div className="bg-black/60 p-3 rounded border border-purple-500/30 flex items-center gap-3">
-                            <BrainCircuit className="text-purple-400" size={20} />
+                        <div className="flex items-center gap-3 rounded border border-primary/30 bg-black/60 p-3">
+                            <BrainCircuit className="text-blue-300" size={20} />
                             <div>
                                 <div className="text-xs font-bold text-white">{lang === 'vi' ? 'PHÂN TÍCH MẠNG NƠ-RON' : 'NEURAL DISCRIMINATOR'}</div>
-                                <div className="text-[9px] text-gray-500">{lang === 'vi' ? 'Quét nhiễu không gian tiềm ẩn (Latent Space)' : 'Detecting GAN & Diffusion artifacts'}</div>
+                                <div className="text-[9px] text-slate-400">{lang === 'vi' ? 'Quét nhiễu không gian tiềm ẩn (Latent Space)' : 'Detecting GAN & Diffusion artifacts'}</div>
                             </div>
                         </div>
 
@@ -99,7 +99,7 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                             <Fingerprint className="text-blue-400" size={20} />
                             <div>
                                 <div className="text-xs font-bold text-white">{lang === 'vi' ? 'XÁC THỰC C2PA & WATERMARK' : 'C2PA & WATERMARK AUTH'}</div>
-                                <div className="text-[9px] text-gray-500">{lang === 'vi' ? 'Truy xuất chữ ký số và nguồn gốc tệp' : 'Cryptographic provenance verification'}</div>
+                                <div className="text-[9px] text-slate-400">{lang === 'vi' ? 'Truy xuất chữ ký số và nguồn gốc tệp' : 'Cryptographic provenance verification'}</div>
                             </div>
                         </div>
 
@@ -107,7 +107,7 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                             <ActivityIcon className="text-green-400" size={20} />
                             <div>
                                 <div className="text-xs font-bold text-white">{lang === 'vi' ? 'BIỂU HIỆN TRUNG THỰC' : 'PHYSIOLOGICAL TRUTH'}</div>
-                                <div className="text-[9px] text-gray-500">{lang === 'vi' ? 'Quét mạch máu rPPG & Vi rung động' : 'rPPG heart-rate & Micro-vibrations'}</div>
+                                <div className="text-[9px] text-slate-400">{lang === 'vi' ? 'Quét mạch máu rPPG & Vi rung động' : 'rPPG heart-rate & Micro-vibrations'}</div>
                             </div>
                         </div>
                     </div>
@@ -117,17 +117,17 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
             {/* Connector 2 */}
              <div className="flex flex-col items-center justify-center">
                  {/* Show arrow right on Desktop, arrow down on Mobile */}
-                 <div className="hidden lg:block w-12 h-1 bg-gradient-to-r from-purple-500 to-red-500 rounded-full relative">
+                 <div className="relative hidden h-1 w-12 rounded-full bg-gradient-to-r from-primary to-red-500 lg:block">
                      <div className="absolute -right-2 top-1/2 -translate-y-1/2 text-red-500 animate-pulse"><ArrowRight /></div>
                  </div>
-                 <div className="block lg:hidden h-12 w-1 bg-gradient-to-b from-purple-500 to-red-500 rounded-full relative">
+                 <div className="relative block h-12 w-1 rounded-full bg-gradient-to-b from-primary to-red-500 lg:hidden">
                      <div className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 text-red-500 animate-pulse"><ArrowDown /></div>
                  </div>
             </div>
 
             {/* STEP 3: OUTPUT */}
             <div className="flex flex-col gap-4 w-full md:w-auto items-center md:items-start">
-                <div className="text-xs font-bold text-gray-500 text-center mb-2 tracking-widest uppercase">{lang === 'vi' ? 'KẾT QUẢ & HÀNH ĐỘNG' : 'RESULTS & ACTIONS'}</div>
+                <div className="mb-2 text-center text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{lang === 'vi' ? 'KẾT QUẢ & HÀNH ĐỘNG' : 'RESULTS & ACTIONS'}</div>
                 
                 <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-2xl border-2 border-red-500/50 w-full md:w-64 text-center relative overflow-hidden shadow-[0_0_30px_rgba(255,0,0,0.15)] group">
                     <div className="absolute inset-0 bg-red-500/5 animate-pulse"></div>
@@ -143,7 +143,7 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                     
                     <div className="flex flex-col gap-2 text-[10px] text-left bg-black/60 p-3 rounded border border-gray-800">
                         <div className="flex items-center gap-2 text-red-300"><ArrowRight size={10}/> {lang === 'vi' ? 'Cảnh báo người dùng ngay lập tức' : 'Alert user immediately'}</div>
-                        <div className="flex items-center gap-2 text-gray-400"><ArrowRight size={10}/> {lang === 'vi' ? 'Tự động ngắt kết nối (Tùy chọn)' : 'Auto-disconnect (Optional)'}</div>
+                        <div className="flex items-center gap-2 text-slate-400"><ArrowRight size={10}/> {lang === 'vi' ? 'Tự động ngắt kết nối (Tùy chọn)' : 'Auto-disconnect (Optional)'}</div>
                     </div>
                 </div>
             </div>
@@ -155,33 +155,33 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20 px-4">
           
           {/* Solution 1: Assistive Touch */}
-          <div className="bg-surface border border-gray-800 rounded-xl p-6 md:p-8 hover:border-purple-500 transition-colors group relative overflow-hidden">
+          <div className="group relative overflow-hidden rounded-xl border border-white/10 bg-surface p-6 transition-colors hover:border-primary/50 md:p-8">
               <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
                   <Smartphone size={150} />
               </div>
               <div className="flex items-center gap-4 mb-6">
-                  <div className="bg-purple-500/20 p-3 rounded-full text-purple-400 shrink-0">
+                  <div className="shrink-0 rounded-full bg-primary/15 p-3 text-blue-300">
                       <ScanEye size={32} />
                   </div>
                   <div>
                       <h3 className="text-xl md:text-2xl font-bold text-white">DEEPFENSE TOUCH</h3>
-                      <p className="text-xs text-purple-400 font-mono">ON-SCREEN SHIELD</p>
+                      <p className="font-mono text-xs text-blue-300">ON-SCREEN SHIELD</p>
                   </div>
               </div>
-              <p className="text-gray-300 mb-6 leading-relaxed text-sm md:text-base">
+              <p className="mb-6 text-sm leading-7 text-slate-300 md:text-base">
                   {lang === 'vi' 
                     ? 'Một nút ảo (Assistive Touch) luôn hiện diện trên màn hình điện thoại của bạn. Khi có cuộc gọi video đến, chỉ cần 1 chạm, AI sẽ quét toàn bộ màn hình theo thời gian thực để tìm kiếm dấu hiệu giả mạo mà mắt thường không thấy.'
                     : 'A virtual button (Assistive Touch) always present on your phone screen. When a video call arrives, with just 1 tap, AI scans the entire screen in real-time to find deepfake signs invisible to the naked eye.'}
               </p>
-              <ul className="space-y-3 text-sm text-gray-400">
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-purple-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Tự động kích hoạt khi có cuộc gọi Zalo/Messenger' : 'Auto-activate for Zalo/Messenger calls'}</li>
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-purple-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Phân tích vi biểu cảm (Micro-expressions)' : 'Micro-expressions analysis'}</li>
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-purple-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Cảnh báo đỏ ngay trên khuôn mặt giả' : 'Red alert directly on fake face'}</li>
+              <ul className="space-y-3 text-sm text-slate-400">
+                  <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary"></span> {lang === 'vi' ? 'Tự động kích hoạt khi có cuộc gọi Zalo/Messenger' : 'Auto-activate for Zalo/Messenger calls'}</li>
+                  <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary"></span> {lang === 'vi' ? 'Phân tích vi biểu cảm (Micro-expressions)' : 'Micro-expressions analysis'}</li>
+                  <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary"></span> {lang === 'vi' ? 'Cảnh báo đỏ ngay trên khuôn mặt giả' : 'Red alert directly on fake face'}</li>
               </ul>
           </div>
 
           {/* Solution 2: Browser Extension */}
-          <div className="bg-surface border border-gray-800 rounded-xl p-6 md:p-8 hover:border-emerald-500 transition-colors group relative overflow-hidden">
+          <div className="group relative overflow-hidden rounded-xl border border-white/10 bg-surface p-6 transition-colors hover:border-emerald-500/50 md:p-8">
               <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
                   <MonitorSmartphone size={150} />
               </div>
@@ -194,23 +194,23 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                       <p className="text-xs text-emerald-400 font-mono">{lang === 'vi' ? 'BROWSER GUARDIAN' : 'BROWSER GUARDIAN'}</p>
                   </div>
               </div>
-              <p className="text-gray-300 mb-6 leading-relaxed text-sm md:text-base">
+              <p className="mb-6 text-sm leading-7 text-slate-300 md:text-base">
                   {lang === 'vi' 
                     ? 'Một tiện ích mở rộng (Extension) mạnh mẽ dành cho Chrome, Edge và Safari. AI sẽ hoạt động như một lớp màng lọc bảo vệ trực tiếp trên trình duyệt của bạn, tự động phân tích mọi nội dung đa phương tiện khi bạn lướt web, giúp ngăn chặn lừa đảo ngay từ nguồn phát.'
                     : 'A powerful browser extension for Chrome, Edge, and Safari. AI acts as a direct filtering shield on your browser, automatically analyzing all multimedia content as you surf the web, stopping scams at the source.'}
               </p>
-              <ul className="space-y-3 text-sm text-gray-400">
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Quét Deepfake thời gian thực trên YouTube, Facebook, X (Twitter)' : 'Real-time Deepfake scanning on YouTube, Facebook, X'}</li>
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Cảnh báo Website giả mạo cơ quan nhà nước & trang lừa đảo' : 'Anti-Phishing: Alerts for fake government & scam websites'}</li>
-                  <li className="flex gap-2 items-center"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></span> {lang === 'vi' ? 'Tích hợp kiểm tra nguồn gốc hình ảnh qua chữ ký số C2PA' : 'Integrated provenance check via C2PA digital signatures'}</li>
+              <ul className="space-y-3 text-sm text-slate-400">
+                  <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span> {lang === 'vi' ? 'Quét Deepfake thời gian thực trên YouTube, Facebook, X (Twitter)' : 'Real-time Deepfake scanning on YouTube, Facebook, X'}</li>
+                  <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span> {lang === 'vi' ? 'Cảnh báo Website giả mạo cơ quan nhà nước & trang lừa đảo' : 'Anti-Phishing: Alerts for fake government & scam websites'}</li>
+                  <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span> {lang === 'vi' ? 'Tích hợp kiểm tra nguồn gốc hình ảnh qua chữ ký số C2PA' : 'Integrated provenance check via C2PA digital signatures'}</li>
               </ul>
           </div>
       </div>
 
       {/* Roadmap Section */}
       <div className="mb-24 max-w-[100vw] overflow-hidden">
-        <h3 className="text-center font-bold text-gray-500 mb-8 md:mb-12 font-mono tracking-widest uppercase flex items-center justify-center gap-3 px-4">
-             <Map size={24} className="text-purple-500" /> 
+        <h3 className="mb-8 flex items-center justify-center gap-3 px-4 text-center font-mono font-bold uppercase tracking-[0.12em] text-slate-400 md:mb-12">
+             <Map size={24} className="text-blue-300" />
              {lang === 'vi' ? 'LỘ TRÌNH PHÁT TRIỂN (Q4/2025 - Q4/2027)' : 'DEVELOPMENT ROADMAP (Q4/2025 - Q4/2027)'}
         </h3>
         
@@ -220,20 +220,20 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
         >
             <div className="flex flex-col md:flex-row gap-8 md:gap-5 relative items-stretch max-w-5xl mx-auto">
                 {/* Continuous Connecting Line - Vertical on Mobile, Horizontal on Desktop */}
-                <div className="absolute left-[90px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-yellow-500 to-green-500 opacity-40 md:hidden"></div>
-                <div className="absolute top-[9px] left-[90px] right-[90px] h-0.5 bg-gradient-to-r from-purple-500 via-yellow-500 to-green-500 opacity-40 hidden md:block"></div>
+                <div className="absolute bottom-0 left-[90px] top-0 w-0.5 bg-gradient-to-b from-primary via-yellow-500 to-green-500 opacity-40 md:hidden"></div>
+                <div className="absolute left-[90px] right-[90px] top-[9px] hidden h-0.5 bg-gradient-to-r from-primary via-yellow-500 to-green-500 opacity-40 md:block"></div>
 
                 {[
                     {
                         time: "Q4/2025",
                         title: lang === 'vi' ? 'Dự án Giáo dục' : 'Edu Project',
                         desc: lang === 'vi' ? 'Ra mắt dự án & công cụ kiểm tra rủi ro.' : 'Launch project & risk detection tools.',
-                        icon: <GraduationCap size={16} className="text-purple-400"/>,
-                        borderClass: "border-purple-500",
-                        textClass: "text-purple-400",
-                        hoverClass: "hover:border-purple-500/50",
-                        hoverBg: "group-hover:bg-purple-500",
-                        shadowHover: "group-hover:shadow-[0_0_15px_#a855f7]"
+                        icon: <GraduationCap size={16} className="text-blue-400"/>,
+                        borderClass: "border-blue-500",
+                        textClass: "text-blue-400",
+                        hoverClass: "hover:border-blue-500/50",
+                        hoverBg: "group-hover:bg-blue-500",
+                        shadowHover: "group-hover:shadow-[0_0_15px_#3b82f6]"
                     },
                     {
                         time: "Q1/2026",
@@ -291,7 +291,7 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                             {/* Card Content - Fixed layout for mobile to not overlap line */}
                             <div className={`md:mt-8 ml-28 md:ml-0 bg-surface ${isCurrent ? 'border border-blue-500/30' : 'border border-gray-800'} p-4 md:p-6 rounded-2xl ${phase.hoverClass} transition-colors flex-1 md:h-full flex flex-col items-center text-center justify-center ${isCurrent ? 'relative overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.15)]' : ''}`}>
                                 {isCurrent && (
-                                    <div className="inline-flex bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest mb-2">
+                                    <div className="inline-flex bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-[0.12em] mb-2">
                                         {lang === 'vi' ? 'HIỆN TẠI' : 'CURRENT'}
                                     </div>
                                 )}
@@ -300,11 +300,11 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                                     {phase.time} {isCurrent && <Video className="text-blue-500" size={16}/>}
                                 </h4>
                                 
-                                <h5 className={`text-[10px] md:text-[11px] font-bold ${phase.textClass} mb-3 uppercase tracking-widest flex items-center justify-center gap-1.5 leading-tight`}>
+                                <h5 className={`text-[10px] md:text-[11px] font-bold ${phase.textClass} mb-3 uppercase tracking-[0.12em] flex items-center justify-center gap-1.5 leading-tight`}>
                                     {!isCurrent && phase.icon} {phase.title}
                                 </h5>
                                 
-                                <p className={`text-gray-400 text-[10px] md:text-xs leading-relaxed text-balance ${isCurrent ? 'font-bold !text-gray-300' : ''}`}>
+                                <p className={`text-balance text-[10px] leading-relaxed text-slate-400 md:text-xs ${isCurrent ? 'font-bold !text-slate-300' : ''}`}>
                                     {phase.desc}
                                 </p>
                             </div>
@@ -316,10 +316,10 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
       </div>
 
       {/* Vision Statement */}
-      <div className="text-center bg-gray-900/50 border border-gray-800 rounded-2xl p-6 md:p-10 backdrop-blur-sm mx-4">
-         <Fingerprint className="mx-auto text-gray-600 mb-4" size={48} />
+      <div className="mx-4 rounded-2xl border border-white/10 bg-slate-900/50 p-6 text-center backdrop-blur-sm md:p-10">
+         <Fingerprint className="mx-auto mb-4 text-slate-500" size={48} />
          <h2 className="text-2xl font-bold text-white mb-4">{lang === 'vi' ? 'TẦM NHÌN TƯƠNG LAI' : 'FUTURE VISION'}</h2>
-         <p className="text-gray-400 max-w-3xl mx-auto italic text-sm md:text-base">
+         <p className="mx-auto max-w-3xl text-sm italic leading-7 text-slate-300/85 md:text-base">
             {lang === 'vi' 
               ? '"Trong tương lai, Deepfense sẽ không chỉ là một website, mà là một tiêu chuẩn an toàn bắt buộc trên mọi thiết bị thông minh, giống như dây an toàn trên xe hơi vậy."'
               : '"In the future, Deepfense will not just be a website, but a mandatory safety standard on every smart device, just like seatbelts in cars."'}

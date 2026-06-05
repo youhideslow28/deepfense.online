@@ -135,42 +135,7 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
         }
       },
     });
-
-    // ═══ CENTER FOCUS SCALING ═══
-    const cards = gsap.utils.toArray<HTMLElement>('.era-card');
-    cards.forEach((card, index) => {
-      // Bỏ qua card đầu tiên (intro) không cho thu nhỏ khi ở trên cùng
-      const isIntro = index === 0;
-      
-      gsap.set(card, { scale: isIntro ? 1 : 0.7, opacity: isIntro ? 1 : 0, filter: isIntro ? 'blur(0px)' : 'blur(12px)' });
-      
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: card,
-          start: isIntro ? 'top top' : 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
-        }
-      });
-
-      if (isIntro) {
-        // Chỉ cho intro mờ đi khi cuộn đi
-        tl.to(card, { opacity: 0, scale: 0.8, filter: 'blur(10px)', ease: 'power2.in' });
-      } else {
-        tl.to(card, { 
-          scale: 1.15, 
-          opacity: 1, 
-          filter: 'blur(0px)', 
-          ease: 'power2.inOut' 
-        })
-        .to(card, { 
-          scale: 0.7, 
-          opacity: 0, 
-          filter: 'blur(12px)', 
-          ease: 'power2.inOut' 
-        });
-      }
-    });
+    // Era cards stay visible by default so the home page never renders as a blank scroll area.
   }, { scope: containerRef });
 
   return (
@@ -193,9 +158,9 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
       <div className="relative z-20 -mt-[100vh] w-full pointer-events-none">
         
         {/* Intro Section */}
-        <div className="h-screen flex items-start justify-center pt-[25vh]">
+        <div className="flex min-h-[440px] items-start justify-center pt-[18vh] md:min-h-[620px] md:pt-[22vh]">
           <div className="text-center era-card px-4">
-            <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tight mix-blend-difference leading-[1.6]" style={{ fontFamily: "var(--font-outfit)" }}>
+            <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tight mix-blend-difference leading-[1.6]" style={{ fontFamily: "var(--font-display)" }}>
               {lang === 'vi' ? (
                 <>
                   Deepfake đã phát triển<br /><span className="mt-2 block">như thế nào?</span>
@@ -205,7 +170,7 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
               )}
             </h2>
             <div className="mt-8 inline-block px-6 py-3 bg-black/40 backdrop-blur-md border border-white/10 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.1)]">
-              <p className="text-cyan-400 tracking-[0.2em] text-xs md:text-sm uppercase font-bold animate-pulse" style={{ fontFamily:"'Outfit', sans-serif" }}>
+              <p className="text-cyan-400 tracking-[0.12em] text-xs md:text-sm uppercase font-bold animate-pulse" style={{ fontFamily:"var(--font-display)" }}>
                 {lang === 'vi' ? 'Cuộn xuống để du hành thời gian' : 'Scroll down to time travel'}
               </p>
             </div>
@@ -218,26 +183,26 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
         {ERAS.map((era, index) => (
           <div 
             key={index} 
-            className="h-screen flex items-center justify-center px-4"
+            className="flex min-h-[360px] items-center justify-center px-4 md:min-h-[520px]"
           >
             <div className={`era-card relative bg-black/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-3xl max-w-2xl w-full text-center ${era.shadow}`}>
               <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-black rounded-full border border-white/10 flex items-center justify-center">
                 <era.icon className={era.color} size={24} />
               </div>
-              <span className={`text-7xl font-black opacity-20 absolute -top-4 -left-4 ${era.color} pointer-events-none`} style={{ fontFamily:"'Outfit', sans-serif" }}>
+              <span className={`text-7xl font-black opacity-20 absolute -top-4 -left-4 ${era.color} pointer-events-none`} style={{ fontFamily:"var(--font-display)" }}>
                 {era.year}
               </span>
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 mt-4" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 mt-4" style={{ fontFamily: "var(--font-display)" }}>
                 {lang === 'vi' ? era.titleVi : era.titleEn}
               </h3>
-              <p className="text-gray-300 md:text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <p className="text-gray-300 md:text-lg leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
                 {lang === 'vi' ? era.descVi : era.descEn}
               </p>
             </div>
           </div>
         ))}
 
-        <div className="h-[20vh]" /> {/* Spacer at bottom */}
+        <div className="h-[8vh]" /> {/* Spacer at bottom */}
       </div>
 
     </div>

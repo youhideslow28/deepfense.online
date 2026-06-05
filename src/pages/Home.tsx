@@ -165,14 +165,14 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
       <DeepfakeTimeline lang={lang} />
 
       <div className="container mx-auto max-w-7xl px-4 py-8 md:py-12">
-        <section ref={heroRef as React.RefObject<HTMLDivElement>} className="relative mb-16 grid min-h-[520px] grid-cols-1 items-center gap-7 overflow-visible lg:grid-cols-12 lg:gap-9">
+        <section ref={heroRef as React.RefObject<HTMLDivElement>} className="relative mb-16 grid min-h-[420px] grid-cols-1 items-center gap-7 overflow-visible md:min-h-[480px] lg:grid-cols-12 lg:gap-9">
           <div className="pointer-events-none absolute inset-x-0 top-6 h-[300px] overflow-hidden opacity-80">
             <div className="absolute left-1/2 top-8 h-56 w-[min(760px,90vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(29,111,232,0.075),transparent_68%)] blur-2xl" />
             {season === 'SUMMER' && <div className="absolute right-[12%] top-16 h-24 w-24 rounded-full bg-orange-500/8 blur-3xl" />}
           </div>
 
           <div className="relative z-10 text-center lg:col-span-7 lg:text-left">
-            <div data-reveal className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 font-mono text-[10px] tracking-widest text-blue-300">
+            <div data-reveal className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-500/25 bg-blue-500/10 px-4 py-1.5 text-[11px] font-bold tracking-[0.08em] text-blue-200">
               <img src="/logo/favicon-32x32.png" alt="" className="h-4 w-4 rounded-md object-contain" />
               <TypewriterText
                 text={isVi ? 'CHƯƠNG TRÌNH HUẤN LUYỆN DEEPFAKE // SẴN SÀNG' : 'DEEPFAKE TRAINING PROGRAM // READY'}
@@ -185,14 +185,14 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             <div data-reveal className="overflow-visible py-3">
               <h1
                 className="mx-auto max-w-[760px] text-[2.45rem] font-black uppercase leading-[1.18] text-white [text-wrap:balance] sm:text-[3rem] md:text-[3.6rem] lg:mx-0 lg:text-[3.9rem]"
-                style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {isVi ? 'Huấn luyện' : 'Train your'}<br />
                 <span className="inline-block pb-1 text-shimmer">{isVi ? 'nhận diện deepfake' : 'deepfake eye'}</span>
               </h1>
             </div>
 
-            <p data-reveal className="mx-auto mb-6 max-w-xl text-base leading-8 text-gray-400 md:text-lg lg:mx-0 lg:border-l-2 lg:border-blue-500/40 lg:pl-4">
+            <p data-reveal className="mx-auto mb-6 max-w-xl text-base leading-8 text-slate-300/82 md:text-lg lg:mx-0 lg:border-l-2 lg:border-blue-500/40 lg:pl-4">
               {isVi
                 ? 'Học cách nhận biết video, hình ảnh và giọng nói giả mạo AI. Trang bị kỹ năng tự vệ trước lừa đảo số bằng bài học ngắn, thử thách mô phỏng và điểm thưởng DPF.'
                 : 'Learn to spot AI-generated videos, images, and voices. Build practical self-defense skills through short lessons, simulations, and DPF rewards.'}
@@ -239,10 +239,10 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         <section ref={academyRef as React.RefObject<HTMLDivElement>} data-reveal className="mx-auto mb-16 max-w-6xl overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-[0_0_40px_rgba(29,111,232,0.12)] backdrop-blur-xl transition-all duration-500 hover:border-blue-500/35">
           <div className="border-b border-white/10 bg-white/[0.025] px-5 py-4 md:px-7">
             <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-              <div className="flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-3 py-1.5 font-mono text-[10px] tracking-widest text-blue-300">
+              <div className="flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-3 py-1.5 text-[10px] font-bold tracking-[0.12em] text-blue-200">
                 <GraduationCap size={12} /> DEEPFENSE ACADEMY
               </div>
-              <button onClick={() => navigate('/academy')} className="group inline-flex w-fit items-center gap-2 font-mono text-[10px] font-black uppercase tracking-widest text-blue-300 transition-colors hover:text-blue-100">
+              <button onClick={() => navigate('/academy')} className="group inline-flex w-fit items-center gap-2 text-[10px] font-black uppercase tracking-[0.12em] text-blue-300 transition-colors hover:text-blue-100">
                 {isVi ? 'Bảng vinh danh' : 'Hall of fame'} <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
               </button>
             </div>
@@ -250,10 +250,10 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
           <div className="grid grid-cols-1 gap-6 p-5 md:p-7 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-6">
-              <h2 className="text-left text-2xl font-black leading-tight text-white md:text-3xl" style={{ fontFamily: "'Outfit', 'Inter', Arial, sans-serif" }}>
+              <h2 className="font-display text-left text-2xl font-black leading-tight text-white md:text-3xl">
                 {isVi ? 'Học cách bình tĩnh trước một nội dung quá giống thật.' : 'Learn to stay calm when fake looks real.'}
               </h2>
-              <p className="mt-4 max-w-2xl text-left text-sm leading-7 text-gray-400">
+              <p className="mt-4 max-w-2xl text-left text-sm leading-7 text-slate-300/82">
                 {isVi
                   ? 'Một giọng nói quen thuộc, một video gấp gáp, một tin nhắn đòi chuyển tiền. Chỉ vài phút học đúng cách có thể giúp bạn dừng lại, kiểm chứng và không tiếp tay cho nội dung giả.'
                   : 'A familiar voice, an urgent video, a payment request. A few focused lessons can help you pause, verify, and avoid amplifying synthetic media.'}
@@ -274,7 +274,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-400/10 text-xs font-black text-blue-200">{item.step}</div>
                   <div>
                     <div className="text-sm font-black text-white">{item.title}</div>
-                    <div className="mt-1 text-xs leading-relaxed text-gray-500">{item.text}</div>
+                    <div className="mt-1 text-xs leading-relaxed text-slate-400">{item.text}</div>
                   </div>
                 </div>
               ))}
@@ -289,7 +289,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 <div className="rounded-lg bg-secondary/20 p-2"><AlertTriangle className="text-secondary" size={18} /></div>
                 <div>
                   <h2 className="text-sm font-bold uppercase tracking-wide text-white">{t.warning_center}</h2>
-                  <p className="mt-1 flex items-center gap-2 font-mono text-[9px] uppercase tracking-tighter text-gray-400">
+                  <p className="mt-1 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.06em] text-slate-400">
                     <RadarPing size={6} color="secondary" speed="slow" /> LIVE_THREAT_AWARENESS
                   </p>
                 </div>
@@ -299,17 +299,17 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
               {displayedNews.length > 0 ? displayedNews.map((item, index) => (
                 <a key={`${item.title}-${index}`} href={item.url} target="_blank" rel="noopener noreferrer" className={`news-card group flex flex-col gap-2.5 border-b border-white/5 p-5 ${flippingIndex === index ? 'animate-pulse opacity-50' : ''}`}>
                   <div className="flex items-center justify-between">
-                    <span className="rounded bg-red-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-red-400">{item.tag}</span>
-                    <span className="font-mono text-[10px] text-gray-600">{item.date}</span>
+                    <span className="rounded bg-red-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-red-300">{item.tag}</span>
+                    <span className="font-mono text-[10px] text-slate-500">{item.date}</span>
                   </div>
                   <h3 className="line-clamp-2 text-sm font-bold leading-snug text-white transition-colors group-hover:text-blue-400">{item.title}</h3>
-                  <p className="line-clamp-2 text-[11px] leading-relaxed text-gray-500">{item.desc}</p>
+                  <p className="line-clamp-2 text-[11px] leading-relaxed text-slate-400">{item.desc}</p>
                   <div className="mt-auto flex items-center justify-end">
-                    <ExternalLink size={11} className="text-gray-700 transition-colors group-hover:text-blue-400" />
+                    <ExternalLink size={11} className="text-slate-600 transition-colors group-hover:text-blue-400" />
                   </div>
                 </a>
               )) : (
-                <div className="col-span-2 p-10 text-center font-mono text-xs uppercase tracking-widest text-gray-500">
+                <div className="col-span-2 p-10 text-center font-mono text-xs uppercase tracking-[0.12em] text-slate-400">
                   <RadarPing size={8} className="mx-auto mb-4" />
                   Initializing Threat Database...
                 </div>
@@ -322,7 +322,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
               <div className="rounded-xl bg-white/20 p-3.5 text-white transition-transform group-hover:scale-110"><PhoneCall size={28} /></div>
               <div>
                 <div className="text-base font-bold uppercase leading-none tracking-wide text-white">{t.hotline}</div>
-                <div className="mt-1.5 font-mono text-[10px] uppercase tracking-tighter text-white/70">{t.hotline_subtext}</div>
+                <div className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.06em] text-white/75">{t.hotline_subtext}</div>
               </div>
             </button>
 
@@ -338,9 +338,9 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 {displayFacts.map((fact, index) => (
                   <div key={`${factIndex}-${index}`} className="animate-in slide-in-from-right relative border-l-2 border-blue-500/20 pl-5 duration-700 hover:border-blue-400">
                     <div className="absolute -left-[5px] top-0 h-2 w-2 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(29,111,232,0.8)]" />
-                    <div className="mb-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-blue-400/60">FACT #{(factIndex + index) % facts.length + 1}</div>
+                    <div className="mb-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-blue-300/75">FACT #{(factIndex + index) % facts.length + 1}</div>
                     <h4 className="mb-2 text-base font-black uppercase italic leading-tight text-white">{fact.title}</h4>
-                    <p className="line-clamp-3 text-xs leading-relaxed text-gray-400">{fact.content}</p>
+                    <p className="line-clamp-3 text-xs leading-relaxed text-slate-300/85">{fact.content}</p>
                   </div>
                 ))}
               </div>
