@@ -235,7 +235,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                 </span>
                 <div className="mt-1 hidden items-center gap-1.5 md:flex">
                   <div className="h-1 w-1 animate-pulse rounded-full bg-primary" />
-                  <span className="font-mono text-[0.55rem] font-bold uppercase tracking-[0.24em] text-blue-300/55">
+                  <span className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.22em] text-blue-300/65">
                     DEEPFAKE - DEFENSE
                   </span>
                 </div>
@@ -269,7 +269,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                   <button
                     key={l}
                     onClick={() => setLang(l)}
-                    className={`flex h-full items-center justify-center rounded-full px-2.5 text-[10px] font-bold transition-all duration-300 ${
+                    className={`flex h-full items-center justify-center rounded-full px-2.5 text-[11px] font-bold transition-all duration-300 ${
                       lang === l ? 'bg-primary text-white shadow-[0_0_8px_rgba(29,111,232,0.42)]' : 'text-slate-400 hover:text-slate-100'
                     }`}
                   >
@@ -332,7 +332,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                   <div className="absolute -top-1.5 right-3 h-3 w-3 rotate-45 border-l border-t border-emerald-400/40 bg-emerald-950/95" />
                   <div className="pointer-events-auto relative flex items-start gap-2 rounded-xl border border-emerald-400/40 bg-emerald-950/95 px-3 py-2.5 shadow-2xl">
                     <Smartphone size={14} className="mt-0.5 shrink-0 text-emerald-300" />
-                    <div className="flex-1 font-mono text-[10.5px] leading-snug text-emerald-50">
+                    <div className="flex-1 font-mono text-[11px] leading-snug text-emerald-50">
                       {lang === 'vi'
                         ? 'Giữ nút này 4 giây để bật chế độ cấu hình thấp — web sẽ mượt hơn trên điện thoại.'
                         : 'Hold this button for 4s to enable Lite mode — smoother on mobile.'}
@@ -361,7 +361,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                     {perfToast.lite
                       ? <Smartphone size={14} className="mt-0.5 shrink-0 text-emerald-300" />
                       : <Power size={14} className="mt-0.5 shrink-0 text-primary" />}
-                    <div className="flex-1 font-mono text-[10.5px] leading-snug">{perfToast.msg}</div>
+                    <div className="flex-1 font-mono text-[11px] leading-snug">{perfToast.msg}</div>
                     <button
                       type="button"
                       onClick={() => setPerfToast(null)}
@@ -384,14 +384,14 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                 {user ? <UserCircle size={12} /> : <LogIn size={12} />}
                 <span className="truncate">{authBusy ? (lang === 'vi' ? 'Đang xử lý' : 'Working') : authLabel}</span>
                 {user && (
-                  <span className="ml-1 inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[9px] text-amber-200">
+                  <span className="ml-1 inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[10px] text-amber-200">
                     <Coins size={10} /> {dpfBalanceLabel}
                   </span>
                 )}
               </button>
 
               {authError && (
-                <div className="absolute right-10 top-[calc(100%+10px)] w-56 rounded-lg border border-red-500/20 bg-red-950/90 px-3 py-2 font-mono text-[10px] font-bold text-red-200 shadow-xl lg:right-0">
+                <div className="absolute right-10 top-[calc(100%+10px)] w-56 rounded-lg border border-red-500/20 bg-red-950/90 px-3 py-2 font-mono text-[11px] font-bold text-red-200 shadow-xl lg:right-0">
                   {authError}
                 </div>
               )}
@@ -430,7 +430,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                   {user ? <UserCircle size={13} /> : <LogIn size={13} />}
                   <span className="truncate">{authBusy ? (lang === 'vi' ? 'Đang xử lý' : 'Working') : authLabel}</span>
                   {user && (
-                    <span className="inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[9px] text-amber-200">
+                    <span className="inline-flex items-center gap-1 rounded-md border border-amber-300/25 bg-amber-300/10 px-1.5 py-0.5 text-[10px] text-amber-200">
                       <Coins size={10} /> {dpfBalanceLabel} DPF
                     </span>
                   )}
