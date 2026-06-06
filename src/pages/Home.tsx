@@ -151,7 +151,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     {
       step: '02',
       title: isVi ? 'Luyện trong tình huống thật' : 'Practice real scenarios',
-      text: isVi ? 'Thử thách mô phỏng tin nhắn, cuộc gọi, video gấp gáp và yêu cầu chuyển tiền.' : 'Simulated messages, calls, urgent videos, and payment requests.',
+      text: isVi ? 'Thử thách mô phỏng tin nhắn, video gấp gáp và yêu cầu chuyển tiền.' : 'Simulated messages, urgent videos, and payment requests.',
     },
     {
       step: '03',
