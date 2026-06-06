@@ -37,14 +37,14 @@ const CyberDashboard: React.FC = () => {
             <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
           </div>
-          <span className="text-[10px] text-slate-300/85 ml-2 tracking-[0.12em]">DEEPFENSE_MONITOR_V1.0</span>
+          <span className="text-[11px] text-slate-300/85 ml-2 tracking-[0.12em]">DEEPFENSE_MONITOR_V1.0</span>
         </div>
         <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
             </span>
-            <span className="text-[10px] text-success font-bold">LIVE</span>
+            <span className="text-[11px] text-success font-bold">LIVE</span>
         </div>
       </div>
 
@@ -65,7 +65,7 @@ const CyberDashboard: React.FC = () => {
 
                 <div className="flex justify-between items-start mb-2 relative z-10">
                     <ShieldCheck className="text-primary" size={24} />
-                    <span className="text-[10px] text-primary border border-primary/30 px-1 rounded bg-black/50 backdrop-blur">SECURE</span>
+                    <span className="text-[11px] text-primary border border-primary/30 px-1.5 rounded bg-black/50 backdrop-blur">SECURE</span>
                 </div>
                 
                 {/* Simulated World Map Points */}
@@ -76,7 +76,7 @@ const CyberDashboard: React.FC = () => {
                     <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-success rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
                 </div>
 
-                <div className="relative z-10 flex justify-between text-[10px] text-slate-400">
+                <div className="relative z-10 flex justify-between text-[11px] text-slate-400">
                     <span>UPTIME: 99.9%</span>
                     <span>THREATS: 0</span>
                 </div>
@@ -85,7 +85,7 @@ const CyberDashboard: React.FC = () => {
             {/* Right Col: Stats */}
             <div className="flex flex-col gap-3">
                 <div className="bg-gray-900/30 p-2 rounded border border-gray-800">
-                    <div className="flex items-center gap-2 text-slate-300/85 text-[10px] mb-1">
+                    <div className="flex items-center gap-2 text-slate-300/85 text-[11px] mb-1">
                         <Activity size={10} /> NETWORK TRAFFIC
                     </div>
                     <div className="h-8 flex items-end gap-0.5">
@@ -100,14 +100,14 @@ const CyberDashboard: React.FC = () => {
                 </div>
 
                 <div className="bg-gray-900/30 p-2 rounded border border-gray-800 flex-1 flex flex-col">
-                     <div className="flex items-center gap-2 text-slate-300/85 text-[10px] mb-2 shrink-0">
+                     <div className="flex items-center gap-2 text-slate-300/85 text-[11px] mb-2 shrink-0">
                         <Lock size={10} /> SYSTEM LOGS
                     </div>
                     <div className="space-y-1 overflow-hidden flex-1 relative">
                         {/* Overlay to fade out bottom logs */}
                         <div className="absolute bottom-0 left-0 w-full h-8 bg-gradient-to-t from-gray-900/30 to-transparent pointer-events-none"></div>
                         {logs.map((log, i) => (
-                            <div key={i} className="text-[9px] text-success/80 truncate font-mono animate-in slide-in-from-left-2 duration-300">
+                            <div key={i} className="text-[10px] text-success/80 truncate font-mono animate-in slide-in-from-left-2 duration-300">
                                 {log}
                             </div>
                         ))}
@@ -118,7 +118,7 @@ const CyberDashboard: React.FC = () => {
       </div>
 
       {/* Footer Status Bar */}
-      <div className="flex justify-between border-t border-slate-800 bg-slate-900/80 p-1.5 font-mono text-[9px] text-slate-400">
+      <div className="flex justify-between border-t border-slate-800 bg-slate-900/80 p-1.5 font-mono text-[10px] text-slate-400">
          <span className="flex items-center gap-1"><Wifi size={10}/> CONNECTED</span>
          <span>MEM: 64%</span>
          <span>CPU: 12%</span>

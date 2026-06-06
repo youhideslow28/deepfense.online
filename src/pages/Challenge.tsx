@@ -629,7 +629,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                                     className={`p-5 rounded-xl border transition-all flex flex-col items-center gap-3 group active:scale-95 ${surveyAnswers[surveyStep] === idx ? 'bg-primary border-primary text-white scale-105' : 'bg-black/40 border-white/10 text-slate-300/85 hover:border-primary/50'}`}
                                 >
                                     <span className="text-3xl group-hover:scale-110 transition-transform">{s.split(' ')[0]}</span>
-                                    <span className="text-[10px] font-black uppercase text-center leading-tight tracking-tighter">{s.split(' ').slice(1).join(' ')}</span>
+                                    <span className="text-[11px] font-black uppercase text-center leading-tight tracking-tight">{s.split(' ').slice(1).join(' ')}</span>
                                 </button>
                             ))}
                         </div>
@@ -650,7 +650,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                                              className={`w-16 bg-transparent border-b-2 text-center text-xl font-bold text-primary outline-none transition-colors ${captchaError ? 'border-red-500' : 'border-primary/50 focus:border-primary'}`}
                                          />
                                      </div>
-                                     {captchaError && <div className="text-red-500 text-[10px] mt-2 italic">{lang === 'vi' ? 'Kết quả chưa đúng!' : 'Incorrect answer!'}</div>}
+                                     {captchaError && <div className="text-red-500 text-[11px] mt-2 italic">{lang === 'vi' ? 'Kết quả chưa đúng!' : 'Incorrect answer!'}</div>}
                                  </div>
                                  <button 
                                     onClick={submitSurvey}
@@ -663,7 +663,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                         )}
                         
                         {surveyStep > 0 && (
-                            <button onClick={() => setSurveyStep(prev => prev - 1)} className="mt-8 text-[10px] font-black text-slate-500 uppercase tracking-[0.12em] hover:text-slate-300/85 transition-colors">
+                            <button onClick={() => setSurveyStep(prev => prev - 1)} className="mt-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.12em] hover:text-slate-300/85 transition-colors">
                                 {lang === 'vi' ? 'QUAY LẠI CÂU TRƯỚC' : 'BACK TO PREVIOUS'}
                             </button>
                         )}
@@ -691,7 +691,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
 
                     {!surveySent && !surveyDismissed && (
                       <div className="w-full max-w-xl mb-8 rounded-2xl border border-primary/20 bg-primary/5 p-6 text-left">
-                        <div className="text-primary text-[10px] font-black uppercase tracking-[0.12em] mb-3">
+                        <div className="text-primary text-[11px] font-black uppercase tracking-[0.12em] mb-3">
                           {lang === 'vi' ? 'KHẢO SÁT TÙY CHỌN' : 'OPTIONAL SURVEY'}
                         </div>
                         <p className="text-gray-300 text-sm leading-relaxed mb-5">
@@ -743,7 +743,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     </div>
 
                     <div className="mt-8 pt-8 border-t border-white/10 w-full max-w-sm mx-auto">
-                        <p className="text-slate-300/85 text-[10px] uppercase tracking-[0.12em] font-bold mb-4">{lang === 'vi' ? 'CHIA SẺ KẾT QUẢ ĐỂ NÂNG CAO NHẬN THỨC' : 'SHARE RESULTS TO RAISE AWARENESS'}</p>
+                        <p className="text-slate-300/85 text-[11px] uppercase tracking-[0.12em] font-bold mb-4">{lang === 'vi' ? 'CHIA SẺ KẾT QUẢ ĐỂ NÂNG CAO NHẬN THỨC' : 'SHARE RESULTS TO RAISE AWARENESS'}</p>
                         <div className="flex justify-center gap-4">
                             <button onClick={() => handleShare('facebook')} className="bg-[#1877F2]/20 text-[#1877F2] border border-[#1877F2]/30 p-3 rounded-full hover:bg-[#1877F2] hover:text-white hover:scale-110 transition-all shadow-lg" title="Share on Facebook">
                                 <Facebook size={18} />
@@ -809,7 +809,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                        {wrongLevels.map((lvl, idx) => (
                          <div key={idx} className="bg-secondary/5 border border-secondary/20 p-6 rounded-2xl flex flex-col">
-                            <div className="text-[10px] text-secondary font-black mb-2 uppercase tracking-tighter">{lvl.title}</div>
+                            <div className="text-[11px] text-secondary font-black mb-2 uppercase tracking-tight">{lvl.title}</div>
                             <p className="text-white text-sm font-medium leading-relaxed">"{lvl.advice}"</p>
                          </div>
                        ))}
@@ -871,7 +871,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
           <div className="w-full">
               <div className="flex items-center gap-2 mb-2">
                  <Zap size={14} className="text-primary" />
-                 <span className="text-[10px] font-black uppercase tracking-[0.14em] text-blue-300">{lang === 'vi' ? 'NHIỆM VỤ' : 'MISSION'} {gameState.current + 1}</span>
+                 <span className="text-[11px] font-black uppercase tracking-[0.14em] text-blue-300">{lang === 'vi' ? 'NHIỆM VỤ' : 'MISSION'} {gameState.current + 1}</span>
               </div>
               <h3 className="font-display text-2xl font-black uppercase leading-tight tracking-tight text-white md:text-3xl">{lvl.title}</h3>
           </div>
@@ -906,7 +906,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     >
                         <Play size={18} fill="currentColor" /> {lang === 'vi' ? 'BẮT ĐẦU XEM VIDEO' : 'START VIDEO'}
                     </button>
-                    <p className="mt-4 max-w-sm text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
+                    <p className="mt-4 max-w-sm text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">
                         {lang === 'vi' ? 'Xem hết video rồi mới đưa ra nhận định.' : 'Watch the full video before making a judgment.'}
                     </p>
                 </div>
@@ -914,7 +914,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
 
             {videoStarted && !videoEnded && !gameState.show_result && (
                 <div className="absolute bottom-4 inset-x-4 z-10 pointer-events-none flex justify-center">
-                    <div className="rounded-lg border border-white/10 bg-black/80 px-4 py-2 text-[10px] font-black uppercase tracking-[0.12em] text-slate-300 backdrop-blur">
+                    <div className="rounded-lg border border-white/10 bg-black/80 px-4 py-2 text-[11px] font-black uppercase tracking-[0.12em] text-slate-300 backdrop-blur">
                         {lang === 'vi' ? 'Đang quan sát...' : 'Observing...'}
                     </div>
                 </div>
@@ -922,8 +922,8 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
             
             {!gameState.show_result && (
                 <div className="absolute top-4 inset-x-4 flex justify-between pointer-events-none">
-                    <div className="bg-black/80 backdrop-blur px-3 py-1 rounded-lg border border-primary/20 text-primary text-[9px] font-black uppercase italic">MẪU_A</div>
-                    <div className="bg-black/80 backdrop-blur px-3 py-1 rounded-lg border border-secondary/20 text-secondary text-[9px] font-black uppercase italic">MẪU_B</div>
+                    <div className="bg-black/80 backdrop-blur px-3 py-1 rounded-lg border border-primary/20 text-primary text-[10px] font-black uppercase italic">MẪU_A</div>
+                    <div className="bg-black/80 backdrop-blur px-3 py-1 rounded-lg border border-secondary/20 text-secondary text-[10px] font-black uppercase italic">MẪU_B</div>
                 </div>
             )}
           </div>
@@ -931,7 +931,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
           {!gameState.show_result ? (
               <div className="space-y-4">
                   <div className={`rounded-2xl border border-white/10 bg-surface p-5 shadow-xl transition-opacity ${videoEnded ? 'opacity-100' : 'opacity-55'}`}>
-                      <div className="mb-2 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.12em] text-blue-300">
+                      <div className="mb-2 flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.12em] text-blue-300">
                           <ClipboardList size={14} />
                           {lang === 'vi' ? 'Bạn đã thấy dấu hiệu nào?' : 'Which clues did you notice?'}
                       </div>
@@ -988,7 +988,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                         </p>
                         {!gameState.last_correct && (
                             <div className="mt-4 rounded-xl border border-secondary/20 bg-black/30 p-4 text-left">
-                                <div className="mb-2 text-[10px] font-black uppercase tracking-[0.12em] text-secondary">
+                                <div className="mb-2 text-[11px] font-black uppercase tracking-[0.12em] text-secondary">
                                     {lang === 'vi' ? 'VÌ SAO ĐÁP ÁN CHƯA ĐÚNG?' : 'WHY WAS THIS NOT CORRECT?'}
                                 </div>
                                 <p className="text-sm leading-relaxed text-slate-300">{lvl.advice}</p>
@@ -996,7 +996,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                         )}
                         {checklistResult && !checklistPerfect && (
                             <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-4 text-left">
-                                <div className="mb-2 text-[10px] font-black uppercase tracking-[0.12em] text-primary">
+                                <div className="mb-2 text-[11px] font-black uppercase tracking-[0.12em] text-primary">
                                     {lang === 'vi' ? 'CHECKLIST QUAN SÁT' : 'OBSERVATION CHECKLIST'}
                                 </div>
                                 <p className="text-sm leading-relaxed text-slate-300">
@@ -1018,7 +1018,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                     </button>
                 </div>
                 <div className="mt-4 bg-surface border border-white/10 rounded-2xl p-5 shadow-xl">
-                    <label htmlFor={`challenge-feedback-${lvl.id}`} className="block text-primary text-[10px] font-black uppercase tracking-[0.12em] mb-3">
+                    <label htmlFor={`challenge-feedback-${lvl.id}`} className="block text-primary text-[11px] font-black uppercase tracking-[0.12em] mb-3">
                         {lang === 'vi' ? 'Bạn có thấy điểm gì khác chúng tôi không?' : 'Did you notice anything we missed?'}
                     </label>
                     <textarea
@@ -1030,7 +1030,7 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                         className="w-full resize-none rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-slate-600 focus:border-primary"
                         placeholder={lang === 'vi' ? 'Hãy góp ý nếu bạn thấy dấu hiệu khác, video bị lỗi, hoặc đáp án/giải thích cần xem lại.' : 'Share any other clues you noticed, video issues, or answer/explanation concerns.'}
                     />
-                    <div className="mt-2 text-right font-mono text-[10px] text-slate-500">{(challengeFeedback[lvl.id] ?? '').length}/500</div>
+                    <div className="mt-2 text-right font-mono text-[11px] text-slate-500">{(challengeFeedback[lvl.id] ?? '').length}/500</div>
                 </div>
             </div>
           )}

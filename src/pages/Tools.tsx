@@ -466,7 +466,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                <FileSearch size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
                <div className="flex items-center gap-2 flex-wrap w-full">
                  <span>{lang === 'vi' ? '2. MÔ PHỎNG PHÁP Y (DEMO)' : '2. FORENSICS SIMULATION (DEMO)'}</span>
-                 <span className="bg-red-500/20 text-red-500 text-[9px] px-2 py-0.5 rounded-full animate-pulse border border-red-500/30 tracking-[0.12em] ml-auto sm:ml-0 mt-0.5">{lang === 'vi' ? 'SIMULATION ONLY' : 'SIMULATION ONLY'}</span>
+                 <span className="bg-red-500/20 text-red-500 text-[10px] px-2 py-0.5 rounded-full animate-pulse border border-red-500/30 tracking-[0.12em] ml-auto sm:ml-0 mt-0.5">{lang === 'vi' ? 'SIMULATION ONLY' : 'SIMULATION ONLY'}</span>
                </div>
             </h3>
             
@@ -543,13 +543,13 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                     
                     <div className="space-y-3 min-h-[120px] max-h-[200px] overflow-y-auto">
                       {scanLogs.map((log, idx) => (
-                      <div key={idx} className="animate-in flex items-start gap-2 text-[11px] text-slate-400 duration-300 slide-in-from-bottom-2">
+                      <div key={idx} className="animate-in flex items-start gap-2 text-xs text-slate-400 duration-300 slide-in-from-bottom-2">
                           <span className="text-secondary mt-0.5">root@deepfense:~#</span> 
                           <span className="leading-relaxed">{log}</span>
                         </div>
                       ))}
                       {isScanning && (
-                         <div className="flex animate-pulse items-start gap-2 text-[11px] text-slate-500">
+                         <div className="flex animate-pulse items-start gap-2 text-xs text-slate-500">
                             <span className="text-secondary mt-0.5">root@deepfense:~#</span> _
                          </div>
                       )}
@@ -561,7 +561,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                             <AlertTriangle size={14} /> 
                             {lang === 'vi' ? 'PHÁT HIỆN DẤU VẾT BẤT THƯỜNG (CẦN XÁC MINH)' : 'ANOMALIES DETECTED (VERIFICATION NEEDED)'}
                          </div>
-                         <p className="mb-6 text-[11px] leading-relaxed text-slate-400">
+                         <p className="mb-6 text-xs leading-relaxed text-slate-400">
                            {lang === 'vi' 
                                ? '[ĐÂY LÀ TÍNH NĂNG MÔ PHỎNG] - Trên thực tế, hệ thống sẽ phân tích quang phổ và pixel. Tệp quá lớn hoặc API thất bại nên hệ thống hiển thị kết quả mô phỏng.'
                                : '[SIMULATION MODE] - File too large or API failed, falling back to simulated results.'}
@@ -622,7 +622,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
           <h3 className="mb-4 flex w-full items-center justify-start gap-3 border-b border-primary/15 pb-4 text-sm font-black uppercase tracking-[0.12em] text-blue-300 md:text-base">
             <ScanLine size={20} className="mt-0.5 sm:mt-0 shrink-0" /> 
             <span>{lang === 'vi' ? '3. MÁY QUÉT SỨC SỐNG (rPPG LIVENESS DETECTOR)' : '3. rPPG LIVENESS DETECTOR'}</span>
-            <span className="bg-[#00f0ff]/20 text-[#00f0ff] text-[9px] px-2 py-0.5 rounded-full border border-[#00f0ff]/30 tracking-[0.12em] uppercase ml-2 animate-pulse">
+            <span className="bg-[#00f0ff]/20 text-[#00f0ff] text-[10px] px-2 py-0.5 rounded-full border border-[#00f0ff]/30 tracking-[0.12em] uppercase ml-2 animate-pulse">
               LIVE DEMO
             </span>
           </h3>
@@ -686,7 +686,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                     </div>
                 </div>
 
-                <button onClick={toggleLiveness} className="w-full rounded-xl border border-transparent py-3 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400 transition-all hover:border-white/10 hover:bg-white/10 hover:text-white">
+                <button onClick={toggleLiveness} className="w-full rounded-xl border border-transparent py-3 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400 transition-all hover:border-white/10 hover:bg-white/10 hover:text-white">
                     {lang === 'vi' ? 'TẮT MÁY QUÉT' : 'SHUTDOWN SCANNER'}
                 </button>
               </div>
@@ -792,7 +792,7 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
                   <button 
                     key={idx}
                     onClick={() => setActiveKnowledgeCat(idx)}
-                    className={`flex items-center gap-3 rounded-xl border p-4 text-left text-[10px] font-bold tracking-[0.12em] shadow-lg transition-all md:text-xs ${activeKnowledgeCat === idx ? 'border-primary bg-primary text-white' : 'transparent-panel-soft border-white/10 text-slate-400 hover:border-white/20 hover:text-white'}`}
+                    className={`flex items-center gap-3 rounded-xl border p-4 text-left text-[11px] font-bold tracking-[0.12em] shadow-lg transition-all md:text-xs ${activeKnowledgeCat === idx ? 'border-primary bg-primary text-white' : 'transparent-panel-soft border-white/10 text-slate-400 hover:border-white/20 hover:text-white'}`}
                   >
                     <span className={activeKnowledgeCat === idx ? 'text-white' : 'text-blue-300'}>
                        {getKnowledgeIcon(idx)}

@@ -239,10 +239,10 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         <section ref={academyRef as React.RefObject<HTMLDivElement>} data-reveal className="mx-auto mb-16 max-w-6xl overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-[0_0_40px_rgba(29,111,232,0.12)] backdrop-blur-xl transition-all duration-500 hover:border-blue-500/35">
           <div className="border-b border-white/10 bg-white/[0.025] px-5 py-4 md:px-7">
             <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-              <div className="flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-3 py-1.5 text-[10px] font-bold tracking-[0.12em] text-blue-200">
+              <div className="flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-3 py-1.5 text-[11px] font-bold tracking-[0.12em] text-blue-200">
                 <GraduationCap size={12} /> DEEPFENSE ACADEMY
               </div>
-              <button onClick={() => navigate('/academy')} className="group inline-flex w-fit items-center gap-2 text-[10px] font-black uppercase tracking-[0.12em] text-blue-300 transition-colors hover:text-blue-100">
+              <button onClick={() => navigate('/academy')} className="group inline-flex w-fit items-center gap-2 text-[11px] font-black uppercase tracking-[0.12em] text-blue-300 transition-colors hover:text-blue-100">
                 {isVi ? 'Bảng vinh danh' : 'Hall of fame'} <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
               </button>
             </div>
@@ -289,7 +289,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 <div className="rounded-lg bg-secondary/20 p-2"><AlertTriangle className="text-secondary" size={18} /></div>
                 <div>
                   <h2 className="text-sm font-bold uppercase tracking-wide text-white">{t.warning_center}</h2>
-                  <p className="mt-1 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.06em] text-slate-400">
+                  <p className="mt-1 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.06em] text-slate-400">
                     <RadarPing size={6} color="secondary" speed="slow" /> LIVE_THREAT_AWARENESS
                   </p>
                 </div>
@@ -299,11 +299,11 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
               {displayedNews.length > 0 ? displayedNews.map((item, index) => (
                 <a key={`${item.title}-${index}`} href={item.url} target="_blank" rel="noopener noreferrer" className={`news-card group flex flex-col gap-2.5 border-b border-white/5 p-5 ${flippingIndex === index ? 'animate-pulse opacity-50' : ''}`}>
                   <div className="flex items-center justify-between">
-                    <span className="rounded bg-red-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-red-300">{item.tag}</span>
-                    <span className="font-mono text-[10px] text-slate-500">{item.date}</span>
+                    <span className="rounded bg-red-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-red-300">{item.tag}</span>
+                    <span className="font-mono text-[11px] text-slate-500">{item.date}</span>
                   </div>
                   <h3 className="line-clamp-2 text-sm font-bold leading-snug text-white transition-colors group-hover:text-blue-400">{item.title}</h3>
-                  <p className="line-clamp-2 text-[11px] leading-relaxed text-slate-400">{item.desc}</p>
+                  <p className="line-clamp-2 text-xs leading-relaxed text-slate-400">{item.desc}</p>
                   <div className="mt-auto flex items-center justify-end">
                     <ExternalLink size={11} className="text-slate-600 transition-colors group-hover:text-blue-400" />
                   </div>
@@ -322,7 +322,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
               <div className="rounded-xl bg-white/20 p-3.5 text-white transition-transform group-hover:scale-110"><PhoneCall size={28} /></div>
               <div>
                 <div className="text-base font-bold uppercase leading-none tracking-wide text-white">{t.hotline}</div>
-                <div className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.06em] text-white/75">{t.hotline_subtext}</div>
+                <div className="mt-1.5 font-mono text-[11px] uppercase tracking-[0.06em] text-white/75">{t.hotline_subtext}</div>
               </div>
             </button>
 
@@ -338,7 +338,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 {displayFacts.map((fact, index) => (
                   <div key={`${factIndex}-${index}`} className="animate-in slide-in-from-right relative border-l-2 border-blue-500/20 pl-5 duration-700 hover:border-blue-400">
                     <div className="absolute -left-[5px] top-0 h-2 w-2 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(29,111,232,0.8)]" />
-                    <div className="mb-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-blue-300/75">FACT #{(factIndex + index) % facts.length + 1}</div>
+                    <div className="mb-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-blue-300/75">FACT #{(factIndex + index) % facts.length + 1}</div>
                     <h4 className="mb-2 text-base font-black uppercase italic leading-tight text-white">{fact.title}</h4>
                     <p className="line-clamp-3 text-xs leading-relaxed text-slate-300/85">{fact.content}</p>
                   </div>
