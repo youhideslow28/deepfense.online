@@ -5,7 +5,7 @@
  * @copyright 2025 Ho Xuan Nguyen (25NS039)
  */
 
-import React, { useRef, useMemo, useEffect, useState, useCallback, Suspense } from 'react';
+import React, { useRef, useMemo, useEffect, useState, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -187,9 +187,14 @@ const CyberField: React.FC = () => {
     if (mq.matches) setIsVisible(false);
   }, []);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
-    mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   if (!isVisible) {
@@ -203,8 +208,7 @@ const CyberField: React.FC = () => {
 
   return (
     <div
-      className="fixed inset-0 z-0 pointer-events-auto"
-      onMouseMove={handleMouseMove}
+      className="fixed inset-0 z-0 pointer-events-none"
       style={{ cursor: 'default' }}
     >
       <Canvas
