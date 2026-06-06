@@ -151,8 +151,8 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
         <div className="flex items-center gap-2">
           <BarChart3 className="text-primary" size={16} />
           <div className="flex flex-col">
-            <span className="text-[9px] font-black uppercase leading-none tracking-[0.12em] text-white">{metricsLabels.title}</span>
-            <span className="text-[7px] text-primary/60 font-mono uppercase mt-0.5">{metricsLabels.status}</span>
+            <span className="text-[10px] font-black uppercase leading-none tracking-[0.12em] text-white">{metricsLabels.title}</span>
+            <span className="text-[8px] text-primary/60 font-mono uppercase mt-1">{metricsLabels.status}</span>
           </div>
         </div>
         <div className="flex gap-1.5 p-1 bg-white/5 rounded-xl border border-white/10">
@@ -178,8 +178,8 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
                 <circle cx="50" cy="50" r="46" fill="none" stroke="#00F0FF" strokeWidth="4" strokeDasharray={`${(stats.accuracy / 100) * 289}, 289`} strokeLinecap="round" className="transition-all duration-1000 ease-out" />
               </svg>
               <div className="text-center relative z-10">
-                <div className="text-[8px] font-black text-primary/60 tracking-[0.3em] uppercase mb-1">ACCURACY</div>
-                <div className="text-4xl font-black text-white italic tracking-tighter">{stats.accuracy}%</div>
+                <div className="text-[9px] font-black text-primary/60 tracking-[0.3em] uppercase mb-1">ACCURACY</div>
+                <div className="text-[2.75rem] leading-none font-black text-white italic tracking-tighter">{stats.accuracy}%</div>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 w-full">
@@ -188,8 +188,8 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
                   { label: metricsLabels.blocked, val: stats.blocked.toLocaleString(), color: '#FF2A6D' }
               ].map((s, i) => (
                 <div key={i} className="bg-white/5 border border-white/5 rounded-2xl p-4 relative overflow-hidden text-center">
-                  <div className="mb-2 text-[8px] font-black uppercase tracking-[0.12em] text-slate-500">{s.label}</div>
-                  <div className="text-xl font-black text-white" style={{ color: s.color }}>{s.val}</div>
+                  <div className="mb-2 text-[9px] font-black uppercase tracking-[0.12em] text-slate-500">{s.label}</div>
+                  <div className="text-2xl font-black text-white" style={{ color: s.color }}>{s.val}</div>
                 </div>
               ))}
             </div>
