@@ -294,7 +294,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       modulesCount: 6,
       reward: '750 DPF',
       difficulty: isVi ? 'Nâng cao' : 'Advanced',
-      locked: true
+      locked: true,
+      comingSoon: true
     },
     {
       id: 'expert',
@@ -304,7 +305,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       modulesCount: 8,
       reward: '1000 DPF',
       difficulty: isVi ? 'Chuyên gia' : 'Expert',
-      locked: true
+      locked: true,
+      comingSoon: true
     },
   ];
 
@@ -547,18 +549,31 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               >
                 <div className="flex items-start justify-between mb-4 relative z-10">
                   <div>
-                    <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-[10px] font-bold text-blue-300 mb-2 uppercase tracking-[0.12em]">
-                      {isVi ? 'KHÓA HỌC' : 'COURSE'}
+                    <div className={`inline-flex items-center gap-2 px-2 py-0.5 rounded border text-[10px] font-bold mb-2 uppercase tracking-[0.12em] ${
+                      track.comingSoon
+                        ? 'bg-amber-400/10 border-amber-400/25 text-amber-300'
+                        : 'bg-blue-500/10 border-blue-500/20 text-blue-300'
+                    }`}>
+                      {track.comingSoon ? 'COMING SOON' : (isVi ? 'KHÓA HỌC' : 'COURSE')}
                     </div>
                     <h3 className="text-xl font-black text-white mb-1 group-hover:text-blue-400 transition-colors">{track.title}</h3>
                     <p className="text-sm text-slate-300/85">{track.subtitle}</p>
                   </div>
                   <div className="text-right">
-                    <div className="flex items-center gap-2 justify-end">
-                      {track.progress === 100 && <CheckCircle2 size={20} className="text-emerald-400" />}
-                      <span className="text-2xl font-black text-blue-400">{track.progress}%</span>
-                    </div>
-                    <p className="text-[10px] uppercase tracking-[0.08em] text-slate-400 mt-1">Reward: {track.reward}</p>
+                    {track.comingSoon ? (
+                      <>
+                        <div className="text-sm font-black uppercase tracking-[0.12em] text-amber-300">Coming soon</div>
+                        <p className="text-[10px] uppercase tracking-[0.08em] text-slate-400 mt-1">{track.modulesCount} modules planned</p>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2 justify-end">
+                          {track.progress === 100 && <CheckCircle2 size={20} className="text-emerald-400" />}
+                          <span className="text-2xl font-black text-blue-400">{track.progress}%</span>
+                        </div>
+                        <p className="text-[10px] uppercase tracking-[0.08em] text-slate-400 mt-1">Reward: {track.reward}</p>
+                      </>
+                    )}
                   </div>
                 </div>
 
