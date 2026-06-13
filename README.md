@@ -37,6 +37,8 @@ npm run build
 
 - Ho Xuan Nguyen (25NS039)
 - Nguyen Nhat Huy (25NS020)
+- Vo Phan Phap (25NS045)
+- Tran Minh Nhat (25NS040)
 - Class 25NS, Vietnam-Korea University of Information and Communication Technology (VKU)
 
 Copyright (c) 2025 Ho Xuan Nguyen, Nguyen Nhat Huy. All rights reserved.
