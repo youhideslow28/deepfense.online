@@ -1,9 +1,12 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { MessageSquare, X, Send, Bot, ScanLine, Sparkles, Copy, Check } from 'lucide-react';
+import { MessageSquare, X, Send, Bot, ScanLine, Sparkles, Copy, Check, ExternalLink } from 'lucide-react';
 import { Language } from '@/types';
 import { TRANSLATIONS, KNOWLEDGE_BASE, CHECKLIST_DATA } from '@/data';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
   const t = TRANSLATIONS[lang];
@@ -13,6 +16,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
   const [loading, setLoading] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [reactions, setReactions] = useState<Record<number, 'up' | 'down'>>({});
+  const [unreadCount, setUnreadCount] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const isMountedRef = useRef(true);
@@ -51,7 +55,12 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
     if (messages.length > 1) {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(messages)); } catch {}
     }
-  }, [messages, STORAGE_KEY]);
+    // Tăng badge khi có tin AI mới + chat đang đóng
+    const last = messages[messages.length - 1];
+    if (last?.role === 'model' && last.text && !isOpen) {
+      setUnreadCount(prev => prev + 1);
+    }
+  }, [messages, STORAGE_KEY, isOpen]);
 
   const clearHistory = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY);
@@ -83,10 +92,89 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
 
   // TỐI ƯU HIỆU NĂNG: Đóng băng object components để React không phá hủy chat history mỗi khi gõ phím
   const markdownComponents = React.useMemo<any>(() => ({
-      p: ({node, ...props}: {node?: unknown, [key: string]: unknown}) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
-      ul: ({node, ...props}: {node?: unknown, [key: string]: unknown}) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
-      li: ({node, ...props}: {node?: unknown, [key: string]: unknown}) => <li className="pl-1 marker:text-primary" {...props} />,
-      strong: ({node, ...props}: {node?: unknown, [key: string]: unknown}) => <strong className="font-bold text-primary" {...props} />,
+    // Paragraphs
+    p: ({ node, ...props }: any) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
+    // Lists
+    ul: ({ node, ...props }: any) => <ul className="list-disc pl-4 mb-2 space-y-0.5" {...props} />,
+    ol: ({ node, ...props }: any) => <ol className="list-decimal pl-4 mb-2 space-y-0.5" {...props} />,
+    li: ({ node, ...props }: any) => <li className="pl-1 marker:text-primary" {...props} />,
+    // Inline
+    strong: ({ node, ...props }: any) => <strong className="font-bold text-primary" {...props} />,
+    em: ({ node, ...props }: any) => <em className="italic text-slate-600 dark:text-slate-300" {...props} />,
+    // Headings
+    h1: ({ node, ...props }: any) => <h1 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2 mt-3 border-b border-primary/20 pb-1" {...props} />,
+    h2: ({ node, ...props }: any) => <h2 className="text-xs font-black text-primary uppercase tracking-wider mb-1.5 mt-2" {...props} />,
+    h3: ({ node, ...props }: any) => <h3 className="mb-1 mt-2 text-xs font-bold text-slate-700 dark:text-slate-200" {...props} />,
+    // Links — open in new tab
+    a: ({ node, href, children, ...props }: any) => (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-0.5 text-primary underline underline-offset-2 transition-colors hover:text-slate-900 dark:text-blue-100 dark:hover:text-white"
+        {...props}
+      >
+        {children}
+        <ExternalLink size={8} className="opacity-60" />
+      </a>
+    ),
+    // Blockquote — cyberpunk style
+    blockquote: ({ node, ...props }: any) => (
+      <blockquote
+        className="my-2 rounded-r border-l-2 border-primary/50 bg-primary/5 py-1 pl-3 italic text-slate-500 dark:text-slate-400"
+        {...props}
+      />
+    ),
+    // Horizontal rule
+    hr: ({ node, ...props }: any) => <hr className="border-slate-300 dark:border-gray-700 my-3" {...props} />,
+    // Tables (GFM)
+    table: ({ node, ...props }: any) => (
+      <div className="overflow-x-auto my-2 rounded">
+        <table className="text-[10px] w-full border-collapse" {...props} />
+      </div>
+    ),
+    thead: ({ node, ...props }: any) => <thead className="bg-primary/10" {...props} />,
+    th: ({ node, ...props }: any) => <th className="border border-slate-300 dark:border-gray-700 px-2 py-1 text-left text-primary font-bold uppercase tracking-wider" {...props} />,
+    td: ({ node, ...props }: any) => <td className="border border-slate-300 dark:border-gray-700/60 px-2 py-1 text-slate-600 dark:text-gray-300" {...props} />,
+    tr: ({ node, ...props }: any) => <tr className="hover:bg-white/[0.03] transition-colors" {...props} />,
+    // Inline code
+    code: ({ node, inline, className, children, ...props }: any) => {
+      const match = /language-(\w+)/.exec(className || '');
+      const language = match ? match[1] : '';
+      // Block code — use SyntaxHighlighter
+      if (!inline && language) {
+        return (
+          <div className="my-2 rounded-lg overflow-hidden text-[10px] border border-slate-300 dark:border-gray-700/60">
+            <div className="flex items-center justify-between bg-slate-50 dark:bg-gray-900 px-3 py-1.5 border-b border-slate-300 dark:border-gray-700/60">
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-primary/70">{language}</span>
+              <span className="flex gap-1">
+                <span className="w-2 h-2 rounded-full bg-red-500/60" />
+                <span className="w-2 h-2 rounded-full bg-yellow-500/60" />
+                <span className="w-2 h-2 rounded-full bg-green-500/60" />
+              </span>
+            </div>
+            <SyntaxHighlighter
+              style={atomDark}
+              language={language}
+              PreTag="div"
+              customStyle={{ margin: 0, padding: '10px 12px', background: '#0d1117', fontSize: '10px', lineHeight: '1.6' }}
+              {...props}
+            >
+              {String(children).replace(/\n$/, '')}
+            </SyntaxHighlighter>
+          </div>
+        );
+      }
+      // Inline code
+      return (
+        <code
+          className="bg-primary/10 text-primary border border-primary/20 px-1 py-0.5 rounded text-[10px] font-mono"
+          {...props}
+        >
+          {children}
+        </code>
+      );
+    },
   }), []);
 
   useEffect(() => {
@@ -195,19 +283,19 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end pointer-events-none">
+    <div className="ai-chat-shell fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end pointer-events-none">
       {isOpen && (
         <div
           data-lenis-prevent
           onWheel={(event) => event.stopPropagation()}
           onTouchMove={(event) => event.stopPropagation()}
-          className="pointer-events-auto bg-surface border border-primary/30 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.5)] w-[280px] h-[380px] md:w-[350px] md:h-[500px] flex flex-col mb-3 md:mb-4 overflow-hidden animate-in slide-in-from-bottom-10 duration-300"
+          className="df-chat-panel pointer-events-auto mb-3 flex h-[380px] w-[280px] flex-col overflow-hidden rounded-2xl border border-blue-200/90 bg-white/95 text-slate-900 shadow-[0_18px_48px_rgba(15,50,100,0.18)] ring-1 ring-white/80 animate-in slide-in-from-bottom-10 duration-300 dark:border-primary/30 dark:bg-[#07111f]/95 dark:text-white dark:shadow-[0_0_30px_rgba(0,0,0,0.5)] dark:ring-white/[0.04] md:mb-4 md:h-[500px] md:w-[350px]"
         >
-            <div className="bg-primary/10 border-b border-primary/20 p-3 md:p-4 flex justify-between items-center relative overflow-hidden">
+            <div className="df-chat-header relative flex items-center justify-between overflow-hidden border-b border-blue-100 bg-gradient-to-r from-white via-sky-50 to-blue-50 p-3 dark:border-primary/20 dark:bg-none dark:bg-primary/10 md:p-4">
                 <div className="flex items-center gap-2 relative z-10">
-                    <div className="bg-primary text-white p-1 md:p-1.5 rounded-full"><Bot size={16} className="md:w-[18px] md:h-[18px]" /></div>
+                    <div className="rounded-full bg-primary p-1 text-white shadow-[0_0_14px_rgba(29,111,232,0.28)] md:p-1.5"><Bot size={16} className="md:w-[18px] md:h-[18px]" /></div>
                     <div>
-                        <h3 className="font-mono text-xs font-bold tracking-[0.12em] text-white md:text-sm">DEEPFENSE AGENT</h3>
+                        <h3 className="font-mono text-xs font-bold tracking-[0.12em] text-slate-900 dark:text-white md:text-sm">DEEPFENSE AGENT</h3>
                         <div className="flex items-center gap-1 text-[9px] md:text-[10px] text-success">
                             <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"></span> ONLINE
                         </div>
@@ -218,22 +306,22 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                     <button
                       onClick={clearHistory}
                       title={lang === 'vi' ? 'Xóa lịch sử' : 'Clear history'}
-                      className="font-mono text-[9px] uppercase tracking-[0.12em] text-slate-500 transition-colors hover:text-red-400"
+                      className="font-mono text-[9px] uppercase tracking-[0.12em] text-slate-500 transition-colors hover:text-red-500 dark:text-slate-400 dark:hover:text-red-300"
                     >
                       {lang === 'vi' ? 'Xóa' : 'Clear'}
                     </button>
                   )}
-                  <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-white"><X size={18} className="md:w-5 md:h-5" /></button>
+                  <button onClick={() => setIsOpen(false)} className="rounded-full p-1 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"><X size={18} className="md:w-5 md:h-5" /></button>
                 </div>
             </div>
 
-            <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain custom-scrollbar p-3 md:p-4 space-y-3 md:space-y-4 bg-black/40">
+            <div data-lenis-prevent className="df-chat-body custom-scrollbar flex-1 space-y-3 overflow-y-auto overscroll-contain bg-slate-50/80 p-3 dark:bg-black/40 md:space-y-4 md:p-4">
                 {messages.map((msg, idx) => (
                     <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} group`}>
-                        <div className={`relative max-w-[85%] rounded-lg p-2.5 md:p-3 text-xs md:text-sm ${msg.role === 'user' ? 'bg-primary/20 border border-primary/50 text-white rounded-tr-none' : 'bg-gray-800/80 border border-gray-700 text-gray-200 rounded-tl-none'}`}>
+                        <div className={`relative max-w-[85%] rounded-lg p-2.5 text-xs shadow-sm md:p-3 md:text-sm ${msg.role === 'user' ? 'df-chat-user-message rounded-tr-none border border-primary/35 bg-blue-50 text-slate-900 dark:border-primary/50 dark:bg-primary/20 dark:text-white' : 'df-chat-agent-message rounded-tl-none border border-blue-100 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'}`}>
                             {msg.role === 'model' ? (
                                 <>
-                                  <ReactMarkdown components={markdownComponents}>{msg.text}</ReactMarkdown>
+                                  <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkGfm]}>{msg.text}</ReactMarkdown>
                                   {msg.text && (
                                     <div className="absolute -bottom-6 right-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
                                       {/* Reactions */}
@@ -250,7 +338,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                                       {/* Copy */}
                                       <button
                                         onClick={() => copyMessage(msg.text, idx)}
-                                        className="flex items-center gap-1 text-[9px] text-gray-500 hover:text-primary bg-black/60 px-1.5 py-0.5 rounded"
+                                        className="flex items-center gap-1 rounded bg-white/80 dark:bg-black/60 px-1.5 py-0.5 text-[9px] text-slate-500 dark:text-slate-400 hover:text-primary"
                                       >
                                         {copiedIdx === idx ? <Check size={9} className="text-green-400" /> : <Copy size={9} />}
                                         {copiedIdx === idx ? (lang === 'vi' ? 'Đã sao chép' : 'Copied!') : (lang === 'vi' ? 'Sao chép' : 'Copy')}
@@ -266,7 +354,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                 ))}
                 {loading && (
                     <div className="flex justify-start">
-                        <div className="bg-gray-800/80 border border-primary/30 rounded-lg p-2.5 md:p-3 rounded-tl-none">
+                        <div className="rounded-lg rounded-tl-none border border-primary/25 bg-white p-2.5 shadow-sm dark:border-primary/30 dark:bg-gray-800/80 md:p-3">
                             <div className="flex gap-1.5 items-center">
                                 <ScanLine size={12} className="text-primary animate-pulse" />
                                 <span className="text-[10px] text-primary/80 italic font-mono tracking-wider">
@@ -282,7 +370,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                 <div ref={messagesEndRef} />
             </div>
 
-            <div className="p-2 md:p-3 bg-surface border-t border-gray-800 space-y-2">
+            <div className="df-chat-footer space-y-2 border-t border-blue-100 bg-white/95 p-2 dark:border-slate-800 dark:bg-[#07111f] md:p-3">
                 <div className="flex gap-2 items-end">
                     <textarea
                       ref={textareaRef}
@@ -291,7 +379,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                       onChange={handleInputChange}
                       onKeyDown={handleKeyPress}
                       placeholder={t.agent_placeholder}
-                      className="flex-1 bg-black/50 border border-gray-700 rounded px-2 py-1.5 md:px-3 md:py-2 text-xs md:text-sm text-white outline-none focus:border-primary resize-none overflow-hidden leading-relaxed"
+                      className="df-chat-input flex-1 resize-none overflow-hidden rounded border border-slate-200 bg-white px-2 py-1.5 text-xs leading-relaxed text-slate-900 outline-none placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/10 dark:border-slate-700 dark:bg-black/50 dark:text-white dark:placeholder:text-slate-500 md:px-3 md:py-2 md:text-sm"
                       style={{ minHeight: '34px', maxHeight: '96px' }}
                     />
                     <button onClick={handleSend} disabled={loading || !input.trim()} className="bg-primary text-white p-1.5 md:p-2 rounded hover:bg-blue-500 disabled:opacity-50 flex-shrink-0 mb-0.5"><Send size={16} className="md:w-[18px] md:h-[18px]" /></button>
@@ -303,7 +391,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
       {/* CTA Label */}
       {!isOpen && (
         <div className="pointer-events-auto mb-2 mr-1 md:mb-3 md:mr-2 animate-bounce cursor-pointer" onClick={() => setIsOpen(true)}>
-            <div className="bg-secondary text-white font-bold text-[10px] md:text-xs px-3 py-1.5 md:px-4 md:py-2 rounded-xl shadow-[0_0_20px_rgba(255,42,109,0.6)] relative flex items-center gap-2 border border-white/20">
+            <div className="bg-secondary text-white font-bold text-[10px] md:text-xs px-3 py-1.5 md:px-4 md:py-2 rounded-xl shadow-[0_0_20px_rgba(255,42,109,0.6)] relative flex items-center gap-2 border border-black/20 dark:border-white/20">
                <Sparkles size={12} className="animate-spin-slow md:w-[14px] md:h-[14px]" />
                {lang === 'vi' ? 'Chat với AI Agent' : 'Chat with AI Agent'}
                <div className="absolute top-full right-4 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-secondary"></div>
@@ -311,9 +399,18 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
         </div>
       )}
 
-      <button onClick={() => setIsOpen(!isOpen)} className="pointer-events-auto bg-primary text-white p-3 md:p-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:scale-110 transition-all relative group">
+      <button
+        onClick={() => { setIsOpen(!isOpen); setUnreadCount(0); }}
+        className="pointer-events-auto bg-primary text-white p-3 md:p-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:scale-110 transition-all relative group"
+      >
         <span className="absolute inset-0 rounded-full bg-primary opacity-50 animate-ping group-hover:opacity-75"></span>
         <span className="relative">{isOpen ? <X className="w-5 h-5 md:w-6 md:h-6" /> : <MessageSquare className="w-5 h-5 md:w-6 md:h-6" />}</span>
+        {/* Notification badge */}
+        {unreadCount > 0 && !isOpen && (
+          <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-secondary text-white text-[9px] font-black rounded-full flex items-center justify-center px-1 shadow-[0_0_8px_rgba(255,42,109,0.8)] animate-bounce border border-black/30">
+            {unreadCount > 9 ? '9+' : unreadCount}
+          </span>
+        )}
       </button>
     </div>
   );

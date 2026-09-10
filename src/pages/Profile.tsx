@@ -170,7 +170,7 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
 
   if (authBusy || !user) {
     return (
-      <div className="mx-auto max-w-4xl rounded-2xl border border-white/10 bg-black/30 p-8 text-sm text-slate-400">
+      <div className="mx-auto max-w-4xl rounded-2xl border border-black/10 dark:border-white/10 bg-black/30 p-8 text-sm text-slate-500 dark:text-slate-400">
         {isVi ? 'Đang tải hồ sơ...' : 'Loading profile...'}
       </div>
     );
@@ -178,17 +178,17 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
 
   return (
     <div className="mx-auto max-w-5xl animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <section className="glass-dark relative overflow-hidden rounded-3xl border border-white/10 p-5 shadow-[0_32px_120px_rgba(0,0,0,0.5)] md:p-10">
+      <section className="glass-dark relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 p-5 shadow-[0_32px_120px_rgba(0,0,0,0.5)] md:p-10">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-blue-200">
               <UserCircle size={13} /> {isVi ? 'Hồ sơ người học' : 'Learner profile'}
             </div>
-            <h1 className="text-3xl font-black leading-tight text-white md:text-4xl" style={{ fontFamily: "var(--font-display)" }}>
+            <h1 className="text-3xl font-black leading-tight text-slate-900 dark:text-white md:text-4xl" style={{ fontFamily: "var(--font-display)" }}>
               {user.displayName || user.email?.split('@')[0] || 'Deepfense learner'}
             </h1>
-            <p className="mt-3 text-sm leading-7 text-slate-300/85">
+            <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300/85">
               {isVi
                 ? 'Quản lý tài khoản, xác minh email và theo dõi DPF coin của bạn.'
                 : 'Manage your account, verify email, and track your DPF coin.'}
@@ -199,19 +199,19 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
                 <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.12em] text-cyan-200">
                   <Coins size={13} /> DPF Coin
                 </div>
-                <div className="mt-2 text-3xl font-black text-white">{walletLoading ? '...' : wallet?.webBalance ?? 0}</div>
+                <div className="mt-2 text-3xl font-black text-slate-900 dark:text-white">{walletLoading ? '...' : wallet?.webBalance ?? 0}</div>
               </div>
               <div className={`rounded-xl border p-4 ${user.emailVerified ? 'border-emerald-400/20 bg-emerald-400/10' : 'border-amber-400/20 bg-amber-400/10'}`}>
                 <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.12em] text-white/75">
                   <MailCheck size={13} /> Email
                 </div>
-                <div className="mt-3 text-xs font-black uppercase tracking-[0.12em] text-white">
+                <div className="mt-3 text-xs font-black uppercase tracking-[0.12em] text-slate-900 dark:text-white">
                   {user.emailVerified ? (isVi ? 'Đã xác minh' : 'Verified') : (isVi ? 'Chưa xác minh' : 'Unverified')}
                 </div>
               </div>
             </div>
 
-            <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.035] p-4 text-xs leading-relaxed text-slate-400">
+            <div className="mt-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/[0.035] p-4 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
               {isVi
                 ? 'Mẹo: hãy xác minh email để khôi phục tài khoản dễ dàng hơn.'
                 : 'Tip: verify your email for easier account recovery.'}
@@ -219,15 +219,15 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
           </div>
 
           <div className="lg:col-span-7">
-            <div className="glass-dark rounded-2xl border border-white/10 p-5 md:p-8">
+            <div className="glass-dark rounded-2xl border border-black/10 dark:border-white/10 p-5 md:p-8">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <label className="block md:col-span-2">
-                  <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{isVi ? 'Tên hiển thị' : 'Display name'}</span>
-                  <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-white/10" />
+                  <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{isVi ? 'Tên hiển thị' : 'Display name'}</span>
+                  <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} className="w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-3 text-sm text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-black/10 dark:bg-white/10" />
                 </label>
                 <label className="block md:col-span-2">
-                  <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Email</span>
-                  <input value={user.email || ''} readOnly className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-slate-400 outline-none" />
+                  <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">Email</span>
+                  <input value={user.email || ''} readOnly className="w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-3 text-sm text-slate-500 dark:text-slate-400 outline-none" />
                 </label>
 
                 <button onClick={handleSaveProfile} disabled={busy} className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-400/20 bg-blue-400/10 px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-blue-200 hover:bg-blue-400/15 disabled:opacity-60">
@@ -239,7 +239,7 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
                 <button onClick={handleVerifyEmail} disabled={busy || user.emailVerified} className="inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-emerald-200 hover:bg-emerald-400/15 disabled:opacity-40">
                   <MailCheck size={14} /> {isVi ? 'Gửi xác minh' : 'Verify email'}
                 </button>
-                <button onClick={handleRefreshVerification} disabled={busy} className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-slate-300 hover:bg-white/[0.08] disabled:opacity-60">
+                <button onClick={handleRefreshVerification} disabled={busy} className="inline-flex items-center justify-center gap-2 rounded-lg border border-black/10 dark:border-white/10 bg-white/[0.04] px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300 hover:bg-white/[0.08] disabled:opacity-60">
                   <RefreshCw size={14} /> {isVi ? 'Kiểm tra lại' : 'Refresh'}
                 </button>
                 <button onClick={handleSignOut} className="inline-flex items-center justify-center gap-2 rounded-lg border border-red-400/20 bg-red-500/10 px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-red-100 hover:bg-red-500/15 md:col-span-2">
@@ -248,7 +248,7 @@ const Profile: React.FC<ProfileProps> = ({ lang, user, authBusy }) => {
               </div>
 
               {message && (
-                <div className="mt-5 flex gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-xs leading-relaxed text-gray-200">
+                <div className="mt-5 flex gap-3 rounded-xl border border-black/10 dark:border-white/10 bg-white/[0.04] p-4 text-xs leading-relaxed text-slate-700 dark:text-gray-200">
                   {message.toLowerCase().includes('không') || message.toLowerCase().includes('unable')
                     ? <AlertTriangle size={16} className="mt-0.5 shrink-0 text-amber-300" />
                     : <BadgeCheck size={16} className="mt-0.5 shrink-0 text-emerald-300" />}

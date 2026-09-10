@@ -117,25 +117,52 @@ const NeuralSphere = ({ progressRef }: { progressRef: React.MutableRefObject<num
 
 const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef(0);
 
   useGSAP(() => {
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
     ScrollTrigger.create({
       trigger: containerRef.current,
       start: 'top top',
       end: 'bottom bottom',
       onUpdate: (self) => {
         progressRef.current = self.progress;
-        // Fade out background at the very end of the timeline
-        const fadeStart = 0.85;
-        if (self.progress > fadeStart) {
-          gsap.to('.sticky-bg', { opacity: 1 - (self.progress - fadeStart) / (1 - fadeStart), duration: 0.05, overwrite: 'auto' });
+
+        // Fade the whole timeline as it leaves the viewport. Previously only
+        // the sticky background faded, leaving the cards/title visibly hanging
+        // over the next homepage section.
+        if (stageRef.current && !prefersReducedMotion) {
+          const fadeStart = 0.82;
+          const fadeProgress = gsap.utils.clamp(0, 1, (self.progress - fadeStart) / (1 - fadeStart));
+          gsap.set(stageRef.current, {
+            opacity: 1 - fadeProgress,
+            filter: `blur(${fadeProgress * 4}px)`,
+          });
+        }
+
+        // Fade out the blur overlay near the beginning (0 to 0.15)
+        if (self.progress <= 0.15) {
+          // Normalize 0..0.15 to 1..0
+          const blurOpacity = Math.max(0, 1 - (self.progress / 0.15));
+          gsap.set('.blur-overlay', { opacity: blurOpacity });
         } else {
-          gsap.to('.sticky-bg', { opacity: 1, duration: 0.05, overwrite: 'auto' });
+          gsap.set('.blur-overlay', { opacity: 0 });
+        }
+
+        // Fade out background gradually as 2025 card finishes
+        const fadeStart = 0.90;
+        if (self.progress > fadeStart) {
+          const t = (self.progress - fadeStart) / (1 - fadeStart);
+          gsap.to('.sticky-bg', { opacity: 1 - t, duration: 0.3, overwrite: 'auto' });
+        } else {
+          gsap.to('.sticky-bg', { opacity: 1, duration: 0.3, overwrite: 'auto' });
         }
       },
     });
 
+    // Card animations (appear and disappear on scroll)
     const cards = gsap.utils.toArray<HTMLElement>('.era-card');
     cards.forEach((card, index) => {
       const isIntro = index === 0;
@@ -180,27 +207,28 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
 
   return (
     <div ref={containerRef} className="relative w-full">
-      
-      {/* Sticky 3D Background */}
-      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden pointer-events-none z-0 sticky-bg">
-        <div className="absolute inset-0 bg-black/10 z-10" />
-        <Canvas 
-          camera={{ position: [0, 0, 5], fov: 60 }}
-          gl={{ alpha: true, antialias: true }}
-          style={{ background: 'transparent' }}
-        >
-          <ambientLight intensity={0.5} />
-          <NeuralSphere progressRef={progressRef} />
-        </Canvas>
-      </div>
+      <div ref={stageRef} className="timeline-stage transition-[opacity,filter] duration-150 ease-out">
+        {/* Sticky 3D Background */}
+        <div className="sticky top-0 left-0 w-full h-screen overflow-hidden pointer-events-none z-0 sticky-bg">
+          <div className="absolute inset-0 bg-black/5 z-10" />
+          <div className="blur-overlay absolute inset-0 z-10 backdrop-blur-sm bg-black/5" />
+          <Canvas
+            camera={{ position: [0, 0, 5], fov: 60 }}
+            gl={{ alpha: true, antialias: true }}
+            style={{ background: 'transparent' }}
+          >
+            <ambientLight intensity={0.5} />
+            <NeuralSphere progressRef={progressRef} />
+          </Canvas>
+        </div>
 
-      {/* Scrollable Overlay Content (drives the height of the container) */}
-      <div className="relative z-20 -mt-[100vh] w-full pointer-events-none">
+        {/* Scrollable Overlay Content (drives the height of the container) */}
+        <div className="relative z-20 -mt-[100vh] w-full pointer-events-none">
         
         {/* Intro Section */}
-        <div className="flex h-screen items-start justify-center pt-[25vh]">
+        <div className="flex min-h-[440px] items-start justify-center pt-[18vh] md:min-h-[620px] md:pt-[22vh]">
           <div className="text-center era-card px-4">
-            <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tight mix-blend-difference leading-[1.6]" style={{ fontFamily: "var(--font-display)" }}>
+            <h2 className="text-4xl md:text-7xl font-black text-slate-900 dark:text-white uppercase tracking-tight mix-blend-difference leading-[1.6]" style={{ fontFamily: "var(--font-display)" }}>
               {lang === 'vi' ? (
                 <>
                   Deepfake đã phát triển<br /><span className="mt-2 block">như thế nào?</span>
@@ -209,8 +237,8 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
                 'How Deepfake Has Evolved'
               )}
             </h2>
-            <div className="mt-8 inline-block px-6 py-3 bg-black/40 backdrop-blur-md border border-white/10 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.1)]">
-              <p className="text-cyan-400 tracking-[0.12em] text-xs md:text-sm uppercase font-bold animate-pulse" style={{ fontFamily:"var(--font-display)" }}>
+            <div className="mt-8 inline-block px-6 py-3 bg-white/70 dark:bg-black/40 backdrop-blur-md border border-black/10 dark:border-white/10 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.1)]">
+              <p className="text-cyan-400 tracking-[0.2em] text-xs md:text-sm uppercase font-bold animate-pulse" style={{ fontFamily:"var(--font-display)" }}>
                 {lang === 'vi' ? 'Cuộn xuống để du hành thời gian' : 'Scroll down to time travel'}
               </p>
             </div>
@@ -223,26 +251,27 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
         {ERAS.map((era, index) => (
           <div 
             key={index} 
-            className="flex h-screen items-center justify-center px-4"
+            className="flex min-h-[360px] items-center justify-center px-4 md:min-h-[520px]"
           >
-            <div className={`era-card relative bg-black/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-3xl max-w-2xl w-full text-center ${era.shadow}`}>
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-black rounded-full border border-white/10 flex items-center justify-center">
+            <div className={`era-card relative bg-white/70 dark:bg-black/60 backdrop-blur-xl border border-black/10 dark:border-white/10 p-8 md:p-12 rounded-3xl max-w-2xl w-full text-center ${era.shadow}`}>
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-white dark:bg-black rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center">
                 <era.icon className={era.color} size={24} />
               </div>
               <span className={`text-7xl font-black opacity-20 absolute -top-4 -left-4 ${era.color} pointer-events-none`} style={{ fontFamily:"var(--font-display)" }}>
                 {era.year}
               </span>
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 mt-4" style={{ fontFamily: "var(--font-display)" }}>
+              <h3 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4 mt-4" style={{ fontFamily: "var(--font-display)" }}>
                 {lang === 'vi' ? era.titleVi : era.titleEn}
               </h3>
-              <p className="text-gray-300 md:text-lg leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+              <p className="text-slate-600 dark:text-gray-300 md:text-lg leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
                 {lang === 'vi' ? era.descVi : era.descEn}
               </p>
             </div>
           </div>
         ))}
 
-        <div className="h-[20vh]" /> {/* Spacer at bottom */}
+        <div className="h-[50vh]" /> {/* Spacer at bottom */}
+        </div>
       </div>
 
     </div>

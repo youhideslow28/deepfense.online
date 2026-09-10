@@ -28,16 +28,16 @@ const CyberDashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-[#0a0a0a] border border-gray-800 rounded-xl overflow-hidden shadow-2xl h-full min-h-[320px] flex flex-col font-mono relative group hover:border-primary/50 transition-colors duration-500">
+    <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-gray-800 rounded-xl overflow-hidden shadow-2xl h-full min-h-[320px] flex flex-col font-mono relative group hover:border-primary/50 transition-colors duration-500">
       {/* Header */}
-      <div className="bg-gray-900/50 border-b border-gray-800 p-3 flex justify-between items-center backdrop-blur-sm">
+      <div className="bg-slate-50 dark:bg-gray-900/50 border-b border-slate-200 dark:border-gray-800 p-3 flex justify-between items-center backdrop-blur-sm">
         <div className="flex items-center gap-2">
           <div className="flex gap-1.5">
             <div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
           </div>
-          <span className="text-[11px] text-slate-300/85 ml-2 tracking-[0.12em]">DEEPFENSE_MONITOR_V1.0</span>
+          <span className="text-[10px] text-slate-600 dark:text-slate-300/85 ml-2 tracking-[0.12em]">DEEPFENSE_MONITOR_V1.0</span>
         </div>
         <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
@@ -55,7 +55,7 @@ const CyberDashboard: React.FC = () => {
         
         <div className="grid grid-cols-2 gap-4 h-full relative z-10">
             {/* Left Col: Radar & Security */}
-            <div className="border border-gray-800 bg-black/40 rounded p-3 flex flex-col justify-between overflow-hidden relative">
+            <div className="border border-slate-200 dark:border-gray-800 bg-white/70 dark:bg-black/40 rounded p-3 flex flex-col justify-between overflow-hidden relative">
                 {/* Radar Effect Background */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] opacity-20 pointer-events-none">
                      <div className="w-full h-full rounded-full border border-primary/30 relative animate-[spin_4s_linear_infinite]">
@@ -69,14 +69,14 @@ const CyberDashboard: React.FC = () => {
                 </div>
                 
                 {/* Simulated World Map Points */}
-                <div className="flex-1 relative border-t border-b border-gray-800 my-2 opacity-60">
+                <div className="flex-1 relative border-t border-b border-slate-200 dark:border-gray-800 my-2 opacity-60">
                     <Globe className="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 text-slate-600 opacity-30" />
                     <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
                     <div className="absolute bottom-1/3 right-1/4 w-1.5 h-1.5 bg-primary rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
                     <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-success rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
                 </div>
 
-                <div className="relative z-10 flex justify-between text-[11px] text-slate-400">
+                <div className="relative z-10 flex justify-between text-[10px] text-slate-500 dark:text-slate-400">
                     <span>UPTIME: 99.9%</span>
                     <span>THREATS: 0</span>
                 </div>
@@ -84,8 +84,8 @@ const CyberDashboard: React.FC = () => {
 
             {/* Right Col: Stats */}
             <div className="flex flex-col gap-3">
-                <div className="bg-gray-900/30 p-2 rounded border border-gray-800">
-                    <div className="flex items-center gap-2 text-slate-300/85 text-[11px] mb-1">
+                <div className="bg-slate-50 dark:bg-gray-900/30 p-2 rounded border border-slate-200 dark:border-gray-800">
+                    <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300/85 text-[10px] mb-1">
                         <Activity size={10} /> NETWORK TRAFFIC
                     </div>
                     <div className="h-8 flex items-end gap-0.5">
@@ -99,8 +99,8 @@ const CyberDashboard: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="bg-gray-900/30 p-2 rounded border border-gray-800 flex-1 flex flex-col">
-                     <div className="flex items-center gap-2 text-slate-300/85 text-[11px] mb-2 shrink-0">
+                <div className="bg-slate-50 dark:bg-gray-900/30 p-2 rounded border border-slate-200 dark:border-gray-800 flex-1 flex flex-col">
+                     <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300/85 text-[10px] mb-2 shrink-0">
                         <Lock size={10} /> SYSTEM LOGS
                     </div>
                     <div className="space-y-1 overflow-hidden flex-1 relative">
@@ -118,7 +118,7 @@ const CyberDashboard: React.FC = () => {
       </div>
 
       {/* Footer Status Bar */}
-      <div className="flex justify-between border-t border-slate-800 bg-slate-900/80 p-1.5 font-mono text-[10px] text-slate-400">
+      <div className="flex justify-between border-t border-slate-800 bg-slate-900/80 p-1.5 font-mono text-[9px] text-slate-500 dark:text-slate-400">
          <span className="flex items-center gap-1"><Wifi size={10}/> CONNECTED</span>
          <span>MEM: 64%</span>
          <span>CPU: 12%</span>

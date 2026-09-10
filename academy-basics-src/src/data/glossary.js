@@ -1,5 +1,5 @@
 /**
- * glossary.js — Deepfake & cybersecurity glossary for DEEPFENSE BASIC.
+ * glossary.js — Deepfake & cybersecurity glossary for DEEPFENSE ACADEMY.
  * Each entry: { id, term, module, category, definition }
  * module: which module introduces/uses the term (for contextual display)
  * category: 'concept' | 'technique' | 'threat' | 'rule' | 'tool'
@@ -295,7 +295,7 @@ export const GLOSSARY = [
     module: 6,
     category: 'concept',
     definition:
-      'Chứng chỉ hoàn thành khoá học DEEPFENSE BASIC, cấp sau khi hoàn thành tất cả 6 module và vượt qua Final Exam. Xác nhận người học đã nắm vững kiến thức cơ bản về nhận diện, phản ứng và phòng vệ trước deepfake.',
+      'Chứng chỉ hoàn thành khoá học DEEPFENSE ACADEMY, cấp sau khi hoàn thành tất cả 6 module và vượt qua Final Exam. Xác nhận người học đã nắm vững kiến thức cơ bản về nhận diện, phản ứng và phòng vệ trước deepfake.',
   },
 ];
 

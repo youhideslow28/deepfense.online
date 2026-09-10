@@ -10,8 +10,8 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 // === CONFIG ===
-const PARTICLE_COUNT = 600;
-const CONNECTION_DISTANCE = 2.2;
+const PARTICLE_COUNT = 360;
+const CONNECTION_DISTANCE = 2;
 const MOUSE_REPULSION_RADIUS = 3;
 const MOUSE_REPULSION_STRENGTH = 0.08;
 const FIELD_SIZE = 12;
@@ -90,7 +90,7 @@ const Particles: React.FC<{ mouse: React.MutableRefObject<{ x: number; y: number
       meshRef.current.setMatrixAt(i, dummy.matrix);
 
       // Tính connections (chỉ với ~50 particle gần nhất để giảm O(n²))
-      for (let j = i + 1; j < Math.min(i + 50, PARTICLE_COUNT); j++) {
+      for (let j = i + 1; j < Math.min(i + 36, PARTICLE_COUNT); j++) {
         const jx = j * 3;
         const ddx = positions[ix] - positions[jx];
         const ddy = positions[iy] - positions[jx + 1];
@@ -188,13 +188,13 @@ const CyberField: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handlePointerMove = (e: PointerEvent) => {
       mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    return () => window.removeEventListener('pointermove', handlePointerMove);
   }, []);
 
   if (!isVisible) {
@@ -207,13 +207,10 @@ const CyberField: React.FC = () => {
   }
 
   return (
-    <div
-      className="fixed inset-0 z-0 pointer-events-none"
-      style={{ cursor: 'default' }}
-    >
+    <div className="fixed inset-0 z-0 pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 6], fov: 60 }}
-        dpr={[1, 1.5]}
+        dpr={[0.8, 1.15]}
         gl={{
           antialias: false,
           alpha: true,

@@ -16,6 +16,11 @@ node_modules
 dist
 dist-ssr
 *.local
+.tmp-report/
+
+# Large local source videos. Keep web-encoded versions in Git.
+public/academy/media/module-intros/**/*.mp4
+!public/academy/media/module-intros/**/*.web.mp4
 
 # ===== BẢO MẬT: ENVIRONMENT VARIABLES =====
 # TUYỆT ĐỐI KHÔNG commit các file này lên Git!
@@ -82,3 +87,4 @@ credentials/
 
 .vercel
 .env*.local
+.env*

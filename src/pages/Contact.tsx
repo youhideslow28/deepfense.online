@@ -17,15 +17,15 @@ const Contact: React.FC = () => {
 
   return (
     <div className="animate-in fade-in duration-500">
-       <h2 className="text-2xl font-black uppercase text-center mb-2 text-white">📞 BÁO CÁO SỰ CỐ</h2>
-       <p className="text-slate-300/85 text-center mb-8">Liên hệ hỗ trợ hoặc báo cáo trường hợp lừa đảo Deepfake</p>
+       <h2 className="text-2xl font-black uppercase text-center mb-2 text-slate-900 dark:text-white">📞 BÁO CÁO SỰ CỐ</h2>
+       <p className="text-slate-600 dark:text-slate-300/85 text-center mb-8">Liên hệ hỗ trợ hoặc báo cáo trường hợp lừa đảo Deepfake</p>
 
        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Info Column */}
           <div className="space-y-6">
               <div className="bg-surface border border-border rounded-lg p-6">
                   <div className="text-success text-sm font-black uppercase tracking-[0.12em] mb-4">KÊNH HỖ TRỢ</div>
-                  <div className="space-y-3 text-sm text-gray-300">
+                  <div className="space-y-3 text-sm text-slate-600 dark:text-gray-300">
                       <div className="flex items-center gap-3"><Mail size={16} /> deepfense@gmail.com</div>
                       <div className="flex items-center gap-3"><Phone size={16} /> 0828250475</div>
                       <div className="flex items-center gap-3"><MapPin size={16} /> 25NS, VKU, DA NANG, VIET NAM</div>
@@ -34,7 +34,7 @@ const Contact: React.FC = () => {
 
               <div className="bg-surface border border-border rounded-lg p-6">
                   <div className="text-secondary text-sm font-black uppercase tracking-[0.12em] mb-4">ĐƯỜNG DÂY NÓNG</div>
-                  <div className="space-y-3 text-sm text-gray-300">
+                  <div className="space-y-3 text-sm text-slate-600 dark:text-gray-300">
                       <p>🚔 <strong>Cảnh sát phản ứng nhanh:</strong> 113</p>
                       <p>🛡️ <strong>Cục An ninh mạng:</strong> 069.219.4053</p>
                       <p>📱 <strong>Zalo OA:</strong> Cục An toàn thông tin</p>
@@ -48,53 +48,53 @@ const Contact: React.FC = () => {
                   <div className="absolute inset-0 bg-surface/95 backdrop-blur flex flex-col items-center justify-center z-10 animate-in fade-in">
                       <div className="text-5xl mb-4">🎉</div>
                       <h3 className="text-success font-bold text-xl">GỬI THÀNH CÔNG!</h3>
-                      <p className="text-slate-300 text-sm mt-2">Chúng tôi sẽ liên hệ trong 24h.</p>
+                      <p className="text-slate-600 dark:text-slate-300 text-sm mt-2">Chúng tôi sẽ liên hệ trong 24h.</p>
                   </div>
               )}
               
               <div className="text-primary text-sm font-black uppercase tracking-[0.12em] mb-6">GỬI BÁO CÁO</div>
               <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                      <label className="block text-xs font-bold uppercase tracking-[0.08em] text-slate-400 mb-1">Họ và tên *</label>
+                      <label className="block text-xs font-bold uppercase tracking-[0.08em] text-slate-500 dark:text-slate-400 mb-1">Họ và tên *</label>
                       <input 
                         type="text" 
-                        className="w-full bg-black border border-border rounded p-2 text-white focus:border-primary outline-none transition-colors"
+                        className="w-full bg-white dark:bg-black border border-border rounded p-2 text-slate-900 dark:text-white focus:border-primary outline-none transition-colors"
                         placeholder="Nguyễn Văn A"
                         value={formData.name}
                         onChange={e => setFormData({...formData, name: e.target.value})}
                       />
                   </div>
                   <div>
-                      <label className="block text-xs font-bold uppercase tracking-[0.08em] text-slate-400 mb-1">Số điện thoại *</label>
+                      <label className="block text-xs font-bold uppercase tracking-[0.08em] text-slate-500 dark:text-slate-400 mb-1">Số điện thoại *</label>
                       <input 
                         type="text" 
-                        className="w-full bg-black border border-border rounded p-2 text-white focus:border-primary outline-none transition-colors"
+                        className="w-full bg-white dark:bg-black border border-border rounded p-2 text-slate-900 dark:text-white focus:border-primary outline-none transition-colors"
                         placeholder="0901234567"
                         value={formData.phone}
                         onChange={e => setFormData({...formData, phone: e.target.value})}
                       />
                   </div>
                   <div>
-                      <label className="block text-xs font-bold uppercase tracking-[0.08em] text-slate-400 mb-1">SĐT đối tượng (nếu có)</label>
+                      <label className="block text-xs font-bold uppercase tracking-[0.08em] text-slate-500 dark:text-slate-400 mb-1">SĐT đối tượng (nếu có)</label>
                       <input 
                         type="text" 
-                        className="w-full bg-black border border-border rounded p-2 text-white focus:border-primary outline-none transition-colors"
+                        className="w-full bg-white dark:bg-black border border-border rounded p-2 text-slate-900 dark:text-white focus:border-primary outline-none transition-colors"
                         placeholder="Số điện thoại kẻ lừa đảo"
                         value={formData.scamPhone}
                         onChange={e => setFormData({...formData, scamPhone: e.target.value})}
                       />
                   </div>
                   <div>
-                      <label className="block text-xs font-bold uppercase tracking-[0.08em] text-slate-400 mb-1">Mô tả chi tiết *</label>
+                      <label className="block text-xs font-bold uppercase tracking-[0.08em] text-slate-500 dark:text-slate-400 mb-1">Mô tả chi tiết *</label>
                       <textarea 
-                        className="w-full bg-black border border-border rounded p-2 text-white focus:border-primary outline-none transition-colors h-32 resize-none"
+                        className="w-full bg-white dark:bg-black border border-border rounded p-2 text-slate-900 dark:text-white focus:border-primary outline-none transition-colors h-32 resize-none"
                         placeholder="Mô tả cách thức lừa đảo, thời gian, thiệt hại..."
                         value={formData.desc}
                         onChange={e => setFormData({...formData, desc: e.target.value})}
                       ></textarea>
                   </div>
                   
-                  <button type="submit" className="w-full bg-primary text-white font-bold py-3 rounded flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors">
+                  <button type="submit" className="w-full bg-primary text-slate-900 dark:text-white font-bold py-3 rounded flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors">
                       <Send size={16} /> GỬI BÁO CÁO
                   </button>
               </form>

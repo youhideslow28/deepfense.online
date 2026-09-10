@@ -2,7 +2,7 @@ import React from 'react';
 import { MODULES } from '../data/course.js';
 import { COURSE_HOME_ASSETS, MODULE_HEADER_ASSETS } from '../data/visualAssets.js';
 
-export default function HomePage({ onStart, onSelectModule, completedLessons }) {
+export default function HomePage({ onStart, onSelectModule, completedLessons, guestMode }) {
   const totalLessons = MODULES.reduce((sum, m) =>
     sum + m.sections.reduce((s2, sec) => s2 + sec.lessons.length, 0), 0);
   const totalDone = completedLessons.size;
@@ -21,7 +21,7 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
       <div className="home-hero">
         {/* Badge */}
         <div className="home-badge">
-          🛡️ DEEPFENSE BASICS v2
+          🛡️ DEEPFENSE ACADEMY
         </div>
 
         {/* Title */}
@@ -36,7 +36,7 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
         </p>
 
         <figure className="home-visual">
-          <img src={COURSE_HOME_ASSETS.hero} alt="DEEPFENSE BASIC course visual" loading="lazy" />
+          <img src={COURSE_HOME_ASSETS.hero} alt="DEEPFENSE ACADEMY course visual" loading="lazy" />
         </figure>
 
         {/* Stats */}
@@ -63,8 +63,14 @@ export default function HomePage({ onStart, onSelectModule, completedLessons }) 
 
         {/* CTA */}
         <button className="home-cta" onClick={onStart}>
-          {totalDone > 0 ? 'Tiếp tục học →' : 'Bắt đầu khoá học →'}
+          {guestMode ? 'Bắt đầu xem bài →' : totalDone > 0 ? 'Tiếp tục học →' : 'Bắt đầu khoá học →'}
         </button>
+        {guestMode && (
+          <div className="guest-mode-banner" role="status">
+            <span>👀</span>
+            <span>Guest Mode: bạn đang xem thử. Bài tập và tiến độ sẽ không được lưu.</span>
+          </div>
+        )}
       </div>
 
       {/* Module grid */}

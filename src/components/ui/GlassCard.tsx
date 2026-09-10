@@ -47,7 +47,7 @@ const GlassCard: React.FC<GlassCardProps> = ({
           animation: 'spin 4s linear infinite',
         }}
       />
-      <div className="absolute inset-[1px] rounded-2xl bg-[#0a0a0a]" />
+      <div className="absolute inset-[1px] rounded-2xl bg-surface" />
     </div>
   ) : null;
 

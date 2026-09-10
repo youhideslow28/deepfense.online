@@ -1,4 +1,6 @@
 ﻿// ── HELPERS ────────────────────────────────────────────────────
+import { LEARNING_CARD_ASSETS, MODULE_HEADER_ASSETS, SCENARIO_ASSETS } from './visualAssets.js';
+
 export const lesson = (id, title, paragraphs, takeaways) => ({ id, title, paragraphs, takeaways });
 export const q = (text, options, answer) => ({ text, options, answer });
 export const checkpoint = (label, questions, miniGame, maxQuestions) => ({
@@ -9,7 +11,7 @@ export const checkpoint = (label, questions, miniGame, maxQuestions) => ({
 
 // ── COURSE META ─────────────────────────────────────────────────
 export const COURSE = {
-  title: 'DEEPFENSE BASICS',
+  title: 'DEEPFENSE ACADEMY',
   subtitle: 'Nhận diện & phòng ngừa deepfake',
   totalModules: 7,
 };
@@ -28,7 +30,7 @@ export const MODULES = [
     outcomes: [
       'Hiểu vì sao deepfake không còn là chuyện xa lạ của người nổi tiếng hay phim ảnh.',
       'Nhận ra rằng bất kỳ người dùng Internet nào cũng có thể gặp nội dung giả mạo, lừa đảo hoặc gây hiểu nhầm.',
-      'Làm quen với cách học của DEEPFENSE BASIC: qua câu chuyện, tình huống, quan sát, quyết định và phản hồi.',
+      'Làm quen với cách học của DEEPFENSE ACADEMY: qua câu chuyện, tình huống, quan sát, quyết định và phản hồi.',
       'Tự kiểm tra phản xạ ban đầu của mình trước các tình huống nghi vấn trên không gian số.',
     ],
     sections: [
@@ -36,13 +38,13 @@ export const MODULES = [
         title: '0.0 Bắt đầu khóa học',
         lessons: [
           lesson('0.0.0', 'Khóa học này dạy điều gì?', [
-            'DEEPFENSE BASIC là khóa học nhập môn về deepfake, nội dung giả mạo và phản xạ an toàn trên không gian số. Khóa học không yêu cầu người học biết lập trình, không yêu cầu nền tảng trí tuệ nhân tạo và không biến người học thành chuyên gia pháp chứng số.',
+            'DEEPFENSE ACADEMY là khóa học nhập môn về deepfake, nội dung giả mạo và phản xạ an toàn trên không gian số. Khóa học không yêu cầu người học biết lập trình, không yêu cầu nền tảng trí tuệ nhân tạo và không biến người học thành chuyên gia pháp chứng số.',
             'Mục tiêu thực tế hơn: giúp người học nhận ra khi nào một nội dung có thể gây rủi ro, biết dừng lại trước khi hành động, biết kiểm chứng qua kênh độc lập và biết chọn phản ứng ít gây hại nhất.',
             { type: 'callout', variant: 'info', title: 'Phạm vi học tập', text: 'Chúng ta không học cách tạo deepfake. Chúng ta học cách nhận diện rủi ro, kiểm chứng thông tin và bảo vệ con người trước nội dung giả mạo.' },
-            { type: 'image', alt: 'DFB_ILL_M0_01', placeholderHint: 'Placeholder hình minh họa: một ngày số bình thường của An với điện thoại, mạng xã hội, nhóm chat, cuộc gọi video và các tín hiệu rủi ro nhẹ.' },
+            { type: 'image', src: MODULE_HEADER_ASSETS[0], alt: 'Một ngày số bình thường của An', caption: 'Một ngày số bình thường có thể chứa rất nhiều tín hiệu cần dừng lại và quan sát.' },
             'Trong đời sống số, nguy cơ không chỉ đến từ video giả hoàn hảo. Nguy cơ thường đến từ một tình huống có vẻ quen thuộc: người thân cần tiền gấp, tài khoản bạn bè nhắn tin lạ, một video gây phẫn nộ lan rất nhanh, hoặc một hình ảnh nhạy cảm bị chia sẻ trong nhóm chat.',
           ], [
-            'DEEPFENSE BASIC tập trung vào phản xạ phòng vệ, không dạy tạo deepfake.',
+            'DEEPFENSE ACADEMY tập trung vào phản xạ phòng vệ, không dạy tạo deepfake.',
             'Người học cần biết dừng, kiểm chứng và quyết định an toàn hơn.',
           ]),
         ],
@@ -161,7 +163,7 @@ export const MODULES = [
             'Module 1 bắt đầu từ một tình huống quen thuộc: An nhìn thấy video một người nổi tiếng giới thiệu nền tảng đầu tư. Gương mặt giống, giọng nói giống, khẩu hình có vẻ khớp và bên dưới có nhiều bình luận tích cực.',
             'Nếu đây là mười năm trước, nhiều người có thể nghĩ: “Có video thì chắc là thật”. Nhưng trong môi trường số hiện nay, hình ảnh, giọng nói và ngữ cảnh đều có thể bị tạo mới, chỉnh sửa hoặc đặt sai bối cảnh.',
             { type: 'callout', variant: 'info', title: 'Mục tiêu của Module 1', text: 'Hiểu các loại nội dung giả mạo cơ bản để biết nên kiểm chứng theo hướng nào, thay vì chỉ dựa vào cảm giác.' },
-            { type: 'image', alt: 'DFB_ILL_M1_01', placeholderHint: 'Placeholder infographic: các lớp của một nội dung số gồm hình ảnh, video, âm thanh, chú thích, nguồn đăng và yêu cầu hành động.' },
+            { type: 'image', src: MODULE_HEADER_ASSETS[1], alt: 'Các lớp của một nội dung số', caption: 'Một nội dung số không chỉ có hình ảnh hoặc video; nguồn đăng, chú thích và yêu cầu hành động cũng là dữ liệu cần đọc.' },
             'Module này không yêu cầu người học phân tích kỹ thuật sâu. Điều cần nắm là ngôn ngữ cơ bản: deepfake, deepvoice, synthetic media, face swap, lip sync, edited media và repurposed media.',
           ], [
             'Hình ảnh và giọng nói không còn là bằng chứng tuyệt đối.',
@@ -335,7 +337,7 @@ export const MODULES = [
             'Sau Module 1, An hiểu rằng hình ảnh, video và giọng nói trên mạng có thể bị làm giả. An biết khái niệm deepfake, deepvoice, synthetic media và cũng hiểu rằng “nhìn thấy” chưa đủ để kết luận.',
             'Nhưng kiến thức không tự động biến thành phản xạ. Khi điện thoại reo lúc tối muộn, màn hình hiện tên người thân, giọng nói ở đầu dây run lên và yêu cầu chuyển tiền gấp, não người không bắt đầu bằng phân tích kỹ thuật. Nó bắt đầu bằng lo lắng.',
             { type: 'callout', variant: 'info', title: 'Ý chính của Module 2', text: 'Deepfake nguy hiểm không chỉ vì công nghệ giống thật, mà vì nó xuất hiện đúng lúc cảm xúc của con người bị đẩy lên cao.' },
-            { type: 'image', alt: 'DFB_ILL_M2_01', placeholderHint: 'Placeholder visual: bốn nút bấm cảm xúc quanh điện thoại của An gồm khẩn cấp, thân quen, quyền lực và lợi ích.' },
+            { type: 'image', src: MODULE_HEADER_ASSETS[2], alt: 'Bốn nút bấm cảm xúc trong lừa đảo số', caption: 'Kẻ xấu thường không cần thuyết phục quá lâu; họ chỉ cần bấm đúng cảm xúc khiến ta hành động nhanh.' },
             'Kẻ xấu không cần nạn nhân “kém hiểu biết”. Chúng chỉ cần tạo một tình huống khiến nạn nhân vội, sợ, tin, thương, xấu hổ hoặc kỳ vọng quá mức. Khi cảm xúc tăng nhanh, khả năng kiểm chứng thường giảm xuống.',
             'Vì vậy, Module 2 không tập trung vào việc nhìn lỗi kỹ thuật trên khuôn mặt hay âm thanh. Phần này tập trung vào cơ chế tâm lý: vì sao một người bình thường, có hiểu biết, vẫn có thể ra quyết định sai trong vài phút căng thẳng.',
           ], [
@@ -521,7 +523,7 @@ export const MODULES = [
             'Sau Module 2, An hiểu rằng cảm xúc có thể làm mình phản ứng vội. Sáng hôm sau, An mở lại video người nổi tiếng kêu gọi đầu tư. Gương mặt giống, giọng nói giống, bình luận rất tích cực. Nhưng lần này An không vội tin.',
             'An tự hỏi: video đến từ tài khoản nào? Người nổi tiếng này có đăng nội dung tương tự trên kênh chính thức không? Video có yêu cầu bấm link, nạp tiền hoặc hành động ngay không? Nếu video sai, ai có thể bị hại?',
             { type: 'callout', variant: 'info', title: 'Mục tiêu của Module 3', text: 'Không học để đoán thật giả trong vài giây. Học để biết khi nào một nội dung đủ rủi ro để dừng lại, kiểm chứng và không hành động vội.' },
-            { type: 'image', alt: 'DFB_ILL_M3_01', placeholderHint: 'Placeholder visual: ba lớp quan sát nội dung nghi vấn gồm hình ảnh/video, âm thanh/giọng nói và ngữ cảnh/hành vi.' },
+            { type: 'image', src: MODULE_HEADER_ASSETS[3], alt: 'Ba lớp quan sát nội dung nghi vấn', caption: 'Quan sát tốt là kết hợp hình ảnh, âm thanh và ngữ cảnh trước khi đưa ra kết luận.' },
             'Quan sát tốt không chỉ là nhìn mặt. Quan sát tốt là nhìn, nghe và đọc toàn bộ tình huống. Một video có thể rất mượt nhưng ngữ cảnh lừa đảo rõ ràng. Một video có thể hơi mờ nhưng vẫn là thật. Vì vậy, Module 3 dùng cách tiếp cận ba lớp.',
           ], [
             'Quan sát không chỉ là tìm lỗi trên khuôn mặt; cần nhìn cả nguồn, yêu cầu và hậu quả.',
@@ -542,6 +544,18 @@ export const MODULES = [
               ['Ánh sáng', 'Bóng trên mặt có hợp với nguồn sáng và nền không?'],
               ['Chi tiết nhỏ', 'Tóc, tai, kính, tay hoặc phụ kiện có biến dạng khi chuyển động không?'],
               ['Nền', 'Chữ, logo, đồ vật, địa điểm có khớp với câu chuyện được kể không?'],
+            ] },
+            { type: 'video-gallery', title: 'Thư viện quan sát: 10 clip deepfake ngắn', subtitle: 'Xem từng clip như một bài luyện mắt. Đừng vội kết luận thật/giả; hãy ghi lại tín hiệu, mức chắc chắn và bước kiểm chứng tiếp theo.', items: [
+              { src: '/academy/basics/media/deepfake-samples/dfb-deepfake-sample-01.mp4', title: 'Mẫu quan sát 01', caption: 'Tập trung vào vùng mắt, nhịp chớp và phản chiếu ánh sáng.' },
+              { src: '/academy/basics/media/deepfake-samples/dfb-deepfake-sample-02.mp4', title: 'Mẫu quan sát 02', caption: 'So khẩu hình với nhịp nói; chú ý môi, răng và độ trễ âm thanh.' },
+              { src: '/academy/basics/media/deepfake-samples/dfb-deepfake-sample-03.mp4', title: 'Mẫu quan sát 03', caption: 'Quan sát rìa khuôn mặt khi đầu xoay hoặc biểu cảm thay đổi.' },
+              { src: '/academy/basics/media/deepfake-samples/dfb-deepfake-sample-04.mp4', title: 'Mẫu quan sát 04', caption: 'So ánh sáng trên mặt với cổ, nền và các vật thể xung quanh.' },
+              { src: '/academy/basics/media/deepfake-samples/dfb-deepfake-sample-05.mp4', title: 'Mẫu quan sát 05', caption: 'Kiểm tra độ tự nhiên của da, biểu cảm và các chuyển động nhỏ.' },
+              { src: '/academy/basics/media/deepfake-samples/dfb-deepfake-sample-06.mp4', title: 'Mẫu quan sát 06', caption: 'Theo dõi cằm, cổ và vai để xem chuyển động có đồng bộ không.' },
+              { src: '/academy/basics/media/deepfake-samples/dfb-deepfake-sample-07.mp4', title: 'Mẫu quan sát 07', caption: 'Chú ý tóc, tai, kính hoặc phụ kiện ở rìa khuôn mặt.' },
+              { src: '/academy/basics/media/deepfake-samples/dfb-deepfake-sample-08.mp4', title: 'Mẫu quan sát 08', caption: 'Quan sát sự ổn định của khuôn mặt qua nhiều khung hình liên tiếp.' },
+              { src: '/academy/basics/media/deepfake-samples/dfb-deepfake-sample-09.mp4', title: 'Mẫu quan sát 09', caption: 'Đánh giá biểu cảm có khớp nội dung, bối cảnh và cảm xúc được nói ra không.' },
+              { src: '/academy/basics/media/deepfake-samples/dfb-deepfake-sample-10.mp4', title: 'Mẫu quan sát 10', caption: 'Tổng hợp ít nhất ba tín hiệu trước khi chuyển sang kiểm chứng nguồn.' },
             ] },
             'Một dấu hiệu đơn lẻ hiếm khi đủ. Nhưng nhiều dấu hiệu xuất hiện cùng lúc, nhất là khi đi kèm yêu cầu tiền, link lạ hoặc tài khoản không chính thức, sẽ làm mức rủi ro tăng lên rõ rệt.',
           ], [
@@ -657,6 +671,7 @@ export const MODULES = [
               ['Tin nhắn thoại giống người thân yêu cầu chuyển tiền vào tài khoản người lạ', 'Rủi ro cao. Gọi lại số đã lưu hoặc xác minh qua người thân khác.'],
               ['Hình ảnh nhạy cảm trong nhóm lớp, không rõ nguồn', 'Rủi ro gây hại cao. Không lưu, không chuyển tiếp, báo cáo và hỗ trợ người bị hại.'],
             ] },
+            { type: 'image', src: LEARNING_CARD_ASSETS.threeLayerObservation, alt: 'Thẻ tóm tắt ba lớp quan sát', caption: 'Ba lớp quan sát giúp người học không bị kẹt vào một chi tiết kỹ thuật duy nhất.' },
             'Kết luận Module 3: đừng chỉ hỏi “nó có giả không?”. Hãy hỏi: “nó có đủ đáng tin để mình hành động không?”. Nếu câu trả lời là chưa, hành động đúng là dừng lại, kiểm chứng và giảm hại.',
           ], [
             'Checklist 3 lớp giúp quan sát đủ: nhìn gì, nghe gì, tình huống yêu cầu gì.',
@@ -706,7 +721,7 @@ export const MODULES = [
             'Đến Module 4, An đã có nhiều mảnh kiến thức: deepfake có thể mạo danh người thật, cảm xúc có thể làm mình phản ứng vội, giọng nói quen không đủ để tin, và dấu hiệu kỹ thuật chỉ là tín hiệu tham khảo.',
             'Nhưng trong đời thật, nội dung nghi vấn không xuất hiện dưới dạng câu hỏi trắc nghiệm. Nó xuất hiện khi bạn đang bận, đang lo, đang giận, đang muốn giúp ai đó hoặc đang bị thúc ép phải quyết định nhanh.',
             { type: 'callout', variant: 'info', title: 'Vai trò của quy trình', text: 'Quy trình giúp người học không phải nghĩ lại từ đầu trong từng tình huống. Nó tạo một đường ray an toàn khi cảm xúc đang kéo mình đi nhanh.' },
-            { type: 'image', alt: 'DFB_ILL_M4_01', placeholderHint: 'Placeholder sơ đồ: đường đi Deepfense Check gồm Pause, Observe, Verify, Trace và Decide bằng biểu tượng đơn giản.' },
+            { type: 'image', src: MODULE_HEADER_ASSETS[4], alt: 'Đường đi Deepfense Check', caption: 'Deepfense Check biến phản xạ phòng vệ thành một quy trình ngắn, rõ và có thể lặp lại.' },
             'Deepfense Check là quy trình cốt lõi của khóa học. Nó không biến người học thành chuyên gia pháp chứng số, nhưng giúp người học trở thành người dùng Internet khó bị kéo vào hành động vội.',
           ], [
             'Kiến thức chỉ hữu ích khi được chuyển thành quy trình có thể lặp lại.',
@@ -727,6 +742,7 @@ export const MODULES = [
               ['Trace', 'Nội dung này bắt nguồn từ đâu?', 'Tìm nguồn gốc, bản đầy đủ, kênh chính thức hoặc dấu hiệu giả mạo.'],
               ['Decide', 'Hành động ít gây hại nhất bây giờ là gì?', 'Từ chối, báo cáo, hỏi thêm, cảnh báo riêng hoặc không lan truyền.'],
             ] },
+            { type: 'image', src: LEARNING_CARD_ASSETS.deepfenseCheck, alt: 'Thẻ tóm tắt Deepfense Check', caption: 'Khi tình huống gây áp lực, quy trình ngắn giúp người học giữ được nhịp quyết định.' },
             'Trong tình huống rủi ro cao, bạn không cần hoàn tất mọi bước như một điều tra viên. Chỉ cần một bước xác minh đủ mạnh cũng có thể ngăn thiệt hại: gọi lại số đã lưu, không bấm link, không đọc OTP, không chia sẻ hình ảnh nhạy cảm.',
           ], [
             'Deepfense Check gồm Pause, Observe, Verify, Trace, Decide.',
@@ -823,6 +839,7 @@ export const MODULES = [
               ['Cuộc gọi giống người thân', 'Pause trước khi chuyển tiền. Observe khẩn cấp, cô lập, tài khoản lạ. Verify số đã lưu/người thân khác. Trace không cần ưu tiên hơn Verify. Decide không chuyển khi chưa xác minh.'],
               ['Hình ảnh nhạy cảm trong nhóm chat', 'Pause trước khi lưu/chuyển tiếp. Observe rủi ro danh dự. Verify qua người có trách nhiệm, không phân tích công khai. Trace nguồn nếu cần bởi người phù hợp. Decide không lan truyền, báo cáo và hỗ trợ.'],
             ] },
+            { type: 'image', src: SCENARIO_ASSETS.caseFileBoard, alt: 'Bảng hồ sơ tình huống Deepfense Check', caption: 'Một hồ sơ tốt không cần nhiều chữ; chỉ cần đủ nguồn, yêu cầu, dấu hiệu đỏ và quyết định an toàn.' },
             'Nếu chỉ nhớ một điều từ Module 4, hãy nhớ: Deepfense Check không buộc bạn phải biết chắc thật giả. Nó giúp bạn không trở thành mắt xích tiếp theo trong chuỗi thiệt hại.',
           ], [
             'Áp dụng quy trình vào hành động cụ thể, không chỉ đọc thuộc 5 bước.',
@@ -892,7 +909,7 @@ export const MODULES = [
           lesson('5.0.0', 'Từ công nghệ sang hành vi', [
             'Deepfake nguy hiểm không chỉ vì hình ảnh hoặc giọng nói có thể bị làm giả. Nó nguy hiểm vì được đặt vào đúng hoàn cảnh khiến con người dễ phản ứng nhanh: lo cho người thân, sợ mất tiền, sợ bị bêu xấu, muốn có cơ hội tốt hoặc muốn bảo vệ quan điểm của mình.',
             'Trong thực tế, người học hiếm khi gặp một nội dung có nhãn “deepfake”. Thứ họ gặp là một yêu cầu: chuyển tiền, bấm link, gửi giấy tờ, chia sẻ clip, im lặng, giữ bí mật hoặc hành động ngay.',
-            { type: 'image', alt: 'DFB_ILL_M5_01', placeholderHint: 'Placeholder bản đồ rủi ro đời sống số: gia đình, tiền bạc, học đường, mạng xã hội, việc làm và quan hệ cá nhân.' },
+            { type: 'image', src: MODULE_HEADER_ASSETS[5], alt: 'Bản đồ rủi ro trong đời sống số', caption: 'Rủi ro deepfake xuất hiện trong những tình huống rất đời thường: tiền bạc, gia đình, học tập, công việc và danh dự cá nhân.' },
             'Vì vậy, mục tiêu của Module 5 không phải là biến bạn thành chuyên gia giám định hình ảnh. Mục tiêu là giúp bạn nhận ra bối cảnh rủi ro và chọn hành động ít gây hại nhất.',
           ], [
             'Đừng chỉ hỏi “nội dung này có giả không?”. Hãy hỏi thêm: “Ai đang muốn mình làm gì, trong bao lâu, và hậu quả nếu mình làm sai là gì?”.',
@@ -913,6 +930,7 @@ export const MODULES = [
         lessons: [
           lesson('5.1.0', 'Mạo danh người thân, cấp trên và cơ quan', [
             'Các vụ lừa đảo tài chính thường bắt đầu bằng một danh tính đáng tin: người thân, sếp, giáo viên, ngân hàng, cơ quan chức năng hoặc người nổi tiếng. Deepfake và deepvoice làm lớp danh tính này thuyết phục hơn, nhưng phần nguy hiểm nhất vẫn là yêu cầu đi kèm.',
+            { type: 'image', src: SCENARIO_ASSETS.familyCall, alt: 'Cuộc gọi video người thân đáng nghi', caption: 'Khi yêu cầu liên quan đến tiền, giọng quen hoặc mặt quen chỉ là điểm bắt đầu để xác minh, không phải lý do để chuyển tiền.' },
             'Hãy đặc biệt thận trọng với yêu cầu chuyển tiền vào tài khoản lạ, đọc OTP, gửi mật khẩu, cài ứng dụng ngoài kho chính thức, quét QR thanh toán hoặc cung cấp giấy tờ cá nhân trong lúc bị thúc ép.',
             'Một nguyên tắc học thuật nhưng rất thực dụng: danh tính càng có vẻ đáng tin thì quy trình xác minh càng không được bỏ qua. Người thật sẽ hiểu vì sao bạn cần xác minh; kẻ lừa đảo thường muốn bạn bỏ qua bước đó.',
           ], [
@@ -921,6 +939,7 @@ export const MODULES = [
           lesson('5.1.1', 'Quy trình xử lý yêu cầu tài chính', [
             'Pause: dừng lại trước khi chuyển tiền, đọc OTP hoặc bấm link. Cảm giác gấp là tín hiệu cần kiểm tra, không phải lý do để bỏ kiểm tra.',
             'Observe: ghi lại các dấu hiệu bất thường: tài khoản nhận tiền lạ, lý do mơ hồ, cấm gọi lại, yêu cầu giữ bí mật, thay đổi kênh liên lạc hoặc nói chuyện rất ngắn.',
+            { type: 'image', src: SCENARIO_ASSETS.fakeInvestment, alt: 'Video đầu tư mạo danh người nổi tiếng', caption: 'Một lời mời đầu tư rủi ro thường kết hợp nhiều lớp: danh tính đáng tin, bình luận tạo đám đông, link lạ và áp lực thời gian.' },
             'Verify: tự gọi số đã lưu, liên hệ người thân khác, dùng kênh nội bộ chính thức, hoặc tự mở app/ngân hàng/trang web chính thức. Không dùng số điện thoại hoặc link do người đang yêu cầu cung cấp.',
             'Decide: nếu chưa xác minh được, không chuyển tiền, không đọc OTP, không cài app và không gửi giấy tờ. Từ chối trong rủi ro cao là một quyết định hợp lý.',
           ], [
@@ -960,6 +979,7 @@ export const MODULES = [
         lessons: [
           lesson('5.2.0', 'Tác hại không dừng ở màn hình', [
             'Trong môi trường học đường, deepfake có thể xuất hiện dưới dạng ảnh nhạy cảm, clip ghép mặt, tin đồn bằng giọng nói hoặc tài khoản giả. Ngay cả khi nội dung là giả, người bị nhắm đến vẫn có thể chịu tổn thương thật: xấu hổ, bị cô lập, bị bắt nạt hoặc mất cảm giác an toàn.',
+            { type: 'image', src: SCENARIO_ASSETS.sensitiveGroupChat, alt: 'Nhóm chat có nội dung nhạy cảm gây hại', caption: 'Với nội dung nhạy cảm, phản ứng đúng là giảm lan truyền và đưa sự việc đến người có trách nhiệm.' },
             'Người xem thường nghĩ mình chỉ “xem cho biết” hoặc “gửi cho một người”. Nhưng mỗi lượt lưu, gửi lại, bình luận hoặc trêu đùa đều làm thiệt hại lan rộng hơn.',
             'Với nội dung nhạy cảm, câu hỏi đạo đức quan trọng hơn câu hỏi kỹ thuật: hành động của mình có làm người trong ảnh/clip bị hại thêm không?',
           ], [
@@ -969,6 +989,7 @@ export const MODULES = [
             'Dừng lan truyền: không tải xuống, không chuyển tiếp, không đăng lại và không yêu cầu người khác gửi.',
             'Giữ bằng chứng phù hợp: nếu cần báo cáo, lưu thông tin nguồn phát tán, thời điểm, đường dẫn hoặc ảnh chụp màn hình ở mức cần thiết. Tránh lưu hoặc phát tán lại chính nội dung nhạy cảm.',
             'Báo người có trách nhiệm: giáo viên, phụ huynh, quản trị viên nhóm, bộ phận an toàn nền tảng hoặc cơ quan chức năng khi tình huống nghiêm trọng.',
+            { type: 'image', src: LEARNING_CARD_ASSETS.sensitiveHarmReduction, alt: 'Thẻ giảm hại với nội dung nhạy cảm', caption: 'Giảm hại nghĩa là dừng lan truyền, giữ bằng chứng đúng mức và đưa sự việc đến người có trách nhiệm.' },
             'Hỗ trợ nạn nhân: tránh đổ lỗi, tránh chất vấn gây xấu hổ, khuyến khích họ tìm hỗ trợ. Một phản ứng bình tĩnh có thể giảm thiệt hại rất nhiều.',
           ], [
             'Trong nhóm lớp, im lặng đôi khi chưa đủ. Hành động đúng là dừng lan truyền và đưa vấn đề đến người có trách nhiệm.',
@@ -1087,7 +1108,7 @@ export const MODULES = [
           lesson('6.0.0', 'Kiến thức chỉ hữu ích khi thành quy tắc', [
             'Một người biết kiểm tra deepfake có thể tự bảo vệ mình tốt hơn. Nhưng trong đời sống thật, rủi ro thường đi qua người thân, bạn bè, đồng nghiệp hoặc nhóm chat trước khi đến bạn.',
             'Nếu gia đình chưa có cách xác minh khi có cuộc gọi cầu cứu, nếu lớp học chưa có quy tắc dừng phát tán ảnh nhạy cảm, nếu nhóm làm việc vẫn cho phép chuyển tiền ngoài quy trình, kiến thức cá nhân chưa đủ để tạo an toàn chung.',
-            { type: 'image', alt: 'DFB_ILL_M6_01', placeholderHint: 'Placeholder visual: Deepfense Shield như một bộ quy tắc bảo vệ cá nhân và cộng đồng trước mạo danh số.' },
+            { type: 'image', src: MODULE_HEADER_ASSETS[6], alt: 'Deepfense Shield', caption: 'Một người dùng an toàn hơn khi có thói quen kiểm chứng, lưu bằng chứng, báo cáo đúng nơi và hỗ trợ người bị hại.' },
             'Module này chuyển trọng tâm từ “tôi nhận ra dấu hiệu gì” sang “chúng ta đã chuẩn bị quy tắc gì để không hoảng loạn khi sự cố xảy ra”.',
           ], [
             'Phòng vệ tốt không bắt đầu ở lúc hoảng. Phòng vệ tốt bắt đầu từ quy tắc đã thống nhất trước.',
@@ -1172,6 +1193,7 @@ export const MODULES = [
         lessons: [
           lesson('6.3.0', 'Lưu bằng chứng để xử lý, không phải để lan truyền', [
             'Bằng chứng hữu ích có thể gồm đường link, tên tài khoản, số điện thoại, số tài khoản, thời gian, nội dung tin nhắn, ảnh chụp màn hình vừa đủ thông tin, mã giao dịch hoặc tên miền nghi vấn.',
+            { type: 'image', src: SCENARIO_ASSETS.evidenceCards, alt: 'Các thẻ bằng chứng được sắp xếp', caption: 'Bằng chứng nên được sắp xếp để xử lý sự cố, không dùng để kích động hoặc phát tán lại nội dung gây hại.' },
             'Điểm quan trọng là mục đích. Lưu bằng chứng để báo nền tảng, liên hệ ngân hàng, trình báo khi cần hoặc cảnh báo nhóm nhỏ có liên quan. Không dùng bằng chứng để bêu tên, kích động đám đông hoặc phát tán lại nội dung nhạy cảm.',
             'Với ảnh hoặc video nhạy cảm, nếu bạn không phải người có trách nhiệm xử lý, hãy ưu tiên báo cáo nền tảng hoặc người phụ trách. Không lưu trữ thêm, không gửi cho bạn bè để “xác minh”, không biến nạn nhân thành chủ đề bàn tán.',
           ], [
@@ -1205,7 +1227,7 @@ export const MODULES = [
             'Không cần chứng minh chắc chắn video là deepfake mới được từ chối. Tổng rủi ro đã đủ cao để dừng lại.',
           ]),
           lesson('6.4.2', 'Kết luận khóa học', [
-            'DEEPFENSE BASIC không dạy bạn sống trong nghi ngờ. Khóa học dạy bạn có phương pháp khi nội dung số cố làm bạn mất phương pháp.',
+            'DEEPFENSE ACADEMY không dạy bạn sống trong nghi ngờ. Khóa học dạy bạn có phương pháp khi nội dung số cố làm bạn mất phương pháp.',
             'Sau khóa này, người học cần nhớ ba năng lực lõi: nhận diện tín hiệu rủi ro, xác minh qua kênh độc lập, và chọn hành động giảm thiệt hại cho bản thân lẫn người khác.',
             'Bài kiểm tra cuối khóa sẽ đánh giá khả năng áp dụng, không chỉ ghi nhớ thuật ngữ. Hãy ưu tiên tư duy: nguồn ở đâu, ai được lợi, mình bị yêu cầu làm gì, có kênh xác minh độc lập không, và hành động nào ít gây hại nhất.',
           ], [
@@ -1223,7 +1245,7 @@ export const MODULES = [
         lessons: [
           {
             id: 'final-exam',
-            title: 'DEEPFENSE BASIC — Bài kiểm tra cuối khóa',
+            title: 'DEEPFENSE ACADEMY — Bài kiểm tra cuối khóa',
             type: 'exam',
             paragraphs: [],
             takeaways: [],

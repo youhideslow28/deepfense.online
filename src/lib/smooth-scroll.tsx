@@ -12,6 +12,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Expose lenis instance globally so ScrollToTop can call scrollTo(0)
+let lenisInstance: Lenis | null = null;
+export const getLenis = () => lenisInstance;
+
 const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     // Respect accessibility: không smooth scroll nếu user muốn giảm motion
@@ -26,6 +30,8 @@ const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => 
       prevent: (node: Element) => node.closest('[data-lenis-prevent]') !== null,
     } as any);
 
+    lenisInstance = lenis;
+
     // Đồng bộ Lenis ↔ GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
@@ -36,6 +42,7 @@ const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
     return () => {
       lenis.destroy();
+      lenisInstance = null;
     };
   }, []);
 

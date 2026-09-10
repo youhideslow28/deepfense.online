@@ -40,7 +40,8 @@ export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
       category: "CÔNG NGHỆ GIÁM ĐỊNH AI",
       items: [
         { title: "rPPG (Nhịp tim từ xa)", content: "Mắt người không thấy được, nhưng AI có thể quét sự thay đổi màu sắc vi mô của da theo nhịp tim để xác định đó là người thật." },
-        { title: "C2PA (Hộ chiếu Nội dung)", content: "Tiêu chuẩn toàn cầu giúp dán nhãn 'nguồn gốc' cho hình ảnh, giúp biết được ảnh chụp từ camera hay tạo ra từ AI." },
+        { title: "C2PA 2.4 / Content Credentials", content: "Chuẩn provenance có chữ ký số, ghi lại nguồn và các tác vụ tạo/chỉnh sửa. Nhãn này là bằng chứng nguồn gốc có thể kiểm tra, không phải phán quyết tuyệt đối rằng ảnh thật hay giả; không có nhãn cũng không chứng minh ảnh giả." },
+        { title: "CAWG Training & Data Mining 1.1", content: "Một assertion bổ sung để ghi rõ nội dung có được phép khai thác dữ liệu, dùng làm đầu vào suy luận, huấn luyện AI thường hay huấn luyện AI tạo sinh hay không. Đây là tín hiệu cho hệ thống đọc và thực thi, không phải cơ chế chặn sao chép tuyệt đối." },
         { title: "Phân tích Phổ âm", content: "AI lừa đảo thường có dải tần số âm thanh không đều, để lại các vết nhiễu đặc trưng khi biểu diễn trên biểu đồ phổ tần số (Spectrogram)." }
       ]
     },
@@ -105,8 +106,9 @@ export const KNOWLEDGE_BASE: Record<Language, KnowledgeCategory[]> = {
     {
       category: "FORENSICS TECHNOLOGY",
       items: [
-        { title: "rPPG (Remote Heartbeat)", content: "Invisible to humans, AI can scan micro-skin color changes driven by heartbeats to verify real-life status." },
-        { title: "C2PA Standards", content: "A global standard for media provenance, labeling whether content is camera-original or AI-generated." },
+        { title: "rPPG (Remote Heartbeat)", content: "A research direction that may estimate pulse-related color changes in video, but it is not a standalone proof that content is real." },
+        { title: "C2PA 2.4 / Content Credentials", content: "A cryptographically signed provenance standard that records origin and editing actions. It is verifiable source-history evidence, not an absolute real/fake verdict; missing credentials do not prove a file is fake." },
+        { title: "CAWG Training & Data Mining 1.1", content: "An assertion for machine-readable preferences about data mining, AI inference, non-generative training, and generative training. It signals policy to consumers; it cannot physically stop copying on its own." },
         { title: "Spectrogram Analysis", content: "Scam AI often has irregular frequency bands, leaving characteristic noise patterns on a spectrogram." }
       ]
     },

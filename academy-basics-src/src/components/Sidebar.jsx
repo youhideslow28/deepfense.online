@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MODULES } from '../data/course.js';
 
-export default function Sidebar({ isOpen, onClose, currentLesson, completedLessons, onSelectLesson, lessonIndex, onHome }) {
+export default function Sidebar({ isOpen, onClose, currentLesson, completedLessons, onSelectLesson, lessonIndex, onHome, guestMode }) {
   const activeLessonRef = useRef(null);
   const [openModules, setOpenModules] = useState(() => {
     const init = {};
@@ -51,8 +51,8 @@ export default function Sidebar({ isOpen, onClose, currentLesson, completedLesso
       <button className="sidebar-logo" onClick={onHome} title="Về trang chủ">
         <img src="/logo/android-chrome-192x192.png" className="sidebar-logo-img" alt="DEEPFENSE" />
         <div className="sidebar-logo-text">
-          Deepfense
-          <span>BASICS</span>
+           Deepfense
+           <span>ACADEMY</span>
         </div>
         {/* Close button — visible only on mobile */}
         <span className="sidebar-close-btn" onClick={e => { e.stopPropagation(); onClose?.(); }} aria-label="Đóng menu" role="button" tabIndex={0}>✕</span>
@@ -61,12 +61,13 @@ export default function Sidebar({ isOpen, onClose, currentLesson, completedLesso
       {/* Global progress */}
       <div className="sidebar-progress-wrap">
         <div className="sidebar-progress-label">
-          <span>Tiến độ khoá học</span>
-          <strong>{pct}%</strong>
+          <span>{guestMode ? 'Chế độ xem thử' : 'Tiến độ khoá học'}</span>
+          <strong>{guestMode ? 'Không lưu' : `${pct}%`}</strong>
         </div>
         <div className="sidebar-progress-bar">
-          <div className="sidebar-progress-fill" style={{ width: `${pct}%` }} />
+          <div className="sidebar-progress-fill" style={{ width: `${guestMode ? 0 : pct}%` }} />
         </div>
+        {guestMode && <p className="sidebar-guest-note">Đọc tự do · đăng nhập để làm bài</p>}
       </div>
 
       {/* Module nav */}

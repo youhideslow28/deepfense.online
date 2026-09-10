@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -8,9 +9,21 @@ export default {
         secondary: '#FF2A6D',   // Red - cảnh báo / danger
         accent:    '#F59E0B',   // Amber - gamification / achievements
         success:   '#10B981',   // Green - correct / safe
-        bgDark:    '#03080F',   // Near-black blue-tinted bg
-        surface:   '#0D1929',   // Dark navy surface
-        border:    '#1E3A5F',   // Blue-tinted border
+        bgDark:    'var(--bg-dark)',   // Near-black blue-tinted bg
+        surface:   'var(--bg-surface)',   // Dark navy surface
+        border:    'var(--border-color)',   // Blue-tinted border
+        slate: {
+          50: 'var(--slate-50)',
+          100: 'var(--slate-100)',
+          200: 'var(--slate-200)',
+          300: 'var(--slate-300)',
+          400: 'var(--slate-400)',
+          500: 'var(--slate-500)',
+          600: 'var(--slate-600)',
+          700: 'var(--slate-700)',
+          800: 'var(--slate-800)',
+          900: 'var(--slate-900)',
+        },
       },
       fontFamily: {
         sans:  ['Inter', 'Be Vietnam Pro', 'Arial', 'Helvetica Neue', 'sans-serif'],

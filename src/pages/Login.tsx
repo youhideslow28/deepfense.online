@@ -101,7 +101,7 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
         displayName: currentUser.displayName || '',
         photoURL: currentUser.photoURL || '',
         provider: currentUser.providerData[0]?.providerId || 'firebase',
-        course: 'DEEPFENSE BASICS',
+        course: 'DEEPFENSE ACADEMY',
         credentialTarget: 'DEEPFENSE AWARE',
         rewardTarget: { amount: 500, symbol: 'DPF' },
         ...initialLearningState,
@@ -210,7 +210,7 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
 
   return (
     <div className="mx-auto max-w-5xl animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <section className="glass-dark relative overflow-hidden rounded-3xl border border-white/10 p-6 shadow-[0_32px_120px_rgba(0,0,0,0.5)] md:p-10">
+      <section className="glass-dark relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 p-6 shadow-[0_32px_120px_rgba(0,0,0,0.5)] md:p-10">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
         <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-blue-600/10 blur-[100px]" />
         <div className="absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-cyan-500/8 blur-[100px]" />
@@ -220,10 +220,10 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-blue-200">
               <ShieldCheck size={13} /> DEEPFENSE AUTH
             </div>
-            <h1 className="text-3xl font-black uppercase leading-tight text-white md:text-5xl" style={{ fontFamily: "var(--font-display)" }}>
+            <h1 className="text-3xl font-black uppercase leading-tight text-slate-900 dark:text-white md:text-5xl" style={{ fontFamily: "var(--font-display)" }}>
               {isVi ? 'Đăng nhập để lưu tiến độ học.' : 'Sign in to save your learning progress.'}
             </h1>
-            <p className="mt-5 max-w-xl text-sm leading-7 text-slate-300/85 md:text-base">
+            <p className="mt-5 max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-300/85 md:text-base">
               {isVi
                 ? 'Tạo tài khoản bằng email và mật khẩu để lưu bài học, thử thách, chứng nhận và DPF coin. Tài khoản admin được phân quyền riêng, người dùng thường không thể vào dashboard quản trị.'
                 : 'Create an email/password account to save lessons, challenges, certificates, and DPF coin. Admin accounts use a separate role, so regular users cannot access the admin dashboard.'}
@@ -234,69 +234,69 @@ const Login: React.FC<LoginProps> = ({ lang, user }) => {
                 [isVi ? 'Nhận DPF' : 'Earn DPF', isVi ? 'Điểm thưởng hiển thị nhanh trên thanh trên.' : 'Rewards appear in the top bar.'],
                 [isVi ? 'An toàn' : 'Safer access', isVi ? 'Admin được khóa bằng role riêng.' : 'Admin is protected by role gates.'],
               ].map(([title, text]) => (
-                <div key={title} className="rounded-2xl border border-white/10 bg-white/[0.035] p-3">
-                  <div className="text-xs font-black uppercase tracking-wide text-white">{title}</div>
-                  <div className="mt-1 text-[11px] leading-relaxed text-slate-400">{text}</div>
+                <div key={title} className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/[0.035] p-3">
+                  <div className="text-xs font-black uppercase tracking-wide text-slate-900 dark:text-white">{title}</div>
+                  <div className="mt-1 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{text}</div>
                 </div>
               ))}
             </div>
           </div>
 
           <div className="lg:col-span-6">
-            <div className="glass-dark rounded-2xl border border-white/10 p-5 md:p-8">
+            <div className="glass-dark rounded-2xl border border-black/10 dark:border-white/10 p-5 md:p-8">
               {user ? (
                 <div className="space-y-5">
                   <div className="rounded-xl border border-emerald-400/20 bg-emerald-400/10 p-4">
-                    <div className="flex items-center gap-2 text-sm font-black text-white"><BadgeCheck size={16} /> {user.displayName || user.email}</div>
+                    <div className="flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white"><BadgeCheck size={16} /> {user.displayName || user.email}</div>
                     <div className="mt-1 text-xs text-emerald-200/80">{user.email}</div>
                   </div>
                   <div className="flex flex-col gap-3 sm:flex-row">
                     <GlowButton color="primary" size="md" icon={<ShieldCheck size={16} />} onClick={() => navigate('/profile')}>
                       {isVi ? 'MỞ HỒ SƠ' : 'OPEN PROFILE'}
                     </GlowButton>
-                    <button onClick={handleSignOut} disabled={busy} className="rounded-lg border border-white/10 px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-slate-300 hover:border-red-400/30 hover:text-red-200">
+                    <button onClick={handleSignOut} disabled={busy} className="rounded-lg border border-black/10 dark:border-white/10 px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300 hover:border-red-400/30 hover:text-red-200">
                       {isVi ? 'Đăng xuất' : 'Sign out'}
                     </button>
                   </div>
                 </div>
               ) : (
                 <div className="space-y-5">
-                  <div className="grid grid-cols-2 gap-2 rounded-xl border border-white/10 bg-black/25 p-1">
-                    <button type="button" onClick={() => { setMode('login'); setMessage(''); }} className={`rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-[0.12em] transition-colors ${mode === 'login' ? 'bg-blue-500 text-white' : 'text-slate-400 hover:text-white'}`}>
+                  <div className="grid grid-cols-2 gap-2 rounded-xl border border-black/10 dark:border-white/10 bg-black/25 p-1">
+                    <button type="button" onClick={() => { setMode('login'); setMessage(''); }} className={`rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-[0.12em] transition-colors ${mode === 'login' ? 'bg-blue-500 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}>
                       {isVi ? 'Đăng nhập' : 'Sign in'}
                     </button>
-                    <button type="button" onClick={() => { setMode('register'); setMessage(''); }} className={`rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-[0.12em] transition-colors ${mode === 'register' ? 'bg-emerald-500 text-white' : 'text-slate-400 hover:text-white'}`}>
+                    <button type="button" onClick={() => { setMode('register'); setMessage(''); }} className={`rounded-lg px-3 py-2 text-[10px] font-black uppercase tracking-[0.12em] transition-colors ${mode === 'register' ? 'bg-emerald-500 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}>
                       {isVi ? 'Tạo tài khoản' : 'Create account'}
                     </button>
                   </div>
 
                   <div className="pt-2">
-                    <div className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
+                    <div className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
                       {mode === 'login' ? <KeyRound size={13} /> : <UserPlus size={13} />}
                       {mode === 'login' ? (isVi ? 'Đăng nhập email' : 'Email sign in') : (isVi ? 'Tạo tài khoản mới' : 'Create a new account')}
                     </div>
                     <form onSubmit={mode === 'login' ? handleEmailPassword : handleCreateAccount} className="space-y-3">
                       {mode === 'register' && (
                         <label className="block">
-                          <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{isVi ? 'Tên hiển thị' : 'Display name'}</span>
-                          <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} type="text" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-white/10" placeholder={isVi ? 'Nguyễn Văn A' : 'Your name'} />
+                          <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{isVi ? 'Tên hiển thị' : 'Display name'}</span>
+                          <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} type="text" className="w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-3 text-sm text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-black/10 dark:bg-white/10" placeholder={isVi ? 'Nguyễn Văn A' : 'Your name'} />
                         </label>
                       )}
                       <label className="block">
-                        <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Email</span>
-                        <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 transition-all focus-within:border-blue-500/50 focus-within:bg-white/10">
+                        <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">Email</span>
+                        <div className="flex items-center gap-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 transition-all focus-within:border-blue-500/50 focus-within:bg-black/10 dark:bg-white/10">
                           <Mail size={14} className="text-slate-500" />
-                          <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" className="w-full bg-transparent py-3 text-sm text-white outline-none placeholder:text-slate-600" placeholder="you@example.com" />
+                          <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" className="w-full bg-transparent py-3 text-sm text-slate-900 dark:text-white outline-none placeholder:text-slate-600" placeholder="you@example.com" />
                         </div>
                       </label>
                       <label className="block">
-                        <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{isVi ? 'Mật khẩu' : 'Password'}</span>
-                        <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-white/10" placeholder="••••••••" />
+                        <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{isVi ? 'Mật khẩu' : 'Password'}</span>
+                        <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" className="w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-3 text-sm text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-black/10 dark:bg-white/10" placeholder="••••••••" />
                       </label>
                       {mode === 'register' && (
                         <label className="block">
-                          <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{isVi ? 'Xác nhận mật khẩu' : 'Confirm password'}</span>
-                          <input value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type="password" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-white/10" placeholder="••••••••" />
+                          <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{isVi ? 'Xác nhận mật khẩu' : 'Confirm password'}</span>
+                          <input value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type="password" className="w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-3 text-sm text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-black/10 dark:bg-white/10" placeholder="••••••••" />
                         </label>
                       )}
                       {mode === 'login' && (

@@ -1140,7 +1140,7 @@ export const EXAM_BANK = [
     'Không lan truyền nội dung gây hại.',
   ], 0, 'Mục tiêu là cân bằng: không hoảng sợ, không tin vội.'),
 
-  eq('Q150', 6, 'concept', 'Bài học lớn nhất của DEEPFENSE BASIC là gì?', [
+  eq('Q150', 6, 'concept', 'Bài học lớn nhất của DEEPFENSE ACADEMY là gì?', [
     'Không tin vội, không chia sẻ vội, không chuyển tiền khi bị ép; hãy kiểm chứng trước khi hành động.',
     'Mọi thứ trên Internet đều giả.',
     'Detector luôn đủ.',

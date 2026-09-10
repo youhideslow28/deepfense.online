@@ -38,7 +38,7 @@ const COLOR_MAP: Record<ButtonColor, { base: string; glow: string }> = {
     glow: 'shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_35px_rgba(37,99,235,0.5)]',
   },
   ghost: {
-    base: 'bg-transparent text-white border border-white/15 hover:bg-white/10 hover:border-white/30',
+    base: 'bg-transparent text-slate-900 dark:text-white border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10 hover:border-black/30 dark:hover:border-white/30',
     glow: '',
   },
 };

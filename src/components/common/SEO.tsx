@@ -9,11 +9,11 @@ interface SEOProps {
 }
 
 const SEO: React.FC<SEOProps> = ({ title, description, lang }) => {
-  const defaultTitle = 'DEEPFENSE.ONLINE - Hệ thống nhận diện Deepfake & AI Scam';
+  const defaultTitle = 'DEEPFENSE.ONLINE - Huấn luyện nhận diện Deepfake & AI Scam';
   const defaultDesc = lang === 'vi' 
-    ? 'Nền tảng huấn luyện và giám sát an ninh mạng. Công cụ quét rủi ro lừa đảo Deepfake, AI Voice và bảo vệ cộng đồng trên không gian số.'
-    : 'Cybersecurity monitoring and training platform. Scan for Deepfake risks, AI Voice scams, and protect yourself online.';
-  const siteUrl = 'https://deepfense.online'; // Thay bằng tên miền thật của bạn
+    ? 'Nền tảng huấn luyện nhận diện deepfake, AI voice scam và lừa đảo công nghệ cao. Máy quét AI đang trong giai đoạn phát triển, train model và benchmark.'
+    : 'Training platform for deepfake awareness, AI voice scams, and high-tech fraud prevention. The AI scanner is currently in development, training, and benchmark validation.';
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://deepfense.online';
 
   const seoTitle = title ? `${title} | DEEPFENSE` : defaultTitle;
   const seoDesc = description || defaultDesc;
@@ -32,7 +32,7 @@ const SEO: React.FC<SEOProps> = ({ title, description, lang }) => {
       <meta property="og:image" content={`${siteUrl}/assets/poster.jpg`} />
 
       {/* Keywords cho Google */}
-      <meta name="keywords" content="deepfake, lừa đảo AI, bảo mật, an ninh mạng, quét deepfake, deepfake scanner, nhận diện khuôn mặt giả, VKU" />
+      <meta name="keywords" content="deepfake education, lừa đảo AI, bảo mật, an ninh mạng, nhận diện deepfake, AI scam awareness, content provenance, VKU" />
     </Helmet>
   );
 };

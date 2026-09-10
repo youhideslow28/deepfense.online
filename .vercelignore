@@ -1,0 +1,14 @@
+node_modules
+dist
+.git
+.claude
+*.log
+.env.local
+# Bỏ qua các video thô chưa nén dung lượng lớn (>50MB) để tránh giới hạn Vercel 100MB
+**/module 0.mp4
+**/module 1.mp4
+**/module 2.mp4
+**/module 3.mp4
+**/module 4.mp4
+**/module 5.mp4
+**/module 6.mp4

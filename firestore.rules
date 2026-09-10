@@ -1,0 +1,195 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isPlatformOwner() {
+      return signedIn() && request.auth.token.email == 'deepfense@gmail.com';
+    }
+
+    function userDocPath() {
+      return /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+
+    function hasUserDoc() {
+      return signedIn() && exists(userDocPath());
+    }
+
+    function role() {
+      return hasUserDoc() ? get(userDocPath()).data.role : 'user';
+    }
+
+    function hasConsoleAccess() {
+      return isPlatformOwner() || role() in ['owner', 'admin', 'editor', 'support'];
+    }
+
+    function isOwnerOrAdmin() {
+      return isPlatformOwner() || role() in ['owner', 'admin'];
+    }
+
+    function canEditContent() {
+      return isPlatformOwner() || role() in ['owner', 'admin', 'editor'];
+    }
+
+    function canSupportCases() {
+      return isPlatformOwner() || role() in ['owner', 'admin', 'support'];
+    }
+
+    function isSelfDoc(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function isSelfEmail() {
+      return signedIn()
+        && request.auth.token.email != null
+        && resource.data.email == request.auth.token.email;
+    }
+
+    function readsSelfUid() {
+      return signedIn() && resource.data.uid == request.auth.uid;
+    }
+
+    function writesSelfUid() {
+      return signedIn() && request.resource.data.uid == request.auth.uid;
+    }
+
+    function selfProfileKeys() {
+      return [
+        'uid',
+        'email',
+        'displayName',
+        'photoURL',
+        'emailVerified',
+        'authProviders',
+        'role',
+        'canAccessAdmin',
+        'status',
+        'lastActiveAt',
+        'adminLastSeenAt',
+        'createdAt',
+        'updatedAt'
+      ];
+    }
+
+    function createsBasicSelfDoc() {
+      return (!request.resource.data.keys().hasAny(['role']) || request.resource.data.role == 'user')
+        && (!request.resource.data.keys().hasAny(['canAccessAdmin']) || request.resource.data.canAccessAdmin == false)
+        && !request.resource.data.keys().hasAny(['adminLastSeenAt'])
+        && request.resource.data.keys().hasOnly(selfProfileKeys());
+    }
+
+    function updatesBasicSelfDoc() {
+      return (!request.resource.data.keys().hasAny(['role']) || request.resource.data.role == 'user')
+        && (!request.resource.data.keys().hasAny(['canAccessAdmin']) || request.resource.data.canAccessAdmin == false)
+        && !request.resource.data.keys().hasAny(['adminLastSeenAt'])
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(selfProfileKeys());
+    }
+
+    function keepsAssignedConsoleRole() {
+      return resource.data.keys().hasAny(['role'])
+        && resource.data.role in ['owner', 'admin', 'editor', 'support']
+        && request.resource.data.role == resource.data.role
+        && request.resource.data.canAccessAdmin == true
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(selfProfileKeys());
+    }
+
+    match /site_config/{documentId} {
+      allow read: if true;
+      allow write: if canEditContent();
+    }
+
+    match /users/{userId} {
+      allow get, list: if isSelfDoc(userId) || isSelfEmail() || hasConsoleAccess();
+      allow create: if isOwnerOrAdmin() || (isSelfDoc(userId) && createsBasicSelfDoc());
+      allow update: if isOwnerOrAdmin() || (isSelfDoc(userId) && (updatesBasicSelfDoc() || keepsAssignedConsoleRole()));
+      allow delete: if isOwnerOrAdmin();
+    }
+
+    match /academy_learners/{userId} {
+      allow read: if isSelfDoc(userId) || hasConsoleAccess();
+      allow create, update: if isSelfDoc(userId) || isOwnerOrAdmin();
+      allow delete: if isOwnerOrAdmin();
+    }
+
+    match /user_profiles/{userId} {
+      allow read: if isSelfDoc(userId) || hasConsoleAccess();
+      allow create, update: if isSelfDoc(userId) || isOwnerOrAdmin();
+      allow delete: if isOwnerOrAdmin();
+    }
+
+    match /help_center_cases/{caseId} {
+      allow create: if true;
+      allow read, update: if canSupportCases();
+      allow delete: if isOwnerOrAdmin();
+    }
+
+    match /incident_reports/{reportId} {
+      allow create: if true;
+      allow read, update: if canSupportCases();
+      allow delete: if isOwnerOrAdmin();
+    }
+
+    match /challenges/{challengeId} {
+      allow read: if true;
+      allow create, update, delete: if canEditContent();
+    }
+
+    match /game_results/{resultId} {
+      allow read: if true;
+      allow create: if signedIn();
+      allow update, delete: if isOwnerOrAdmin();
+    }
+
+    match /surveys/{surveyId} {
+      allow read: if hasConsoleAccess();
+      allow create: if true;
+      allow update, delete: if isOwnerOrAdmin();
+    }
+
+    match /minigame_leaderboard/{entryId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if isOwnerOrAdmin();
+    }
+
+    match /dpf_ledger/{ledgerId} {
+      allow read: if isOwnerOrAdmin() || readsSelfUid();
+      allow create, update: if isOwnerOrAdmin() || writesSelfUid();
+      allow delete: if isOwnerOrAdmin();
+    }
+
+    match /dpf_daily_quotas/{quotaId} {
+      allow read: if isOwnerOrAdmin() || readsSelfUid();
+      allow create, update: if isOwnerOrAdmin() || writesSelfUid();
+      allow delete: if isOwnerOrAdmin();
+    }
+
+    match /unlocks/{unlockId} {
+      allow read: if isOwnerOrAdmin() || readsSelfUid();
+      allow create, update: if isOwnerOrAdmin() || writesSelfUid();
+      allow delete: if isOwnerOrAdmin();
+    }
+
+    match /activity_logs/{logId} {
+      allow read: if hasConsoleAccess();
+      allow create, update, delete: if isOwnerOrAdmin() || canEditContent() || canSupportCases();
+    }
+
+    match /security_events/{eventId} {
+      allow read: if isOwnerOrAdmin();
+      allow create, update, delete: if isOwnerOrAdmin();
+    }
+
+    match /content_lessons/{lessonId} {
+      allow read: if true;
+      allow create, update, delete: if canEditContent();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

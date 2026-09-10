@@ -10,15 +10,15 @@ export const module0: Module = {
   outcomes: [
     "Hiểu vì sao deepfake không còn là chuyện xa lạ của người nổi tiếng hay phim ảnh.",
     "Nhận ra rằng bất kỳ người dùng Internet nào cũng có thể gặp nội dung giả mạo, lừa đảo hoặc gây hiểu nhầm.",
-    "Làm quen với cách học của DEEPFENSE BASIC: học qua câu chuyện, tình huống, quan sát, quyết định và phản hồi.",
+    "Làm quen với cách học của DEEPFENSE ACADEMY: học qua câu chuyện, tình huống, quan sát, quyết định và phản hồi.",
     "Tự kiểm tra phản xạ ban đầu của mình trước các tình huống nghi vấn trên không gian số."
   ],
   sections: [
     {
-      title: "0.0 Chào mừng đến với DEEPFENSE BASIC",
+      title: "0.0 Chào mừng đến với DEEPFENSE ACADEMY",
       lessons: [
-        lesson("0.0.1", "Chào mừng đến với DEEPFENSE BASIC", [
-          "Chào mừng bạn đến với DEEPFENSE BASIC.",
+        lesson("0.0.1", "Chào mừng đến với DEEPFENSE ACADEMY", [
+          "Chào mừng bạn đến với DEEPFENSE ACADEMY.",
           "Đây là khóa học cơ bản về deepfake và phòng vệ trước nội dung giả mạo trên không gian số. Khóa học này không yêu cầu bạn biết lập trình, không yêu cầu bạn hiểu sâu về trí tuệ nhân tạo, cũng không yêu cầu bạn phải là chuyên gia an toàn thông tin.",
           "Bạn chỉ cần là một người đang sống trong thế giới số.",
           "Nếu bạn từng dùng mạng xã hội, từng nhận tin nhắn từ người lạ, từng xem video ngắn, từng nghe một lời kêu gọi chuyển tiền, từng thấy một hình ảnh gây sốc trong nhóm chat, từng băn khoăn \"cái này có thật không?\", thì khóa học này dành cho bạn.",
@@ -31,7 +31,7 @@ export const module0: Module = {
           "Trước đây, nhiều người nghĩ: \"Có hình thì chắc là thật.\" Sau đó, chúng ta học thêm: \"Ảnh có thể bị chỉnh sửa.\" Rồi video trở thành bằng chứng mạnh hơn: \"Có video thì chắc khó mà giả.\"",
           "Nhưng bây giờ, ngay cả hình ảnh, video và giọng nói cũng có thể được tạo ra hoặc chỉnh sửa bằng AI theo cách rất thuyết phục.",
           "Điều đó không có nghĩa là chúng ta phải nghi ngờ mọi thứ. Nếu cái gì cũng bị xem là giả, chúng ta sẽ mệt mỏi và mất phương hướng.",
-          "Mục tiêu của DEEPFENSE BASIC là giúp bạn có một cách tiếp cận cân bằng:\n- Không hoảng sợ.\n- Không tin vội.\n- Không chia sẻ vội.\n- Không chuyển tiền khi đang bị gây áp lực.\n- Biết cách kiểm chứng trước khi hành động."
+          "Mục tiêu của DEEPFENSE ACADEMY là giúp bạn có một cách tiếp cận cân bằng:\n- Không hoảng sợ.\n- Không tin vội.\n- Không chia sẻ vội.\n- Không chuyển tiền khi đang bị gây áp lực.\n- Biết cách kiểm chứng trước khi hành động."
         ], [])
       ]
     },
@@ -78,10 +78,10 @@ export const module0: Module = {
       title: "0.3 Bạn sẽ học như thế nào?",
       lessons: [
         lesson("0.3.1", "Bạn sẽ học như thế nào?", [
-          "DEEPFENSE BASIC được thiết kế theo kiểu học ngắn, tương tác và thực tế.",
+          "DEEPFENSE ACADEMY được thiết kế theo kiểu học ngắn, tương tác và thực tế.",
           "Mỗi phần học thường có 5 thành phần:\n1. Câu chuyện: Bạn gặp một tình huống giống đời thật.\n2. Kiến thức: Bạn học khái niệm hoặc quy trình cần thiết.\n3. Quan sát: Bạn xem dấu hiệu, dữ kiện, hành vi hoặc ngữ cảnh.\n4. Quyết định: Bạn chọn hành động.\n5. Phản hồi: Hệ thống giải thích vì sao lựa chọn đó an toàn hoặc rủi ro.",
           "Một số phần sẽ có quiz ngắn. Quiz không nhằm \"bắt lỗi\" bạn. Quiz giúp bạn kiểm tra xem mình đã hiểu đủ để dùng kiến thức trong đời thật chưa.",
-          "Cuối khóa, bạn sẽ làm bài kiểm tra gồm 50 câu hỏi. Hệ thống sẽ lấy ngẫu nhiên từ ngân hàng 150 câu. Nếu đạt từ 70% trở lên, bạn đủ điều kiện nhận chứng chỉ hoàn thành DEEPFENSE BASIC."
+          "Cuối khóa, bạn sẽ làm bài kiểm tra gồm 50 câu hỏi. Hệ thống sẽ lấy ngẫu nhiên từ ngân hàng 150 câu. Nếu đạt từ 70% trở lên, bạn đủ điều kiện nhận chứng chỉ hoàn thành DEEPFENSE ACADEMY."
         ], [])
       ]
     },
@@ -108,7 +108,7 @@ export const module0: Module = {
     }
   ],
   quiz: [
-    q("Mục tiêu chính của DEEPFENSE BASIC là gì?", ["Học cách tạo deepfake", "Học cách nhận diện rủi ro và phòng vệ an toàn trước nội dung giả mạo", "Học mẹo vượt detector", "Tăng lượt xem nội dung"], 1),
+    q("Mục tiêu chính của DEEPFENSE ACADEMY là gì?", ["Học cách tạo deepfake", "Học cách nhận diện rủi ro và phòng vệ an toàn trước nội dung giả mạo", "Học mẹo vượt detector", "Tăng lượt xem nội dung"], 1),
     q("Deepfense Check gồm các bước nào?", ["Pause, Observe, Verify, Trace, Decide", "Post, Like, Share, Comment", "Copy, Paste, Upload", "Scan, Delete, Ignore"], 0),
     q("Khi nhận cuộc gọi giống người thân yêu cầu chuyển tiền gấp, bước an toàn nhất là gì?", ["Chuyển tiền ngay", "Ngắt cuộc gọi và xác minh qua số/kênh đã biết trước", "Gửi OTP để họ xử lý", "Hỏi số tài khoản rồi chuyển thử"], 1)
   ]

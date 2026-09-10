@@ -13,6 +13,7 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { basicsCourse, Module, Section, Lesson } from '@/data/basicsCourseData';
 import LessonMiniGame from '@/features/academy/LessonMiniGame';
 import LessonContentBlock from '@/features/academy/LessonContentBlock';
+import WinterCheckpoint from '@/features/academy/WinterCheckpoint';
 
 interface AcademyProps { 
   lang: Language; 
@@ -124,6 +125,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [currentView, setCurrentView] = useState('dashboard');
+  const [guestMode, setGuestMode] = useState(() => searchParams.get('mode') === 'guest');
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [activeModule, setActiveModule] = useState<Module | null>(null);
   const [activeSectionIdx, setActiveSectionIdx] = useState(0);
@@ -148,15 +150,41 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   // Sync auth state to currentView
   useEffect(() => {
     if (authBusy) return;
-    if (!user) {
-      setCurrentView('welcome');
-    } else if (currentView === 'welcome') {
+    const requestedGuestMode = searchParams.get('mode') === 'guest';
+    if (!user && requestedGuestMode) {
+      setGuestMode(true);
       setCurrentView('dashboard');
+    } else if (!user) {
+      setGuestMode(false);
+      setCurrentView('welcome');
+    } else {
+      setGuestMode(false);
+      if (requestedGuestMode) navigate('/academy', { replace: true });
+      if (currentView === 'welcome') {
+        setCurrentView('dashboard');
+      }
     }
-  }, [user, authBusy]);
+  }, [user, authBusy, searchParams, navigate]);
+
+  const enterGuestMode = () => {
+    setGuestMode(true);
+    setCurrentView('dashboard');
+    navigate('/academy?mode=guest', { replace: true });
+  };
 
   useEffect(() => {
-    if (!user?.uid) return;
+    if (guestMode) {
+      setCompletedLessons([]);
+      setCompletedModules([]);
+      setHtmlCoursePassed(false);
+      setHtmlCourseEvalDone(false);
+    }
+  }, [guestMode]);
+
+  /* Authenticated users keep their own progress. Guest mode deliberately has no
+     persistence path; the separate reader also receives an explicit guest flag. */
+  useEffect(() => {
+    if (!user?.uid || guestMode) return;
     localStorage.setItem(storageKey('df_completed_lessons', user.uid), JSON.stringify(completedLessons));
     try {
       const progressKey = storageKey('dfb_progress_v2', user.uid);
@@ -168,10 +196,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
         currentLessonId: prev.currentLessonId ?? null,
       }));
     } catch {}
-  }, [completedLessons, user?.uid]);
+  }, [completedLessons, user?.uid, guestMode]);
 
   useEffect(() => {
-    if (!user?.uid) return;
+    if (!user?.uid || guestMode) return;
     localStorage.setItem(storageKey('df_completed_modules', user.uid), JSON.stringify(completedModules));
     // Keep user-scoped sync key up-to-date so /academy/basics/ SPA can read it
     try {
@@ -180,7 +208,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       const merged = [...new Set([...(prev.completedModules ?? []), ...completedModules])];
       localStorage.setItem(syncKey, JSON.stringify({ uid: user.uid, completedModules: merged, updatedAt: Date.now() }));
     } catch {}
-  }, [completedModules, user?.uid]);
+  }, [completedModules, user?.uid, guestMode]);
 
   useEffect(() => {
     if (!user?.uid) {
@@ -202,7 +230,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   }, [user?.uid, user?.email]);
 
   useEffect(() => {
-    if (!user?.uid) return;
+    if (!user?.uid || guestMode) return;
     const syncFromBasics = () => {
       setCompletedLessons(prev => [...new Set([...prev, ...readUserCompletedLessons(user.uid)])]);
       const savedModules = readJson<number[]>(storageKey('df_completed_modules', user.uid), []);
@@ -234,7 +262,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       window.removeEventListener('focus', onFocus);
       document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [user?.uid]);
+  }, [user?.uid, guestMode]);
+
   const [showAnswers, setShowAnswers] = useState<Record<string, boolean>>({});
   const [checkpointAnswers, setCheckpointAnswers] = useState<Record<number, number>>({});
   const [checkpointSubmitted, setCheckpointSubmitted] = useState(false);
@@ -275,7 +304,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
   const tracks = [
     {
       id: 'basics',
-      title: 'DEEPFENSE BASIC',
+      title: 'DEEPFENSE ACADEMY',
       subtitle: isVi ? 'Khóa nền tảng đầy đủ' : 'Complete foundation course',
       progress: (() => {
         const totalLessons = basicsCourse.modules.reduce((acc, m) => acc + m.sections.reduce((sAcc, s) => sAcc + s.lessons.length, 0), 0);
@@ -354,12 +383,32 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     },
   };
 
-  const stats = [
-    { label: isVi ? 'Khóa học' : 'Enrolled', value: isSignedIn ? 1 : 0, icon: BookOpen, color: 'text-blue-400' },
-    { label: isVi ? 'Thời gian' : 'Total Time', value: '45m', icon: Clock, color: 'text-cyan-400' },
-    { label: isVi ? 'Đã xong' : 'Finished', value: completedLessons.length, icon: CheckCircle2, color: 'text-emerald-400' },
-    { label: isVi ? 'Chứng chỉ' : 'Certs', value: (completedModules.includes(99) || (htmlCoursePassed && htmlCourseEvalDone)) ? 1 : 0, icon: Award, color: 'text-amber-400' },
-  ];
+  const stats = guestMode
+    ? [
+      { label: isVi ? 'Chế độ' : 'Mode', value: isVi ? 'Xem thử' : 'Guest', icon: Eye, color: 'text-blue-400' },
+      { label: isVi ? 'Module' : 'Modules', value: basicsCourse.modules.length, icon: BookOpen, color: 'text-cyan-400' },
+      { label: isVi ? 'Đã lưu' : 'Saved', value: isVi ? 'Không' : 'No', icon: LockKeyhole, color: 'text-amber-400' },
+      { label: isVi ? 'Chứng chỉ' : 'Certs', value: '—', icon: Award, color: 'text-slate-400' },
+    ]
+    : [
+      { label: isVi ? 'Khóa học' : 'Enrolled', value: isSignedIn ? 1 : 0, icon: BookOpen, color: 'text-blue-400' },
+      { label: isVi ? 'Thời gian' : 'Total Time', value: '45m', icon: Clock, color: 'text-cyan-400' },
+      { label: isVi ? 'Đã xong' : 'Finished', value: completedLessons.length, icon: CheckCircle2, color: 'text-emerald-400' },
+      { label: isVi ? 'Chứng chỉ' : 'Certs', value: (completedModules.includes(99) || (htmlCoursePassed && htmlCourseEvalDone)) ? 1 : 0, icon: Award, color: 'text-amber-400' },
+    ];
+
+  const openBasicsCourse = () => {
+    if (user) {
+      try {
+        localStorage.setItem('dfb_session_v1', JSON.stringify({
+          uid: user.uid,
+          loginAt: Date.now(),
+        }));
+      } catch {}
+    }
+    const guestQuery = guestMode && !user ? '?mode=guest' : '';
+    window.location.assign(`/academy/basics/index.html${guestQuery}`);
+  };
 
   const WelcomeView = () => (
     <div className="animate-in fade-in duration-500">
@@ -368,12 +417,12 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
         <div className="relative z-10 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-8">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-[10px] font-bold tracking-[0.12em] text-blue-300">
-              <GraduationCap size={12} /> DEEPFENSE BASIC
+              <GraduationCap size={12} /> DEEPFENSE ACADEMY
             </div>
-            <h1 className="text-4xl md:text-6xl font-black uppercase leading-tight text-white" style={{ fontFamily: "var(--font-display)" }}>
-              DEEPFENSE BASIC
+            <h1 className="text-4xl md:text-6xl font-black uppercase leading-tight text-slate-900 dark:text-white" style={{ fontFamily: "var(--font-display)" }}>
+              DEEPFENSE ACADEMY
             </h1>
-            <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-slate-300/85">
+            <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-slate-600 dark:text-slate-300/85">
               {isVi
                 ? 'Khóa nền tảng giúp bạn hiểu deepfake, nhận ra tín hiệu bất thường và biết cách kiểm chứng trước khi tin, chia sẻ hoặc chuyển tiền. Đăng nhập Google để lưu tiến độ, kết quả quiz và điều kiện mở certificate.'
                 : 'A foundation course that helps you understand deepfakes, notice suspicious signals, and verify before trusting, sharing, or sending money. Sign in with Google so progress, quiz results, and certificate eligibility are saved.'}
@@ -387,10 +436,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-amber-300">
                   {isVi ? 'Sau khi hoàn thành' : 'After completion'}
                 </div>
-                <div className="text-white font-black uppercase">Certificate + DPF</div>
+                <div className="text-slate-900 dark:text-white font-black uppercase">Certificate + DPF</div>
               </div>
             </div>
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm leading-relaxed text-slate-300/85">
+            <div className="rounded-xl border border-black/10 dark:border-white/10 bg-black/20 p-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300/85">
               {isVi
                 ? 'Certificate chỉ mở khi bạn học xong, gửi đánh giá khóa học và đạt bài thi cuối khóa.'
                 : 'Certificate unlocks only after lessons, course evaluation, and Final Exam are completed.'}
@@ -400,16 +449,16 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       </section>
 
       <section className="grid grid-cols-1 gap-6 mb-8 xl:grid-cols-12">
-        <div data-reveal className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#07111f]/90 p-6 md:p-8 xl:col-span-7">
+        <div data-reveal className="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-[#07111f]/90 p-6 md:p-8 xl:col-span-7">
           <div className="relative z-10 max-w-2xl">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/10 text-amber-300 px-4 py-1.5 text-[10px] font-bold tracking-[0.12em]">
               <LockKeyhole size={12} />
               {isVi ? 'CẦN ĐĂNG NHẬP GOOGLE' : 'GOOGLE SIGN-IN REQUIRED'}
             </div>
-            <h2 className="text-2xl md:text-4xl font-black text-white uppercase leading-tight" style={{ fontFamily: "var(--font-display)" }}>
+            <h2 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white uppercase leading-tight" style={{ fontFamily: "var(--font-display)" }}>
               {isVi ? 'Sẵn sàng vào bài học đầu tiên.' : 'Ready for your first lesson.'}
             </h2>
-            <p className="mt-4 text-slate-300/85 text-sm md:text-base leading-relaxed">
+            <p className="mt-4 text-slate-600 dark:text-slate-300/85 text-sm md:text-base leading-relaxed">
               {isVi
                 ? 'Khi đã đăng nhập, bạn sẽ được chuyển sang hệ thống học riêng. Tiến độ đọc, checkpoint và bài thi được lưu lại để bạn có thể tiếp tục đúng vị trí.'
                 : 'After sign-in, you will enter the course reader. Reading progress, checkpoints, and exams are saved so you can continue from the right place.'}
@@ -425,16 +474,24 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 <GlowButton color="primary" size="lg" icon={<LogIn size={16} />} onClick={onGoogleAuth}>
                   {authBusy ? (isVi ? 'ĐANG MỞ GOOGLE...' : 'OPENING GOOGLE...') : (isVi ? 'ĐĂNG NHẬP GOOGLE ĐỂ BẮT ĐẦU' : 'SIGN IN WITH GOOGLE')}
                 </GlowButton>
+                <button
+                  type="button"
+                  onClick={enterGuestMode}
+                  className="mt-3 inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-xs font-black uppercase tracking-[0.08em] text-slate-300 transition-colors hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-white"
+                >
+                  <Eye size={15} />
+                  {isVi ? 'XEM THỬ VỚI GUEST MODE' : 'PREVIEW AS GUEST'}
+                </button>
               </div>
             </div>
           </div>
         </div>
 
         <aside data-reveal className="xl:col-span-5">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-6">
+          <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/[0.025] p-6">
             <div className="mb-5 flex items-center gap-2">
               <ShieldCheck size={15} className="text-primary" />
-              <h2 className="text-white font-black uppercase tracking-[0.12em] text-sm">
+              <h2 className="text-slate-900 dark:text-white font-black uppercase tracking-[0.12em] text-sm">
                 {isVi ? 'Những thứ bạn sẽ được học' : 'What you will learn'}
               </h2>
             </div>
@@ -446,7 +503,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                       {module.code}
                     </div>
                     <div>
-                      <h3 className="text-white font-black text-sm uppercase leading-snug">{isVi ? module.titleVi : module.titleEn}</h3>
+                      <h3 className="text-slate-900 dark:text-white font-black text-sm uppercase leading-snug">{isVi ? module.titleVi : module.titleEn}</h3>
                       <div className="mt-3 flex items-center gap-2 text-[10px] font-mono text-blue-300/70">
                         <Clock3 size={12} /> {isVi ? module.metaVi : module.metaEn}
                       </div>
@@ -476,8 +533,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   <Award size={32} />
                 </div>
                 <div>
-                  <h3 className="text-white font-black uppercase italic tracking-wider text-lg">CHỨNG CHỈ CỦA BẠN</h3>
-                  <p className="text-[10px] text-amber-300 font-bold uppercase tracking-[0.12em]">{isVi ? 'ĐÃ HOÀN THÀNH DEEPFENSE BASIC' : 'DEEPFENSE BASIC CERTIFIED'}</p>
+                  <h3 className="text-slate-900 dark:text-white font-black uppercase italic tracking-wider text-lg">CHỨNG CHỈ CỦA BẠN</h3>
+                  <p className="text-[10px] text-amber-300 font-bold uppercase tracking-[0.12em]">{isVi ? 'ĐÃ HOÀN THÀNH DEEPFENSE ACADEMY' : 'DEEPFENSE ACADEMY CERTIFIED'}</p>
                 </div>
               </div>
               
@@ -486,13 +543,13 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   href="/academy/certificate-template/certificate-template.html" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-6 py-3 text-xs font-black uppercase tracking-[0.12em] text-white hover:bg-amber-400 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)]"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-6 py-3 text-xs font-black uppercase tracking-[0.12em] text-slate-900 dark:text-white hover:bg-amber-400 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)]"
                 >
                   <Award size={16} /> {isVi ? 'TẢI CHỨNG CHỈ' : 'DOWNLOAD CERTIFICATE'}
                 </a>
                 <button 
                   onClick={() => navigate('/academy/verify')}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-xs font-black uppercase tracking-[0.12em] text-white hover:bg-white/10 transition-all"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-6 py-3 text-xs font-black uppercase tracking-[0.12em] text-slate-900 dark:text-white hover:bg-black/10 dark:bg-white/10 transition-all"
                 >
                   <ExternalLink size={16} /> {isVi ? 'TRANG XÁC MINH' : 'VERIFY PAGE'}
                 </button>
@@ -504,20 +561,27 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {stats.map((stat, idx) => (
-          <div key={idx} className="glass-dark rounded-xl p-4 md:p-5 border border-white/10 hover:border-blue-500/30 transition-all group">
+          <div key={idx} className="glass-dark rounded-xl p-4 md:p-5 border border-black/10 dark:border-white/10 hover:border-blue-500/30 transition-all group">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{stat.label}</h3>
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{stat.label}</h3>
               <stat.icon className={`w-4 h-4 ${stat.color} group-hover:scale-110 transition-transform`} />
             </div>
-            <p className="text-xl md:text-2xl font-black text-white">{stat.value}</p>
+            <p className="text-xl md:text-2xl font-black text-slate-900 dark:text-white">{stat.value}</p>
           </div>
         ))}
       </div>
 
+      <WinterCheckpoint
+        lang={lang}
+        user={user}
+        completedLessons={completedLessons.length}
+        onStartCourse={openBasicsCourse}
+      />
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xl font-black uppercase text-white flex items-center gap-2">
+            <h2 className="text-xl font-black uppercase text-slate-900 dark:text-white flex items-center gap-2">
               <LayoutDashboard className="text-blue-400" size={20} />
               {isVi ? 'Lộ trình của tôi' : 'My Courses'}
             </h2>
@@ -527,20 +591,11 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             {tracks.map((track) => (
               <div
                 key={track.id}
-                className={`glass-dark rounded-2xl p-6 border transition-all relative overflow-hidden group ${track.locked ? 'border-white/5 opacity-60 grayscale cursor-not-allowed' : 'border-white/10 hover:border-blue-500/40 cursor-pointer'}`}
+                className={`glass-dark rounded-2xl p-6 border transition-all relative overflow-hidden group ${track.locked ? 'border-black/10 dark:border-white/5 opacity-60 grayscale cursor-not-allowed' : 'border-black/10 dark:border-white/10 hover:border-blue-500/40 cursor-pointer'}`}
                 onClick={() => {
                   if (track.locked) return;
                   if (track.id === 'basics') {
-                    // Ghi session để /academy/basics/ auth gate cho qua
-                    if (user) {
-                      try {
-                        localStorage.setItem('dfb_session_v1', JSON.stringify({
-                          uid: user.uid,
-                          loginAt: Date.now(),
-                        }));
-                      } catch {}
-                    }
-                    window.location.href = '/academy/basics/';
+                    openBasicsCourse();
                   } else {
                     setSelectedCourseId(track.id);
                     setCurrentView('course');
@@ -549,40 +604,37 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               >
                 <div className="flex items-start justify-between mb-4 relative z-10">
                   <div>
-                    <div className={`inline-flex items-center gap-2 px-2 py-0.5 rounded border text-[10px] font-bold mb-2 uppercase tracking-[0.12em] ${
-                      track.comingSoon
-                        ? 'bg-amber-400/10 border-amber-400/25 text-amber-300'
-                        : 'bg-blue-500/10 border-blue-500/20 text-blue-300'
-                    }`}>
-                      {track.comingSoon ? 'COMING SOON' : (isVi ? 'KHÓA HỌC' : 'COURSE')}
+                    <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-[10px] font-bold text-blue-300 mb-2 uppercase tracking-[0.12em]">
+                      {isVi ? 'KHÓA HỌC' : 'COURSE'}
                     </div>
-                    <h3 className="text-xl font-black text-white mb-1 group-hover:text-blue-400 transition-colors">{track.title}</h3>
-                    <p className="text-sm text-slate-300/85">{track.subtitle}</p>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white mb-1 group-hover:text-blue-400 transition-colors">{track.title}</h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300/85">{track.subtitle}</p>
                   </div>
                   <div className="text-right">
-                    {track.comingSoon ? (
-                      <>
-                        <div className="text-sm font-black uppercase tracking-[0.12em] text-amber-300">Coming soon</div>
-                        <p className="text-[10px] uppercase tracking-[0.08em] text-slate-400 mt-1">{track.modulesCount} modules planned</p>
-                      </>
-                    ) : (
-                      <>
-                        <div className="flex items-center gap-2 justify-end">
-                          {track.progress === 100 && <CheckCircle2 size={20} className="text-emerald-400" />}
-                          <span className="text-2xl font-black text-blue-400">{track.progress}%</span>
-                        </div>
-                        <p className="text-[10px] uppercase tracking-[0.08em] text-slate-400 mt-1">Reward: {track.reward}</p>
-                      </>
-                    )}
+                    <div className="flex items-center gap-2 justify-end">
+                      {track.progress === 100 && <CheckCircle2 size={20} className="text-emerald-400" />}
+                      <span className="text-2xl font-black text-blue-400">{track.progress}%</span>
+                    </div>
+                    <p className="text-[10px] uppercase tracking-[0.08em] text-slate-500 dark:text-slate-400 mt-1">Reward: {track.reward}</p>
                   </div>
                 </div>
 
-                <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden relative z-10">
+                <div className="w-full bg-black/5 dark:bg-white/5 rounded-full h-1.5 overflow-hidden relative z-10">
                   <div
                     className={`h-full transition-all duration-700 ease-out ${track.progress === 100 ? 'bg-emerald-500' : 'bg-gradient-to-r from-blue-500 to-cyan-400'}`}
                     style={{ width: `${track.progress}%` }}
                   />
                 </div>
+
+                {track.comingSoon && (
+                  <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[2px]">
+                    <div className="rotate-[-8deg] border-2 border-blue-400/80 bg-blue-900/60 px-6 py-2 rounded-xl shadow-2xl backdrop-blur-md">
+                      <span className="font-black text-xl md:text-2xl uppercase tracking-[0.2em] text-blue-200">
+                        {isVi ? 'Sắp ra mắt' : 'Coming Soon'}
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -594,7 +646,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             <div className="absolute top-0 right-0 p-4 opacity-10">
               <GraduationCap size={80} className="text-blue-400" />
             </div>
-            <h3 className="font-black text-white uppercase tracking-[0.12em] text-[10px] mb-4 flex items-center gap-2">
+            <h3 className="font-black text-slate-900 dark:text-white uppercase tracking-[0.12em] text-[10px] mb-4 flex items-center gap-2">
               <BookOpen className="text-blue-400" size={14} /> 
               {isVi ? 'Thông tin đào tạo' : 'Course Overview'}
             </h3>
@@ -608,7 +660,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     isVi ? 'Tâm lý học hành vi lừa đảo' : 'Scam Behavior Psychology',
                     isVi ? 'Quy trình kiểm chứng 4 bước' : '4-Step Verification Workflow'
                   ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[11px] text-slate-300">
+                    <li key={i} className="flex items-start gap-2 text-[11px] text-slate-600 dark:text-slate-300">
                       <div className="w-1 h-1 rounded-full bg-blue-500 mt-1.5 shrink-0" />
                       {item}
                     </li>
@@ -624,7 +676,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     isVi ? 'Truy vết nguồn gốc metadata' : 'Metadata Origin Tracing',
                     isVi ? 'Lab nhận diện tình huống thực' : 'Real-world Scenario Labs'
                   ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[11px] text-slate-300">
+                    <li key={i} className="flex items-start gap-2 text-[11px] text-slate-600 dark:text-slate-300">
                       <div className="w-1 h-1 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
                       {item}
                     </li>
@@ -640,7 +692,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     isVi ? 'Thưởng DPF Coin (lên tới 1000)' : 'Up to 1000 DPF Reward Coins',
                     isVi ? 'Hồ sơ năng lực an toàn số' : 'Digital Safety Competency Profile'
                   ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[11px] text-slate-300">
+                    <li key={i} className="flex items-start gap-2 text-[11px] text-slate-600 dark:text-slate-300">
                       <div className="w-1 h-1 rounded-full bg-amber-500 mt-1.5 shrink-0" />
                       {item}
                     </li>
@@ -652,18 +704,18 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
 
           {/* Hall of Fame Section */}
           <div className="glass-dark border border-amber-400/20 rounded-2xl p-6 relative overflow-hidden">
-             <h3 className="font-black text-white uppercase tracking-[0.12em] text-[10px] mb-4 flex items-center gap-2">
+             <h3 className="font-black text-slate-900 dark:text-white uppercase tracking-[0.12em] text-[10px] mb-4 flex items-center gap-2">
                <Trophy className="text-amber-400" size={14} /> 
                {isVi ? 'Bảng vinh danh' : 'Hall of Fame'}
              </h3>
              <div className="space-y-3">
                {hallOfFame.map((learner, i) => (
-                 <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
+                 <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/5">
                    <div className="flex items-center gap-3">
                      <span className="text-[10px] font-mono text-amber-300">#{learner.rank}</span>
                      <div className="flex flex-col">
-                       <span className="text-[11px] font-bold text-white truncate max-w-[120px]">{learner.name}</span>
-                       <span className="text-[9px] text-slate-400 uppercase tracking-[0.08em]">{learner.credential}</span>
+                       <span className="text-[11px] font-bold text-slate-900 dark:text-white truncate max-w-[120px]">{learner.name}</span>
+                       <span className="text-[9px] text-slate-500 dark:text-slate-400 uppercase tracking-[0.08em]">{learner.credential}</span>
                      </div>
                    </div>
                    <Trophy size={12} className="text-amber-400/50" />
@@ -675,12 +727,14 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
           {/* Sign In Prompt */}
           {!isSignedIn ? (
             <div className="glass-dark border border-blue-500/20 rounded-2xl p-6">
-              <h3 className="font-black text-white uppercase tracking-[0.12em] text-[10px] mb-2 flex items-center gap-2">
-                <LockKeyhole className="text-blue-400" size={14} />
-                {isVi ? 'Yêu cầu đăng nhập' : 'Sign-in required'}
+              <h3 className="font-black text-slate-900 dark:text-white uppercase tracking-[0.12em] text-[10px] mb-2 flex items-center gap-2">
+                 {guestMode ? <Eye className="text-blue-400" size={14} /> : <LockKeyhole className="text-blue-400" size={14} />}
+                 {guestMode ? (isVi ? 'ĐANG XEM THỬ' : 'GUEST PREVIEW') : (isVi ? 'Yêu cầu đăng nhập' : 'Sign-in required')}
               </h3>
-              <p className="text-[11px] text-slate-400 mb-4 leading-relaxed">
-                {isVi ? 'Đăng nhập Google để lưu tiến độ và nhận DPF.' : 'Sign in with Google to save progress and earn DPF.'}
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
+                 {guestMode
+                   ? (isVi ? 'Bạn có thể đọc toàn bộ Deepfense Academy. Đăng nhập khi muốn làm bài và lưu tiến độ.' : 'Read the full Deepfense Academy course. Sign in when you want to practise and save progress.')
+                   : (isVi ? 'Đăng nhập Google để lưu tiến độ và nhận DPF.' : 'Sign in with Google to save progress and earn DPF.')}
               </p>
               <GlowButton color="secondary" size="sm" className="w-full" onClick={onGoogleAuth} icon={<LogIn size={14} />}>
                 {authBusy ? '...' : (isVi ? 'ĐĂNG NHẬP' : 'SIGN IN')}
@@ -694,7 +748,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     <Sparkles size={14} />
                     DEV TOOLS (ADMIN ONLY)
                   </h3>
-                  <p className="text-[11px] text-slate-400 mb-4 leading-relaxed">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
                     Hoàn thành nhanh 100% khóa học để kiểm tra chứng chỉ (Certificate).
                   </p>
                   <div className="flex flex-col gap-2">
@@ -778,28 +832,6 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 </div>
               )}
 
-              {user?.email === 'deepfense@gmail.com' && (
-                <div className="glass-dark border border-red-500/20 rounded-2xl p-6">
-                  <h3 className="font-black text-red-300 uppercase tracking-[0.12em] text-[10px] mb-2 flex items-center gap-2">
-                    <AlertCircle size={14} />
-                    {isVi ? 'VÙNG NGUY HIỂM' : 'DANGER ZONE'}
-                  </h3>
-                  <p className="text-[11px] text-slate-400 mb-4">
-                    {isVi ? 'Xóa toàn bộ tiến độ học tập của bạn?' : 'Reset all your learning progress?'}
-                  </p>
-                  <button 
-                    onClick={() => {
-                      if (window.confirm(isVi ? 'Bạn có chắc chắn muốn xóa hết tiến độ?' : 'Are you sure you want to reset all progress?')) {
-                        setCompletedLessons([]);
-                        setCompletedModules([]);
-                      }
-                    }}
-                    className="w-full py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-[10px] font-black uppercase tracking-[0.12em] hover:bg-red-500/20 transition-all"
-                  >
-                    {isVi ? 'RESET TIẾN ĐỘ' : 'RESET PROGRESS'}
-                  </button>
-                </div>
-              )}
             </>
           )}
         </div>
@@ -815,7 +847,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       <div className="space-y-6 animate-in fade-in duration-500">
         <button
           onClick={() => setCurrentView('dashboard')}
-          className="inline-flex items-center gap-2 text-blue-300 hover:text-white transition-colors font-black uppercase text-xs tracking-[0.12em]"
+          className="inline-flex items-center gap-2 text-blue-300 hover:text-slate-900 dark:text-white transition-colors font-black uppercase text-xs tracking-[0.12em]"
         >
           <ChevronLeft size={16} /> {isVi ? 'Quay lại Dashboard' : 'Back to Dashboard'}
         </button>
@@ -823,14 +855,14 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
         <div className="relative overflow-hidden rounded-3xl border border-blue-500/30 bg-gradient-to-br from-blue-900/40 to-black p-8 md:p-12 shadow-2xl">
           <div className="absolute -right-20 -top-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
           <div className="relative z-10">
-            <h1 className="text-3xl md:text-5xl font-black text-white mb-4 uppercase leading-tight italic">{track.title}</h1>
-            <p className="text-slate-300/85 text-sm max-w-2xl mb-8 leading-relaxed italic">{basicsCourse.modules[0].scenario}</p>
+            <h1 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-4 uppercase leading-tight italic">{track.title}</h1>
+            <p className="text-slate-600 dark:text-slate-300/85 text-sm max-w-2xl mb-8 leading-relaxed italic">{basicsCourse.modules[0].scenario}</p>
             <div className="flex flex-col md:flex-row md:items-center gap-8">
               <div className="shrink-0">
-                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.12em] mb-1">{isVi ? 'Tiến độ tổng thể' : 'Overall Progress'}</p>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase tracking-[0.12em] mb-1">{isVi ? 'Tiến độ tổng thể' : 'Overall Progress'}</p>
                 <p className="text-5xl font-black text-blue-400">{track.progress}%</p>
               </div>
-              <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
+              <div className="flex-1 h-2 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
                 <div
                   className={`h-full transition-all duration-1000 ${track.progress === 100 ? 'bg-emerald-500' : 'bg-gradient-to-r from-blue-500 to-cyan-400'}`}
                   style={{ width: `${track.progress}%` }}
@@ -841,7 +873,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-xl font-black text-white uppercase tracking-[0.12em] mb-4 flex items-center gap-2">
+          <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-[0.12em] mb-4 flex items-center gap-2">
             <BookOpen size={20} className="text-blue-400" />
             {isVi ? 'Các module đào tạo' : 'Training Modules'}
           </h2>
@@ -856,9 +888,9 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 <div
                   key={module.id}
                   className={`p-6 rounded-2xl border transition-all cursor-pointer group relative overflow-hidden ${
-                    isLocked ? 'opacity-50 grayscale border-white/5 bg-white/5 cursor-not-allowed' : 
+                    isLocked ? 'opacity-50 grayscale border-black/10 dark:border-white/5 bg-black/5 dark:bg-white/5 cursor-not-allowed' : 
                     isDone ? 'bg-emerald-500/5 border-emerald-500/20 hover:border-emerald-500/40' :
-                    'glass-dark border-white/10 hover:border-blue-500/30'
+                    'glass-dark border-black/10 dark:border-white/10 hover:border-blue-500/30'
                   }`}
                   onClick={() => {
                     if (isLocked) return;
@@ -878,14 +910,14 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     <div className="flex items-center gap-5">
                       <div className={`w-10 h-10 rounded-xl border flex items-center justify-center font-black text-sm ${
                         isDone ? 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400' : 
-                        isLocked ? 'bg-white/5 border-white/5 text-slate-600' :
+                        isLocked ? 'bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/5 text-slate-600' :
                         'bg-blue-500/10 border-blue-500/20 text-blue-400'
                       }`}>
                         {isDone ? <CheckCircle2 size={20} /> : module.id}
                       </div>
                       <div>
-                        <h3 className={`font-bold text-lg transition-colors ${isDone ? 'text-emerald-300' : 'text-white group-hover:text-blue-400'}`}>{module.title}</h3>
-                        <div className="flex items-center gap-4 mt-1 text-[10px] font-medium text-slate-400">
+                        <h3 className={`font-bold text-lg transition-colors ${isDone ? 'text-emerald-300' : 'text-slate-900 dark:text-white group-hover:text-blue-400'}`}>{module.title}</h3>
+                        <div className="flex items-center gap-4 mt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
                           <span className="flex items-center gap-1">
                             <Clock className="w-3 h-3" /> {module.duration}
                           </span>
@@ -924,10 +956,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
     
     if (questions.length === 0) {
       return (
-        <div className="text-center py-20 glass-dark rounded-3xl border border-white/10">
+        <div className="text-center py-20 glass-dark rounded-3xl border border-black/10 dark:border-white/10">
           <CheckCircle2 size={64} className="text-emerald-500 mx-auto mb-6" />
-          <h2 className="text-2xl font-black text-white uppercase mb-2">{isVi ? 'Hoàn thành Module!' : 'Module Completed!'}</h2>
-          <p className="text-slate-300/85 mb-8">{isVi ? 'Module này chưa có bài trắc nghiệm.' : 'This module does not have a quiz yet.'}</p>
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase mb-2">{isVi ? 'Hoàn thành Module!' : 'Module Completed!'}</h2>
+          <p className="text-slate-600 dark:text-slate-300/85 mb-8">{isVi ? 'Module này chưa có bài trắc nghiệm.' : 'This module does not have a quiz yet.'}</p>
           <GlowButton color="primary" onClick={() => {
             setCurrentView('course');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -949,14 +981,14 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[10px] font-black text-amber-300 uppercase tracking-[0.12em] mb-4">
             <Zap size={12} /> {isVi ? 'Bài trắc nghiệm cuối module' : 'Module Final Quiz'}
           </div>
-          <h1 className="text-3xl md:text-4xl font-black text-white mb-2 uppercase">{activeModule.title}</h1>
-          <p className="text-slate-400 text-sm">{isVi ? 'Trả lời đúng 70% để vượt qua' : 'Score 70% to pass'}</p>
+          <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 uppercase">{activeModule.title}</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">{isVi ? 'Trả lời đúng 70% để vượt qua' : 'Score 70% to pass'}</p>
         </div>
 
         <div className="space-y-6">
           {questions.map((q, qIdx) => (
-            <div key={qIdx} className="glass-dark border border-white/10 rounded-2xl p-6 md:p-8">
-              <p className="text-white font-bold text-lg mb-6 leading-relaxed">
+            <div key={qIdx} className="glass-dark border border-black/10 dark:border-white/10 rounded-2xl p-6 md:p-8">
+              <p className="text-slate-900 dark:text-white font-bold text-lg mb-6 leading-relaxed">
                 <span className="text-blue-400 mr-2">Q{qIdx + 1}.</span> {q.text}
               </p>
               <div className="grid grid-cols-1 gap-3">
@@ -976,10 +1008,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                             ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
                             : isSelected
                               ? 'bg-red-500/10 border-red-500/30 text-red-300'
-                              : 'bg-white/5 border-white/5 opacity-40'
+                              : 'bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/5 opacity-40'
                           : isSelected
                             ? 'bg-blue-500/10 border-blue-500/30 text-blue-300 ring-1 ring-blue-500/20'
-                            : 'bg-white/5 border-white/5 hover:border-white/20 text-slate-300'
+                            : 'bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/5 hover:border-black/20 dark:border-white/20 text-slate-600 dark:text-slate-300'
                       }`}
                     >
                       <span className="text-sm font-medium">{opt}</span>
@@ -1001,7 +1033,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
 
         {!quizSubmitted ? (
           <div className="sticky bottom-6 p-4 glass-dark border border-blue-500/30 rounded-2xl shadow-2xl flex items-center justify-between gap-6">
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-slate-600 dark:text-slate-300">
               {Object.keys(quizAnswers).length} / {questions.length} {isVi ? 'đã trả lời' : 'answered'}
             </p>
             <GlowButton
@@ -1021,14 +1053,14 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               {pass ? <Trophy size={40} /> : <AlertCircle size={40} />}
             </div>
             <div>
-              <h2 className="text-3xl font-black text-white uppercase mb-2">
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase mb-2">
                 {pass ? (isVi ? 'CHÚC MỪNG!' : 'CONGRATULATIONS!') : (isVi ? 'CHƯA ĐẠT' : 'KEEP TRYING')}
               </h2>
-              <p className="text-xl font-bold text-white">
+              <p className="text-xl font-bold text-slate-900 dark:text-white">
                 {isVi ? 'Điểm của bạn:' : 'Your score:'} <span className={pass ? 'text-emerald-400' : 'text-red-400'}>{score}/{questions.length}</span>
               </p>
             </div>
-            <p className="text-slate-300/85 max-w-md mx-auto">
+            <p className="text-slate-600 dark:text-slate-300/85 max-w-md mx-auto">
               {pass 
                 ? (isVi ? 'Bạn đã vượt qua bài kiểm tra và hoàn thành module này. Tiếp tục lộ trình để nhận chứng chỉ.' : 'You passed the quiz and completed this module. Continue your journey to earn your certificate.')
                 : (isVi ? 'Rất tiếc, bạn cần ít nhất 70% điểm để vượt qua. Hãy xem lại bài học và thử lại nhé.' : 'Sorry, you need at least 70% to pass. Review the lessons and try again.')
@@ -1049,7 +1081,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     setQuizSubmitted(false);
                     setQuizAnswers({});
                   }}
-                  className="px-8 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-black uppercase tracking-[0.12em] hover:bg-white/20 transition-all"
+                  className="px-8 py-3 rounded-xl bg-black/10 dark:bg-white/10 border border-black/20 dark:border-white/20 text-slate-900 dark:text-white font-black uppercase tracking-[0.12em] hover:bg-black/20 dark:bg-white/20 transition-all"
                 >
                   {isVi ? 'THỬ LẠI' : 'TRY AGAIN'}
                 </button>
@@ -1084,7 +1116,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               <h4 className="text-[10px] font-black text-blue-300 uppercase tracking-[0.12em] mb-4 flex items-center gap-2">
                 <Brain size={14} /> {isVi ? 'BỐI CẢNH MODULE' : 'MODULE SCENARIO'}
               </h4>
-              <p className="text-gray-300 italic leading-relaxed text-sm">"{activeModule.scenario}"</p>
+              <p className="text-slate-600 dark:text-gray-300 italic leading-relaxed text-sm">"{activeModule.scenario}"</p>
             </div>
           </div>
         )}
@@ -1095,7 +1127,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               setCurrentView('course');
               setLessonStep('content');
             }}
-          className="inline-flex items-center gap-2 text-blue-300 hover:text-white transition-colors font-black uppercase text-xs tracking-[0.12em]"
+          className="inline-flex items-center gap-2 text-blue-300 hover:text-slate-900 dark:text-white transition-colors font-black uppercase text-xs tracking-[0.12em]"
           >
             <ChevronLeft size={16} /> {isVi ? 'Quay lại Module' : 'Back to Module'}
           </button>
@@ -1117,10 +1149,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   }}
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-[0.12em] border whitespace-nowrap transition-all flex items-center gap-2 ${
                     idx === activeSectionIdx 
-                      ? 'bg-blue-500 text-white border-blue-400' 
+                      ? 'bg-blue-500 text-slate-900 dark:text-white border-blue-400' 
                       : isSectionDone
                         ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                        : 'bg-white/5 text-slate-400 border-white/5 hover:border-white/20'
+                        : 'bg-black/5 dark:bg-white/5 text-slate-500 dark:text-slate-400 border-black/10 dark:border-white/5 hover:border-black/20 dark:border-white/20'
                   } ${(isCheckpoint || isReview) ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   {isSectionDone && <CheckCircle2 size={12} />}
@@ -1134,7 +1166,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-8 space-y-6">
             {lessonStep === 'content' && (
-              <div className="glass-dark border border-white/10 rounded-3xl p-8 md:p-10 relative overflow-hidden min-h-[400px]">
+              <div className="glass-dark border border-black/10 dark:border-white/10 rounded-3xl p-8 md:p-10 relative overflow-hidden min-h-[400px]">
                 <div className="absolute top-0 right-0 p-8 opacity-5">
                   <BookOpen size={120} className="text-blue-400" />
                 </div>
@@ -1144,12 +1176,12 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     <span className="px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-[9px] font-bold text-blue-300 uppercase tracking-[0.12em]">
                       {lesson.id}
                     </span>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.12em]">
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-[0.12em]">
                       {section.title}
                     </span>
                   </div>
                   
-                  <h1 className="text-3xl md:text-4xl font-black text-white mb-8 uppercase leading-tight italic">{lesson.title}</h1>
+                  <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-8 uppercase leading-tight italic">{lesson.title}</h1>
                   
                   {lesson.blocks && lesson.blocks.length > 0 ? (
                     <div className="space-y-4">
@@ -1166,7 +1198,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   ) : (
                     <div className="prose prose-invert prose-blue max-w-none">
                       {lesson.paragraphs.map((p, i) => (
-                        <p key={i} className="text-gray-300 text-base leading-relaxed mb-6 last:mb-0">
+                        <p key={i} className="text-slate-600 dark:text-gray-300 text-base leading-relaxed mb-6 last:mb-0">
                           {p}
                         </p>
                       ))}
@@ -1182,19 +1214,19 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mx-auto mb-4 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
                     <Brain size={32} />
                   </div>
-                  <h2 className="text-2xl font-black text-white uppercase italic">{isVi ? 'ĐIỂM CẦN NHỚ' : 'KEY TAKEAWAYS'}</h2>
-                  <p className="text-xs text-slate-400 font-bold mt-2 uppercase tracking-[0.12em]">
+                  <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase italic">{isVi ? 'ĐIỂM CẦN NHỚ' : 'KEY TAKEAWAYS'}</h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-bold mt-2 uppercase tracking-[0.12em]">
                     {isVi ? 'Tóm tắt kiến thức trước khi kiểm tra' : 'Summary before the checkpoint'}
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   {section.lessons.flatMap(l => l.takeaways).map((tk, idx) => (
-                    <div key={idx} className="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-amber-500/20 transition-all group">
+                    <div key={idx} className="flex items-start gap-4 p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/5 hover:border-amber-500/20 transition-all group">
                       <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 shrink-0 group-hover:scale-110 transition-transform">
                         <Zap size={14} />
                       </div>
-                      <p className="text-gray-300 text-sm font-bold leading-relaxed">{tk}</p>
+                      <p className="text-slate-600 dark:text-gray-300 text-sm font-bold leading-relaxed">{tk}</p>
                     </div>
                   ))}
                 </div>
@@ -1216,14 +1248,14 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     <div className="glass-dark border border-amber-500/20 rounded-2xl p-6 flex items-center gap-4 mb-4">
                       <ShieldCheck size={32} className="text-amber-400" />
                       <div>
-                        <h3 className="text-lg font-black text-white uppercase italic">{isVi ? 'KIỂM TRA NHANH' : 'QUICK CHECK'}</h3>
-                        <p className="text-[10px] text-slate-400 uppercase tracking-[0.12em] font-bold">{section.checkpoint?.label}</p>
+                        <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase italic">{isVi ? 'KIỂM TRA NHANH' : 'QUICK CHECK'}</h3>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-[0.12em] font-bold">{section.checkpoint?.label}</p>
                       </div>
                     </div>
 
                     {section.checkpoint?.questions.map((q, qIdx) => (
-                      <div key={qIdx} className="glass-dark border border-white/10 rounded-2xl p-6 md:p-8">
-                        <p className="text-white font-bold text-lg mb-6 leading-relaxed flex items-start gap-4">
+                      <div key={qIdx} className="glass-dark border border-black/10 dark:border-white/10 rounded-2xl p-6 md:p-8">
+                        <p className="text-slate-900 dark:text-white font-bold text-lg mb-6 leading-relaxed flex items-start gap-4">
                           <span className="text-amber-400 font-black italic shrink-0">#{qIdx + 1}</span>
                           <span>{q.text}</span>
                         </p>
@@ -1244,10 +1276,10 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                                       ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
                                       : isSelected
                                         ? 'bg-red-500/10 border-red-500/30 text-red-400'
-                                        : 'bg-white/5 border-white/5 opacity-40'
+                                        : 'bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/5 opacity-40'
                                     : isSelected
                                       ? 'bg-amber-500/10 border-amber-500/30 text-amber-300 ring-1 ring-amber-500/20'
-                                      : 'bg-white/5 border-white/5 hover:border-white/20 text-slate-300'
+                                      : 'bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/5 hover:border-black/20 dark:border-white/20 text-slate-600 dark:text-slate-300'
                                 }`}
                               >
                                 <span className="text-sm font-bold">{opt}</span>
@@ -1281,7 +1313,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     setActiveLessonIdx(prevSection.lessons.length - 1);
                   }
                 }}
-                className={`px-6 py-3 rounded-xl border border-white/10 text-white font-black uppercase tracking-[0.12em] text-[10px] hover:bg-white/5 transition-all ${activeLessonIdx === 0 && activeSectionIdx === 0 && lessonStep === 'content' ? 'opacity-0 pointer-events-none' : ''}`}
+                className={`px-6 py-3 rounded-xl border border-black/10 dark:border-white/10 text-slate-900 dark:text-white font-black uppercase tracking-[0.12em] text-[10px] hover:bg-black/5 dark:bg-white/5 transition-all ${activeLessonIdx === 0 && activeSectionIdx === 0 && lessonStep === 'content' ? 'opacity-0 pointer-events-none' : ''}`}
               >
                 {isVi ? 'TRƯỚC' : 'BACK'}
               </button>
@@ -1354,8 +1386,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
           </div>
 
           <div className="lg:col-span-4 space-y-6">
-            <div className="glass-dark border border-white/10 rounded-2xl p-6">
-              <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.12em] mb-4">
+            <div className="glass-dark border border-black/10 dark:border-white/10 rounded-2xl p-6">
+              <h4 className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.12em] mb-4">
                 {isVi ? 'Danh sách bài học' : 'Lesson List'}
               </h4>
               <div className="space-y-2">
@@ -1367,7 +1399,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                     className={`w-full p-3 rounded-xl text-left transition-all border flex items-center justify-between ${
                       idx === activeLessonIdx
                         ? 'bg-blue-500/10 border-blue-500/20 text-blue-400'
-                        : 'bg-white/5 border-white/5 text-slate-400 hover:border-white/10'
+                        : 'bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:border-black/10 dark:border-white/10'
                     } ${(isCheckpoint || isReview) ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     <span className="text-[11px] font-bold truncate pr-2">{l.title}</span>
@@ -1377,11 +1409,11 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
               </div>
             </div>
 
-            <div className="glass-dark border border-white/10 rounded-2xl p-6">
-              <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.12em] mb-4">
+            <div className="glass-dark border border-black/10 dark:border-white/10 rounded-2xl p-6">
+              <h4 className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.12em] mb-4">
                 {isVi ? 'HƯỚNG DẪN' : 'GUIDANCE'}
               </h4>
-              <p className="text-xs text-slate-300 leading-relaxed font-bold">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-bold">
                 {lessonStep === 'content' 
                   ? (isVi ? 'Đọc kỹ nội dung và ghi nhớ các ý chính. Nút Tiếp theo sẽ đưa bạn đến bài học kế tiếp hoặc phần kiểm tra.' : 'Read carefully and memorize key points. The Next button will take you to the next lesson or checkpoint.')
                   : lessonStep === 'review'
@@ -1403,11 +1435,11 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-[10px] font-bold tracking-[0.12em] text-blue-300 mb-5">
               <GraduationCap size={12} /> DEEPFENSE ACADEMY
             </div>
-            <h1 className="text-4xl md:text-6xl font-black uppercase leading-tight text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>
+            <h1 className="text-4xl md:text-6xl font-black uppercase leading-tight text-slate-900 dark:text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>
               {isVi ? 'Hệ thống học tập' : 'Learning Platform'}
             </h1>
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-              <p className="text-slate-300/85 max-w-2xl leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-300/85 max-w-2xl leading-relaxed">
                 {isVi 
                   ? 'Hệ thống đào tạo nhận thức an toàn số chuyên sâu. Hoàn thành các bài học, vượt qua bài Lab để nhận DPF và chứng chỉ.' 
                   : 'Advanced digital safety awareness training system. Complete lessons, pass Lab challenges to earn DPF and certificates.'}
@@ -1415,15 +1447,15 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             </div>
           </div>
           
-          <div className="flex items-center gap-3 glass-dark border border-white/10 p-4 rounded-2xl">
+          <div className="flex items-center gap-3 glass-dark border border-black/10 dark:border-white/10 p-4 rounded-2xl">
             {isSignedIn ? (
               <>
                 <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-blue-500/20">
                   <img src={user.photoURL || '/logo/favicon-32x32.png'} alt={user.displayName || 'User'} className="w-full h-full object-cover" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Welcome back,</p>
-                  <p className="text-white font-black uppercase tracking-[0.12em] text-xs truncate max-w-[120px]">{user.displayName?.split(' ')[0] || 'Learner'}</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">Welcome back,</p>
+                  <p className="text-slate-900 dark:text-white font-black uppercase tracking-[0.12em] text-xs truncate max-w-[120px]">{user.displayName?.split(' ')[0] || 'Learner'}</p>
                 </div>
               </>
             ) : (
@@ -1432,8 +1464,8 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                   <Trophy size={20} />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400 mb-1">Academy Status</p>
-                  <p className="text-white font-black uppercase tracking-[0.12em] text-xs">Guest Mode</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400 mb-1">Academy Status</p>
+                  <p className="text-slate-900 dark:text-white font-black uppercase tracking-[0.12em] text-xs">Guest Mode</p>
                 </div>
               </>
             )}

@@ -20,11 +20,12 @@ const detectInitial = (): PerfMode => {
   }
   // Auto-detect mobile / low-end
   const isCoarsePointer = window.matchMedia?.('(pointer: coarse)').matches;
-  const isNarrow = window.innerWidth < 768;
+  const isNarrow = window.innerWidth <= 820;
   const isReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const isLowConcurrency = (navigator as any).hardwareConcurrency && (navigator as any).hardwareConcurrency <= 4;
+  const isLowMemory = (navigator as any).deviceMemory && (navigator as any).deviceMemory <= 4;
   const isSaveData = (navigator as any).connection?.saveData === true;
-  if (isCoarsePointer || isNarrow || isReducedMotion || isLowConcurrency || isSaveData) return 'lite';
+  if (isCoarsePointer || isNarrow || isReducedMotion || isLowConcurrency || isLowMemory || isSaveData) return 'lite';
   return 'full';
 };
 
@@ -43,6 +44,13 @@ export function usePerfMode() {
   const toggle = useCallback(() => {
     setMode(mode === 'lite' ? 'full' : 'lite');
   }, [mode, setMode]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const root = window.document.documentElement;
+    root.classList.toggle('perf-lite', mode === 'lite');
+    root.setAttribute('data-perf', mode);
+  }, [mode]);
 
   // Cross-tab sync
   useEffect(() => {

@@ -1,5 +1,5 @@
 /**
- * MiniGame.jsx — Inline mini-game component for DEEPFENSE BASICS checkpoints.
+ * MiniGame.jsx — Inline mini-game component for DEEPFENSE ACADEMY checkpoints.
  * 5 game types: sort-cards | order-steps | tag-the-trick | shield-match | risk-meter
  */
 import React, { useState, useMemo, useEffect } from 'react';

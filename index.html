@@ -48,19 +48,46 @@
     <meta name="theme-color" content="#03080F" />
     <meta name="description" content="Nền tảng huấn luyện nhận diện Deepfake chuyên sâu với các thử thách tương tác và Academy." />
     <title>DEEPFENSE - Dự án huấn luyện nhận dạng deepfake</title>
+    
+    <!-- EARLY THEME INITIALIZER (PREVENTS FLASH OF UNTHEMED CONTENT) -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('df_theme') || 'system';
+          var isDark = saved === 'dark' || (saved === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.classList.add('light');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <style>
       body {
-        background-color: #03080F;
-        color: #E0E0E0;
         background-image: 
           linear-gradient(rgba(29,111,232,0.025) 1px, transparent 1px),
           linear-gradient(90deg, rgba(29,111,232,0.025) 1px, transparent 1px);
         background-size: 52px 52px;
         overflow-x: hidden;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      html.dark body {
+        background-color: #03080F;
+        color: #E0E0E0;
+      }
+      html.light body {
+        background-color: #F3F6FA;
+        color: #0B1523;
       }
       ::-webkit-scrollbar { width: 6px; }
-      ::-webkit-scrollbar-track { background: #03080F; }
-      ::-webkit-scrollbar-thumb { background: #1E3A5F; border-radius: 4px; }
+      html.dark ::-webkit-scrollbar-track { background: #03080F; }
+      html.light ::-webkit-scrollbar-track { background: #F3F6FA; }
+      html.dark ::-webkit-scrollbar-thumb { background: #1E3A5F; border-radius: 4px; }
+      html.light ::-webkit-scrollbar-thumb { background: #D6E4F0; border-radius: 4px; }
       ::-webkit-scrollbar-thumb:hover { background: #1D6FE8; }
     </style>
 </head>

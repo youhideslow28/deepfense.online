@@ -50,7 +50,7 @@ export const VISUAL_ASSET_GROUPS = [
   },
   {
     label: 'Module illustrations',
-    purpose: 'Dùng làm ảnh đầu bài cho Module 0-6 trong DEEPFENSE BASIC.',
+    purpose: 'Dùng làm ảnh đầu bài cho Module 0-6 trong DEEPFENSE ACADEMY.',
     items: [
       { id: 'DFB_ILL_M0_01', title: 'A Normal Digital Day', format: '16:9 image', placement: 'Module 0', prompt: 'A day-in-the-life scene showing phone notifications, social feed, group chat, video call, and An calmly noticing risk signals.' },
       { id: 'DFB_ILL_M1_01', title: 'Media Layers', format: '16:9 image', placement: 'Module 1', prompt: 'Layered visual metaphor of image, video, audio, caption, and source context, arranged clearly like learning cards around An.' },

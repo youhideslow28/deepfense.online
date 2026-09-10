@@ -4,26 +4,47 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Bot, Coins, Cpu, GraduationCap, Home, Info, LogIn, Menu, Power, Smartphone, Sun, Swords, UserCircle, X } from 'lucide-react';
+import { Bot, Coins, Cpu, GraduationCap, Home, Info, LogIn, Menu, Moon, Power, Smartphone, Snowflake, Sun, Swords, UserCircle, X } from 'lucide-react';
 import type { User } from 'firebase/auth';
+import type { SiteConfig } from '@/config/siteConfig';
 import { Language, Season } from '@/types';
 import type { PerfMode } from '@/hooks/usePerfMode';
+import type { ThemeMode } from '@/hooks/useTheme';
 import { useDpfBalance } from '@/features/dpf/useDpfWallet';
 
 interface NavbarProps {
   lang: Language;
   setLang: (l: Language) => void;
-  season: Season;
-  setSeason: (s: Season) => void;
+  siteConfig: SiteConfig;
+  theme: ThemeMode;
+  toggleTheme: () => void;
   perfMode: PerfMode;
   togglePerfMode: () => void;
   user: User | null;
   authBusy: boolean;
   authError: string;
   onGoogleAuth: () => void;
+  season: Season;
+  setSeason: (s: Season) => void;
+  showTicker?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfMode, togglePerfMode, user, authBusy, authError, onGoogleAuth }) => {
+const Navbar: React.FC<NavbarProps> = ({
+  lang,
+  setLang,
+  siteConfig,
+  theme,
+  toggleTheme,
+  perfMode,
+  togglePerfMode,
+  user,
+  authBusy,
+  authError,
+  onGoogleAuth,
+  season,
+  setSeason,
+  showTicker = true,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -46,12 +67,15 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
   ];
 
   const isLite = perfMode === 'lite';
-  const isSummer = season === 'SUMMER';
+  const isWinter = season === 'WINTER';
+  const themeLabel = lang === 'vi'
+    ? `Đổi sang giao diện ${theme === 'dark' ? 'sáng' : 'tối'}`
+    : `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`;
   const perfLabel = lang === 'vi'
-    ? `${isSummer ? 'Mùa hè · Bật' : 'Mùa hè · Tắt'} (chạm để đổi · giữ 4s để ${isLite ? 'tắt' : 'bật'} chế độ cấu hình thấp)`
-    : `${isSummer ? 'Summer · ON' : 'Summer · OFF'} (tap to toggle · hold 4s for Lite mode)`;
+    ? `Sự kiện mùa đông ${isWinter ? 'Bật' : 'Tắt'} (chạm để đổi · giữ 4s để ${isLite ? 'tắt' : 'bật'} chế độ cấu hình thấp)`
+    : `Winter event ${isWinter ? 'On' : 'Off'} (tap to toggle · hold 4s for Lite mode)`;
 
-  // === Tap = đổi mùa hè · Giữ 4s = đổi chế độ cấu hình thấp ===
+  // === Tap = đổi sự kiện mùa đông · Giữ 4s = đổi chế độ cấu hình thấp ===
   const HOLD_MS = 4000;
   const TAP_MAX_MS = 350; // chạm dưới 350ms được coi là tap
   const [holdProgress, setHoldProgress] = useState(0); // 0..1
@@ -127,8 +151,8 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
         setPerfToast({
           msg: willBeLite
             ? (lang === 'vi'
-                ? 'Đã bật chế độ cấu hình thấp — tắt hiệu ứng 3D, hoa rơi và smooth scroll để web mượt hơn trên điện thoại.'
-                : 'Lite mode enabled — disabled 3D effects, falling petals and smooth scroll for a smoother mobile experience.')
+                ? 'Đã bật chế độ cấu hình thấp — tắt hiệu ứng 3D, tuyết rơi và smooth scroll để web mượt hơn trên điện thoại.'
+                : 'Lite mode enabled — disabled 3D effects, falling snow and smooth scroll for a smoother mobile experience.')
             : (lang === 'vi'
                 ? 'Đã tắt chế độ cấu hình thấp — bật lại đầy đủ hiệu ứng.'
                 : 'Lite mode disabled — all effects restored.'),
@@ -141,10 +165,9 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
     }, HOLD_MS);
   };
 
-  // Pointer up: nếu chưa đạt 4s thì coi là tap → toggle Season
+  // Pointer up: tap nhanh = toggle winter event · giữ 4s = toggle lite mode
   const endHold = () => {
     if (holdTimerRef.current === null && holdRafRef.current === null) {
-      // Không có hold đang chạy
       if (holdFiredRef.current) {
         holdFiredRef.current = false;
         return;
@@ -154,8 +177,8 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
     const wasHoldFired = holdFiredRef.current;
     clearHold();
     if (!wasHoldFired && elapsed > 0 && elapsed < TAP_MAX_MS) {
-      // Tap nhanh → toggle mùa hè
-      setSeason(season === 'SUMMER' ? 'NORMAL' : 'SUMMER');
+      // Tap nhanh → bật/tắt sự kiện mùa đông
+      setSeason(season === 'WINTER' ? 'NORMAL' : 'WINTER');
     }
     holdFiredRef.current = false;
   };
@@ -182,13 +205,29 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
   };
 
   const welcomeText = lang === 'vi'
-    ? 'Chào mừng bạn đến với DEEPFENSE 3.0 - nền tảng huấn luyện nhận diện deepfake và tự vệ trước lừa đảo AI'
+    ? siteConfig.marquee
     : 'Welcome to DEEPFENSE 3.0 - a gamified training platform for deepfake awareness and AI scam defense';
 
   const authLabel = user
     ? (user.displayName?.split(' ')[0] || user.email?.split('@')[0] || 'Profile')
     : (lang === 'vi' ? 'Đăng nhập' : 'Sign in');
   const dpfBalanceLabel = dpfLoading ? '...' : dpfBalance.toLocaleString('en-US');
+  const mobileMenuSurface = theme === 'dark'
+    ? 'border-white/[0.10] bg-[#020710]/[0.98] shadow-[0_20px_46px_rgba(0,0,0,0.44)]'
+    : 'border-slate-200/90 bg-white/[0.98] shadow-[0_18px_38px_rgba(15,50,100,0.16)]';
+  const mobileMenuInactive = theme === 'dark'
+    ? 'text-slate-200 hover:bg-white/[0.07] hover:text-white'
+    : 'text-slate-700 hover:bg-slate-100 hover:text-slate-950';
+  const mobileMenuActive = theme === 'dark'
+    ? 'border border-primary/25 bg-primary/14 text-blue-100'
+    : 'border border-primary/25 bg-primary/12 text-primary';
+  const mobileMenuIcon = theme === 'dark' ? 'text-slate-400' : 'text-slate-500';
+  const tickerBarClass = theme === 'dark'
+    ? 'border-primary/15 bg-gradient-to-r from-[#020710] via-[#071426] to-[#020710]'
+    : 'border-blue-100/80 bg-gradient-to-r from-white via-sky-50 to-white shadow-[0_1px_10px_rgba(15,50,100,0.06)]';
+  const tickerEdgeLeft = theme === 'dark' ? 'from-black' : 'from-white';
+  const tickerEdgeRight = theme === 'dark' ? 'from-black' : 'from-white';
+  const tickerTextClass = theme === 'dark' ? 'text-blue-200/75' : 'text-slate-700';
 
   const isActivePath = (path: string) => (
     location.pathname === path
@@ -198,24 +237,26 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
 
   return (
     <>
-      <div className="relative z-[101] flex h-8 w-full items-center overflow-hidden border-b border-primary/15 bg-gradient-to-r from-[#020710] via-[#071426] to-[#020710]">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-black to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-black to-transparent" />
-        <div className="announcement-ticker">
-          {[0, 1].map((item) => (
-            <span key={item} className="pr-10 font-sans text-[11px] font-semibold tracking-[0.02em] text-blue-200/75 md:text-[12px]">
-              {welcomeText} &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; {welcomeText} &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
-            </span>
-          ))}
+      {showTicker && (
+        <div className={`relative z-[101] flex h-8 w-full items-center overflow-hidden border-b transition-colors duration-300 ${tickerBarClass}`}>
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div className={`pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r ${tickerEdgeLeft} to-transparent`} />
+          <div className={`pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l ${tickerEdgeRight} to-transparent`} />
+          <div className="announcement-ticker">
+            {[0, 1].map((item) => (
+              <span key={item} className={`pr-10 font-sans text-[11px] font-semibold tracking-[0.02em] md:text-[12px] ${tickerTextClass}`}>
+                {welcomeText} &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; {welcomeText} &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div
         className={`sticky top-0 z-[100] w-full border-b transition-all duration-500 ${
           isScrolled
-            ? 'border-white/[0.10] bg-[#020710]/95 shadow-[0_4px_34px_rgba(0,0,0,0.52)] backdrop-blur-2xl'
-            : 'border-white/[0.06] bg-[#020710]/82 backdrop-blur-xl'
+            ? 'border-black/[0.08] dark:border-white/[0.10] bg-white/95 dark:bg-[#020710]/95 shadow-[0_4px_34px_rgba(0,0,0,0.12)] dark:shadow-[0_4px_34px_rgba(0,0,0,0.52)] backdrop-blur-2xl'
+            : 'border-black/[0.05] dark:border-white/[0.06] bg-white/82 dark:bg-[#020710]/82 backdrop-blur-xl'
         }`}
       >
         <div className="mx-auto max-w-7xl px-4 md:px-6">
@@ -230,12 +271,12 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                 />
               </div>
               <div className="flex flex-col leading-none">
-                <span className="font-display text-xl font-black tracking-tight text-white md:text-2xl">
+                <span className="font-display text-xl font-black tracking-tight text-slate-900 dark:text-white md:text-2xl">
                   DEEPFENSE
                 </span>
                 <div className="mt-1 hidden items-center gap-1.5 md:flex">
                   <div className="h-1 w-1 animate-pulse rounded-full bg-primary" />
-                  <span className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.22em] text-blue-300/65">
+                  <span className="font-mono text-[0.55rem] font-bold uppercase tracking-[0.24em] text-blue-300/55">
                     DEEPFAKE - DEFENSE
                   </span>
                 </div>
@@ -250,10 +291,10 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                     key={item.path}
                     to={item.path}
                     className={`group relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-[13px] font-semibold tracking-normal transition-all duration-300 ${
-                      isActive ? 'bg-primary/15 text-blue-100 shadow-[inset_0_0_0_1px_rgba(96,165,250,0.18)]' : 'text-slate-300/85 hover:bg-white/[0.06] hover:text-white'
+                      isActive ? 'bg-primary/15 text-primary dark:text-blue-100 shadow-[inset_0_0_0_1px_rgba(96,165,250,0.18)]' : 'text-slate-600 dark:text-slate-300/85 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
-                    <span className={`transition-colors ${isActive ? 'text-blue-300' : 'text-slate-500 group-hover:text-slate-300'}`}>{item.icon}</span>
+                    <span className={`transition-colors ${isActive ? 'text-primary dark:text-blue-300' : 'text-slate-500 group-hover:text-slate-600 dark:text-slate-300'}`}>{item.icon}</span>
                     <span>{item.label}</span>
                     {isActive && (
                       <span className="absolute bottom-0 left-1/2 h-[2px] w-7 -translate-x-1/2 rounded-full bg-blue-300 shadow-[0_0_8px_rgba(96,165,250,0.72)]" />
@@ -264,19 +305,31 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
             </nav>
 
             <div className="relative flex items-center gap-2 md:gap-3">
-              <div className="flex h-8 items-center rounded-full border border-white/10 bg-white/[0.045] p-1">
+              <div className="flex h-8 items-center rounded-full border border-black/10 dark:border-white/10 bg-white/[0.045] p-1">
                 {(['vi', 'en'] as const).map((l) => (
                   <button
                     key={l}
                     onClick={() => setLang(l)}
-                    className={`flex h-full items-center justify-center rounded-full px-2.5 text-[11px] font-bold transition-all duration-300 ${
-                      lang === l ? 'bg-primary text-white shadow-[0_0_8px_rgba(29,111,232,0.42)]' : 'text-slate-400 hover:text-slate-100'
+                    className={`flex h-full items-center justify-center rounded-full px-2.5 text-[10px] font-bold transition-all duration-300 ${
+                      lang === l ? 'bg-primary text-white shadow-[0_0_8px_rgba(29,111,232,0.42)]' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'
                     }`}
                   >
                     {l.toUpperCase()}
                   </button>
                 ))}
               </div>
+
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="relative flex h-8 w-8 items-center justify-center rounded-full border border-black/10 bg-white/80 text-slate-700 shadow-sm transition-all duration-300 hover:border-primary/30 hover:text-primary dark:border-white/10 dark:bg-white/[0.045] dark:text-slate-300 dark:hover:text-white md:h-9 md:w-9"
+                title={themeLabel}
+                aria-label={themeLabel}
+                aria-pressed={theme === 'dark'}
+              >
+                {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+              </button>
+
 
               <div className="relative">
               <button
@@ -288,11 +341,11 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                 className="group relative z-50 select-none outline-none touch-manipulation"
                 title={perfLabel}
                 aria-label={perfLabel}
-                aria-pressed={isLite}
+                aria-pressed={isWinter}
               >
                 <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-500 ${
                   isLite ? 'bg-emerald-500/40 opacity-100'
-                  : isSummer ? 'bg-orange-500/50 opacity-100'
+                  : isWinter ? 'bg-cyan-400/45 opacity-100'
                   : 'bg-primary/30 opacity-0 group-hover:opacity-60'
                 }`} />
                 {/* Progress ring trong khi giữ */}
@@ -312,16 +365,16 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                 <div className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border shadow-xl transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] md:h-9 md:w-9 ${
                   isLite
                     ? 'border-emerald-400/70 bg-gradient-to-br from-emerald-500 to-teal-600'
-                    : isSummer
-                      ? 'rotate-[360deg] border-orange-500 bg-gradient-to-br from-orange-400 to-red-500'
-                      : 'rotate-0 border-white/10 bg-zinc-900 hover:border-white/30 hover:bg-zinc-800'
+                    : isWinter
+                      ? 'border-cyan-300/80 bg-gradient-to-br from-cyan-400 to-blue-700'
+                      : 'rotate-0 border-black/10 dark:border-white/10 bg-zinc-900 hover:border-white/30 hover:bg-zinc-800'
                 } ${holdProgress > 0 ? 'scale-95' : ''}`}
                 >
                   {isLite
                     ? <Smartphone size={15} className="text-white drop-shadow-md" />
-                    : isSummer
-                      ? <Sun size={15} className="animate-[spin_10s_linear_infinite] text-yellow-200 drop-shadow-md" />
-                      : <Power size={15} className="text-slate-400 transition-colors group-hover:text-gray-300" />}
+                    : isWinter
+                      ? <Snowflake size={15} className="text-cyan-50 drop-shadow-md" />
+                      : <Moon size={15} className="text-slate-400 transition-colors group-hover:text-gray-200" />}
                 </div>
               </button>
 
@@ -340,7 +393,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                     <button
                       type="button"
                       onClick={dismissPerfHint}
-                      className="ml-1 -mr-1 -mt-1 shrink-0 rounded-full p-1 text-emerald-300/70 transition-colors hover:bg-white/10 hover:text-white"
+                      className="ml-1 -mr-1 -mt-1 shrink-0 rounded-full p-1 text-emerald-300/70 transition-colors hover:bg-black/10 hover:text-white dark:bg-white/10"
                       aria-label={lang === 'vi' ? 'Đóng' : 'Close'}
                     >
                       <X size={12} />
@@ -365,7 +418,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                     <button
                       type="button"
                       onClick={() => setPerfToast(null)}
-                      className="ml-1 -mr-1 -mt-1 shrink-0 rounded-full p-1 text-slate-300/85 transition-colors hover:bg-white/10 hover:text-white"
+                      className="ml-1 -mr-1 -mt-1 shrink-0 rounded-full p-1 text-slate-600 dark:text-slate-300/85 transition-colors hover:bg-black/10 dark:bg-white/10 hover:text-slate-900 dark:text-white"
                       aria-label={lang === 'vi' ? 'Đóng' : 'Close'}
                     >
                       <X size={12} />
@@ -379,7 +432,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                 onClick={onGoogleAuth}
                 disabled={authBusy}
                 title={user?.email || (lang === 'vi' ? 'Đăng nhập hoặc tạo tài khoản' : 'Sign in or create account')}
-                className="hidden max-w-[250px] items-center gap-1.5 rounded-lg border border-primary/25 bg-primary/12 px-3 py-2 text-[12px] font-bold text-blue-100 transition-all duration-300 hover:border-primary/45 hover:bg-primary/20 disabled:cursor-wait disabled:opacity-60 lg:flex"
+                className="hidden max-w-[250px] items-center gap-1.5 rounded-lg border border-primary/25 bg-primary/12 px-3 py-2 text-[12px] font-bold text-primary transition-all duration-300 hover:border-primary/45 hover:bg-primary/20 disabled:cursor-wait disabled:opacity-60 dark:text-blue-100 lg:flex"
               >
                 {user ? <UserCircle size={12} /> : <LogIn size={12} />}
                 <span className="truncate">{authBusy ? (lang === 'vi' ? 'Đang xử lý' : 'Working') : authLabel}</span>
@@ -396,7 +449,17 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                 </div>
               )}
 
-              <button className="rounded-lg p-2 text-slate-300 transition-colors hover:bg-white/[0.06] hover:text-white lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              <button
+                type="button"
+                className={`rounded-lg p-2 transition-colors lg:hidden ${
+                  theme === 'dark'
+                    ? 'text-slate-200 hover:bg-white/[0.07] hover:text-white'
+                    : 'text-slate-700 hover:bg-slate-100 hover:text-slate-950'
+                }`}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label={isMenuOpen ? (lang === 'vi' ? 'Đóng điều hướng' : 'Close navigation') : (lang === 'vi' ? 'Mở điều hướng' : 'Open navigation')}
+                aria-expanded={isMenuOpen}
+              >
                 {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
             </div>
@@ -404,7 +467,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
         </div>
 
         {isMenuOpen && (
-          <div className="animate-in slide-in-from-top-3 border-t border-white/8 bg-[#020710]/98 backdrop-blur-2xl duration-200 lg:hidden">
+          <div className={`animate-in slide-in-from-top-3 border-t backdrop-blur-2xl duration-200 lg:hidden ${mobileMenuSurface}`}>
             <div className="flex flex-col gap-1 p-3">
               {navItems.map((item) => {
                 const isActive = isActivePath(item.path);
@@ -413,19 +476,22 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, season, setSeason, perfM
                     key={item.path}
                     onClick={() => handleNavClick(item.path)}
                     className={`flex items-center gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold tracking-normal transition-all ${
-                      isActive ? 'border border-primary/25 bg-primary/14 text-blue-100' : 'text-slate-300 hover:bg-white/[0.06] hover:text-white'
+                      isActive ? mobileMenuActive : mobileMenuInactive
                     }`}
                   >
-                    <span className={isActive ? 'text-blue-300' : 'text-slate-500'}>{item.icon}</span>
+                    <span className={isActive ? (theme === 'dark' ? 'text-blue-300' : 'text-primary') : mobileMenuIcon}>{item.icon}</span>
                     {item.label}
                   </button>
                 );
               })}
-              <div className="mt-2 border-t border-white/5 pt-2">
+
+              <div className={`mt-2 border-t pt-2 ${theme === 'dark' ? 'border-white/[0.08]' : 'border-slate-200'}`}>
                 <button
                   onClick={onGoogleAuth}
                   disabled={authBusy}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-primary/25 bg-primary/12 px-4 py-3 text-[13px] font-bold text-blue-100 disabled:opacity-60"
+                  className={`flex w-full items-center justify-center gap-2 rounded-xl border border-primary/25 bg-primary/12 px-4 py-3 text-[13px] font-bold disabled:opacity-60 ${
+                    theme === 'dark' ? 'text-blue-100' : 'text-primary'
+                  }`}
                 >
                   {user ? <UserCircle size={13} /> : <LogIn size={13} />}
                   <span className="truncate">{authBusy ? (lang === 'vi' ? 'Đang xử lý' : 'Working') : authLabel}</span>

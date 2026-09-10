@@ -52,7 +52,7 @@ function saveAcademyExamPass(s) {
       score: s.bestScore,
       passedAt: s.passedAt || Date.now(),
       attempts: s.attempts,
-      course: 'DEEPFENSE BASIC',
+      course: 'DEEPFENSE ACADEMY',
     }));
   } catch {}
 }
@@ -130,7 +130,7 @@ export default function FinalExam({ onComplete, completedLessons }) {
       <div className="content">
         <div className="exam-intro-wrap">
           <div className="exam-intro-badge">🎓 Bài kiểm tra cuối khóa</div>
-          <h1 className="exam-intro-title">DEEPFENSE BASIC<br /><span>Final Exam</span></h1>
+          <h1 className="exam-intro-title">DEEPFENSE ACADEMY<br /><span>Final Exam</span></h1>
 
           {alreadyPassed && (
             <div className="exam-passed-card">
@@ -172,7 +172,7 @@ export default function FinalExam({ onComplete, completedLessons }) {
           {/* Header */}
           <div className="exam-header">
             <div className="exam-header-title">
-              DEEPFENSE BASIC - Final Exam
+              DEEPFENSE ACADEMY - Final Exam
               {currentSession && (
                 <span className="exam-session-kicker">
                   {currentSession.sessionLabel}: {currentSession.sessionTitle}
@@ -302,7 +302,7 @@ export default function FinalExam({ onComplete, completedLessons }) {
               <div className="exam-celebrate-emoji">🏆</div>
               <div className="exam-celebrate-title">Xuất sắc!</div>
               <div className="exam-celebrate-sub">
-                Bạn đã vượt qua Final Exam và hoàn thành <strong>DEEPFENSE BASIC</strong>.
+                Bạn đã vượt qua Final Exam và hoàn thành <strong>DEEPFENSE ACADEMY</strong>.
               </div>
               <div className="exam-celebrate-badge">
                 <span className="ecb-dot" /><span>DEEPFENSE AWARE</span><span className="ecb-dot" />

@@ -6,6 +6,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, getCountFromServer, query, where } from 'firebase/firestore';
+import type { SiteConfig } from '@/config/siteConfig';
 import {
   AlertTriangle,
   ArrowRight,
@@ -20,7 +21,7 @@ import {
 } from 'lucide-react';
 import { db } from '@/config/firebase';
 import { FUN_FACTS, NEWS_DATA, TRANSLATIONS } from '@/data';
-import { Language, NewsItem, Season } from '@/types';
+import { Language, NewsItem } from '@/types';
 import AnalyticsChart from '@/features/dashboard/AnalyticsChart';
 import DeepfakeTimeline from '@/components/effects/DeepfakeTimeline';
 import ThreatPulse from '@/components/effects/ThreatPulse';
@@ -33,14 +34,37 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 interface HomeProps {
   lang: Language;
-  season: Season;
+  siteConfig: SiteConfig;
 }
 
-const Home: React.FC<HomeProps> = ({ lang, season }) => {
+const Home: React.FC<HomeProps> = ({ lang, siteConfig }) => {
   const t = TRANSLATIONS[lang];
   const facts = FUN_FACTS[lang];
   const navigate = useNavigate();
   const isVi = lang === 'vi';
+  const heroTitle = isVi ? siteConfig.heroTitle : 'Train your deepfake eye';
+  const heroSubtitle = isVi
+    ? siteConfig.heroSubtitle
+    : 'Learn to spot AI-generated videos, images, and voices. Build practical self-defense skills through short lessons, simulations, and DPF rewards.';
+  const heroTitleWords = heroTitle.replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
+  const heroFirstLine = isVi ? heroTitleWords.slice(0, 2).join(' ') : 'Train your';
+  const heroSecondLine = isVi ? heroTitleWords.slice(2).join(' ') || heroTitle : 'deepfake eye';
+  const primaryCta = isVi ? siteConfig.primaryCta : 'TAKE CHALLENGE';
+  const secondaryCta = isVi ? siteConfig.secondaryCta : 'START LEARNING';
+  const academyTitle = isVi ? siteConfig.academyTitle : 'Learn to stay calm when fake looks real.';
+  const academySummary = isVi
+    ? siteConfig.academySummary
+    : 'A familiar voice, an urgent video, a payment request. A few focused lessons can help you pause, verify, and avoid amplifying synthetic media.';
+  const factPool = useMemo(() => {
+    if (!isVi) return facts;
+    const configuredFacts = [siteConfig.factOne, siteConfig.factTwo, siteConfig.factThree]
+      .map((content, index) => ({
+        title: `Bạn có biết #${index + 1}`,
+        content,
+      }))
+      .filter((fact) => fact.content.trim().length > 0);
+    return configuredFacts.length >= 3 ? configuredFacts : facts;
+  }, [facts, isVi, siteConfig.factOne, siteConfig.factThree, siteConfig.factTwo]);
   const [protectedUsers, setProtectedUsers] = useState(0);
   const [totalAttempts, setTotalAttempts] = useState(0);
   const [factIndex, setFactIndex] = useState(0);
@@ -127,7 +151,7 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
     }, 5200);
 
     const factTimer = window.setInterval(() => {
-      if (ok) setFactIndex((previous) => (previous + 3) % facts.length);
+      if (ok) setFactIndex((previous) => (previous + 3) % factPool.length);
     }, 10000);
 
     return () => {
@@ -135,11 +159,11 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
       window.clearInterval(newsTimer);
       window.clearInterval(factTimer);
     };
-  }, [liveNews, facts.length]);
+  }, [liveNews, factPool.length]);
 
   const displayFacts = useMemo(
-    () => [0, 1, 2].map((offset) => facts[(factIndex + offset) % facts.length]),
-    [facts, factIndex],
+    () => [0, 1, 2].map((offset) => factPool[(factIndex + offset) % factPool.length]),
+    [factPool, factIndex],
   );
 
   const journeyItems = [
@@ -168,7 +192,6 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         <section ref={heroRef as React.RefObject<HTMLDivElement>} className="relative mb-16 grid min-h-[420px] grid-cols-1 items-center gap-7 overflow-visible md:min-h-[480px] lg:grid-cols-12 lg:gap-9">
           <div className="pointer-events-none absolute inset-x-0 top-6 h-[300px] overflow-hidden opacity-80">
             <div className="absolute left-1/2 top-8 h-56 w-[min(760px,90vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(29,111,232,0.075),transparent_68%)] blur-2xl" />
-            {season === 'SUMMER' && <div className="absolute right-[12%] top-16 h-24 w-24 rounded-full bg-orange-500/8 blur-3xl" />}
           </div>
 
           <div className="relative z-10 text-center lg:col-span-7 lg:text-left">
@@ -184,18 +207,16 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
             <div data-reveal className="overflow-visible py-3">
               <h1
-                className="mx-auto max-w-[760px] text-[2.45rem] font-black uppercase leading-[1.18] text-white [text-wrap:balance] sm:text-[3rem] md:text-[3.6rem] lg:mx-0 lg:text-[3.9rem]"
+                className="mx-auto max-w-[760px] text-[2.45rem] font-black uppercase leading-[1.18] text-slate-900 dark:text-white [text-wrap:balance] sm:text-[3rem] md:text-[3.6rem] lg:mx-0 lg:text-[3.9rem]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                {isVi ? 'Huấn luyện' : 'Train your'}<br />
-                <span className="inline-block pb-1 text-shimmer">{isVi ? 'nhận diện deepfake' : 'deepfake eye'}</span>
+                {heroFirstLine}<br />
+                <span className="inline-block pb-1 text-shimmer">{heroSecondLine}</span>
               </h1>
             </div>
 
-            <p data-reveal className="mx-auto mb-6 max-w-xl text-base leading-8 text-slate-300/82 md:text-lg lg:mx-0 lg:border-l-2 lg:border-blue-500/40 lg:pl-4">
-              {isVi
-                ? 'Học cách nhận biết video, hình ảnh và giọng nói giả mạo AI. Trang bị kỹ năng tự vệ trước lừa đảo số bằng bài học ngắn, thử thách mô phỏng và điểm thưởng DPF.'
-                : 'Learn to spot AI-generated videos, images, and voices. Build practical self-defense skills through short lessons, simulations, and DPF rewards.'}
+            <p data-reveal className="mx-auto mb-6 max-w-xl text-base leading-8 text-slate-600 dark:text-slate-300/82 md:text-lg lg:mx-0 lg:border-l-2 lg:border-blue-500/40 lg:pl-4">
+              {heroSubtitle}
             </p>
 
             <div data-reveal className="mb-7 flex flex-wrap justify-center gap-3 lg:justify-start">
@@ -212,12 +233,12 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             <div data-reveal className="flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
               <MagneticWrapper>
                 <GlowButton color="primary" size="lg" icon={<GraduationCap size={16} />} onClick={() => navigate('/academy')}>
-                  {isVi ? 'BẮT ĐẦU HỌC' : 'START LEARNING'}
+                  {secondaryCta.toUpperCase()}
                 </GlowButton>
               </MagneticWrapper>
               <MagneticWrapper>
                 <GlowButton color="secondary" size="lg" icon={<Swords size={16} />} onClick={() => navigate('/challenge')}>
-                  {isVi ? 'THỬ THÁCH NGAY' : 'TAKE CHALLENGE'}
+                  {primaryCta.toUpperCase()}
                 </GlowButton>
               </MagneticWrapper>
               <MagneticWrapper>
@@ -229,52 +250,54 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
           </div>
 
           <div className="relative z-10 lg:col-span-5">
-            <div data-reveal className="relative h-[300px] overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-[0_0_40px_rgba(29,111,232,0.15)] backdrop-blur-xl transition-all duration-500 hover:border-blue-500/50 md:h-[360px]">
+            <div data-reveal data-testid="home-analytics-card" className="relative h-[300px] overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-black/40 shadow-[0_0_40px_rgba(29,111,232,0.15)] backdrop-blur-xl transition-all duration-500 hover:border-blue-500/50 md:h-[360px]">
               <AnalyticsChart lang={lang} />
               <ThreatPulse />
             </div>
           </div>
         </section>
 
-        <section ref={academyRef as React.RefObject<HTMLDivElement>} data-reveal className="mx-auto mb-16 max-w-6xl overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-[0_0_40px_rgba(29,111,232,0.12)] backdrop-blur-xl transition-all duration-500 hover:border-blue-500/35">
-          <div className="border-b border-white/10 bg-white/[0.025] px-5 py-4 md:px-7">
+        <section ref={academyRef as React.RefObject<HTMLDivElement>} data-reveal className="mx-auto mb-16 max-w-6xl overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-black/40 shadow-[0_0_40px_rgba(29,111,232,0.12)] backdrop-blur-xl transition-all duration-500 hover:border-blue-500/35">
+          <div className="border-b border-black/10 dark:border-white/10 bg-white/[0.025] px-5 py-4 md:px-7">
             <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-              <div className="flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-3 py-1.5 text-[11px] font-bold tracking-[0.12em] text-blue-200">
+              <div className="flex w-fit items-center gap-2 rounded-full border border-blue-400/25 bg-blue-400/10 px-3 py-1.5 text-[10px] font-bold tracking-[0.12em] text-blue-200">
                 <GraduationCap size={12} /> DEEPFENSE ACADEMY
               </div>
-              <button onClick={() => navigate('/academy')} className="group inline-flex w-fit items-center gap-2 text-[11px] font-black uppercase tracking-[0.12em] text-blue-300 transition-colors hover:text-blue-100">
-                {isVi ? 'Bảng vinh danh' : 'Hall of fame'} <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
-              </button>
+              {siteConfig.leaderboardEnabled && (
+                <button onClick={() => navigate('/academy')} className="group inline-flex w-fit items-center gap-2 text-[10px] font-black uppercase tracking-[0.12em] text-blue-300 transition-colors hover:text-blue-100">
+                  {isVi ? 'Bảng vinh danh' : 'Hall of fame'} <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
+                </button>
+              )}
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-6 p-5 md:p-7 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-6">
-              <h2 className="font-display text-left text-2xl font-black leading-tight text-white md:text-3xl">
-                {isVi ? 'Học cách bình tĩnh trước một nội dung quá giống thật.' : 'Learn to stay calm when fake looks real.'}
+              <h2 className="font-display text-left text-2xl font-black leading-tight text-slate-900 dark:text-white md:text-3xl">
+                {academyTitle}
               </h2>
-              <p className="mt-4 max-w-2xl text-left text-sm leading-7 text-slate-300/82">
-                {isVi
-                  ? 'Một giọng nói quen thuộc, một video gấp gáp, một tin nhắn đòi chuyển tiền. Chỉ vài phút học đúng cách có thể giúp bạn dừng lại, kiểm chứng và không tiếp tay cho nội dung giả.'
-                  : 'A familiar voice, an urgent video, a payment request. A few focused lessons can help you pause, verify, and avoid amplifying synthetic media.'}
+              <p className="mt-4 max-w-2xl text-left text-sm leading-7 text-slate-600 dark:text-slate-300/82">
+                {academySummary}
               </p>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                 <GlowButton color="primary" size="md" icon={<GraduationCap size={16} />} onClick={() => navigate('/academy')}>
                   {isVi ? 'VÀO KHÓA HỌC' : 'OPEN COURSE'}
                 </GlowButton>
-                <GlowButton color="ghost" size="md" icon={<Trophy size={16} />} onClick={() => navigate('/academy')}>
-                  {isVi ? 'BẢNG VINH DANH' : 'HALL OF FAME'}
-                </GlowButton>
+                {siteConfig.leaderboardEnabled && (
+                  <GlowButton color="ghost" size="md" icon={<Trophy size={16} />} onClick={() => navigate('/academy')}>
+                    {isVi ? 'BẢNG VINH DANH' : 'HALL OF FAME'}
+                  </GlowButton>
+                )}
               </div>
             </div>
 
             <div className="grid gap-3 lg:col-span-6">
               {journeyItems.map((item) => (
-                <div key={item.step} className="grid grid-cols-[42px_1fr] gap-3 rounded-2xl border border-white/10 bg-white/[0.035] p-4 text-left transition-all duration-300 hover:border-blue-400/25 hover:bg-white/[0.055]">
+                <div key={item.step} className="grid grid-cols-[42px_1fr] gap-3 rounded-2xl border border-black/10 dark:border-white/10 bg-white/[0.035] p-4 text-left transition-all duration-300 hover:border-blue-400/25 hover:bg-white/[0.055]">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-400/10 text-xs font-black text-blue-200">{item.step}</div>
                   <div>
-                    <div className="text-sm font-black text-white">{item.title}</div>
-                    <div className="mt-1 text-xs leading-relaxed text-slate-400">{item.text}</div>
+                    <div className="text-sm font-black text-slate-900 dark:text-white">{item.title}</div>
+                    <div className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{item.text}</div>
                   </div>
                 </div>
               ))}
@@ -283,13 +306,13 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
         </section>
 
         <section ref={newsRef as React.RefObject<HTMLDivElement>} className="mb-16 grid grid-cols-1 gap-6 lg:grid-cols-12">
-          <div data-reveal className="overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-[0_0_40px_rgba(29,111,232,0.1)] backdrop-blur-xl transition-all duration-500 hover:border-blue-500/35 lg:col-span-8">
-            <div className="flex items-center justify-between border-b border-white/10 bg-black/40 p-6">
+          <div data-reveal className="overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-black/40 shadow-[0_0_40px_rgba(29,111,232,0.1)] backdrop-blur-xl transition-all duration-500 hover:border-blue-500/35 lg:col-span-8">
+            <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 bg-white/70 dark:bg-black/40 p-6">
               <div className="flex items-center gap-3">
                 <div className="rounded-lg bg-secondary/20 p-2"><AlertTriangle className="text-secondary" size={18} /></div>
                 <div>
-                  <h2 className="text-sm font-bold uppercase tracking-wide text-white">{t.warning_center}</h2>
-                  <p className="mt-1 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.06em] text-slate-400">
+                  <h2 className="text-sm font-bold uppercase tracking-wide text-slate-900 dark:text-white">{t.warning_center}</h2>
+                  <p className="mt-1 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.06em] text-slate-500 dark:text-slate-400">
                     <RadarPing size={6} color="secondary" speed="slow" /> LIVE_THREAT_AWARENESS
                   </p>
                 </div>
@@ -297,19 +320,19 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
             </div>
             <div className="grid min-h-[400px] grid-cols-1 md:grid-cols-2">
               {displayedNews.length > 0 ? displayedNews.map((item, index) => (
-                <a key={`${item.title}-${index}`} href={item.url} target="_blank" rel="noopener noreferrer" className={`news-card group flex flex-col gap-2.5 border-b border-white/5 p-5 ${flippingIndex === index ? 'animate-pulse opacity-50' : ''}`}>
+                <a key={`${item.title}-${index}`} href={item.url} target="_blank" rel="noopener noreferrer" className={`news-card group flex flex-col gap-2.5 border-b border-black/10 dark:border-white/5 p-5 ${flippingIndex === index ? 'animate-pulse opacity-50' : ''}`}>
                   <div className="flex items-center justify-between">
-                    <span className="rounded bg-red-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-red-300">{item.tag}</span>
-                    <span className="font-mono text-[11px] text-slate-500">{item.date}</span>
+                    <span className="rounded bg-red-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-red-300">{item.tag}</span>
+                    <span className="font-mono text-[10px] text-slate-500">{item.date}</span>
                   </div>
-                  <h3 className="line-clamp-2 text-sm font-bold leading-snug text-white transition-colors group-hover:text-blue-400">{item.title}</h3>
-                  <p className="line-clamp-2 text-xs leading-relaxed text-slate-400">{item.desc}</p>
+                  <h3 className="line-clamp-2 text-sm font-bold leading-snug text-slate-900 dark:text-white transition-colors group-hover:text-blue-400">{item.title}</h3>
+                  <p className="line-clamp-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{item.desc}</p>
                   <div className="mt-auto flex items-center justify-end">
                     <ExternalLink size={11} className="text-slate-600 transition-colors group-hover:text-blue-400" />
                   </div>
                 </a>
               )) : (
-                <div className="col-span-2 p-10 text-center font-mono text-xs uppercase tracking-[0.12em] text-slate-400">
+                <div className="col-span-2 p-10 text-center font-mono text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
                   <RadarPing size={8} className="mx-auto mb-4" />
                   Initializing Threat Database...
                 </div>
@@ -319,18 +342,18 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
 
           <div className="flex flex-col gap-5 lg:col-span-4">
             <button data-reveal onClick={() => navigate('/tools/crisis')} className="group flex items-center gap-4 rounded-2xl bg-secondary p-6 text-left shadow-lg shadow-secondary/20 transition-all hover:bg-red-500">
-              <div className="rounded-xl bg-white/20 p-3.5 text-white transition-transform group-hover:scale-110"><PhoneCall size={28} /></div>
+              <div className="rounded-xl bg-black/20 dark:bg-white/20 p-3.5 text-slate-900 dark:text-white transition-transform group-hover:scale-110"><PhoneCall size={28} /></div>
               <div>
-                <div className="text-base font-bold uppercase leading-none tracking-wide text-white">{t.hotline}</div>
-                <div className="mt-1.5 font-mono text-[11px] uppercase tracking-[0.06em] text-white/75">{t.hotline_subtext}</div>
+                <div className="text-base font-bold uppercase leading-none tracking-wide text-slate-900 dark:text-white">{t.hotline}</div>
+                <div className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.06em] text-white/75">{t.hotline_subtext}</div>
               </div>
             </button>
 
-            <div data-reveal className="group relative flex-grow overflow-hidden rounded-3xl border border-white/10 bg-black/40 p-6 shadow-[0_0_40px_rgba(29,111,232,0.1)] backdrop-blur-xl transition-all duration-500 hover:border-blue-500/35">
-              <div className="mb-6 flex items-center gap-3 border-b border-white/10 pb-4">
+            <div data-reveal className="group relative flex-grow overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-black/40 p-6 shadow-[0_0_40px_rgba(29,111,232,0.1)] backdrop-blur-xl transition-all duration-500 hover:border-blue-500/35">
+              <div className="mb-6 flex items-center gap-3 border-b border-black/10 dark:border-white/10 pb-4">
                 <div className="rounded-xl bg-blue-500/20 p-2.5"><Lightbulb className="text-blue-400" size={22} /></div>
                 <div>
-                  <h2 className="text-sm font-bold uppercase tracking-wider text-white">{t.knowledge}</h2>
+                  <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white">{t.knowledge}</h2>
                   <div className="mt-2 h-1 w-8 rounded-full bg-blue-500/40" />
                 </div>
               </div>
@@ -338,9 +361,9 @@ const Home: React.FC<HomeProps> = ({ lang, season }) => {
                 {displayFacts.map((fact, index) => (
                   <div key={`${factIndex}-${index}`} className="animate-in slide-in-from-right relative border-l-2 border-blue-500/20 pl-5 duration-700 hover:border-blue-400">
                     <div className="absolute -left-[5px] top-0 h-2 w-2 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(29,111,232,0.8)]" />
-                    <div className="mb-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-blue-300/75">FACT #{(factIndex + index) % facts.length + 1}</div>
-                    <h4 className="mb-2 text-base font-black uppercase italic leading-tight text-white">{fact.title}</h4>
-                    <p className="line-clamp-3 text-xs leading-relaxed text-slate-300/85">{fact.content}</p>
+                    <div className="mb-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-blue-300/75">FACT #{(factIndex + index) % factPool.length + 1}</div>
+                    <h4 className="mb-2 text-base font-black uppercase italic leading-tight text-slate-900 dark:text-white">{fact.title}</h4>
+                    <p className="line-clamp-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300/85">{fact.content}</p>
                   </div>
                 ))}
               </div>

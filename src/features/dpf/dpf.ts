@@ -21,6 +21,7 @@ export type DpfLedgerSource =
   | 'simulator'
   | 'course'
   | 'certificate'
+  | 'seasonal'
   | 'admin_bonus'
   | 'admin_revoke'
   | 'unlock'
@@ -62,7 +63,7 @@ export type DpfWallet = {
 };
 
 export type DpfClaimConfig = {
-  source: Extract<DpfLedgerSource, 'challenge' | 'simulator' | 'course' | 'certificate'>;
+  source: Extract<DpfLedgerSource, 'challenge' | 'simulator' | 'course' | 'certificate' | 'seasonal'>;
   activityId: string;
   amount: number;
   reason: string;

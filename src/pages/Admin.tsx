@@ -2,10 +2,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { db, auth, storage } from '@/config/firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 import { googleProvider } from '@/config/firebase';
+import { DEFAULT_SITE_CONFIG, type SiteConfig } from '@/config/siteConfig';
 import {
   collection,
   addDoc,
   getDocs,
+  getDoc,
   getCountFromServer,
   getAggregateFromServer,
   sum,
@@ -15,6 +17,7 @@ import {
   onSnapshot,
   runTransaction,
   updateDoc,
+  setDoc,
   doc,
   deleteDoc,
   limit,
@@ -53,10 +56,14 @@ import {
   Download,
   RefreshCw,
   Ban,
+  Crown,
+  Globe2,
+  MonitorCog,
+  UserCog,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
-type Role = 'user' | 'editor' | 'admin';
+type Role = 'user' | 'support' | 'editor' | 'admin' | 'owner';
 type CaseStatus = 'new' | 'reviewing' | 'replied' | 'closed' | 'archived' | 'processed';
 type Severity = 'info' | 'notice' | 'low' | 'medium' | 'warning' | 'high' | 'critical';
 
@@ -165,25 +172,52 @@ interface TrainingStats {
   isLoading: boolean;
 }
 
-type AdminTab = 'overview' | 'users' | 'dpf' | 'cases' | 'studio' | 'activity' | 'security' | 'data';
-
 const timeRangeOptions = ['Hôm nay', '7 ngày', '30 ngày', 'Tất cả'];
 
-const tabs: Array<{ id: AdminTab; label: string; icon: LucideIcon }> = [
-  { id: 'overview', label: 'Tổng quan SOC', icon: Gauge },
-  { id: 'users', label: 'Giám sát người dùng', icon: Users },
-  { id: 'dpf', label: 'DPF coin', icon: Coins },
-  { id: 'cases', label: 'Hồ sơ trợ giúp', icon: HelpCircle },
-  { id: 'studio', label: 'Xưởng nội dung', icon: Layers },
-  { id: 'activity', label: 'Nhật ký hoạt động', icon: Activity },
-  { id: 'security', label: 'Sự kiện bảo mật', icon: ShieldAlert },
-  { id: 'data', label: 'Mô hình dữ liệu', icon: Database },
+type AdminTab = 'overview' | 'users' | 'studio' | 'website' | 'cases' | 'dpf' | 'governance';
+type WebsiteToggleKey = 'seasonalEnabled' | 'aiAgentEnabled' | 'leaderboardEnabled';
+
+const consoleAccessRoles: Array<Exclude<Role, 'user'>> = ['owner', 'admin', 'editor', 'support'];
+
+const canAccessAdminRole = (role?: string | null): role is Exclude<Role, 'user'> => (
+  role === 'owner' || role === 'admin' || role === 'editor' || role === 'support'
+);
+
+const resolveConsoleRole = (email?: string | null, storedRole?: string | null): Exclude<Role, 'user'> | null => {
+  if ((email || '').toLowerCase() === 'deepfense@gmail.com') return 'owner';
+  return canAccessAdminRole(storedRole) ? storedRole : null;
+};
+
+const tabs: Array<{ id: AdminTab; label: string; description: string; icon: LucideIcon; roles: Exclude<Role, 'user'>[] }> = [
+  { id: 'overview', label: 'Tổng quan', description: 'Sức khỏe vận hành', icon: Gauge, roles: consoleAccessRoles },
+  { id: 'users', label: 'Người dùng', description: 'Hồ sơ, quyền, trạng thái', icon: Users, roles: ['owner', 'admin', 'support'] },
+  { id: 'studio', label: 'Academy', description: 'Bài học và thử thách', icon: Layers, roles: ['owner', 'admin', 'editor'] },
+  { id: 'website', label: 'Website', description: 'Nội dung hiển thị', icon: Globe2, roles: ['owner', 'admin', 'editor'] },
+  { id: 'cases', label: 'Hỗ trợ', description: 'Hồ sơ tố giác và trợ giúp', icon: HelpCircle, roles: ['owner', 'admin', 'support'] },
+  { id: 'dpf', label: 'DPF coin', description: 'Ví thưởng và sổ giao dịch', icon: Coins, roles: ['owner', 'admin'] },
+  { id: 'governance', label: 'Quản trị', description: 'Nhật ký, bảo mật, dữ liệu', icon: Shield, roles: ['owner', 'admin'] },
+];
+
+const websiteToggleControls: Array<{ key: WebsiteToggleKey; label: string }> = [
+  { key: 'seasonalEnabled', label: 'Hiệu ứng mùa đông' },
+  { key: 'aiAgentEnabled', label: 'AI Agent' },
+  { key: 'leaderboardEnabled', label: 'Bảng vinh danh' },
 ];
 
 const roleLabels: Record<Role, string> = {
   user: 'Người học',
+  support: 'Hỗ trợ người dùng',
   editor: 'Biên tập viên',
   admin: 'Quản trị viên',
+  owner: 'Giám đốc / Owner',
+};
+
+const getRoleLabel = (role?: string | null) => {
+  if (role === 'owner' || role === 'admin' || role === 'editor' || role === 'support' || role === 'user') {
+    return roleLabels[role];
+  }
+  if (role === 'viewer') return 'Viewer - bị chặn';
+  return 'Chưa phân quyền';
 };
 
 const userStatusLabels: Record<NonNullable<UserRecord['status']>, string> = {
@@ -270,7 +304,7 @@ const statusClass = (status?: string) => {
     case 'archived':
       return 'bg-red-500/15 text-red-300 border-red-500/30';
     default:
-      return 'bg-white/10 text-gray-300 border-white/10';
+      return 'bg-black/10 dark:bg-white/10 text-slate-600 dark:text-gray-300 border-black/10 dark:border-white/10';
   }
 };
 
@@ -295,17 +329,17 @@ const StatCard = ({
   };
 
   return (
-    <div className="rounded-lg border border-white/10 bg-[#07111f]/90 p-4 shadow-xl shadow-black/20">
+    <div className="rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90 p-4 shadow-xl shadow-black/20">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">{label}</p>
-          <div className="mt-3 text-3xl font-black text-white">{value}</div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{label}</p>
+          <div className="mt-3 text-3xl font-black text-slate-900 dark:text-white">{value}</div>
         </div>
         <div className={`rounded-lg border p-2 ${tones[tone]}`}>
           <Icon size={20} />
         </div>
       </div>
-      <p className="mt-4 text-xs text-slate-300/85">{sub}</p>
+      <p className="mt-4 text-xs text-slate-600 dark:text-slate-300/85">{sub}</p>
     </div>
   );
 };
@@ -319,6 +353,8 @@ const Pill = ({ children, className = '' }: { children: React.ReactNode; classNa
 const Admin: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthChecking, setIsAuthChecking] = useState(true);
+  const [currentAdminRole, setCurrentAdminRole] = useState<Exclude<Role, 'user'> | null>(null);
+  const [blockedUserEmail, setBlockedUserEmail] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
@@ -372,16 +408,88 @@ const Admin: React.FC = () => {
     amount: '1000',
     reason: 'Admin bonus DPF coin',
   });
+  const [websiteDraft, setWebsiteDraft] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
   const [dpfBusy, setDpfBusy] = useState(false);
   const [actionMessage, setActionMessage] = useState('');
 
+  const visibleTabs = useMemo(() => {
+    if (!currentAdminRole) return [];
+    return tabs.filter((tab) => tab.roles.includes(currentAdminRole));
+  }, [currentAdminRole]);
+
+  const canManageUsers = currentAdminRole === 'owner' || currentAdminRole === 'admin';
+  const canEditContent = currentAdminRole === 'owner' || currentAdminRole === 'admin' || currentAdminRole === 'editor';
+  const canSupportCases = currentAdminRole === 'owner' || currentAdminRole === 'admin' || currentAdminRole === 'support';
+  const canManageDpf = currentAdminRole === 'owner' || currentAdminRole === 'admin';
+  const canUseDangerZone = currentAdminRole === 'owner';
+  const canAssignRole = (role: Role) => role !== 'owner' || currentAdminRole === 'owner';
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsAuthenticated(!!user);
-      setIsAuthChecking(false);
+      const verifyAdminAccess = async () => {
+        if (!user) {
+          setCurrentAdminRole(null);
+          setBlockedUserEmail('');
+          setIsAuthenticated(false);
+          setIsAuthChecking(false);
+          return;
+        }
+
+        const normalizedEmail = (user.email || '').toLowerCase();
+        try {
+          const userSnap = await getDoc(doc(db, 'users', user.uid));
+          let storedRole = userSnap.exists() ? String(userSnap.data().role || '') : '';
+          if (!storedRole && normalizedEmail) {
+            const emailSnap = await getDocs(query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1)));
+            storedRole = emailSnap.empty ? '' : String(emailSnap.docs[0].data().role || '');
+          }
+          const assignedRole = resolveConsoleRole(normalizedEmail, storedRole);
+
+          if (!assignedRole) {
+            setCurrentAdminRole(null);
+            setBlockedUserEmail(user.email || normalizedEmail);
+            setLoginError('Tài khoản này chưa được phân quyền truy cập Admin Dashboard.');
+            setIsAuthenticated(false);
+            setIsAuthChecking(false);
+            return;
+          }
+
+          await setDoc(doc(db, 'users', user.uid), {
+            uid: user.uid,
+            email: user.email || '',
+            displayName: user.displayName || '',
+            photoURL: user.photoURL || '',
+            role: assignedRole,
+            canAccessAdmin: true,
+            adminLastSeenAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+          }, { merge: true });
+
+          setCurrentAdminRole(assignedRole);
+          setBlockedUserEmail('');
+          setIsAuthenticated(true);
+          setIsAuthChecking(false);
+        } catch (error) {
+          console.error('Admin role verification failed:', error);
+          setCurrentAdminRole(null);
+          setBlockedUserEmail(user.email || normalizedEmail);
+          setLoginError('Không thể xác minh quyền quản trị. Vui lòng kiểm tra Firestore role của tài khoản.');
+          setIsAuthenticated(false);
+          setIsAuthChecking(false);
+        }
+      };
+
+      setIsAuthChecking(true);
+      void verifyAdminAccess();
     });
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (!currentAdminRole) return;
+    if (visibleTabs.some((tab) => tab.id === activeTab)) return;
+    setActiveTab(visibleTabs[0]?.id || 'overview');
+  }, [activeTab, currentAdminRole, visibleTabs]);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -409,6 +517,17 @@ const Admin: React.FC = () => {
       }),
       onSnapshot(query(collection(db, 'security_events'), orderBy('createdAt', 'desc'), limit(80)), (snapshot) => {
         setSecurityEvents(snapshot.docs.map((item) => ({ id: item.id, ...item.data() })) as SecurityEvent[]);
+      }),
+      onSnapshot(doc(db, 'site_config', 'main'), (snapshot) => {
+        if (!snapshot.exists()) return;
+        const data = snapshot.data() as Partial<SiteConfig>;
+        setWebsiteDraft((current) => ({
+          ...current,
+          ...data,
+          seasonalEnabled: typeof data.seasonalEnabled === 'boolean' ? data.seasonalEnabled : current.seasonalEnabled,
+          aiAgentEnabled: typeof data.aiAgentEnabled === 'boolean' ? data.aiAgentEnabled : current.aiAgentEnabled,
+          leaderboardEnabled: typeof data.leaderboardEnabled === 'boolean' ? data.leaderboardEnabled : current.leaderboardEnabled,
+        }));
       }),
     ];
 
@@ -517,7 +636,7 @@ const Admin: React.FC = () => {
       await signInWithEmailAndPassword(auth, email, password);
       setLoginError('');
     } catch (error) {
-      setLoginError('Sai thong tin dang nhap hoac tai khoan chua duoc cap quyen.');
+      setLoginError('Sai thông tin đăng nhập hoặc tài khoản chưa được cấp quyền.');
     }
   };
 
@@ -578,7 +697,7 @@ const Admin: React.FC = () => {
   const writeActivityLog = async (payload: Omit<ActivityLog, 'id' | 'createdAt'>) => {
     await addDoc(collection(db, 'activity_logs'), {
       actorId: auth.currentUser?.uid || 'admin',
-      actorRole: 'admin',
+      actorRole: currentAdminRole || 'admin',
       ...payload,
       createdAt: serverTimestamp(),
     });
@@ -651,6 +770,10 @@ const Admin: React.FC = () => {
   const grantDpfCoin = async (event: React.FormEvent) => {
     event.preventDefault();
     if (dpfBusy) return;
+    if (!canManageDpf) {
+      showActionMessage('Tài khoản hiện tại không có quyền quản lý DPF coin.');
+      return;
+    }
 
     const target = dpfForm.target.trim();
     const normalizedEmail = target.toLowerCase();
@@ -697,7 +820,7 @@ const Admin: React.FC = () => {
           uid: auth.currentUser.uid,
           email: auth.currentUser.email || normalizedEmail,
           displayName: auth.currentUser.displayName || 'Admin',
-          role: 'admin',
+          role: currentAdminRole || 'admin',
           status: 'active',
         };
       }
@@ -771,6 +894,10 @@ const Admin: React.FC = () => {
 
   const revokeDpfCoin = async () => {
     if (dpfBusy) return;
+    if (!canManageDpf) {
+      showActionMessage('Tài khoản hiện tại không có quyền thu hồi DPF coin.');
+      return;
+    }
 
     const target = dpfForm.target.trim();
     const amount = Number(dpfForm.amount);
@@ -808,6 +935,11 @@ const Admin: React.FC = () => {
   };
 
   const updateCaseStatus = async (item: HelpCenterCase, status: CaseStatus) => {
+    if (!canSupportCases) {
+      showActionMessage('Tài khoản hiện tại không có quyền xử lý hồ sơ hỗ trợ.');
+      return;
+    }
+
     const collectionName = item.caseType === 'legacy_incident' ? 'incident_reports' : 'help_center_cases';
     const nextStatus = item.caseType === 'legacy_incident' && status === 'closed' ? 'processed' : status;
     await updateDoc(doc(db, collectionName, item.id), { status: nextStatus });
@@ -822,6 +954,11 @@ const Admin: React.FC = () => {
   };
 
   const saveCaseDraft = async (item: HelpCenterCase) => {
+    if (!canSupportCases) {
+      showActionMessage('Tài khoản hiện tại không có quyền lưu phản hồi hồ sơ.');
+      return;
+    }
+
     const draft = caseDrafts[item.id];
     if (!draft) return;
     const collectionName = item.caseType === 'legacy_incident' ? 'incident_reports' : 'help_center_cases';
@@ -842,6 +979,11 @@ const Admin: React.FC = () => {
   };
 
   const deleteCase = async (item: HelpCenterCase) => {
+    if (!(currentAdminRole === 'owner' || currentAdminRole === 'admin')) {
+      showActionMessage('Chỉ Owner hoặc Admin được xóa hồ sơ hỗ trợ.');
+      return;
+    }
+
     if (!window.confirm('Bạn chắc chắn muốn xóa hồ sơ này?')) return;
     try {
       if (item.attachmentUrl) {
@@ -867,7 +1009,21 @@ const Admin: React.FC = () => {
   };
 
   const changeUserRole = async (user: UserRecord, role: Role) => {
-    await updateDoc(doc(db, 'users', user.uid || user.id), { role });
+    if (!canManageUsers) {
+      showActionMessage('Tài khoản hiện tại không có quyền đổi vai trò người dùng.');
+      return;
+    }
+    if (!canAssignRole(role)) {
+      showActionMessage('Chỉ Owner được gán quyền Owner.');
+      return;
+    }
+    if ((user.uid || user.id) === auth.currentUser?.uid && role !== currentAdminRole) {
+      showActionMessage('Không đổi quyền của chính tài khoản đang quản trị tại đây.');
+      return;
+    }
+
+    const canAccessAdmin = canAccessAdminRole(role);
+    await updateDoc(doc(db, 'users', user.uid || user.id), { role, canAccessAdmin });
     await writeActivityLog({
       action: 'admin.role_changed',
       targetType: 'users',
@@ -878,7 +1034,7 @@ const Admin: React.FC = () => {
     await addDoc(collection(db, 'security_events'), {
       eventType: 'role_changed',
       actorId: auth.currentUser?.uid || 'admin',
-      actorRole: 'admin',
+      actorRole: currentAdminRole || 'admin',
       severity: 'notice',
       sourceIp: 'client',
       details: { targetUser: user.uid || user.id, role },
@@ -888,6 +1044,11 @@ const Admin: React.FC = () => {
   };
 
   const resetAllUserProgress = async () => {
+    if (!canUseDangerZone) {
+      showActionMessage('Chỉ Owner được reset toàn bộ tiến độ người dùng.');
+      return;
+    }
+
     const isAdminEmail = (email?: string) => email?.toLowerCase() === 'deepfense@gmail.com';
     const adminUid = auth.currentUser?.uid;
 
@@ -912,7 +1073,7 @@ const Admin: React.FC = () => {
 
       const userPromises = userSnaps.docs.map(userDoc => {
         const data = userDoc.data();
-        if (data.role === 'admin' || isAdminEmail(data.email)) return Promise.resolve();
+        if (data.role === 'owner' || data.role === 'admin' || isAdminEmail(data.email)) return Promise.resolve();
         return updateDoc(doc(db, 'users', userDoc.id), resetStats);
       });
 
@@ -974,6 +1135,11 @@ const Admin: React.FC = () => {
   };
 
   const changeUserStatus = async (user: UserRecord, status: UserRecord['status']) => {
+    if (!canManageUsers) {
+      showActionMessage('Tài khoản hiện tại không có quyền đổi trạng thái người dùng.');
+      return;
+    }
+
     await updateDoc(doc(db, 'users', user.uid || user.id), { status });
     await writeActivityLog({
       action: status === 'banned' ? 'admin.user_banned' : 'admin.user_unbanned',
@@ -986,7 +1152,17 @@ const Admin: React.FC = () => {
   };
 
   const deleteUserRecord = async (user: UserRecord) => {
+    if (!canManageUsers) {
+      showActionMessage('Tài khoản hiện tại không có quyền xóa hồ sơ người dùng.');
+      return;
+    }
+
     const userId = user.uid || user.id;
+    if (userId === auth.currentUser?.uid) {
+      showActionMessage('Không xóa chính hồ sơ đang dùng để quản trị.');
+      return;
+    }
+
     if (!window.confirm(`Bạn chắc chắn muốn xóa hồ sơ user "${user.email || user.displayName || userId}"? Tài khoản đăng nhập Firebase Auth sẽ không bị xóa.`)) return;
 
     await deleteDoc(doc(db, 'users', userId));
@@ -1005,6 +1181,11 @@ const Admin: React.FC = () => {
   };
 
   const deleteDpfLedgerEntry = async (entry: DpfLedgerRecord) => {
+    if (!canManageDpf) {
+      showActionMessage('Tài khoản hiện tại không có quyền xóa giao dịch DPF.');
+      return;
+    }
+
     if (!window.confirm(`Bạn chắc chắn muốn xóa giao dịch DPF "${entry.id}"? Thao tác này không tự tính lại số dư user.`)) return;
 
     await deleteDoc(doc(db, 'dpf_ledger', entry.id));
@@ -1019,6 +1200,11 @@ const Admin: React.FC = () => {
   };
 
   const deleteActivityLog = async (item: ActivityLog) => {
+    if (!(currentAdminRole === 'owner' || currentAdminRole === 'admin')) {
+      showActionMessage('Chỉ Owner hoặc Admin được xóa nhật ký hoạt động.');
+      return;
+    }
+
     if (!window.confirm(`Bạn chắc chắn muốn xóa activity log "${item.action || item.id}"?`)) return;
 
     await deleteDoc(doc(db, 'activity_logs', item.id));
@@ -1033,6 +1219,11 @@ const Admin: React.FC = () => {
   };
 
   const deleteSecurityEvent = async (item: SecurityEvent) => {
+    if (!(currentAdminRole === 'owner' || currentAdminRole === 'admin')) {
+      showActionMessage('Chỉ Owner hoặc Admin được xóa sự kiện bảo mật.');
+      return;
+    }
+
     if (!window.confirm(`Bạn chắc chắn muốn xóa security event "${item.eventType || item.id}"?`)) return;
 
     await deleteDoc(doc(db, 'security_events', item.id));
@@ -1048,8 +1239,16 @@ const Admin: React.FC = () => {
 
   const createUserRecord = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!canManageUsers) {
+      showActionMessage('Tài khoản hiện tại không có quyền tạo hồ sơ người dùng.');
+      return;
+    }
     if (!userForm.email.trim()) {
       showActionMessage('Cần nhập email để tạo hồ sơ người dùng.');
+      return;
+    }
+    if (!canAssignRole(userForm.role as Role)) {
+      showActionMessage('Chỉ Owner được tạo hồ sơ có quyền Owner.');
       return;
     }
 
@@ -1057,6 +1256,7 @@ const Admin: React.FC = () => {
       email: userForm.email.trim().toLowerCase(),
       displayName: userForm.displayName.trim() || userForm.email.trim(),
       role: userForm.role,
+      canAccessAdmin: canAccessAdminRole(userForm.role),
       status: userForm.status,
       score: 0,
       totalChallenges: 0,
@@ -1071,7 +1271,7 @@ const Admin: React.FC = () => {
       action: 'admin.user_created',
       targetType: 'users',
       targetId: docRef.id,
-      severity: userForm.role === 'admin' ? 'warning' : 'notice',
+      severity: userForm.role === 'admin' || userForm.role === 'owner' ? 'warning' : 'notice',
       metadata: { email: userForm.email, role: userForm.role, status: userForm.status },
     });
 
@@ -1081,6 +1281,10 @@ const Admin: React.FC = () => {
 
   const createChallenge = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!canEditContent) {
+      showActionMessage('Tài khoản hiện tại không có quyền tạo nội dung Academy.');
+      return;
+    }
     if (!challengeForm.title.trim()) {
       showActionMessage('Cần nhập tiêu đề challenge.');
       return;
@@ -1126,6 +1330,11 @@ const Admin: React.FC = () => {
   };
 
   const updateChallengeStatus = async (challenge: ChallengeRecord, status: ChallengeRecord['status']) => {
+    if (!canEditContent) {
+      showActionMessage('Tài khoản hiện tại không có quyền cập nhật nội dung Academy.');
+      return;
+    }
+
     await updateDoc(doc(db, 'challenges', challenge.id), {
       status,
       publishedAt: status === 'published' ? serverTimestamp() : challenge.updatedAt || null,
@@ -1143,6 +1352,11 @@ const Admin: React.FC = () => {
   };
 
   const deleteChallenge = async (challenge: ChallengeRecord) => {
+    if (!canEditContent) {
+      showActionMessage('Tài khoản hiện tại không có quyền xóa nội dung Academy.');
+      return;
+    }
+
     if (!window.confirm(`Bạn chắc chắn muốn xóa challenge "${challenge.title || challenge.id}"?`)) return;
     await deleteDoc(doc(db, 'challenges', challenge.id));
     await writeActivityLog({
@@ -1157,10 +1371,15 @@ const Admin: React.FC = () => {
 
   const createSecurityEvent = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!(currentAdminRole === 'owner' || currentAdminRole === 'admin')) {
+      showActionMessage('Chỉ Owner hoặc Admin được tạo sự kiện bảo mật thủ công.');
+      return;
+    }
+
     await addDoc(collection(db, 'security_events'), {
       eventType: eventForm.eventType,
       actorId: eventForm.actorId || auth.currentUser?.uid || 'admin',
-      actorRole: 'admin',
+      actorRole: currentAdminRole || 'admin',
       severity: eventForm.severity,
       sourceIp: 'client',
       userAgent: navigator.userAgent,
@@ -1176,6 +1395,35 @@ const Admin: React.FC = () => {
     });
     setEventForm({ eventType: 'permission_denied', actorId: '', severity: 'warning', details: '' });
     showActionMessage('Đã tạo sự kiện bảo mật thủ công.');
+  };
+
+  const updateWebsiteDraftField = <Key extends keyof SiteConfig>(key: Key, value: SiteConfig[Key]) => {
+    setWebsiteDraft((current) => ({ ...current, [key]: value }));
+  };
+
+  const saveWebsiteDraft = async (status: SiteConfig['status']) => {
+    if (!canEditContent) {
+      showActionMessage('Tài khoản hiện tại không có quyền chỉnh nội dung website.');
+      return;
+    }
+
+    await setDoc(doc(db, 'site_config', 'main'), {
+      ...websiteDraft,
+      status,
+      updatedBy: auth.currentUser?.email || auth.currentUser?.uid || 'admin',
+      updatedAt: serverTimestamp(),
+      ...(status === 'published' ? { publishedAt: serverTimestamp() } : {}),
+    }, { merge: true });
+
+    await writeActivityLog({
+      action: status === 'published' ? 'editor.website_published' : 'editor.website_draft_saved',
+      targetType: 'site_config',
+      targetId: 'main',
+      severity: status === 'published' ? 'notice' : 'info',
+      metadata: { heroTitle: websiteDraft.heroTitle, marquee: websiteDraft.marquee },
+    });
+
+    showActionMessage(status === 'published' ? 'Đã xuất bản cấu hình website.' : 'Đã lưu nháp cấu hình website.');
   };
 
   if (isAuthChecking) {
@@ -1199,18 +1447,23 @@ const Admin: React.FC = () => {
   if (!isAuthenticated) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center animate-in fade-in">
-        <div className="w-full max-w-sm rounded-lg border border-white/10 bg-[#07111f] p-8 text-center shadow-2xl shadow-black/40">
+        <div className="w-full max-w-sm rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f] p-8 text-center shadow-2xl shadow-black/40">
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-lg border border-primary/30 bg-primary/10">
             <Lock className="text-primary" size={32} />
           </div>
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.28em] text-primary">Trung tâm điều khiển Deepfense</p>
-          <h2 className="mb-6 text-xl font-black text-white">Đăng nhập quản trị</h2>
+          <h2 className="mb-6 text-xl font-black text-slate-900 dark:text-white">Đăng nhập quản trị</h2>
+          {blockedUserEmail && (
+            <div className="mb-5 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-left text-xs leading-relaxed text-amber-100">
+              <b>{blockedUserEmail}</b> đã đăng nhập nhưng chưa có quyền admin. Hãy phân quyền trong Firestore bằng một trong các role: owner, admin, editor, support.
+            </div>
+          )}
           
-          <button onClick={handleGoogleLogin} className="mb-6 flex w-full items-center justify-center gap-2 rounded-lg border border-blue-500/30 bg-blue-500/10 py-3 text-sm font-bold text-blue-300 transition-colors hover:bg-blue-500 hover:text-white">
+          <button onClick={handleGoogleLogin} className="mb-6 flex w-full items-center justify-center gap-2 rounded-lg border border-blue-500/30 bg-blue-500/10 py-3 text-sm font-bold text-blue-300 transition-colors hover:bg-blue-500 hover:text-slate-900 dark:text-white">
             <LogIn size={18} /> Đăng nhập bằng Google
           </button>
 
-          <div className="mb-6 flex items-center gap-4 text-xs font-bold text-slate-400 before:h-px before:flex-1 before:bg-white/10 after:h-px after:flex-1 after:bg-white/10">
+          <div className="mb-6 flex items-center gap-4 text-xs font-bold text-slate-500 dark:text-slate-400 before:h-px before:flex-1 before:bg-black/10 dark:bg-white/10 after:h-px after:flex-1 after:bg-black/10 dark:bg-white/10">
             HOẶC DÙNG EMAIL
           </div>
 
@@ -1218,19 +1471,19 @@ const Admin: React.FC = () => {
             <input
               type="email"
               placeholder="Email quản trị"
-              className="mb-4 w-full rounded-lg border border-white/20 bg-black p-3 text-center text-white outline-none focus:border-primary"
+              className="mb-4 w-full rounded-lg border border-black/20 dark:border-white/20 bg-white dark:bg-black p-3 text-center text-slate-900 dark:text-white outline-none focus:border-primary"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
             <input
               type="password"
               placeholder="Mật khẩu"
-              className="mb-4 w-full rounded-lg border border-white/20 bg-black p-3 text-center text-white outline-none focus:border-primary"
+              className="mb-4 w-full rounded-lg border border-black/20 dark:border-white/20 bg-white dark:bg-black p-3 text-center text-slate-900 dark:text-white outline-none focus:border-primary"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
             {loginError && <div className="mb-4 text-xs font-bold text-red-400">{loginError}</div>}
-            <button type="submit" className="w-full rounded-lg bg-primary py-3 font-bold text-white transition-colors hover:bg-blue-500">
+            <button type="submit" className="w-full rounded-lg bg-primary py-3 font-bold text-slate-900 dark:text-white transition-colors hover:bg-blue-500">
               Truy cập bằng mật khẩu
             </button>
           </form>
@@ -1239,88 +1492,167 @@ const Admin: React.FC = () => {
     );
   }
 
-  const renderOverview = () => (
-    <div className="space-y-6">
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        <StatCard label="Người học hoạt động" value={stats.activeLearners} sub="Tài khoản thật trong users, không còn hồ sơ mẫu" icon={Users} tone="blue" />
-        <StatCard label="Lượt luyện tập" value={trainingStats.isLoading ? '...' : trainingStats.totalAttempts} sub="Đồng bộ trực tiếp từ collection game_results như trang chủ" icon={BarChart3} tone="green" />
-        <StatCard label="Độ chính xác" value={trainingStats.isLoading ? '...' : `${trainingStats.averageAccuracy}%`} sub="Tính bằng tổng score / tổng lượt luyện tập từ database" icon={Gauge} tone="green" />
-        <StatCard label="Lượt vượt chuẩn" value={trainingStats.isLoading ? '...' : trainingStats.protectedUsers} sub="Số lượt có score từ 9 trở lên, cùng logic với trang chủ" icon={CheckCircle} tone="green" />
-        <StatCard label="Hồ sơ trợ giúp" value={stats.openCases} sub="Hồ sơ mới hoặc đang xem xét" icon={HelpCircle} tone="amber" />
-        <StatCard label="Tín hiệu rủi ro cao" value={stats.highRisk} sub="Tình huống cần ưu tiên kiểm tra" icon={Flame} tone="red" />
-        <StatCard label="Hàng đợi nội dung" value={stats.reviewQueue} sub="Challenge hoặc lesson đang ở bản nháp" icon={BookOpen} tone="blue" />
-      </div>
+  const renderOverview = () => {
+    const urgentCases = dashboardCases
+      .filter((item) => ['new', 'reviewing'].includes(item.status || 'new'))
+      .slice(0, 5);
+    const draftChallenges = dashboardChallenges
+      .filter((item) => item.status === 'draft')
+      .slice(0, 5);
+    const notableLedger = canManageDpf
+      ? dpfLedger.filter((entry) => (entry.amount || 0) >= 500).slice(0, 4)
+      : [];
+    const roleRows: Array<{ role: Exclude<Role, 'user'>; scope: string }> = [
+      { role: 'owner', scope: 'Toàn quyền: người dùng, nội dung, DPF, bảo mật, reset hệ thống.' },
+      { role: 'admin', scope: 'Vận hành chính: người dùng, hỗ trợ, nội dung, DPF, nhật ký.' },
+      { role: 'editor', scope: 'Chỉ chỉnh Academy và cấu hình hiển thị website.' },
+      { role: 'support', scope: 'Chỉ xem người dùng liên quan và xử lý hồ sơ hỗ trợ.' },
+    ];
 
-      <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
-        <section className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
-          <div className="mb-5 flex items-center justify-between">
+    return (
+      <div className="space-y-6">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <StatCard label="Người học" value={stats.activeLearners} sub="Tài khoản không bị khóa trong collection users." icon={Users} tone="blue" />
+          <StatCard label="Lượt luyện tập" value={trainingStats.isLoading ? '...' : trainingStats.totalAttempts} sub="Đọc trực tiếp từ game_results." icon={BarChart3} tone="green" />
+          <StatCard label="Độ chính xác" value={trainingStats.isLoading ? '...' : `${trainingStats.averageAccuracy}%`} sub="Tổng score chia cho tổng lượt luyện tập." icon={Gauge} tone="green" />
+          <StatCard label="Hồ sơ cần xử lý" value={stats.openCases} sub="Case mới hoặc đang xem xét." icon={HelpCircle} tone="amber" />
+          <StatCard label="Rủi ro cao" value={stats.highRisk} sub="Hồ sơ high hoặc critical." icon={Flame} tone="red" />
+          <StatCard label="Nội dung nháp" value={stats.reviewQueue} sub="Challenge chờ duyệt/xuất bản." icon={BookOpen} tone="blue" />
+          <StatCard label="Vượt chuẩn" value={trainingStats.isLoading ? '...' : trainingStats.protectedUsers} sub="Lượt đạt score từ 9 trở lên." icon={CheckCircle} tone="green" />
+          <StatCard label="Sổ DPF" value={dpfLedger.length} sub="Giao dịch DPF gần đây đã tải." icon={Coins} tone="amber" />
+        </div>
+
+        <div className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
+          <section className="rounded-lg border border-black/10 bg-white/70 p-5 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-[#07111f]/82">
+            <div className="mb-5 flex flex-col justify-between gap-3 sm:flex-row sm:items-start">
+              <div>
+                <h3 className="font-black text-slate-900 dark:text-white">Hàng đợi điều hành</h3>
+                <p className="mt-1 text-sm text-slate-600 dark:text-slate-300/85">Những việc cần nhìn trước khi chỉnh nội dung hoặc dữ liệu.</p>
+              </div>
+              <Pill className="border-primary/30 bg-primary/10 text-blue-200">Vai trò: {getRoleLabel(currentAdminRole)}</Pill>
+            </div>
+
+            <div className="space-y-3">
+              {urgentCases.length === 0 && draftChallenges.length === 0 && notableLedger.length === 0 ? (
+                <div className="rounded-lg border border-black/10 bg-black/5 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+                  Chưa có hàng đợi ưu tiên trong dữ liệu hiện tại.
+                </div>
+              ) : null}
+
+              {urgentCases.map((item) => (
+                <button key={item.id} onClick={() => setActiveTab('cases')} className="flex w-full items-start gap-3 rounded-lg border border-amber-500/20 bg-amber-500/10 p-3 text-left transition-colors hover:border-amber-400/60">
+                  <HelpCircle className="mt-0.5 text-amber-300" size={16} />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-bold text-slate-900 dark:text-white">{item.title || item.description || item.desc || 'Hồ sơ cần xử lý'}</span>
+                    <span className="mt-1 block text-xs text-slate-600 dark:text-slate-300/85">{item.email || 'Không có email'} / {caseStatusLabels[item.status || 'new']} / {severityLabels[item.severity || 'medium']}</span>
+                  </span>
+                </button>
+              ))}
+
+              {draftChallenges.map((item) => (
+                <button key={item.id} onClick={() => setActiveTab('studio')} className="flex w-full items-start gap-3 rounded-lg border border-primary/20 bg-primary/10 p-3 text-left transition-colors hover:border-primary/60">
+                  <BookOpen className="mt-0.5 text-primary" size={16} />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-bold text-slate-900 dark:text-white">{item.title || 'Challenge chưa đặt tên'}</span>
+                    <span className="mt-1 block text-xs text-slate-600 dark:text-slate-300/85">{challengeTypeLabels[item.type || ''] || item.type || 'Bài luyện tập'} / {difficultyLabels[item.difficulty || 'medium']}</span>
+                  </span>
+                </button>
+              ))}
+
+              {notableLedger.map((entry) => (
+                <button key={entry.id} onClick={() => setActiveTab('dpf')} className="flex w-full items-start gap-3 rounded-lg border border-amber-400/20 bg-amber-400/10 p-3 text-left transition-colors hover:border-amber-300/60">
+                  <Coins className="mt-0.5 text-amber-200" size={16} />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-bold text-slate-900 dark:text-white">{entry.direction === 'debit' ? 'Thu hồi' : 'Cấp'} {(entry.amount || 0).toLocaleString('vi-VN')} DPF</span>
+                    <span className="mt-1 block text-xs text-slate-600 dark:text-slate-300/85">{entry.uid || 'Không có UID'} / {formatDate(entry.createdAt)}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-lg border border-black/10 bg-white/70 p-5 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-[#07111f]/82">
+            <div className="mb-5 flex items-center justify-between">
+              <div>
+                <h3 className="font-black text-slate-900 dark:text-white">Phân quyền truy cập</h3>
+                <p className="mt-1 text-sm text-slate-600 dark:text-slate-300/85">Không có viewer. User thường không được vào dashboard.</p>
+              </div>
+              <Crown className="text-amber-300" size={20} />
+            </div>
+            <div className="space-y-3">
+              {roleRows.map((row) => (
+                <div key={row.role} className="rounded-lg border border-black/10 bg-black/5 p-3 dark:border-white/10 dark:bg-white/5">
+                  <div className="mb-1 flex items-center justify-between gap-3">
+                    <span className="text-sm font-black text-slate-900 dark:text-white">{getRoleLabel(row.role)}</span>
+                    <Pill className="border-emerald-400/30 bg-emerald-400/10 text-emerald-200">Được phân quyền</Pill>
+                  </div>
+                  <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300/85">{row.scope}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <section className="rounded-lg border border-black/10 bg-white/70 p-5 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-[#07111f]/82">
+          <div className="mb-4 flex items-center justify-between">
             <div>
-              <h3 className="font-bold text-white">Tín hiệu gần đây</h3>
-              <p className="text-xs text-slate-400">Dòng thời gian hoạt động và thao tác quản trị mới nhất</p>
+              <h3 className="font-black text-slate-900 dark:text-white">Nhật ký gần đây</h3>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-300/85">Các thao tác quản trị mới nhất để bạn truy vết nhanh.</p>
             </div>
             <Activity className="text-primary" size={20} />
           </div>
-          <div className="space-y-3">
+          <div className="grid gap-3 lg:grid-cols-2">
             {dashboardActivity.slice(0, 6).map((item) => (
-              <div key={item.id} className="flex items-start gap-3 rounded-lg border border-white/5 bg-black/20 p-3">
+              <div key={item.id} className="flex items-start gap-3 rounded-lg border border-black/10 bg-black/5 p-3 dark:border-white/10 dark:bg-white/5">
                 <Radio className="mt-0.5 text-primary" size={16} />
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-mono text-sm text-white">{item.action || 'activity.event'}</span>
-                    <Pill className={severityClass(item.severity)}>{item.severity || 'info'}</Pill>
+                    <span className="font-mono text-sm text-slate-900 dark:text-white">{item.action || 'activity.event'}</span>
+                    <Pill className={severityClass(item.severity)}>{severityLabels[item.severity || 'info']}</Pill>
                   </div>
-                  <p className="mt-1 text-xs text-slate-400">{item.actorRole || 'user'} / {item.targetType || 'system'} / {formatDate(item.createdAt)}</p>
+                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{getRoleLabel(item.actorRole)} / {item.targetType || 'system'} / {formatDate(item.createdAt)}</p>
                 </div>
               </div>
             ))}
-          </div>
-        </section>
-
-        <section className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
-          <div className="mb-5 flex items-center justify-between">
-            <div>
-              <h3 className="font-bold text-white">Kỹ năng còn yếu</h3>
-              <p className="text-xs text-slate-400">Gợi ý ưu tiên nội dung đào tạo tiếp theo</p>
-            </div>
-            <Sparkles className="text-amber-300" size={20} />
-          </div>
-          {['Giọng nói', 'Xác minh', 'Chuyển động', 'Ngữ cảnh', 'Ánh sáng'].map((skill, index) => (
-            <div key={skill} className="mb-4">
-              <div className="mb-1 flex justify-between text-xs">
-                <span className="font-bold uppercase tracking-wide text-gray-300">{skill}</span>
-                <span className="text-slate-400">{68 - index * 7}% rủi ro</span>
+            {dashboardActivity.length === 0 && (
+              <div className="rounded-lg border border-black/10 bg-black/5 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+                Chưa có activity log.
               </div>
-              <div className="h-2 rounded-full bg-white/10">
-                <div className="h-2 rounded-full bg-gradient-to-r from-red-500 via-amber-400 to-primary" style={{ width: `${68 - index * 7}%` }} />
-              </div>
-            </div>
-          ))}
+            )}
+          </div>
         </section>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderUsers = () => (
     <div className="space-y-5">
       <form onSubmit={createUserRecord} className="rounded-lg border border-primary/20 bg-[#07111f]/90 p-5">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h3 className="font-black text-white">Tạo hồ sơ người dùng</h3>
-            <p className="mt-1 text-xs text-slate-400">Dùng để tạo hồ sơ quản trị trong Firestore khi tài khoản chưa tự đồng bộ.</p>
+            <h3 className="font-black text-slate-900 dark:text-white">Tạo hồ sơ người dùng</h3>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Dùng để tạo hồ sơ quản trị trong Firestore khi tài khoản chưa tự đồng bộ.</p>
           </div>
-          <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-blue-500">
+          <button type="submit" disabled={!canManageUsers} className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wide text-slate-900 dark:text-white hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50">
             <Plus size={15} /> Tạo hồ sơ
           </button>
         </div>
+        {!canManageUsers && (
+          <div className="mb-4 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-amber-100">
+            Role hiện tại chỉ được xem dữ liệu người dùng. Tạo hồ sơ, đổi quyền, khóa hoặc xóa tài khoản cần Owner/Admin.
+          </div>
+        )}
         <div className="grid gap-3 md:grid-cols-4">
-          <input value={userForm.email} onChange={(event) => setUserForm((current) => ({ ...current, email: event.target.value }))} placeholder="Email người dùng" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
-          <input value={userForm.displayName} onChange={(event) => setUserForm((current) => ({ ...current, displayName: event.target.value }))} placeholder="Tên hiển thị" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
-          <select value={userForm.role} onChange={(event) => setUserForm((current) => ({ ...current, role: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-primary">
+          <input disabled={!canManageUsers} value={userForm.email} onChange={(event) => setUserForm((current) => ({ ...current, email: event.target.value }))} placeholder="Email người dùng" className="rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" />
+          <input disabled={!canManageUsers} value={userForm.displayName} onChange={(event) => setUserForm((current) => ({ ...current, displayName: event.target.value }))} placeholder="Tên hiển thị" className="rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" />
+          <select disabled={!canManageUsers} value={userForm.role} onChange={(event) => setUserForm((current) => ({ ...current, role: event.target.value }))} className="rounded-lg border border-black/10 dark:border-white/10 bg-black/70 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary disabled:cursor-not-allowed disabled:opacity-50">
             <option value="user">Người học</option>
+            <option value="support">Hỗ trợ người dùng</option>
             <option value="editor">Biên tập viên</option>
             <option value="admin">Quản trị viên</option>
+            {currentAdminRole === 'owner' && <option value="owner">Giám đốc / Owner</option>}
           </select>
-          <select value={userForm.status} onChange={(event) => setUserForm((current) => ({ ...current, status: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-primary">
+          <select disabled={!canManageUsers} value={userForm.status} onChange={(event) => setUserForm((current) => ({ ...current, status: event.target.value }))} className="rounded-lg border border-black/10 dark:border-white/10 bg-black/70 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary disabled:cursor-not-allowed disabled:opacity-50">
             <option value="active">Đang hoạt động</option>
             <option value="inactive">Ít hoạt động</option>
             <option value="flagged">Cần theo dõi</option>
@@ -1329,130 +1661,124 @@ const Admin: React.FC = () => {
         </div>
       </form>
 
-      <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-5">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-          <div>
-            <h3 className="flex items-center gap-2 font-black text-red-300">
-              <ShieldAlert size={18} /> Danger Zone: Reset toàn bộ tiến độ
-            </h3>
-            <p className="mt-1 text-xs text-slate-400">Đặt lại điểm số, coin và tiến độ học về 0 cho tất cả người dùng (Trừ Admin).</p>
-          </div>
-          <button onClick={resetAllUserProgress} disabled={loading} className="inline-flex items-center gap-2 rounded-lg bg-red-600/20 px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-red-300 border border-red-500/30 hover:bg-red-600/30 transition-colors">
-            <RefreshCw size={14} className={loading ? 'animate-spin' : ''} /> Reset All Users
-          </button>
-        </div>
-      </div>
-
-      <section className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
+      <section className="rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90 p-5">
         <div className="mb-5 flex flex-col justify-between gap-3 lg:flex-row lg:items-center">
           <div>
-            <h3 className="font-black text-white">Profile người dùng</h3>
-            <p className="mt-1 text-xs text-slate-400">Chọn một dòng trong bảng để xem hồ sơ, DPF coin, case liên quan và nhật ký thao tác.</p>
+            <h3 className="font-black text-slate-900 dark:text-white">Profile người dùng</h3>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Chọn một dòng trong bảng để xem hồ sơ, DPF coin, case liên quan và nhật ký thao tác.</p>
           </div>
           {selectedUser && (
             <div className="flex flex-wrap gap-2">
-              <button onClick={() => changeUserStatus(selectedUser, selectedUser.status === 'flagged' ? 'active' : 'flagged')} className="inline-flex items-center gap-2 rounded-lg border border-amber-500/30 px-3 py-2 text-xs font-bold text-amber-200 hover:bg-amber-500/10">
-                <ShieldAlert size={14} /> {selectedUser.status === 'flagged' ? 'Bỏ theo dõi' : 'Theo dõi'}
-              </button>
-              <button onClick={() => changeUserStatus(selectedUser, selectedUser.status === 'banned' ? 'active' : 'banned')} className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 px-3 py-2 text-xs font-bold text-red-300 hover:bg-red-500/10">
-                <Ban size={14} /> {selectedUser.status === 'banned' ? 'Mở khóa' : 'Khóa tài khoản'}
-              </button>
-              <button onClick={() => deleteUserRecord(selectedUser)} className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs font-bold text-red-300 hover:bg-red-500/20">
-                <Trash2 size={14} /> Xóa hồ sơ
-              </button>
-              <button
-                onClick={() => {
-                  setDpfForm((current) => ({ ...current, target: selectedUser.email || selectedUser.uid || selectedUser.id, amount: current.amount || '1000' }));
-                  setActiveTab('dpf');
-                }}
-                className="inline-flex items-center gap-2 rounded-lg border border-amber-400/30 px-3 py-2 text-xs font-bold text-amber-200 hover:bg-amber-400/10"
-              >
-                <Coins size={14} /> Cấp DPF
-              </button>
-              <button
-                onClick={() => {
-                  setDpfForm((current) => ({ ...current, target: selectedUser.email || selectedUser.uid || selectedUser.id, amount: current.amount || '100' }));
-                  setActiveTab('dpf');
-                }}
-                className="inline-flex items-center gap-2 rounded-lg border border-red-400/30 px-3 py-2 text-xs font-bold text-red-300 hover:bg-red-400/10"
-              >
-                <Trash2 size={14} /> Thu hồi DPF
-              </button>
+              {canManageUsers && (
+                <>
+                  <button onClick={() => changeUserStatus(selectedUser, selectedUser.status === 'flagged' ? 'active' : 'flagged')} className="inline-flex items-center gap-2 rounded-lg border border-amber-500/30 px-3 py-2 text-xs font-bold text-amber-200 hover:bg-amber-500/10">
+                    <ShieldAlert size={14} /> {selectedUser.status === 'flagged' ? 'Bỏ theo dõi' : 'Theo dõi'}
+                  </button>
+                  <button onClick={() => changeUserStatus(selectedUser, selectedUser.status === 'banned' ? 'active' : 'banned')} className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 px-3 py-2 text-xs font-bold text-red-300 hover:bg-red-500/10">
+                    <Ban size={14} /> {selectedUser.status === 'banned' ? 'Mở khóa' : 'Khóa tài khoản'}
+                  </button>
+                  <button onClick={() => deleteUserRecord(selectedUser)} className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs font-bold text-red-300 hover:bg-red-500/20">
+                    <Trash2 size={14} /> Xóa hồ sơ
+                  </button>
+                </>
+              )}
+              {canManageDpf && (
+                <>
+                  <button
+                    onClick={() => {
+                      setDpfForm((current) => ({ ...current, target: selectedUser.email || selectedUser.uid || selectedUser.id, amount: current.amount || '1000' }));
+                      setActiveTab('dpf');
+                    }}
+                    className="inline-flex items-center gap-2 rounded-lg border border-amber-400/30 px-3 py-2 text-xs font-bold text-amber-200 hover:bg-amber-400/10"
+                  >
+                    <Coins size={14} /> Cấp DPF
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDpfForm((current) => ({ ...current, target: selectedUser.email || selectedUser.uid || selectedUser.id, amount: current.amount || '100' }));
+                      setActiveTab('dpf');
+                    }}
+                    className="inline-flex items-center gap-2 rounded-lg border border-red-400/30 px-3 py-2 text-xs font-bold text-red-300 hover:bg-red-400/10"
+                  >
+                    <Trash2 size={14} /> Thu hồi DPF
+                  </button>
+                </>
+              )}
             </div>
           )}
         </div>
 
         {!selectedUser ? (
-          <div className="rounded-lg border border-white/10 bg-black/25 p-5 text-sm text-slate-400">
+          <div className="rounded-lg border border-black/10 dark:border-white/10 bg-black/25 p-5 text-sm text-slate-500 dark:text-slate-400">
             Chưa có user thật trong Firestore. Hãy tạo hồ sơ hoặc để người dùng đăng nhập để dashboard đồng bộ.
           </div>
         ) : (
           <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
-            <div className="rounded-lg border border-white/10 bg-black/25 p-4">
+            <div className="rounded-lg border border-black/10 dark:border-white/10 bg-black/25 p-4">
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="truncate text-xl font-black text-white">{selectedUser.displayName || 'Chưa đặt tên'}</p>
-                  <p className="truncate text-sm text-slate-300/85">{selectedUser.email || selectedUser.uid || selectedUser.id}</p>
+                  <p className="truncate text-xl font-black text-slate-900 dark:text-white">{selectedUser.displayName || 'Chưa đặt tên'}</p>
+                  <p className="truncate text-sm text-slate-600 dark:text-slate-300/85">{selectedUser.email || selectedUser.uid || selectedUser.id}</p>
                 </div>
                 <Pill className={statusClass(selectedUser.status)}>{userStatusLabels[selectedUser.status || 'active']}</Pill>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-slate-400">Vai trò</p>
-                  <p className="mt-1 font-bold text-white">{roleLabels[selectedUser.role || 'user']}</p>
+                <div className="rounded border border-black/10 dark:border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Vai trò</p>
+                  <p className="mt-1 font-bold text-slate-900 dark:text-white">{getRoleLabel(selectedUser.role)}</p>
                 </div>
-                <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-slate-400">DPF webBalance</p>
+                <div className="rounded border border-black/10 dark:border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">DPF webBalance</p>
                   <p className="mt-1 font-bold text-amber-200">{(selectedUser.webBalance || 0).toLocaleString('vi-VN')}</p>
                 </div>
-                <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-slate-400">Challenge</p>
-                  <p className="mt-1 font-bold text-white">{selectedUser.totalChallenges || 0}</p>
+                <div className="rounded border border-black/10 dark:border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Challenge</p>
+                  <p className="mt-1 font-bold text-slate-900 dark:text-white">{selectedUser.totalChallenges || 0}</p>
                 </div>
-                <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-slate-400">Độ đúng</p>
-                  <p className="mt-1 font-bold text-white">{selectedUser.accuracy || 0}%</p>
+                <div className="rounded border border-black/10 dark:border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Độ đúng</p>
+                  <p className="mt-1 font-bold text-slate-900 dark:text-white">{selectedUser.accuracy || 0}%</p>
                 </div>
-                <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-slate-400">Tạo hồ sơ</p>
-                  <p className="mt-1 text-xs text-gray-300">{formatDate(selectedUser.createdAt)}</p>
+                <div className="rounded border border-black/10 dark:border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Tạo hồ sơ</p>
+                  <p className="mt-1 text-xs text-slate-600 dark:text-gray-300">{formatDate(selectedUser.createdAt)}</p>
                 </div>
-                <div className="rounded border border-white/5 bg-black/30 p-3">
-                  <p className="text-xs text-slate-400">Hoạt động cuối</p>
-                  <p className="mt-1 text-xs text-gray-300">{formatDate(selectedUser.lastActiveAt)}</p>
+                <div className="rounded border border-black/10 dark:border-white/5 bg-black/30 p-3">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Hoạt động cuối</p>
+                  <p className="mt-1 text-xs text-slate-600 dark:text-gray-300">{formatDate(selectedUser.lastActiveAt)}</p>
                 </div>
               </div>
             </div>
 
             <div className="grid gap-3 md:grid-cols-3">
-              <div className="rounded-lg border border-white/10 bg-black/25 p-4">
-                <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Case liên quan</p>
-                <p className="mt-2 text-2xl font-black text-white">{selectedUserCases.length}</p>
+              <div className="rounded-lg border border-black/10 dark:border-white/10 bg-black/25 p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Case liên quan</p>
+                <p className="mt-2 text-2xl font-black text-slate-900 dark:text-white">{selectedUserCases.length}</p>
                 <div className="mt-3 space-y-2">
                   {selectedUserCases.slice(0, 3).map((item) => (
-                    <button key={item.id} onClick={() => setActiveTab('cases')} className="block w-full truncate rounded border border-white/5 px-2 py-2 text-left text-xs text-gray-300 hover:border-primary">
+                    <button key={item.id} onClick={() => setActiveTab('cases')} className="block w-full truncate rounded border border-black/10 dark:border-white/5 px-2 py-2 text-left text-xs text-slate-600 dark:text-gray-300 hover:border-primary">
                       {item.title || item.description || item.id}
                     </button>
                   ))}
                 </div>
               </div>
-              <div className="rounded-lg border border-white/10 bg-black/25 p-4">
-                <p className="text-xs font-bold uppercase tracking-wide text-slate-400">Nhật ký</p>
-                <p className="mt-2 text-2xl font-black text-white">{selectedUserActivity.length}</p>
+              <div className="rounded-lg border border-black/10 dark:border-white/10 bg-black/25 p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Nhật ký</p>
+                <p className="mt-2 text-2xl font-black text-slate-900 dark:text-white">{selectedUserActivity.length}</p>
                 <div className="mt-3 space-y-2">
                   {selectedUserActivity.slice(0, 3).map((item) => (
-                    <button key={item.id} onClick={() => setActiveTab('activity')} className="block w-full truncate rounded border border-white/5 px-2 py-2 text-left font-mono text-xs text-gray-300 hover:border-primary">
+                    <button key={item.id} onClick={() => setActiveTab('governance')} className="block w-full truncate rounded border border-black/10 dark:border-white/5 px-2 py-2 text-left font-mono text-xs text-slate-600 dark:text-gray-300 hover:border-primary">
                       {item.action || item.id}
                     </button>
                   ))}
                 </div>
               </div>
-              <div className="rounded-lg border border-white/10 bg-black/25 p-4">
-                <p className="text-xs font-bold uppercase tracking-wide text-slate-400">DPF ledger</p>
-                <p className="mt-2 text-2xl font-black text-white">{selectedUserLedger.length}</p>
+              <div className="rounded-lg border border-black/10 dark:border-white/10 bg-black/25 p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">DPF ledger</p>
+                <p className="mt-2 text-2xl font-black text-slate-900 dark:text-white">{selectedUserLedger.length}</p>
                 <div className="mt-3 space-y-2">
                   {selectedUserLedger.slice(0, 3).map((entry) => (
-                    <button key={entry.id} onClick={() => setActiveTab('dpf')} className="block w-full truncate rounded border border-white/5 px-2 py-2 text-left text-xs text-amber-200 hover:border-amber-400">
+                    <button key={entry.id} onClick={() => setActiveTab('dpf')} className="block w-full truncate rounded border border-black/10 dark:border-white/5 px-2 py-2 text-left text-xs text-amber-200 hover:border-amber-400">
                       +{(entry.amount || 0).toLocaleString('vi-VN')} DPF
                     </button>
                   ))}
@@ -1463,43 +1789,51 @@ const Admin: React.FC = () => {
         )}
       </section>
 
-      <section className="overflow-x-auto rounded-lg border border-white/10 bg-[#07111f]/90">
-        <div className="grid min-w-[1050px] grid-cols-[1.4fr_0.7fr_0.8fr_0.6fr_0.6fr_0.6fr_0.8fr_1.1fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">
+      <section className="overflow-x-auto rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90">
+        <div className="grid min-w-[1050px] grid-cols-[1.4fr_0.7fr_0.8fr_0.6fr_0.6fr_0.6fr_0.8fr_1.1fr] gap-3 border-b border-black/10 dark:border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
           <span>Người dùng</span><span>Vai trò</span><span>Trạng thái</span><span>Challenge</span><span>Độ đúng</span><span>Điểm</span><span>Lần cuối</span><span>Điều khiển</span>
         </div>
         <div className="divide-y divide-white/5">
           {filteredUsers.length === 0 ? (
-            <div className="px-4 py-6 text-sm text-slate-400">Không có user thật phù hợp bộ lọc hiện tại.</div>
+            <div className="px-4 py-6 text-sm text-slate-500 dark:text-slate-400">Không có user thật phù hợp bộ lọc hiện tại.</div>
           ) : filteredUsers.map((user) => (
             <div key={user.id} className="grid min-w-[1050px] grid-cols-[1.4fr_0.7fr_0.8fr_0.6fr_0.6fr_0.6fr_0.8fr_1.1fr] gap-3 px-4 py-4 text-sm">
               <div className="min-w-0">
-                <p className="truncate font-bold text-white">{user.displayName || 'Chưa đặt tên'}</p>
-                <p className="truncate text-xs text-slate-400">{user.email || user.uid || user.id}</p>
+                <p className="truncate font-bold text-slate-900 dark:text-white">{user.displayName || 'Chưa đặt tên'}</p>
+                <p className="truncate text-xs text-slate-500 dark:text-slate-400">{user.email || user.uid || user.id}</p>
               </div>
-              <Pill className="border-primary/30 bg-primary/10 text-blue-200">{roleLabels[user.role || 'user']}</Pill>
+              <Pill className="border-primary/30 bg-primary/10 text-blue-200">{getRoleLabel(user.role)}</Pill>
               <Pill className={statusClass(user.status)}>{userStatusLabels[user.status || 'active']}</Pill>
-              <span className="text-gray-300">{user.totalChallenges || 0}</span>
-              <span className="text-gray-300">{user.accuracy || 0}%</span>
-              <span className="text-gray-300">{user.score || 0}</span>
-              <span className="text-xs text-slate-400">{formatDate(user.lastActiveAt)}</span>
+              <span className="text-slate-600 dark:text-gray-300">{user.totalChallenges || 0}</span>
+              <span className="text-slate-600 dark:text-gray-300">{user.accuracy || 0}%</span>
+              <span className="text-slate-600 dark:text-gray-300">{user.score || 0}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">{formatDate(user.lastActiveAt)}</span>
               <div className="flex flex-wrap gap-2">
                 <button onClick={() => setSelectedUserId(user.uid || user.id)} className="rounded border border-primary/30 px-2 py-1 text-xs font-bold text-blue-200 hover:bg-primary/10">
                   Profile
                 </button>
-                <select value={user.role || 'user'} onChange={(event) => changeUserRole(user, event.target.value as Role)} className="rounded border border-white/10 bg-black px-2 py-1 text-xs text-white">
-                  <option value="user">Người học</option>
-                  <option value="editor">Biên tập</option>
-                  <option value="admin">Admin</option>
-                </select>
-                <button onClick={() => changeUserStatus(user, user.status === 'flagged' ? 'active' : 'flagged')} className="rounded border border-white/10 px-2 py-1 text-xs font-bold text-gray-300 hover:border-amber-400 hover:text-amber-200">
-                  Theo dõi
-                </button>
-                <button onClick={() => changeUserStatus(user, user.status === 'banned' ? 'active' : 'banned')} className="inline-flex items-center gap-1 rounded border border-white/10 px-2 py-1 text-xs font-bold text-gray-300 hover:border-red-400 hover:text-red-300">
-                  <Ban size={12} /> {user.status === 'banned' ? 'Mở khóa' : 'Khóa'}
-                </button>
-                <button onClick={() => deleteUserRecord(user)} className="inline-flex items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
-                  <Trash2 size={12} /> Xóa
-                </button>
+                {canManageUsers ? (
+                  <>
+                    <select value={user.role || 'user'} onChange={(event) => changeUserRole(user, event.target.value as Role)} className="rounded border border-black/10 dark:border-white/10 bg-white dark:bg-black px-2 py-1 text-xs text-slate-900 dark:text-white">
+                      <option value="user">Người học</option>
+                      <option value="support">Hỗ trợ</option>
+                      <option value="editor">Biên tập</option>
+                      <option value="admin">Admin</option>
+                      {currentAdminRole === 'owner' && <option value="owner">Owner</option>}
+                    </select>
+                    <button onClick={() => changeUserStatus(user, user.status === 'flagged' ? 'active' : 'flagged')} className="rounded border border-black/10 dark:border-white/10 px-2 py-1 text-xs font-bold text-slate-600 dark:text-gray-300 hover:border-amber-400 hover:text-amber-200">
+                      Theo dõi
+                    </button>
+                    <button onClick={() => changeUserStatus(user, user.status === 'banned' ? 'active' : 'banned')} className="inline-flex items-center gap-1 rounded border border-black/10 dark:border-white/10 px-2 py-1 text-xs font-bold text-slate-600 dark:text-gray-300 hover:border-red-400 hover:text-red-300">
+                      <Ban size={12} /> {user.status === 'banned' ? 'Mở khóa' : 'Khóa'}
+                    </button>
+                    <button onClick={() => deleteUserRecord(user)} className="inline-flex items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
+                      <Trash2 size={12} /> Xóa
+                    </button>
+                  </>
+                ) : (
+                  <span className="rounded border border-black/10 px-2 py-1 text-xs font-bold text-slate-500 dark:border-white/10 dark:text-slate-400">Chỉ xem</span>
+                )}
               </div>
             </div>
           ))}
@@ -1549,8 +1883,8 @@ const Admin: React.FC = () => {
         <form onSubmit={grantDpfCoin} className="rounded-lg border border-amber-500/20 bg-[#07111f]/90 p-5">
           <div className="mb-4 flex flex-col justify-between gap-3 lg:flex-row lg:items-center">
             <div>
-              <h3 className="font-black text-white">Cấp DPF coin cho người dùng</h3>
-              <p className="mt-1 text-xs text-slate-400">
+              <h3 className="font-black text-slate-900 dark:text-white">Cấp DPF coin cho người dùng</h3>
+              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                 Nhập email hoặc UID. Coin sẽ được cộng vào webBalance và ghi lại trong dpf_ledger để kiểm tra.
               </p>
             </div>
@@ -1558,7 +1892,7 @@ const Admin: React.FC = () => {
               <button
                 type="submit"
                 disabled={dpfBusy}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-white hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-slate-900 dark:text-white hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Coins size={15} /> {dpfBusy ? 'Đang xử lý...' : 'Cấp DPF coin'}
               </button>
@@ -1573,42 +1907,42 @@ const Admin: React.FC = () => {
             </div>
           </div>
           <div className="grid gap-3 lg:grid-cols-[1.2fr_0.55fr_1.4fr]">
-            <label className="text-xs font-bold uppercase tracking-wide text-slate-400">
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
               Email hoặc UID
               <input
                 value={dpfForm.target}
                 onChange={(event) => setDpfForm((current) => ({ ...current, target: event.target.value }))}
                 placeholder="deepfense@gmail.com"
-                className="mt-2 w-full rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-amber-400"
+                className="mt-2 w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-amber-400"
               />
             </label>
-            <label className="text-xs font-bold uppercase tracking-wide text-slate-400">
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
               Số DPF coin
               <input
                 value={dpfForm.amount}
                 onChange={(event) => setDpfForm((current) => ({ ...current, amount: event.target.value }))}
                 inputMode="numeric"
                 placeholder="1000"
-                className="mt-2 w-full rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-amber-400"
+                className="mt-2 w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-amber-400"
               />
             </label>
-            <label className="text-xs font-bold uppercase tracking-wide text-slate-400">
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
               Lý do
               <input
                 value={dpfForm.reason}
                 onChange={(event) => setDpfForm((current) => ({ ...current, reason: event.target.value }))}
                 placeholder="Admin bonus DPF coin"
-                className="mt-2 w-full rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-amber-400"
+                className="mt-2 w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-amber-400"
               />
             </label>
           </div>
-          <p className="mt-4 text-xs leading-relaxed text-slate-400">
+          <p className="mt-4 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
             Nút cấp sẽ cộng vào webBalance. Nút thu hồi sẽ trừ khỏi webBalance, ghi debit ledger `admin_revoke` và không cho số dư âm.
           </p>
         </form>
 
-        <section className="overflow-x-auto rounded-lg border border-white/10 bg-[#07111f]/90">
-          <div className="grid min-w-[1120px] grid-cols-[1.2fr_0.75fr_0.75fr_0.75fr_0.75fr_0.75fr_1.15fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">
+        <section className="overflow-x-auto rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90">
+          <div className="grid min-w-[1120px] grid-cols-[1.2fr_0.75fr_0.75fr_0.75fr_0.75fr_0.75fr_1.15fr] gap-3 border-b border-black/10 dark:border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
             <span>Người dùng</span>
             <span>Web balance</span>
             <span>Đã kiếm</span>
@@ -1619,21 +1953,21 @@ const Admin: React.FC = () => {
           </div>
           <div className="divide-y divide-white/5">
             {dashboardUsers.length === 0 ? (
-              <div className="px-4 py-6 text-sm text-slate-400">
+              <div className="px-4 py-6 text-sm text-slate-500 dark:text-slate-400">
                 Chưa có user thật trong collection users. Khi người dùng đăng nhập hoặc bạn tạo hồ sơ ở tab User, số dư DPF sẽ hiện tại đây.
               </div>
             ) : (
               dashboardUsers.map((user) => (
                 <div key={user.id} className="grid min-w-[1120px] grid-cols-[1.2fr_0.75fr_0.75fr_0.75fr_0.75fr_0.75fr_1.15fr] gap-3 px-4 py-4 text-sm">
                   <div className="min-w-0">
-                    <p className="truncate font-bold text-white">{user.displayName || user.email || user.uid || user.id}</p>
-                    <p className="truncate text-xs text-slate-400">{user.email || user.uid || user.id}</p>
+                    <p className="truncate font-bold text-slate-900 dark:text-white">{user.displayName || user.email || user.uid || user.id}</p>
+                    <p className="truncate text-xs text-slate-500 dark:text-slate-400">{user.email || user.uid || user.id}</p>
                   </div>
                   <span className="font-black text-amber-200">{(user.webBalance || 0).toLocaleString('vi-VN')}</span>
-                  <span className="text-gray-300">{(user.earnedBalance || 0).toLocaleString('vi-VN')}</span>
-                  <span className="text-gray-300">{(user.bonusBalance || 0).toLocaleString('vi-VN')}</span>
+                  <span className="text-slate-600 dark:text-gray-300">{(user.earnedBalance || 0).toLocaleString('vi-VN')}</span>
+                  <span className="text-slate-600 dark:text-gray-300">{(user.bonusBalance || 0).toLocaleString('vi-VN')}</span>
                   <span className="text-red-300">{(user.revokedBalance || 0).toLocaleString('vi-VN')}</span>
-                  <span className="text-gray-300">{(user.spentBalance || 0).toLocaleString('vi-VN')}</span>
+                  <span className="text-slate-600 dark:text-gray-300">{(user.spentBalance || 0).toLocaleString('vi-VN')}</span>
                   <div className="flex flex-wrap gap-2">
                     <button onClick={() => { setSelectedUserId(user.uid || user.id); setActiveTab('users'); }} className="rounded border border-primary/30 px-2 py-1 text-xs font-bold text-blue-200 hover:bg-primary/10">
                       Mở profile
@@ -1651,8 +1985,8 @@ const Admin: React.FC = () => {
           </div>
         </section>
 
-        <section className="overflow-x-auto rounded-lg border border-white/10 bg-[#07111f]/90">
-          <div className="grid min-w-[1080px] grid-cols-[0.9fr_0.7fr_0.8fr_0.9fr_1.2fr_0.9fr_0.6fr] gap-3 border-b border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">
+        <section className="overflow-x-auto rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90">
+          <div className="grid min-w-[1080px] grid-cols-[0.9fr_0.7fr_0.8fr_0.9fr_1.2fr_0.9fr_0.6fr] gap-3 border-b border-black/10 dark:border-white/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
             <span>Thời gian</span>
             <span>Loại</span>
             <span>Số lượng</span>
@@ -1663,20 +1997,20 @@ const Admin: React.FC = () => {
           </div>
           <div className="divide-y divide-white/5">
             {dpfLedger.length === 0 ? (
-              <div className="px-4 py-6 text-sm text-slate-400">Chưa có giao dịch DPF coin nào trong dpf_ledger.</div>
+              <div className="px-4 py-6 text-sm text-slate-500 dark:text-slate-400">Chưa có giao dịch DPF coin nào trong dpf_ledger.</div>
             ) : (
               dpfLedger.map((entry) => {
                 const targetEmail = typeof entry.metadata?.targetEmail === 'string' ? entry.metadata.targetEmail : '';
                 return (
                   <div key={entry.id} className="grid min-w-[1080px] grid-cols-[0.9fr_0.7fr_0.8fr_0.9fr_1.2fr_0.9fr_0.6fr] gap-3 px-4 py-4 text-sm">
-                    <span className="text-xs text-slate-400">{formatDate(entry.createdAt)}</span>
+                    <span className="text-xs text-slate-500 dark:text-slate-400">{formatDate(entry.createdAt)}</span>
                     <Pill className={entry.direction === 'debit' ? 'border-red-500/30 bg-red-500/10 text-red-300' : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200'}>
                       {entry.direction || 'credit'}
                     </Pill>
-                    <span className="font-black text-white">{(entry.amount || 0).toLocaleString('en-US')}</span>
-                    <span className="text-gray-300">{(entry.balanceAfter || 0).toLocaleString('en-US')}</span>
-                    <span className="truncate text-gray-300">{targetEmail || entry.uid || 'unknown'}</span>
-                    <span className="truncate text-xs text-slate-400">{entry.source || entry.reason || 'admin_bonus'}</span>
+                    <span className="font-black text-slate-900 dark:text-white">{(entry.amount || 0).toLocaleString('en-US')}</span>
+                    <span className="text-slate-600 dark:text-gray-300">{(entry.balanceAfter || 0).toLocaleString('en-US')}</span>
+                    <span className="truncate text-slate-600 dark:text-gray-300">{targetEmail || entry.uid || 'unknown'}</span>
+                    <span className="truncate text-xs text-slate-500 dark:text-slate-400">{entry.source || entry.reason || 'admin_bonus'}</span>
                     <button onClick={() => deleteDpfLedgerEntry(entry)} className="inline-flex w-fit items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
                       <Trash2 size={12} /> Xóa
                     </button>
@@ -1693,7 +2027,7 @@ const Admin: React.FC = () => {
   const renderCases = () => (
     <div className="grid gap-4">
       {filteredCases.length === 0 ? (
-        <section className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5 text-sm text-slate-400">
+        <section className="rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90 p-5 text-sm text-slate-500 dark:text-slate-400">
           Không có hồ sơ trợ giúp thật phù hợp bộ lọc hiện tại.
         </section>
       ) : filteredCases.map((item) => {
@@ -1704,27 +2038,27 @@ const Admin: React.FC = () => {
         };
 
         return (
-          <section key={`${item.caseType}-${item.id}`} className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
+          <section key={`${item.caseType}-${item.id}`} className="rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90 p-5">
             <div className="flex flex-col justify-between gap-4 lg:flex-row">
               <div className="min-w-0 flex-1">
                 <div className="mb-3 flex flex-wrap items-center gap-2">
                   <Pill className={statusClass(item.status)}>{caseStatusLabels[item.status || 'new']}</Pill>
                   <Pill className={severityClass(item.severity)}>{severityLabels[item.severity || 'medium']}</Pill>
-                  <Pill className="border-white/10 bg-white/5 text-gray-300">{item.caseType || 'other'}</Pill>
-                  <span className="text-xs text-slate-400">{formatDate(item.submittedAt)}</span>
+                  <Pill className="border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-slate-600 dark:text-gray-300">{item.caseType || 'other'}</Pill>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">{formatDate(item.submittedAt)}</span>
                 </div>
-                <h3 className="text-lg font-black text-white">{item.title || item.name || 'Hồ sơ trợ giúp'}</h3>
-                <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-slate-300/85">
+                <h3 className="text-lg font-black text-slate-900 dark:text-white">{item.title || item.name || 'Hồ sơ trợ giúp'}</h3>
+                <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-slate-300/85">
                   <span>{item.name || 'Ẩn danh'}</span>
                   {item.email && <a href={`mailto:${item.email}`} className="inline-flex items-center gap-1 text-primary hover:underline"><Mail size={14} />{item.email}</a>}
                 </div>
-                <p className="mt-4 rounded-lg border border-white/5 bg-black/30 p-4 text-sm leading-relaxed text-gray-300">
+                <p className="mt-4 rounded-lg border border-black/10 dark:border-white/5 bg-black/30 p-4 text-sm leading-relaxed text-slate-600 dark:text-gray-300">
                   {item.description || item.desc || 'Chưa có mô tả chi tiết.'}
                 </p>
                 <div className="mt-4 grid gap-3 md:grid-cols-2">
-                  <label className="text-xs font-bold uppercase tracking-wide text-slate-400">
+                  <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                     Trạng thái hồ sơ
-                    <select value={draft.status} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, status: event.target.value as CaseStatus } }))} className="mt-2 w-full rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-sm text-white">
+                    <select value={draft.status} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, status: event.target.value as CaseStatus } }))} className="mt-2 w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/70 px-3 py-2 text-sm text-slate-900 dark:text-white">
                       <option value="new">Mới nhận</option>
                       <option value="reviewing">Đang xem xét</option>
                       <option value="replied">Đã phản hồi</option>
@@ -1732,26 +2066,26 @@ const Admin: React.FC = () => {
                       <option value="archived">Lưu trữ</option>
                     </select>
                   </label>
-                  <label className="text-xs font-bold uppercase tracking-wide text-slate-400">
+                  <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                     Mức độ ưu tiên
-                    <select value={draft.severity} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, severity: event.target.value as Severity } }))} className="mt-2 w-full rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-sm text-white">
+                    <select value={draft.severity} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, severity: event.target.value as Severity } }))} className="mt-2 w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/70 px-3 py-2 text-sm text-slate-900 dark:text-white">
                       <option value="low">Thấp</option>
                       <option value="medium">Trung bình</option>
                       <option value="high">Cao</option>
                     </select>
                   </label>
                 </div>
-                <label className="mt-3 block text-xs font-bold uppercase tracking-wide text-slate-400">
+                <label className="mt-3 block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                   Ghi chú phản hồi
-                  <textarea value={draft.responseNote} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, responseNote: event.target.value } }))} rows={3} placeholder="Nội dung có dấu hiệu cần xác minh thêm..." className="mt-2 w-full rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
+                  <textarea value={draft.responseNote} onChange={(event) => setCaseDrafts((current) => ({ ...current, [item.id]: { ...draft, responseNote: event.target.value } }))} rows={3} placeholder="Nội dung có dấu hiệu cần xác minh thêm..." className="mt-2 w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary" />
                 </label>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {item.url && <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded border border-white/10 px-3 py-2 text-xs font-bold text-gray-300 hover:text-primary">Mở đường dẫn <ExternalLink size={13} /></a>}
-                  {item.attachmentUrl && <a href={item.attachmentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded border border-white/10 px-3 py-2 text-xs font-bold text-gray-300 hover:text-primary"><Paperclip size={13} />Tệp đính kèm</a>}
+                  {item.url && <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded border border-black/10 dark:border-white/10 px-3 py-2 text-xs font-bold text-slate-600 dark:text-gray-300 hover:text-primary">Mở đường dẫn <ExternalLink size={13} /></a>}
+                  {item.attachmentUrl && <a href={item.attachmentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded border border-black/10 dark:border-white/10 px-3 py-2 text-xs font-bold text-slate-600 dark:text-gray-300 hover:text-primary"><Paperclip size={13} />Tệp đính kèm</a>}
                 </div>
               </div>
-              <div className="flex min-w-[220px] flex-col gap-2 border-t border-white/10 pt-4 lg:border-l lg:border-t-0 lg:pl-4 lg:pt-0">
-                <button onClick={() => saveCaseDraft(item)} className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-3 py-3 text-xs font-bold text-white hover:bg-blue-500">
+              <div className="flex min-w-[220px] flex-col gap-2 border-t border-black/10 dark:border-white/10 pt-4 lg:border-l lg:border-t-0 lg:pl-4 lg:pt-0">
+                <button onClick={() => saveCaseDraft(item)} className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-3 py-3 text-xs font-bold text-slate-900 dark:text-white hover:bg-blue-500">
                   <Save size={16} /> Lưu hồ sơ
                 </button>
                 <a
@@ -1781,67 +2115,67 @@ const Admin: React.FC = () => {
       <form onSubmit={createChallenge} className="rounded-lg border border-primary/20 bg-[#07111f]/90 p-5">
         <div className="mb-5 flex items-center justify-between gap-3">
           <div>
-            <h3 className="font-black text-white">Tạo challenge mới</h3>
-            <p className="mt-1 text-xs text-slate-400">Tạo nội dung huấn luyện mới cho academy và challenge.</p>
+            <h3 className="font-black text-slate-900 dark:text-white">Tạo challenge mới</h3>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Tạo nội dung huấn luyện mới cho academy và challenge.</p>
           </div>
-          <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-blue-500">
+          <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wide text-slate-900 dark:text-white hover:bg-blue-500">
             <Plus size={15} /> Tạo mới
           </button>
         </div>
         <div className="grid gap-3 md:grid-cols-2">
-          <input value={challengeForm.title} onChange={(event) => setChallengeForm((current) => ({ ...current, title: event.target.value }))} placeholder="Tiêu đề challenge" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
-          <input value={challengeForm.videoUrl} onChange={(event) => setChallengeForm((current) => ({ ...current, videoUrl: event.target.value }))} placeholder="Link video hoặc YouTube" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
-          <select value={challengeForm.type} onChange={(event) => setChallengeForm((current) => ({ ...current, type: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-primary">
+          <input value={challengeForm.title} onChange={(event) => setChallengeForm((current) => ({ ...current, title: event.target.value }))} placeholder="Tiêu đề challenge" className="rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary" />
+          <input value={challengeForm.videoUrl} onChange={(event) => setChallengeForm((current) => ({ ...current, videoUrl: event.target.value }))} placeholder="Link video hoặc YouTube" className="rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary" />
+          <select value={challengeForm.type} onChange={(event) => setChallengeForm((current) => ({ ...current, type: event.target.value }))} className="rounded-lg border border-black/10 dark:border-white/10 bg-black/70 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary">
             <option value="compare_ab">So sánh A/B</option>
             <option value="single_video_detect">Nhận diện một video</option>
             <option value="scam_scenario">Tình huống lừa đảo</option>
             <option value="quiz">Câu hỏi kiến thức</option>
           </select>
-          <input value={challengeForm.correctAnswer} onChange={(event) => setChallengeForm((current) => ({ ...current, correctAnswer: event.target.value }))} placeholder="Đáp án đúng" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
-          <select value={challengeForm.difficulty} onChange={(event) => setChallengeForm((current) => ({ ...current, difficulty: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-primary">
+          <input value={challengeForm.correctAnswer} onChange={(event) => setChallengeForm((current) => ({ ...current, correctAnswer: event.target.value }))} placeholder="Đáp án đúng" className="rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary" />
+          <select value={challengeForm.difficulty} onChange={(event) => setChallengeForm((current) => ({ ...current, difficulty: event.target.value }))} className="rounded-lg border border-black/10 dark:border-white/10 bg-black/70 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary">
             <option value="easy">Dễ</option>
             <option value="medium">Trung bình</option>
             <option value="hard">Khó</option>
           </select>
-          <select value={challengeForm.status} onChange={(event) => setChallengeForm((current) => ({ ...current, status: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-primary">
+          <select value={challengeForm.status} onChange={(event) => setChallengeForm((current) => ({ ...current, status: event.target.value }))} className="rounded-lg border border-black/10 dark:border-white/10 bg-black/70 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary">
             <option value="draft">Bản nháp</option>
             <option value="published">Xuất bản</option>
             <option value="archived">Lưu trữ</option>
           </select>
-          <input value={challengeForm.skillTags} onChange={(event) => setChallengeForm((current) => ({ ...current, skillTags: event.target.value }))} placeholder="Skill tags: voice, verification" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary md:col-span-2" />
-          <textarea value={challengeForm.description} onChange={(event) => setChallengeForm((current) => ({ ...current, description: event.target.value }))} rows={3} placeholder="Mô tả tình huống" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
-          <textarea value={challengeForm.explanation} onChange={(event) => setChallengeForm((current) => ({ ...current, explanation: event.target.value }))} rows={3} placeholder="Giải thích sau khi người dùng trả lời" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-primary" />
+          <input value={challengeForm.skillTags} onChange={(event) => setChallengeForm((current) => ({ ...current, skillTags: event.target.value }))} placeholder="Skill tags: voice, verification" className="rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary md:col-span-2" />
+          <textarea value={challengeForm.description} onChange={(event) => setChallengeForm((current) => ({ ...current, description: event.target.value }))} rows={3} placeholder="Mô tả tình huống" className="rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary" />
+          <textarea value={challengeForm.explanation} onChange={(event) => setChallengeForm((current) => ({ ...current, explanation: event.target.value }))} rows={3} placeholder="Giải thích sau khi người dùng trả lời" className="rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-primary" />
         </div>
       </form>
 
       <div className="grid gap-4 lg:grid-cols-3">
         {dashboardChallenges.map((challenge) => (
-          <section key={challenge.id} className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
+          <section key={challenge.id} className="rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90 p-5">
             <div className="mb-4 flex items-center justify-between gap-3">
               <Pill className={statusClass(challenge.status)}>{challengeStatusLabels[challenge.status || 'draft']}</Pill>
               <Pill className={severityClass(challenge.difficulty === 'hard' ? 'high' : challenge.difficulty === 'medium' ? 'medium' : 'low')}>{difficultyLabels[challenge.difficulty || 'medium']}</Pill>
             </div>
-            <h3 className="text-lg font-black text-white">{challenge.title || 'Challenge chưa đặt tên'}</h3>
+            <h3 className="text-lg font-black text-slate-900 dark:text-white">{challenge.title || 'Challenge chưa đặt tên'}</h3>
             <p className="mt-2 font-mono text-xs text-primary">{challengeTypeLabels[challenge.type || 'single_video_detect'] || challenge.type}</p>
-            <p className="mt-3 line-clamp-3 text-sm text-slate-300/85">{challenge.description || 'Chưa có mô tả.'}</p>
+            <p className="mt-3 line-clamp-3 text-sm text-slate-600 dark:text-slate-300/85">{challenge.description || 'Chưa có mô tả.'}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               {(challenge.skillTags || ['verification']).map((tag) => (
-                <span key={tag} className="rounded bg-white/10 px-2 py-1 text-[11px] font-bold text-gray-300">{tag}</span>
+                <span key={tag} className="rounded bg-black/10 dark:bg-white/10 px-2 py-1 text-[11px] font-bold text-slate-600 dark:text-gray-300">{tag}</span>
               ))}
             </div>
             <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded border border-white/5 bg-black/25 p-3">
-                <p className="text-xs text-slate-400">Lượt chơi</p>
-                <p className="mt-1 font-black text-white">{challenge.totalPlays || 0}</p>
+              <div className="rounded border border-black/10 dark:border-white/5 bg-black/25 p-3">
+                <p className="text-xs text-slate-500 dark:text-slate-400">Lượt chơi</p>
+                <p className="mt-1 font-black text-slate-900 dark:text-white">{challenge.totalPlays || 0}</p>
               </div>
-              <div className="rounded border border-white/5 bg-black/25 p-3">
-                <p className="text-xs text-slate-400">Tỷ lệ đúng</p>
-                <p className="mt-1 font-black text-white">{challenge.correctRate || 0}%</p>
+              <div className="rounded border border-black/10 dark:border-white/5 bg-black/25 p-3">
+                <p className="text-xs text-slate-500 dark:text-slate-400">Tỷ lệ đúng</p>
+                <p className="mt-1 font-black text-slate-900 dark:text-white">{challenge.correctRate || 0}%</p>
               </div>
             </div>
             <div className="mt-4 grid grid-cols-3 gap-2">
               {(['draft', 'published', 'archived'] as ChallengeRecord['status'][]).map((status) => (
-                <button key={status} onClick={() => updateChallengeStatus(challenge, status)} className="rounded border border-white/10 px-2 py-2 text-[11px] font-bold text-gray-300 hover:border-primary hover:text-white">
+                <button key={status} onClick={() => updateChallengeStatus(challenge, status)} className="rounded border border-black/10 dark:border-white/10 px-2 py-2 text-[11px] font-bold text-slate-600 dark:text-gray-300 hover:border-primary hover:text-slate-900 dark:text-white">
                   {challengeStatusLabels[status || 'draft']}
                 </button>
               ))}
@@ -1856,18 +2190,18 @@ const Admin: React.FC = () => {
   );
 
   const renderActivity = () => (
-    <section className="rounded-lg border border-white/10 bg-[#07111f]/90">
+    <section className="rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90">
       {dashboardActivity.length === 0 ? (
-        <div className="px-5 py-6 text-sm text-slate-400">Chưa có activity log nào trong Firestore.</div>
+        <div className="px-5 py-6 text-sm text-slate-500 dark:text-slate-400">Chưa có activity log nào trong Firestore.</div>
       ) : dashboardActivity.map((item) => (
-        <div key={item.id} className="grid gap-3 border-b border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.8fr_0.8fr_0.35fr]">
+        <div key={item.id} className="grid gap-3 border-b border-black/10 dark:border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.8fr_0.8fr_0.35fr]">
           <div>
-            <p className="font-mono font-bold text-white">{item.action || 'activity.event'}</p>
-            <p className="text-xs text-slate-400">Tác nhân: {item.actorId || 'hệ thống'}</p>
+            <p className="font-mono font-bold text-slate-900 dark:text-white">{item.action || 'activity.event'}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Tác nhân: {item.actorId || 'hệ thống'}</p>
           </div>
           <Pill className={severityClass(item.severity)}>{severityLabels[item.severity || 'info']}</Pill>
-          <span className="text-slate-300/85">{item.targetType || 'system'} / {item.targetId || '-'}</span>
-          <span className="text-xs text-slate-400">{formatDate(item.createdAt)}</span>
+          <span className="text-slate-600 dark:text-slate-300/85">{item.targetType || 'system'} / {item.targetId || '-'}</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400">{formatDate(item.createdAt)}</span>
           <button onClick={() => deleteActivityLog(item)} className="inline-flex w-fit items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
             <Trash2 size={12} /> Xóa
           </button>
@@ -1881,15 +2215,15 @@ const Admin: React.FC = () => {
       <form onSubmit={createSecurityEvent} className="rounded-lg border border-amber-500/20 bg-[#07111f]/90 p-5">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h3 className="font-black text-white">Tạo sự kiện bảo mật</h3>
-            <p className="mt-1 text-xs text-slate-400">Ghi nhận truy cập bị từ chối, link đáng ngờ, đổi vai trò hoặc gửi biểu mẫu bất thường.</p>
+            <h3 className="font-black text-slate-900 dark:text-white">Tạo sự kiện bảo mật</h3>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Ghi nhận truy cập bị từ chối, link đáng ngờ, đổi vai trò hoặc gửi biểu mẫu bất thường.</p>
           </div>
-          <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-white hover:bg-amber-400">
+          <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-slate-900 dark:text-white hover:bg-amber-400">
             <Plus size={15} /> Ghi sự kiện
           </button>
         </div>
         <div className="grid gap-3 md:grid-cols-4">
-          <select value={eventForm.eventType} onChange={(event) => setEventForm((current) => ({ ...current, eventType: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-amber-400">
+          <select value={eventForm.eventType} onChange={(event) => setEventForm((current) => ({ ...current, eventType: event.target.value }))} className="rounded-lg border border-black/10 dark:border-white/10 bg-black/70 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-amber-400">
             <option value="login_failed">Đăng nhập thất bại</option>
             <option value="repeated_login_failed">Đăng nhập thất bại nhiều lần</option>
             <option value="permission_denied">Bị từ chối quyền truy cập</option>
@@ -1898,29 +2232,29 @@ const Admin: React.FC = () => {
             <option value="suspicious_upload_or_link">Upload/link đáng ngờ</option>
             <option value="high_frequency_submission">Gửi biểu mẫu tần suất cao</option>
           </select>
-          <input value={eventForm.actorId} onChange={(event) => setEventForm((current) => ({ ...current, actorId: event.target.value }))} placeholder="ID người dùng/tác nhân" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-amber-400" />
-          <select value={eventForm.severity} onChange={(event) => setEventForm((current) => ({ ...current, severity: event.target.value }))} className="rounded-lg border border-white/10 bg-black/70 p-3 text-sm text-white outline-none focus:border-amber-400">
+          <input value={eventForm.actorId} onChange={(event) => setEventForm((current) => ({ ...current, actorId: event.target.value }))} placeholder="ID người dùng/tác nhân" className="rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-amber-400" />
+          <select value={eventForm.severity} onChange={(event) => setEventForm((current) => ({ ...current, severity: event.target.value }))} className="rounded-lg border border-black/10 dark:border-white/10 bg-black/70 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-amber-400">
             <option value="notice">Đáng chú ý</option>
             <option value="warning">Cảnh báo</option>
             <option value="high">Cao</option>
             <option value="critical">Nghiêm trọng</option>
           </select>
-          <input value={eventForm.details} onChange={(event) => setEventForm((current) => ({ ...current, details: event.target.value }))} placeholder="Ghi chú chi tiết" className="rounded-lg border border-white/10 bg-black/50 p-3 text-sm text-white outline-none focus:border-amber-400" />
+          <input value={eventForm.details} onChange={(event) => setEventForm((current) => ({ ...current, details: event.target.value }))} placeholder="Ghi chú chi tiết" className="rounded-lg border border-black/10 dark:border-white/10 bg-black/50 p-3 text-sm text-slate-900 dark:text-white outline-none focus:border-amber-400" />
         </div>
       </form>
 
-      <section className="rounded-lg border border-white/10 bg-[#07111f]/90">
+      <section className="rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90">
         {dashboardSecurity.length === 0 ? (
-          <div className="px-5 py-6 text-sm text-slate-400">Chưa có security event nào trong Firestore.</div>
+          <div className="px-5 py-6 text-sm text-slate-500 dark:text-slate-400">Chưa có security event nào trong Firestore.</div>
         ) : dashboardSecurity.map((item) => (
-          <div key={item.id} className="grid gap-3 border-b border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.6fr_0.8fr_0.35fr]">
+          <div key={item.id} className="grid gap-3 border-b border-black/10 dark:border-white/5 px-5 py-4 text-sm md:grid-cols-[1fr_0.5fr_0.6fr_0.8fr_0.35fr]">
             <div>
-              <p className="font-mono font-bold text-white">{item.eventType || 'security.event'}</p>
-              <p className="text-xs text-slate-400">Tác nhân: {item.actorId || 'không rõ'} / IP: {item.sourceIp || 'ẩn'}</p>
+              <p className="font-mono font-bold text-slate-900 dark:text-white">{item.eventType || 'security.event'}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Tác nhân: {item.actorId || 'không rõ'} / IP: {item.sourceIp || 'ẩn'}</p>
             </div>
             <Pill className={severityClass(item.severity)}>{severityLabels[item.severity || 'notice']}</Pill>
-            <span className="text-slate-300/85">{roleLabels[item.actorRole || 'user']}</span>
-            <span className="text-xs text-slate-400">{formatDate(item.createdAt)}</span>
+            <span className="text-slate-600 dark:text-slate-300/85">{getRoleLabel(item.actorRole)}</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">{formatDate(item.createdAt)}</span>
             <button onClick={() => deleteSecurityEvent(item)} className="inline-flex w-fit items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-1 text-xs font-bold text-red-300 hover:bg-red-500/20">
               <Trash2 size={12} /> Xóa
             </button>
@@ -1943,16 +2277,205 @@ const Admin: React.FC = () => {
         ['activity_logs', 'actorId, actorRole, action, targetType, targetId, severity, metadata, createdAt'],
         ['security_events', 'eventType, actorId, actorRole, severity, sourceIp, userAgent, details, createdAt'],
         ['content_lessons', 'title, slug, body, category, status, createdBy, updatedBy, createdAt, updatedAt'],
+        ['site_config/main', 'marquee, heroTitle, heroSubtitle, academySummary, footerSummary, facts, feature toggles, status'],
       ].map(([collectionName, fields]) => (
-        <section key={collectionName} className="rounded-lg border border-white/10 bg-[#07111f]/90 p-5">
+        <section key={collectionName} className="rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90 p-5">
           <p className="font-mono text-sm font-black text-primary">{collectionName}</p>
-          <p className="mt-3 text-sm leading-relaxed text-slate-300/85">{fields}</p>
+          <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300/85">{fields}</p>
         </section>
       ))}
     </div>
   );
 
+  const renderWebsiteControl = () => (
+    <div className="space-y-5">
+      <section className="rounded-lg border border-black/10 bg-white/70 p-5 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-[#07111f]/86">
+        <div className="mb-5 flex flex-col justify-between gap-3 lg:flex-row lg:items-start">
+          <div>
+            <div className="mb-2 flex items-center gap-2 text-primary">
+              <MonitorCog size={18} />
+              <p className="text-xs font-bold uppercase tracking-[0.22em]">Điều khiển website</p>
+            </div>
+            <h3 className="text-xl font-black text-slate-900 dark:text-white">Chỉnh nội dung chính</h3>
+            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600 dark:text-slate-300/85">
+              Khu vực này lưu cấu hình vào Firestore `site_config/main`. Nội dung live của trang có thể đọc từ cấu hình này để bạn chỉnh mà không cần sửa code.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button type="button" onClick={() => saveWebsiteDraft('draft')} disabled={!canEditContent} className="inline-flex items-center gap-2 rounded-lg border border-primary/30 px-4 py-2 text-xs font-bold uppercase tracking-wide text-blue-200 hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-50">
+              <Save size={15} /> Lưu nháp
+            </button>
+            <button type="button" onClick={() => saveWebsiteDraft('published')} disabled={!canEditContent} className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wide text-slate-900 dark:text-white hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50">
+              <Send size={15} /> Xuất bản
+            </button>
+          </div>
+        </div>
+
+        <div className="grid gap-3 md:grid-cols-3">
+          {websiteToggleControls.map(({ key, label }) => (
+            <label key={key} className="flex items-center justify-between rounded-lg border border-black/10 bg-black/5 p-3 text-sm font-bold text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+              <span>{label}</span>
+              <input
+                type="checkbox"
+                checked={websiteDraft[key]}
+                disabled={!canEditContent}
+                onChange={(event) => updateWebsiteDraftField(key, event.target.checked)}
+                className="h-5 w-5 accent-primary"
+              />
+            </label>
+          ))}
+        </div>
+      </section>
+
+      <div className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr]">
+        <section className="rounded-lg border border-black/10 bg-white/70 p-5 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-[#07111f]/86">
+          <div className="mb-4 flex items-center gap-2">
+            <Globe2 className="text-primary" size={18} />
+            <h3 className="font-black text-slate-900 dark:text-white">Nội dung trang chủ</h3>
+          </div>
+          <div className="grid gap-4">
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              Thanh chạy trên cùng
+              <input value={websiteDraft.marquee} disabled={!canEditContent} onChange={(event) => updateWebsiteDraftField('marquee', event.target.value)} className="mt-2 w-full rounded-lg border border-black/10 bg-black/5 p-3 text-sm normal-case tracking-normal text-slate-900 outline-none focus:border-primary disabled:opacity-50 dark:border-white/10 dark:bg-black/40 dark:text-white" />
+            </label>
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              Tiêu đề hero
+              <input value={websiteDraft.heroTitle} disabled={!canEditContent} onChange={(event) => updateWebsiteDraftField('heroTitle', event.target.value)} className="mt-2 w-full rounded-lg border border-black/10 bg-black/5 p-3 text-sm normal-case tracking-normal text-slate-900 outline-none focus:border-primary disabled:opacity-50 dark:border-white/10 dark:bg-black/40 dark:text-white" />
+            </label>
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              Mô tả hero
+              <textarea value={websiteDraft.heroSubtitle} disabled={!canEditContent} onChange={(event) => updateWebsiteDraftField('heroSubtitle', event.target.value)} rows={3} className="mt-2 w-full rounded-lg border border-black/10 bg-black/5 p-3 text-sm normal-case tracking-normal text-slate-900 outline-none focus:border-primary disabled:opacity-50 dark:border-white/10 dark:bg-black/40 dark:text-white" />
+            </label>
+            <div className="grid gap-3 md:grid-cols-2">
+              <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                CTA chính
+                <input value={websiteDraft.primaryCta} disabled={!canEditContent} onChange={(event) => updateWebsiteDraftField('primaryCta', event.target.value)} className="mt-2 w-full rounded-lg border border-black/10 bg-black/5 p-3 text-sm normal-case tracking-normal text-slate-900 outline-none focus:border-primary disabled:opacity-50 dark:border-white/10 dark:bg-black/40 dark:text-white" />
+              </label>
+              <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                CTA phụ
+                <input value={websiteDraft.secondaryCta} disabled={!canEditContent} onChange={(event) => updateWebsiteDraftField('secondaryCta', event.target.value)} className="mt-2 w-full rounded-lg border border-black/10 bg-black/5 p-3 text-sm normal-case tracking-normal text-slate-900 outline-none focus:border-primary disabled:opacity-50 dark:border-white/10 dark:bg-black/40 dark:text-white" />
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-lg border border-black/10 bg-white/70 p-5 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-[#07111f]/86">
+          <div className="mb-4 flex items-center gap-2">
+            <Sparkles className="text-amber-300" size={18} />
+            <h3 className="font-black text-slate-900 dark:text-white">Academy, footer và facts</h3>
+          </div>
+          <div className="grid gap-4">
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              Tiêu đề Academy
+              <input value={websiteDraft.academyTitle} disabled={!canEditContent} onChange={(event) => updateWebsiteDraftField('academyTitle', event.target.value)} className="mt-2 w-full rounded-lg border border-black/10 bg-black/5 p-3 text-sm normal-case tracking-normal text-slate-900 outline-none focus:border-primary disabled:opacity-50 dark:border-white/10 dark:bg-black/40 dark:text-white" />
+            </label>
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              Mô tả Academy
+              <textarea value={websiteDraft.academySummary} disabled={!canEditContent} onChange={(event) => updateWebsiteDraftField('academySummary', event.target.value)} rows={3} className="mt-2 w-full rounded-lg border border-black/10 bg-black/5 p-3 text-sm normal-case tracking-normal text-slate-900 outline-none focus:border-primary disabled:opacity-50 dark:border-white/10 dark:bg-black/40 dark:text-white" />
+            </label>
+            <label className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              Footer dự án
+              <textarea value={websiteDraft.footerSummary} disabled={!canEditContent} onChange={(event) => updateWebsiteDraftField('footerSummary', event.target.value)} rows={3} className="mt-2 w-full rounded-lg border border-black/10 bg-black/5 p-3 text-sm normal-case tracking-normal text-slate-900 outline-none focus:border-primary disabled:opacity-50 dark:border-white/10 dark:bg-black/40 dark:text-white" />
+            </label>
+            {(['factOne', 'factTwo', 'factThree'] as const).map((key, index) => (
+              <label key={key} className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                Fact {index + 1}
+                <textarea value={websiteDraft[key]} disabled={!canEditContent} onChange={(event) => updateWebsiteDraftField(key, event.target.value)} rows={2} className="mt-2 w-full rounded-lg border border-black/10 bg-black/5 p-3 text-sm normal-case tracking-normal text-slate-900 outline-none focus:border-primary disabled:opacity-50 dark:border-white/10 dark:bg-black/40 dark:text-white" />
+              </label>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <section className="rounded-lg border border-primary/20 bg-primary/10 p-5">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Preview nhanh</p>
+        <h3 className="mt-3 text-2xl font-black text-slate-900 dark:text-white">{websiteDraft.heroTitle}</h3>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600 dark:text-slate-300/85">{websiteDraft.heroSubtitle}</p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <Pill className="border-primary/30 bg-primary/10 text-blue-200">{websiteDraft.primaryCta}</Pill>
+          <Pill className="border-white/20 bg-white/10 text-slate-200">{websiteDraft.secondaryCta}</Pill>
+          <Pill className={websiteDraft.status === 'published' ? 'border-emerald-400/30 bg-emerald-400/10 text-emerald-200' : 'border-amber-400/30 bg-amber-400/10 text-amber-200'}>
+            {websiteDraft.status === 'published' ? 'Đã xuất bản' : 'Bản nháp'}
+          </Pill>
+        </div>
+      </section>
+    </div>
+  );
+
+  const renderGovernance = () => (
+    <div className="space-y-5">
+      <section className="rounded-lg border border-black/10 bg-white/70 p-5 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-[#07111f]/86">
+        <div className="mb-4 flex items-center gap-2">
+          <UserCog className="text-primary" size={18} />
+          <h3 className="font-black text-slate-900 dark:text-white">Ma trận quyền</h3>
+        </div>
+        <div className="overflow-x-auto">
+          <div className="grid min-w-[760px] grid-cols-[0.7fr_1.2fr_1fr_1fr] gap-3 border-b border-black/10 pb-3 text-xs font-bold uppercase tracking-wide text-slate-500 dark:border-white/10 dark:text-slate-400">
+            <span>Role</span><span>Quyền chính</span><span>Được vào admin</span><span>Ghi chú</span>
+          </div>
+          {[
+            ['owner', 'Toàn quyền, gồm reset hệ thống và gán Owner', 'Có', 'Dành cho tài khoản điều hành chính'],
+            ['admin', 'Vận hành user, case, DPF, nội dung, log', 'Có', 'Không tự đổi quyền chính mình'],
+            ['editor', 'Academy và Website', 'Có', 'Không xem DPF hoặc bảo mật'],
+            ['support', 'Người dùng và hồ sơ hỗ trợ', 'Có', 'Không xóa dữ liệu nhạy cảm'],
+            ['user', 'Học, làm thử thách, dùng profile', 'Không', 'Không truy cập dashboard'],
+          ].map(([role, scope, access, note]) => (
+            <div key={role} className="grid min-w-[760px] grid-cols-[0.7fr_1.2fr_1fr_1fr] gap-3 border-b border-black/10 py-3 text-sm dark:border-white/5">
+              <span className="font-black text-slate-900 dark:text-white">{getRoleLabel(role)}</span>
+              <span className="text-slate-600 dark:text-slate-300/85">{scope}</span>
+              <span className={access === 'Có' ? 'font-bold text-emerald-300' : 'font-bold text-red-300'}>{access}</span>
+              <span className="text-slate-500 dark:text-slate-400">{note}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div className="grid gap-5 xl:grid-cols-2">
+        <div>
+          <div className="mb-3 flex items-center gap-2">
+            <Activity className="text-primary" size={18} />
+            <h3 className="font-black text-slate-900 dark:text-white">Nhật ký hoạt động</h3>
+          </div>
+          {renderActivity()}
+        </div>
+        <div>
+          <div className="mb-3 flex items-center gap-2">
+            <ShieldAlert className="text-amber-300" size={18} />
+            <h3 className="font-black text-slate-900 dark:text-white">Sự kiện bảo mật</h3>
+          </div>
+          {renderSecurity()}
+        </div>
+      </div>
+
+      <section className="rounded-lg border border-black/10 bg-white/70 p-5 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-[#07111f]/86">
+        <div className="mb-4 flex items-center gap-2">
+          <Database className="text-primary" size={18} />
+          <h3 className="font-black text-slate-900 dark:text-white">Mô hình dữ liệu</h3>
+        </div>
+        {renderDataModel()}
+      </section>
+
+      <section className="rounded-lg border border-red-500/25 bg-red-500/10 p-5">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+          <div>
+            <h3 className="flex items-center gap-2 font-black text-red-300">
+              <ShieldAlert size={18} /> Danger Zone: reset tiến độ toàn hệ thống
+            </h3>
+            <p className="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300/85">
+              Chỉ Owner được đặt lại điểm số, coin và tiến độ học về 0 cho người dùng thường. Owner/Admin được giữ nguyên.
+            </p>
+          </div>
+          <button onClick={resetAllUserProgress} disabled={!canUseDangerZone || loading} className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-600/20 px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-red-300 transition-colors hover:bg-red-600/30 disabled:cursor-not-allowed disabled:opacity-50">
+            <RefreshCw size={14} className={loading ? 'animate-spin' : ''} /> Reset người dùng
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+
   const renderActiveTab = () => {
+    if (!visibleTabs.some((tab) => tab.id === activeTab)) return renderOverview();
+
     switch (activeTab) {
       case 'users':
         return renderUsers();
@@ -1962,12 +2485,10 @@ const Admin: React.FC = () => {
         return renderCases();
       case 'studio':
         return renderStudio();
-      case 'activity':
-        return renderActivity();
-      case 'security':
-        return renderSecurity();
-      case 'data':
-        return renderDataModel();
+      case 'website':
+        return renderWebsiteControl();
+      case 'governance':
+        return renderGovernance();
       default:
         return renderOverview();
     }
@@ -1975,26 +2496,29 @@ const Admin: React.FC = () => {
 
   return (
     <div className="mx-auto max-w-7xl animate-in fade-in">
-      <div className="mb-6 overflow-hidden rounded-lg border border-white/10 bg-[#07111f]/90 shadow-2xl shadow-black/30">
-        <div className="flex flex-col justify-between gap-4 border-b border-white/10 p-5 lg:flex-row lg:items-center">
+      <div className="mb-6 overflow-hidden rounded-lg border border-black/10 dark:border-white/10 bg-[#07111f]/90 shadow-2xl shadow-black/30">
+        <div className="flex flex-col justify-between gap-4 border-b border-black/10 dark:border-white/10 p-5 lg:flex-row lg:items-center">
           <div>
             <div className="mb-2 flex items-center gap-2">
               <Shield className="text-primary" size={20} />
-              <p className="text-xs font-bold uppercase tracking-[0.26em] text-primary">Trung tâm điều khiển Deepfense</p>
+              <p className="text-xs font-bold uppercase tracking-[0.26em] text-primary">DEEPFENSE Command Center</p>
             </div>
-            <h1 className="text-2xl font-black text-white md:text-3xl">Bảng quản trị Academy kiểu SOC</h1>
-            <p className="mt-2 max-w-3xl text-sm text-slate-300/85">
-              Quản trị người dùng, biên tập viên, quản trị viên, hồ sơ trợ giúp, xưởng nội dung, nhật ký hoạt động và sự kiện bảo mật.
+            <h1 className="text-2xl font-black text-slate-900 dark:text-white md:text-3xl">Bảng điều hành hệ thống</h1>
+            <p className="mt-2 max-w-3xl text-sm text-slate-600 dark:text-slate-300/85">
+              Quản lý người học, Academy, nội dung website, hồ sơ hỗ trợ, DPF coin, quyền truy cập và nhật ký vận hành.
             </p>
+            <Pill className="mt-3 border-emerald-400/30 bg-emerald-400/10 text-emerald-200">
+              Quyền hiện tại: {getRoleLabel(currentAdminRole)}
+            </Pill>
           </div>
           <div className="flex flex-wrap gap-2">
-            <button onClick={exportDashboardJson} className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-3 text-xs font-bold uppercase tracking-wide text-gray-300 hover:border-primary hover:text-white">
+            <button onClick={exportDashboardJson} className="inline-flex items-center justify-center gap-2 rounded-lg border border-black/10 dark:border-white/10 px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-600 dark:text-gray-300 hover:border-primary hover:text-slate-900 dark:text-white">
               <Download size={16} /> Xuất JSON
             </button>
-            <button onClick={exportCasesCsv} className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-3 text-xs font-bold uppercase tracking-wide text-gray-300 hover:border-primary hover:text-white">
+            <button onClick={exportCasesCsv} className="inline-flex items-center justify-center gap-2 rounded-lg border border-black/10 dark:border-white/10 px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-600 dark:text-gray-300 hover:border-primary hover:text-slate-900 dark:text-white">
               <Download size={16} /> Xuất Case CSV
             </button>
-            <button onClick={() => signOut(auth)} className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-3 text-xs font-bold uppercase tracking-wide text-gray-300 hover:border-primary hover:text-white">
+            <button onClick={() => signOut(auth)} className="inline-flex items-center justify-center gap-2 rounded-lg border border-black/10 dark:border-white/10 px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-600 dark:text-gray-300 hover:border-primary hover:text-slate-900 dark:text-white">
               <LogOut size={16} /> Đăng xuất
             </button>
           </div>
@@ -2006,9 +2530,9 @@ const Admin: React.FC = () => {
         )}
 
         <div className="grid gap-0 lg:grid-cols-[250px_1fr]">
-          <aside className="border-b border-white/10 p-3 lg:border-b-0 lg:border-r">
+          <aside className="border-b border-black/10 dark:border-white/10 p-3 lg:border-b-0 lg:border-r">
             <div className="space-y-1">
-              {tabs.map((tab) => {
+              {visibleTabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
                 return (
@@ -2020,10 +2544,13 @@ const Admin: React.FC = () => {
                       setRoleFilter('all');
                       setSearch('');
                     }}
-                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-bold transition-colors ${isActive ? 'bg-primary text-white' : 'text-slate-300/85 hover:bg-white/5 hover:text-white'}`}
+                    className={`flex w-full items-start gap-3 rounded-lg px-3 py-3 text-left text-sm font-bold transition-colors ${isActive ? 'bg-primary text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-300/85 hover:bg-black/5 hover:text-slate-900 dark:hover:bg-white/5 dark:hover:text-white'}`}
                   >
-                    <Icon size={17} />
-                    {tab.label}
+                    <Icon className="mt-0.5 shrink-0" size={17} />
+                    <span>
+                      <span className="block">{tab.label}</span>
+                      <span className="mt-0.5 block text-[11px] font-medium leading-snug opacity-70">{tab.description}</span>
+                    </span>
                   </button>
                 );
               })}
@@ -2034,32 +2561,34 @@ const Admin: React.FC = () => {
             <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex flex-wrap gap-2">
                 {timeRangeOptions.map((option) => (
-                  <button key={option} onClick={() => setTimeRange(option)} className={`rounded-lg border px-3 py-2 text-xs font-bold ${timeRange === option ? 'border-primary bg-primary/15 text-blue-200' : 'border-white/10 text-slate-300/85 hover:text-white'}`}>
+                  <button key={option} onClick={() => setTimeRange(option)} className={`rounded-lg border px-3 py-2 text-xs font-bold ${timeRange === option ? 'border-primary bg-primary/15 text-blue-200' : 'border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-300/85 hover:text-slate-900 dark:text-white'}`}>
                     {option}
                   </button>
                 ))}
-                <button onClick={resetControls} className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-bold text-slate-300/85 hover:text-white">
+                <button onClick={resetControls} className="inline-flex items-center gap-2 rounded-lg border border-black/10 dark:border-white/10 px-3 py-2 text-xs font-bold text-slate-600 dark:text-slate-300/85 hover:text-slate-900 dark:text-white">
                   <RefreshCw size={14} /> Đặt lại
                 </button>
               </div>
 
-              {activeTab !== 'overview' && activeTab !== 'data' && (
+              {activeTab !== 'overview' && activeTab !== 'governance' && activeTab !== 'website' && (
                 <div className="flex flex-col gap-2 sm:flex-row">
-                  <label className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/30 px-3 py-2">
-                    <Search size={16} className="text-slate-400" />
-                    <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Tìm kiếm..." className="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-600" />
+                  <label className="flex items-center gap-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/30 px-3 py-2">
+                    <Search size={16} className="text-slate-500 dark:text-slate-400" />
+                    <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Tìm kiếm..." className="w-full bg-transparent text-sm text-slate-900 dark:text-white outline-none placeholder:text-slate-600" />
                   </label>
                   {activeTab === 'users' && (
-                    <select value={roleFilter} onChange={(event) => setRoleFilter(event.target.value as 'all' | Role)} className="rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-sm text-white">
+                    <select value={roleFilter} onChange={(event) => setRoleFilter(event.target.value as 'all' | Role)} className="rounded-lg border border-black/10 dark:border-white/10 bg-black/70 px-3 py-2 text-sm text-slate-900 dark:text-white">
                       <option value="all">Tất cả vai trò</option>
                       <option value="user">Người học</option>
+                      <option value="support">Hỗ trợ người dùng</option>
                       <option value="editor">Biên tập viên</option>
                       <option value="admin">Quản trị viên</option>
+                      <option value="owner">Giám đốc / Owner</option>
                     </select>
                   )}
                   {(activeTab === 'users' || activeTab === 'cases') && (
-                    <label className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/70 px-3 py-2 text-sm text-white">
-                      <Filter size={15} className="text-slate-400" />
+                    <label className="flex items-center gap-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/70 px-3 py-2 text-sm text-slate-900 dark:text-white">
+                      <Filter size={15} className="text-slate-500 dark:text-slate-400" />
                       <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} className="bg-transparent outline-none">
                         <option value="all">Tất cả trạng thái</option>
                         {activeTab === 'users' ? (
@@ -2087,7 +2616,7 @@ const Admin: React.FC = () => {
 
             {loading ? (
               <div className="grid gap-4 md:grid-cols-3">
-                {[1, 2, 3].map((item) => <div key={item} className="h-40 animate-pulse rounded-lg border border-white/5 bg-white/5" />)}
+                {[1, 2, 3].map((item) => <div key={item} className="h-40 animate-pulse rounded-lg border border-black/10 dark:border-white/5 bg-black/5 dark:bg-white/5" />)}
               </div>
             ) : renderActiveTab()}
           </div>

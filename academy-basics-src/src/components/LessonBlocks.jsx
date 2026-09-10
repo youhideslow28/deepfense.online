@@ -2,7 +2,7 @@
  * LessonBlocks.jsx — Rich content block renderer for lessons.
  *
  * Supported block types (used in paragraphs array alongside plain strings):
- *   callout | table | comparison | process | cards | scenario | image | stats
+ *   callout | table | comparison | process | cards | scenario | image | stats | video-gallery
  */
 import React from 'react';
 import {
@@ -175,6 +175,35 @@ export function LessonImage({ src, alt, caption, placeholderHint }) {
 
 // ── STATS ROW ─────────────────────────────────────────────────────────────────
 // stats: [{ value, label, icon?, color? }]
+export function VideoGallery({ title, subtitle, items = [] }) {
+  return (
+    <section className="lb-video-gallery">
+      <div className="lb-video-gallery-head">
+        {title && <h3>{title}</h3>}
+        {subtitle && <p>{subtitle}</p>}
+      </div>
+      <div className="lb-video-gallery-grid">
+        {items.map((item, index) => (
+          <article className="lb-video-card" key={item.src || index}>
+            <video
+              src={item.src}
+              className="lb-video-card-media"
+              controls
+              preload="metadata"
+              playsInline
+            />
+            <div className="lb-video-card-body">
+              <span className="lb-video-card-index">{String(index + 1).padStart(2, '0')}</span>
+              {item.title && <p className="lb-video-card-title">{item.title}</p>}
+              {item.caption && <p className="lb-video-card-caption">{item.caption}</p>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function StatsRow({ title, stats }) {
   return (
     <div className="lb-stats">
@@ -200,7 +229,7 @@ export function VisualAssetKit({ title, subtitle }) {
     <section className="lb-asset-kit">
       <div className="lb-asset-kit-head">
         <div>
-          <p className="lb-asset-kit-kicker">DEEPFENSE BASIC</p>
+          <p className="lb-asset-kit-kicker">DEEPFENSE ACADEMY</p>
           <h3>{title || 'Visual Asset Prompt Kit'}</h3>
           {subtitle && <p>{subtitle}</p>}
         </div>
@@ -270,6 +299,7 @@ export default function LessonBlock({ block }) {
     case 'cards':      return <Cards {...block} />;
     case 'scenario':   return <ScenarioCard {...block} />;
     case 'image':      return <LessonImage {...block} />;
+    case 'video-gallery': return <VideoGallery {...block} />;
     case 'stats':      return <StatsRow {...block} />;
     case 'asset-kit':  return <VisualAssetKit {...block} />;
     default:           return null;

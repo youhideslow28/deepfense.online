@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import type { User } from 'firebase/auth';
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, limit, query, serverTimestamp, setDoc, where } from 'firebase/firestore';
 
 import '@/styles/design-tokens.css';
 
@@ -11,17 +11,22 @@ import SEO from '@/components/common/SEO';
 import Footer from '@/components/layout/Footer';
 import LoadingFallback from '@/components/layout/LoadingFallback';
 import Navbar from '@/components/layout/Navbar';
-import SmoothScroll from '@/lib/smooth-scroll';
-import SummerEffects from '@/components/effects/SummerEffects';
+import SmoothScroll, { getLenis } from '@/lib/smooth-scroll';
+import WinterEffects from '@/components/effects/WinterEffects';
 import AiChat from '@/features/chat/AiChat';
 import { auth, db } from '@/config/firebase';
 import { PROJECT_METADATA } from '@/data';
 import { Language, Season } from '@/types';
 import { usePerfMode } from '@/hooks/usePerfMode';
+import { useSiteConfig } from '@/hooks/useSiteConfig';
+import { useTheme } from '@/hooks/useTheme';
+import { resolveDeepfenseExperience } from '@/config/domainRouting';
 
 const CyberField = lazy(() => import('@/components/effects/CyberField'));
 const CookieConsent = lazy(() => import('@/components/common/CookieConsent'));
 const Home = lazy(() => import('@/pages/Home'));
+const DomainPortal = lazy(() => import('@/pages/DomainPortal'));
+const FamilyLanding = lazy(() => import('@/pages/FamilyLanding'));
 const Academy = lazy(() => import('@/pages/Academy'));
 const CertificateVerify = lazy(() => import('@/pages/CertificateVerify'));
 const Login = lazy(() => import('@/pages/Login'));
@@ -34,25 +39,49 @@ const Admin = lazy(() => import('@/pages/Admin'));
 const Policy = lazy(() => import('@/pages/Policy'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
+type AppRole = 'owner' | 'admin' | 'editor' | 'support' | 'user';
+
+const ADMIN_CONSOLE_ROLES = new Set<AppRole>(['owner', 'admin', 'editor', 'support']);
+
+const resolveAppRole = (email: string, storedRole: string): AppRole => {
+  if (email === 'deepfense@gmail.com') return 'owner';
+  if (storedRole === 'owner' || storedRole === 'admin' || storedRole === 'editor' || storedRole === 'support') {
+    return storedRole;
+  }
+  return 'user';
+};
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    const lenis = getLenis();
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
   }, [pathname]);
   return null;
 };
 
 const AppContent: React.FC = () => {
   const [lang, setLang] = useState<Language>('vi');
-  const [season, setSeason] = useState<Season>('SUMMER');
   const { mode: perfMode, toggle: togglePerfMode, isLite } = usePerfMode();
+  const { theme, toggleTheme } = useTheme();
+  const siteConfig = useSiteConfig();
+  const [season, setSeason] = useState<Season>('WINTER');
   const [user, setUser] = useState<User | null>(null);
   const [authBusy, setAuthBusy] = useState(true);
   const [authError, setAuthError] = useState('');
-  const [userRole, setUserRole] = useState<'admin' | 'editor' | 'user' | null>(null);
+  const [userRole, setUserRole] = useState<AppRole | null>(null);
   const [roleBusy, setRoleBusy] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const domainExperience = resolveDeepfenseExperience();
+  const isPortalRoute = (domainExperience === 'portal' && location.pathname === '/') || location.pathname === '/portal';
+  const isFamilyRoute = (domainExperience === 'family' && location.pathname === '/') || location.pathname === '/family';
+  const usesLiteShell = isLite || isPortalRoute || domainExperience === 'family' || location.pathname === '/family';
+  const isFullWidthRoute = location.pathname === '/' || location.pathname === '/portal' || location.pathname === '/family';
 
   useEffect(() => onAuthStateChanged(auth, (nextUser) => {
     setUser(nextUser);
@@ -72,13 +101,16 @@ const AppContent: React.FC = () => {
 
       setRoleBusy(true);
       const email = (user.email || '').toLowerCase();
-      const emailRole = email === 'deepfense@gmail.com' ? 'admin' : null;
 
       try {
         const userRef = doc(db, 'users', user.uid);
         const userSnap = await getDoc(userRef);
-        const storedRole = userSnap.exists() ? String(userSnap.data().role || '') : '';
-        const nextRole = emailRole || (storedRole === 'admin' || storedRole === 'editor' ? storedRole : 'user');
+        let storedRole = userSnap.exists() ? String(userSnap.data().role || '') : '';
+        if (!storedRole && email) {
+          const emailSnap = await getDocs(query(collection(db, 'users'), where('email', '==', email), limit(1)));
+          storedRole = emailSnap.empty ? '' : String(emailSnap.docs[0].data().role || '');
+        }
+        const nextRole = resolveAppRole(email, storedRole);
 
         await setDoc(userRef, {
           uid: user.uid,
@@ -86,6 +118,7 @@ const AppContent: React.FC = () => {
           displayName: user.displayName || '',
           photoURL: user.photoURL || '',
           role: nextRole,
+          canAccessAdmin: ADMIN_CONSOLE_ROLES.has(nextRole),
           status: 'active',
           lastActiveAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
@@ -97,13 +130,15 @@ const AppContent: React.FC = () => {
           displayName: user.displayName || '',
           photoURL: user.photoURL || '',
           signedInAt: Date.now(),
-          isAdmin: nextRole === 'admin',
+          role: nextRole,
+          isAdmin: nextRole === 'owner' || nextRole === 'admin',
+          canAccessAdmin: ADMIN_CONSOLE_ROLES.has(nextRole),
         }));
 
-        if (!ignore) setUserRole(nextRole as 'admin' | 'editor' | 'user');
+        if (!ignore) setUserRole(nextRole);
       } catch (error) {
         console.error('Unable to load user role:', error);
-        if (!ignore) setUserRole(emailRole || 'user');
+        if (!ignore) setUserRole(resolveAppRole(email, ''));
       } finally {
         if (!ignore) setRoleBusy(false);
       }
@@ -146,19 +181,22 @@ const AppContent: React.FC = () => {
     PROJECT_METADATA.authors.forEach((author) => {
       console.log(`%c - ${author.name} (${author.id}) - ${author.role}`, 'color: #FF2A6D; font-style: italic; font-weight: bold;');
     });
-    console.log('%cWARNING: This project is the intellectual property of Team 2HAND (VKU).', 'color: red; font-weight: bold;');
+    console.log('%cWARNING: This project is the intellectual property of VKU Student Group (25NS).', 'color: red; font-weight: bold;');
   }, []);
 
   const getPageTitle = () => {
+    if (isPortalRoute) return lang === 'vi' ? 'Cổng Deepfense' : 'Deepfense Portal';
+    if (isFamilyRoute) return 'DEEPFENSE Family';
+
     switch (location.pathname) {
       case '/': return lang === 'vi' ? 'Trang chủ' : 'Home';
       case '/login': return lang === 'vi' ? 'Đăng nhập' : 'Sign In';
       case '/profile': return lang === 'vi' ? 'Hồ sơ người học' : 'Profile';
       case '/academy': return 'DEEPFENSE Academy';
-      case '/academy/basics': return 'DEEPFENSE Basics';
+      case '/academy/basics': return 'DEEPFENSE Academy';
       case '/academy/verify': return lang === 'vi' ? 'Xác minh chứng chỉ' : 'Verify Certificate';
       case '/challenge': return lang === 'vi' ? 'Thử thách thám tử' : 'Detective Challenge';
-      case '/tools': return lang === 'vi' ? 'Hệ thống quét rủi ro' : 'Risk Scanner';
+      case '/tools': return lang === 'vi' ? 'Công cụ an toàn' : 'Safety Tools';
       case '/ai-project': return lang === 'vi' ? 'Dự án AI Deepfense' : 'AI Project';
       case '/contact':
       case '/about': return lang === 'vi' ? 'Liên hệ & báo cáo' : 'Contact & Report';
@@ -170,7 +208,7 @@ const AppContent: React.FC = () => {
           if (location.pathname.includes('crisis')) return lang === 'vi' ? 'Trung tâm ứng cứu' : 'Crisis Hub';
           if (location.pathname.includes('protect')) return lang === 'vi' ? 'Khiên bảo vệ' : 'AI Shield';
           if (location.pathname.includes('knowledge')) return lang === 'vi' ? 'Kiến thức & pháp luật' : 'Law & Knowledge';
-          return lang === 'vi' ? 'Hệ thống quét rủi ro' : 'Risk Scanner';
+          return lang === 'vi' ? 'Công cụ an toàn' : 'Safety Tools';
         }
         return lang === 'vi' ? 'Trang không tồn tại' : 'Page Not Found';
     }
@@ -179,15 +217,15 @@ const AppContent: React.FC = () => {
   const renderAdminRoute = () => {
     if (authBusy || roleBusy) return <LoadingFallback />;
     if (!user) return <Navigate to="/login" replace />;
-    if (userRole !== 'admin') return <Navigate to="/profile" replace />;
+    if (!userRole || !ADMIN_CONSOLE_ROLES.has(userRole)) return <Navigate to="/profile" replace />;
     return <Admin />;
   };
 
   const appContent = (
-    <div className="relative flex min-h-screen flex-col font-sans selection:bg-primary/30 selection:text-white">
+    <div className="relative flex min-h-screen flex-col font-sans selection:bg-primary/30 text-slate-900 dark:text-white">
         <SEO title={getPageTitle()} lang={lang} />
         <ScrollToTop />
-        {isLite ? (
+        {usesLiteShell ? (
           // Fallback gradient tĩnh — cực nhẹ cho mobile / máy yếu
           <div className="fixed inset-0 z-0 pointer-events-none">
             <div className="absolute inset-0 bg-gradient-to-br from-[#1D6FE8]/5 via-transparent to-[#A855F7]/5" />
@@ -195,26 +233,43 @@ const AppContent: React.FC = () => {
         ) : (
           <Suspense fallback={null}><CyberField /></Suspense>
         )}
-        {!isLite && location.pathname === '/' && season === 'SUMMER' && <SummerEffects />}
+        {siteConfig.seasonalEnabled && season === 'WINTER' && domainExperience === 'main' && location.pathname === '/' && <WinterEffects isLite={isLite} />}
 
-        <Navbar
-          lang={lang}
-          setLang={setLang}
-          season={season}
-          setSeason={setSeason}
-          perfMode={perfMode}
-          togglePerfMode={togglePerfMode}
-          user={user}
-          authBusy={authBusy}
-          authError={authError}
-          onGoogleAuth={handleGoogleAuth}
-        />
+        {!isPortalRoute && (
+          <Navbar
+            lang={lang}
+            setLang={setLang}
+            siteConfig={siteConfig}
+            theme={theme}
+            toggleTheme={toggleTheme}
+            perfMode={perfMode}
+            togglePerfMode={togglePerfMode}
+            user={user}
+            authBusy={authBusy}
+            authError={authError}
+            onGoogleAuth={handleGoogleAuth}
+            season={season}
+            setSeason={setSeason}
+            showTicker={!usesLiteShell}
+          />
+        )}
 
-        <main className={`z-10 flex-grow ${location.pathname === '/' ? 'w-full' : 'container mx-auto max-w-7xl px-4 py-8 md:py-12'}`}>
+        <main className={`z-10 flex-grow ${isFullWidthRoute ? 'w-full' : 'container mx-auto max-w-7xl px-4 py-8 md:py-12'}`}>
           <ErrorBoundary>
             <Suspense fallback={<LoadingFallback />}>
               <Routes>
-                <Route path="/" element={<Home lang={lang} season={isLite ? 'NORMAL' : season} />} />
+                <Route
+                  path="/"
+                  element={
+                    isPortalRoute
+                      ? <DomainPortal lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme} />
+                      : isFamilyRoute
+                        ? <FamilyLanding lang={lang} />
+                        : <Home lang={lang} siteConfig={siteConfig} />
+                  }
+                />
+                <Route path="/portal" element={<DomainPortal lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme} />} />
+                <Route path="/family" element={<FamilyLanding lang={lang} />} />
                 <Route path="/login" element={<Login lang={lang} user={user} />} />
                 <Route path="/profile" element={<Profile lang={lang} user={user} authBusy={authBusy || roleBusy} />} />
                 <Route path="/academy" element={<Academy lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} />} />
@@ -234,13 +289,13 @@ const AppContent: React.FC = () => {
           </ErrorBoundary>
         </main>
 
-        <AiChat lang={lang} />
-        <CookieConsent lang={lang} />
-        <Footer lang={lang} />
+        {!usesLiteShell && siteConfig.aiAgentEnabled && <AiChat lang={lang} />}
+        {!isPortalRoute && <CookieConsent lang={lang} />}
+        {!isPortalRoute && <Footer lang={lang} siteConfig={siteConfig} />}
       </div>
   );
 
-  return isLite ? appContent : <SmoothScroll>{appContent}</SmoothScroll>;
+  return usesLiteShell ? appContent : <SmoothScroll>{appContent}</SmoothScroll>;
 };
 
 const App: React.FC = () => (

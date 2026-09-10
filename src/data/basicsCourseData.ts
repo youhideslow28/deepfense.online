@@ -199,7 +199,7 @@ const q = (text: string, options: string[], answer: number, explanation?: string
 const checkpoint = (label: string, questions: any[]): Checkpoint => ({ label, questions });
 
 export const basicsCourse = {
-  title: "DEEPFENSE BASICS",
+  title: "DEEPFENSE ACADEMY",
   credential: "DEEPFENSE AWARE",
   reward: "500 DPF coin",
   modules: [
@@ -213,15 +213,15 @@ export const basicsCourse = {
       outcomes: [
         "Hiểu vì sao deepfake không còn là chuyện xa lạ của người nổi tiếng hay phim ảnh.",
         "Nhận ra bất kỳ người dùng Internet nào cũng có thể gặp nội dung giả mạo, lừa đảo hoặc gây hiểu nhầm.",
-        "Làm quen với cách học của DEEPFENSE BASIC: câu chuyện, quan sát, quyết định và phản hồi.",
+        "Làm quen với cách học của DEEPFENSE ACADEMY: câu chuyện, quan sát, quyết định và phản hồi.",
         "Nắm quy trình Deepfense Check: Pause, Observe, Verify, Trace, Decide."
       ],
       sections: [
         {
           title: "0.1 Chào mừng và đặt vấn đề",
           lessons: [
-            lesson("0.1.1", "Chào mừng đến với DEEPFENSE BASIC", [
-              "Chào mừng bạn đến với DEEPFENSE BASIC. Đây là khóa học nền tảng về deepfake và phòng vệ trước nội dung giả mạo trên không gian số. Bạn không cần biết lập trình, không cần hiểu sâu về trí tuệ nhân tạo, cũng không cần là chuyên gia an toàn thông tin.",
+            lesson("0.1.1", "Chào mừng đến với DEEPFENSE ACADEMY", [
+              "Chào mừng bạn đến với DEEPFENSE ACADEMY. Đây là khóa học nền tảng về deepfake và phòng vệ trước nội dung giả mạo trên không gian số. Bạn không cần biết lập trình, không cần hiểu sâu về trí tuệ nhân tạo, cũng không cần là chuyên gia an toàn thông tin.",
               "Bạn chỉ cần là một người đang sống trong thế giới số: có điện thoại, dùng mạng xã hội, xem video ngắn, nhận tin nhắn, nghe cuộc gọi, tham gia nhóm chat và đôi khi tự hỏi: nội dung này có thật không?",
               "Trong khóa học này, chúng ta không học cách tạo deepfake. Chúng ta học cách nhận ra rủi ro, kiểm chứng thông tin, bảo vệ bản thân, bảo vệ người khác và ra quyết định bình tĩnh hơn trước những nội dung có thể đánh lừa mắt, tai và cảm xúc."
             ], [
@@ -271,7 +271,7 @@ export const basicsCourse = {
           title: "0.3 Deepfense Check",
           lessons: [
             lesson("0.3.1", "Năm bước kiểm chứng cơ bản", [
-              "DEEPFENSE BASIC dùng một quy trình ngắn gọi là Deepfense Check. Bạn chưa cần thuộc lòng mọi chi tiết, nhưng cần nhớ logic: đừng để cảm xúc quyết định thay bạn.",
+              "DEEPFENSE ACADEMY dùng một quy trình ngắn gọi là Deepfense Check. Bạn chưa cần thuộc lòng mọi chi tiết, nhưng cần nhớ logic: đừng để cảm xúc quyết định thay bạn.",
               "Pause: dừng lại trước khi phản ứng. Observe: quan sát dấu hiệu kỹ thuật và ngữ cảnh. Verify: xác minh qua kênh độc lập. Trace: truy nguồn nội dung. Decide: ra quyết định ít gây hại nhất.",
               "Quy trình này không biến bạn thành chuyên gia pháp chứng. Nó giúp bạn có một khoảng dừng đủ tốt để tránh chuyển tiền, chia sẻ, kết luận hoặc làm tổn thương người khác khi chưa có bằng chứng."
             ], [
@@ -282,7 +282,7 @@ export const basicsCourse = {
           checkpoint: {
             label: "0.3",
             questions: [
-              q("Mục tiêu chính của DEEPFENSE BASIC là gì?", ["Học cách tạo deepfake", "Học cách nhận diện và phòng vệ an toàn", "Học mẹo vượt detector", "Tăng lượt xem nội dung"], 1),
+              q("Mục tiêu chính của DEEPFENSE ACADEMY là gì?", ["Học cách tạo deepfake", "Học cách nhận diện và phòng vệ an toàn", "Học mẹo vượt detector", "Tăng lượt xem nội dung"], 1),
               q("Trong Deepfense Check, 'Verify' có nghĩa là gì?", ["Xác minh qua kênh độc lập", "Tin nếu video rõ nét", "Tải video về ngay", "Chia sẻ để hỏi cộng đồng"], 0),
             ],
             miniGame: {
@@ -1399,7 +1399,7 @@ export const basicsCourse = {
         q("Nội dung deepfake nào gây tổn hại danh dự nhất hiện nay?", ["Deepfake mạo danh kêu gọi từ thiện", "Deepfake khiêu dâm/nhạy cảm mạo danh (NCII)", "Deepfake đọc truyện", "Deepfake chơi game"], 1, "Gây ảnh hưởng nghiêm trọng đến tâm lý và đời sống nạn nhân."),
         q("Khi thấy lỗi ở răng hoặc tóc trong video, bạn kết luận gì?", ["Giả 100%", "Là một tín hiệu nghi vấn mạnh, cần kiểm chứng bối cảnh và nguồn", "Thật 100%", "Video bị lỗi mạng"], 1, "Dấu hiệu kỹ thuật cần đi kèm với phân tích ngữ cảnh."),
         q("Tại sao 'Pause' 30 giây lại quan trọng?", ["Để chờ máy nguội", "Để nhường chỗ cho lý trí thay vì hành động theo cảm xúc vội vàng", "Để tăng lượt xem", "Để người gửi chờ lâu"], 1, "Khoảng dừng giúp kích hoạt tư duy phản biện."),
-        q("Khóa học DEEPFENSE BASIC dành cho ai?", ["Chỉ lập trình viên", "Bất kỳ người dùng Internet nào muốn bảo vệ mình trên không gian số", "Chỉ người già", "Chỉ trẻ em"], 1, "Kỹ năng an toàn số là cần thiết cho tất cả mọi người.")
+        q("Khóa học DEEPFENSE ACADEMY dành cho ai?", ["Chỉ lập trình viên", "Bất kỳ người dùng Internet nào muốn bảo vệ mình trên không gian số", "Chỉ người già", "Chỉ trẻ em"], 1, "Kỹ năng an toàn số là cần thiết cho tất cả mọi người.")
       ]
     }
   ]

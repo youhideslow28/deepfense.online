@@ -41,7 +41,7 @@ function parseInline(text: string): React.ReactNode[] {
   const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={i} className="text-white font-bold">{part.slice(2, -2)}</strong>;
+      return <strong key={i} className="text-slate-900 dark:text-white font-bold">{part.slice(2, -2)}</strong>;
     }
     if (part.startsWith('*') && part.endsWith('*')) {
       return <em key={i} className="text-zinc-300 italic">{part.slice(1, -1)}</em>;
@@ -57,9 +57,9 @@ const TextRenderer: React.FC<{ block: TextBlock; lang: Language }> = ({ block, l
   const variant = block.variant ?? 'normal';
   return (
     <p className={
-      variant === 'lead'    ? 'text-gray-200 text-lg leading-relaxed font-medium' :
-      variant === 'caption' ? 'text-slate-400 text-xs leading-relaxed italic' :
-                              'text-gray-300 text-base leading-relaxed'
+      variant === 'lead'    ? 'text-slate-700 dark:text-gray-200 text-lg leading-relaxed font-medium' :
+      variant === 'caption' ? 'text-slate-500 dark:text-slate-400 text-xs leading-relaxed italic' :
+                              'text-slate-600 dark:text-gray-300 text-base leading-relaxed'
     }>
       {parseInline(text)}
     </p>
@@ -94,11 +94,11 @@ const ImageRenderer: React.FC<{ block: ImageBlock; lang: Language }> = ({ block,
           className={`w-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-          <ZoomIn className="w-6 h-6 text-white opacity-0 group-hover:opacity-80 transition-opacity" />
+          <ZoomIn className="w-6 h-6 text-slate-900 dark:text-white opacity-0 group-hover:opacity-80 transition-opacity" />
         </div>
       </div>
       {caption && (
-        <figcaption className="mt-2 text-center text-xs text-slate-400 leading-relaxed px-2">
+        <figcaption className="mt-2 text-center text-xs text-slate-500 dark:text-slate-400 leading-relaxed px-2">
           {caption}
         </figcaption>
       )}
@@ -184,8 +184,8 @@ const CompareRenderer: React.FC<{ block: CompareBlock; lang: Language }> = ({ bl
           </div>
 
           {/* Labels */}
-          <div className="absolute top-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded font-semibold backdrop-blur-sm">{beforeLabel}</div>
-          <div className="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded font-semibold backdrop-blur-sm">{afterLabel}</div>
+          <div className="absolute top-2 left-2 bg-white/80 dark:bg-black/60 text-slate-900 dark:text-white text-xs px-2 py-1 rounded font-semibold backdrop-blur-sm">{beforeLabel}</div>
+          <div className="absolute top-2 right-2 bg-white/80 dark:bg-black/60 text-slate-900 dark:text-white text-xs px-2 py-1 rounded font-semibold backdrop-blur-sm">{afterLabel}</div>
           <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white/60 text-[10px] select-none">{lang === 'vi' ? 'Kéo để so sánh' : 'Drag to compare'}</div>
         </div>
         {caption && <figcaption className="mt-2 text-center text-xs text-zinc-500 leading-relaxed">{caption}</figcaption>}
@@ -204,8 +204,8 @@ const CompareRenderer: React.FC<{ block: CompareBlock; lang: Language }> = ({ bl
           <div key={badge} className="relative rounded-xl overflow-hidden bg-zinc-800">
             <img src={src} alt={label} className="w-full object-cover" />
             <div className="absolute top-2 left-2 flex items-center gap-1.5">
-              <span className="bg-black/70 text-white text-[10px] px-2 py-0.5 rounded font-bold backdrop-blur-sm">{badge}</span>
-              <span className="bg-black/50 text-white text-[10px] px-2 py-0.5 rounded backdrop-blur-sm">{label}</span>
+              <span className="bg-black/70 text-slate-900 dark:text-white text-[10px] px-2 py-0.5 rounded font-bold backdrop-blur-sm">{badge}</span>
+              <span className="bg-black/50 text-slate-900 dark:text-white text-[10px] px-2 py-0.5 rounded backdrop-blur-sm">{label}</span>
             </div>
           </div>
         ))}
@@ -292,7 +292,7 @@ const AudioRenderer: React.FC<{ block: AudioBlock; lang: Language }> = ({ block,
   };
 
   return (
-    <div className="glass-dark border border-white/10 rounded-xl p-4">
+    <div className="glass-dark border border-black/10 dark:border-white/10 rounded-xl p-4">
       <audio
         ref={audioRef}
         src={block.src}
@@ -352,12 +352,12 @@ const TableRenderer: React.FC<{ block: TableBlock; lang: Language }> = ({ block,
       {caption && (
         <figcaption className="text-xs text-amber-400 font-semibold uppercase tracking-wide mb-2">{caption}</figcaption>
       )}
-      <div className="overflow-x-auto rounded-xl border border-white/10">
+      <div className="overflow-x-auto rounded-xl border border-black/10 dark:border-white/10">
         <table className="w-full text-sm border-collapse">
           <thead>
-            <tr className="bg-white/10">
+            <tr className="bg-black/10 dark:bg-white/10">
               {block.headers.map((h, i) => (
-                <th key={i} className="px-4 py-2.5 text-left text-xs font-black text-zinc-300 uppercase tracking-wider border-b border-white/10">
+                <th key={i} className="px-4 py-2.5 text-left text-xs font-black text-zinc-300 uppercase tracking-wider border-b border-black/10 dark:border-white/10">
                   {lang === 'vi' ? h.vi : h.en}
                 </th>
               ))}
@@ -365,7 +365,7 @@ const TableRenderer: React.FC<{ block: TableBlock; lang: Language }> = ({ block,
           </thead>
           <tbody>
             {block.rows.map((row, ri) => (
-              <tr key={ri} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+              <tr key={ri} className="border-b border-black/10 dark:border-white/5 hover:bg-black/5 dark:bg-white/5 transition-colors">
                 {row.map((cell, ci) => (
                   <td key={ci} className="px-4 py-3 text-zinc-300 text-sm">
                     {parseInline(lang === 'vi' ? cell.vi : cell.en)}
@@ -420,10 +420,10 @@ const ExerciseRenderer: React.FC<{ block: ExerciseBlock; lang: Language }> = ({ 
           {after}
         </p>
         {!submitted
-          ? <button disabled={blankValue === null} onClick={() => setSubmitted(true)} className="text-xs px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-white font-bold transition-colors">{t.block_exercise_check}</button>
+          ? <button disabled={blankValue === null} onClick={() => setSubmitted(true)} className="text-xs px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-slate-900 dark:text-white font-bold transition-colors">{t.block_exercise_check}</button>
           : <div className={`text-sm font-semibold mt-2 ${correct ? 'text-green-400' : 'text-red-400'}`}>
               {correct ? `✅ ${t.block_exercise_correct}` : `❌ ${t.block_exercise_wrong}`}
-              <p className="text-slate-400 text-xs mt-1 font-normal">{explanation}</p>
+              <p className="text-slate-500 dark:text-slate-400 text-xs mt-1 font-normal">{explanation}</p>
             </div>}
       </div>
     );
@@ -451,9 +451,9 @@ const ExerciseRenderer: React.FC<{ block: ExerciseBlock; lang: Language }> = ({ 
                 showResult
                   ? isCorrect(i) ? 'border-green-500/50 bg-green-500/10 text-green-300'
                   : selected === i ? 'border-red-500/50 bg-red-500/10 text-red-300'
-                  : 'border-white/5 text-slate-500 opacity-50'
+                  : 'border-black/10 dark:border-white/5 text-slate-500 opacity-50'
                   : selected === i ? 'border-amber-500/50 bg-amber-500/10 text-amber-300'
-                  : 'border-white/10 text-slate-300 hover:border-white/20'
+                  : 'border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:border-black/20 dark:border-white/20'
               }`}
             >
               <span>{label}</span>
@@ -464,10 +464,10 @@ const ExerciseRenderer: React.FC<{ block: ExerciseBlock; lang: Language }> = ({ 
         })}
       </div>
       {!submitted
-        ? <button disabled={selected === null} onClick={() => setSubmitted(true)} className="text-xs px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-white font-bold transition-colors">{t.block_exercise_check}</button>
+        ? <button disabled={selected === null} onClick={() => setSubmitted(true)} className="text-xs px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-slate-900 dark:text-white font-bold transition-colors">{t.block_exercise_check}</button>
         : <div className={`text-sm font-semibold ${correct ? 'text-green-400' : 'text-red-400'}`}>
             {correct ? `✅ ${t.block_exercise_correct}` : `❌ ${t.block_exercise_wrong}`}
-            <p className="text-slate-400 text-xs mt-1 font-normal">{explanation}</p>
+            <p className="text-slate-500 dark:text-slate-400 text-xs mt-1 font-normal">{explanation}</p>
           </div>}
     </div>
   );
@@ -506,7 +506,7 @@ const SandboxRenderer: React.FC<{ block: SandboxBlock; lang: Language }> = ({ bl
         <span className="text-base">🎭</span>
         <div>
           <p className="text-sm font-bold text-blue-300">{title}</p>
-          {desc && <p className="text-xs text-slate-400">{desc}</p>}
+          {desc && <p className="text-xs text-slate-500 dark:text-slate-400">{desc}</p>}
         </div>
       </div>
 
@@ -522,7 +522,7 @@ const SandboxRenderer: React.FC<{ block: SandboxBlock; lang: Language }> = ({ bl
                 <div className={`max-w-[85%] px-3 py-2 rounded-xl text-sm ${
                   turn.speaker === 'scammer'
                     ? 'bg-red-900/30 border border-red-700/30 text-zinc-200'
-                    : 'bg-zinc-800 border border-zinc-700 text-slate-400 text-center text-xs'
+                    : 'bg-zinc-800 border border-zinc-700 text-slate-500 dark:text-slate-400 text-center text-xs'
                 }`}>
                   {turn.speaker === 'scammer' && <span className="text-red-400 text-xs font-bold block mb-0.5">⚠️ {lang === 'vi' ? 'Tin nhắn đáng ngờ' : 'Suspicious message'}</span>}
                   {msg.split('\n').map((line, i, arr) => (
@@ -551,8 +551,8 @@ const SandboxRenderer: React.FC<{ block: SandboxBlock; lang: Language }> = ({ bl
                                 ? choice.outcome === 'good'
                                   ? 'border-green-500/50 bg-green-900/20 text-green-300'
                                   : 'border-red-500/50 bg-red-900/20 text-red-300'
-                                : 'border-white/5 text-slate-600 opacity-40'
-                              : 'border-white/10 text-slate-300 hover:border-blue-500/40 hover:text-blue-300 cursor-pointer'
+                                : 'border-black/10 dark:border-white/5 text-slate-600 opacity-40'
+                              : 'border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:border-blue-500/40 hover:text-blue-300 cursor-pointer'
                           }`}
                         >
                           {label}
@@ -690,7 +690,7 @@ const AnnotateRenderer: React.FC<{ block: AnnotateBlock; lang: Language }> = ({ 
           <button
             onClick={() => setSubmitted(true)}
             disabled={selected.size === 0}
-            className="text-xs px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 text-white font-bold transition-colors"
+            className="text-xs px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 text-slate-900 dark:text-white font-bold transition-colors"
           >
             {t.block_annotate_check}
           </button>

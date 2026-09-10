@@ -4,11 +4,24 @@ import FinalExam from './FinalExam.jsx';
 import MiniGame from './MiniGame.jsx';
 import LessonBlock from './LessonBlocks.jsx';
 import CourseEvaluation, { isCourseEvaluationDone } from './CourseEvaluation.jsx';
-import { MODULE_HEADER_ASSETS } from '../data/visualAssets.js';
+import { COMPANION_ASSETS, MODULE_HEADER_ASSETS } from '../data/visualAssets.js';
+
+function GuestPracticeLock({ title = 'Phần thực hành đang khóa' }) {
+  return (
+    <div className="guest-practice-lock" role="note">
+      <div className="guest-practice-lock-icon">👀</div>
+      <div>
+        <strong>{title}</strong>
+        <p>Guest chỉ có thể đọc bài học. Đăng nhập tại Academy để làm bài và lưu tiến độ.</p>
+      </div>
+      <a href="/academy" className="guest-practice-lock-link">Đăng nhập →</a>
+    </div>
+  );
+}
 
 export default function LessonView({
   lessonIndex, currentIdx, currentEntry,
-  completedLessons, onNext, onPrev, onComplete,
+  completedLessons, onNext, onPrev, onComplete, guestMode,
 }) {
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizDone, setQuizDone] = useState(false);
@@ -19,6 +32,20 @@ export default function LessonView({
 
   // ── Final exam special render ──────────────────────────────────────────────
   if (lesson.type === 'exam') {
+    if (guestMode) {
+      return (
+        <div className="content">
+          <div className="lesson-wrap">
+            <div className="lesson-meta">
+              <span className="lesson-module-tag">Module {moduleId}</span>
+              <span className="lesson-id-tag">{lesson.id}</span>
+            </div>
+            <h1 className="lesson-title">{lesson.title}</h1>
+            <GuestPracticeLock title="Bài kiểm tra cuối khóa đang khóa" />
+          </div>
+        </div>
+      );
+    }
     if (!evaluationDone) {
       return <CourseEvaluation onComplete={() => setEvaluationDone(true)} />;
     }
@@ -38,6 +65,7 @@ export default function LessonView({
   })();
   const introVideo = isFirstInModule ? module?.introVideo : null;
   const moduleHeaderImage = isFirstInModule ? MODULE_HEADER_ASSETS[moduleId] : null;
+  const showAnCompanion = moduleId === 0 && currentIdx === 0;
 
   // Last lesson in this section (regardless of checkpoint)
   const isLastInSection = (() => {
@@ -46,9 +74,9 @@ export default function LessonView({
     return next.sectionTitle !== sectionTitle || next.moduleId !== moduleId;
   })();
 
-  // Show takeaways only: module >= 1, last lesson of section, data exists
-  const showTakeaways = moduleId >= 1 && isLastInSection
-    && lesson.takeaways && lesson.takeaways.length > 0;
+  // Every lesson gets a short, visible memory box instead of hiding takeaways
+  // only at the end of a section.
+  const showTakeaways = lesson.takeaways && lesson.takeaways.length > 0;
 
   const isDone = completedLessons.has(lesson.id);
 
@@ -56,6 +84,10 @@ export default function LessonView({
   const checkpointDone = hasMiniGame ? miniGameDone : quizDone;
 
   function handleNext() {
+    if (guestMode) {
+      if (!isLast) onNext();
+      return;
+    }
     onComplete(lesson.id);
     if (isLastInSection && checkpoint && !checkpointDone) {
       if (!hasMiniGame) setShowQuiz(true);
@@ -130,23 +162,40 @@ export default function LessonView({
           )}
         </div>
 
+        {showAnCompanion && (
+          <figure className="lesson-companion-card">
+            <div className="lesson-companion-portrait">
+              <img src={COMPANION_ASSETS.anPortrait} alt="An trong một khung cảnh đời thường" loading="lazy" />
+            </div>
+            <figcaption className="lesson-companion-copy">
+              <span className="lesson-companion-kicker">Ví dụ gần gũi</span>
+              <strong>An cũng bắt đầu từ một ngày rất bình thường</strong>
+              <p>Điều quan trọng không phải là trở thành chuyên gia ngay lập tức, mà là biết dừng lại trước khi tin, chia sẻ hoặc làm theo.</p>
+            </figcaption>
+          </figure>
+        )}
+
         {/* Takeaways — only last lesson of section, module 1+ */}
         {showTakeaways && (
-          <div className="lesson-takeaways">
-            <div className="lesson-takeaways-title">Điểm ghi nhớ</div>
+          <div className="lesson-takeaways lesson-key-points">
+            <div className="lesson-takeaways-title">Điểm cần nhớ</div>
             {lesson.takeaways.map((t, i) => (
               <div key={i} className="lesson-takeaway-item">{t}</div>
             ))}
           </div>
         )}
 
+        {guestMode && isLastInSection && checkpoint && (
+          <GuestPracticeLock title="Checkpoint đang khóa ở Guest Mode" />
+        )}
+
         {/* Mini game (inline) */}
-        {hasMiniGame && !miniGameDone && (
+        {!guestMode && hasMiniGame && !miniGameDone && (
           <MiniGame config={checkpoint.miniGame} onComplete={handleMiniGameComplete} />
         )}
 
         {/* Checkpoint notice (standard quiz, no mini game) */}
-        {isLastInSection && checkpoint && !hasMiniGame && !quizDone && (
+        {!guestMode && isLastInSection && checkpoint && !hasMiniGame && !quizDone && (
           <div className="checkpoint-notice">
             <span className="checkpoint-icon">📝</span>
             <div className="checkpoint-info">
@@ -167,9 +216,9 @@ export default function LessonView({
           <button
             className={`lesson-nav-btn ${isLast ? '' : 'primary'}`}
             onClick={handleNext}
-            disabled={isLast && isDone}
+            disabled={guestMode ? isLast : isLast && isDone}
           >
-            {isLast ? (isDone ? '✓ Hoàn thành' : 'Hoàn thành khoá học') : 'Bài tiếp →'}
+            {guestMode ? (isLast ? 'Đã đến bài cuối' : 'Bài tiếp →') : (isLast ? (isDone ? '✓ Hoàn thành' : 'Hoàn thành khoá học') : 'Bài tiếp →')}
           </button>
         </div>
       </div>

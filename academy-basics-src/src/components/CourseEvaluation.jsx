@@ -37,7 +37,7 @@ function saveEvaluation(payload) {
       uid: session?.uid,
       email: session?.email,
       submittedAt: Date.now(),
-      course: 'DEEPFENSE BASIC',
+      course: 'DEEPFENSE ACADEMY',
       version: 1,
     }));
   } catch {}

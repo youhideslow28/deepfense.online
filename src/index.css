@@ -10,11 +10,176 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .tab-copy-reveal :where(h1, h2, h3, h4, p, li, label, a, button, .reveal-line) {
+    animation: tabLineReveal 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .tab-copy-reveal :where(h1, h2, h3, h4, p, li, label, a, button, .reveal-line):nth-child(2) { animation-delay: 45ms; }
+  .tab-copy-reveal :where(h1, h2, h3, h4, p, li, label, a, button, .reveal-line):nth-child(3) { animation-delay: 90ms; }
+  .tab-copy-reveal :where(h1, h2, h3, h4, p, li, label, a, button, .reveal-line):nth-child(4) { animation-delay: 135ms; }
+  .tab-copy-reveal :where(h1, h2, h3, h4, p, li, label, a, button, .reveal-line):nth-child(5) { animation-delay: 180ms; }
+  .tab-copy-reveal :where(h1, h2, h3, h4, p, li, label, a, button, .reveal-line):nth-child(n+6) { animation-delay: 220ms; }
+
+  .tab-panel-reveal {
+    animation: tabPanelReveal 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes tabLineReveal {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes tabPanelReveal {
+    from {
+      opacity: 0;
+      transform: translateY(14px) scale(0.992);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+
+.home-panel {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018)),
+    rgba(0,0,0,0.42);
+  border: 1px solid rgba(255,255,255,0.11);
+  box-shadow: 0 18px 56px rgba(0,0,0,0.32), 0 0 38px rgba(29,111,232,0.08);
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.home-panel:hover {
+  border-color: rgba(96,165,250,0.34);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.022)),
+    rgba(0,0,0,0.46);
+  box-shadow: 0 22px 64px rgba(0,0,0,0.38), 0 0 44px rgba(29,111,232,0.12);
+  transform: translateY(-2px);
+}
+
+.home-subcard {
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.home-subcard:hover {
+  border-color: rgba(96,165,250,0.28);
+  background: rgba(255,255,255,0.055);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  transform: translateY(-1px);
+}
+
+.home-danger-panel {
+  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.home-danger-panel:hover {
+  background: #ef4444;
+  box-shadow: 0 18px 44px rgba(239,68,68,0.26);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .home-panel,
+  .home-subcard,
+  .home-danger-panel {
+    transform: none !important;
+    transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease;
+  }
+}
+
 @layer base {
   :root {
     --font-sans: 'Inter', 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-display: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-mono: 'JetBrains Mono', Consolas, 'Liberation Mono', monospace;
+
+    /* Theme Variables - Dark Mode (Default) */
+    --bg-dark: #03080F;
+    --bg-surface: #0D1929;
+    --border-color: #1E3A5F;
+    --text-main: #FFFFFF;
+    --text-muted: #CBD5E1;
+    --text-dim: #94A3B8;
+
+    /* Dark Mode Slate Color mapping */
+    --slate-50: #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1e293b;
+    --slate-900: #0f172a;
+    
+    --glass-bg: rgba(7, 17, 31, 0.64);
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --glass-shadow: rgba(0, 0, 0, 0.28);
+    --input-bg: rgba(0, 0, 0, 0.55);
+  }
+
+  .light {
+    /* Theme Variables - Light Mode */
+    --bg-dark: #F5F8FC;
+    --bg-surface: #FFFFFF;
+    --border-color: #C7D5E6;
+    --text-main: #0F172A;
+    --text-muted: #334155;
+    --text-dim: #64748B;
+
+    --slate-50: #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1e293b;
+    --slate-900: #0f172a;
+
+    --glass-bg: rgba(255, 255, 255, 0.84);
+    --glass-border: rgba(29, 111, 232, 0.16);
+    --glass-shadow: rgba(15, 50, 100, 0.10);
+    --input-bg: #FFFFFF;
+  }
+
+  .keep-dark {
+    /* Theme Variables - Reset to Dark Mode */
+    --bg-dark: #03080F;
+    --bg-surface: #0D1929;
+    --border-color: #1E3A5F;
+    --text-main: #FFFFFF;
+    --text-muted: #CBD5E1;
+    --text-dim: #94A3B8;
+
+    /* Dark Mode Slate Color mapping */
+    --slate-50: #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1e293b;
+    --slate-900: #0f172a;
+    
+    --glass-bg: rgba(7, 17, 31, 0.64);
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --glass-shadow: rgba(0, 0, 0, 0.28);
+    --input-bg: rgba(0, 0, 0, 0.55);
   }
 
   html, body {
@@ -23,11 +188,12 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-synthesis-weight: none;
-    background: #03080F;
-    color: #fff;
+    background: var(--bg-dark);
+    color: var(--text-main);
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   * {
@@ -40,8 +206,8 @@
   }
 
   ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #03080F; }
-  ::-webkit-scrollbar-thumb { background: #1E3A5F; border-radius: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
   ::-webkit-scrollbar-thumb:hover { background: #1D6FE8; }
 
   /* Chrome/Safari Autofill override */
@@ -49,16 +215,22 @@
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 40px #0c1829 inset !important;
-    -webkit-text-fill-color: #fff !important;
+    -webkit-box-shadow: 0 0 0 40px var(--bg-surface) inset !important;
+    -webkit-text-fill-color: var(--text-main) !important;
     transition: background-color 5000s ease-in-out 0s;
   }
+
+
 }
 
 /* ── MOBILE PERFORMANCE OPTIMIZATIONS ───────────────────────────
    Backdrop-filter (blur) là một trong những thứ tốn GPU nhất trên mobile.
    Trên pointer:coarse (touch) hoặc viewport hẹp, giảm/tắt các hiệu ứng nặng. */
 @media (max-width: 768px), (pointer: coarse) {
+  .ai-chat-shell {
+    display: none !important;
+  }
+
   /* Giảm backdrop-blur xuống mức tối thiểu — đỡ giật khi scroll */
   .backdrop-blur-2xl { backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important; }
   .backdrop-blur-xl  { backdrop-filter: blur(6px) !important; -webkit-backdrop-filter: blur(6px) !important; }
@@ -84,4 +256,315 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ── LIGHT MODE GLOBAL OVERRIDES ─────────────────────────────────
+   Khi html có class "light", áp dụng màu nền và style rõ ràng hơn  */
+html.dark {
+  background: #03080F;
+}
+
+html.dark body {
+  background: var(--bg-dark);
+  color: var(--text-main);
+}
+
+html.light {
+  background: linear-gradient(135deg, #d8e5f2 0%, #e8eef5 50%, #dde7f1 100%);
+}
+
+html.light body {
+  background: transparent;
+  color: #0B1523;
+}
+
+/* Card/panel background trong light mode: có nền trắng rõ, border đậm, shadow */
+html.light .bg-white\/70 {
+  background: rgba(255, 255, 255, 0.90) !important;
+  border-color: rgba(29, 111, 232, 0.15) !important;
+  box-shadow: 0 4px 24px rgba(15, 50, 100, 0.10), 0 1px 4px rgba(15, 50, 100, 0.06) !important;
+}
+
+html.light .bg-black\/40,
+html.light .bg-black\/60,
+html.light .bg-black\/10 {
+  background: rgba(255, 255, 255, 0.88) !important;
+}
+
+/* Text trong light mode — tránh chữ mờ nhạt */
+html.light .text-slate-600 {
+  color: #2D3E52 !important;
+}
+html.light .text-slate-300,
+html.light .text-gray-300 {
+  color: #3B5270 !important;
+}
+html.light .text-slate-400,
+html.light .text-slate-500 {
+  color: #4A6080 !important;
+}
+
+/* Border light mode rõ hơn */
+html.light .border-black\/10,
+html.light .border-white\/10,
+html.light .border-white\/\[0\.10\] {
+  border-color: rgba(29, 111, 232, 0.18) !important;
+}
+
+/* Announcement ticker — light mode dùng nền sáng nên chữ cần đủ tương phản */
+html.light .announcement-ticker span {
+  color: #1E3A5F !important;
+}
+
+.df-chat-panel {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(191, 219, 254, 0.9) !important;
+  color: #0f172a !important;
+}
+
+.df-chat-header {
+  background: linear-gradient(90deg, #ffffff, #f0f9ff, #eff6ff) !important;
+  border-color: #dbeafe !important;
+  color: #0f172a !important;
+}
+
+.df-chat-body {
+  background: rgba(248, 250, 252, 0.8) !important;
+}
+
+.df-chat-footer {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: #dbeafe !important;
+}
+
+.df-chat-input {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+.df-chat-agent-message {
+  background: #ffffff !important;
+  border-color: #dbeafe !important;
+  color: #334155 !important;
+}
+
+.df-chat-user-message {
+  background: #eff6ff !important;
+  border-color: rgba(29, 111, 232, 0.35) !important;
+  color: #0f172a !important;
+}
+
+html.dark .df-chat-agent-message {
+  background: rgba(30, 41, 59, 0.9) !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .df-chat-panel {
+  background: rgba(7, 17, 31, 0.95) !important;
+  border-color: rgba(29, 111, 232, 0.3) !important;
+  color: #ffffff !important;
+}
+
+html.dark .df-chat-header {
+  background: rgba(29, 111, 232, 0.1) !important;
+  border-color: rgba(29, 111, 232, 0.2) !important;
+  color: #ffffff !important;
+}
+
+html.dark .df-chat-body {
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark .df-chat-footer {
+  background: #07111f !important;
+  border-color: #1e293b !important;
+}
+
+html.dark .df-chat-input {
+  background: rgba(0, 0, 0, 0.5) !important;
+  border-color: #334155 !important;
+  color: #ffffff !important;
+}
+
+html.dark .df-chat-user-message {
+  background: rgba(29, 111, 232, 0.2) !important;
+  border-color: rgba(29, 111, 232, 0.5) !important;
+  color: #ffffff !important;
+}
+
+html.light .home-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82)),
+    rgba(255,255,255,0.88);
+  border-color: rgba(29,111,232,0.15);
+  box-shadow: 0 18px 46px rgba(15,50,100,0.11);
+}
+
+html.light .home-panel:hover {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.88)),
+    rgba(255,255,255,0.94);
+  box-shadow: 0 22px 54px rgba(15,50,100,0.15);
+}
+
+html.light .home-subcard:hover {
+  background: rgba(29,111,232,0.06);
+}
+
+html.light .transparent-panel,
+html.light .transparent-panel-dark,
+html.light .transparent-panel-light {
+  background: rgba(255,255,255,0.86) !important;
+  border-color: rgba(29,111,232,0.16) !important;
+  box-shadow: 0 16px 44px rgba(15,50,100,0.10) !important;
+}
+
+html.light .transparent-panel-terminal {
+  background: rgba(255,255,255,0.95) !important;
+  border-color: rgba(29,111,232,0.16) !important;
+}
+
+html.light .bg-slate-900\/40,
+html.light .bg-slate-900\/50,
+html.light .bg-slate-900\/60,
+html.light .bg-slate-950\/50,
+html.light .bg-black\/30,
+html.light .bg-black\/35,
+html.light .bg-black\/50,
+html.light .bg-black\/55 {
+  background: rgba(255,255,255,0.86) !important;
+}
+
+html.light .text-blue-100,
+html.light .text-blue-200 {
+  color: #1D4ED8 !important;
+}
+
+html.light .text-slate-200 {
+  color: #334155 !important;
+}
+
+html.light .text-cyan-100,
+html.light .text-cyan-200 {
+  color: #0E7490 !important;
+}
+
+html.perf-lite .transparent-panel,
+html.perf-lite .transparent-panel-dark,
+html.perf-lite .transparent-panel-light,
+html.perf-lite .backdrop-blur-md,
+html.perf-lite .backdrop-blur-lg,
+html.perf-lite .backdrop-blur-xl,
+html.perf-lite .backdrop-blur-2xl {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.perf-lite .home-panel,
+html.perf-lite .home-subcard,
+html.perf-lite .transparent-panel,
+html.perf-lite .transparent-panel-dark,
+html.perf-lite .transparent-panel-light {
+  box-shadow: 0 10px 26px rgba(15, 50, 100, 0.08) !important;
+  transform: none !important;
+}
+
+html.perf-lite .animate-pulse,
+html.perf-lite .float,
+html.perf-lite .float-delayed,
+html.perf-lite .text-shimmer,
+html.perf-lite .cyber-grid {
+  animation: none !important;
+}
+
+html.perf-lite .blur-2xl,
+html.perf-lite .blur-3xl {
+  filter: blur(12px) !important;
+}
+
+/* ── WINTER SIGNAL ─────────────────────────────────────────────── */
+.winter-signal {
+  isolation: isolate;
+  mask-image: linear-gradient(to bottom, black 0%, black 58%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 58%, transparent 100%);
+}
+
+.winter-signal-frost {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(126, 219, 255, 0.055) 0%, rgba(56, 189, 248, 0.018) 40%, transparent 76%);
+}
+
+.winter-signal-frost::after {
+  position: absolute;
+  top: clamp(7rem, 17vh, 10.5rem);
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  content: '';
+  background: linear-gradient(90deg, transparent, rgba(125, 225, 255, 0.28), transparent);
+}
+
+.winter-signal-snow {
+  position: absolute;
+  top: 6.5rem;
+  left: var(--winter-signal-left);
+  width: var(--winter-signal-size);
+  height: var(--winter-signal-size);
+  object-fit: contain;
+  opacity: var(--winter-signal-opacity);
+  filter: brightness(0) saturate(100%) invert(87%) sepia(75%) saturate(552%) hue-rotate(147deg) brightness(106%) contrast(103%);
+  animation: winter-signal-drift var(--winter-signal-duration) linear var(--winter-signal-delay) infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.winter-checkpoint-crystal {
+  width: 21px;
+  height: 21px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(87%) sepia(75%) saturate(552%) hue-rotate(147deg) brightness(106%) contrast(103%);
+}
+
+.winter-reward-visual video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: screen;
+}
+
+.winter-checkpoint-line {
+  background: linear-gradient(90deg, transparent, rgba(125, 225, 255, 0.65), transparent);
+}
+
+@keyframes winter-signal-drift {
+  from {
+    transform: translate3d(0, -2rem, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(var(--winter-signal-drift), 30rem, 0) rotate(90deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .winter-signal-snow {
+    display: none;
+  }
+
+  .winter-signal-frost::after {
+    left: 7%;
+    right: 7%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .winter-signal-snow {
+    animation: none;
+  }
+}
+
+html.perf-lite .winter-signal-snow {
+  display: none;
 }

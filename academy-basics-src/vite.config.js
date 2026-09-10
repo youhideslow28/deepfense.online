@@ -7,6 +7,9 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  // Keep the standalone Academy build rooted in this package even when Vite
+  // is invoked from the monorepo/workspace root.
+  root: __dirname,
   plugins: [
     react(),
     VitePWA({
@@ -14,8 +17,8 @@ export default defineConfig({
       injectRegister: 'auto',
 
       manifest: {
-        name: 'DEEPFENSE BASICS',
-        short_name: 'DF Basics',
+        name: 'DEEPFENSE ACADEMY',
+        short_name: 'DF Academy',
         description: 'Khóa học cơ bản về deepfake và phòng vệ trước nội dung giả mạo',
         theme_color: '#7c3aed',
         background_color: '#0a0a0a',

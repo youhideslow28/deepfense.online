@@ -48,6 +48,10 @@ function readSession() {
   } catch { return null; }
 }
 
+function isGuestMode() {
+  return new URLSearchParams(window.location.search).get('mode') === 'guest';
+}
+
 function isSessionValid() {
   return !!readSession();
 }
@@ -95,6 +99,7 @@ function initTheme() {
 }
 
 function loadProgress() {
+  if (!readSession()) return { completed: new Set(), currentLessonId: null };
   try {
     const raw = localStorage.getItem(scopedKey(STORAGE_KEY));
     if (raw) {
@@ -120,17 +125,19 @@ function saveProgress(completed, currentLessonId) {
 }
 
 export default function App() {
-  // Auth gate — phải đăng nhập tại /academy/ trước
+  // Auth gate — guest mode is read-only and must be explicit in the URL.
   const [authed] = useState(() => isSessionValid());
+  const [guestMode] = useState(() => isGuestMode());
 
   useEffect(() => {
-    if (!authed) window.location.replace('/academy/');
-    cleanupLegacyProgressForNonAdmin();
-  }, [authed]);
+    if (!authed && !guestMode) window.location.replace('/academy/');
+    if (authed && !guestMode) cleanupLegacyProgressForNonAdmin();
+  }, [authed, guestMode]);
 
   const lessonIndex = useMemo(() => buildLessonIndex(), []);
-  const [completed, setCompleted] = useState(() => loadProgress().completed);
+  const [completed, setCompleted] = useState(() => guestMode ? new Set() : loadProgress().completed);
   const [currentIdx, setCurrentIdx] = useState(() => {
+    if (guestMode) return null;
     const { currentLessonId } = loadProgress();
     if (currentLessonId) {
       const idx = lessonIndex.findIndex(e => e.lesson.id === currentLessonId);
@@ -181,8 +188,9 @@ export default function App() {
   const currentEntry = currentIdx !== null ? lessonIndex[currentIdx] : null;
 
   useEffect(() => {
+    if (guestMode) return;
     saveProgress(completed, currentEntry?.lesson?.id || null);
-  }, [completed, currentEntry]);
+  }, [completed, currentEntry, guestMode]);
 
   // Refresh note-exists indicator whenever the current lesson changes
   useEffect(() => {
@@ -215,6 +223,7 @@ export default function App() {
   };
 
   useEffect(() => {
+    if (guestMode) return;
     // Apply on mount
     setCompleted(prev => applyModuleSync(prev));
     // Re-apply whenever Academy.tsx (same origin, other tab) writes the sync key
@@ -223,10 +232,11 @@ export default function App() {
     };
     window.addEventListener('storage', onStorage);
     return () => window.removeEventListener('storage', onStorage);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [guestMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Whenever lesson progress changes: compute fully-done modules and write to shared key
   useEffect(() => {
+    if (guestMode) return;
     const counts = {}, done = {};
     for (const entry of lessonIndex) {
       const mid = entry.moduleId;
@@ -237,7 +247,7 @@ export default function App() {
       .filter(mid => done[mid] === counts[mid])
       .map(Number);
     writeModuleSync(doneModules);
-  }, [completed]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [completed, guestMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function goToLesson(idx) {
     setCurrentIdx(idx);
@@ -289,8 +299,8 @@ export default function App() {
   const totalDone = completed.size;
   const pct = totalLessons > 0 ? Math.round((totalDone / totalLessons) * 100) : 0;
 
-  // Chưa xác thực → không render gì, useEffect sẽ redirect
-  if (!authed) return null;
+  // Chưa xác thực và không phải guest → không render gì, useEffect sẽ redirect
+  if (!authed && !guestMode) return null;
 
   return (
     <div className="layout">
@@ -300,6 +310,7 @@ export default function App() {
         onClose={() => setSidebarOpen(false)}
         currentLesson={currentEntry}
         completedLessons={completed}
+        guestMode={guestMode}
         onSelectLesson={handleSelectLesson}
         lessonIndex={lessonIndex}
         onHome={() => { setCurrentIdx(null); setSidebarOpen(false); }}
@@ -322,23 +333,25 @@ export default function App() {
       />
 
       {/* Notes panel */}
-      <NotesPanel
-        isOpen={notesOpen}
-        onClose={() => setNotesOpen(false)}
-        lessonId={currentEntry?.lesson?.id ?? null}
-        lessonTitle={currentEntry?.lesson?.title ?? ''}
-        moduleId={currentEntry?.moduleId ?? null}
-        onNoteChange={(id, hasContent) => {
-          if (id === currentEntry?.lesson?.id) setNoteExists(hasContent);
-        }}
-      />
+      {!guestMode && (
+        <NotesPanel
+          isOpen={notesOpen}
+          onClose={() => setNotesOpen(false)}
+          lessonId={currentEntry?.lesson?.id ?? null}
+          lessonTitle={currentEntry?.lesson?.title ?? ''}
+          moduleId={currentEntry?.moduleId ?? null}
+          onNoteChange={(id, hasContent) => {
+            if (id === currentEntry?.lesson?.id) setNoteExists(hasContent);
+          }}
+        />
+      )}
 
       {/* PWA install banner */}
       {showInstall && (
         <div className="install-banner">
           <span className="install-banner-icon">📲</span>
-          <span className="install-banner-text">
-            Cài <strong>DEEPFENSE BASICS</strong> lên thiết bị — học offline bất cứ lúc nào!
+            <span className="install-banner-text">
+             Cài <strong>DEEPFENSE ACADEMY</strong> lên thiết bị — học offline bất cứ lúc nào!
           </span>
           <button className="install-banner-btn" onClick={handleInstall}>Cài ngay</button>
           <button className="install-banner-dismiss" onClick={() => setShowInstall(false)} aria-label="Đóng">✕</button>
@@ -361,8 +374,8 @@ export default function App() {
 
           {/* Ext links — left side (moved from right) */}
           <div className="topbar-ext">
-            <a className="topbar-ext-link" href="https://deepfense.online/academy/" target="_blank" rel="noopener noreferrer" title="Trang Academy">🎓 Academy</a>
-            <a className="topbar-ext-link" href="https://deepfense.online" target="_blank" rel="noopener noreferrer" title="deepfense.online">🌐 Trang chủ</a>
+            <a className="topbar-ext-link" href="/academy" title="Trang Academy">🎓 Academy</a>
+            <a className="topbar-ext-link" href="/" title="deepfense.online">🌐 Trang chủ</a>
           </div>
 
           {/* Breadcrumb — only visible when inside a lesson */}
@@ -397,7 +410,7 @@ export default function App() {
           </button>
 
           {/* Notes toggle — only when viewing a lesson */}
-          {currentEntry && (
+          {currentEntry && !guestMode && (
             <button
               className={`topbar-notes-btn${notesOpen ? ' active' : ''}`}
               onClick={() => setNotesOpen(o => !o)}
@@ -423,6 +436,7 @@ export default function App() {
             onStart={handleStart}
             onSelectModule={handleSelectModule}
             completedLessons={completed}
+            guestMode={guestMode}
           />
         ) : (
           <LessonView
@@ -430,6 +444,7 @@ export default function App() {
             currentIdx={currentIdx}
             currentEntry={currentEntry}
             completedLessons={completed}
+            guestMode={guestMode}
             onNext={handleNext}
             onPrev={handlePrev}
             onComplete={handleComplete}
