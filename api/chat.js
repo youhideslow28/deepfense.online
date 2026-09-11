@@ -724,7 +724,8 @@ export default async function handler(req, res) {
     }));
     
     // Khởi tạo AI với API Key từ biến môi trường server
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+    const ai = new GoogleGenAI({ apiKey });
 
     // 1. TÌM KIẾM URL TRONG TIN NHẮN CUỐI CÙNG CỦA NGƯỜI DÙNG
     const lastUserMessage = messages[messages.length - 1]?.text || "";
@@ -842,13 +843,12 @@ export default async function handler(req, res) {
     const finalInstruction = mode === 'simulator' ? simulatorInstruction : systemInstruction;
 
     const CANDIDATE_MODELS = [
-      'gemini-2.0-flash',
       'gemini-1.5-flash',
+      'gemini-2.0-flash',
       'gemini-2.5-flash',
-      'gemini-1.5-flash-8b',
     ];
 
-    const buildContentConfig = (modelName, withTools = true) => ({
+    const buildContentConfig = (modelName) => ({
       model: modelName,
       contents: sanitizedMessages.map(m => ({
         role: m.role,
@@ -856,7 +856,6 @@ export default async function handler(req, res) {
       })),
       config: {
         systemInstruction: finalInstruction,
-        tools: (mode === 'simulator' || !withTools) ? [] : [{ googleSearch: {} }]
       }
     });
 
@@ -874,7 +873,7 @@ export default async function handler(req, res) {
 
       for (const modelName of CANDIDATE_MODELS) {
         try {
-          const contentConfig = buildContentConfig(modelName, true);
+          const contentConfig = buildContentConfig(modelName);
           const streamResponse = await ai.models.generateContentStream(contentConfig);
 
           for await (const chunk of streamResponse) {
@@ -911,7 +910,7 @@ export default async function handler(req, res) {
     let lastError = null;
     for (const modelName of CANDIDATE_MODELS) {
       try {
-        const contentConfig = buildContentConfig(modelName, true);
+        const contentConfig = buildContentConfig(modelName);
         const response = await ai.models.generateContent(contentConfig);
 
         const text = response.text || (lang === 'vi' 
@@ -931,7 +930,7 @@ export default async function handler(req, res) {
     console.error("AI Error:", error);
     return res.status(500).json({ 
       error: 'Internal Server Error',
-      details: error.message 
+      details: error?.message || String(error)
     });
   }
 }
