@@ -196,7 +196,7 @@ const Home: React.FC<HomeProps> = ({ lang, siteConfig }) => {
 
           <div className="relative z-10 text-center lg:col-span-7 lg:text-left">
             <div data-reveal className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-500/25 bg-blue-500/10 px-4 py-1.5 text-[11px] font-bold tracking-[0.08em] text-blue-200">
-              <img src="/logo/favicon-32x32.png" alt="" className="h-4 w-4 rounded-md object-contain" />
+              <img src="/logo/favicon-32x32.png" alt="DEEPFENSE" className="h-4 w-4 rounded-md object-contain" />
               <TypewriterText
                 text={isVi ? 'CHƯƠNG TRÌNH HUẤN LUYỆN DEEPFAKE // SẴN SÀNG' : 'DEEPFAKE TRAINING PROGRAM // READY'}
                 speed={40}

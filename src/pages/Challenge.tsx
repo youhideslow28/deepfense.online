@@ -208,8 +208,33 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
   ];
 
   useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('deepfense_challenge_state');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.gameState && !parsed.gameState.finished) {
+          setGameState(parsed.gameState);
+          setShowIntro(false);
+          if (parsed.wrongLevels) setWrongLevels(parsed.wrongLevels);
+          if (parsed.sessionId) setSessionId(parsed.sessionId);
+          return;
+        }
+      }
+    } catch {}
     startNewGame();
   }, [lang]);
+
+  useEffect(() => {
+    if (gameState && !gameState.finished && !showIntro) {
+      try {
+        sessionStorage.setItem('deepfense_challenge_state', JSON.stringify({ gameState, wrongLevels, sessionId }));
+      } catch {}
+    } else if (gameState?.finished) {
+      try {
+        sessionStorage.removeItem('deepfense_challenge_state');
+      } catch {}
+    }
+  }, [gameState, showIntro, wrongLevels, sessionId]);
 
   useEffect(() => {
     return () => {
