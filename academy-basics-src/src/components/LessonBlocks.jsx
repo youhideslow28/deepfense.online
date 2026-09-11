@@ -155,19 +155,20 @@ export function ScenarioCard({ time, icon, title, description, question, risk = 
 }
 
 // ── IMAGE ─────────────────────────────────────────────────────────────────────
-// Shows image if src provided, placeholder with description if not
-export function LessonImage({ src, alt, caption, placeholderHint }) {
+// Shows image if valid, hides completely if broken or error
+export function LessonImage({ src, alt, caption }) {
+  const [error, setError] = React.useState(false);
+  if (error || !src) return null;
+
   return (
     <figure className="lb-image-figure">
-      {src ? (
-        <img src={src} alt={alt || caption || ''} className="lb-image" loading="lazy" />
-      ) : (
-        <div className="lb-image-placeholder">
-          <span className="lb-image-placeholder-icon">🖼️</span>
-          <p className="lb-image-placeholder-hint">{placeholderHint || alt || 'Hình ảnh'}</p>
-          {alt && <code className="lb-image-placeholder-alt">{alt}</code>}
-        </div>
-      )}
+      <img
+        src={src}
+        alt={alt || caption || ''}
+        className="lb-image"
+        loading="lazy"
+        onError={() => setError(true)}
+      />
       {caption && <figcaption className="lb-image-caption">{caption}</figcaption>}
     </figure>
   );

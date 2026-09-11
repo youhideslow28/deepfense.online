@@ -155,18 +155,28 @@ export default function LessonView({
 
         {/* Body */}
         <div className="lesson-body">
-          {lesson.paragraphs.map((block, i) =>
-            typeof block === 'string'
-              ? <p key={i} className="lesson-para" dangerouslySetInnerHTML={{ __html: block }} />
-              : <LessonBlock key={i} block={block} />
-          )}
+          {(() => {
+            const seenImages = new Set();
+            if (moduleHeaderImage) seenImages.add(moduleHeaderImage);
+
+            return lesson.paragraphs.map((block, i) => {
+              if (typeof block === 'string') {
+                return <p key={i} className="lesson-para" dangerouslySetInnerHTML={{ __html: block }} />;
+              }
+              // Chống lặp ảnh trong cùng 1 bài học & bỏ qua block ảnh không có src
+              if (block && block.type === 'image') {
+                if (!block.src || seenImages.has(block.src)) {
+                  return null;
+                }
+                seenImages.add(block.src);
+              }
+              return <LessonBlock key={i} block={block} />;
+            });
+          })()}
         </div>
 
         {showAnCompanion && (
           <figure className="lesson-companion-card">
-            <div className="lesson-companion-portrait">
-              <img src={COMPANION_ASSETS.anPortrait} alt="An trong một khung cảnh đời thường" loading="lazy" />
-            </div>
             <figcaption className="lesson-companion-copy">
               <span className="lesson-companion-kicker">Ví dụ gần gũi</span>
               <strong>An cũng bắt đầu từ một ngày rất bình thường</strong>

@@ -70,7 +70,9 @@ const TextRenderer: React.FC<{ block: TextBlock; lang: Language }> = ({ block, l
 
 const ImageRenderer: React.FC<{ block: ImageBlock; lang: Language }> = ({ block, lang }) => {
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
   const [zoom, setZoom] = useState(false);
+  if (error || !block.src) return null;
   const alt = lang === 'vi' ? block.alt.vi : block.alt.en;
   const caption = block.caption ? (lang === 'vi' ? block.caption.vi : block.caption.en) : null;
 
@@ -91,6 +93,7 @@ const ImageRenderer: React.FC<{ block: ImageBlock; lang: Language }> = ({ block,
           src={block.src}
           alt={alt}
           onLoad={() => setLoaded(true)}
+          onError={() => setError(true)}
           className={`w-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">

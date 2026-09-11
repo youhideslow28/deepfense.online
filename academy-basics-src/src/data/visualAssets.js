@@ -6,7 +6,7 @@ export const COURSE_HOME_ASSETS = {
 };
 
 export const COMPANION_ASSETS = {
-  anPortrait: `${ROOT}/session-01-course-home/an-companion-portrait.jpg`,
+  anPortrait: null,
 };
 
 export const MODULE_HEADER_ASSETS = {
