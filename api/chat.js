@@ -843,9 +843,10 @@ export default async function handler(req, res) {
     const finalInstruction = mode === 'simulator' ? simulatorInstruction : systemInstruction;
 
     const CANDIDATE_MODELS = [
-      'gemini-1.5-flash',
-      'gemini-2.0-flash',
+      'gemini-3.6-flash',
       'gemini-2.5-flash',
+      'gemini-2.0-flash',
+      'gemini-1.5-flash',
     ];
 
     const buildContentConfig = (modelName) => ({
@@ -924,9 +925,19 @@ export default async function handler(req, res) {
       }
     }
 
+    let availableModels = [];
+    try {
+      const modelsRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+      if (modelsRes.ok) {
+        const mdata = await modelsRes.json();
+        availableModels = (mdata.models || []).map(m => m.name.replace('models/', ''));
+      }
+    } catch {}
+
     return res.status(500).json({
       error: 'All AI models failed to respond',
       candidateErrors,
+      availableModels,
     });
 
   } catch (error) {
