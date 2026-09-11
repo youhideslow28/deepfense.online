@@ -639,6 +639,35 @@ RULES:
 }
 
 export default async function handler(req, res) {
+  // Lấy nguồn gốc của yêu cầu
+  const origin = req.headers.origin || req.headers.referer || '';
+  const allowedDomains = [
+    'localhost', 
+    '127.0.0.1',
+    'deepfense.online',
+    'www.deepfense.online',
+    'main.deepfense.online',
+    'family.deepfense.online',
+  ]; 
+  
+  const isStrictlyAllowed = allowedDomains.some(domain => (
+    origin === `http://${domain}`
+    || origin === `https://${domain}`
+    || origin.startsWith(`http://${domain}:`)
+  ));
+
+  // --- CORS PREFLIGHT ---
+  if (req.method === 'OPTIONS') {
+    if (origin && isStrictlyAllowed) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      res.setHeader('Access-Control-Max-Age', '86400');
+      return res.status(204).end();
+    }
+    return res.status(403).end();
+  }
+
   // Chỉ chấp nhận method POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
@@ -650,40 +679,33 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: 'Too Many Requests. Vui lòng đợi 1 phút trước khi gửi tiếp.' });
   }
 
-  // --- BẢO MẬT: REQUEST SIZE LIMIT (max 8KB) ---
+  // --- BẢO MẬT: REQUEST SIZE LIMIT (max 128KB) ---
   const bodySize = JSON.stringify(req.body).length;
-  if (bodySize > 8192) {
-    return res.status(413).json({ error: 'Payload Too Large. Maximum 8KB.' });
+  if (bodySize > 131072) {
+    return res.status(413).json({ error: 'Payload Too Large. Maximum 128KB.' });
   }
 
-  // --- BẢO MẬT: CHỐNG SPAM API TỪ TRANG WEB KHÁC (CORS / ORIGIN CHECK) ---
-  // Lấy nguồn gốc của yêu cầu
-  const origin = req.headers.origin || req.headers.referer || '';
-  // Các tên miền được phép gọi API (Sửa lại tên miền Vercel của bạn nếu cần)
-  const allowedDomains = [
-    'localhost', 
-    '127.0.0.1',
-    'deepfense.online',
-    'www.deepfense.online',
-    'main.deepfense.online',
-    'family.deepfense.online',
-  ]; 
-  
-  const isAllowed = allowedDomains.some(domain => origin.includes(domain));
-  // CHỮA CHÁY: Parse đúng hostname để so sánh, tránh vụ dùng .includes() bị bypass
-  const isStrictlyAllowed = allowedDomains.some(domain => origin === `http://${domain}` || origin === `https://${domain}` || origin.startsWith(`http://${domain}:`));
   if (!origin || !isStrictlyAllowed) {
     console.warn(`Blocked API request from unauthorized origin: ${origin}`);
     return res.status(403).json({ error: 'Forbidden: Unauthorized Origin. DEEPFENSE Security System Blocked This Request.' });
   }
 
+  res.setHeader('Access-Control-Allow-Origin', origin);
+  res.setHeader('Vary', 'Origin');
+
   try {
     const { messages, lang, context, mode, scenarioId } = req.body;
     
     // BẢO VỆ SERVERLESS: Ngăn chặn tấn công làm sập logic bằng payload rỗng/sai định dạng
-    if (!messages || !Array.isArray(messages) || messages.some(m => !m.text || typeof m.text !== 'string')) {
+    if (!messages || !Array.isArray(messages) || messages.length === 0 || messages.some(m => !m.text || typeof m.text !== 'string')) {
       return res.status(400).json({ error: 'Bad Request: Invalid payload structure.' });
     }
+
+    // Giới hạn lịch sử chat gửi lên tối đa 15 tin nhắn gần nhất và mỗi tin nhắn tối đa 4,000 ký tự
+    const sanitizedMessages = messages.slice(-15).map(m => ({
+      role: m.role === 'model' ? 'model' : 'user',
+      text: String(m.text).slice(0, 4000)
+    }));
     
     // Khởi tạo AI với API Key từ biến môi trường server
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -805,7 +827,7 @@ export default async function handler(req, res) {
 
     const contentConfig = {
       model: 'gemini-2.5-flash', 
-      contents: messages.map(m => ({
+      contents: sanitizedMessages.map(m => ({
         role: m.role,
         parts: [{ text: m.text }]
       })),

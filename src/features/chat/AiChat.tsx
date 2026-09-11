@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { MessageSquare, X, Send, Bot, ScanLine, Sparkles, Copy, Check, ExternalLink } from 'lucide-react';
 import { Language } from '@/types';
+import { logger } from '@/lib/logger';
 import { TRANSLATIONS, KNOWLEDGE_BASE, CHECKLIST_DATA, FUN_FACTS, NEWS_DATA, LEVELS, PROJECT_METADATA } from '@/data';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -312,7 +313,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
     } catch (clientError: any) {
       if (clientError.name === 'AbortError') return;
 
-      console.error("Chat Error:", clientError);
+      logger.error("Chat Error:", clientError);
       const errorMsg = lang === 'vi'
         ? "Hệ thống đang bảo trì, vui lòng thử lại sau."
         : "System maintenance, please try again later.";

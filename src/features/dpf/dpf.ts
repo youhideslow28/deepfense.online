@@ -1,4 +1,5 @@
 import { auth, db } from '@/config/firebase';
+import { logger } from '@/lib/logger';
 import type { User } from 'firebase/auth';
 import {
   collection,
@@ -200,7 +201,7 @@ export const claimDpfReward = async (config: DpfClaimConfig): Promise<DpfClaimRe
     const serverResult = await postDpfAction<DpfClaimResult>('claimReward', config);
     if (serverResult) return serverResult;
   } catch (error) {
-    console.error('DPF server reward failed, falling back to client transaction:', error);
+    logger.error('DPF server reward failed, falling back to client transaction:', error);
   }
 
   if (!Number.isFinite(config.amount) || config.amount <= 0 || config.amount > MAX_REWARD_AMOUNT) {
@@ -285,7 +286,7 @@ export const claimDpfReward = async (config: DpfClaimConfig): Promise<DpfClaimRe
       return { ok: true, amount: config.amount, balanceAfter, ledgerId };
     });
   } catch (error) {
-    console.error('DPF reward claim failed:', error);
+    logger.error('DPF reward claim failed:', error);
     return { ok: false, code: 'firebase_error', message: 'Unable to claim DPF coin right now.' };
   }
 };
@@ -305,7 +306,7 @@ export const unlockWithDpf = async (item: {
     const serverResult = await postDpfAction<DpfUnlockResult>('unlockItem', item);
     if (serverResult) return serverResult;
   } catch (error) {
-    console.error('DPF server unlock failed, falling back to client transaction:', error);
+    logger.error('DPF server unlock failed, falling back to client transaction:', error);
   }
 
   if (!Number.isFinite(item.cost) || item.cost <= 0 || item.cost > MAX_UNLOCK_COST) {
@@ -384,7 +385,7 @@ export const unlockWithDpf = async (item: {
       return { ok: true, cost: item.cost, balanceAfter, ledgerId };
     });
   } catch (error) {
-    console.error('DPF unlock failed:', error);
+    logger.error('DPF unlock failed:', error);
     return { ok: false, code: 'firebase_error', message: 'Unable to unlock this item right now.' };
   }
 };

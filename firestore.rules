@@ -157,20 +157,17 @@ service cloud.firestore {
 
     match /dpf_ledger/{ledgerId} {
       allow read: if isOwnerOrAdmin() || readsSelfUid();
-      allow create, update: if isOwnerOrAdmin() || writesSelfUid();
-      allow delete: if isOwnerOrAdmin();
+      allow write: if isOwnerOrAdmin();
     }
 
     match /dpf_daily_quotas/{quotaId} {
       allow read: if isOwnerOrAdmin() || readsSelfUid();
-      allow create, update: if isOwnerOrAdmin() || writesSelfUid();
-      allow delete: if isOwnerOrAdmin();
+      allow write: if isOwnerOrAdmin();
     }
 
     match /unlocks/{unlockId} {
       allow read: if isOwnerOrAdmin() || readsSelfUid();
-      allow create, update: if isOwnerOrAdmin() || writesSelfUid();
-      allow delete: if isOwnerOrAdmin();
+      allow write: if isOwnerOrAdmin();
     }
 
     match /activity_logs/{logId} {

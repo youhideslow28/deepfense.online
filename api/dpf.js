@@ -4,10 +4,27 @@ const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX_REQUESTS = 30;
 const DPF_SEASON = 'genesis-2026';
-const MAX_REWARD_AMOUNT = 250;
-const MAX_UNLOCK_COST = 2_000;
-const MAX_ADMIN_GRANT_AMOUNT = 1_000_000;
-const MAX_ADMIN_REVOKE_AMOUNT = 1_000_000;
+const ALLOWED_DOMAINS = [
+  'localhost',
+  '127.0.0.1',
+  'deepfense.online',
+  'www.deepfense.online',
+  'main.deepfense.online',
+  'family.deepfense.online',
+];
+
+const isAllowedOrigin = (origin) => ALLOWED_DOMAINS.some((domain) => (
+  origin === `http://${domain}`
+  || origin === `https://${domain}`
+  || origin.startsWith(`http://${domain}:`)
+));
+
+const CANONICAL_REWARDS = {
+  challenge: { maxAmount: 30, defaultAmount: 15, maxDaily: 5 },
+  simulator: { maxAmount: 25, defaultAmount: 15, maxDaily: 5 },
+  course: { maxAmount: 35, defaultAmount: 25, maxDaily: 6 },
+  certificate: { maxAmount: 100, defaultAmount: 50, maxDaily: 1 },
+};
 
 function getFirebaseAdmin() {
   if (admin.apps.length) return admin.app();
@@ -312,19 +329,21 @@ async function adminRevoke(uid, adminUser, payload) {
 
 async function claimReward(uid, userProfile, payload) {
   const { source, activityId, amount, reason, dailyLimit, minScore, score, metadata = {} } = payload;
-  const allowedSources = new Set(['challenge', 'simulator', 'course', 'certificate']);
+  const rewardRule = CANONICAL_REWARDS[source];
 
-  if (!allowedSources.has(source)) {
+  if (!rewardRule) {
     return { ok: false, code: 'invalid_source', message: 'Invalid reward source.' };
   }
 
-  if (!Number.isFinite(amount) || amount <= 0 || amount > MAX_REWARD_AMOUNT) {
-    return { ok: false, code: 'invalid_amount', message: 'Invalid DPF reward amount.' };
-  }
-
-  if (!Number.isFinite(dailyLimit) || dailyLimit <= 0 || dailyLimit > 10) {
-    return { ok: false, code: 'invalid_quota', message: 'Invalid DPF quota.' };
-  }
+  // Server-enforced caps: Chống tấn công tham số từ client/DevTools
+  const safeAmount = Math.min(
+    Math.max(1, Number.isFinite(amount) ? amount : rewardRule.defaultAmount),
+    rewardRule.maxAmount
+  );
+  const safeDailyLimit = Math.min(
+    Math.max(1, Number.isFinite(dailyLimit) ? dailyLimit : rewardRule.maxDaily),
+    rewardRule.maxDaily
+  );
 
   if (typeof minScore === 'number' && typeof score === 'number' && score < minScore) {
     return { ok: false, code: 'not_eligible', message: 'Score is not high enough for this DPF reward.' };
@@ -352,13 +371,13 @@ async function claimReward(uid, userProfile, payload) {
     }
 
     const quotaCount = quotaSnap.exists ? numberOrZero(quotaSnap.data().count) : 0;
-    if (quotaCount >= dailyLimit) {
+    if (quotaCount >= safeDailyLimit) {
       return { ok: false, code: 'quota_exceeded', message: 'Daily DPF reward limit reached. Practice still counts, rewards resume tomorrow.' };
     }
 
     const userData = userSnap.exists ? userSnap.data() : {};
     const balanceBefore = numberOrZero(userData.webBalance);
-    const balanceAfter = balanceBefore + amount;
+    const balanceAfter = balanceBefore + safeAmount;
     const now = admin.firestore.FieldValue.serverTimestamp();
 
     transaction.set(userRef, {
@@ -367,7 +386,7 @@ async function claimReward(uid, userProfile, payload) {
       displayName: userProfile.name || '',
       photoURL: userProfile.picture || '',
       webBalance: balanceAfter,
-      earnedBalance: numberOrZero(userData.earnedBalance) + amount,
+      earnedBalance: numberOrZero(userData.earnedBalance) + safeAmount,
       updatedAt: now,
       createdAt: userSnap.exists && userData.createdAt ? userData.createdAt : now,
     }, { merge: true });
@@ -376,13 +395,20 @@ async function claimReward(uid, userProfile, payload) {
       uid,
       direction: 'credit',
       source,
-      amount,
+      amount: safeAmount,
       balanceBefore,
       balanceAfter,
       status: 'confirmed',
-      reason,
+      reason: String(reason || `${source} reward`).slice(0, 120),
       activityId,
-      metadata: withoutUndefined({ season: DPF_SEASON, day, score: score ?? null, ...metadata }),
+      metadata: withoutUndefined({
+        season: DPF_SEASON,
+        day,
+        score: score ?? null,
+        blockchainNonce: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+        chainStatus: 'unminted_ledger',
+        ...metadata,
+      }),
       idempotencyKey,
       createdAt: now,
       confirmedAt: now,
@@ -393,11 +419,11 @@ async function claimReward(uid, userProfile, payload) {
       source,
       day,
       count: admin.firestore.FieldValue.increment(1),
-      amount: admin.firestore.FieldValue.increment(amount),
+      amount: admin.firestore.FieldValue.increment(safeAmount),
       updatedAt: now,
     }, { merge: true });
 
-    return { ok: true, amount, balanceAfter, ledgerId };
+    return { ok: true, amount: safeAmount, balanceAfter, ledgerId };
   });
 }
 
@@ -483,9 +509,30 @@ async function unlockItem(uid, userProfile, payload) {
 }
 
 export default async function handler(req, res) {
+  // CORS & Preflight handling
+  const origin = req.headers.origin || req.headers.referer || '';
+  if (req.method === 'OPTIONS') {
+    if (origin && isAllowedOrigin(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      res.setHeader('Access-Control-Max-Age', '86400');
+      return res.status(204).end();
+    }
+    return res.status(403).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, message: 'Method not allowed.' });
   }
+
+  if (!origin || !isAllowedOrigin(origin)) {
+    console.warn(`Blocked DPF API request from unauthorized origin: ${origin}`);
+    return res.status(403).json({ ok: false, code: 'unauthorized_origin', message: 'Forbidden: Unauthorized Origin.' });
+  }
+
+  res.setHeader('Access-Control-Allow-Origin', origin);
+  res.setHeader('Vary', 'Origin');
 
   try {
     const user = await requireUser(req);

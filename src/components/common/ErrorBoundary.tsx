@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { logger } from '@/lib/logger';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -29,7 +30,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("🔥 REACT FATAL ERROR CAUGHT:", error, errorInfo);
+    logger.error("React application error caught:", error);
     
     // Tự động tải lại trang nếu lỗi là do Chunk Load Failed (thường do cập nhật phiên bản mới)
     if (this.state.isChunkError) {

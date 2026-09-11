@@ -16,6 +16,7 @@ import WinterEffects from '@/components/effects/WinterEffects';
 import AiChat from '@/features/chat/AiChat';
 import { auth, db } from '@/config/firebase';
 import { PROJECT_METADATA } from '@/data';
+import { logger, initSecurityConsole } from '@/lib/logger';
 import { Language, Season } from '@/types';
 import { usePerfMode } from '@/hooks/usePerfMode';
 import { useSiteConfig } from '@/hooks/useSiteConfig';
@@ -169,7 +170,7 @@ const AppContent: React.FC = () => {
 
         if (!ignore) setUserRole(nextRole);
       } catch (error) {
-        console.error('Unable to load user role:', error);
+        logger.error('Unable to load user role:', error);
         if (!ignore) setUserRole(resolveAppRole(email, ''));
       } finally {
         if (!ignore) setRoleBusy(false);
@@ -199,21 +200,7 @@ const AppContent: React.FC = () => {
   };
 
   useEffect(() => {
-    const styleTitle = 'color: #00F0FF; font-size: 20px; font-weight: bold; background: #000; padding: 10px; border: 2px solid #00F0FF; border-radius: 5px;';
-    const styleText = 'color: #E0E0E0; font-size: 12px; background: #111; padding: 4px;';
-
-    console.log('%cDỪNG LẠI! / STOP!', 'color: red; font-size: 45px; font-weight: 900; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000; font-family: sans-serif;');
-    console.log('%cĐây là tính năng dành cho nhà phát triển. Nếu ai đó bảo bạn sao chép-dán mã vào đây để mở khóa tính năng ẩn, đó có thể là Self-XSS nhằm chiếm đoạt tài khoản.', 'color: white; font-size: 16px; background: red; padding: 12px; border-radius: 6px; font-weight: bold;');
-    console.log('%cThis is a browser feature intended for developers. If someone told you to copy-paste something here, it may give them access to your account.', 'color: white; font-size: 14px; background: #333; padding: 10px; border-radius: 6px;');
-    console.log('--------------------------------------------------');
-    console.log('%cDEEPFENSE.AI - SYSTEM INITIALIZED', styleTitle);
-    console.log(`%cBuild Version: ${PROJECT_METADATA.version}`, styleText);
-    console.log(`%cBuild Date: ${PROJECT_METADATA.build_date}`, styleText);
-    console.log(`%cOrganization: ${PROJECT_METADATA.university}`, styleText);
-    PROJECT_METADATA.authors.forEach((author) => {
-      console.log(`%c - ${author.name} (${author.id}) - ${author.role}`, 'color: #FF2A6D; font-style: italic; font-weight: bold;');
-    });
-    console.log('%cWARNING: This project is the intellectual property of VKU Student Group (25NS).', 'color: red; font-weight: bold;');
+    initSecurityConsole(PROJECT_METADATA);
   }, []);
 
   const getPageTitle = () => {

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import type { User } from 'firebase/auth';
 import { auth } from '@/config/firebase';
+import { logger } from '@/lib/logger';
 import { DpfLedgerEntry, DpfWallet, listenDpfLedger, listenDpfWallet } from './dpf';
 
 export const useDpfWallet = () => {
@@ -30,13 +31,13 @@ export const useDpfWallet = () => {
       setWallet(nextWallet);
       setLoading(false);
     }, (err) => {
-      console.error('DPF wallet listener failed:', err);
+      logger.error('DPF wallet listener failed:', err);
       setError('Unable to load DPF coin wallet.');
       setLoading(false);
     });
 
     const unsubscribeLedger = listenDpfLedger(user, setLedger, (err) => {
-      console.error('DPF ledger listener failed:', err);
+      logger.error('DPF ledger listener failed:', err);
       setError('Unable to load DPF coin history.');
     });
 
@@ -72,7 +73,7 @@ export const useDpfBalance = (currentUser: User | null) => {
       setWallet(nextWallet);
       setLoading(false);
     }, (err) => {
-      console.error('DPF balance listener failed:', err);
+      logger.error('DPF balance listener failed:', err);
       setWallet(null);
       setLoading(false);
     });

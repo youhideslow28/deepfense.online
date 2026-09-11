@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Brain, Users, BarChart3 } from 'lucide-react';
 import { Language } from '@/types';
 import { db } from '@/config/firebase';
+import { logger } from '@/lib/logger';
 import { collection, getDocs, getCountFromServer, getAggregateFromServer, sum, query, limit, orderBy } from 'firebase/firestore';
 
 const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
@@ -38,7 +39,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
                 totalGames = cachedData.totalGames;
                 totalScore = cachedData.totalScore;
             } catch (error) {
-                console.warn("Lỗi đọc cache Game Stats, xóa cache.");
+                logger.warn("Lỗi đọc cache Game Stats, xóa cache.");
                 sessionStorage.removeItem(gameCacheKey);
                 fetchGameFromFirebase = true;
             }
@@ -71,7 +72,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
                 finalPsychoStats = JSON.parse(sessionStorage.getItem(cacheKey)!);
                 setPsychoStats(finalPsychoStats);
             } catch (error) {
-                console.warn("Lỗi đọc cache Psycho Stats, xóa cache.");
+                logger.warn("Lỗi đọc cache Psycho Stats, xóa cache.");
                 sessionStorage.removeItem(cacheKey);
                 fetchPsychoFromFirebase = true;
             }
@@ -129,7 +130,7 @@ const AnalyticsChart: React.FC<{ lang: Language }> = ({ lang }) => {
 
       } catch (error) {
         if (!isMounted) return;
-        console.error("Error fetching analytics:", error);
+        logger.error("Error fetching analytics:", error);
       } finally {
         if (isMounted) setLoading(false);
       }

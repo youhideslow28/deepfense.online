@@ -56,6 +56,9 @@ firebase-export-*
 *.sw?
 *.code-workspace
 .claude/
+.agents/
+.codex/
+output/
 
 # ===== OS FILES =====
 .DS_Store
