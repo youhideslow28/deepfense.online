@@ -448,14 +448,14 @@ const Navbar: React.FC<NavbarProps> = ({
                       ? 'border-emerald-400/70 bg-gradient-to-br from-emerald-500 to-teal-600'
                       : isWinter
                         ? 'border-cyan-300/80 bg-gradient-to-br from-cyan-400 to-blue-700'
-                        : 'rotate-0 border-black/10 dark:border-white/10 bg-zinc-900 hover:border-white/30 hover:bg-zinc-800'
+                        : 'rotate-0 border-black/10 dark:border-white/10 bg-zinc-900 hover:border-cyan-500/40 hover:bg-zinc-800'
                   } ${holdProgress > 0 ? 'scale-95' : ''}`}
                   >
                     {isLite
                       ? <Smartphone size={15} className="text-white drop-shadow-md" />
                       : isWinter
                         ? <Snowflake size={15} className="text-cyan-50 drop-shadow-md" />
-                        : <Moon size={15} className="text-slate-400 transition-colors group-hover:text-gray-200" />}
+                        : <Snowflake size={15} className="text-slate-400 transition-colors group-hover:text-cyan-300" />}
                   </div>
                 </button>
 

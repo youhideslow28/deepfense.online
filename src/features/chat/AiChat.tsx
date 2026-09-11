@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { MessageSquare, X, Send, Bot, ScanLine, Sparkles, Copy, Check, ExternalLink } from 'lucide-react';
 import { Language } from '@/types';
-import { TRANSLATIONS, KNOWLEDGE_BASE, CHECKLIST_DATA } from '@/data';
+import { TRANSLATIONS, KNOWLEDGE_BASE, CHECKLIST_DATA, FUN_FACTS, NEWS_DATA, LEVELS, PROJECT_METADATA } from '@/data';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -23,20 +23,52 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const STORAGE_KEY = `deepfense_chat_${lang}`;
 
-  // CHỐNG BÀO MÒN CPU: Tính toán Context 1 lần duy nhất thay vì mỗi lần bấm Gửi
+  // NẠP TOÀN BỘ DỮ LIỆU NỀN TẢNG DEEPFENSE VÀO CONTEXT CỦA AI CHATBOT
   const websiteContextString = React.useMemo(() => {
-      const context = {
-          introduction: "DEEPFENSE.ONLINE is a cybersecurity platform protecting users against Deepfakes.",
-          features: { scan_tool: "Checklist to detect deepfake signs.", challenge: "10 levels to spot fake videos." },
-          database: {
-              knowledge_base: KNOWLEDGE_BASE[lang].map((cat) => ({
-                  category: cat.category,
-                  topics: cat.items.map((i) => i.title)
-              })),
-              checklist: CHECKLIST_DATA[lang],
-          }
-      };
-      return JSON.stringify(context, null, 2);
+    const context = {
+      platform: {
+        name: PROJECT_METADATA?.name || "DEEPFENSE.ONLINE",
+        version: PROJECT_METADATA?.version || "3.0.0",
+        mission: lang === 'vi' 
+          ? "Nền tảng giáo dục phòng chống lừa đảo trực tuyến & nhận diện Deepfake" 
+          : "Educational platform for Deepfake prevention and cybersecurity awareness",
+        authors: "Hồ Xuân Nguyễn (25NS039) & Nguyễn Nhất Huy (25NS020) - Đại học Công nghệ Thông tin & Truyền thông Việt - Hàn (VKU)",
+        contact_email: "deepfense@gmail.com",
+        current_route: typeof window !== 'undefined' ? window.location.pathname : '/',
+      },
+      routes_and_features: {
+        home: "/ (Trang chủ: Tin tức thời gian thực, số liệu thống kê lừa đảo, timeline Deepfake 2017-2026)",
+        tools: "/tools (Bộ công cụ: Check 12 dấu hiệu Deepfake, cẩm nang phòng thủ, trung tâm khủng hoảng)",
+        crisis_hub: "/tools/crisis (Trung tâm ứng cứu khủng hoảng: Tạo đơn tố giác tội phạm gửi Công an, hotline 111 & A05, quy trình 15 phút vàng)",
+        family_portal: "/family (Cổng Gia Đình an toàn số)",
+        family_young: "/family/young (Chế độ Thiếu niên: Bẫy vote ảnh, nạp thẻ game, dụ chat riêng tư tống tiền, việc làm online lừa đảo)",
+        family_old: "/family/old (Chế độ Người lớn 40+: Deepfake video con cháu tai nạn mượn tiền, mạo danh công an/viện kiểm sát, đầu tư tài chính ảo)",
+        challenge: "/challenge (Thử thách 10 cấp độ phân biệt video thật vs Deepfake AI)",
+        simulator: "/simulator (Giả lập tình huống tấn công lừa đảo công nghệ cao tương tác trực tiếp)",
+        academy: "/academy (Học viện đào tạo an toàn số và thi sát hạch cấp chứng chỉ số xác thực tại /verify)",
+        ai_roadmap: "/ai (Lộ trình phát triển công nghệ AI phòng thủ 2025-2028)",
+        about: "/about (Về chúng tôi, đội ngũ VKU, tiếp nhận phản ánh sự cố lừa đảo)",
+      },
+      emergency_contacts: {
+        police_a05: "069.234.3636 (Cục An ninh mạng & PCTP sử dụng công nghệ cao - Bộ Công An)",
+        child_helpline_111: "111 (Tổng đài Quốc gia Bảo vệ Trẻ em - Trực 24/7, miễn phí)",
+        ncsc_vncert: "024.3640.4421 - Trang web báo cáo: chongthurac.vn / canhsatso.gov.vn",
+        golden_protocol_15m: lang === 'vi'
+          ? "1. Ngắt ngay kết nối kẻ gian -> 2. Gọi ngân hàng phong tỏa tài khoản/thẻ khẩn cấp -> 3. Lưu toàn bộ tin nhắn/sao kê làm bằng chứng -> 4. Nộp đơn tố giác tại /tools/crisis cho Công an xã/phường hoặc PA05"
+          : "1. Disconnect immediately -> 2. Call bank hotline to freeze accounts/cards -> 3. Save chat logs and bank receipts -> 4. Submit police report at /tools/crisis",
+      },
+      knowledge_base: KNOWLEDGE_BASE[lang] || [],
+      checklist: CHECKLIST_DATA[lang] || [],
+      fun_facts: FUN_FACTS[lang] || [],
+      recent_news: NEWS_DATA[lang]?.slice(0, 10) || [],
+      challenge_levels_guide: LEVELS[lang]?.map(l => ({
+        id: l.id,
+        title: l.title,
+        difficulty: l.difficulty,
+        advice: l.advice
+      })) || []
+    };
+    return JSON.stringify(context);
   }, [lang]);
 
   // Load lịch sử từ localStorage khi mở, fallback về welcome message
