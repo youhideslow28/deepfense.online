@@ -706,7 +706,7 @@ export default async function handler(req, res) {
     return res.status(413).json({ error: 'Payload Too Large. Maximum 128KB.' });
   }
 
-  res.setHeader('Access-Control-Allow-Origin', origin);
+  res.setHeader('Access-Control-Allow-Origin', corsOrigin);
   res.setHeader('Vary', 'Origin');
 
   try {
