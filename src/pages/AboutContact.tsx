@@ -13,6 +13,7 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [formData, setFormData] = useState({ name: '', email: '', desc: '' });
+  const [consentGiven, setConsentGiven] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -26,6 +27,10 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
     setErrorMsg('');
     
     // --- VALIDATION: Bắt buộc điền đúng ---
+    if (!consentGiven) {
+        setErrorMsg(lang === 'vi' ? 'Vui lòng xác nhận đồng ý với chính sách xử lý dữ liệu trước khi gửi.' : 'Please consent to data processing under the Privacy Policy before submitting.');
+        return;
+    }
     if (formData.name.trim().length < 2) {
         setErrorMsg(lang === 'vi' ? 'Tên gọi quá ngắn (tối thiểu 2 ký tự).' : 'Name must be at least 2 characters.');
         return;
@@ -219,19 +224,19 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                       </div>
                   )}
                   <div className="space-y-1">
-                      <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_name}</label>
-                      <input type="text" disabled={isSubmitting} placeholder={lang === 'vi' ? 'VD: Anna' : 'Ex: Anna'} className="w-full rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                      <label htmlFor="contact-name" className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_name}</label>
+                      <input id="contact-name" type="text" disabled={isSubmitting} placeholder={lang === 'vi' ? 'VD: Anna' : 'Ex: Anna'} className="w-full rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                   </div>
                   <div className="space-y-1">
-                      <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_email}</label>
-                      <input type="email" disabled={isSubmitting} placeholder="email@example.com" className="w-full rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                      <label htmlFor="contact-email" className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_email}</label>
+                      <input id="contact-email" type="email" disabled={isSubmitting} placeholder="email@example.com" className="w-full rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
                   </div>
                   <div className="space-y-1">
-                      <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_desc}</label>
-                      <textarea disabled={isSubmitting} placeholder={lang === 'vi' ? 'Vui lòng mô tả chi tiết sự việc (đối tượng giả danh ai, qua nền tảng nào...)' : 'Please describe the incident in detail...'} className="h-32 w-full resize-none rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
+                      <label htmlFor="contact-desc" className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_desc}</label>
+                      <textarea id="contact-desc" disabled={isSubmitting} placeholder={lang === 'vi' ? 'Vui lòng mô tả chi tiết sự việc (đối tượng giả danh ai, qua nền tảng nào...)' : 'Please describe the incident in detail...'} className="h-32 w-full resize-none rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
                   </div>
                   <div className="space-y-1">
-                      <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_attachment}</label>
+                      <label htmlFor="file-upload" className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_attachment}</label>
                       <div className="relative">
                           <input 
                               ref={fileInputRef} 
@@ -248,7 +253,33 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                           </label>
                       </div>
                   </div>
-                  <button type="submit" disabled={isSubmitting} className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-5 text-xs font-black uppercase tracking-[0.16em] text-white shadow-lg shadow-primary/20 transition-all hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-70">
+                  <div className="flex items-start gap-3 rounded-2xl border border-black/10 dark:border-white/10 bg-slate-100/60 dark:bg-black/30 p-3.5 text-xs text-slate-600 dark:text-slate-400">
+                    <input
+                      id="form-consent"
+                      type="checkbox"
+                      checked={consentGiven}
+                      onChange={(e) => setConsentGiven(e.target.checked)}
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-primary focus:ring-primary dark:border-white/20 cursor-pointer"
+                    />
+                    <label htmlFor="form-consent" className="cursor-pointer leading-relaxed text-[11px] text-slate-600 dark:text-slate-300">
+                      {lang === 'vi' ? (
+                        <>
+                          Tôi đồng ý cho phép DEEPFENSE tiếp nhận và xử lý dữ liệu báo cáo theo{' '}
+                          <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-bold text-primary underline underline-offset-2">
+                            Chính sách bảo mật
+                          </a>.
+                        </>
+                      ) : (
+                        <>
+                          I agree to let DEEPFENSE collect and process this report according to the{' '}
+                          <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-bold text-primary underline underline-offset-2">
+                            Privacy Policy
+                          </a>.
+                        </>
+                      )}
+                    </label>
+                  </div>
+                  <button type="submit" disabled={isSubmitting || !consentGiven} className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-5 text-xs font-black uppercase tracking-[0.16em] text-white shadow-lg shadow-primary/20 transition-all hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50">
                     {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
                     {isSubmitting ? (lang === 'vi' ? 'ĐANG XỬ LÝ...' : 'SENDING...') : t.send_report}
                   </button>

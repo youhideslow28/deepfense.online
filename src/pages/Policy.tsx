@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
+  Cookie,
+  CreditCard,
   Database,
   FileText,
   HelpCircle,
@@ -226,6 +228,42 @@ const policySections: PolicySection[] = [
       {
         vi: 'Người dùng có thể yêu cầu xem, chỉnh sửa hoặc xóa dữ liệu cá nhân của mình khi phù hợp với điều kiện kỹ thuật, an toàn hệ thống và nghĩa vụ pháp lý.',
         en: 'Users may request access, correction, or deletion of their personal data where compatible with technical constraints, system safety, and legal obligations.',
+      },
+    ],
+  },
+  {
+    id: 'cookies',
+    icon: Cookie,
+    title: {
+      vi: 'Chính Sách Cookie Và Lưu Trữ Cục Bộ',
+      en: 'Cookie Policy And Local Storage',
+    },
+    body: [
+      {
+        vi: 'Deepfense sử dụng cookie thiết yếu và Web Storage (localStorage/sessionStorage) để lưu tùy chọn giao diện (sáng/tối), ngôn ngữ hiển thị, trạng thái phiên đăng nhập và tiến độ học tập trên thiết bị. Toàn bộ phục vụ mục đích kỹ thuật và trải nghiệm người dùng.',
+        en: 'Deepfense uses essential cookies and Web Storage (localStorage/sessionStorage) to retain theme preferences, display language, auth session state, and learning progress on your device. These are strictly used for technical operation and user experience.',
+      },
+      {
+        vi: 'Nền tảng không sử dụng cookie theo dõi quảng cáo của bên thứ ba, không bán hoặc chia sẻ hồ sơ hành vi người dùng cho bất kỳ mạng lưới tiếp thị nào. Người dùng có quyền từ chối hoặc xóa cookie bất cứ lúc nào thông qua biểu ngữ quyền riêng tư hoặc cài đặt trình duyệt.',
+        en: 'The platform does not use third-party advertising tracking cookies, nor does it sell or share behavioral profiles with marketing networks. Users can decline or clear cookies at any time via the privacy banner or browser settings.',
+      },
+    ],
+  },
+  {
+    id: 'refund',
+    icon: CreditCard,
+    title: {
+      vi: 'Chính Sách Dịch Vụ Miễn Phí & Điểm Thưởng DPF',
+      en: 'Free Service Policy And DPF Rewards',
+    },
+    body: [
+      {
+        vi: 'Deepfense là một nền tảng phi lợi nhuận phục vụ cộng đồng, hoàn toàn miễn phí cho mọi đối tượng người học. Nền tảng không bán gói đăng ký, không thu phí dịch vụ, không cung cấp tính năng thương mại có phí, do đó không phát sinh chính sách hoàn tiền (Refund).',
+        en: 'Deepfense is a non-profit community platform that is 100% free for all learners. We do not sell subscriptions, charge fees, or provide commercial paid features; therefore, no financial transactions or refund obligations apply.',
+      },
+      {
+        vi: 'Điểm thưởng DPF Coin trên website là cơ chế trò chơi hóa (Gamification) nội bộ nhằm khuyến khích rèn luyện kiến thức, không phải công cụ đầu tư, không đại diện cho quyền sở hữu tài chính và không có giá trị quy đổi ra tiền pháp định.',
+        en: 'DPF Coin rewards on the platform are an internal gamification mechanism designed to motivate learning; they are not an investment vehicle, do not represent financial ownership, and have no monetary fiat exchange value.',
       },
     ],
   },

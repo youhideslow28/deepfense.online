@@ -85,7 +85,7 @@ export type DpfUnlockResult =
 const DPF_SEASON = 'genesis-2026';
 const MAX_REWARD_AMOUNT = 250;
 const MAX_UNLOCK_COST = 2_000;
-const USE_SERVER_DPF = import.meta.env.VITE_DPF_USE_SERVER_REWARDS === 'true';
+const USE_SERVER_DPF = import.meta.env.VITE_DPF_USE_SERVER_REWARDS !== 'false';
 
 const toSafeId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 180);
 

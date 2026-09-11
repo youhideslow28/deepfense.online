@@ -52,6 +52,7 @@ const Footer: React.FC<FooterProps> = ({ lang, siteConfig, isFamilyShell, family
   const legalLinks = [
     { path: '/privacy', label: isVi ? 'Chính sách bảo mật' : 'Privacy Policy', icon: <Lock size={13} /> },
     { path: '/terms', label: isVi ? 'Điều khoản sử dụng' : 'Terms of Use', icon: <Scale size={13} /> },
+    { path: '/policy#cookies', label: isVi ? 'Chính sách Cookie' : 'Cookie Policy', icon: <ShieldCheck size={13} /> },
     { path: '/policy#help-center', label: isVi ? 'Chính sách Help Center' : 'Help Center Policy', icon: <ShieldCheck size={13} /> },
     { path: '/policy#retention', label: isVi ? 'Lưu trữ dữ liệu' : 'Data Retention', icon: <FileText size={13} /> },
   ];

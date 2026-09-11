@@ -35,12 +35,19 @@ const isFirebaseConfigured = missingFirebaseEnvKeys.length === 0 && firebaseConf
 // Avoid duplicate app initialization (HMR safe)
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
-// Only init analytics in browser + production
+// Only init analytics in browser + production if cookies are not declined
 let analytics = null;
 if (typeof window !== 'undefined' && import.meta.env.PROD) {
-  import("firebase/analytics").then(({ getAnalytics }) => {
-    try { analytics = getAnalytics(app); } catch { /* silent */ }
-  });
+  try {
+    const consent = localStorage.getItem('deepfense_cookie_consent');
+    if (consent !== 'declined') {
+      import("firebase/analytics").then(({ getAnalytics }) => {
+        try { analytics = getAnalytics(app); } catch { /* silent */ }
+      });
+    }
+  } catch {
+    /* silent */
+  }
 }
 
 const db      = getFirestore(app);

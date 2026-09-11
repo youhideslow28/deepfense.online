@@ -310,7 +310,12 @@ const AppContent: React.FC = () => {
                 <Route path="/about" element={<AboutContact lang={lang} />} />
                 <Route path="/privacy" element={<Policy lang={lang} />} />
                 <Route path="/terms" element={<Policy lang={lang} />} />
+                <Route path="/terms-of-service" element={<Policy lang={lang} />} />
                 <Route path="/policy" element={<Policy lang={lang} />} />
+                <Route path="/cookies" element={<Policy lang={lang} />} />
+                <Route path="/cookie-policy" element={<Policy lang={lang} />} />
+                <Route path="/refund" element={<Policy lang={lang} />} />
+                <Route path="/refund-policy" element={<Policy lang={lang} />} />
                 <Route path="/admin" element={renderAdminRoute()} />
                 <Route path="*" element={<NotFound lang={lang} />} />
               </Routes>
