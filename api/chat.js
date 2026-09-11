@@ -640,7 +640,17 @@ RULES:
 
 export default async function handler(req, res) {
   // Lấy nguồn gốc của yêu cầu
-  const origin = req.headers.origin || req.headers.referer || '';
+  const rawOrigin = req.headers.origin || req.headers.referer || '';
+  let originHost = '';
+  try {
+    if (rawOrigin) {
+      originHost = new URL(rawOrigin).hostname.toLowerCase();
+    }
+  } catch {}
+  if (!originHost && req.headers.host) {
+    originHost = req.headers.host.split(':')[0].toLowerCase();
+  }
+
   const allowedDomains = [
     'localhost', 
     '127.0.0.1',
@@ -648,18 +658,24 @@ export default async function handler(req, res) {
     'www.deepfense.online',
     'main.deepfense.online',
     'family.deepfense.online',
+    'teen.deepfense.online',
+    'adult.deepfense.online',
   ]; 
   
-  const isStrictlyAllowed = allowedDomains.some(domain => (
-    origin === `http://${domain}`
-    || origin === `https://${domain}`
-    || origin.startsWith(`http://${domain}:`)
-  ));
+  const isStrictlyAllowed = Boolean(
+    originHost && (
+      allowedDomains.includes(originHost)
+      || originHost.endsWith('.deepfense.online')
+      || originHost.endsWith('.vercel.app')
+    )
+  );
+
+  const corsOrigin = req.headers.origin || (originHost ? `https://${originHost}` : '*');
 
   // --- CORS PREFLIGHT ---
   if (req.method === 'OPTIONS') {
-    if (origin && isStrictlyAllowed) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
+    if (isStrictlyAllowed) {
+      res.setHeader('Access-Control-Allow-Origin', corsOrigin);
       res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
       res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
       res.setHeader('Access-Control-Max-Age', '86400');
@@ -679,8 +695,8 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: 'Too Many Requests. Vui lòng đợi 1 phút trước khi gửi tiếp.' });
   }
 
-  if (!origin || !isStrictlyAllowed) {
-    console.warn(`Blocked API request from unauthorized origin: ${origin}`);
+  if (!isStrictlyAllowed) {
+    console.warn(`Blocked API request from unauthorized origin/host: ${originHost || 'empty'}`);
     return res.status(403).json({ error: 'Forbidden: Unauthorized Origin. DEEPFENSE Security System Blocked This Request.' });
   }
 
@@ -825,54 +841,91 @@ export default async function handler(req, res) {
 
     const finalInstruction = mode === 'simulator' ? simulatorInstruction : systemInstruction;
 
-    const contentConfig = {
-      model: 'gemini-2.5-flash', 
+    const CANDIDATE_MODELS = [
+      'gemini-2.0-flash',
+      'gemini-1.5-flash',
+      'gemini-2.5-flash',
+      'gemini-1.5-flash-8b',
+    ];
+
+    const buildContentConfig = (modelName, withTools = true) => ({
+      model: modelName,
       contents: sanitizedMessages.map(m => ({
         role: m.role,
         parts: [{ text: m.text }]
       })),
-      config: { 
+      config: {
         systemInstruction: finalInstruction,
-        tools: mode === 'simulator' ? [] : [{ googleSearch: {} }]
+        tools: (mode === 'simulator' || !withTools) ? [] : [{ googleSearch: {} }]
       }
-    };
+    });
 
     // --- STREAMING MODE (SSE) ---
     if (req.body.stream === true) {
       res.writeHead(200, {
         'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
+        'Cache-Control': 'no-cache, no-transform',
         'Connection': 'keep-alive',
         'X-Accel-Buffering': 'no',
       });
 
-      try {
-        const streamResponse = await ai.models.generateContentStream(contentConfig);
-        
-        for await (const chunk of streamResponse) {
-          const text = chunk.text || '';
-          if (text) {
-            res.write(`data: ${JSON.stringify({ text })}\n\n`);
+      let streamSuccess = false;
+      let hasWrittenChunks = false;
+
+      for (const modelName of CANDIDATE_MODELS) {
+        try {
+          const contentConfig = buildContentConfig(modelName, true);
+          const streamResponse = await ai.models.generateContentStream(contentConfig);
+
+          for await (const chunk of streamResponse) {
+            const text = chunk.text || '';
+            if (text) {
+              res.write(`data: ${JSON.stringify({ text })}\n\n`);
+              hasWrittenChunks = true;
+            }
+          }
+          res.write(`data: [DONE]\n\n`);
+          streamSuccess = true;
+          break;
+        } catch (streamError) {
+          console.warn(`Model ${modelName} stream failed:`, streamError?.message || streamError);
+          if (hasWrittenChunks) {
+            res.write(`data: [DONE]\n\n`);
+            streamSuccess = true;
+            break;
           }
         }
-        
-        res.write(`data: [DONE]\n\n`);
-        return res.end();
-      } catch (streamError) {
-        console.error("Stream Error:", streamError);
-        res.write(`data: ${JSON.stringify({ error: 'Stream interrupted' })}\n\n`);
-        return res.end();
       }
+
+      if (!streamSuccess) {
+        const errorFallback = lang === 'vi'
+          ? "Hệ thống AI hiện đang xử lý nhiều yêu cầu cùng lúc. Vui lòng thử lại sau giây lát."
+          : "AI service is currently busy. Please try again shortly.";
+        res.write(`data: ${JSON.stringify({ text: errorFallback })}\n\n`);
+        res.write(`data: [DONE]\n\n`);
+      }
+      return res.end();
     }
 
     // --- NORMAL MODE (JSON) ---
-    const response = await ai.models.generateContent(contentConfig);
+    let lastError = null;
+    for (const modelName of CANDIDATE_MODELS) {
+      try {
+        const contentConfig = buildContentConfig(modelName, true);
+        const response = await ai.models.generateContent(contentConfig);
 
-    const text = response.text || (lang === 'vi' 
-        ? "Xin lỗi, tôi chưa hiểu rõ câu hỏi. Bạn vui lòng nhập lại nội dung cụ thể hơn nhé." 
-        : "I apologize, I didn't catch that. Please rephrase your question specifically.");
-        
-    return res.status(200).json({ text });
+        const text = response.text || (lang === 'vi' 
+            ? "Xin lỗi, tôi chưa hiểu rõ câu hỏi. Bạn vui lòng nhập lại nội dung cụ thể hơn nhé." 
+            : "I apologize, I didn't catch that. Please rephrase your question specifically.");
+            
+        return res.status(200).json({ text });
+      } catch (err) {
+        console.warn(`Model ${modelName} generateContent failed:`, err?.message || err);
+        lastError = err;
+      }
+    }
+
+    throw lastError || new Error('All candidate AI models failed to respond.');
 
   } catch (error) {
     console.error("AI Error:", error);

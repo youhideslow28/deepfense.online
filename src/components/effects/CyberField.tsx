@@ -181,13 +181,22 @@ const CyberField: React.FC = () => {
   const mouse = useRef({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(true);
 
-  // Reduced motion check
+  // Reduced motion & mobile device detection (tiết kiệm 100% GPU/pin cho mobile)
   useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mq.matches) setIsVisible(false);
+    const checkVisibility = () => {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isMobileDevice = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
+      setIsVisible(!prefersReduced && !isMobileDevice);
+    };
+
+    checkVisibility();
+    window.addEventListener('resize', checkVisibility, { passive: true });
+    return () => window.removeEventListener('resize', checkVisibility);
   }, []);
 
   useEffect(() => {
+    if (!isVisible) return;
+
     const handlePointerMove = (e: PointerEvent) => {
       mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
@@ -195,7 +204,7 @@ const CyberField: React.FC = () => {
 
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
     return () => window.removeEventListener('pointermove', handlePointerMove);
-  }, []);
+  }, [isVisible]);
 
   if (!isVisible) {
     // Fallback gradient tĩnh cho reduced motion

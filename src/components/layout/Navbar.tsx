@@ -149,31 +149,9 @@ const Navbar: React.FC<NavbarProps> = ({
   const holdStartRef = useRef<number>(0);
   const holdFiredRef = useRef<boolean>(false); // đã đạt 4s và đổi perf mode chưa
 
-  // Hint "Giữ 4s..." auto-hiện lần đầu trên mobile
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const isMobile = window.matchMedia?.('(pointer: coarse)').matches || window.innerWidth < 768;
-    if (!isMobile) return;
-    try {
-      if (window.localStorage.getItem('df_perf_hint_seen') === '1') return;
-    } catch { /* ignore */ }
-    const id = window.setTimeout(() => setShowPerfHint(true), 1200);
-    return () => window.clearTimeout(id);
-  }, []);
-
-  // Auto-dismiss hint sau 8s, ghi localStorage
-  useEffect(() => {
-    if (!showPerfHint) return;
-    const id = window.setTimeout(() => {
-      setShowPerfHint(false);
-      try { window.localStorage.setItem('df_perf_hint_seen', '1'); } catch { /* ignore */ }
-    }, 8000);
-    return () => window.clearTimeout(id);
-  }, [showPerfHint]);
-
+  // Giao diện mobile đã tự động tối ưu 60fps phần cứng, không cần popup gợi ý gây vướng mắt
   const dismissPerfHint = () => {
     setShowPerfHint(false);
-    try { window.localStorage.setItem('df_perf_hint_seen', '1'); } catch { /* ignore */ }
   };
 
   const clearHold = () => {

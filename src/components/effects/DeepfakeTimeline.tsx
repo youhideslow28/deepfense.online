@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useState, useEffect } from 'react';
 import { Language } from '@/types';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -119,9 +119,20 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      setIsMobile(window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768);
+    };
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useGSAP(() => {
     const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const isMobileDevice = window.matchMedia?.('(pointer: coarse)').matches || window.innerWidth < 768;
 
     ScrollTrigger.create({
       trigger: containerRef.current,
@@ -130,12 +141,14 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
       onUpdate: (self) => {
         progressRef.current = self.progress;
 
-        // Fade out the blur overlay near the beginning (0 to 0.15)
-        if (self.progress <= 0.15) {
-          const blurOpacity = Math.max(0, 1 - (self.progress / 0.15));
-          gsap.set('.blur-overlay', { opacity: blurOpacity });
-        } else {
-          gsap.set('.blur-overlay', { opacity: 0 });
+        if (!isMobileDevice) {
+          // Fade out the blur overlay near the beginning (0 to 0.15)
+          if (self.progress <= 0.15) {
+            const blurOpacity = Math.max(0, 1 - (self.progress / 0.15));
+            gsap.set('.blur-overlay', { opacity: blurOpacity });
+          } else {
+            gsap.set('.blur-overlay', { opacity: 0 });
+          }
         }
 
         // Fade out 3D background & accompanying effects smoothly as 2025 card finishes (0.84 to 0.98)
@@ -150,46 +163,81 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
       },
     });
 
-    // Card animations: every era card (2017, 2020, 2023, 2025) enters, zooms in to 1.15 in center,
+    // Card animations: every era card (2017, 2020, 2023, 2025) enters, zooms in to center,
     // and automatically zooms out / fades away as you scroll past.
+    // Trên mobile: Chỉ animate opacity & transform (scale), KHÔNG animate CSS filter blur để đảm bảo 60fps mượt mà
     const cards = gsap.utils.toArray<HTMLElement>('.era-card');
     cards.forEach((card, index) => {
       const isIntro = index === 0;
 
-      gsap.set(card, {
-        scale: isIntro ? 1 : 0.7,
-        opacity: isIntro ? 1 : 0,
-        filter: isIntro ? 'blur(0px)' : 'blur(12px)',
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: card,
-          start: isIntro ? 'top top' : 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      });
-
-      if (isIntro) {
-        tl.to(card, {
-          opacity: 0,
-          scale: 0.8,
-          filter: 'blur(10px)',
-          ease: 'power2.in',
+      if (isMobileDevice) {
+        gsap.set(card, {
+          scale: isIntro ? 1 : 0.88,
+          opacity: isIntro ? 1 : 0,
         });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: card,
+            start: isIntro ? 'top top' : 'top bottom',
+            end: 'bottom top',
+            scrub: 0.5,
+          },
+        });
+
+        if (isIntro) {
+          tl.to(card, {
+            opacity: 0,
+            scale: 0.88,
+            ease: 'power1.in',
+          });
+        } else {
+          tl.to(card, {
+            scale: 1.05,
+            opacity: 1,
+            ease: 'power1.inOut',
+          }).to(card, {
+            scale: 0.88,
+            opacity: 0,
+            ease: 'power1.inOut',
+          });
+        }
       } else {
-        tl.to(card, {
-          scale: 1.15,
-          opacity: 1,
-          filter: 'blur(0px)',
-          ease: 'power2.inOut',
-        }).to(card, {
-          scale: 0.7,
-          opacity: 0,
-          filter: 'blur(12px)',
-          ease: 'power2.inOut',
+        gsap.set(card, {
+          scale: isIntro ? 1 : 0.7,
+          opacity: isIntro ? 1 : 0,
+          filter: isIntro ? 'blur(0px)' : 'blur(12px)',
         });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: card,
+            start: isIntro ? 'top top' : 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        });
+
+        if (isIntro) {
+          tl.to(card, {
+            opacity: 0,
+            scale: 0.8,
+            filter: 'blur(10px)',
+            ease: 'power2.in',
+          });
+        } else {
+          tl.to(card, {
+            scale: 1.15,
+            opacity: 1,
+            filter: 'blur(0px)',
+            ease: 'power2.inOut',
+          }).to(card, {
+            scale: 0.7,
+            opacity: 0,
+            filter: 'blur(12px)',
+            ease: 'power2.inOut',
+          });
+        }
       }
     });
   }, { scope: containerRef });
@@ -200,15 +248,21 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
         {/* Sticky 3D Background */}
         <div className="sticky top-0 left-0 w-full h-screen overflow-hidden pointer-events-none z-0 sticky-bg">
           <div className="absolute inset-0 bg-black/5 z-10" />
-          <div className="blur-overlay absolute inset-0 z-10 backdrop-blur-sm bg-black/5" />
-          <Canvas
-            camera={{ position: [0, 0, 5], fov: 60 }}
-            gl={{ alpha: true, antialias: true }}
-            style={{ background: 'transparent' }}
-          >
-            <ambientLight intensity={0.5} />
-            <NeuralSphere progressRef={progressRef} />
-          </Canvas>
+          {!isMobile && <div className="blur-overlay absolute inset-0 z-10 backdrop-blur-sm bg-black/5" />}
+          {!isMobile ? (
+            <Canvas
+              camera={{ position: [0, 0, 5], fov: 60 }}
+              gl={{ alpha: true, antialias: true }}
+              style={{ background: 'transparent' }}
+            >
+              <ambientLight intensity={0.5} />
+              <NeuralSphere progressRef={progressRef} />
+            </Canvas>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center opacity-30">
+              <div className="w-64 h-64 rounded-full bg-gradient-to-tr from-cyan-500/20 via-blue-500/15 to-purple-500/20 blur-2xl" />
+            </div>
+          )}
         </div>
 
         {/* Scrollable Overlay Content (drives the height of the container) */}

@@ -18,9 +18,12 @@ export const getLenis = () => lenisInstance;
 
 const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
-    // Respect accessibility: không smooth scroll nếu user muốn giảm motion
+    // Respect accessibility & mobile ergonomics:
+    // Trên mobile touch (pointer: coarse hoặc <768px), sử dụng 100% native momentum scrolling
+    // của trình duyệt (120Hz/60Hz phần cứng), tránh giật lag, tiết kiệm CPU và loại bỏ hoàn toàn lỗi khựng mép màn hình.
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
+    if (prefersReduced || isTouchDevice) return;
 
     const lenis = new Lenis({
       lerp: 0.1,          // Smoothing velocity chuẩn mực từ phiên bản trước

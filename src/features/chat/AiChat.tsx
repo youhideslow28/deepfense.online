@@ -315,8 +315,8 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
 
       logger.error("Chat Error:", clientError);
       const errorMsg = lang === 'vi'
-        ? "Hệ thống đang bảo trì, vui lòng thử lại sau."
-        : "System maintenance, please try again later.";
+        ? "Hệ thống AI hiện đang xử lý nhiều yêu cầu cùng lúc. Bạn vui lòng thử gửi lại tin nhắn nhé."
+        : "AI system is currently handling multiple requests. Please try sending your message again.";
 
       setMessages(prev => [...prev, { role: 'model', text: errorMsg }]);
     } finally {
@@ -342,35 +342,45 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
   };
 
   return (
-    <div className="ai-chat-shell fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end pointer-events-none">
+    <>
       {isOpen && (
         <div
-          data-lenis-prevent
-          onWheel={(event) => event.stopPropagation()}
-          onTouchMove={(event) => event.stopPropagation()}
-          className="df-chat-panel pointer-events-auto mb-3 flex h-[520px] w-[min(calc(100vw-24px),420px)] sm:w-[400px] md:w-[420px] md:h-[580px] flex-col overflow-hidden rounded-2xl border border-blue-200/90 bg-white/95 text-slate-900 shadow-[0_20px_50px_rgba(15,50,100,0.22)] ring-1 ring-white/80 animate-in slide-in-from-bottom-10 duration-300 dark:border-primary/30 dark:bg-[#07111f]/95 dark:text-white dark:shadow-[0_0_35px_rgba(0,0,0,0.6)] dark:ring-white/[0.04] md:mb-4"
-        >
-            <div className="df-chat-header shrink-0 relative flex items-center justify-between overflow-hidden border-b border-blue-100 bg-gradient-to-r from-white via-sky-50 to-blue-50 p-3 dark:border-primary/20 dark:bg-none dark:bg-primary/10 md:p-3.5">
-                <div className="flex items-center gap-2 relative z-10">
-                    <div className="rounded-full bg-primary p-1 text-white shadow-[0_0_14px_rgba(29,111,232,0.28)] md:p-1.5"><Bot size={16} className="md:w-[18px] md:h-[18px]" /></div>
-                    <div>
-                        <h3 className="font-mono text-xs font-bold tracking-[0.12em] text-slate-900 dark:text-white md:text-sm">DEEPFENSE AGENT</h3>
-                        <div className="flex items-center gap-1 text-[9px] md:text-[10px] text-success">
-                            <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"></span> ONLINE
-                        </div>
-                    </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  {messages.length > 1 && (
-                    <button
-                      onClick={clearHistory}
-                      title={lang === 'vi' ? 'Xóa lịch sử' : 'Clear history'}
-                      className="font-mono text-[9px] uppercase tracking-[0.12em] text-slate-500 transition-colors hover:text-red-500 dark:text-slate-400 dark:hover:text-red-300"
-                    >
-                      {lang === 'vi' ? 'Xóa' : 'Clear'}
-                    </button>
-                  )}
-                  <button onClick={() => setIsOpen(false)} className="rounded-full p-1 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"><X size={18} className="md:w-5 md:h-5" /></button>
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-xs sm:hidden pointer-events-auto"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+      <div className="ai-chat-shell fixed bottom-3 right-3 sm:bottom-4 sm:right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end pointer-events-none">
+        {isOpen && (
+          <div
+            data-lenis-prevent
+            onWheel={(event) => event.stopPropagation()}
+            onTouchMove={(event) => event.stopPropagation()}
+            className="df-chat-panel pointer-events-auto fixed inset-x-0 bottom-0 sm:static sm:inset-auto mb-0 sm:mb-3 flex h-[82dvh] sm:h-[520px] md:h-[580px] w-full sm:w-[400px] md:w-[420px] flex-col overflow-hidden rounded-t-3xl sm:rounded-2xl border border-blue-200/90 bg-white/95 text-slate-900 shadow-[0_20px_50px_rgba(15,50,100,0.22)] ring-1 ring-white/80 animate-in slide-in-from-bottom-10 duration-300 dark:border-primary/30 dark:bg-[#07111f]/95 dark:text-white dark:shadow-[0_0_35px_rgba(0,0,0,0.6)] dark:ring-white/[0.04] md:mb-4 z-50"
+          >
+            <div className="df-chat-header shrink-0 relative flex flex-col overflow-hidden border-b border-blue-100 bg-gradient-to-r from-white via-sky-50 to-blue-50 p-2.5 sm:p-3 dark:border-primary/20 dark:bg-none dark:bg-primary/10 md:p-3.5">
+                <div className="w-10 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-1.5 sm:hidden" />
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2 relative z-10">
+                      <div className="rounded-full bg-primary p-1 text-white shadow-[0_0_14px_rgba(29,111,232,0.28)] md:p-1.5"><Bot size={16} className="md:w-[18px] md:h-[18px]" /></div>
+                      <div>
+                          <h3 className="font-mono text-xs font-bold tracking-[0.12em] text-slate-900 dark:text-white md:text-sm">DEEPFENSE AGENT</h3>
+                          <div className="flex items-center gap-1 text-[9px] md:text-[10px] text-success">
+                              <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"></span> ONLINE
+                          </div>
+                      </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {messages.length > 1 && (
+                      <button
+                        onClick={clearHistory}
+                        title={lang === 'vi' ? 'Xóa lịch sử' : 'Clear history'}
+                        className="font-mono text-[9px] uppercase tracking-[0.12em] text-slate-500 transition-colors hover:text-red-500 dark:text-slate-400 dark:hover:text-red-300"
+                      >
+                        {lang === 'vi' ? 'Xóa' : 'Clear'}
+                      </button>
+                    )}
+                    <button onClick={() => setIsOpen(false)} className="rounded-full p-1 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"><X size={18} className="md:w-5 md:h-5" /></button>
+                  </div>
                 </div>
             </div>
 
@@ -501,9 +511,9 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
         </div>
       )}
 
-      {/* CTA Label */}
+      {/* CTA Label - Ẩn trên mobile nhỏ để không đè nội dung và nút thao tác */}
       {!isOpen && (
-        <div className="pointer-events-auto mb-2 mr-1 md:mb-3 md:mr-2 animate-bounce cursor-pointer" onClick={() => setIsOpen(true)}>
+        <div className="pointer-events-auto mb-2 mr-1 md:mb-3 md:mr-2 animate-bounce cursor-pointer hidden sm:block" onClick={() => setIsOpen(true)}>
             <div className="bg-secondary text-white font-bold text-[10px] md:text-xs px-3 py-1.5 md:px-4 md:py-2 rounded-xl shadow-[0_0_20px_rgba(255,42,109,0.6)] relative flex items-center gap-2 border border-black/20 dark:border-white/20">
                <Sparkles size={12} className="animate-spin-slow md:w-[14px] md:h-[14px]" />
                {lang === 'vi' ? 'Hỏi trợ lý DEEPFENSE' : 'Ask DEEPFENSE Assistant'}
@@ -514,7 +524,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
 
       <button
         onClick={() => { setIsOpen(!isOpen); setUnreadCount(0); }}
-        className="pointer-events-auto bg-primary text-white p-3 md:p-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:scale-110 transition-all relative group"
+        className="pointer-events-auto bg-primary text-white p-2.5 sm:p-3 md:p-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:scale-110 transition-all relative group touch-manipulation"
       >
         <span className="absolute inset-0 rounded-full bg-primary opacity-50 animate-ping group-hover:opacity-75"></span>
         <span className="relative">{isOpen ? <X className="w-5 h-5 md:w-6 md:h-6" /> : <MessageSquare className="w-5 h-5 md:w-6 md:h-6" />}</span>
@@ -526,6 +536,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
         )}
       </button>
     </div>
+    </>
   );
 };
 

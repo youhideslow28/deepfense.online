@@ -11,13 +11,23 @@ const ALLOWED_DOMAINS = [
   'www.deepfense.online',
   'main.deepfense.online',
   'family.deepfense.online',
+  'teen.deepfense.online',
+  'adult.deepfense.online',
 ];
 
-const isAllowedOrigin = (origin) => ALLOWED_DOMAINS.some((domain) => (
-  origin === `http://${domain}`
-  || origin === `https://${domain}`
-  || origin.startsWith(`http://${domain}:`)
-));
+const isAllowedOrigin = (origin) => {
+  if (!origin) return false;
+  try {
+    const url = new URL(origin);
+    const host = url.hostname.toLowerCase();
+    if (ALLOWED_DOMAINS.includes(host)) return true;
+    if (host.endsWith('.deepfense.online')) return true;
+    if (host.endsWith('.vercel.app')) return true;
+    return false;
+  } catch {
+    return false;
+  }
+};
 
 const CANONICAL_REWARDS = {
   challenge: { maxAmount: 30, defaultAmount: 15, maxDaily: 5 },
