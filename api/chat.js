@@ -907,7 +907,7 @@ export default async function handler(req, res) {
     }
 
     // --- NORMAL MODE (JSON) ---
-    let lastError = null;
+    const candidateErrors = [];
     for (const modelName of CANDIDATE_MODELS) {
       try {
         const contentConfig = buildContentConfig(modelName);
@@ -920,11 +920,14 @@ export default async function handler(req, res) {
         return res.status(200).json({ text });
       } catch (err) {
         console.warn(`Model ${modelName} generateContent failed:`, err?.message || err);
-        lastError = err;
+        candidateErrors.push({ model: modelName, error: err?.message || String(err) });
       }
     }
 
-    throw lastError || new Error('All candidate AI models failed to respond.');
+    return res.status(500).json({
+      error: 'All AI models failed to respond',
+      candidateErrors,
+    });
 
   } catch (error) {
     console.error("AI Error:", error);
