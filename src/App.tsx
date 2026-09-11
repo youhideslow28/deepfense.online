@@ -323,7 +323,7 @@ const AppContent: React.FC = () => {
           </ErrorBoundary>
         </main>
 
-        {!usesLiteShell && siteConfig.aiAgentEnabled && <AiChat lang={lang} />}
+        {!isStandalonePortal && siteConfig.aiAgentEnabled && <AiChat lang={lang} />}
         {!isStandalonePortal && <CookieConsent lang={lang} />}
         {!isStandalonePortal && <Footer lang={lang} siteConfig={siteConfig} isFamilyShell={isFamilyShell} familyAudience={familyAudienceForShell} />}
       </div>

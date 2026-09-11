@@ -524,10 +524,11 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
 
       <button
         onClick={() => { setIsOpen(!isOpen); setUnreadCount(0); }}
-        className="pointer-events-auto bg-primary text-white p-2.5 sm:p-3 md:p-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:scale-110 transition-all relative group touch-manipulation"
+        aria-label={isOpen ? (lang === 'vi' ? 'Đóng trợ lý AI' : 'Close AI assistant') : (lang === 'vi' ? 'Mở trợ lý AI' : 'Open AI assistant')}
+        className="pointer-events-auto flex items-center justify-center w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 rounded-full bg-primary text-white shadow-[0_4px_25px_rgba(0,240,255,0.5)] hover:scale-105 active:scale-95 transition-all relative group touch-manipulation z-50"
       >
         <span className="absolute inset-0 rounded-full bg-primary opacity-50 animate-ping group-hover:opacity-75"></span>
-        <span className="relative">{isOpen ? <X className="w-5 h-5 md:w-6 md:h-6" /> : <MessageSquare className="w-5 h-5 md:w-6 md:h-6" />}</span>
+        <span className="relative">{isOpen ? <X className="w-5 h-5 md:w-6 md:h-6" /> : <MessageSquare className="w-6 h-6 md:w-6 md:h-6" />}</span>
         {/* Notification badge */}
         {unreadCount > 0 && !isOpen && (
           <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-secondary text-white text-[9px] font-black rounded-full flex items-center justify-center px-1 shadow-[0_0_8px_rgba(255,42,109,0.8)] animate-bounce border border-black/30">
