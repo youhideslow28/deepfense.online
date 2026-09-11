@@ -679,15 +679,15 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: 'Too Many Requests. Vui lòng đợi 1 phút trước khi gửi tiếp.' });
   }
 
-  // --- BẢO MẬT: REQUEST SIZE LIMIT (max 128KB) ---
-  const bodySize = JSON.stringify(req.body).length;
-  if (bodySize > 131072) {
-    return res.status(413).json({ error: 'Payload Too Large. Maximum 128KB.' });
-  }
-
   if (!origin || !isStrictlyAllowed) {
     console.warn(`Blocked API request from unauthorized origin: ${origin}`);
     return res.status(403).json({ error: 'Forbidden: Unauthorized Origin. DEEPFENSE Security System Blocked This Request.' });
+  }
+
+  // --- BẢO MẬT: REQUEST SIZE LIMIT (max 128KB) ---
+  const bodySize = JSON.stringify(req.body || {}).length;
+  if (bodySize > 131072) {
+    return res.status(413).json({ error: 'Payload Too Large. Maximum 128KB.' });
   }
 
   res.setHeader('Access-Control-Allow-Origin', origin);
