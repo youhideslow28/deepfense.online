@@ -2,16 +2,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { LEVELS, TRANSLATIONS, SURVEY_SCALE } from '@/data';
 import { GameState, Language, LevelData } from '@/types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { CheckCircle2, XCircle, Zap, ShieldCheck, ArrowRight, ArrowLeft, RotateCcw, AlertCircle, ClipboardList, Send, Brain, Eye, ShieldAlert, ChevronRight, BarChart2, ShieldQuestion, Share2, Facebook, Twitter, Users, Play } from 'lucide-react';
 import { db } from '@/config/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import Simulator from './Simulator';
 import { claimDpfReward, DpfClaimResult } from '@/features/dpf/dpf';
 import DpfRewardNotice from '@/features/dpf/DpfRewardNotice';
+import type { FamilyAudience } from '@/config/domainRouting';
 
 interface ChallengeProps {
   lang: Language;
+  familyAudience?: FamilyAudience | null;
 }
 
 const shuffleLevels = <T,>(items: T[]) => {
@@ -946,14 +948,14 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                             return (
                               <label
                                 key={item.id}
-                                className={`flex min-h-[54px] items-center gap-3 rounded-xl border px-4 py-3 text-xs font-bold leading-snug transition-all ${checked ? 'border-primary bg-primary/12 text-slate-900 dark:text-white' : 'border-black/10 dark:border-white/10 bg-black/30 text-slate-500 dark:text-slate-400'} ${videoEnded ? 'cursor-pointer hover:border-primary/50 hover:text-slate-900 dark:text-white' : 'cursor-not-allowed'}`}
+                                className={`flex min-h-[54px] items-center gap-3 rounded-xl border px-4 py-3 text-xs font-bold leading-snug transition-all ${checked ? 'border-primary bg-primary/10 text-slate-900 dark:text-white shadow-sm' : 'border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-black/30 text-slate-700 dark:text-slate-400'} ${videoEnded ? 'cursor-pointer hover:border-primary/50 hover:text-slate-900 dark:text-white' : 'cursor-not-allowed'}`}
                               >
                                 <input
                                   type="checkbox"
                                   disabled={!videoEnded}
                                   checked={checked}
                                   onChange={() => toggleChecklistItem(lvl.id, item.id)}
-                                  className="h-4 w-4 accent-cyan-400"
+                                  className="h-4 w-4 accent-primary"
                                 />
                                 <span>{item.label}</span>
                               </label>
@@ -963,10 +965,10 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <button disabled={!canSubmitAnswer} onClick={() => handleChoice(1)} className={`group flex items-center justify-center gap-3 rounded-2xl border border-black/10 dark:border-white/10 bg-surface py-6 text-xs font-black uppercase tracking-[0.12em] shadow-xl transition-all active:scale-95 ${canSubmitAnswer ? 'text-slate-900 dark:text-white hover:border-primary hover:text-blue-300' : 'cursor-not-allowed text-slate-600 opacity-60'}`}>
+                      <button disabled={!canSubmitAnswer} onClick={() => handleChoice(1)} className={`group flex items-center justify-center gap-3 rounded-2xl border border-black/10 dark:border-white/10 bg-surface py-6 text-xs font-black uppercase tracking-[0.12em] shadow-xl transition-all active:scale-95 ${canSubmitAnswer ? 'text-slate-900 dark:text-white hover:border-primary hover:text-blue-600 dark:hover:text-blue-300' : 'cursor-not-allowed text-slate-400 dark:text-slate-600 opacity-60'}`}>
                         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> {lang === 'vi' ? 'BÊN TRÁI LÀ GIẢ' : 'LEFT IS FAKE'}
                       </button>
-                      <button disabled={!canSubmitAnswer} onClick={() => handleChoice(2)} className={`group flex items-center justify-center gap-3 rounded-2xl border border-black/10 dark:border-white/10 bg-surface py-6 text-xs font-black uppercase tracking-[0.12em] shadow-xl transition-all active:scale-95 ${canSubmitAnswer ? 'text-slate-900 dark:text-white hover:border-secondary hover:text-red-300' : 'cursor-not-allowed text-slate-600 opacity-60'}`}>
+                      <button disabled={!canSubmitAnswer} onClick={() => handleChoice(2)} className={`group flex items-center justify-center gap-3 rounded-2xl border border-black/10 dark:border-white/10 bg-surface py-6 text-xs font-black uppercase tracking-[0.12em] shadow-xl transition-all active:scale-95 ${canSubmitAnswer ? 'text-slate-900 dark:text-white hover:border-secondary hover:text-red-600 dark:hover:text-red-300' : 'cursor-not-allowed text-slate-400 dark:text-slate-600 opacity-60'}`}>
                         {lang === 'vi' ? 'BÊN PHẢI LÀ GIẢ' : 'RIGHT IS FAKE'} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                       </button>
                   </div>
@@ -1039,8 +1041,22 @@ const DetectiveGame: React.FC<ChallengeProps> = ({ lang }) => {
   );
 };
 
-const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
-  const [activeTab, setActiveTab] = useState<'DETECTIVE' | 'SIMULATOR'>('DETECTIVE');
+const Challenge: React.FC<ChallengeProps> = ({ lang, familyAudience = null }) => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const requestedMode = queryParams.get('mode');
+  const queryAudience = queryParams.get('audience');
+  const effectiveAudience = familyAudience || (queryAudience === 'young' || queryAudience === 'old' ? queryAudience : null);
+  const shouldStartSimulator = effectiveAudience === 'old' || requestedMode === 'simulator';
+  const [activeTab, setActiveTab] = useState<'DETECTIVE' | 'SIMULATOR'>(shouldStartSimulator ? 'SIMULATOR' : 'DETECTIVE');
+
+  useEffect(() => {
+    if (effectiveAudience === 'old' || requestedMode === 'simulator') {
+      setActiveTab('SIMULATOR');
+    } else {
+      setActiveTab('DETECTIVE');
+    }
+  }, [effectiveAudience, requestedMode]);
 
   const handleTabChange = (tab: 'DETECTIVE' | 'SIMULATOR') => {
     setActiveTab(tab);
@@ -1048,26 +1064,40 @@ const Challenge: React.FC<ChallengeProps> = ({ lang }) => {
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     });
   };
+
+  const challengeTabs = [
+    {
+      id: 'DETECTIVE' as const,
+      label: lang === 'vi' ? 'THÁM TỬ DEEPFAKE' : 'DEEPFAKE DETECTIVE',
+      icon: <Eye size={16} />,
+      activeClass: 'bg-primary text-white shadow-[0_0_18px_rgba(29,111,232,0.24)]',
+    },
+    {
+      id: 'SIMULATOR' as const,
+      label: lang === 'vi' ? 'MÔ PHỎNG LỪA ĐẢO' : 'SCAM SIMULATOR',
+      icon: <Brain size={16} />,
+      activeClass: 'bg-secondary text-white shadow-[0_0_20px_rgba(255,42,109,0.22)]',
+    },
+  ].filter((tab) => effectiveAudience !== 'old' || tab.id === 'SIMULATOR');
   
   return (
     <div className="animate-in fade-in duration-500">
-       <div className="mx-auto mb-8 mt-4 flex w-fit flex-wrap justify-center gap-2 rounded-2xl border border-black/10 dark:border-white/10 bg-surface p-2 px-2 shadow-xl">
-        <button 
-          onClick={() => handleTabChange('DETECTIVE')}
-          className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${activeTab === 'DETECTIVE' ? 'bg-primary text-slate-900 dark:text-white shadow-[0_0_18px_rgba(29,111,232,0.24)]' : 'text-slate-500 dark:text-slate-400 hover:bg-white/[0.06] hover:text-slate-900 dark:text-white'}`}
-        >
-          <Eye size={16} /> {lang === 'vi' ? 'THÁM TỬ DEEPFAKE' : 'DEEPFAKE DETECTIVE'}
-        </button>
-        <button 
-          onClick={() => handleTabChange('SIMULATOR')}
-          className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${activeTab === 'SIMULATOR' ? 'bg-secondary text-slate-900 dark:text-white shadow-[0_0_20px_rgba(255,42,109,0.22)]' : 'text-slate-500 dark:text-slate-400 hover:bg-white/[0.06] hover:text-slate-900 dark:text-white'}`}
-        >
-          <Brain size={16} /> {lang === 'vi' ? 'MÔ PHỎNG LỪA ĐẢO' : 'SCAM SIMULATOR'}
-        </button>
-      </div>
+      {challengeTabs.length > 1 && (
+        <div className="mx-auto mb-8 mt-4 flex w-fit flex-wrap justify-center gap-2 rounded-2xl border border-black/10 dark:border-white/10 bg-surface p-2 px-2 shadow-xl">
+          {challengeTabs.map((tab) => (
+            <button 
+              key={tab.id}
+              onClick={() => handleTabChange(tab.id)}
+              className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${activeTab === tab.id ? tab.activeClass : 'text-slate-600 dark:text-slate-400 hover:bg-black/5 dark:hover:bg-white/[0.06] hover:text-slate-900 dark:text-white'}`}
+            >
+              {tab.icon} {tab.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       <div key={activeTab} className="tab-panel-reveal tab-copy-reveal">
-        {activeTab === 'DETECTIVE' ? <DetectiveGame lang={lang} /> : <Simulator lang={lang} />}
+        {activeTab === 'DETECTIVE' ? <DetectiveGame lang={lang} /> : <Simulator lang={lang} audience={effectiveAudience} />}
       </div>
     </div>
   );

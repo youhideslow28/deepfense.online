@@ -130,39 +130,28 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
       onUpdate: (self) => {
         progressRef.current = self.progress;
 
-        // Fade the whole timeline as it leaves the viewport. Previously only
-        // the sticky background faded, leaving the cards/title visibly hanging
-        // over the next homepage section.
-        if (stageRef.current && !prefersReducedMotion) {
-          const fadeStart = 0.82;
-          const fadeProgress = gsap.utils.clamp(0, 1, (self.progress - fadeStart) / (1 - fadeStart));
-          gsap.set(stageRef.current, {
-            opacity: 1 - fadeProgress,
-            filter: `blur(${fadeProgress * 4}px)`,
-          });
-        }
-
         // Fade out the blur overlay near the beginning (0 to 0.15)
         if (self.progress <= 0.15) {
-          // Normalize 0..0.15 to 1..0
           const blurOpacity = Math.max(0, 1 - (self.progress / 0.15));
           gsap.set('.blur-overlay', { opacity: blurOpacity });
         } else {
           gsap.set('.blur-overlay', { opacity: 0 });
         }
 
-        // Fade out background gradually as 2025 card finishes
-        const fadeStart = 0.90;
+        // Fade out 3D background & accompanying effects smoothly as 2025 card finishes (0.84 to 0.98)
+        const fadeStart = 0.84;
+        const fadeEnd = 0.98;
         if (self.progress > fadeStart) {
-          const t = (self.progress - fadeStart) / (1 - fadeStart);
-          gsap.to('.sticky-bg', { opacity: 1 - t, duration: 0.3, overwrite: 'auto' });
+          const t = Math.min(1, Math.max(0, (self.progress - fadeStart) / (fadeEnd - fadeStart)));
+          gsap.set('.sticky-bg', { opacity: 1 - t });
         } else {
-          gsap.to('.sticky-bg', { opacity: 1, duration: 0.3, overwrite: 'auto' });
+          gsap.set('.sticky-bg', { opacity: 1 });
         }
       },
     });
 
-    // Card animations (appear and disappear on scroll)
+    // Card animations: every era card (2017, 2020, 2023, 2025) enters, zooms in to 1.15 in center,
+    // and automatically zooms out / fades away as you scroll past.
     const cards = gsap.utils.toArray<HTMLElement>('.era-card');
     cards.forEach((card, index) => {
       const isIntro = index === 0;
@@ -228,7 +217,7 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
         {/* Intro Section */}
         <div className="flex min-h-[440px] items-start justify-center pt-[18vh] md:min-h-[620px] md:pt-[22vh]">
           <div className="text-center era-card px-4">
-            <h2 className="text-4xl md:text-7xl font-black text-slate-900 dark:text-white uppercase tracking-tight mix-blend-difference leading-[1.6]" style={{ fontFamily: "var(--font-display)" }}>
+            <h2 className="text-4xl md:text-7xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-[1.6]" style={{ fontFamily: "var(--font-display)" }}>
               {lang === 'vi' ? (
                 <>
                   Deepfake đã phát triển<br /><span className="mt-2 block">như thế nào?</span>
@@ -237,12 +226,12 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
                 'How Deepfake Has Evolved'
               )}
             </h2>
-            <div className="mt-8 inline-block px-6 py-3 bg-white/70 dark:bg-black/40 backdrop-blur-md border border-black/10 dark:border-white/10 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.1)]">
-              <p className="text-cyan-400 tracking-[0.2em] text-xs md:text-sm uppercase font-bold animate-pulse" style={{ fontFamily:"var(--font-display)" }}>
+            <div className="mt-8 inline-block px-6 py-3 bg-white/90 dark:bg-black/60 backdrop-blur-md border border-black/10 dark:border-white/10 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.1)]">
+              <p className="text-cyan-600 dark:text-cyan-400 tracking-[0.2em] text-xs md:text-sm uppercase font-bold animate-pulse" style={{ fontFamily:"var(--font-display)" }}>
                 {lang === 'vi' ? 'Cuộn xuống để du hành thời gian' : 'Scroll down to time travel'}
               </p>
             </div>
-            <div className="flex justify-center mt-6 text-cyan-400/60 animate-bounce">
+            <div className="flex justify-center mt-6 text-cyan-500/70 animate-bounce">
               <ChevronDown size={32} />
             </div>
           </div>
@@ -253,8 +242,8 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
             key={index} 
             className="flex min-h-[360px] items-center justify-center px-4 md:min-h-[520px]"
           >
-            <div className={`era-card relative bg-white/70 dark:bg-black/60 backdrop-blur-xl border border-black/10 dark:border-white/10 p-8 md:p-12 rounded-3xl max-w-2xl w-full text-center ${era.shadow}`}>
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-white dark:bg-black rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center">
+            <div className={`era-card relative bg-white/95 dark:bg-black/80 backdrop-blur-xl border border-black/10 dark:border-white/10 p-8 md:p-12 rounded-3xl max-w-2xl w-full text-center ${era.shadow} shadow-2xl`}>
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-white dark:bg-slate-900 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center shadow-md">
                 <era.icon className={era.color} size={24} />
               </div>
               <span className={`text-7xl font-black opacity-20 absolute -top-4 -left-4 ${era.color} pointer-events-none`} style={{ fontFamily:"var(--font-display)" }}>
@@ -263,14 +252,14 @@ const DeepfakeTimeline: React.FC<DeepfakeTimelineProps> = ({ lang }) => {
               <h3 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4 mt-4" style={{ fontFamily: "var(--font-display)" }}>
                 {lang === 'vi' ? era.titleVi : era.titleEn}
               </h3>
-              <p className="text-slate-600 dark:text-gray-300 md:text-lg leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+              <p className="text-slate-800 dark:text-slate-200 md:text-lg leading-relaxed font-medium" style={{ fontFamily: "var(--font-sans)" }}>
                 {lang === 'vi' ? era.descVi : era.descEn}
               </p>
             </div>
           </div>
         ))}
 
-        <div className="h-[50vh]" /> {/* Spacer at bottom */}
+        <div className="h-[75vh]" /> {/* Spacer at bottom for smooth fade-out */}
         </div>
       </div>
 

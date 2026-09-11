@@ -9,10 +9,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="/academy/basics/assets/index-Cq2AqiC3.js"></script>
+    <script>
+      (function() {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var theme = params.get('theme') || localStorage.getItem('df_theme') || localStorage.getItem('dfb_theme_v1') || 'dark';
+          document.documentElement.setAttribute('data-theme', theme);
+          if (theme === 'light') {
+            document.documentElement.classList.add('light');
+          } else {
+            document.documentElement.classList.remove('light');
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script type="module" crossorigin src="/academy/basics/assets/index-CzAIe1PU.js"></script>
     <link rel="stylesheet" crossorigin href="/academy/basics/assets/index-Bx_fhm0S.css">
   <link rel="manifest" href="/academy/basics/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/academy/basics/registerSW.js"></script></head>
   <body>
-    <div id="root"></div>
+    <div id="root"></div>
   </body>
 </html>

@@ -11,8 +11,8 @@ interface SEOProps {
 const SEO: React.FC<SEOProps> = ({ title, description, lang }) => {
   const defaultTitle = 'DEEPFENSE.ONLINE - Huấn luyện nhận diện Deepfake & AI Scam';
   const defaultDesc = lang === 'vi' 
-    ? 'Nền tảng huấn luyện nhận diện deepfake, AI voice scam và lừa đảo công nghệ cao. Máy quét AI đang trong giai đoạn phát triển, train model và benchmark.'
-    : 'Training platform for deepfake awareness, AI voice scams, and high-tech fraud prevention. The AI scanner is currently in development, training, and benchmark validation.';
+    ? 'Nền tảng huấn luyện nhận diện deepfake, AI voice scam và tự vệ trước lừa đảo công nghệ cao.'
+    : 'Training platform for deepfake awareness, AI voice scams, and high-tech fraud prevention.';
   const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://deepfense.online';
 
   const seoTitle = title ? `${title} | DEEPFENSE` : defaultTitle;

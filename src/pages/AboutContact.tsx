@@ -154,24 +154,24 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               </div>
 
               {/* SOLO AUTHOR SECTION */}
-              <div className="group/box relative overflow-hidden rounded-3xl border border-blue-400/20 bg-gradient-to-br from-blue-950/18 to-black p-8 shadow-xl transition-all hover:border-blue-400/45">
+              <div className="group/box relative overflow-hidden rounded-3xl border border-blue-400/20 bg-surface p-8 shadow-xl transition-all hover:border-blue-400/45">
                   <div className="absolute -right-10 -bottom-10 opacity-10 rotate-12"><User size={200} /></div>
                   
-                  <h3 className="mb-6 flex items-center gap-2 text-xs font-black uppercase tracking-[0.12em] text-blue-300 transition-transform group-hover/box:translate-x-1">
+                  <h3 className="mb-6 flex items-center gap-2 text-xs font-black uppercase tracking-[0.12em] text-blue-600 dark:text-blue-300 transition-transform group-hover/box:translate-x-1">
                     <Code size={16}/> {t.team}
                   </h3>
                   
                   <div className="flex flex-col gap-4 relative z-10">
                       {PROJECT_METADATA.authors.map((author, index) => (
                           <div key={index} className="flex gap-4 items-start">
-                              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-blue-500 text-slate-900 dark:text-white shadow-lg">
+                              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-blue-500 text-white shadow-lg">
                                   <span className="font-black text-xl">{author.name.charAt(0)}</span>
                               </div>
                               <div>
                                   <div className="text-slate-900 dark:text-white font-black text-xl uppercase tracking-tight mb-1">
                                       {author.name}
                                   </div>
-                                  <div className="mb-2 inline-block rounded border border-blue-400/25 bg-blue-400/10 px-2 py-1 font-mono text-[10px] text-blue-200">
+                                  <div className="mb-2 inline-block rounded border border-blue-400/25 bg-blue-50 dark:bg-blue-400/10 px-2 py-1 font-mono text-[10px] text-blue-600 dark:text-blue-200">
                                       ID: {author.id}
                                   </div>
                                   <div className="text-sm text-slate-500 dark:text-slate-400">
@@ -190,11 +190,11 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
               </div>
 
               <div className="rounded-3xl border border-black/10 dark:border-white/10 bg-surface p-8 shadow-xl">
-                  <h3 className="mb-6 text-xs font-black uppercase tracking-[0.12em] text-red-300">{t.contact_support}</h3>
-                  <div className="grid grid-cols-1 gap-6 text-sm text-slate-500 dark:text-slate-400 md:grid-cols-2">
-                      <div className="flex cursor-pointer items-center gap-4 rounded-xl border border-black/10 dark:border-white/10 bg-black/35 p-4 transition-colors hover:border-primary/25 hover:text-slate-900 dark:text-white"><Mail size={20} className="shrink-0 text-primary"/> deepfense@gmail.com</div>
-                      <div className="flex cursor-pointer items-center gap-4 rounded-xl border border-black/10 dark:border-white/10 bg-black/35 p-4 transition-colors hover:border-primary/25 hover:text-slate-900 dark:text-white"><Phone size={20} className="shrink-0 text-primary"/> 0828250475</div>
-                      <div className="flex items-center gap-4 rounded-xl border border-black/10 dark:border-white/10 bg-black/35 p-4 md:col-span-2"><MapPin size={20} className="shrink-0 text-primary"/> 25NS, VKU, DA NANG, VIET NAM</div>
+                  <h3 className="mb-6 text-xs font-black uppercase tracking-[0.12em] text-red-500 dark:text-red-300">{t.contact_support}</h3>
+                  <div className="grid grid-cols-1 gap-6 text-sm text-slate-600 dark:text-slate-400 md:grid-cols-2">
+                      <div className="flex cursor-pointer items-center gap-4 rounded-xl border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-black/35 p-4 transition-colors hover:border-primary/25 hover:text-slate-900 dark:text-white"><Mail size={20} className="shrink-0 text-primary"/> deepfense@gmail.com</div>
+                      <div className="flex cursor-pointer items-center gap-4 rounded-xl border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-black/35 p-4 transition-colors hover:border-primary/25 hover:text-slate-900 dark:text-white"><Phone size={20} className="shrink-0 text-primary"/> 0828250475</div>
+                      <div className="flex items-center gap-4 rounded-xl border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-black/35 p-4 md:col-span-2"><MapPin size={20} className="shrink-0 text-primary"/> 25NS, VKU, DA NANG, VIET NAM</div>
                   </div>
               </div>
           </div>
@@ -220,15 +220,15 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                   )}
                   <div className="space-y-1">
                       <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_name}</label>
-                      <input type="text" disabled={isSubmitting} placeholder={lang === 'vi' ? 'VD: Anna' : 'Ex: Anna'} className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                      <input type="text" disabled={isSubmitting} placeholder={lang === 'vi' ? 'VD: Anna' : 'Ex: Anna'} className="w-full rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                   </div>
                   <div className="space-y-1">
                       <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_email}</label>
-                      <input type="email" disabled={isSubmitting} placeholder="email@example.com" className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                      <input type="email" disabled={isSubmitting} placeholder="email@example.com" className="w-full rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
                   </div>
                   <div className="space-y-1">
                       <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_desc}</label>
-                      <textarea disabled={isSubmitting} placeholder={lang === 'vi' ? 'Vui lòng mô tả chi tiết sự việc (đối tượng giả danh ai, qua nền tảng nào...)' : 'Please describe the incident in detail...'} className="h-32 w-full resize-none rounded-2xl border border-black/10 dark:border-white/10 bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
+                      <textarea disabled={isSubmitting} placeholder={lang === 'vi' ? 'Vui lòng mô tả chi tiết sự việc (đối tượng giả danh ai, qua nền tảng nào...)' : 'Please describe the incident in detail...'} className="h-32 w-full resize-none rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/55 p-4 text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50" value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
                   </div>
                   <div className="space-y-1">
                       <label className="mb-1 ml-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t.label_attachment}</label>
@@ -242,13 +242,13 @@ const AboutContact: React.FC<{ lang: Language }> = ({ lang }) => {
                               className="hidden" 
                               onChange={e => setFile(e.target.files?.[0] || null)} 
                           />
-                          <label htmlFor="file-upload" className={`flex w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-black/10 dark:border-white/10 bg-black/55 p-4 text-slate-500 dark:text-slate-400 transition-colors ${isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:border-primary/50 hover:text-blue-300'}`}>
+                          <label htmlFor="file-upload" className={`flex w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-black/55 p-4 text-slate-500 dark:text-slate-400 transition-colors ${isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:border-primary/50 hover:text-blue-500'}`}>
                               <Paperclip size={20} />
                               <span className="text-xs font-mono">{file ? file.name : (lang === 'vi' ? 'Nhấp để chọn tệp' : 'Click to select file')}</span>
                           </label>
                       </div>
                   </div>
-                  <button type="submit" disabled={isSubmitting} className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-5 text-xs font-black uppercase tracking-[0.16em] text-slate-900 dark:text-white shadow-lg shadow-primary/20 transition-all hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-70">
+                  <button type="submit" disabled={isSubmitting} className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-5 text-xs font-black uppercase tracking-[0.16em] text-white shadow-lg shadow-primary/20 transition-all hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-70">
                     {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
                     {isSubmitting ? (lang === 'vi' ? 'ĐANG XỬ LÝ...' : 'SENDING...') : t.send_report}
                   </button>

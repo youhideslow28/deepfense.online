@@ -205,9 +205,9 @@
     color: #fff;
   }
 
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg-dark); }
-  ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 9999px; }
   ::-webkit-scrollbar-thumb:hover { background: #1D6FE8; }
 
   /* Chrome/Safari Autofill override */
@@ -219,8 +219,6 @@
     -webkit-text-fill-color: var(--text-main) !important;
     transition: background-color 5000s ease-in-out 0s;
   }
-
-
 }
 
 /* ── MOBILE PERFORMANCE OPTIMIZATIONS ───────────────────────────
@@ -347,12 +345,16 @@ html.light .announcement-ticker span {
   background: #ffffff !important;
   border-color: #dbeafe !important;
   color: #334155 !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
 }
 
 .df-chat-user-message {
   background: #eff6ff !important;
   border-color: rgba(29, 111, 232, 0.35) !important;
   color: #0f172a !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
 }
 
 html.dark .df-chat-agent-message {
@@ -487,38 +489,22 @@ html.perf-lite .blur-3xl {
 /* ── WINTER SIGNAL ─────────────────────────────────────────────── */
 .winter-signal {
   isolation: isolate;
-  mask-image: linear-gradient(to bottom, black 0%, black 58%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 58%, transparent 100%);
-}
-
-.winter-signal-frost {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(126, 219, 255, 0.055) 0%, rgba(56, 189, 248, 0.018) 40%, transparent 76%);
-}
-
-.winter-signal-frost::after {
-  position: absolute;
-  top: clamp(7rem, 17vh, 10.5rem);
-  left: 12%;
-  right: 12%;
-  height: 1px;
-  content: '';
-  background: linear-gradient(90deg, transparent, rgba(125, 225, 255, 0.28), transparent);
+  pointer-events: none;
 }
 
 .winter-signal-snow {
   position: absolute;
-  top: 6.5rem;
+  top: -40px;
   left: var(--winter-signal-left);
   width: var(--winter-signal-size);
   height: var(--winter-signal-size);
   object-fit: contain;
   opacity: var(--winter-signal-opacity);
-  filter: brightness(0) saturate(100%) invert(87%) sepia(75%) saturate(552%) hue-rotate(147deg) brightness(106%) contrast(103%);
+  filter: brightness(0) saturate(100%) invert(87%) sepia(75%) saturate(552%) hue-rotate(147deg) brightness(106%) contrast(103%) drop-shadow(0 0 5px rgba(56, 189, 248, 0.75));
   animation: winter-signal-drift var(--winter-signal-duration) linear var(--winter-signal-delay) infinite;
   transform-origin: center;
   will-change: transform;
+  pointer-events: none;
 }
 
 .winter-checkpoint-crystal {
@@ -540,22 +526,25 @@ html.perf-lite .blur-3xl {
 }
 
 @keyframes winter-signal-drift {
-  from {
-    transform: translate3d(0, -2rem, 0) rotate(0deg);
+  0% {
+    transform: translate3d(0, -30px, 0) rotate(0deg);
+    opacity: 0;
   }
-  to {
-    transform: translate3d(var(--winter-signal-drift), 30rem, 0) rotate(90deg);
+  6% {
+    opacity: var(--winter-signal-opacity);
+  }
+  92% {
+    opacity: var(--winter-signal-opacity);
+  }
+  100% {
+    transform: translate3d(var(--winter-signal-drift), calc(100vh + 60px), 0) rotate(180deg);
+    opacity: 0;
   }
 }
 
 @media (max-width: 767px) {
-  .winter-signal-snow {
+  .winter-signal-snow:nth-child(even) {
     display: none;
-  }
-
-  .winter-signal-frost::after {
-    left: 7%;
-    right: 7%;
   }
 }
 
@@ -568,3 +557,4 @@ html.perf-lite .blur-3xl {
 html.perf-lite .winter-signal-snow {
   display: none;
 }
+

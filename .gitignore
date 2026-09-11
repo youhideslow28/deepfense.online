@@ -55,6 +55,7 @@ firebase-export-*
 *.sln
 *.sw?
 *.code-workspace
+.claude/
 
 # ===== OS FILES =====
 .DS_Store

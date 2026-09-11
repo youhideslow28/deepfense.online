@@ -406,17 +406,23 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
         }));
       } catch {}
     }
+    const currentTheme = document.documentElement.classList.contains('light') ? 'light' : 'dark';
+    try {
+      localStorage.setItem('dfb_theme_v1', currentTheme);
+      localStorage.setItem('df_theme', currentTheme);
+    } catch {}
     const guestQuery = guestMode && !user ? '?mode=guest' : '';
-    window.location.assign(`/academy/basics/index.html${guestQuery}`);
+    const themeQuery = (guestQuery ? '&' : '?') + `theme=${currentTheme}`;
+    window.location.assign(`/academy/basics/index.html${guestQuery}${themeQuery}`);
   };
 
   const WelcomeView = () => (
     <div className="animate-in fade-in duration-500">
-      <section data-reveal className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-[#07111f]/90 p-6 md:p-10 mb-8 shadow-[0_24px_90px_rgba(0,0,0,0.35)]">
+      <section data-reveal className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-white/90 dark:bg-[#07111f]/90 p-6 md:p-10 mb-8 shadow-xl">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
         <div className="relative z-10 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-8">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-[10px] font-bold tracking-[0.12em] text-blue-300">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-[10px] font-bold tracking-[0.12em] text-blue-600 dark:text-blue-300">
               <GraduationCap size={12} /> DEEPFENSE ACADEMY
             </div>
             <h1 className="text-4xl md:text-6xl font-black uppercase leading-tight text-slate-900 dark:text-white" style={{ fontFamily: "var(--font-display)" }}>
@@ -429,17 +435,17 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
             </p>
           </div>
 
-          <div className="lg:col-span-4 rounded-2xl border border-amber-400/20 bg-amber-400/[0.06] p-5">
+          <div className="lg:col-span-4 rounded-2xl border border-amber-400/20 bg-amber-400/[0.08] p-5">
             <div className="mb-5 flex items-center gap-3">
-              <Award size={28} className="text-amber-300" />
+              <Award size={28} className="text-amber-500 dark:text-amber-300" />
               <div>
-                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-amber-300">
+                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-amber-600 dark:text-amber-300">
                   {isVi ? 'Sau khi hoàn thành' : 'After completion'}
                 </div>
                 <div className="text-slate-900 dark:text-white font-black uppercase">Certificate + DPF</div>
               </div>
             </div>
-            <div className="rounded-xl border border-black/10 dark:border-white/10 bg-black/20 p-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300/85">
+            <div className="rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-black/20 p-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300/85">
               {isVi
                 ? 'Certificate chỉ mở khi bạn học xong, gửi đánh giá khóa học và đạt bài thi cuối khóa.'
                 : 'Certificate unlocks only after lessons, course evaluation, and Final Exam are completed.'}
@@ -449,9 +455,9 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
       </section>
 
       <section className="grid grid-cols-1 gap-6 mb-8 xl:grid-cols-12">
-        <div data-reveal className="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-[#07111f]/90 p-6 md:p-8 xl:col-span-7">
+        <div data-reveal className="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-white/90 dark:bg-[#07111f]/90 p-6 md:p-8 xl:col-span-7 shadow-lg">
           <div className="relative z-10 max-w-2xl">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/10 text-amber-300 px-4 py-1.5 text-[10px] font-bold tracking-[0.12em]">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/10 text-amber-600 dark:text-amber-300 px-4 py-1.5 text-[10px] font-bold tracking-[0.12em]">
               <LockKeyhole size={12} />
               {isVi ? 'CẦN ĐĂNG NHẬP GOOGLE' : 'GOOGLE SIGN-IN REQUIRED'}
             </div>
@@ -466,7 +472,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <div className="w-full max-w-xl">
-                <div className="mb-3 rounded-xl border border-blue-400/20 bg-blue-500/10 text-blue-100 p-4 text-sm leading-relaxed">
+                <div className="mb-3 rounded-xl border border-blue-400/20 bg-blue-500/10 text-slate-900 dark:text-blue-100 p-4 text-sm leading-relaxed">
                   {isVi
                     ? 'Bạn cần đăng nhập bằng Google để vào hệ thống học, lưu tiến độ, làm quiz và mở certificate sau khi hoàn thành.'
                     : 'Please sign in with Google to enter the course system, save progress, take quizzes, and unlock the certificate after completion.'}
@@ -477,7 +483,7 @@ export default function Academy({ lang, user, authBusy, onGoogleAuth }: AcademyP
                 <button
                   type="button"
                   onClick={enterGuestMode}
-                  className="mt-3 inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-xs font-black uppercase tracking-[0.08em] text-slate-300 transition-colors hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-white"
+                  className="mt-3 inline-flex items-center gap-2 rounded-xl border border-black/15 dark:border-white/15 bg-black/5 dark:bg-white/[0.04] px-4 py-3 text-xs font-black uppercase tracking-[0.08em] text-slate-700 dark:text-slate-300 transition-colors hover:border-blue-500 hover:text-blue-500"
                 >
                   <Eye size={15} />
                   {isVi ? 'XEM THỬ VỚI GUEST MODE' : 'PREVIEW AS GUEST'}

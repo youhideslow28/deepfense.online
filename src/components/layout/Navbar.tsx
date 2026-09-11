@@ -4,13 +4,14 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Bot, Coins, Cpu, GraduationCap, Home, Info, LogIn, Menu, Moon, Power, Smartphone, Snowflake, Sun, Swords, UserCircle, X } from 'lucide-react';
+import { Bot, Coins, Cpu, GraduationCap, HeartHandshake, Home, Info, LogIn, Menu, Moon, Power, Scale, ScanLine, Smartphone, Snowflake, Sun, Swords, Target, UserCircle, X } from 'lucide-react';
 import type { User } from 'firebase/auth';
 import type { SiteConfig } from '@/config/siteConfig';
 import { Language, Season } from '@/types';
 import type { PerfMode } from '@/hooks/usePerfMode';
 import type { ThemeMode } from '@/hooks/useTheme';
 import { useDpfBalance } from '@/features/dpf/useDpfWallet';
+import { getFamilyPath, getFamilyRootPath, type FamilyAudience } from '@/config/domainRouting';
 
 interface NavbarProps {
   lang: Language;
@@ -27,6 +28,8 @@ interface NavbarProps {
   season: Season;
   setSeason: (s: Season) => void;
   showTicker?: boolean;
+  isFamilyShell?: boolean;
+  familyAudience?: FamilyAudience | null;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -44,6 +47,8 @@ const Navbar: React.FC<NavbarProps> = ({
   season,
   setSeason,
   showTicker = true,
+  isFamilyShell = false,
+  familyAudience = null,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,14 +62,72 @@ const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems: { path: string; label: string; icon: React.ReactNode }[] = [
-    { path: '/', label: lang === 'vi' ? 'Trang chủ' : 'Home', icon: <Home size={14} /> },
-    { path: '/academy', label: 'Academy', icon: <GraduationCap size={14} /> },
-    { path: '/tools', label: lang === 'vi' ? 'Công cụ' : 'Tools', icon: <Cpu size={14} /> },
-    { path: '/challenge', label: lang === 'vi' ? 'Thử thách' : 'Challenge', icon: <Swords size={14} /> },
-    { path: '/ai-project', label: lang === 'vi' ? 'Dự án AI' : 'AI Project', icon: <Bot size={14} /> },
-    { path: '/contact', label: lang === 'vi' ? 'Về chúng tôi' : 'About', icon: <Info size={14} /> },
-  ];
+  const withAudience = (path: string) => {
+    if (!familyAudience) return path;
+    const separator = path.includes('?') ? '&' : '?';
+    return `${path}${separator}audience=${familyAudience}`;
+  };
+
+  const navItems: { path: string; label: string; icon: React.ReactNode }[] = isFamilyShell
+    ? familyAudience === 'old'
+      ? [
+        { path: getFamilyPath('old'), label: lang === 'vi' ? 'Người lớn 40+' : 'Adults 40+', icon: <HeartHandshake size={14} /> },
+        { path: withAudience('/challenge?mode=simulator'), label: lang === 'vi' ? 'Kịch bản bẫy' : 'Scenarios', icon: <Target size={14} /> },
+        { path: withAudience('/tools/scan'), label: lang === 'vi' ? 'Giám định' : 'Forensics', icon: <ScanLine size={14} /> },
+        { path: withAudience('/tools/crisis'), label: lang === 'vi' ? 'Ứng cứu' : 'Crisis', icon: <Cpu size={14} /> },
+        { path: withAudience('/tools/knowledge'), label: lang === 'vi' ? 'Pháp luật' : 'Law', icon: <Scale size={14} /> },
+      ]
+      : familyAudience === 'young'
+        ? [
+          { path: getFamilyPath('young'), label: lang === 'vi' ? 'Thiếu niên' : 'Teens', icon: <GraduationCap size={14} /> },
+          { path: withAudience('/challenge'), label: lang === 'vi' ? 'Thám tử nhí' : 'Detective', icon: <Swords size={14} /> },
+          { path: withAudience('/challenge?mode=simulator'), label: lang === 'vi' ? 'Kịch bản bẫy' : 'Scenarios', icon: <Target size={14} /> },
+          { path: withAudience('/tools/scan'), label: lang === 'vi' ? 'Giám định' : 'Forensics', icon: <ScanLine size={14} /> },
+          { path: withAudience('/tools/crisis'), label: lang === 'vi' ? 'Ứng cứu' : 'Crisis', icon: <Cpu size={14} /> },
+        ]
+        : [
+          { path: getFamilyRootPath(), label: lang === 'vi' ? 'Cổng gia đình' : 'Family', icon: <Home size={14} /> },
+          { path: getFamilyPath('young'), label: lang === 'vi' ? 'Thiếu niên' : 'Teens', icon: <GraduationCap size={14} /> },
+          { path: getFamilyPath('old'), label: lang === 'vi' ? 'Người lớn 40+' : 'Adults 40+', icon: <HeartHandshake size={14} /> },
+          { path: '/contact', label: lang === 'vi' ? 'Về chúng tôi' : 'About', icon: <Info size={14} /> },
+        ]
+    : [
+      { path: '/', label: lang === 'vi' ? 'Trang chủ' : 'Home', icon: <Home size={14} /> },
+      { path: '/academy', label: 'Academy', icon: <GraduationCap size={14} /> },
+      { path: '/tools', label: lang === 'vi' ? 'Công cụ' : 'Tools', icon: <Cpu size={14} /> },
+      { path: '/challenge', label: lang === 'vi' ? 'Thử thách' : 'Challenge', icon: <Swords size={14} /> },
+      { path: '/ai-project', label: lang === 'vi' ? 'Dự án AI' : 'AI Project', icon: <Bot size={14} /> },
+      { path: '/contact', label: lang === 'vi' ? 'Về chúng tôi' : 'About', icon: <Info size={14} /> },
+    ];
+
+  const mobileNavItems: { path: string; label: string; icon: React.ReactNode }[] = isFamilyShell
+    ? familyAudience === 'young'
+      ? [
+        { path: getFamilyPath('young'), label: lang === 'vi' ? 'Trang chủ thiếu niên' : 'Teens Home', icon: <GraduationCap size={14} /> },
+        { path: withAudience('/challenge'), label: lang === 'vi' ? 'Thử thách thám tử' : 'Detective Challenge', icon: <Swords size={14} /> },
+        { path: withAudience('/challenge?mode=simulator'), label: lang === 'vi' ? 'Kịch bản bẫy mạng' : 'Scam Scenarios', icon: <Target size={14} /> },
+        { path: withAudience('/tools/scan'), label: lang === 'vi' ? 'Quét giám định pháp y' : 'Forensics Scan', icon: <ScanLine size={14} /> },
+        { path: withAudience('/tools/crisis'), label: lang === 'vi' ? 'Trung tâm ứng cứu khẩn' : 'Crisis Center', icon: <Cpu size={14} /> },
+        { path: withAudience('/academy'), label: 'Học viện Academy', icon: <GraduationCap size={14} /> },
+        { path: withAudience('/tools/knowledge'), label: lang === 'vi' ? 'Kiến thức & Pháp luật' : 'Law & Knowledge', icon: <Scale size={14} /> },
+        { path: withAudience('/contact'), label: lang === 'vi' ? 'Về chúng tôi' : 'About Us', icon: <Info size={14} /> },
+      ]
+      : familyAudience === 'old'
+        ? [
+          { path: getFamilyPath('old'), label: lang === 'vi' ? 'Trang chủ người lớn 40+' : 'Adults 40+ Home', icon: <HeartHandshake size={14} /> },
+          { path: withAudience('/challenge?mode=simulator'), label: lang === 'vi' ? 'Kịch bản lừa đảo' : 'Scam Scenarios', icon: <Target size={14} /> },
+          { path: withAudience('/tools/scan'), label: lang === 'vi' ? 'Kiểm tra & Giám định' : 'Forensic Scan', icon: <ScanLine size={14} /> },
+          { path: withAudience('/tools/crisis'), label: lang === 'vi' ? 'Ứng cứu khẩn cấp' : 'Crisis Center', icon: <Cpu size={14} /> },
+          { path: withAudience('/tools/knowledge'), label: lang === 'vi' ? 'Kiến thức an toàn & Pháp luật' : 'Law & Safety', icon: <Scale size={14} /> },
+          { path: withAudience('/contact'), label: lang === 'vi' ? 'Về chúng tôi' : 'About Us', icon: <Info size={14} /> },
+        ]
+        : [
+          { path: getFamilyRootPath(), label: lang === 'vi' ? 'Cổng gia đình' : 'Family Portal', icon: <Home size={14} /> },
+          { path: getFamilyPath('young'), label: lang === 'vi' ? 'Chế độ thiếu niên' : 'Teens Mode', icon: <GraduationCap size={14} /> },
+          { path: getFamilyPath('old'), label: lang === 'vi' ? 'Chế độ người lớn 40+' : 'Adults 40+ Mode', icon: <HeartHandshake size={14} /> },
+          { path: '/contact', label: lang === 'vi' ? 'Về chúng tôi' : 'About Us', icon: <Info size={14} /> },
+        ]
+    : navItems;
 
   const isLite = perfMode === 'lite';
   const isWinter = season === 'WINTER';
@@ -229,16 +292,33 @@ const Navbar: React.FC<NavbarProps> = ({
   const tickerEdgeRight = theme === 'dark' ? 'from-black' : 'from-white';
   const tickerTextClass = theme === 'dark' ? 'text-blue-200/75' : 'text-slate-700';
 
-  const isActivePath = (path: string) => (
-    location.pathname === path
-    || (path === '/tools' && location.pathname.startsWith('/tools'))
-    || (path === '/academy' && location.pathname.startsWith('/academy'))
-  );
+  const isActivePath = (path: string) => {
+    const target = new URL(path, 'https://deepfense.local');
+    const currentMode = new URLSearchParams(location.search).get('mode');
+    const targetMode = target.searchParams.get('mode');
+    const targetAudience = target.searchParams.get('audience');
+    const currentAudience = new URLSearchParams(location.search).get('audience');
+
+    if (target.pathname === '/challenge') {
+      if (targetMode) {
+        return location.pathname === '/challenge'
+          && currentMode === targetMode
+          && (!targetAudience || currentAudience === targetAudience || familyAudience === targetAudience);
+      }
+      return location.pathname === '/challenge' && currentMode !== 'simulator';
+    }
+
+    return (
+      location.pathname === target.pathname
+      || (target.pathname === '/tools' && location.pathname.startsWith('/tools'))
+      || (target.pathname === '/academy' && location.pathname.startsWith('/academy'))
+    );
+  };
 
   return (
     <>
       {showTicker && (
-        <div className={`relative z-[101] flex h-8 w-full items-center overflow-hidden border-b transition-colors duration-300 ${tickerBarClass}`}>
+        <div className={`relative z-[101] flex h-8 w-full max-w-[100vw] items-center overflow-hidden border-b transition-colors duration-300 ${tickerBarClass}`}>
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
           <div className={`pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r ${tickerEdgeLeft} to-transparent`} />
           <div className={`pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l ${tickerEdgeRight} to-transparent`} />
@@ -259,10 +339,10 @@ const Navbar: React.FC<NavbarProps> = ({
             : 'border-black/[0.05] dark:border-white/[0.06] bg-white/82 dark:bg-[#020710]/82 backdrop-blur-xl'
         }`}
       >
-        <div className="mx-auto max-w-7xl px-4 md:px-6">
-          <div className={`flex items-center justify-between transition-all duration-500 ${isScrolled ? 'h-14 md:h-16' : 'h-16 md:h-20'}`}>
-            <Link to="/" className="group flex shrink-0 cursor-pointer items-center gap-3">
-              <div className="relative h-9 w-9 md:h-10 md:w-10">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6">
+          <div className={`flex items-center justify-between flex-nowrap min-w-0 transition-all duration-500 ${isScrolled ? 'h-14 md:h-16' : 'h-16 md:h-20'}`}>
+            <Link to={isFamilyShell ? getFamilyRootPath() : '/'} className="group flex shrink-0 cursor-pointer items-center gap-2 md:gap-3">
+              <div className="relative h-8 w-8 shrink-0 sm:h-9 sm:w-9 md:h-10 md:w-10">
                 <div className="absolute inset-0 rounded-2xl bg-primary/20 opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100" />
                 <img
                   src="/logo/android-chrome-192x192.png"
@@ -271,31 +351,31 @@ const Navbar: React.FC<NavbarProps> = ({
                 />
               </div>
               <div className="flex flex-col leading-none">
-                <span className="font-display text-xl font-black tracking-tight text-slate-900 dark:text-white md:text-2xl">
+                <span className="font-display truncate text-lg font-black tracking-tight text-slate-900 dark:text-white sm:text-xl md:text-2xl">
                   DEEPFENSE
                 </span>
                 <div className="mt-1 hidden items-center gap-1.5 md:flex">
                   <div className="h-1 w-1 animate-pulse rounded-full bg-primary" />
                   <span className="font-mono text-[0.55rem] font-bold uppercase tracking-[0.24em] text-blue-300/55">
-                    DEEPFAKE - DEFENSE
+                    {lang === 'vi' ? 'PHÒNG VỆ DEEPFAKE' : 'DEEPFAKE DEFENSE'}
                   </span>
                 </div>
               </div>
             </Link>
 
-            <nav className="hidden items-center gap-1 lg:flex">
+            <nav className={`hidden items-center flex-nowrap whitespace-nowrap shrink-0 ${isFamilyShell ? 'gap-0.5 xl:gap-1.5' : 'gap-1'} lg:flex`}>
               {navItems.map((item) => {
                 const isActive = isActivePath(item.path);
                 return (
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`group relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-[13px] font-semibold tracking-normal transition-all duration-300 ${
+                    className={`group relative flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg py-2 text-[13px] font-semibold tracking-normal transition-all duration-300 ${isFamilyShell ? 'px-2 xl:px-3' : 'px-3'} ${
                       isActive ? 'bg-primary/15 text-primary dark:text-blue-100 shadow-[inset_0_0_0_1px_rgba(96,165,250,0.18)]' : 'text-slate-600 dark:text-slate-300/85 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
-                    <span className={`transition-colors ${isActive ? 'text-primary dark:text-blue-300' : 'text-slate-500 group-hover:text-slate-600 dark:text-slate-300'}`}>{item.icon}</span>
-                    <span>{item.label}</span>
+                    <span className={`transition-colors shrink-0 ${isActive ? 'text-primary dark:text-blue-300' : 'text-slate-500 group-hover:text-slate-600 dark:text-slate-300'}`}>{item.icon}</span>
+                    <span className="shrink-0">{item.label}</span>
                     {isActive && (
                       <span className="absolute bottom-0 left-1/2 h-[2px] w-7 -translate-x-1/2 rounded-full bg-blue-300 shadow-[0_0_8px_rgba(96,165,250,0.72)]" />
                     )}
@@ -304,13 +384,13 @@ const Navbar: React.FC<NavbarProps> = ({
               })}
             </nav>
 
-            <div className="relative flex items-center gap-2 md:gap-3">
-              <div className="flex h-8 items-center rounded-full border border-black/10 dark:border-white/10 bg-white/[0.045] p-1">
+            <div className="relative flex shrink-0 items-center gap-1 sm:gap-2 md:gap-3">
+              <div className="flex h-7 items-center rounded-full border border-black/10 dark:border-white/10 bg-white/[0.045] p-0.5 sm:h-8 sm:p-1">
                 {(['vi', 'en'] as const).map((l) => (
                   <button
                     key={l}
                     onClick={() => setLang(l)}
-                    className={`flex h-full items-center justify-center rounded-full px-2.5 text-[10px] font-bold transition-all duration-300 ${
+                    className={`flex h-full items-center justify-center rounded-full px-2 text-[10px] font-bold transition-all duration-300 sm:px-2.5 ${
                       lang === l ? 'bg-primary text-white shadow-[0_0_8px_rgba(29,111,232,0.42)]' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'
                     }`}
                   >
@@ -322,7 +402,7 @@ const Navbar: React.FC<NavbarProps> = ({
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="relative flex h-8 w-8 items-center justify-center rounded-full border border-black/10 bg-white/80 text-slate-700 shadow-sm transition-all duration-300 hover:border-primary/30 hover:text-primary dark:border-white/10 dark:bg-white/[0.045] dark:text-slate-300 dark:hover:text-white md:h-9 md:w-9"
+                className="relative flex h-7 w-7 items-center justify-center rounded-full border border-black/10 bg-white/80 text-slate-700 shadow-sm transition-all duration-300 hover:border-primary/30 hover:text-primary dark:border-white/10 dark:bg-white/[0.045] dark:text-slate-300 dark:hover:text-white sm:h-8 sm:w-8 md:h-9 md:w-9"
                 title={themeLabel}
                 aria-label={themeLabel}
                 aria-pressed={theme === 'dark'}
@@ -331,52 +411,53 @@ const Navbar: React.FC<NavbarProps> = ({
               </button>
 
 
-              <div className="relative">
-              <button
-                onPointerDown={startHold}
-                onPointerUp={endHold}
-                onPointerLeave={cancelHold}
-                onPointerCancel={cancelHold}
-                onContextMenu={(e) => e.preventDefault()}
-                className="group relative z-50 select-none outline-none touch-manipulation"
-                title={perfLabel}
-                aria-label={perfLabel}
-                aria-pressed={isWinter}
-              >
-                <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-500 ${
-                  isLite ? 'bg-emerald-500/40 opacity-100'
-                  : isWinter ? 'bg-cyan-400/45 opacity-100'
-                  : 'bg-primary/30 opacity-0 group-hover:opacity-60'
-                }`} />
-                {/* Progress ring trong khi giữ */}
-                {holdProgress > 0 && (
-                  <svg className="absolute inset-0 z-20 h-full w-full -rotate-90" viewBox="0 0 36 36" aria-hidden="true">
-                    <circle cx="18" cy="18" r="16" fill="none" stroke="rgba(16,185,129,0.18)" strokeWidth="2.5" />
-                    <circle
-                      cx="18" cy="18" r="16" fill="none"
-                      stroke={isLite ? '#fbbf24' : '#10b981'}
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeDasharray={`${holdProgress * 100.53} 100.53`}
-                      className="drop-shadow-[0_0_4px_rgba(16,185,129,0.7)]"
-                    />
-                  </svg>
-                )}
-                <div className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border shadow-xl transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] md:h-9 md:w-9 ${
-                  isLite
-                    ? 'border-emerald-400/70 bg-gradient-to-br from-emerald-500 to-teal-600'
-                    : isWinter
-                      ? 'border-cyan-300/80 bg-gradient-to-br from-cyan-400 to-blue-700'
-                      : 'rotate-0 border-black/10 dark:border-white/10 bg-zinc-900 hover:border-white/30 hover:bg-zinc-800'
-                } ${holdProgress > 0 ? 'scale-95' : ''}`}
+              {!isFamilyShell && (
+                <div className="relative">
+                <button
+                  onPointerDown={startHold}
+                  onPointerUp={endHold}
+                  onPointerLeave={cancelHold}
+                  onPointerCancel={cancelHold}
+                  onContextMenu={(e) => e.preventDefault()}
+                  className="group relative z-50 select-none outline-none touch-manipulation"
+                  title={perfLabel}
+                  aria-label={perfLabel}
+                  aria-pressed={isWinter}
                 >
-                  {isLite
-                    ? <Smartphone size={15} className="text-white drop-shadow-md" />
-                    : isWinter
-                      ? <Snowflake size={15} className="text-cyan-50 drop-shadow-md" />
-                      : <Moon size={15} className="text-slate-400 transition-colors group-hover:text-gray-200" />}
-                </div>
-              </button>
+                  <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-500 ${
+                    isLite ? 'bg-emerald-500/40 opacity-100'
+                    : isWinter ? 'bg-cyan-400/45 opacity-100'
+                    : 'bg-primary/30 opacity-0 group-hover:opacity-60'
+                  }`} />
+                  {/* Progress ring trong khi giữ */}
+                  {holdProgress > 0 && (
+                    <svg className="absolute inset-0 z-20 h-full w-full -rotate-90" viewBox="0 0 36 36" aria-hidden="true">
+                      <circle cx="18" cy="18" r="16" fill="none" stroke="rgba(16,185,129,0.18)" strokeWidth="2.5" />
+                      <circle
+                        cx="18" cy="18" r="16" fill="none"
+                        stroke={isLite ? '#fbbf24' : '#10b981'}
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeDasharray={`${holdProgress * 100.53} 100.53`}
+                        className="drop-shadow-[0_0_4px_rgba(16,185,129,0.7)]"
+                      />
+                    </svg>
+                  )}
+                  <div className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full border shadow-xl transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] sm:h-8 sm:w-8 md:h-9 md:w-9 ${
+                    isLite
+                      ? 'border-emerald-400/70 bg-gradient-to-br from-emerald-500 to-teal-600'
+                      : isWinter
+                        ? 'border-cyan-300/80 bg-gradient-to-br from-cyan-400 to-blue-700'
+                        : 'rotate-0 border-black/10 dark:border-white/10 bg-zinc-900 hover:border-white/30 hover:bg-zinc-800'
+                  } ${holdProgress > 0 ? 'scale-95' : ''}`}
+                  >
+                    {isLite
+                      ? <Smartphone size={15} className="text-white drop-shadow-md" />
+                      : isWinter
+                        ? <Snowflake size={15} className="text-cyan-50 drop-shadow-md" />
+                        : <Moon size={15} className="text-slate-400 transition-colors group-hover:text-gray-200" />}
+                  </div>
+                </button>
 
               {/* Tooltip hướng dẫn — chỉ trên mobile, lần đầu */}
               {showPerfHint && !perfToast && (
@@ -426,7 +507,8 @@ const Navbar: React.FC<NavbarProps> = ({
                   </div>
                 </div>
               )}
-              </div>
+                </div>
+              )}
 
               <button
                 onClick={onGoogleAuth}
@@ -451,7 +533,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
               <button
                 type="button"
-                className={`rounded-lg p-2 transition-colors lg:hidden ${
+                  className={`rounded-lg p-1.5 transition-colors sm:p-2 lg:hidden ${
                   theme === 'dark'
                     ? 'text-slate-200 hover:bg-white/[0.07] hover:text-white'
                     : 'text-slate-700 hover:bg-slate-100 hover:text-slate-950'
@@ -460,7 +542,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 aria-label={isMenuOpen ? (lang === 'vi' ? 'Đóng điều hướng' : 'Close navigation') : (lang === 'vi' ? 'Mở điều hướng' : 'Open navigation')}
                 aria-expanded={isMenuOpen}
               >
-                {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
           </div>
@@ -469,7 +551,7 @@ const Navbar: React.FC<NavbarProps> = ({
         {isMenuOpen && (
           <div className={`animate-in slide-in-from-top-3 border-t backdrop-blur-2xl duration-200 lg:hidden ${mobileMenuSurface}`}>
             <div className="flex flex-col gap-1 p-3">
-              {navItems.map((item) => {
+              {mobileNavItems.map((item) => {
                 const isActive = isActivePath(item.path);
                 return (
                   <button

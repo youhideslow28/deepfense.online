@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { 
   ScanLine, 
   ShieldCheck, 
@@ -25,10 +25,14 @@ import { Language } from '@/types';
 import { TRANSLATIONS, KNOWLEDGE_BASE } from '@/data';
 import CrisisHub from './CrisisHub';
 import GlowButton from '@/components/ui/GlowButton';
+import type { FamilyAudience } from '@/config/domainRouting';
 
 interface ToolsProps {
   lang: Language;
+  familyAudience?: FamilyAudience | null;
 }
+
+type ToolsTab = 'SCAN' | 'PROTECT' | 'CRISIS' | 'KNOWLEDGE';
 
 interface BehaviorQuestion {
   q: string;
@@ -233,12 +237,17 @@ const buildProtectionReceipt = (
   warning: 'This is an unsigned user-intent receipt. It does not run Fawkes, enforce rights, or replace a signed C2PA Content Credential.',
 });
 
-const Tools: React.FC<ToolsProps> = ({ lang }) => {
+const Tools: React.FC<ToolsProps> = ({ lang, familyAudience = null }) => {
   const t = TRANSLATIONS[lang];
-  const location = useLocation();
   const { tab } = useParams<{ tab?: string }>();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'SCAN' | 'PROTECT' | 'CRISIS' | 'KNOWLEDGE'>('SCAN');
+  const [activeTab, setActiveTab] = useState<ToolsTab>('SCAN');
+  const allowedTabs: ToolsTab[] = familyAudience ? ['SCAN', 'KNOWLEDGE', 'CRISIS'] : ['SCAN', 'PROTECT', 'KNOWLEDGE', 'CRISIS'];
+
+  const buildToolsPath = (newTab: ToolsTab) => {
+    const basePath = `/tools/${newTab.toLowerCase()}`;
+    return familyAudience ? `${basePath}?audience=${familyAudience}` : basePath;
+  };
 
   const scrollPageToTop = () => {
     requestAnimationFrame(() => {
@@ -247,19 +256,24 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
   };
 
   useEffect(() => {
+    const fallbackTab = allowedTabs[0];
     if (tab) {
       const normalizedTab = tab.toUpperCase();
-      if (['SCAN', 'PROTECT', 'CRISIS', 'KNOWLEDGE'].includes(normalizedTab)) {
-        setActiveTab(normalizedTab as any);
+      if (['SCAN', 'PROTECT', 'CRISIS', 'KNOWLEDGE'].includes(normalizedTab) && allowedTabs.includes(normalizedTab as ToolsTab)) {
+        setActiveTab(normalizedTab as ToolsTab);
+        return;
       }
-    } else {
-      setActiveTab('SCAN');
-    }
-  }, [tab]);
 
-  const handleTabChange = (newTab: 'SCAN' | 'PROTECT' | 'CRISIS' | 'KNOWLEDGE') => {
+      setActiveTab(fallbackTab);
+      navigate(buildToolsPath(fallbackTab), { replace: true });
+    } else {
+      setActiveTab(fallbackTab);
+    }
+  }, [tab, familyAudience]);
+
+  const handleTabChange = (newTab: ToolsTab) => {
     setActiveTab(newTab);
-    navigate(`/tools/${newTab.toLowerCase()}`);
+    navigate(buildToolsPath(newTab));
     scrollPageToTop();
   };
 
@@ -370,6 +384,33 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
     }
   };
 
+  const tabOptions: Array<{ id: ToolsTab; label: string; icon: React.ReactNode; activeClass: string }> = [
+    {
+      id: 'SCAN' as const,
+      label: t.btn_scan,
+      icon: <ScanLine size={16} />,
+      activeClass: 'bg-primary text-white shadow-[0_0_18px_rgba(29,111,232,0.24)]',
+    },
+    {
+      id: 'PROTECT' as const,
+      label: t.tools_protect_btn,
+      icon: <ShieldCheck size={16} />,
+      activeClass: 'bg-green-500 text-white shadow-[0_0_20px_rgba(34,197,94,0.22)]',
+    },
+    {
+      id: 'KNOWLEDGE' as const,
+      label: t.tools_knowledge_title,
+      icon: <Scale size={16} />,
+      activeClass: 'bg-primary text-white shadow-[0_0_18px_rgba(29,111,232,0.24)]',
+    },
+    {
+      id: 'CRISIS' as const,
+      label: t.crisis_hub,
+      icon: <AlertTriangle size={16} />,
+      activeClass: 'bg-red-500 text-white shadow-[0_0_20px_rgba(239,68,68,0.22)]',
+    },
+  ].filter((option) => allowedTabs.includes(option.id));
+
   return (
     <div className="max-w-7xl mx-auto animate-in fade-in duration-500 py-6 px-4">
       <div key={`tools-heading-${activeTab}`} className="tab-copy-reveal mb-10 text-center">
@@ -390,30 +431,19 @@ const Tools: React.FC<ToolsProps> = ({ lang }) => {
 
       {/* TABS CONTROLLER */}
       <div className="transparent-panel-soft mx-auto mb-12 flex w-fit flex-wrap justify-center gap-2 rounded-2xl border border-black/10 dark:border-white/10 p-2 shadow-xl">
-        <button 
-          onClick={() => handleTabChange('SCAN')}
-          className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${activeTab === 'SCAN' ? 'bg-primary text-slate-900 dark:text-white shadow-[0_0_18px_rgba(29,111,232,0.24)]' : 'text-slate-500 dark:text-slate-400 hover:bg-white/[0.06] hover:text-slate-900 dark:text-white'}`}
-        >
-          <ScanLine size={16} /> {t.btn_scan}
-        </button>
-        <button 
-          onClick={() => handleTabChange('PROTECT')}
-          className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${activeTab === 'PROTECT' ? 'bg-green-500 text-slate-900 dark:text-white shadow-[0_0_20px_rgba(34,197,94,0.22)]' : 'text-slate-500 dark:text-slate-400 hover:bg-white/[0.06] hover:text-slate-900 dark:text-white'}`}
-        >
-          <ShieldCheck size={16} /> {t.tools_protect_btn}
-        </button>
-        <button 
-          onClick={() => handleTabChange('KNOWLEDGE')}
-          className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${activeTab === 'KNOWLEDGE' ? 'bg-primary text-slate-900 dark:text-white shadow-[0_0_18px_rgba(29,111,232,0.24)]' : 'text-slate-500 dark:text-slate-400 hover:bg-white/[0.06] hover:text-slate-900 dark:text-white'}`}
-        >
-          <Scale size={16} /> {t.tools_knowledge_title}
-        </button>
-        <button 
-          onClick={() => handleTabChange('CRISIS')}
-          className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${activeTab === 'CRISIS' ? 'bg-red-500 text-slate-900 dark:text-white shadow-[0_0_20px_rgba(239,68,68,0.22)]' : 'text-slate-500 dark:text-slate-400 hover:bg-white/[0.06] hover:text-slate-900 dark:text-white'}`}
-        >
-          <AlertTriangle size={16} /> {t.crisis_hub}
-        </button>
+        {tabOptions.map((option) => (
+          <button
+            key={option.id}
+            onClick={() => handleTabChange(option.id)}
+            className={`flex items-center gap-2 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.12em] transition-all ${
+              activeTab === option.id
+                ? option.activeClass
+                : 'text-slate-500 dark:text-slate-400 hover:bg-white/[0.06] hover:text-slate-900 dark:text-white'
+            }`}
+          >
+            {option.icon} {option.label}
+          </button>
+        ))}
       </div>
 
       {/* MODE: SCAN CENTER */}

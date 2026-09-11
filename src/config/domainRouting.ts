@@ -1,4 +1,5 @@
 export type DeepfenseExperience = 'portal' | 'main' | 'family';
+export type FamilyAudience = 'young' | 'old';
 
 export const DEEPFENSE_DOMAINS: Record<DeepfenseExperience, string> = {
   portal: 'deepfense.online',
@@ -42,4 +43,33 @@ export const getExperienceHref = (experience: DeepfenseExperience, hostname?: st
   };
 
   return localPaths[experience];
+};
+
+export const getFamilyRootPath = (hostname?: string) =>
+  resolveDeepfenseExperience(hostname) === 'family' ? '/' : '/family';
+
+export const getFamilyPath = (audience: FamilyAudience, hostname?: string) =>
+  resolveDeepfenseExperience(hostname) === 'family' ? `/${audience}` : `/family/${audience}`;
+
+export const getFamilyHref = (audience: FamilyAudience, hostname?: string) => {
+  if (isDeepfenseProductionHost(hostname)) {
+    return `https://${DEEPFENSE_DOMAINS.family}/${audience}`;
+  }
+
+  return `/family/${audience}`;
+};
+
+export const getFamilyAudienceFromPath = (pathname: string): FamilyAudience | null => {
+  const segments = pathname.toLowerCase().split('/').filter(Boolean);
+  const lastSegment = segments[segments.length - 1];
+  if (lastSegment === 'young') return 'young';
+  if (lastSegment === 'old') return 'old';
+  return null;
+};
+
+export const getFamilyAudienceFromSearch = (search: string): FamilyAudience | null => {
+  const params = new URLSearchParams(search);
+  const audience = params.get('audience') || params.get('family');
+  if (audience === 'young' || audience === 'old') return audience;
+  return null;
 };

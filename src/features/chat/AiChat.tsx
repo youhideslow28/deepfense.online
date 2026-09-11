@@ -44,11 +44,32 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       const parsed = saved ? JSON.parse(saved) : null;
-      setMessages(parsed?.length ? parsed : [{ role: 'model', text: t.agent_welcome }]);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        // Làm sạch nếu tin chào đầu tiên còn lưu text train model cũ trong cache
+        let hasUpdated = false;
+        const cleaned = parsed.map((msg, idx) => {
+          if (idx === 0 && msg.role === 'model' && (
+            msg.text?.includes('train model') ||
+            msg.text?.includes('dataset') ||
+            msg.text?.includes('máy quét AI đang khóa') ||
+            msg.text?.includes('AI scanner is currently locked')
+          )) {
+            hasUpdated = true;
+            return { ...msg, text: t.agent_welcome };
+          }
+          return msg;
+        });
+        if (hasUpdated) {
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cleaned)); } catch {}
+        }
+        setMessages(cleaned);
+      } else {
+        setMessages([{ role: 'model', text: t.agent_welcome }]);
+      }
     } catch {
       setMessages([{ role: 'model', text: t.agent_welcome }]);
     }
-  }, [lang]);
+  }, [lang, t.agent_welcome]);
 
   // Lưu lịch sử mỗi khi messages thay đổi
   useEffect(() => {
@@ -93,43 +114,43 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
   // TỐI ƯU HIỆU NĂNG: Đóng băng object components để React không phá hủy chat history mỗi khi gõ phím
   const markdownComponents = React.useMemo<any>(() => ({
     // Paragraphs
-    p: ({ node, ...props }: any) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
+    p: ({ node, ...props }: any) => <p className="mb-2 last:mb-0 leading-relaxed break-words [overflow-wrap:anywhere]" {...props} />,
     // Lists
-    ul: ({ node, ...props }: any) => <ul className="list-disc pl-4 mb-2 space-y-0.5" {...props} />,
-    ol: ({ node, ...props }: any) => <ol className="list-decimal pl-4 mb-2 space-y-0.5" {...props} />,
-    li: ({ node, ...props }: any) => <li className="pl-1 marker:text-primary" {...props} />,
+    ul: ({ node, ...props }: any) => <ul className="list-disc pl-4 mb-2 space-y-1 break-words [overflow-wrap:anywhere]" {...props} />,
+    ol: ({ node, ...props }: any) => <ol className="list-decimal pl-4 mb-2 space-y-1 break-words [overflow-wrap:anywhere]" {...props} />,
+    li: ({ node, ...props }: any) => <li className="pl-1 marker:text-primary break-words [overflow-wrap:anywhere]" {...props} />,
     // Inline
-    strong: ({ node, ...props }: any) => <strong className="font-bold text-primary" {...props} />,
+    strong: ({ node, ...props }: any) => <strong className="font-bold text-primary break-words" {...props} />,
     em: ({ node, ...props }: any) => <em className="italic text-slate-600 dark:text-slate-300" {...props} />,
     // Headings
-    h1: ({ node, ...props }: any) => <h1 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2 mt-3 border-b border-primary/20 pb-1" {...props} />,
-    h2: ({ node, ...props }: any) => <h2 className="text-xs font-black text-primary uppercase tracking-wider mb-1.5 mt-2" {...props} />,
-    h3: ({ node, ...props }: any) => <h3 className="mb-1 mt-2 text-xs font-bold text-slate-700 dark:text-slate-200" {...props} />,
+    h1: ({ node, ...props }: any) => <h1 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2 mt-3 border-b border-primary/20 pb-1 break-words" {...props} />,
+    h2: ({ node, ...props }: any) => <h2 className="text-xs font-black text-primary uppercase tracking-wider mb-1.5 mt-2 break-words" {...props} />,
+    h3: ({ node, ...props }: any) => <h3 className="mb-1 mt-2 text-xs font-bold text-slate-700 dark:text-slate-200 break-words" {...props} />,
     // Links — open in new tab
     a: ({ node, href, children, ...props }: any) => (
       <a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-0.5 text-primary underline underline-offset-2 transition-colors hover:text-slate-900 dark:text-blue-100 dark:hover:text-white"
+        className="inline-flex items-center gap-0.5 text-primary underline underline-offset-2 transition-colors hover:text-slate-900 dark:text-blue-200 dark:hover:text-white break-all"
         {...props}
       >
         {children}
-        <ExternalLink size={8} className="opacity-60" />
+        <ExternalLink size={9} className="opacity-70 shrink-0 ml-0.5" />
       </a>
     ),
     // Blockquote — cyberpunk style
     blockquote: ({ node, ...props }: any) => (
       <blockquote
-        className="my-2 rounded-r border-l-2 border-primary/50 bg-primary/5 py-1 pl-3 italic text-slate-500 dark:text-slate-400"
+        className="my-2 rounded-r border-l-2 border-primary/50 bg-primary/5 py-1.5 pl-3 pr-2 italic text-slate-600 dark:text-slate-300 break-words"
         {...props}
       />
     ),
     // Horizontal rule
-    hr: ({ node, ...props }: any) => <hr className="border-slate-300 dark:border-gray-700 my-3" {...props} />,
+    hr: ({ node, ...props }: any) => <hr className="border-slate-300 dark:border-gray-700 my-2.5" {...props} />,
     // Tables (GFM)
     table: ({ node, ...props }: any) => (
-      <div className="overflow-x-auto my-2 rounded">
+      <div className="overflow-x-auto my-2 rounded max-w-full">
         <table className="text-[10px] w-full border-collapse" {...props} />
       </div>
     ),
@@ -144,9 +165,9 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
       // Block code — use SyntaxHighlighter
       if (!inline && language) {
         return (
-          <div className="my-2 rounded-lg overflow-hidden text-[10px] border border-slate-300 dark:border-gray-700/60">
+          <div className="my-2 rounded-lg overflow-hidden text-[10px] border border-slate-300 dark:border-gray-700/60 max-w-full">
             <div className="flex items-center justify-between bg-slate-50 dark:bg-gray-900 px-3 py-1.5 border-b border-slate-300 dark:border-gray-700/60">
-                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-primary/70">{language}</span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-primary/70">{language}</span>
               <span className="flex gap-1">
                 <span className="w-2 h-2 rounded-full bg-red-500/60" />
                 <span className="w-2 h-2 rounded-full bg-yellow-500/60" />
@@ -157,7 +178,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
               style={atomDark}
               language={language}
               PreTag="div"
-              customStyle={{ margin: 0, padding: '10px 12px', background: '#0d1117', fontSize: '10px', lineHeight: '1.6' }}
+              customStyle={{ margin: 0, padding: '10px 12px', background: '#0d1117', fontSize: '10px', lineHeight: '1.6', overflowX: 'auto', maxWidth: '100%' }}
               {...props}
             >
               {String(children).replace(/\n$/, '')}
@@ -168,7 +189,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
       // Inline code
       return (
         <code
-          className="bg-primary/10 text-primary border border-primary/20 px-1 py-0.5 rounded text-[10px] font-mono"
+          className="bg-primary/10 text-primary border border-primary/20 px-1 py-0.5 rounded text-[10px] font-mono break-all"
           {...props}
         >
           {children}
@@ -179,6 +200,11 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
 
   useEffect(() => {
     scrollToBottom();
+    if (isOpen) {
+      const t1 = setTimeout(scrollToBottom, 60);
+      const t2 = setTimeout(scrollToBottom, 320);
+      return () => { clearTimeout(t1); clearTimeout(t2); };
+    }
   }, [messages, isOpen]);
 
   const handleSend = async () => {
@@ -289,9 +315,9 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
           data-lenis-prevent
           onWheel={(event) => event.stopPropagation()}
           onTouchMove={(event) => event.stopPropagation()}
-          className="df-chat-panel pointer-events-auto mb-3 flex h-[380px] w-[280px] flex-col overflow-hidden rounded-2xl border border-blue-200/90 bg-white/95 text-slate-900 shadow-[0_18px_48px_rgba(15,50,100,0.18)] ring-1 ring-white/80 animate-in slide-in-from-bottom-10 duration-300 dark:border-primary/30 dark:bg-[#07111f]/95 dark:text-white dark:shadow-[0_0_30px_rgba(0,0,0,0.5)] dark:ring-white/[0.04] md:mb-4 md:h-[500px] md:w-[350px]"
+          className="df-chat-panel pointer-events-auto mb-3 flex h-[520px] w-[min(calc(100vw-24px),420px)] sm:w-[400px] md:w-[420px] md:h-[580px] flex-col overflow-hidden rounded-2xl border border-blue-200/90 bg-white/95 text-slate-900 shadow-[0_20px_50px_rgba(15,50,100,0.22)] ring-1 ring-white/80 animate-in slide-in-from-bottom-10 duration-300 dark:border-primary/30 dark:bg-[#07111f]/95 dark:text-white dark:shadow-[0_0_35px_rgba(0,0,0,0.6)] dark:ring-white/[0.04] md:mb-4"
         >
-            <div className="df-chat-header relative flex items-center justify-between overflow-hidden border-b border-blue-100 bg-gradient-to-r from-white via-sky-50 to-blue-50 p-3 dark:border-primary/20 dark:bg-none dark:bg-primary/10 md:p-4">
+            <div className="df-chat-header shrink-0 relative flex items-center justify-between overflow-hidden border-b border-blue-100 bg-gradient-to-r from-white via-sky-50 to-blue-50 p-3 dark:border-primary/20 dark:bg-none dark:bg-primary/10 md:p-3.5">
                 <div className="flex items-center gap-2 relative z-10">
                     <div className="rounded-full bg-primary p-1 text-white shadow-[0_0_14px_rgba(29,111,232,0.28)] md:p-1.5"><Bot size={16} className="md:w-[18px] md:h-[18px]" /></div>
                     <div>
@@ -315,46 +341,66 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                 </div>
             </div>
 
-            <div data-lenis-prevent className="df-chat-body custom-scrollbar flex-1 space-y-3 overflow-y-auto overscroll-contain bg-slate-50/80 p-3 dark:bg-black/40 md:space-y-4 md:p-4">
+            <div data-lenis-prevent className="df-chat-body custom-scrollbar flex-1 space-y-3.5 overflow-y-auto overscroll-contain bg-slate-50/80 p-3.5 dark:bg-black/40 md:p-4">
                 {messages.map((msg, idx) => (
-                    <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} group`}>
-                        <div className={`relative max-w-[85%] rounded-lg p-2.5 text-xs shadow-sm md:p-3 md:text-sm ${msg.role === 'user' ? 'df-chat-user-message rounded-tr-none border border-primary/35 bg-blue-50 text-slate-900 dark:border-primary/50 dark:bg-primary/20 dark:text-white' : 'df-chat-agent-message rounded-tl-none border border-blue-100 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'}`}>
+                    <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start items-start gap-2'} group`}>
+                        {msg.role === 'model' && (
+                          <div className="shrink-0 mt-0.5 w-6 h-6 rounded-full bg-primary/10 border border-primary/25 text-primary flex items-center justify-center">
+                            <Bot size={13} />
+                          </div>
+                        )}
+                        <div
+                          className={`relative max-w-[85%] rounded-2xl p-3 text-xs shadow-sm md:p-3.5 md:text-sm leading-relaxed ${
+                            msg.role === 'user'
+                              ? 'df-chat-user-message rounded-tr-xs border border-primary/35 bg-blue-50 text-slate-900 dark:border-primary/50 dark:bg-primary/20 dark:text-white ml-auto'
+                              : 'df-chat-agent-message rounded-tl-xs border border-blue-100 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
+                          }`}
+                        >
                             {msg.role === 'model' ? (
                                 <>
-                                  <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkGfm]}>{msg.text}</ReactMarkdown>
+                                  <div className="break-words [overflow-wrap:anywhere]">
+                                    <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkGfm]}>{msg.text}</ReactMarkdown>
+                                  </div>
                                   {msg.text && (
-                                    <div className="absolute -bottom-6 right-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                                      {/* Reactions */}
-                                      <button
-                                        onClick={() => reactToMessage(idx, 'up')}
-                                        className={`text-[11px] px-1 py-0.5 rounded transition-all ${reactions[idx] === 'up' ? 'bg-green-500/20 text-green-400' : 'text-slate-500 hover:text-green-400'}`}
-                                        title="Hữu ích"
-                                      >👍</button>
-                                      <button
-                                        onClick={() => reactToMessage(idx, 'down')}
-                                        className={`text-[11px] px-1 py-0.5 rounded transition-all ${reactions[idx] === 'down' ? 'bg-red-500/20 text-red-400' : 'text-slate-500 hover:text-red-400'}`}
-                                        title="Không hữu ích"
-                                      >👎</button>
+                                    <div className="mt-2.5 flex items-center justify-between border-t border-slate-100 pt-1.5 dark:border-white/5">
+                                      <div className="flex items-center gap-1">
+                                        {/* Reactions */}
+                                        <button
+                                          onClick={() => reactToMessage(idx, 'up')}
+                                          className={`text-xs px-1.5 py-0.5 rounded transition-colors ${reactions[idx] === 'up' ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-white/10 dark:hover:text-slate-300'}`}
+                                          title={lang === 'vi' ? 'Hữu ích' : 'Helpful'}
+                                        >👍</button>
+                                        <button
+                                          onClick={() => reactToMessage(idx, 'down')}
+                                          className={`text-xs px-1.5 py-0.5 rounded transition-colors ${reactions[idx] === 'down' ? 'bg-rose-500/20 text-rose-600 dark:text-rose-400' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-white/10 dark:hover:text-slate-300'}`}
+                                          title={lang === 'vi' ? 'Không hữu ích' : 'Not helpful'}
+                                        >👎</button>
+                                      </div>
                                       {/* Copy */}
                                       <button
                                         onClick={() => copyMessage(msg.text, idx)}
-                                        className="flex items-center gap-1 rounded bg-white/80 dark:bg-black/60 px-1.5 py-0.5 text-[9px] text-slate-500 dark:text-slate-400 hover:text-primary"
+                                        className="flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-medium text-slate-400 hover:bg-slate-100 hover:text-primary dark:hover:bg-white/10 dark:hover:text-cyan-300 transition-colors"
                                       >
-                                        {copiedIdx === idx ? <Check size={9} className="text-green-400" /> : <Copy size={9} />}
-                                        {copiedIdx === idx ? (lang === 'vi' ? 'Đã sao chép' : 'Copied!') : (lang === 'vi' ? 'Sao chép' : 'Copy')}
+                                        {copiedIdx === idx ? <Check size={10} className="text-emerald-500" /> : <Copy size={10} />}
+                                        <span>{copiedIdx === idx ? (lang === 'vi' ? 'Đã sao chép' : 'Copied!') : (lang === 'vi' ? 'Sao chép' : 'Copy')}</span>
                                       </button>
                                     </div>
                                   )}
                                 </>
                             ) : (
-                                msg.text
+                                <div className="whitespace-pre-wrap break-words [overflow-wrap:anywhere]">
+                                  {msg.text}
+                                </div>
                             )}
                         </div>
                     </div>
                 ))}
                 {loading && (
-                    <div className="flex justify-start">
-                        <div className="rounded-lg rounded-tl-none border border-primary/25 bg-white p-2.5 shadow-sm dark:border-primary/30 dark:bg-gray-800/80 md:p-3">
+                    <div className="flex justify-start items-start gap-2">
+                        <div className="shrink-0 mt-0.5 w-6 h-6 rounded-full bg-primary/10 border border-primary/25 text-primary flex items-center justify-center">
+                            <Bot size={13} />
+                        </div>
+                        <div className="rounded-2xl rounded-tl-xs border border-primary/25 bg-white p-2.5 shadow-sm dark:border-primary/30 dark:bg-gray-800/80 md:p-3">
                             <div className="flex gap-1.5 items-center">
                                 <ScanLine size={12} className="text-primary animate-pulse" />
                                 <span className="text-[10px] text-primary/80 italic font-mono tracking-wider">
@@ -370,8 +416,42 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                 <div ref={messagesEndRef} />
             </div>
 
-            <div className="df-chat-footer space-y-2 border-t border-blue-100 bg-white/95 p-2 dark:border-slate-800 dark:bg-[#07111f] md:p-3">
-                <div className="flex gap-2 items-end">
+            <div className="df-chat-footer shrink-0 space-y-2 border-t border-blue-100 bg-white/95 p-2.5 dark:border-slate-800 dark:bg-[#07111f] md:p-3">
+                {/* Quick Prompts */}
+                <div className="flex gap-1.5 overflow-x-auto pb-1 custom-scrollbar-none">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setInput(lang === 'vi' ? 'Tôi vừa nhận được một tin nhắn lạ yêu cầu chuyển tiền gấp...' : 'I just received an urgent message asking for money...');
+                      textareaRef.current?.focus();
+                    }}
+                    className="shrink-0 rounded-full border border-primary/25 bg-primary/10 px-2.5 py-1 text-[10px] font-semibold text-primary hover:bg-primary/20 transition-colors"
+                  >
+                    {lang === 'vi' ? '⚡ Phân tích tin nhắn lạ' : '⚡ Analyze suspicious msg'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setInput(lang === 'vi' ? 'Kiểm tra giúp tôi đường link này có an toàn không: ' : 'Check if this link is safe: ');
+                      textareaRef.current?.focus();
+                    }}
+                    className="shrink-0 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/80 px-2.5 py-1 text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:border-primary/40 transition-colors"
+                  >
+                    {lang === 'vi' ? '🔗 Kiểm tra link' : '🔗 Check link'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setInput(lang === 'vi' ? 'Tôi bị lộ mật khẩu và nghi ngờ bị chiếm tài khoản, phải làm sao?' : 'I leaked my password and suspect account compromise, what should I do?');
+                      textareaRef.current?.focus();
+                    }}
+                    className="shrink-0 rounded-full border border-rose-500/25 bg-rose-500/10 px-2.5 py-1 text-[10px] font-semibold text-rose-500 hover:bg-rose-500/20 transition-colors"
+                  >
+                    {lang === 'vi' ? '🚨 Cấp cứu sự cố' : '🚨 Emergency help'}
+                  </button>
+                </div>
+
+                <div className="flex gap-2 items-center">
                     <textarea
                       ref={textareaRef}
                       rows={1}
@@ -379,10 +459,10 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
                       onChange={handleInputChange}
                       onKeyDown={handleKeyPress}
                       placeholder={t.agent_placeholder}
-                      className="df-chat-input flex-1 resize-none overflow-hidden rounded border border-slate-200 bg-white px-2 py-1.5 text-xs leading-relaxed text-slate-900 outline-none placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/10 dark:border-slate-700 dark:bg-black/50 dark:text-white dark:placeholder:text-slate-500 md:px-3 md:py-2 md:text-sm"
-                      style={{ minHeight: '34px', maxHeight: '96px' }}
+                      className="df-chat-input flex-1 resize-none rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs leading-normal text-slate-900 outline-none placeholder:text-slate-400 placeholder:truncate focus:border-primary focus:ring-2 focus:ring-primary/10 dark:border-slate-700 dark:bg-black/50 dark:text-white dark:placeholder:text-slate-500 md:py-2.5 md:text-sm"
+                      style={{ minHeight: '40px', maxHeight: '96px' }}
                     />
-                    <button onClick={handleSend} disabled={loading || !input.trim()} className="bg-primary text-white p-1.5 md:p-2 rounded hover:bg-blue-500 disabled:opacity-50 flex-shrink-0 mb-0.5"><Send size={16} className="md:w-[18px] md:h-[18px]" /></button>
+                    <button onClick={handleSend} disabled={loading || !input.trim()} className="h-10 w-10 bg-primary text-white rounded-xl hover:bg-blue-500 disabled:opacity-50 flex items-center justify-center flex-shrink-0 shadow-sm transition-transform active:scale-95"><Send size={16} className="md:w-[18px] md:h-[18px]" /></button>
                 </div>
             </div>
         </div>
@@ -393,7 +473,7 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
         <div className="pointer-events-auto mb-2 mr-1 md:mb-3 md:mr-2 animate-bounce cursor-pointer" onClick={() => setIsOpen(true)}>
             <div className="bg-secondary text-white font-bold text-[10px] md:text-xs px-3 py-1.5 md:px-4 md:py-2 rounded-xl shadow-[0_0_20px_rgba(255,42,109,0.6)] relative flex items-center gap-2 border border-black/20 dark:border-white/20">
                <Sparkles size={12} className="animate-spin-slow md:w-[14px] md:h-[14px]" />
-               {lang === 'vi' ? 'Chat với AI Agent' : 'Chat with AI Agent'}
+               {lang === 'vi' ? 'Hỏi trợ lý DEEPFENSE' : 'Ask DEEPFENSE Assistant'}
                <div className="absolute top-full right-4 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-secondary"></div>
             </div>
         </div>

@@ -78,6 +78,7 @@ function readModuleSync() {
   return {};
 }
 
+
 function writeModuleSync(completedModuleNums) {
   const session = readSession();
   if (!session?.uid) return;
@@ -93,8 +94,29 @@ function writeModuleSync(completedModuleNums) {
 }
 
 function initTheme() {
-  const saved = localStorage.getItem(THEME_KEY) || 'dark';
+  let saved = 'dark';
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const urlTheme = params.get('theme');
+    if (urlTheme === 'light' || urlTheme === 'dark') {
+      saved = urlTheme;
+    } else {
+      const stored = localStorage.getItem(THEME_KEY) || localStorage.getItem('df_theme');
+      if (stored === 'light' || stored === 'dark') {
+        saved = stored;
+      }
+    }
+  } catch {}
   document.documentElement.setAttribute('data-theme', saved);
+  if (saved === 'light') {
+    document.documentElement.classList.add('light');
+  } else {
+    document.documentElement.classList.remove('light');
+  }
+  try {
+    localStorage.setItem(THEME_KEY, saved);
+    localStorage.setItem('df_theme', saved);
+  } catch {}
   return saved;
 }
 
@@ -180,7 +202,15 @@ export default function App() {
     setTheme(t => {
       const next = t === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
-      try { localStorage.setItem(THEME_KEY, next); } catch {}
+      if (next === 'light') {
+        document.documentElement.classList.add('light');
+      } else {
+        document.documentElement.classList.remove('light');
+      }
+      try {
+        localStorage.setItem(THEME_KEY, next);
+        localStorage.setItem('df_theme', next);
+      } catch {}
       return next;
     });
   }

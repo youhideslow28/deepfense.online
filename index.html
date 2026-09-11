@@ -53,8 +53,14 @@
     <script>
       (function() {
         try {
-          var saved = localStorage.getItem('df_theme') || 'system';
-          var isDark = saved === 'dark' || (saved === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          var themeDefaultKey = 'df_theme_default_v2';
+          var themeDefaultVersion = 'dark-primary';
+          if (localStorage.getItem(themeDefaultKey) !== themeDefaultVersion) {
+            localStorage.setItem('df_theme', 'dark');
+            localStorage.setItem(themeDefaultKey, themeDefaultVersion);
+          }
+          var saved = localStorage.getItem('df_theme') || 'dark';
+          var isDark = saved !== 'light';
           if (isDark) {
             document.documentElement.classList.add('dark');
             document.documentElement.setAttribute('data-theme', 'dark');

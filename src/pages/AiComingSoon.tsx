@@ -280,7 +280,7 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                 <div className="flex flex-col gap-4 w-full md:w-auto items-center md:items-start">
                     <div className="mb-2 text-center text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{lang === 'vi' ? 'ĐẦU RA DỰ KIẾN' : 'PLANNED OUTPUT'}</div>
                     
-                    <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-2xl border-2 border-red-500/50 w-full md:w-64 text-center relative overflow-hidden shadow-[0_0_30px_rgba(255,0,0,0.15)] group">
+                    <div className="bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-black p-6 rounded-2xl border-2 border-red-500/50 w-full md:w-64 text-center relative overflow-hidden shadow-[0_0_30px_rgba(255,0,0,0.15)] group">
                         <div className="absolute inset-0 bg-red-500/5 animate-pulse"></div>
                         
                         <div className="flex justify-center mb-4">
@@ -290,11 +290,11 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                         </div>
                         
                         <div className="text-4xl font-black text-slate-900 dark:text-white mb-1">AI</div>
-                        <div className="text-xs font-bold text-red-400 tracking-wider mb-4">{lang === 'vi' ? 'CHƯA MỞ CÔNG KHAI' : 'NOT PUBLIC YET'}</div>
+                        <div className="text-xs font-bold text-red-500 dark:text-red-400 tracking-wider mb-4">{lang === 'vi' ? 'CHƯA MỞ CÔNG KHAI' : 'NOT PUBLIC YET'}</div>
                         
                         <div className="flex flex-col gap-2 text-[10px] text-left bg-white/80 dark:bg-black/60 p-3 rounded border border-slate-200 dark:border-gray-800">
-                            <div className="flex items-center gap-2 text-red-300"><ArrowRight size={10}/> {lang === 'vi' ? 'Báo cáo rủi ro sau benchmark' : 'Risk report after benchmarks'}</div>
-                            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400"><ArrowRight size={10}/> {lang === 'vi' ? 'Khuyến nghị kiểm chứng theo quy trình' : 'Process-based verification guidance'}</div>
+                            <div className="flex items-center gap-2 text-red-500 dark:text-red-300"><ArrowRight size={10}/> {lang === 'vi' ? 'Báo cáo rủi ro sau benchmark' : 'Risk report after benchmarks'}</div>
+                            <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400"><ArrowRight size={10}/> {lang === 'vi' ? 'Khuyến nghị kiểm chứng theo quy trình' : 'Process-based verification guidance'}</div>
                         </div>
                     </div>
                 </div>
@@ -303,7 +303,7 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
           </div>
 
           {/* Vision Statement */}
-          <div className="mx-4 rounded-2xl border border-black/10 dark:border-white/10 bg-slate-900/50 p-6 text-center backdrop-blur-sm md:p-10">
+          <div className="mx-4 rounded-2xl border border-black/10 dark:border-white/10 bg-surface p-6 text-center backdrop-blur-sm md:p-10 shadow-lg">
              <Fingerprint className="mx-auto mb-4 text-slate-500" size={48} />
              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{lang === 'vi' ? 'TẦM NHÌN TƯƠNG LAI' : 'FUTURE VISION'}</h2>
              <p className="mx-auto max-w-3xl text-sm italic leading-7 text-slate-600 dark:text-slate-300/85 md:text-base">
@@ -467,9 +467,9 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                             shadowHover: "group-hover:shadow-[0_0_15px_#3b82f6]"
                         },
                         {
-                            time: "Q3/2026",
-                            title: lang === 'vi' ? 'Tìm dataset train AI' : 'Dataset Search',
-                            desc: lang === 'vi' ? 'Hiện tại: đang tìm dataset để train AI, kiểm tra nguồn dữ liệu và tiêu chí nhãn.' : 'Current: sourcing datasets for AI training, checking provenance and label criteria.',
+                            time: "Q4/2026",
+                            title: lang === 'vi' ? 'Tìm dataset & học train AI' : 'Dataset & AI Training',
+                            desc: lang === 'vi' ? 'Hiện tại: Đang tìm kiếm dataset chuẩn và học cách train AI nhận diện, kiểm tra nhãn dữ liệu.' : 'Current: sourcing datasets for AI training, learning model training and checking label criteria.',
                             icon: <BrainCircuit size={16} className="text-cyan-400"/>,
                             borderClass: "border-cyan-500",
                             textClass: "text-cyan-400",
@@ -859,12 +859,12 @@ const AiComingSoon: React.FC<AiComingSoonProps> = ({ lang }) => {
                 },
                 {
                   phase: 'Phase 2',
-                  titleVi: 'Dataset & Gói Học Tập',
-                  titleEn: 'Dataset & Learning Plans',
-                  descVi: 'Q3/2026 tập trung tìm dataset train AI; gói trả phí chỉ nên xoay quanh học tập, dashboard và chứng chỉ.',
-                  descEn: 'Q3/2026 focuses on sourcing datasets for AI training; paid plans should stay around learning, dashboards, and certificates.',
-                  statusVi: 'Q3/2026',
-                  statusEn: 'Q3/2026',
+                  titleVi: 'Tìm Dataset & Học Train AI',
+                  titleEn: 'Dataset & AI Training Learning',
+                  descVi: 'Q4/2026: Đang tìm kiếm nguồn dataset uy tín và học cách train AI nhận diện; các tính năng tập trung vào học tập, dashboard và chứng chỉ.',
+                  descEn: 'Q4/2026: Actively sourcing datasets and learning AI training methods; features focus on learning, dashboards, and certificates.',
+                  statusVi: 'Q4/2026',
+                  statusEn: 'Q4/2026',
                   color: 'border-blue-400'
                 },
                 {

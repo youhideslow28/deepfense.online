@@ -28,9 +28,11 @@ import { Language } from '@/types';
 interface FooterProps {
   lang: Language;
   siteConfig: SiteConfig;
+  isFamilyShell?: boolean;
+  familyAudience?: 'young' | 'old' | null;
 }
 
-const Footer: React.FC<FooterProps> = ({ lang, siteConfig }) => {
+const Footer: React.FC<FooterProps> = ({ lang, siteConfig, isFamilyShell, familyAudience }) => {
   const isVi = lang === 'vi';
 
   const trainingLinks = [

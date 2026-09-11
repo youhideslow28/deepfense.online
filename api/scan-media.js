@@ -1,6 +1,6 @@
 /**
  * DEEPFENSE.ONLINE - /api/scan-media
- * Public AI scanning is intentionally locked while the model is trained and benchmarked.
+ * Public AI scanning is intentionally locked while the scanner is under development.
  */
 
 const ALLOWED_DOMAINS = [
@@ -32,12 +32,12 @@ export default async function handler(req, res) {
   const requestLang = req.body?.lang;
 
   return res.status(423).json({
-    status: 'LOCKED_AI_TRAINING',
+    status: 'LOCKED_FEATURE',
     error: requestLang === 'en'
-      ? 'Deepfense Scanner is locked while the AI model is being trained and benchmarked.'
-      : 'Máy quét Deepfense đang được khóa trong giai đoạn tìm dataset, train AI và kiểm định benchmark.',
+      ? 'Deepfense Scanner is currently under development.'
+      : 'Máy quét Deepfense hiện đang trong giai đoạn phát triển và thử nghiệm.',
     next: requestLang === 'en'
-      ? 'Public scanning will reopen only after controlled evaluation.'
-      : 'Tính năng quét công khai chỉ mở lại sau khi có đánh giá kiểm soát rõ ràng.',
+      ? 'Public scanning will open after evaluation and testing.'
+      : 'Tính năng quét công khai sẽ mở sau khi hoàn tất giai đoạn thử nghiệm.',
   });
 }

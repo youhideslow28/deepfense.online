@@ -20,7 +20,12 @@ import { Language, Season } from '@/types';
 import { usePerfMode } from '@/hooks/usePerfMode';
 import { useSiteConfig } from '@/hooks/useSiteConfig';
 import { useTheme } from '@/hooks/useTheme';
-import { resolveDeepfenseExperience } from '@/config/domainRouting';
+import {
+  getFamilyAudienceFromPath,
+  getFamilyAudienceFromSearch,
+  resolveDeepfenseExperience,
+  type FamilyAudience,
+} from '@/config/domainRouting';
 
 const CyberField = lazy(() => import('@/components/effects/CyberField'));
 const CookieConsent = lazy(() => import('@/components/common/CookieConsent'));
@@ -75,13 +80,40 @@ const AppContent: React.FC = () => {
   const [authError, setAuthError] = useState('');
   const [userRole, setUserRole] = useState<AppRole | null>(null);
   const [roleBusy, setRoleBusy] = useState(false);
+  const [storedFamilyAudience, setStoredFamilyAudience] = useState<FamilyAudience | null>(() => {
+    if (typeof window === 'undefined') return null;
+    const saved = window.localStorage.getItem('df_family_audience');
+    return saved === 'young' || saved === 'old' ? saved : null;
+  });
   const location = useLocation();
   const navigate = useNavigate();
   const domainExperience = resolveDeepfenseExperience();
+  const familyAudienceFromPath = getFamilyAudienceFromPath(location.pathname);
+  const familyAudienceFromSearch = getFamilyAudienceFromSearch(location.search);
+  const isLocalFamilyRoute = location.pathname === '/family' || location.pathname.startsWith('/family/');
+  const hasFamilyAudienceQuery = Boolean(familyAudienceFromSearch) && location.pathname !== '/' && location.pathname !== '/portal';
+  const isFamilyShell = domainExperience === 'family' || isLocalFamilyRoute || hasFamilyAudienceQuery;
+  const familyAudience = isFamilyShell ? (familyAudienceFromPath ?? familyAudienceFromSearch ?? storedFamilyAudience) : null;
   const isPortalRoute = (domainExperience === 'portal' && location.pathname === '/') || location.pathname === '/portal';
-  const isFamilyRoute = (domainExperience === 'family' && location.pathname === '/') || location.pathname === '/family';
-  const usesLiteShell = isLite || isPortalRoute || domainExperience === 'family' || location.pathname === '/family';
-  const isFullWidthRoute = location.pathname === '/' || location.pathname === '/portal' || location.pathname === '/family';
+  const isFamilyLandingRoute = (
+    (domainExperience === 'family' && ['/', '/young', '/old'].includes(location.pathname))
+    || ['/family', '/family/young', '/family/old'].includes(location.pathname)
+  );
+  const isFamilyPortalRoute = (
+    (domainExperience === 'family' && location.pathname === '/')
+    || location.pathname === '/family'
+  );
+  const isStandalonePortal = isPortalRoute || isFamilyPortalRoute;
+  const familyAudienceForShell = isFamilyLandingRoute ? familyAudienceFromPath : (isFamilyShell ? (familyAudience ?? 'young') : null);
+  const usesLiteShell = isLite || isStandalonePortal || isFamilyShell;
+  const isFullWidthRoute = location.pathname === '/' || location.pathname === '/portal' || isFamilyLandingRoute;
+
+  useEffect(() => {
+    const nextAudience = familyAudienceFromPath ?? familyAudienceFromSearch;
+    if (!nextAudience) return;
+    setStoredFamilyAudience(nextAudience);
+    try { window.localStorage.setItem('df_family_audience', nextAudience); } catch { /* ignore */ }
+  }, [familyAudienceFromPath, familyAudienceFromSearch]);
 
   useEffect(() => onAuthStateChanged(auth, (nextUser) => {
     setUser(nextUser);
@@ -186,7 +218,11 @@ const AppContent: React.FC = () => {
 
   const getPageTitle = () => {
     if (isPortalRoute) return lang === 'vi' ? 'Cổng Deepfense' : 'Deepfense Portal';
-    if (isFamilyRoute) return 'DEEPFENSE Family';
+    if (isFamilyLandingRoute) {
+      if (familyAudienceFromPath === 'young') return lang === 'vi' ? 'DEEPFENSE Family - Thiếu niên' : 'DEEPFENSE Family - Teens';
+      if (familyAudienceFromPath === 'old') return lang === 'vi' ? 'DEEPFENSE Family - Người lớn 40+' : 'DEEPFENSE Family - Adults 40+';
+      return 'DEEPFENSE Family';
+    }
 
     switch (location.pathname) {
       case '/': return lang === 'vi' ? 'Trang chủ' : 'Home';
@@ -235,7 +271,7 @@ const AppContent: React.FC = () => {
         )}
         {siteConfig.seasonalEnabled && season === 'WINTER' && domainExperience === 'main' && location.pathname === '/' && <WinterEffects isLite={isLite} />}
 
-        {!isPortalRoute && (
+        {!isStandalonePortal && (
           <Navbar
             lang={lang}
             setLang={setLang}
@@ -251,6 +287,8 @@ const AppContent: React.FC = () => {
             season={season}
             setSeason={setSeason}
             showTicker={!usesLiteShell}
+            isFamilyShell={isFamilyShell}
+            familyAudience={familyAudienceForShell}
           />
         )}
 
@@ -263,19 +301,23 @@ const AppContent: React.FC = () => {
                   element={
                     isPortalRoute
                       ? <DomainPortal lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme} />
-                      : isFamilyRoute
-                        ? <FamilyLanding lang={lang} />
+                      : isFamilyLandingRoute
+                        ? <FamilyLanding lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme} mode={familyAudienceFromPath} />
                         : <Home lang={lang} siteConfig={siteConfig} />
                   }
                 />
                 <Route path="/portal" element={<DomainPortal lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme} />} />
-                <Route path="/family" element={<FamilyLanding lang={lang} />} />
+                <Route path="/young" element={domainExperience === 'family' ? <FamilyLanding lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme} mode="young" /> : <Navigate to="/family/young" replace />} />
+                <Route path="/old" element={domainExperience === 'family' ? <FamilyLanding lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme} mode="old" /> : <Navigate to="/family/old" replace />} />
+                <Route path="/family" element={<FamilyLanding lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme} mode={null} />} />
+                <Route path="/family/young" element={<FamilyLanding lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme} mode="young" />} />
+                <Route path="/family/old" element={<FamilyLanding lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme} mode="old" />} />
                 <Route path="/login" element={<Login lang={lang} user={user} />} />
                 <Route path="/profile" element={<Profile lang={lang} user={user} authBusy={authBusy || roleBusy} />} />
                 <Route path="/academy" element={<Academy lang={lang} user={user} authBusy={authBusy} onGoogleAuth={handleGoogleAuth} />} />
                 <Route path="/academy/verify" element={<CertificateVerify lang={lang} />} />
-                <Route path="/tools/:tab?" element={<Tools lang={lang} />} />
-                <Route path="/challenge" element={<Challenge lang={lang} />} />
+                <Route path="/tools/:tab?" element={<Tools lang={lang} familyAudience={familyAudienceForShell} />} />
+                <Route path="/challenge" element={<Challenge lang={lang} familyAudience={familyAudienceForShell} />} />
                 <Route path="/ai-project" element={<AiComingSoon lang={lang} />} />
                 <Route path="/contact" element={<AboutContact lang={lang} />} />
                 <Route path="/about" element={<AboutContact lang={lang} />} />
@@ -290,14 +332,13 @@ const AppContent: React.FC = () => {
         </main>
 
         {!usesLiteShell && siteConfig.aiAgentEnabled && <AiChat lang={lang} />}
-        {!isPortalRoute && <CookieConsent lang={lang} />}
-        {!isPortalRoute && <Footer lang={lang} siteConfig={siteConfig} />}
+        {!isStandalonePortal && <CookieConsent lang={lang} />}
+        {!isStandalonePortal && <Footer lang={lang} siteConfig={siteConfig} isFamilyShell={isFamilyShell} familyAudience={familyAudienceForShell} />}
       </div>
   );
 
   return usesLiteShell ? appContent : <SmoothScroll>{appContent}</SmoothScroll>;
 };
-
 const App: React.FC = () => (
   <Router>
     <AppContent />
