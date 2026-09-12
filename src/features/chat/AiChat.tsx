@@ -345,17 +345,17 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-xs sm:hidden pointer-events-auto"
+          className="fixed inset-0 z-[9999] bg-black/50 backdrop-blur-xs sm:hidden pointer-events-auto"
           onClick={() => setIsOpen(false)}
         />
       )}
-      <div className="ai-chat-shell fixed bottom-3 right-3 sm:bottom-4 sm:right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end pointer-events-none">
+      <div className="ai-chat-shell fixed bottom-4 right-4 sm:bottom-5 sm:right-5 md:bottom-6 md:right-6 z-[10000] flex flex-col items-end pointer-events-none">
         {isOpen && (
           <div
             data-lenis-prevent
             onWheel={(event) => event.stopPropagation()}
             onTouchMove={(event) => event.stopPropagation()}
-            className="df-chat-panel pointer-events-auto fixed inset-x-0 bottom-0 sm:static sm:inset-auto mb-0 sm:mb-3 flex h-[82dvh] sm:h-[520px] md:h-[580px] w-full sm:w-[400px] md:w-[420px] flex-col overflow-hidden rounded-t-3xl sm:rounded-2xl border border-blue-200/90 bg-white/95 text-slate-900 shadow-[0_20px_50px_rgba(15,50,100,0.22)] ring-1 ring-white/80 animate-in slide-in-from-bottom-10 duration-300 dark:border-primary/30 dark:bg-[#07111f]/95 dark:text-white dark:shadow-[0_0_35px_rgba(0,0,0,0.6)] dark:ring-white/[0.04] md:mb-4 z-50"
+            className="df-chat-panel pointer-events-auto fixed inset-x-0 bottom-0 sm:static sm:inset-auto mb-0 sm:mb-3 flex h-[82dvh] sm:h-[520px] md:h-[580px] w-full sm:w-[400px] md:w-[420px] flex-col overflow-hidden rounded-t-3xl sm:rounded-2xl border border-blue-200/90 bg-white/95 text-slate-900 shadow-[0_20px_50px_rgba(15,50,100,0.22)] ring-1 ring-white/80 animate-in slide-in-from-bottom-10 duration-300 dark:border-primary/30 dark:bg-[#07111f]/95 dark:text-white dark:shadow-[0_0_35px_rgba(0,0,0,0.6)] dark:ring-white/[0.04] md:mb-4 z-[10001]"
           >
             <div className="df-chat-header shrink-0 relative flex flex-col overflow-hidden border-b border-blue-100 bg-gradient-to-r from-white via-sky-50 to-blue-50 p-2.5 sm:p-3 dark:border-primary/20 dark:bg-none dark:bg-primary/10 md:p-3.5">
                 <div className="w-10 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-1.5 sm:hidden" />
@@ -525,10 +525,10 @@ const AiChat: React.FC<{ lang: Language }> = ({ lang }) => {
       <button
         onClick={() => { setIsOpen(!isOpen); setUnreadCount(0); }}
         aria-label={isOpen ? (lang === 'vi' ? 'Đóng trợ lý AI' : 'Close AI assistant') : (lang === 'vi' ? 'Mở trợ lý AI' : 'Open AI assistant')}
-        className="pointer-events-auto flex items-center justify-center w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 rounded-full bg-primary text-white shadow-[0_4px_25px_rgba(0,240,255,0.5)] hover:scale-105 active:scale-95 transition-all relative group touch-manipulation z-50"
+        className="pointer-events-auto flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-[0_4px_25px_rgba(0,240,255,0.5)] hover:scale-105 active:scale-95 transition-all relative group touch-manipulation z-[10000]"
       >
         <span className="absolute inset-0 rounded-full bg-primary opacity-50 animate-ping group-hover:opacity-75"></span>
-        <span className="relative">{isOpen ? <X className="w-5 h-5 md:w-6 md:h-6" /> : <MessageSquare className="w-6 h-6 md:w-6 md:h-6" />}</span>
+        <span className="relative">{isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}</span>
         {/* Notification badge */}
         {unreadCount > 0 && !isOpen && (
           <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-secondary text-white text-[9px] font-black rounded-full flex items-center justify-center px-1 shadow-[0_0_8px_rgba(255,42,109,0.8)] animate-bounce border border-black/30">

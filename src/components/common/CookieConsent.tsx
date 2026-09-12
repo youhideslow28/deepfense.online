@@ -27,7 +27,7 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ lang }) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] max-w-sm w-full animate-in slide-in-from-right-10 duration-500">
+    <div className="fixed bottom-24 left-4 right-4 sm:left-auto sm:bottom-6 sm:right-6 sm:max-w-sm z-[9998] animate-in slide-in-from-bottom-5 sm:slide-in-from-right-10 duration-500">
       <div className="glass-dark group relative overflow-hidden rounded-2xl border border-blue-500/30 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         {/* Animated background glow */}
         <div className="absolute -right-10 -top-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-colors" />
